@@ -1,4 +1,3 @@
-import React from 'react'
 
 /*
 localhost:5173/main
