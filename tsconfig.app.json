@@ -20,7 +20,20 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedSideEffectImports": true
+    "noUncheckedSideEffectImports": true,
+
+    /*path alias*/
+    "baseUrl": "./",
+    "paths": {
+      "@api/*": ["src/api/*"],
+      "@asset/*": ["src/asset/*"],
+      "@common/*": ["src/common/*"],
+      "@page/*": ["src/page/*"],
+      "@route/*": ["src/route/*"],
+      "@shared/*": ["src/shared/*"],
+      "@style/*": ["src/style/*"],
+      "@type/*": ["src/type/*"],
+    },
   },
   "include": ["src"]
 }
