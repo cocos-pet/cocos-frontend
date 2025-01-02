@@ -8,11 +8,12 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "svgr" : "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript -- public/svgs"
+    "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript -- public/svgs"
   },
   "dependencies": {
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-router-dom": "^7.1.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
