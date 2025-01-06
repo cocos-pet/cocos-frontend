@@ -6,9 +6,12 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
-    "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript -- public/svgs"
+    "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript -- public/svgs",
+    "lint": "biome lint --write",
+    "format": "biome format --write",
+    "check": "biome check --write",
+    "reporter": "biome check --reporter=summary"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.11",
@@ -19,6 +22,7 @@
     "zustand": "^5.0.2"
   },
   "devDependencies": {
+    "@biomejs/biome": "1.9.4",
     "@eslint/js": "^9.17.0",
     "@svgr/cli": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.62.11",
