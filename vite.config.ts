@@ -1,9 +1,10 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react-swc'
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react-swc";
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [react(), vanillaExtractPlugin()],
   resolve: {
     alias: [
       { find: "@api", replacement: "/src/api" },
@@ -15,6 +16,5 @@ export default defineConfig({
       { find: "@style", replacement: "/src/style" },
       { find: "@type", replacement: "/src/type" },
     ],
-  }
-  
-})
+  },
+});

@@ -24,6 +24,7 @@
     "@tanstack/react-query-devtools": "^5.62.11",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
+    "@vanilla-extract/vite-plugin": "^4.0.19",
     "@vitejs/plugin-react-swc": "^3.5.0",
     "eslint": "^9.17.0",
     "eslint-plugin-react-hooks": "^5.0.0",
