@@ -1,0 +1,105 @@
+import { createGlobalTheme } from "@vanilla-extract/css";
+
+export const theme = createGlobalTheme(":root", {
+  primary: {
+    blue100: "#DEFEFF",
+    blue200: "#C8FDFF",
+    blue300: "#B0FCFF",
+    blue400: "#8EF6FF",
+    blue500: "#43D6FF",
+    blue600: "#3DC4F5",
+    blue700: "#14B5F0",
+    blue800: "#00ACEA",
+    blue900: "#00ACEA",
+  },
+  yellow: {
+    yellow100: "#FFFCF2",
+    yellow200: "#FFFBEB",
+    yellow300: "#FFF5D1",
+    yellow400: "#FFF0B8",
+    yellow500: "#FFEA9E",
+    yellow600: "#FFE785",
+    yellow700: "#FFE270",
+    yellow800: "#FFDC51",
+    yellow900: "#FFD22D",
+  },
+  gray: {
+    gray000: "#FFFFFF",
+    gray100: "#F8F8F8",
+    gray200: "#F0F0F0",
+    gray300: "#E4E4E4",
+    gray400: "#D8D8D8",
+    gray500: "#C6C6C6",
+    gray600: "#BEBEBE",
+    gray700: "#717171",
+    gray800: "#555555",
+    gray900: "#222222",
+  },
+  red: {
+    warning_red100: "#FDE9F4",
+    warning_red200: "#F53D3D",
+  },
+
+  font: {
+    display01: {
+      fontSize: "7.2rem",
+      fontWeight: "600",
+      lineHeight: "120%",
+      letterSpacing: "-3%",
+    },
+    title01: {
+      fontSize: "3.6rem",
+      fontWeight: "600",
+      lineHeight: "120%",
+      letterSpacing: "-3%",
+    },
+    title02: {
+      fontSize: "2.8rem",
+      fontWeight: "600",
+      lineHeight: "120%",
+      letterSpacing: "-3%",
+    },
+    title03: {
+      fontSize: "2.4rem",
+      fontWeight: "600",
+      lineHeight: "120%",
+      letterSpacing: "-3%",
+    },
+    heading01: {
+      fontSize: "2rem",
+      fontWeight: "600",
+      lineHeight: "120%",
+      letterSpacing: "-3%",
+    },
+    heading02: {
+      fontSize: "1.8rem",
+      fontWeight: "600",
+      lineHeight: "140%",
+      letterSpacing: "-1%",
+    },
+    heading03: {
+      fontSize: "1.6rem",
+      fontWeight: "600",
+      lineHeight: "140%",
+      letterSpacing: "-2%",
+    },
+    body01: {
+      fontSize: "1.4rem",
+      fontWeight: "600",
+      lineHeight: "140%",
+      letterSpacing: "-2%",
+    },
+    label01: {
+      fontSize: "1.2rem",
+      fontWeight: "600",
+      lineHeight: "140%",
+      letterSpacing: "-1%",
+    },
+    caption01: {
+      fontSize: "1rem",
+      fontWeight: "600",
+      lineHeight: "140%",
+      letterSpacing: "-1%",
+    },
+  },
+});
