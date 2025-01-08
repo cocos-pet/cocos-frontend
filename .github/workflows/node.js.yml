@@ -1,31 +1,31 @@
 # This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
 # For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
 
-name: PR Test
+name: Build Test
 
 on:
   push:
-    branches: [main]
+    branches: [develop]
   pull_request:
-    branches: [main]
+    branches: [develop]
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [18]
+
     steps:
       - uses: actions/checkout@v3
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 8
 
-      - name: Use Node.js 18
+      - name: Use Node.js 20
         uses: actions/setup-node@v3
         with:
-          node-version: 18
-          cache: "pnpm"
+          node-version: '20'
+
+      - name: Install pnpm
+        run: |
+          npm install -g pnpm
+          echo "PNPM PATH: $(which pnpm)"
+          pnpm --version
 
       - name: Install dependencies
         run: pnpm install
