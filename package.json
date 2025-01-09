@@ -11,8 +11,7 @@
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write",
-    "reporter": "biome check --reporter=summary",
-    "lint:css": "stylelint '**/*.css'"
+    "reporter": "biome check --reporter=summary"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.11",
