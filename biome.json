@@ -25,6 +25,16 @@
       "recommended": true,
       "suspicious": {
         "noRedundantUseStrict": "off"
+      },
+      "correctness": {
+        "noUnusedVariables": {
+          "level": "warn",
+          "fix": "unsafe"
+        },
+        "noUnusedImports": {
+          "level": "warn",
+          "fix": "safe"
+        }
       }
     }
   }
