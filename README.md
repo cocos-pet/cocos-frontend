@@ -1,6 +1,7 @@
 # 🐱 COCOS   
 반려동물 증상을 겪는 반려인들이 커뮤니티를 통해 고민을 공유하고 병원 정보를 확인할 수 있는 서비스!
 
+</br>
 
 <h2> 🐶 COCOS Team </h2>
 
@@ -8,28 +9,28 @@
     <tr align="center">
       <td style="min-width: 150px;">
             <a href="https://github.com/ocahs9">
-              <img src="https://github.com/user-attachments/assets/e95ea9f0-4df6-4422-a652-ef5c6f8d3c81" width="200" height="300" alt="프로필사진">
+              <img src="https://github.com/user-attachments/assets/e95ea9f0-4df6-4422-a652-ef5c6f8d3c81" width="200" height="250" alt="프로필사진">
               <br />
               <b>🎧공준혁</b>
             </a>
         </td>
       <td style="min-width: 150px;">
             <a href="https://github.com/minjeoong">
-              <img src="https://github.com/user-attachments/assets/af774eda-6ea2-4abe-a34c-b27430451ffe" width="200" height="300" alt="프로필사진">
+              <img src="https://github.com/user-attachments/assets/af774eda-6ea2-4abe-a34c-b27430451ffe" width="200" height="250" alt="프로필사진">
               <br />
               <b>🌸김민정</b>
             </a>
         </td>
       <td style="min-width: 150px;">
             <a href="https://github.com/yarimu">
-              <img src="https://github.com/user-attachments/assets/04394243-2a2d-4620-a555-1c08c2324d45" width="200" height="300" alt="프로필사진">
+              <img src="https://github.com/user-attachments/assets/04394243-2a2d-4620-a555-1c08c2324d45" width="200" height="250" alt="프로필사진">
               <br />
               <b>🐶이예림</b>
             </a>
         </td>
       <td style="min-width: 150px;">
             <a href="https://github.com/Leeyoonji23">
-              <img src="https://github.com/user-attachments/assets/db34c483-c14e-4eb0-8414-a0ffe4bab520" width="200" height="300" alt="프로필사진">
+              <img src="https://github.com/user-attachments/assets/db34c483-c14e-4eb0-8414-a0ffe4bab520" width="200" height="250" alt="프로필사진">
               <br />
               <b>🐾이윤지</b>
             </a>
@@ -77,7 +78,7 @@
 
 </div>
 
-</br>
+<br/>
 
 <h2> 📄 컨벤션 및 브랜치 전략 (Git, Branch) </h2>
 <h3>Git Branch</h3>
@@ -92,29 +93,35 @@
 Commit Message 👉 기능 키워드: 커밋 내용</br>
 
 ```
-feat : 새로운 기능 추가
-fix : 버그 수정
-chore : 빌드 업무, 패키지 매니저, 라이브러리, dependencies 설정
-docs : 문서 수정 - ex) [README.md](http://readme.md/)
-design : 사용자 UI 디자인 변경 - ex) CSS
-style : 기능 수정 없는 코드 스타일 변경
-refactor : 코드 리팩터링
-test : 테스트 코드, 리펙토링 테스트 코드 추가
-ci : ci 설정 파일 수정
-perf : 성능 개선
-rename : 파일 혹은 폴더명 변경
+✨ feat : 새로운 기능 추가
+🚀 api : api 연동
+🐞 fix : 버그 수정
+📦 chore : 빌드 업무, 패키지 매니저, 라이브러리, dependencies 설정
+📝 docs : 문서 수정 - ex) [README.md](http://readme.md/)
+🎨 design : 사용자 UI 디자인 변경 - ex) CSS
+💄 style : 기능 수정 없는 코드 스타일 변경 
+♻️ refactor : 코드 리팩터링
+📝 test : 테스트 코드, 리펙토링 테스트 코드 추가
+🌐 ci : ci 설정 파일 수정
+🪄 perf : 성능 개선
+🛠️ rename : 파일 혹은 폴더명 변경
+⚙️ init : 초기 세팅
 ```
+<br/>
 
 <h3>Coding Convention</h3>
 <a href="https://oceanic-pixie-c2c.notion.site/16dc12bc853381f484d1cb9f192c4f4a">COCOS Web의 코딩 컨벤션</a>
+<br/><br/>
 
 <h3>PR & Issue Template</h3>
 이슈 및 pr 템플릿은 실제로 이슈와 PR이 올라오는 템플릿 확인!
-<br/>
+<br/><br/><br/>
+
 
 <h2>📷 구현 스크린샷</h2>
 to be continue...
-<br/>
+<br/><br/>
+
 
 <h2> 📁 폴더 구조 </h2>
 
