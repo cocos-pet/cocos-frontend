@@ -91,22 +91,23 @@
 
 <h3>Commit Convention</h3>
 Commit Message 👉 기능 키워드: 커밋 내용</br>
+<br />
 
-```
-✨ feat : 새로운 기능 추가
-🚀 api : api 연동
-🐞 fix : 버그 수정
-📦 chore : 빌드 업무, 패키지 매니저, 라이브러리, dependencies 설정
-📝 docs : 문서 수정 - ex) [README.md](http://readme.md/)
-🎨 design : 사용자 UI 디자인 변경 - ex) CSS
-💄 style : 기능 수정 없는 코드 스타일 변경 
-♻️ refactor : 코드 리팩터링
-📝 test : 테스트 코드, 리펙토링 테스트 코드 추가
-🌐 ci : ci 설정 파일 수정
-🪄 perf : 성능 개선
-🛠️ rename : 파일 혹은 폴더명 변경
-⚙️ init : 초기 세팅
-```
+| Commit Type | Description |
+|-------------|-------------|
+| ✨ feat      | 새로운 기능 추가 |
+| 🚀 api       | api 연동 |
+| 🐞 fix       | 버그 수정 |
+| 📦 chore     | 빌드 업무, 패키지 매니저, 라이브러리, dependencies 설정 |
+| 📝 docs      | 문서 수정 - ex) README.md |
+| 🎨 design    | 사용자 UI 디자인 변경 - ex) CSS |
+| 💄 style     | 기능 수정 없는 코드 스타일 변경 |
+| ♻️ refactor  | 코드 리팩토링 |
+| 📝 test      | 테스트 코드, 리팩토링 테스트 코드 추가 |
+| 🌐 ci        | ci 설정 파일 수정 |
+| 🪄 perf      | 성능 개선 |
+| 🛠️ rename    | 파일 혹은 폴더명 변경 |
+| ⚙️ init      | 초기 세팅 |
 <br/>
 
 <h3>Coding Convention</h3>
