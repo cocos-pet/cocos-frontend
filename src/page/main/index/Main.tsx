@@ -1,4 +1,3 @@
-import {sty}
 /*
 localhost:5173/main
 */
