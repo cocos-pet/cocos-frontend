@@ -1,19 +1,22 @@
 import { style, styleVariants } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css.ts";
 
-const base = style({
-  fontSize: font.body01,
-  letterSpacing: "-0.28px",
-  height: "auto",
-  color: color.gray.gray900,
-  border: "none",
-  "::placeholder": {
-    color: color.gray.gray700,
+const base = style([
+  font.body01,
+  {
+    letterSpacing: "-0.28px",
+    fontWeight: 500,
+    height: "auto",
+    color: color.gray.gray900,
+    border: "none",
+    "::placeholder": {
+      color: color.gray.gray700,
+    },
+    ":focus": {
+      outline: "none",
+    },
   },
-  ":focus": {
-    outline: "none",
-  },
-});
+]);
 
 export const styles = {
   wrapper: style({
@@ -28,15 +31,15 @@ export const styles = {
   }),
   input: base,
   error: style([base, { border: `0.1rem solid ${color.red.warning_red200}` }]),
-  disabled: style([
+  disabledWrapper: style({
+    background: color.gray.gray300,
+    pointerEvents: "none",
+  }),
+  disabledInput: style([
     base,
     {
       background: color.gray.gray300,
-      pointerEvents: "none",
-      "& > input": {
-        background: color.gray.gray300,
-        color: color.gray.gray500,
-      },
+      color: color.gray.gray500,
     },
   ]),
   icon: style({

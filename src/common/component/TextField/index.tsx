@@ -3,13 +3,24 @@ import React from "react";
 import { styles } from "@common/component/TextField/styles.css.ts";
 
 interface TextFieldProps {
-  icon?: React.ReactNode; // 오른쪽 아이콘
-  state?: "default" | "error"; // 상태: 기본 또는 에러
-  active?: boolean; // 활성화 여부
-  placeholder?: string; // 플레이스홀더
-  value: string; // 입력값
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  icon?: React.ReactNode;
+  state?: "default" | "error";
+  active?: boolean;
+  placeholder?: string;
+  value: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
+
+/**
+ * TextField 공통 컴포넌트
+ * @param icon 오른쪽 아이콘
+ * @param state 상태 (default, error)
+ * @param active 활성화 여부
+ * @param placeholder
+ * @param value
+ * @param onChange
+ * @constructor minjeoong
+ */
 
 export const TextField: React.FC<TextFieldProps> = ({
   icon,
@@ -23,13 +34,13 @@ export const TextField: React.FC<TextFieldProps> = ({
     <div
       className={clsx(
         styles.wrapper,
-        !active && styles.disabled,
+        !active && styles.disabledWrapper,
         state === "error" && styles.error
       )}
     >
       <input
         type="text"
-        className={clsx(styles.input)}
+        className={clsx(styles.input, !active && styles.disabledInput)}
         placeholder={placeholder}
         value={value}
         onChange={onChange}

@@ -11,16 +11,18 @@ const Main = () => {
     setValue(e.target.value);
   };
   return (
-    <div>
+    <div style={{ padding: "3rem" }}>
       <TextField
         placeholder={"검색어를 입력해주세요."}
         active={true}
         value={value}
+        onChange={onChange}
         icon={<IcoIcontest />}
       />
       <TextField
         placeholder={"검색어를 입력해주세요."}
         active={false}
+        onChange={onChange}
         value={value}
       />
       <TextField
