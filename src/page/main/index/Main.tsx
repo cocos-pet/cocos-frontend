@@ -4,6 +4,7 @@ localhost:5173/main
 import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useState } from "react";
 import { IcoIcontest } from "@asset/svg";
+import { Button } from "@common/component/Button";
 
 const Main = () => {
   const [value, setValue] = useState("");
@@ -12,26 +13,7 @@ const Main = () => {
   };
   return (
     <div style={{ padding: "3rem" }}>
-      <TextField
-        placeholder={"검색어를 입력해주세요."}
-        active={true}
-        value={value}
-        onChange={onChange}
-        icon={<IcoIcontest />}
-      />
-      <TextField
-        placeholder={"검색어를 입력해주세요."}
-        active={false}
-        onChange={onChange}
-        value={value}
-      />
-      <TextField
-        placeholder={"검색어를 입력해주세요."}
-        active={true}
-        value={value}
-        onChange={onChange}
-        state={"error"}
-      />
+      <Button label="Button" />
     </div>
   );
 };
