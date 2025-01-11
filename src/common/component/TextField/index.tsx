@@ -6,29 +6,34 @@ interface TextFieldProps {
   icon?: React.ReactNode; // 오른쪽 아이콘
   state?: "default" | "error"; // 상태: 기본 또는 에러
   active?: boolean; // 활성화 여부
-  disabled?: boolean; // 비활성화 여부
   placeholder?: string; // 플레이스홀더
-  value?: string; // 입력값
+  value: string; // 입력값
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
 export const TextField: React.FC<TextFieldProps> = ({
   icon,
   state = "default",
-  disabled = false,
-  placeholder,
+  active = true,
+  placeholder = "검색어를 입력해주세요",
   value,
   onChange,
 }) => {
   return (
-    <div className={clsx(styles.wrapper, disabled && styles.disabled)}>
+    <div
+      className={clsx(
+        styles.wrapper,
+        !active && styles.disabled,
+        state === "error" && styles.error
+      )}
+    >
       <input
         type="text"
-        className={clsx(styles.input, state === "error" && styles.error)}
+        className={clsx(styles.input)}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
-        disabled={disabled}
+        disabled={!active}
       />
       {icon && <div className={styles.icon}>{icon}</div>}
     </div>
