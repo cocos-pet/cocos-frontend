@@ -80,75 +80,88 @@ const createFontStyle = ({
   fontWeight,
   lineHeight,
   letterSpacing,
+  fontFamily,
 }: {
   fontSize: string;
   fontWeight: string;
   lineHeight: string;
   letterSpacing: string;
+  fontFamily: string;
 }) =>
   style({
     fontSize,
     fontWeight,
     lineHeight,
     letterSpacing,
+    fontFamily,
   });
 
 export const font = {
   display01: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "7.2rem",
     fontWeight: "600",
     lineHeight: "120%",
     letterSpacing: "-0.03rem",
   }),
   title01: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "3.6rem",
     fontWeight: "600",
     lineHeight: "120%",
     letterSpacing: "-0.03rem",
   }),
   title02: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "2.8rem",
     fontWeight: "600",
     lineHeight: "120%",
     letterSpacing: "-0.03rem",
   }),
   title03: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "2.4rem",
     fontWeight: "600",
     lineHeight: "120%",
     letterSpacing: "-0.03rem",
   }),
   heading01: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "2rem",
     fontWeight: "600",
     lineHeight: "120%",
     letterSpacing: "-0.03rem",
   }),
   heading02: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "1.8rem",
     fontWeight: "600",
     lineHeight: "140%",
     letterSpacing: "-0.01rem",
   }),
   heading03: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "1.6rem",
     fontWeight: "600",
     lineHeight: "140%",
     letterSpacing: "-0.02rem",
   }),
   body01: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "1.4rem",
     fontWeight: "600",
     lineHeight: "140%",
     letterSpacing: "-0.02rem",
   }),
   label01: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "1.2rem",
     fontWeight: "600",
     lineHeight: "140%",
     letterSpacing: "-0.01rem",
   }),
   caption01: createFontStyle({
+    fontFamily: "Pretendard",
     fontSize: "1rem",
     fontWeight: "600",
     lineHeight: "140%",
