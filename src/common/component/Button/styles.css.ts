@@ -8,8 +8,7 @@ export const styles = {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      height: "3rem",
-      padding: "0 1rem",
+      gap: "1rem",
       borderRadius: "8px",
       border: "none",
       cursor: "pointer",
@@ -20,23 +19,66 @@ export const styles = {
     },
   ]),
   small: style({
-    height: "2rem",
-    padding: "0 0.5rem",
+    height: "3.2rem",
+
+    padding: "0.6rem 1.4rem",
   }),
   medium: style({
-    height: "3rem",
-    padding: "0 1rem",
+    height: "3.6rem",
+
+    padding: "0.8rem 2rem",
   }),
   large: style({
-    height: "4rem",
-    padding: "0 1.5rem",
+    height: "4.4rem",
+    padding: "1.2rem 2.8rem",
   }),
   disabled: style({
     background: color.gray.gray300,
+    color: color.gray.gray500,
     pointerEvents: "none",
+  }),
+  disabledOutline: style({
+    background: "transparent",
+    border: "1px solid var(--Disable-Fill, #E4E4E4)",
+    color: color.gray.gray400,
   }),
   icon: style({
     height: "2rem",
     alignContent: "center",
   }),
 };
+
+export const variants = styleVariants({
+  solidPrimary: {
+    backgroundColor: color.primary.blue600,
+    color: "#fff",
+    ":hover": {
+      backgroundColor: color.primary.blue800,
+    },
+  },
+  solidNeutral: {
+    backgroundColor: color.gray.gray100,
+    color: color.gray.gray700,
+    ":hover": {
+      backgroundColor: color.gray.gray300,
+    },
+    ":active": {
+      backgroundColor: color.gray.gray400,
+    },
+  },
+  outlinePrimary: {
+    border: `0.1rem solid ${color.primary.blue500}`,
+    backgroundColor: "transparent",
+    color: color.gray.gray700,
+    ":hover": {
+      backgroundColor: color.gray.gray100,
+    },
+    ":active": {
+      backgroundColor: color.primary.blue300,
+      border: `0.1rem solid ${color.primary.blue500}`,
+    },
+    ":focus": {
+      border: `0.1rem solid ${color.primary.blue500}`,
+    },
+  },
+});
