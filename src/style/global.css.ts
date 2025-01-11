@@ -2,6 +2,10 @@ import "./reset.css";
 import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("html", {
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+
   fontSize: "16px", //default
   "@media": {
     "(min-width: 450px) and (max-width: 600px)": { fontSize: "13px" },
@@ -16,6 +20,4 @@ globalStyle("body", {
   maxWidth: "768px",
   minHeight: "calc(var(--vh, 1vh) * 100)",
   fontFamily: "Pretendard, sans-serif",
-  backgroundColor: "black",
-  color: "red",
 });
