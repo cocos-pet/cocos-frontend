@@ -8,7 +8,7 @@ export const styles = {
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
-      gap: "1rem",
+      gap: "0.6rem",
       borderRadius: "8px",
       border: "none",
       cursor: "pointer",
@@ -39,12 +39,13 @@ export const styles = {
   }),
   disabledOutline: style({
     background: "transparent",
-    border: "1px solid var(--Disable-Fill, #E4E4E4)",
+    border: `1px solid ${color.gray.gray300}`,
     color: color.gray.gray400,
   }),
   icon: style({
     height: "2rem",
-    alignContent: "center",
+    display: "flex",
+    alignItems: "center",
   }),
 };
 
