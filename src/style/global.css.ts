@@ -1,3 +1,4 @@
+import "./reset.css";
 import { globalStyle } from "@vanilla-extract/css";
 
 globalStyle("html", {
