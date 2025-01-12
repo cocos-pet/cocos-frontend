@@ -6,11 +6,13 @@ const base = style([
   {
     display: "flex",
     padding: "0.8rem 1.2rem",
-    justifyContent: "center",
+    justifyContent: "space-between",
     alignItems: "center",
 
     borderRadius: "9.9rem",
     background: color.gray.gray000,
+    color: color.primary.blue700,
+    border: `0.1rem solid ${color.primary.blue500}`,
   },
 ]);
 
@@ -20,19 +22,16 @@ export const styles = {
     {
       width: "5.8rem",
       height: "3.6rem",
-
-      color: color.primary.blue500,
-      border: `0.1rem solid ${color.primary.blue500}`,
     },
   ]),
-  dropdown: style([
+  icon: style([
     base,
     {
       width: "8.2rem",
       height: "4rem",
-
-      color: color.gray.gray700,
-      border: `0.1rem solid ${color.gray.gray700}`,
     },
   ]),
+  active: style({
+    backgroundColor: color.yellow.yellow700,
+  }),
 };

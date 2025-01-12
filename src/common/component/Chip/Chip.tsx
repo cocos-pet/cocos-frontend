@@ -1,18 +1,28 @@
 import { SvgChevronDown } from "@asset/svg";
+import { useState } from "react";
 import { styles } from "./ChipStyle.css.ts";
 
 interface ChipProps {
   label: string;
-  variant?: "withoutDropdown" | "withDropdown";
+  variant?: "withoutIcon" | "withIcon";
+  active?: boolean;
 }
 
-const Chip = ({ label, variant }: ChipProps) => {
-  const chipStyle = variant === "withDropdown" ? styles.dropdown : styles.default;
+const Chip = ({ label, variant = "withoutIcon", active = false }: ChipProps) => {
+  const [isActive, setIsActive] = useState(active);
+
+  const chipStyle = variant === "withIcon" ? styles.icon : styles.default;
+  const activeStyle = isActive ? styles.active : "";
+
+  const handleClick = () => {
+    setIsActive(!isActive);
+  };
 
   return (
-    <div className={chipStyle}>
+    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
+    <div className={`${chipStyle} ${activeStyle}`} onClick={handleClick}>
       {label}
-      {variant === "withDropdown" && <SvgChevronDown />}
+      {variant === "withIcon" && <SvgChevronDown />}
     </div>
   );
 };

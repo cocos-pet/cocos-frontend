@@ -7,7 +7,7 @@ const SvgChevronDown = (props: SVGProps<SVGSVGElement>) => (
       <path
         id="Icon"
         d="M6 9L12 15L18 9"
-        stroke="#717171"
+        stroke="#14B5F0"
         strokeWidth="1.5"
         strokeLinecap="round"
         strokeLinejoin="round"
