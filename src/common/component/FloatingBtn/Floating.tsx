@@ -1,4 +1,5 @@
 import * as styles from "./Floating.css";
+import { Plus } from "@asset/svg";
 
 interface FloatingBtnProps {
   disabled?: boolean;
@@ -12,7 +13,7 @@ function FloatingBtn({ disabled = false, onClick }: FloatingBtnProps) {
 
   return (
     <button className={floatingBtn} onClick={onClick} disabled={disabled}>
-      <span style={{ fontSize: "1.5rem", color: "#FFFFFF" }}>+</span>
+      <Plus style={{ width: "2.4rem", height: "2.4rem" }} />
     </button>
   );
 }
