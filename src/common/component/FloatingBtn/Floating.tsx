@@ -13,7 +13,7 @@ function FloatingBtn({ disabled = false, onClick }: FloatingBtnProps) {
 
   return (
     <button className={floatingBtn} onClick={onClick} disabled={disabled}>
-      <Plus style={{ width: "2.4rem", height: "2.4rem" }} />
+      <Plus />
     </button>
   );
 }

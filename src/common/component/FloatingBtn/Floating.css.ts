@@ -7,14 +7,14 @@ export const floatingBtnBase = style({
   height: "4.8rem",
   borderRadius: "100rem",
   display: "flex",
-  padding: "1.2rem",
+  justifyContent: "center",
   flexDirection: "column",
   alignItems: "center",
   gap: "1rem",
 });
 
 export const floatingBtnEnabled = style({
-  backgroundColor: semanticColor.primary.normal,
+  backgroundColor: semanticColor.primary.heavy,
   boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.15)",
 });
 
