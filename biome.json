@@ -36,6 +36,7 @@
           "fix": "safe"
         }
       },
+      "a11y": { "useKeyWithClickEvents": "off" },
       "style": {
         "useImportType": {
           "level": "off"

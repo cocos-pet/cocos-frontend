@@ -1,3 +1,4 @@
+import { useState } from "react";
 import * as styles from "./BottomSheet.css";
 
 interface BottomSheetPropTypes {
@@ -7,19 +8,25 @@ interface BottomSheetPropTypes {
 }
 
 //화면 전체를 차지하는 바텀시트 틀 (children 필요)
-const BottomSheet = ({ isOpen, children, onClick }: BottomSheetPropTypes) => {
+const BottomSheet = ({ isOpen: open, children, onClick }: BottomSheetPropTypes) => {
+  const [isOpen, setIsOpen] = useState(open);
   if (!isOpen) return;
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
-    onClick?.();
+  const handleBarClick = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    setIsOpen(false);
+  };
+
+  const handleBottomSheetClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation(); // 이벤트 전파 차단
   };
 
   return (
-    <div className={styles.overlay}>
-      <div className={styles.bottomSheet}>
+    <div className={styles.overlay} onClick={() => setIsOpen(false)} onKeyDown={handleBarClick}>
+      <div className={styles.bottomSheet} onClick={handleBottomSheetClick}>
         <div className={styles.bottomTabBar}>
-          <div className={styles.bar} onClick={onClick} onKeyDown={handleKeyDown} />
+          <div className={styles.bar} onClick={() => setIsOpen(false)} onKeyDown={handleBarClick} />
         </div>
+
         {children}
       </div>
     </div>
