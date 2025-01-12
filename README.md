@@ -135,7 +135,7 @@ to be continue...
  ┣ 📂api
  ┃ ┣ 📂domain
  ┃ ┣ 📂kakaologin
- ┃ ┗ 📜index.ts
+ ┃ ┗ 📜index.tsx
  ┣ 📂common
  ┃ ┣ 📂component
  ┃ ┣ 📂util
