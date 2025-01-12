@@ -1,3 +1,4 @@
+import Divider from "@common/component/Divider/Divider";
 import Spacing from "@common/component/Spacing/Spacing";
 
 /*
@@ -8,6 +9,9 @@ const Main = () => {
     <div>
       <span>main</span>
       <Spacing marginBottom="10" />
+      <Divider size="small" />
+      <Spacing marginBottom="10" />
+      <Divider />
     </div>
   );
 };
