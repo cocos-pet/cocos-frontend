@@ -15,16 +15,13 @@ globalStyle(
     fontSize: "100%",
     font: "inherit",
     verticalAlign: "baseline",
-  }
+  },
 );
 
 /* Display block for HTML5 elements */
-globalStyle(
-  "article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section",
-  {
-    display: "block",
-  }
-);
+globalStyle("article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section", {
+  display: "block",
+});
 
 /* Body styles */
 globalStyle("body", {
@@ -54,4 +51,18 @@ globalStyle("blockquote:before, blockquote:after, q:before, q:after", {
 globalStyle("table", {
   borderCollapse: "collapse",
   borderSpacing: 0,
+});
+
+/* Link 스타일 리셋 */
+globalStyle("a", {
+  textDecoration: "none",
+  color: "inherit",
+  cursor: "inherit",
+  outline: "none",
+});
+
+/* Link 호버 효과 제거 */
+globalStyle("a:hover", {
+  textDecoration: "none",
+  color: "inherit",
 });
