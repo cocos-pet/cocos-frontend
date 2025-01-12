@@ -39,6 +39,9 @@
       "style": {
         "useImportType": {
           "level": "off"
+        },
+        "noNonNullAssertion": {
+          "level": "off"
         }
       }
     }

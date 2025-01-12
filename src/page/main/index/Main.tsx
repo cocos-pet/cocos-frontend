@@ -1,22 +1,21 @@
-import Divider from "@common/component/Divider/Divider";
-import Spacing from "@common/component/Spacing/Spacing";
-import Tab from "@common/component/Tab/Tab";
+import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 
-/*
-localhost:5173/main
-*/
 const Main = () => {
   return (
-    <div>
-      <span>main</span>
-      <Spacing marginBottom="10" />
-      <Divider size="small" />
-      <Spacing marginBottom="10" />
-      <Divider />
-      <Tab active={true}>하이</Tab>
-      <Tab active={true}>Label</Tab>
-      <Tab active={true}>최신글</Tab>
-      <Divider />
+    <div style={{ position: "relative" }}>
+      <BottomSheet isOpen={true}>
+        <div>하이</div>
+      </BottomSheet>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
+      <div>ㅋㅋ</div>
     </div>
   );
 };

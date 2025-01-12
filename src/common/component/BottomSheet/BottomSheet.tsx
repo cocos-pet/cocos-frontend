@@ -1,0 +1,29 @@
+import * as styles from "./BottomSheet.css";
+
+interface BottomSheetPropTypes {
+  isOpen: boolean;
+  onClick?: () => void;
+  children: JSX.Element; //ReactNode는 범위가 너무 넓음
+}
+
+//화면 전체를 차지하는 바텀시트 틀 (children 필요)
+const BottomSheet = ({ isOpen, children, onClick }: BottomSheetPropTypes) => {
+  if (!isOpen) return;
+
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+    onClick?.();
+  };
+
+  return (
+    <div className={styles.overlay}>
+      <div className={styles.bottomSheet}>
+        <div className={styles.bottomTabBar}>
+          <div className={styles.bar} onClick={onClick} onKeyDown={handleKeyDown} />
+        </div>
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export default BottomSheet;
