@@ -1,11 +1,9 @@
-import BottomSheet from "@common/component/BottomSheet/BottomSheet";
+import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 
 const Main = () => {
   return (
     <div style={{ position: "relative" }}>
-      <BottomSheet isOpen={true}>
-        <div>하이</div>
-      </BottomSheet>
+      <FilterBottomSheet isOpen={true} />
       <div>ㅋㅋ</div>
       <div>ㅋㅋ</div>
       <div>ㅋㅋ</div>
