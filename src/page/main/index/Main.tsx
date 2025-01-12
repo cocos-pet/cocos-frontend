@@ -12,7 +12,6 @@ const Main = () => {
 
   return (
     <div style={{ padding: "2.4rem" }}>
-      <h1>Main Page</h1>
       <FloatingBtn disabled={disabled} onClick={handleClick} />
     </div>
   );

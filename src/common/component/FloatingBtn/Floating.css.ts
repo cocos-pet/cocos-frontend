@@ -22,3 +22,8 @@ export const floatingBtnDisabled = style({
   backgroundColor: semanticColor.disable.fill,
   boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
 });
+
+export const floatingBtnHovered = style({
+  opacity: "var(--Opacity-5, 0.05)",
+  backgroundColor: semanticColor.neutral.inverse,
+});
