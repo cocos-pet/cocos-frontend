@@ -11,6 +11,16 @@ export const floatingBtnBase = style({
   flexDirection: "column",
   alignItems: "center",
   gap: "1rem",
+  position: "relative",
+  selectors: {
+    "&:hover:not(:disabled)::before": {
+      content: "''",
+      position: "absolute",
+      borderRadius: "inherit",
+      backgroundColor: "inherit",
+      opacity: 0.05,
+    },
+  },
 });
 
 export const floatingBtnEnabled = style({
@@ -21,9 +31,4 @@ export const floatingBtnEnabled = style({
 export const floatingBtnDisabled = style({
   backgroundColor: semanticColor.disable.fill,
   boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
-});
-
-export const floatingBtnHovered = style({
-  opacity: "var(--Opacity-5, 0.05)",
-  backgroundColor: semanticColor.neutral.inverse,
 });
