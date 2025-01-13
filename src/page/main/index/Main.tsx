@@ -9,7 +9,6 @@ import { Button } from "@common/component/Button";
 import { IcTest } from "@asset/svg";
 
 const Main = () => {
-
   return (
     <>
       <div style={{ margin: "3rem", display: "flex", gap: "1rem" }}>
@@ -121,7 +120,6 @@ const Main = () => {
       <Spacing marginBottom="10" />
       <Divider />
     </>
-
   );
 };
 

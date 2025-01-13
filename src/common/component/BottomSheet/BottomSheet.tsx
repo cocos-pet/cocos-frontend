@@ -1,5 +1,6 @@
-import { IcBottomSheetLine } from "@asset/svg";
+import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
 import * as styles from "./BottomSheet.css";
+import { Button } from "../Button";
 
 const BottomSheet = () => {
   return (
@@ -9,7 +10,24 @@ const BottomSheet = () => {
       </div>
       <div className={styles.contentContainer}>
         <p className={styles.content}>댓글을 정말 삭제할까요?</p>
-        <div className={styles.buttonContainer}></div>
+        <div className={styles.buttonContainer}>
+          <div className={styles.buttonCancle}>
+            <Button
+              label="취소"
+              size="large"
+              variant="solidNeutral"
+              disabled={false}
+            />
+          </div>
+          <div className={styles.buttonDelete}>
+            <Button
+              label="삭제할게요"
+              size="large"
+              variant="solidPrimary"
+              disabled={false}
+            />
+          </div>
+        </div>
       </div>
     </div>
   );

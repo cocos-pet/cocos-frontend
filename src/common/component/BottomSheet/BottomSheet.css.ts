@@ -35,8 +35,39 @@ export const content = style([
   {
     alignSelf: "stretch",
     color: semanticColor.text.normal,
-    letterSpacing: "-0.016rem",
+    letterSpacing: "-0.16px",
   },
 ]);
 
-export const buttonContainer = style({});
+export const buttonContainer = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "1rem",
+  alignSelf: "stretch",
+});
+
+export const buttonCancle = style({
+  flex: 1,
+  height: "4.4rem",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "12px 28px",
+  backgroundColor: semanticColor.neutral.strong,
+  borderRadius: "0.8rem",
+  gap: "1rem",
+  whiteSpace: "nowrap",
+});
+
+export const buttonDelete = style({
+  flex: 1,
+  height: "4.4rem",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: "12px 28px",
+  backgroundColor: semanticColor.primary.strong,
+  borderRadius: "0.8rem",
+  border: "none",
+  whiteSpace: "nowrap",
+});
