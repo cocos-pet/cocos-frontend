@@ -45,10 +45,10 @@ export const icon = recipe({
   variants: {
     iconColor: {
       black: {
-        fill: "black",
+        color: color.gray.gray900,
       },
       white: {
-        fill: "white",
+        background: color.gray.gray000,
       },
     },
   },

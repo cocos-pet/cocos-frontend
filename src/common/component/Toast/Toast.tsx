@@ -8,7 +8,7 @@ import { IcDelete } from "@asset/svg";
 
 interface ToastProps {
   message: string;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 type CombinedButtonProps = ToastProps & Exclude<ToastVariants, undefined>;
@@ -31,7 +31,9 @@ export const Toast = ({
 
   const handleDelete = () => {
     setIsVisible(false);
-    onClick();
+    if (onClick) {
+      onClick();
+    }
   };
 
   if (!isVisible) return null;
@@ -39,7 +41,11 @@ export const Toast = ({
   return (
     <div className={toast({ variant })}>
       {message}
-      <IcDelete className={icon({ iconColor })} onClick={handleDelete} />
+      <IcDelete
+        className={icon({ iconColor })}
+        stroke={iconColor}
+        onClick={handleDelete}
+      />
     </div>
   );
 };

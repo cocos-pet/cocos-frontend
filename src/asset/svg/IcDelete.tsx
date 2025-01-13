@@ -1,6 +1,9 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgIcDelete = (props: SVGProps<SVGSVGElement>) => (
+const SvgIcDelete = ({
+  stroke = "#fff",
+  ...props
+}: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={22}
@@ -9,7 +12,7 @@ const SvgIcDelete = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
-      stroke="#fff"
+      stroke={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.125}
