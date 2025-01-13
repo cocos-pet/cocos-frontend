@@ -1,6 +1,6 @@
 import Divider from "@common/component/Divider/Divider";
 import Spacing from "@common/component/Spacing/Spacing";
-import BottomSheet from "@common/component/BottomSheet/BottomSheet";
+import BottomSheet from "@common/component/BottomSheet/SimpleBottomSheet";
 /*
 localhost:5173/main
 */

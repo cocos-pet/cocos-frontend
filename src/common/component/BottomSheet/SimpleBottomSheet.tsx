@@ -1,5 +1,5 @@
 import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
-import * as styles from "./BottomSheet.css";
+import * as styles from "./SimpleBottomSheet.css";
 import { Button } from "../Button";
 import React from "react";
 
