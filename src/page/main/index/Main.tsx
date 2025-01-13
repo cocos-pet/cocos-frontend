@@ -1,18 +1,8 @@
-import { useState } from "react";
-import FloatingBtn from "@common/component/FloatingBtn/Floating";
-
+/*
+localhost:5173/main
+*/
 const Main = () => {
-  const [isDisabled, setIsDisabled] = useState(false);
-
-  const handleButtonClick = () => {
-    setIsDisabled(true);
-  };
-
-  return (
-    <div>
-      <FloatingBtn disabled={isDisabled} onClick={handleButtonClick} />
-    </div>
-  );
+  return <div>Main</div>;
 };
 
 export default Main;
