@@ -1,5 +1,6 @@
+import * as React from "react";
 import type { SVGProps } from "react";
-const SvgEllipses = (props: SVGProps<SVGSVGElement>) => (
+const SvgIcEllipses = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={22}
@@ -17,4 +18,4 @@ const SvgEllipses = (props: SVGProps<SVGSVGElement>) => (
     </g>
   </svg>
 );
-export default SvgEllipses;
+export default SvgIcEllipses;

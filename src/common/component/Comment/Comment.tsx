@@ -1,5 +1,5 @@
 import * as styles from "./Comment.css";
-import { Ellipse57, Message, Ellipses } from "@asset/svg";
+import { IcEllipse57, IcMessage, IcEllipses } from "@asset/svg";
 import mockComments from "@common/component/Comment/mock/mockComments";
 
 const Comment = () => {
@@ -11,9 +11,9 @@ const Comment = () => {
         <div key={comment.id} className={styles.commentItem}>
           <div className={styles.contentContainer}>
             <div className={styles.header}>
-              <Ellipse57 />
+              <IcEllipse57 />
               <div className={styles.headerInfo}>
-                <Ellipses className={styles.containerOptionsIcon} />
+                <IcEllipses className={styles.containerOptionsIcon} />
                 <span className={styles.nickname}>{comment.nickname}</span>
                 <span className={styles.meta}>
                   {comment.breed}·{comment.petAge}살 · {comment.createdAt}
@@ -23,7 +23,7 @@ const Comment = () => {
             <p className={styles.text}>{comment.content}</p>
 
             <div className={styles.replyContainer}>
-              <Message className={styles.icon} />
+              <IcMessage className={styles.icon} />
               <p className={styles.replyText}>답글쓰기</p>
             </div>
           </div>
