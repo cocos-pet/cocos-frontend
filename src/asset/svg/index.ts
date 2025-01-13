@@ -1,3 +1,4 @@
+export { default as IcDelete } from "./IcDelete";
 export { default as Check } from "./Check";
 export { default as IcUp } from "./IcUp";
 export { default as IcTest } from "./IcTest";
