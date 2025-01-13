@@ -11,22 +11,19 @@ const BottomSheet = () => {
       <div className={styles.contentContainer}>
         <p className={styles.content}>댓글을 정말 삭제할까요?</p>
         <div className={styles.buttonContainer}>
-          <div className={styles.buttonCancle}>
-            <Button
-              label="취소"
-              size="large"
-              variant="solidNeutral"
-              disabled={false}
-            />
-          </div>
-          <div className={styles.buttonDelete}>
-            <Button
-              label="삭제할게요"
-              size="large"
-              variant="solidPrimary"
-              disabled={false}
-            />
-          </div>
+          <Button
+            label="취소"
+            size="large"
+            variant="solidNeutral"
+            disabled={false}
+          />
+
+          <Button
+            label="삭제할게요"
+            size="large"
+            variant="solidPrimary"
+            disabled={false}
+          />
         </div>
       </div>
     </div>
