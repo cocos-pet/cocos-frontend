@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
 
 const Nav = () => {
   const [activeItem, setActiveItem] = useState<string>("home");
+  const navigate = useNavigate();
 
-  const handleClick = (itemId: string) => {
+  const handleClick = (itemId: string, path: string) => {
     setActiveItem(itemId);
+    if (itemId !== "review") {
+      navigate(path);
+    } else {
+      alert("추후 구현 예정입니다.");
+    }
   };
 
   return (
@@ -16,15 +22,15 @@ const Nav = () => {
         const SvgComponent = item.svg;
 
         return (
-          <Link
+          <button
             key={item.id}
-            to={item.path}
-            onClick={() => handleClick(item.id)}
+            type="button"
+            onClick={() => handleClick(item.id, item.path)}
             className={`${styles.wrapper} ${activeItem === item.id ? styles.enabled : styles.disabled}`}
           >
             <SvgComponent />
             {item.label}
-          </Link>
+          </button>
         );
       })}
     </div>
