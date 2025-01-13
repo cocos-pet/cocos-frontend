@@ -1,7 +1,6 @@
 import { color, font } from "@style/styles.css.ts";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
-// 여기서부터 변경사항
 export const chipItem = recipe({
   base: [
     font.body01,
@@ -19,7 +18,6 @@ export const chipItem = recipe({
   ],
 
   variants: {
-    // 아이콘이 없으면 S, 아이콘이 있으면 L
     size: {
       small: {
         width: "5.8rem",
@@ -31,32 +29,30 @@ export const chipItem = recipe({
       },
     },
 
-    // 텍스트 및 보더색상
-    text: {
-      gray: {
-        color: color.gray.gray700,
-        border: `0.1rem solid ${color.gray.gray700}`,
-      },
+    color: {
       blue: {
         color: color.primary.blue700,
         border: `0.1rem solid ${color.primary.blue500}`,
       },
+      gray: {
+        color: color.gray.gray700,
+        border: `0.1rem solid ${color.gray.gray700}`,
+      },
     },
 
-    // 배경색
-    bgColor: {
-      gray: {
+    active: {
+      false: {
         background: color.gray.gray000,
       },
-      blue: {
+      true: {
         backgroundColor: "rgba(67, 214, 255, 0.16)",
       },
     },
   },
   defaultVariants: {
     size: "small",
-    text: "blue",
-    bgColor: "gray",
+    color: "blue",
+    active: false,
   },
 });
 
