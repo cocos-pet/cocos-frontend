@@ -53,16 +53,19 @@ globalStyle("table", {
   borderSpacing: 0,
 });
 
-/* Link 스타일 리셋 */
-globalStyle("a", {
-  textDecoration: "none",
+/* Button 스타일 리셋 */
+globalStyle("button", {
+  background: "none",
+  border: "none",
+  padding: 0,
+  font: "inherit",
   color: "inherit",
-  cursor: "inherit",
+  cursor: "pointer",
   outline: "none",
+  appearance: "none",
 });
 
-/* Link 호버 효과 제거 */
-globalStyle("a:hover", {
-  textDecoration: "none",
-  color: "inherit",
+/* Button 호버 및 포커스 상태 스타일 리셋 */
+globalStyle("button:hover, button:focus", {
+  outline: "none",
 });
