@@ -1,29 +1,43 @@
 import { useState } from "react";
-import { styles } from "./ChipStyle.css.ts";
-import { IcDelete } from "@asset/svg/index.ts";
+import { ChipType, chipItem } from "./ChipStyle.css.ts";
+import { IcDelete } from "@asset/svg/index";
 
 interface ChipProps {
-  label?: string;
-  variant?: "withoutIcon" | "withIcon";
-  active?: boolean;
+  label: string;
+  icon?: boolean;
 }
 
-const Chip = ({ label = "Label", variant = "withIcon", active = false }: ChipProps) => {
-  const [isActive, setIsActive] = useState(active);
+type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
 
-  const chipStyle = variant === "withIcon" ? styles.icon : styles.default;
-  const activeStyle = isActive ? styles.active : "";
+const Chip = ({ label, icon = false, text = "blue", bgColor = "gray" }: CombinedChipProps) => {
+  console.log("icon prop:", icon); // 콘솔 출력 확인
+
+  const [isActive, setIsActive] = useState(false);
 
   const handleClick = () => {
     setIsActive(!isActive);
   };
 
+  const size = icon ? "large" : "small";
+
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-    <div className={`${chipStyle} ${activeStyle}`} onClick={handleClick}>
-      {label}
-      {variant === "withIcon" && <IcDelete className={styles.svg} />}
-    </div>
+    <>
+      {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
+      <div
+        className={chipItem({ size, text, bgColor })} // 스타일 적용
+        onClick={handleClick}
+      >
+        {label}
+        {icon && (
+          <IcDelete
+            style={{
+              position: "relative",
+              bottom: "1.3px",
+            }}
+          />
+        )}
+      </div>
+    </>
   );
 };
 
