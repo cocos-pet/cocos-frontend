@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as styles from "./BottomSheet.css";
 
 interface BottomSheetPropTypes {
@@ -10,6 +10,9 @@ interface BottomSheetPropTypes {
 //화면 전체를 차지하는 바텀시트 틀 (children 필요)
 const BottomSheet = ({ isOpen: open, children, onClick }: BottomSheetPropTypes) => {
   const [isOpen, setIsOpen] = useState(open);
+  useEffect(() => {
+    setIsOpen(open);
+  }, [open]);
   if (!isOpen) return;
 
   const handleBarClick = (event: React.KeyboardEvent<HTMLDivElement>) => {

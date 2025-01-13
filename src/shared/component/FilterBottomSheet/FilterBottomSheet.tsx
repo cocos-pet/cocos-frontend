@@ -7,6 +7,7 @@ import { Button } from "@common/component/Button";
 
 interface FilterBottomSheetPropTypes {
   isOpen: boolean;
+  handleOpen: () => void;
   onClick?: () => void;
   //children: JSX.Element; //ReactNode는 범위가 너무 넓음
 }
@@ -21,7 +22,7 @@ const categories: { id: CategoryType; label: string }[] = [
 
 //todo: selectedFilters, setSelectedFilters 는 더 상위 요소에서 전달받기
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
-const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
+const FilterBottomSheet = ({ isOpen, handleOpen }: FilterBottomSheetPropTypes) => {
   const [category, setCategory] = useState<CategoryType>("kind");
   const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
@@ -68,7 +69,7 @@ const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="확인하기" size="large" width="100%" />
+          <Button label="확인하기" size="large" width="100%" onClick={handleOpen} />
         </div>
       </>
     </BottomSheet>
