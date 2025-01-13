@@ -5,12 +5,14 @@ import {
   icon,
 } from "@common/component/Button/styles.css.ts";
 
-interface ButtonProps extends ButtonVariants {
+interface ButtonProps {
   label?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
 
 /**
  * Button 공통 컴포넌트
@@ -24,7 +26,7 @@ interface ButtonProps extends ButtonVariants {
  * @constructor minjeoong
  */
 
-export const Button: React.FC<ButtonProps> = ({
+export const Button = ({
   label = "Button",
   leftIcon,
   rightIcon,
@@ -32,7 +34,7 @@ export const Button: React.FC<ButtonProps> = ({
   variant = "solidPrimary",
   disabled,
   onClick,
-}) => {
+}: CombinedButtonProps) => {
   return (
     <button
       className={button({ size, variant, disabled })}

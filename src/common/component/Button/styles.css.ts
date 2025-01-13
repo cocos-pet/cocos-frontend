@@ -36,34 +36,54 @@ export const button = recipe({
     },
     variant: {
       solidPrimary: {
-        backgroundColor: color.primary.blue600,
-        color: "#fff",
+        backgroundColor: "rgb(61, 196, 245)",
+        color: "rgb(255, 255, 255)",
         ":hover": {
-          backgroundColor: color.primary.blue800,
+          backgroundColor: "rgb(60, 188, 234)",
+          color: "rgb(244, 244, 244)",
+        },
+        ":focus": {
+          backgroundColor: "rgb(59, 183, 228)",
+          color: "rgb(237, 237, 237)",
+        },
+        ":active": {
+          backgroundColor: "rgb(58, 177, 220)",
+          color: "rgb(58, 177, 220)",
         },
       },
       solidNeutral: {
-        backgroundColor: color.gray.gray100,
-        color: color.gray.gray700,
+        backgroundColor: "rgb(248, 248, 248)",
+        color: "rgb(113, 113, 113)",
         ":hover": {
-          backgroundColor: color.gray.gray300,
+          backgroundColor: "rgb(237, 237, 237)",
+          color: "rgb(109, 109, 109)",
+        },
+        ":focus": {
+          backgroundColor: "rgb(231, 231, 231)",
+          color: "rgb(107, 107, 107)",
         },
         ":active": {
-          backgroundColor: color.gray.gray400,
+          backgroundColor: "rgb(222, 222, 222)",
+          color: "rgb(104, 104, 104)",
         },
       },
       outlinePrimary: {
         border: `0.1rem solid ${color.primary.blue500}`,
         backgroundColor: "transparent",
-        color: color.gray.gray700,
+        color: color.gray.gray900,
         ":hover": {
-          backgroundColor: color.gray.gray100,
+          color: "rgba(33, 41, 44, 1)",
+          backgroundColor: "rgba(67, 214, 255, 0.05)",
+          border: `0.1rem solid ${color.primary.blue500}`,
         },
         ":active": {
-          backgroundColor: color.primary.blue300,
+          backgroundColor: "rgba(67, 214, 255, 0.16)",
+          color: "rgba(39, 63, 69, 1)",
           border: `0.1rem solid ${color.primary.blue500}`,
         },
         ":focus": {
+          backgroundColor: "rgba(67, 214, 255, 0.08)",
+          color: "rgba(33, 46, 50, 1)",
           border: `0.1rem solid ${color.primary.blue500}`,
         },
       },
