@@ -21,10 +21,11 @@ export const checkboxText = recipe({
       true: {
         border: `1px solid ${semanticColor.primary.normal}`,
         color: semanticColor.text.heavy,
-        //todo: 배경색 디자이너에게 물어보고 수정하기
-        backgroundColor: semanticColor.primary.normal,
+        backgroundColor: "rgba(67, 214, 255, 0.16)",
       },
-      false: {},
+      false: {
+        border: "1px solid white",
+      },
     },
   },
 });
