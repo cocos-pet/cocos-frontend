@@ -12,7 +12,7 @@ globalStyle(
     margin: 0,
     padding: 0,
     border: 0,
-    fontSize: "100%",
+    // fontSize: "100%",
     font: "inherit",
     verticalAlign: "baseline",
   }
