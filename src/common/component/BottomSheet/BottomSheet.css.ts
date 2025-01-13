@@ -23,7 +23,7 @@ export const bottomSheetHeader = style({
 export const contentContainer = style({
   display: "flex",
   width: "33.5rem",
-  padding: "20px 0px 32px 0px",
+  padding: "2rem 0rem 3.2rem 0rem",
   flexDirection: "column",
   alignItems: "flex-start",
   gap: "2.4rem",
@@ -51,7 +51,7 @@ export const buttonCancle = style({
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-  padding: "12px 28px",
+  padding: "1.2rem 2.8rem",
   backgroundColor: semanticColor.neutral.strong,
   borderRadius: "0.8rem",
   gap: "1rem",
