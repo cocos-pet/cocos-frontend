@@ -8,7 +8,6 @@ export const bottomSheetContainer = style({
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "20px 20px 0px 0px",
-  backgroundColor: semanticColor.primary.normal,
 });
 
 export const bottomSheetHeader = style({
