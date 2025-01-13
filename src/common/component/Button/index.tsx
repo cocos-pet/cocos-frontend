@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import React from "react";
-import { styles, variants } from "@common/component/Button/styles.css.ts";
+import { button, icon } from "@common/component/Button/styles.css.ts";
 
 interface TextFieldProps {
   label?: string;
@@ -31,19 +31,10 @@ export const Button: React.FC<TextFieldProps> = ({
   disabled,
 }) => {
   return (
-    <button
-      className={clsx(
-        styles.button,
-        styles[size],
-        disabled && styles.disabled,
-        !disabled && variants[variant],
-        disabled && variant === "outlinePrimary" && styles.disabledOutline
-      )}
-      disabled={disabled}
-    >
-      {leftIcon && <div className={styles.icon}>{leftIcon}</div>}
+    <button className={button({ size, variant, disabled })} disabled={disabled}>
+      {leftIcon && <div className={icon}>{leftIcon}</div>}
       {label}
-      {rightIcon && <div className={styles.icon}>{rightIcon}</div>}
+      {rightIcon && <div className={icon}>{rightIcon}</div>}
     </button>
   );
 };
