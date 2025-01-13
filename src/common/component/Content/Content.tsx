@@ -21,7 +21,7 @@ interface ContentPropTypes {
  * @param postTitle 게시물 제목
  * @param postContent 게시물 내용
  * @param likeIconType 좋아요 아이콘 타입 ( 궁금해요, 응원해요 )
- * @param likeCnt 좋아요 tn
+ * @param likeCnt 좋아요 수
  * @param commentCnt 댓글 수
  * @param timeAgo 게시물 작성 시간
  * @param postImage
