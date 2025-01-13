@@ -32,7 +32,7 @@ export const styles = {
     },
   ]),
   active: style({
-    backgroundColor: color.yellow.yellow700,
+    backgroundColor: "rgba(67, 214, 255, 0.16)",
   }),
   svg: style({
     position: "relative",
