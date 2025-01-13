@@ -1,14 +1,14 @@
-import { SvgChevronDown } from "@asset/svg";
 import { useState } from "react";
 import { styles } from "./ChipStyle.css.ts";
+import { IcDelete } from "@asset/svg/index.ts";
 
 interface ChipProps {
-  label: string;
+  label?: string;
   variant?: "withoutIcon" | "withIcon";
   active?: boolean;
 }
 
-const Chip = ({ label, variant = "withoutIcon", active = false }: ChipProps) => {
+const Chip = ({ label = "Label", variant = "withIcon", active = false }: ChipProps) => {
   const [isActive, setIsActive] = useState(active);
 
   const chipStyle = variant === "withIcon" ? styles.icon : styles.default;
@@ -22,7 +22,7 @@ const Chip = ({ label, variant = "withoutIcon", active = false }: ChipProps) => 
     // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
     <div className={`${chipStyle} ${activeStyle}`} onClick={handleClick}>
       {label}
-      {variant === "withIcon" && <SvgChevronDown />}
+      {variant === "withIcon" && <IcDelete className={styles.svg} />}
     </div>
   );
 };

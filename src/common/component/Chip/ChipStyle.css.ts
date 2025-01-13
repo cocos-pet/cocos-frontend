@@ -34,4 +34,8 @@ export const styles = {
   active: style({
     backgroundColor: color.yellow.yellow700,
   }),
+  svg: style({
+    position: "relative",
+    bottom: 1.3,
+  }),
 };
