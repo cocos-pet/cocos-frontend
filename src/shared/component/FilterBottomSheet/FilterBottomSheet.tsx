@@ -2,6 +2,7 @@ import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import * as styles from "./FilterBottomSheet.css";
 import Tab from "@common/component/Tab/Tab";
 import { useState } from "react";
+import CategoryContent from "./CategoryContent/CategoryContent";
 
 interface FilterBottomSheetPropTypes {
   isOpen: boolean;
@@ -9,7 +10,7 @@ interface FilterBottomSheetPropTypes {
   //children: JSX.Element; //ReactNode는 범위가 너무 넓음
 }
 
-type CategoryType = "kind" | "symptoms" | "disease";
+export type CategoryType = "kind" | "symptoms" | "disease";
 
 const categories: { id: CategoryType; label: string }[] = [
   { id: "kind", label: "종류" },
@@ -52,7 +53,9 @@ const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
           ))}
         </div>
 
-        <div className={styles.bodyZone}>바디 내용 써넣기~</div>
+        <div className={styles.bodyZone}>
+          <CategoryContent category={category} />
+        </div>
       </>
     </BottomSheet>
   );

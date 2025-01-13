@@ -30,4 +30,7 @@ export const categoryZone = style({
   borderBottom: `1px solid ${color.gray.gray200}`,
 });
 
-export const bodyZone = style({});
+export const bodyZone = style({
+  display: "flex",
+  justifyContent: "center",
+});
