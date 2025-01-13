@@ -1,14 +1,8 @@
-import Comment from "@common/component/Comment/Comment";
-
 /*
 localhost:5173/main
 */
 const Main = () => {
-  return (
-    <div>
-      <Comment />
-    </div>
-  );
+  return;
 };
 
 export default Main;
