@@ -36,7 +36,7 @@
           "fix": "safe"
         }
       },
-      "a11y": { "useKeyWithClickEvents": "off", "noSvgWithoutTitle": "off" },
+      "a11y": { "useKeyWithClickEvents": "off", "noSvgWithoutTitle": "off", "useButtonType": "off" },
       "style": {
         "useImportType": {
           "level": "off"

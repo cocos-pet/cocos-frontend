@@ -3,6 +3,7 @@ import * as styles from "./FilterBottomSheet.css";
 import Tab from "@common/component/Tab/Tab";
 import { useState } from "react";
 import CategoryContent from "./CategoryContent/CategoryContent";
+import { Button } from "@common/component/Button";
 
 interface FilterBottomSheetPropTypes {
   isOpen: boolean;
@@ -18,6 +19,7 @@ const categories: { id: CategoryType; label: string }[] = [
   { id: "disease", label: "질병" },
 ];
 
+//todo: selectedFilters, setSelectedFilters 는 더 상위 요소에서 전달받기
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
 const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
   const [category, setCategory] = useState<CategoryType>("kind");
@@ -63,6 +65,10 @@ const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
 
         <div className={styles.bodyZone}>
           <CategoryContent category={category} selectedFilters={selectedFilters} setFilter={setFilters} />
+        </div>
+
+        <div className={styles.buttonWrapper}>
+          <Button label="확인하기" size="large" width="100%" />
         </div>
       </>
     </BottomSheet>

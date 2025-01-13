@@ -34,3 +34,16 @@ export const bodyZone = style({
   display: "flex",
   justifyContent: "center",
 });
+
+export const buttonWrapper = style({
+  position: "absolute",
+  bottom: "0",
+
+  display: "flex",
+  width: "37.5rem",
+  height: "8.8rem",
+  padding: "1.2rem 2rem 3.2rem 2rem",
+  justifyContent: "center",
+  alignItems: "center",
+  flexShrink: 0,
+});

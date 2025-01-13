@@ -68,6 +68,37 @@ const CATEGORY_SYMPTOM = [
   },
 ];
 
+const CATEGORY_DISEASE = [
+  {
+    id: 1,
+    name: "눈",
+    diseases: [
+      {
+        id: 1,
+        name: "눈이 아파요",
+      },
+      {
+        id: 2,
+        name: "눈이 시려요",
+      },
+    ],
+  },
+  {
+    id: 2,
+    name: "코",
+    diseases: [
+      {
+        id: 1,
+        name: "코가 아파요",
+      },
+      {
+        id: 2,
+        name: "코가 시려요",
+      },
+    ],
+  },
+];
+
 const categories: { id: CategoryType; label: string }[] = [
   { id: "kind", label: "종류" },
   { id: "symptoms", label: "증상" },
@@ -110,7 +141,20 @@ const CategoryContent = ({ category, selectedFilters, setFilter }: CategoryConte
   }
 
   if (category === "disease") {
-    return <div>질병을 선택하세요</div>;
+    return (
+      <div className={styles.symptomsWrapper}>
+        {CATEGORY_DISEASE.map((disease) => (
+          <DropDownText
+            key={`disease-${disease.id}`}
+            dropDownData={disease.diseases}
+            selectedFilters={selectedFilters}
+            setFilter={setFilter}
+          >
+            {disease.name}
+          </DropDownText>
+        ))}
+      </div>
+    );
   }
 
   return <div>Nothing</div>;

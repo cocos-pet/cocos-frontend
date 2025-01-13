@@ -1,11 +1,8 @@
 import React from "react";
-import {
-  button,
-  ButtonVariants,
-  icon,
-} from "@common/component/Button/styles.css.ts";
+import { button, ButtonVariants, icon } from "@common/component/Button/styles.css.ts";
 
 interface ButtonProps {
+  width?: string;
   label?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -27,6 +24,7 @@ type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
  */
 
 export const Button = ({
+  width = "",
   label = "Button",
   leftIcon,
   rightIcon,
@@ -37,6 +35,7 @@ export const Button = ({
 }: CombinedButtonProps) => {
   return (
     <button
+      style={{ width: width }}
       className={button({ size, variant, disabled })}
       disabled={disabled}
       onClick={onClick}
