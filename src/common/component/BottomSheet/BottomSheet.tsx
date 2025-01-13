@@ -9,7 +9,7 @@ const BottomSheet = () => {
       </div>
       <div className={styles.contentContainer}>
         <p className={styles.content}>댓글을 정말 삭제할까요?</p>
-        <button className={styles.buttonContainer}></button>
+        <div className={styles.buttonContainer}></div>
       </div>
     </div>
   );
