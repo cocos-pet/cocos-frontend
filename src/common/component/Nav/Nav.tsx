@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { SvgShape } from "@asset/svg/index";
+import { IcShape } from "@asset/svg/index";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
 
@@ -20,7 +20,7 @@ const Nav = () => {
           onClick={() => handleClick(item.id)}
           className={`${styles.wrapper} ${activeItem === item.id ? styles.enabled : styles.disabled}`}
         >
-          <SvgShape />
+          <IcShape />
           {item.label}
         </Link>
       ))}
