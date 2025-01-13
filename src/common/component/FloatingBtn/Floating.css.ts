@@ -17,7 +17,8 @@ export const floatingBtnBase = style({
       content: "''",
       position: "absolute",
       borderRadius: "inherit",
-      backgroundColor: "inherit",
+      color: "inherit",
+      border: "none",
       opacity: 0.05,
     },
   },
@@ -26,9 +27,11 @@ export const floatingBtnBase = style({
 export const floatingBtnEnabled = style({
   backgroundColor: semanticColor.primary.heavy,
   boxShadow: "0px 2px 10px rgba(0, 0, 0, 0.15)",
+  border: "none",
 });
 
 export const floatingBtnDisabled = style({
   backgroundColor: semanticColor.disable.fill,
   boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
+  border: "none",
 });
