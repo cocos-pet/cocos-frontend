@@ -21,7 +21,7 @@ const categories: { id: CategoryType; label: string }[] = [
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
 const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
   const [category, setCategory] = useState<CategoryType>("kind");
-  const [selectedFilters, setSelectedFilters] = useState([]);
+  const [selectedFilters, setSelectedFilters] = useState<string[]>([]);
 
   const isSelectedCategory = (cate: CategoryType): boolean => {
     return cate === category;
@@ -31,15 +31,23 @@ const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
     setCategory(cate);
   };
 
+  const setFilters = (filter: string) => {
+    setSelectedFilters(
+      (prev) =>
+        prev.includes(filter)
+          ? prev.filter((item) => item !== filter) // 이미 존재하면 삭제
+          : [...prev, filter], // 존재하지 않으면 추가
+    );
+  };
+
   return (
     <BottomSheet isOpen={isOpen}>
       <>
         {selectedFilters.length ? (
           <div className={styles.selectedZone}>
-            <div>칩 요소</div>
-            <div>칩 요소</div>
-            <div>칩 요소</div>
-            <div>칩 요소</div>
+            {selectedFilters.map((filter) => (
+              <div key={`filter-${filter}`}>{filter}</div>
+            ))}
           </div>
         ) : (
           <></>
@@ -54,7 +62,7 @@ const FilterBottomSheet = ({ isOpen }: FilterBottomSheetPropTypes) => {
         </div>
 
         <div className={styles.bodyZone}>
-          <CategoryContent category={category} />
+          <CategoryContent category={category} selectedFilters={selectedFilters} setFilter={setFilters} />
         </div>
       </>
     </BottomSheet>

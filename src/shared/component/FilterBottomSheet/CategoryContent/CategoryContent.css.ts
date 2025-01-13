@@ -9,4 +9,11 @@ export const styles = {
     alignItems: "flex-start",
     gap: "8px",
   }),
+
+  symptomsWrapper: style({
+    display: "flex",
+    width: "33.5rem",
+    flexDirection: "column",
+    alignItems: "flex-start",
+  }),
 };

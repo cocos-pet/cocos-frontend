@@ -4,10 +4,11 @@ import { Check } from "@asset/svg";
 
 interface CheckBoxTextPropTypes {
   children: string;
+  isSelected: boolean;
   onClick: () => void;
 }
-const CheckBoxText = ({ children, onClick }: CheckBoxTextPropTypes) => {
-  const [isSelected, setIsSelected] = useState(false);
+const CheckBoxText = ({ children, isSelected: selected, onClick }: CheckBoxTextPropTypes) => {
+  const [isSelected, setIsSelected] = useState(selected);
   const handleClickTextBox = () => {
     onClick();
     setIsSelected((prev) => !prev);
