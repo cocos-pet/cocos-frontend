@@ -14,9 +14,18 @@ importers:
       '@vanilla-extract/css':
         specifier: ^1.17.0
         version: 1.17.0
+      '@vanilla-extract/dynamic':
+        specifier: ^2.1.2
+        version: 2.1.2
+      '@vanilla-extract/recipes':
+        specifier: ^0.5.5
+        version: 0.5.5(@vanilla-extract/css@1.17.0)
       axios:
         specifier: ^1.7.9
         version: 1.7.9
+      clsx:
+        specifier: ^2.1.1
+        version: 2.1.1
       openapi-typescript:
         specifier: ^7.5.2
         version: 7.5.2(typescript@5.6.3)
@@ -965,11 +974,19 @@ packages:
   '@vanilla-extract/css@1.17.0':
     resolution: {integrity: sha512-W6FqVFDD+C71ZlKsuj0MxOXSvHb1tvQ9h/+79aYfi097wLsALrnnBzd0by8C///iurrpQ3S+SH74lXd7Lr9MvA==}
 
+  '@vanilla-extract/dynamic@2.1.2':
+    resolution: {integrity: sha512-9BGMciD8rO1hdSPIAh1ntsG4LPD3IYKhywR7VOmmz9OO4Lx1hlwkSg3E6X07ujFx7YuBfx0GDQnApG9ESHvB2A==}
+
   '@vanilla-extract/integration@7.1.12':
     resolution: {integrity: sha512-71HFjnfL7qXM3hqyk7z9c8zrudfO9Sut6IhSmH8IKwmLk/tIMFIL86L6nYpItfUFUa/mrER6YUQPp/SfwjRvkw==}
 
   '@vanilla-extract/private@1.0.6':
     resolution: {integrity: sha512-ytsG/JLweEjw7DBuZ/0JCN4WAQgM9erfSTdS1NQY778hFQSZ6cfCDEZZ0sgVm4k54uNz6ImKB33AYvSR//fjxw==}
+
+  '@vanilla-extract/recipes@0.5.5':
+    resolution: {integrity: sha512-VadU7+IFUwLNLMgks29AHav/K5h7DOEfTU91RItn5vwdPfzduodNg317YbgWCcpm7FSXkuR3B3X8ZOi95UOozA==}
+    peerDependencies:
+      '@vanilla-extract/css': ^1.0.0
 
   '@vanilla-extract/vite-plugin@4.0.19':
     resolution: {integrity: sha512-NtE/sAIesCAu+6JHlanLgmfDJn/cqG8dfElfh5n1PvG2LTSMVMQhVbDefxcVhGjw1lt5QbG+u3dpZMY7KPwJhw==}
@@ -1042,6 +1059,10 @@ packages:
 
   change-case@5.4.4:
     resolution: {integrity: sha512-HRQyTk2/YPEkt9TnUPbOpr64Uw3KOicFWPVBb+xiHvd6eBx/qPr9xqfBFDT8P2vWsvvz4jbEkfDe71W3VyNu2w==}
+
+  clsx@2.1.1:
+    resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
+    engines: {node: '>=6'}
 
   color-convert@2.0.1:
     resolution: {integrity: sha512-RRECPsj7iu/xb5oKYcsFHSppFNnsj/52OVTRKb4zP5onXwVF3zVmmToNcOfGC+CRDpfK/U584fMg38ZHCaElKQ==}
@@ -2336,6 +2357,10 @@ snapshots:
     transitivePeerDependencies:
       - babel-plugin-macros
 
+  '@vanilla-extract/dynamic@2.1.2':
+    dependencies:
+      '@vanilla-extract/private': 1.0.6
+
   '@vanilla-extract/integration@7.1.12(@types/node@22.10.5)':
     dependencies:
       '@babel/core': 7.26.0
@@ -2363,6 +2388,10 @@ snapshots:
       - terser
 
   '@vanilla-extract/private@1.0.6': {}
+
+  '@vanilla-extract/recipes@0.5.5(@vanilla-extract/css@1.17.0)':
+    dependencies:
+      '@vanilla-extract/css': 1.17.0
 
   '@vanilla-extract/vite-plugin@4.0.19(@types/node@22.10.5)(vite@6.0.7(@types/node@22.10.5))':
     dependencies:
@@ -2438,6 +2467,8 @@ snapshots:
       supports-color: 7.2.0
 
   change-case@5.4.4: {}
+
+  clsx@2.1.1: {}
 
   color-convert@2.0.1:
     dependencies:
