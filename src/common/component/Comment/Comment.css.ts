@@ -105,3 +105,9 @@ export const icon = style([
     gap: "0.4rem",
   },
 ]);
+
+export const profileImage = style({
+  width: "3.2rem",
+  height: "3.2rem",
+  borderRadius: "50%",
+});
