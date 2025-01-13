@@ -17,6 +17,8 @@ export const styles = {
       display: "flex",
       flexDirection: "column",
       color: color.gray.gray700,
+      // width: "70%",
+      overflow: "hidden",
     },
   ]),
   category: style([
@@ -35,10 +37,13 @@ export const styles = {
   contents: style([
     font.body01,
     {
-      display: "flex",
-      flexDirection: "column",
       color: color.gray.gray700,
       marginBottom: "0.8rem",
+      width: "inherit",
+      textOverflow: "ellipsis",
+      overflow: "hidden",
+      whiteSpace: "nowrap",
+      boxSizing: "border-box",
     },
   ]),
   subContents: style({
@@ -55,4 +60,7 @@ export const styles = {
       gap: "0.4rem",
     },
   ]),
+  postImage: style({
+    flexShrink: 0,
+  }),
 };

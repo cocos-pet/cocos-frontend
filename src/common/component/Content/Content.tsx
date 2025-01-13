@@ -1,4 +1,4 @@
-import { IcoIcontest, IcoSkeleton } from "@asset/svg";
+import { IcoIcontest, IcoMessage, IcoSkeleton } from "@asset/svg";
 import React from "react";
 import { styles } from "@common/component/Content/Content.css.ts";
 
@@ -7,8 +7,9 @@ interface ContentPropTypes {
   age: string;
   postTitle: string;
   postContent: string;
-  likes: number;
-  comments: number;
+  likeIconType: "curious" | "support";
+  likeCnt: number;
+  commentCnt: number;
   timeAgo: string;
   postImage?: React.ReactNode;
 }
@@ -19,8 +20,9 @@ interface ContentPropTypes {
  * @param age 나이
  * @param postTitle 게시물 제목
  * @param postContent 게시물 내용
- * @param likes 좋아요 수
- * @param comments 댓글 수
+ * @param likeIconType 좋아요 아이콘 타입 ( 궁금해요, 응원해요 )
+ * @param likeCnt 좋아요 tn
+ * @param commentCnt 댓글 수
  * @param timeAgo 게시물 작성 시간
  * @constructor minjeoong
  */
@@ -30,8 +32,9 @@ const Content: React.FC<ContentPropTypes> = ({
   age,
   postTitle,
   postContent,
-  likes,
-  comments,
+  likeIconType,
+  likeCnt,
+  commentCnt,
   timeAgo,
   postImage,
 }) => {
@@ -45,22 +48,19 @@ const Content: React.FC<ContentPropTypes> = ({
         <div className={styles.contents}>{postContent}</div>
         <div className={styles.subContents}>
           <div className={styles.item}>
-            <IcoIcontest />
-            <span>{likes}</span>
+            {/* 궁금해요/응원해요 아아콘 결정되면 수정 */}
+            {likeIconType === "curious" ? <IcoIcontest /> : <IcoIcontest />}
+            <span>{likeCnt}</span>
           </div>
           <div className={styles.item}>
-            <IcoIcontest />
-            <span>{comments}</span>
-          </div>
-          <div className={styles.item}>
-            <IcoIcontest />
-            <span>{comments}</span>
+            <IcoMessage />
+            <span>{commentCnt}</span>
           </div>
           <div className={styles.item}>·</div>
           <div className={styles.item}>{timeAgo}</div>
         </div>
       </div>
-      {postImage ? postImage : <IcoSkeleton />}
+      {postImage ? postImage : <IcoSkeleton className={styles.postImage} />}
     </div>
   );
 };

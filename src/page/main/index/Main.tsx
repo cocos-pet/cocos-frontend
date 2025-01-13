@@ -17,20 +17,20 @@ const Main = () => {
         breed="골든 리트리버"
         age="12살"
         postTitle="강아지 헥헥거림 증상"
-        postContent="강아지가 2주 전부터 헥헥거림 증상이 심한데..."
-        likes={10}
-        comments={5}
+        postContent="강아지가 2주 전부dfsfdsfdsfe터 헥헥거림 증상이 심한데..."
+        likeCnt={10}
+        commentCnt={5}
         timeAgo="1시간 전"
-      />{" "}
+      />
       <Content
         breed="골든 리트리버"
         age="12살"
         postTitle="강아지 헥헥거림 증상"
         postContent="강아지가 2주 전부터 헥헥거림 증상이 심한데..."
-        likes={10}
-        comments={5}
+        likeCnt={10}
+        commentCnt={5}
         timeAgo="1시간 전"
-      />{" "}
+      />
     </div>
   );
 };
