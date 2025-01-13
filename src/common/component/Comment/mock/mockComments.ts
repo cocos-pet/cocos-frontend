@@ -1,3 +1,5 @@
+/* 지워질 데이터입니당 */
+
 const mockComments = {
   comments: [
     {

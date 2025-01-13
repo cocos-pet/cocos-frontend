@@ -7,7 +7,7 @@ export const commentContainer = style([
     display: "flex",
     flexDirection: "column",
     width: "33.5rem",
-    padding: "8px 0px",
+    padding: "0.8rem 0rem",
     gap: "0.4rem",
   },
 ]);
@@ -77,7 +77,7 @@ export const text = style([
     fontWeight: "500",
     lineHeight: "2.24rem",
     letterSpacing: "-0.16rem",
-    padding: "0px 11px 0px 40px",
+    padding: "0rem 1.1rem 0rem 4rem",
   },
 ]);
 
@@ -85,7 +85,7 @@ export const replyContainer = style([
   {
     display: "flex",
     alignItems: "center",
-    padding: "0px 11px 0px 40px",
+    padding: "0rem 1.1rem 0rem 4rem",
   },
 ]);
 
