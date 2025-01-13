@@ -1,3 +1,6 @@
+import Divider from "@common/component/Divider/Divider";
+import Spacing from "@common/component/Spacing/Spacing";
+
 /*
 localhost:5173/main
 */
@@ -6,10 +9,7 @@ import { Button } from "@common/component/Button";
 import { IcTest } from "@asset/svg";
 
 const Main = () => {
-  const [value, setValue] = useState("");
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
+
   return (
     <>
       <div style={{ margin: "3rem", display: "flex", gap: "1rem" }}>
@@ -114,7 +114,13 @@ const Main = () => {
           disabled={false}
         />
       </div>
+      <span>main</span>
+      <Spacing marginBottom="10" />
+      <Divider size="small" />
+      <Spacing marginBottom="10" />
+      <Divider />
     </>
+
   );
 };
 
