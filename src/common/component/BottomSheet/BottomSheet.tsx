@@ -1,8 +1,14 @@
 import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
 import * as styles from "./BottomSheet.css";
 import { Button } from "../Button";
+import React from "react";
 
-const BottomSheet = () => {
+interface BottomSheetProps {
+  leftClick?: React.MouseEventHandler<HTMLButtonElement>;
+  rightClick?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+const BottomSheet = ({ leftClick, rightClick }: BottomSheetProps) => {
   return (
     <div className={styles.bottomSheetContainer}>
       <div className={styles.bottomSheetHeader}>
@@ -16,6 +22,7 @@ const BottomSheet = () => {
             size="large"
             variant="solidNeutral"
             disabled={false}
+            onClick={leftClick}
           />
 
           <Button
@@ -23,6 +30,7 @@ const BottomSheet = () => {
             size="large"
             variant="solidPrimary"
             disabled={false}
+            onClick={rightClick}
           />
         </div>
       </div>
