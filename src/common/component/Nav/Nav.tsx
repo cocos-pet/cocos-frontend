@@ -26,7 +26,9 @@ const Nav = () => {
             key={item.id}
             type="button"
             onClick={() => handleClick(item.id, item.path)}
-            className={`${styles.wrapper} ${activeItem === item.id ? styles.enabled : styles.disabled}`}
+            className={styles.navItem({
+              state: activeItem === item.id,
+            })}
           >
             <SvgComponent />
             {item.label}

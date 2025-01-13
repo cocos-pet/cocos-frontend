@@ -1,7 +1,8 @@
-import * as styles from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 import { font, color } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 
-export const container = styles.style([
+export const container = style([
   font.label01,
   {
     display: "flex",
@@ -12,18 +13,25 @@ export const container = styles.style([
   },
 ]);
 
-export const wrapper = styles.style({
-  display: "flex",
-  flexDirection: "column",
-  justifyContent: "center",
-  alignItems: "center",
-  padding: "0 1.2rem",
-});
-
-export const disabled = styles.style({
-  color: color.gray.gray500,
-});
-
-export const enabled = styles.style({
-  color: color.gray.gray900,
+export const navItem = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+    padding: "0 1.2rem",
+  },
+  variants: {
+    state: {
+      true: {
+        color: color.gray.gray900,
+      },
+      false: {
+        color: color.gray.gray500,
+      },
+    },
+  },
+  defaultVariants: {
+    state: false,
+  },
 });
