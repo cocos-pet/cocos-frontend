@@ -20,8 +20,9 @@ const Comment = () => {
                 </span>
               </div>
             </div>
+            <div className = {styles.pStyle}>
             <p className={styles.text}>{comment.content}</p>
-
+            </div>
             <div className={styles.replyContainer}>
               <IcMessage className={styles.icon} />
               <p className={styles.replyText}>답글쓰기</p>

@@ -12,10 +12,14 @@ export const commentContainer = style([
   },
 ]);
 
+export const pStyle = style({
+  padding: "0rem, 1.1rem, 0rem, 4rem",
+});
+
 export const containerOptionsIcon = style([
   {
     position: "absolute",
-    right: "0.8rem",
+    left: "31.1rem",
     top: "0.8rem",
   },
 ]);
