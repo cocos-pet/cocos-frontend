@@ -18,7 +18,6 @@ const Main = () => {
       {/*  variant={"error"}*/}
       {/*  iconColor={"black"}*/}
       {/*/>*/}
-      <span>main</span>
       <Spacing marginBottom="10" />
       <Divider size="small" />
       <Spacing marginBottom="10" />
