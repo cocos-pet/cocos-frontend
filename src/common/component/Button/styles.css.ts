@@ -1,4 +1,4 @@
-import { recipe } from "@vanilla-extract/recipes";
+import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
 
@@ -74,12 +74,6 @@ export const button = recipe({
         color: color.gray.gray500,
         pointerEvents: "none",
       },
-      outlinePrimary: {
-        backgroundColor: "transparent",
-        border: `1px solid ${color.gray.gray300}`,
-        color: color.gray.gray400,
-        pointerEvents: "none",
-      },
       false: {},
     },
   },
@@ -99,6 +93,8 @@ export const button = recipe({
     disabled: false,
   },
 });
+
+export type ButtonVariants = RecipeVariants<typeof button>;
 
 export const icon = style({
   height: "2rem",

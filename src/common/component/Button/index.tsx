@@ -1,15 +1,16 @@
 import clsx from "clsx";
 import React from "react";
-import { button, icon } from "@common/component/Button/styles.css.ts";
+import {
+  button,
+  ButtonVariants,
+  icon,
+} from "@common/component/Button/styles.css.ts";
 
-interface ButtonProps {
+interface ButtonProps extends ButtonVariants {
   label?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  size?: "small" | "medium" | "large";
-  variant?: "solidPrimary" | "solidNeutral" | "outlinePrimary";
-  disabled?: boolean;
-  onClick?: () => void;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
 
 /**
