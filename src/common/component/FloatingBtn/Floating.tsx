@@ -12,11 +12,7 @@ function FloatingBtn({ disabled = false, onClick }: FloatingBtnProps) {
   }`;
 
   return (
-    <button
-      className={floatingBtn}
-      onClick={!disabled ? onClick : undefined}
-      disabled={disabled}
-    >
+    <button className={floatingBtn} onClick={onClick} disabled={disabled}>
       <Plus />
     </button>
   );
