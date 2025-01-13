@@ -7,8 +7,8 @@ interface ContentPropTypes {
   age: string;
   postTitle: string;
   postContent: string;
-  likeIconType: "curious" | "support";
-  likeCnt: number;
+  likeIconType?: "curious" | "support";
+  likeCnt?: number;
   commentCnt: number;
   timeAgo: string;
   postImage?: React.ReactNode;
@@ -24,6 +24,7 @@ interface ContentPropTypes {
  * @param likeCnt 좋아요 tn
  * @param commentCnt 댓글 수
  * @param timeAgo 게시물 작성 시간
+ * @param postImage
  * @constructor minjeoong
  */
 
