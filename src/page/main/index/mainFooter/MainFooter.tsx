@@ -1,4 +1,4 @@
-import * as styles from "./mainFooter.css";
+import * as styles from "./MainFooter.css";
 
 const MainFooter = () => {
   return (

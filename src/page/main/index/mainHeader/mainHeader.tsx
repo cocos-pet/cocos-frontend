@@ -1,4 +1,4 @@
-import * as styles from "./mainHeader.css";
+import * as styles from "./MainHeader.css";
 import MainCarousel from "./Carousel/mainCarousel";
 import { carouselMock } from "@shared/constant/carouselMock";
 
