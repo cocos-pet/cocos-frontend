@@ -61,7 +61,9 @@ const Content: React.FC<ContentPropTypes> = ({
           <div className={styles.item}>{timeAgo}</div>
         </div>
       </div>
-      <span className={styles.postImage}>{postImage && postImage}</span>
+      {postImage && (
+        <img src={postImage} alt="postImage" className={styles.postImage} />
+      )}
     </div>
   );
 };
