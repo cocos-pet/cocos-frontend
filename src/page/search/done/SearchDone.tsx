@@ -6,11 +6,7 @@ import { styles } from "@page/search/done/SearchDone.css.ts";
 
 const SearchDone = () => {
   const [searchParams] = useSearchParams();
-
-  const onSubmit = (searchText: string) => {
-    searchParams.set("searchText", searchText);
-    navigate("/search");
-  };
+  const query = searchParams.get("searchText");
 
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
