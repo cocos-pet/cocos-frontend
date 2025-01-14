@@ -35,7 +35,9 @@ const Search = () => {
 
   useEffect(() => {
     // 페이지 진입 시 TextField에 포커스 설정
+    console.log(inputRef.current);
     if (inputRef.current) {
+      console.log(inputRef.current);
       inputRef.current.focus();
     }
   }, []);
@@ -58,11 +60,7 @@ const Search = () => {
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
           {recentSearchData.map((data, index) => (
-            <li
-              key={index}
-              className={styles.listItem}
-              onClick={() => onSubmit(data)}
-            >
+            <li key={index} className={styles.listItem} onClick={() => onSubmit(data)}>
               {data}
             </li>
           ))}

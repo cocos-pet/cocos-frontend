@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import React from "react";
 import { styles } from "@common/component/TextField/styles.css.ts";
 import { IcClear } from "@asset/svg";
@@ -9,7 +8,6 @@ interface TextFieldProps {
   active?: boolean;
   placeholder?: string;
   value: string;
-  ref?: React.RefObject<HTMLInputElement>;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -23,7 +21,6 @@ interface TextFieldProps {
  * @param active 활성화 여부
  * @param placeholder placeholder
  * @param value 입력값
- * @param ref
  * @param onChange 입력값 변경 함수
  * @param onClick input 클릭 함수
  * @param onKeyDown 엔터키 입력 함수
@@ -31,31 +28,37 @@ interface TextFieldProps {
  * @constructor minjeoong
  */
 
-export const TextField: React.FC<TextFieldProps> = ({
-  icon,
-  state = "default",
-  active = true,
-  placeholder = "검색어를 입력해주세요",
-  value,
-  ref,
-  onChange,
-  onClick,
-  onKeyDown,
-  onClearClick,
-}) => {
-  return (
-    <div className={styles.wrapper({ state, active })} onClick={onClick}>
-      <input
-        ref={ref}
-        type="text"
-        className={styles.input({ active })}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
-        onKeyDown={onKeyDown}
-        disabled={!active}
-      />
-      {value ? <IcClear onClick={onClearClick} /> : icon}
-    </div>
-  );
-};
+export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+  (
+    {
+      icon,
+      state = "default",
+      active = true,
+      placeholder = "검색어를 입력해주세요",
+      value,
+      onChange,
+      onClick,
+      onKeyDown,
+      onClearClick,
+    },
+    ref, // forwardRef를 통해 ref를 받을 수 있도록 설정
+  ) => {
+    return (
+      <div className={styles.wrapper({ state, active })} onClick={onClick}>
+        <input
+          ref={ref}
+          type="text"
+          className={styles.input({ active })}
+          placeholder={placeholder}
+          value={value}
+          onChange={onChange}
+          onKeyDown={onKeyDown}
+          disabled={!active}
+        />
+        {value ? <IcClear onClick={onClearClick} /> : icon}
+      </div>
+    );
+  },
+);
+
+TextField.displayName = "TextField"; // React DevTools에서 이름이 올바르게 표시되도록 설정
