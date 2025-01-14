@@ -18,6 +18,7 @@ export const p = style([
 ]);
 
 export const title = style([
+  { marginBottom: "1.2rem" },
   font.heading02,
   {
     letterSpacing: "-0.18rem",
@@ -31,9 +32,10 @@ export const hotPostListContainer = style({
   flexDirection: "column",
   alignItems: "flex-start",
   alignSelf: "stretch",
-  gap: "1.2rem",
-  borderColor: semanticColor.primary.strong,
+  gap: "2.4rem",
   borderRadius: "16px",
+  border: `0.1rem solid ${semanticColor.text.normal}`,
+  borderColor: "#f0f0f0",
 });
 
 export const postContent = style({
@@ -42,6 +44,7 @@ export const postContent = style({
 });
 
 export const contentId = style([
+  { gap: "1.2rem" },
   font.body01,
   {
     color: semanticColor.primary.strong,
