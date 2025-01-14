@@ -3,7 +3,6 @@ import COMMUNITY_ROUTES from "./Community";
 import MAIN_ROUTES from "./MainRoutes";
 import MYPAGE_ROUTES from "./MyPageRoutes";
 import ONBOARGING_ROUTES from "./OnboardingRoutes";
-import SEARCH_ROUTES from "./SearchRoutes.tsx";
 
 //children은 Outlet에서 사용하는 방식 (레이아웃 지정해야할 때)
 const router = createBrowserRouter([
@@ -12,7 +11,6 @@ const router = createBrowserRouter([
   ...MAIN_ROUTES,
   ...COMMUNITY_ROUTES,
   ...MYPAGE_ROUTES,
-  ...SEARCH_ROUTES,
 ]);
 
 export default router;

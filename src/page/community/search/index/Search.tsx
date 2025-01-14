@@ -1,4 +1,4 @@
-import { styles } from "@page/search/index/Search.css.ts";
+import { styles } from "@page/community/search/index/Search.css.ts";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
@@ -16,7 +16,7 @@ const Search = () => {
 
   const onSubmit = (searchText: string) => {
     searchParams.set("searchText", searchText);
-    navigate(PATH.SEARCH.DONE + "?" + searchParams.toString());
+    navigate(PATH.COMMUNITY.SEARCHDONE + "?" + searchParams.toString());
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -58,7 +58,11 @@ const Search = () => {
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
           {recentSearchData.map((data, index) => (
-            <li key={index} className={styles.listItem} onClick={() => onSubmit(data)}>
+            <li
+              key={index}
+              className={styles.listItem}
+              onClick={() => onSubmit(data)}
+            >
               {data}
             </li>
           ))}

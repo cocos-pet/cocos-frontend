@@ -8,6 +8,7 @@ export const PATH = {
     ROOT: "/community",
     POST: "/community/:postId",
     SEARCH: "/community/search",
+    SEARCHDONE: "/community/search/done",
     WRITE: "/community/write",
   },
   MYPAGE: {
