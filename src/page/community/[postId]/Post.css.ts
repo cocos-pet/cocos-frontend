@@ -38,7 +38,6 @@ export const styles = {
       fontWeight: "500",
       color: color.gray.gray700,
       lineHeight: "130%",
-      letterSpacing: "-0.24px",
     },
   ]),
   title: style([
@@ -60,12 +59,54 @@ export const styles = {
     borderRadius: "0.8rem",
     objectFit: "cover",
   }),
-  labelwrap: style({
+  labelWrap: style({
     display: "flex",
     flexDirection: "row",
     gap: "0.4rem",
   }),
-  countwrap: style({
+  countWrap: style({
     padding: "0.8rem 0",
   }),
+  subContents: style({
+    display: "flex",
+    alignItems: "center",
+    flexDirection: "row",
+    gap: "0.8rem",
+  }),
+  item: style([
+    font.label01,
+    {
+      width: "6.2rem",
+      display: "flex",
+      alignItems: "center",
+      gap: "0.4rem",
+    },
+  ]),
+  commentTitle: style([
+    font.body01,
+    {
+      marginBottom: "2.5rem",
+      color: color.gray.gray700,
+    },
+  ]),
+  commentCount: style([
+    font.body01,
+    {
+      color: color.gray.gray900,
+    },
+  ]),
+  commentContainer: style({
+    display: "flex",
+    flexDirection: "row",
+    alignItems: "center",
+  }),
+  upload: style([
+    font.body01,
+    {
+      color: color.primary.blue900,
+      flexShrink: 0,
+      padding: "1rem 1.2rem",
+      borderRadius: "1rem",
+    },
+  ]),
 };
