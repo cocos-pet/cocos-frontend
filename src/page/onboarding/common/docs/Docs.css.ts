@@ -5,5 +5,7 @@ export const titleStyle = style([
   font.body01,
   {
     color: color.gray.gray500,
+    marginTop: "0.8rem",
   },
 ]);
+
