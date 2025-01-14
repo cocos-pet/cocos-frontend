@@ -3,19 +3,20 @@ import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useState } from "react";
 import { recentSearchData } from "@shared/constant/recentSearchData.ts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 const Search = () => {
   const [searchText, setSearchText] = useState("");
   const navigate = useNavigate();
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+  const [searchParams] = useSearchParams();
+
+  const onSubmit = (searchText: string) => {
+    searchParams.set("searchText", searchText);
+    navigate("/search/done?" + searchParams.toString());
   };
 
-  const onSubmit = (content: string) => {
-    if (content.trim()) {
-      navigate(`/search/done?content=${encodeURIComponent(content)}`);
-    }
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
