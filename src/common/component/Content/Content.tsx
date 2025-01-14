@@ -11,7 +11,7 @@ interface ContentPropTypes {
   likeCnt?: number;
   commentCnt: number;
   timeAgo: string;
-  postImage?: React.ReactNode;
+  postImage?: string;
   onClick?: () => void;
 }
 
