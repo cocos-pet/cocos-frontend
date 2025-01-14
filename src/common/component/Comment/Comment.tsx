@@ -1,30 +1,42 @@
 import * as styles from "./Comment.css";
-import { Ellipse57, Message, Ellipses } from "@asset/svg";
-import mockComments from "@common/component/Comment/mock/mockComments";
+import { IcEllipse57, IcMessage, IcEllipses } from "@asset/svg";
 
-const Comment = () => {
-  const { comments } = mockComments;
+interface CommentData {
+  id: number;
+  nickname: string;
+  breed: string;
+  petAge: number;
+  createdAt: string;
+  content: string;
+  profileImage: string;
+}
 
+interface CommentProps {
+  comments: CommentData[];
+}
+
+const Comment = ({ comments }: CommentProps) => {
   return (
     <div className={styles.commentContainer}>
       {comments.map((comment) => (
         <div key={comment.id} className={styles.commentItem}>
           <div className={styles.contentContainer}>
             <div className={styles.header}>
-              <Ellipse57 />
+              <img src={comment.profileImage} className={styles.profileImage} />
               <div className={styles.headerInfo}>
-                <Ellipses className={styles.containerOptionsIcon} />
+                <IcEllipses className={styles.containerOptionsIcon} />
                 <span className={styles.nickname}>{comment.nickname}</span>
                 <span className={styles.meta}>
                   {comment.breed}·{comment.petAge}살 · {comment.createdAt}
                 </span>
               </div>
             </div>
+
             <p className={styles.text}>{comment.content}</p>
 
             <div className={styles.replyContainer}>
-              <Message className={styles.icon} />
-              <p className={styles.replyText}>답글쓰기</p>
+              <IcMessage />
+              <p>답글쓰기</p>
             </div>
           </div>
         </div>
@@ -32,5 +44,6 @@ const Comment = () => {
     </div>
   );
 };
+``;
 
 export default Comment;
