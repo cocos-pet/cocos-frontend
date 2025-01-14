@@ -21,7 +21,7 @@ const Comment = ({ comment }: CommentProps) => {
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={comment.profileImage} className={styles.profileImage} />
+          <img src={comment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
           <div className={styles.headerInfo}>
             <IcEllipses className={styles.containerOptionsIcon} />
             <span className={styles.nickname}>{comment.nickname}</span>
