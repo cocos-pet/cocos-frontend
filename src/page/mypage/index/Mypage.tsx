@@ -1,7 +1,5 @@
-import Nav from "@common/component/Nav/Nav";
-
 const Mypage = () => {
-  return <Nav />;
+  return <></>;
 };
 
 export default Mypage;
