@@ -54,11 +54,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         onKeyDown={onKeyDown}
         disabled={!active}
       />
-      {value ? (
-        <IcClear onClick={onClearClick} /> // `value` 값이 있을 때 표시
-      ) : (
-        icon // 사용자가 입력한 아이콘 표시
-      )}
+      {value ? <IcClear onClick={onClearClick} /> : icon}
     </div>
   );
 };
