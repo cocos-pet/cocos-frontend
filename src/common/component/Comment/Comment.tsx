@@ -1,5 +1,5 @@
 import * as styles from "./Comment.css";
-import { IcEllipse57, IcMessage, IcEllipses } from "@asset/svg";
+import { IcMessage, IcEllipses } from "@asset/svg";
 
 interface CommentData {
   id: number;
@@ -22,7 +22,7 @@ const Comment = ({ comments }: CommentProps) => {
         <div key={comment.id} className={styles.commentItem}>
           <div className={styles.contentContainer}>
             <div className={styles.header}>
-              <img src={comment.profileImage} className={styles.profileImage} />
+              <img src={comment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
               <div className={styles.headerInfo}>
                 <IcEllipses className={styles.containerOptionsIcon} />
                 <span className={styles.nickname}>{comment.nickname}</span>
@@ -44,6 +44,5 @@ const Comment = ({ comments }: CommentProps) => {
     </div>
   );
 };
-``;
 
 export default Comment;
