@@ -30,7 +30,7 @@ interface ContentPropTypes {
  * @constructor minjeoong
  */
 
-const Content: React.FC<ContentPropTypes> = ({
+const Content = ({
   breed,
   age,
   postTitle,
@@ -41,9 +41,9 @@ const Content: React.FC<ContentPropTypes> = ({
   timeAgo,
   postImage,
   onClick,
-}) => {
+}: ContentPropTypes) => {
   return (
-    <div className={styles.container}>
+    <div className={styles.container} onClick={onClick}>
       <div className={styles.left}>
         <div className={styles.category}>
           {breed} · {age}
