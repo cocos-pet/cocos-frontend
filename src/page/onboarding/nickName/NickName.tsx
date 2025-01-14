@@ -7,16 +7,18 @@ import * as styles from "./NickName.css";
 import { ChangeEvent, useState } from "react";
 
 interface NickNameProps {
-  onNickNameChange: (value: string) => void; // 부모에서 전달받을 콜백 함수 타입 정의
+  onNickNameChange: (value: string) => void;
 }
 
+// 닉네임 
 const NickName = ({ onNickNameChange }: NickNameProps) => {
   const [value, setValue] = useState("");
 
+  // 값 변경 시 부모 컴포넌트로 알리기
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const newValue = e.target.value;
     setValue(newValue);
-    onNickNameChange(newValue); // 값 변경 시 부모 컴포넌트로 알리기
+    onNickNameChange(newValue);
   };
 
   return (
