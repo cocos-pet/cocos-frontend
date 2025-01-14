@@ -1,8 +1,11 @@
+import { ReactNode } from "react";
 import * as styles from "./Title.css";
-import { ONBOARDING } from "@page/onboarding/constant/title";
 
-const Title = () => {
-  return <div className={styles.titleStyle}>{ONBOARDING.nickName.title}</div>;
+interface TitleProps {
+  text: ReactNode;
+}
+const Title = ({ text }: TitleProps) => {
+  return <div className={styles.titleStyle}>{text}</div>;
 };
 
 export default Title;

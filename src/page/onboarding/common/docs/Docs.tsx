@@ -1,8 +1,12 @@
-import { ONBOARDING } from "@page/onboarding/constant/title";
+import { ReactNode } from "react";
 import * as styles from "./Docs.css";
 
-const Docs = () => {
-  return <div className={styles.titleStyle}>{ONBOARDING.nickName.docs}</div>;
+interface DocsProps {
+  text: ReactNode;
+}
+
+const Docs = ({ text }: DocsProps) => {
+  return <div className={styles.titleStyle}>{text}</div>;
 };
 
 export default Docs;
