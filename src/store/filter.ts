@@ -7,21 +7,21 @@ import {
 
 // todo: 추후 타입들 분리하기
 // 각 필터 항목의 기본 타입
-interface FilterItem {
+export interface FilterItem {
   id: number;
   name: string;
 }
-interface SymptomItem extends FilterItem {
+export interface SymptomItem extends FilterItem {
   symptoms: FilterItem[];
 }
-interface DiseaseItem extends FilterItem {
+export interface DiseaseItem extends FilterItem {
   diseases: FilterItem[];
 }
 
 // API로부터 GET 해오는 데이터 타입들
-type CategoryKind = FilterItem[];
-type CategorySymptom = SymptomItem[];
-type CategoryDisease = DiseaseItem[];
+export type CategoryKind = FilterItem[];
+export type CategorySymptom = SymptomItem[];
+export type CategoryDisease = DiseaseItem[];
 
 // 전체 categoryData의 타입
 interface CategoryData {
@@ -47,6 +47,10 @@ interface FilterState {
   selectedChips: string[];
   toggleChips: (chip: string) => void;
 
+  kind: CategoryKind;
+  symptoms: CategorySymptom;
+  disease: CategoryDisease;
+
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
   setCategoryData: (category: CategoryType, data: CategoryData) => void;
@@ -67,6 +71,10 @@ export const useFilterStore = create<FilterState>((set) => ({
         ? state.selectedChips.filter((f) => f !== chip)
         : [...state.selectedChips, chip],
     })),
+
+  kind: CATEGORY_KIND,
+  symptoms: CATEGORY_SYMPTOM,
+  disease: CATEGORY_DISEASE,
 
   categoryData: { kind: CATEGORY_KIND, symptoms: CATEGORY_SYMPTOM, disease: CATEGORY_DISEASE }, //todo: api 연결 후에는 [] 로 변경할 것
   setCategoryData: (category, data) =>

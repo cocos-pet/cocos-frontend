@@ -3,7 +3,7 @@ import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomS
 import { useFilterStore } from "@store/filter";
 
 const Main = () => {
-  const { setOpen, toggleOpen } = useFilterStore();
+  const { category, categoryData, setOpen, toggleOpen } = useFilterStore();
 
   return (
     <div style={{ position: "relative" }}>
