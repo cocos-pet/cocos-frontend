@@ -1,4 +1,4 @@
-import { IcoIcontest, IcoMessage, IcoSkeleton } from "@asset/svg";
+import { IcoMessage, IcTest } from "@asset/svg";
 import React from "react";
 import { styles } from "@common/component/Content/Content.css.ts";
 
@@ -53,7 +53,7 @@ const Content = ({
         <div className={styles.subContents}>
           <div className={styles.item}>
             {/* 궁금해요/응원해요 아아콘 결정되면 수정 */}
-            {likeIconType === "curious" ? <IcoIcontest /> : <IcoIcontest />}
+            {likeIconType === "curious" ? <IcTest /> : <IcTest />}
             <span>{likeCnt}</span>
           </div>
           <div className={styles.item}>
