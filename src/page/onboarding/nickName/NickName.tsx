@@ -1,5 +1,5 @@
-import Title from "@page/onboarding/common/title/Title";
-import Docs from "@page/onboarding/common/docs/Docs";
+import Title from "@page/onboarding/component/title/Title";
+import Docs from "@page/onboarding/component/docs/Docs";
 import { ONBOARDING_GUIDE } from "@page/onboarding/constant/onboardingGuide";
 import { ERROR_MSG } from "@page/onboarding/constant/errorMsg";
 
