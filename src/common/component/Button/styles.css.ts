@@ -6,11 +6,12 @@ export const button = recipe({
   base: [
     font.body01,
     {
+      width: "100%",
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
       gap: "0.6rem",
-      borderRadius: "8px",
+      borderRadius: "0.8rem",
       border: "none",
       cursor: "pointer",
       transition: "background-color 0.3s",
