@@ -8,6 +8,7 @@ export { default as IcLeftarrow } from "./IcLeftarrow";
 export { default as IcMessage } from "./IcMessage";
 export { default as IcSearch } from "./IcSearch";
 export { default as IcSearchFillter } from "./IcSearchFillter";
+export { default as IcSearchFillterBlue } from "./IcSearchFillterBlue";
 export { default as IcTest } from "./IcTest";
 export { default as IcoMessage } from "./IcoMessage";
 export { default as IcoSkeleton } from "./IcoSkeleton";

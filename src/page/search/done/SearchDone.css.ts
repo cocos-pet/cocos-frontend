@@ -17,25 +17,10 @@ export const styles = {
     borderBottom: `0.1rem solid ${color.gray.gray200}`,
   }),
   searchContent: style({
-    padding: "1.6rem 2rem",
-  }),
-  title: style([
-    font.label01,
-    {
-      color: color.gray.gray800,
-      padding: "0.7rem 0.7rem 0.7rem 0",
-      marginBottom: "2.4rem",
-    },
-  ]),
-  list: style({
+    padding: "1.6rem 2rem 0 2rem",
     display: "flex",
     flexDirection: "column",
-    gap: "2rem",
+    gap: "1.6rem",
   }),
-  listItem: style([
-    font.body01,
-    {
-      fontWeight: "500",
-    },
-  ]),
+  filterwrap: style({}),
 };

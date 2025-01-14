@@ -8,7 +8,6 @@ export const styles = {
     justifyContent: "space-between",
     gap: "1.2rem",
     paddingBottom: "1.6rem",
-    margin: "2rem 2rem 0",
     borderBottom: `1px solid ${color.gray.gray200}`,
   }),
   left: style([
