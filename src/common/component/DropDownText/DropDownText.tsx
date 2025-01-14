@@ -1,38 +1,34 @@
 import { IcUp } from "@asset/svg";
 import * as styles from "./DropDownText.css";
 import { useState } from "react";
-import { SymptomItem, useFilterStore } from "@store/filter";
+import { DiseaseItem, SymptomItem, useFilterStore } from "@store/filter";
+import Chip from "@common/component/Chip/Chip";
 
 interface DropDownTextPropTypes {
   children: string; // title
-  content?: SymptomItem["symptoms"]; // symptom.symptoms의 타입
+  content: SymptomItem["symptoms"] | DiseaseItem["diseases"];
 }
 
 //참고) content는 depth가 깊은 symptoms나 disease에 대응하기 위해 만들어둠
 const DropDownText = ({ children, content }: DropDownTextPropTypes) => {
-  const { category, toggleChips, categoryData } = useFilterStore();
+  const { toggleChips, selectedChips } = useFilterStore();
   const [isOpen, setIsOpen] = useState(false);
-
-  const dropDownData = categoryData[category];
 
   const renderDropDownData = () => {
     if (content) {
       return content.map((data) => (
         //todo: 칩으로 변경, selected 상태일 때 모습도 반영(selectedFilters 이용)
-        <span key={`dropDown-${data.id}`} onClick={() => toggleChips(data.name)}>
-          {data.name}
-        </span>
+        <Chip
+          key={`dropDown-${data.id}`}
+          label={data.name}
+          onClick={() => toggleChips(data.name)}
+          isSelected={selectedChips.includes(data.name)}
+        />
       ));
     }
-    return dropDownData.map((data) => (
-      //todo: 칩으로 변경, selected 상태일 때 모습도 반영(selectedFilters 이용)
-      <span key={`dropDown-${data.id}`} onClick={() => toggleChips(data.name)}>
-        {data.name}
-      </span>
-    ));
   };
 
-  if (!dropDownData) return;
+  if (!content) return;
   return (
     <>
       <div className={styles.dropdownTextWrapper}>
