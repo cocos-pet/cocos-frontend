@@ -51,7 +51,7 @@ export const icon = recipe({
         color: color.gray.gray900,
       },
       white: {
-        background: color.gray.gray000,
+        color: color.gray.gray000,
       },
     },
   },

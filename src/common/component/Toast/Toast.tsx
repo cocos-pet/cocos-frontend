@@ -52,7 +52,7 @@ export const Toast = ({
       {message}
       <IcDelete
         className={icon({ iconColor })}
-        stroke={iconColor}
+        color={iconColor}
         onClick={handleDelete}
       />
     </div>

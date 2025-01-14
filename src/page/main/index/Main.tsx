@@ -12,12 +12,16 @@ import { Toast } from "@common/component/Toast/Toast.tsx";
 const Main = () => {
   return (
     <>
-      {/*<Toast message={"내용을 입력하세요."} variant={"default"} />*/}
       <Toast
         message={"내용을 입력하세요."}
-        variant={"error"}
-        iconColor={"black"}
+        variant={"default"}
+        iconColor={"white"}
       />
+      {/*<Toast*/}
+      {/*  message={"내용을 입력하세요."}*/}
+      {/*  variant={"error"}*/}
+      {/*  iconColor={"black"}*/}
+      {/*/>*/}
       <Spacing marginBottom="10" />
       <Divider size="small" />
       <Spacing marginBottom="10" />
