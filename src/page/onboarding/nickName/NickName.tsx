@@ -1,6 +1,8 @@
 import Title from "@page/onboarding/common/title/Title";
 import Docs from "@page/onboarding/common/docs/Docs";
 import { ONBOARDING_GUIDE } from "@page/onboarding/constant/onboardingGuide";
+import { ERROR_MSG } from "@page/onboarding/constant/errorMsg";
+
 import onboardingImg from "@asset/image/image 1730.png";
 import { TextField } from "@common/component/TextField";
 import * as styles from "./NickName.css";
@@ -10,7 +12,7 @@ interface NickNameProps {
   onNickNameChange: (value: string) => void;
 }
 
-// 닉네임 
+// 닉네임
 const NickName = ({ onNickNameChange }: NickNameProps) => {
   const [value, setValue] = useState("");
 
@@ -28,7 +30,11 @@ const NickName = ({ onNickNameChange }: NickNameProps) => {
         <Title text={ONBOARDING_GUIDE.nickName.title} />
         <Docs text={ONBOARDING_GUIDE.nickName.docs} />
       </div>
-      <TextField value={value} onChange={onChange} placeholder="닉네임을 입력해주세요." />
+      <div>
+        <TextField value={value} onChange={onChange} placeholder="닉네임을 입력해주세요." />
+        <Docs text={ERROR_MSG.nickName.duplicate} />
+        <Docs state="sError" text={ERROR_MSG.petAge.length} />
+      </div>
     </div>
   );
 };

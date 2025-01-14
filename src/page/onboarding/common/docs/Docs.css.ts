@@ -1,11 +1,21 @@
-import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css.ts";
+import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
-export const titleStyle = style([
-  font.body01,
-  {
-    color: color.gray.gray500,
-    marginTop: "0.8rem",
+export const titleStyle = recipe({
+  base: [
+    font.body01,
+    {
+      marginTop: "0.8rem",
+      color: color.red.warning_red200,
+    },
+  ],
+  variants: {
+    state: {
+      none: { color: color.gray.gray500 },
+      lError: {},
+      sError: [font.caption01],
+    },
   },
-]);
+});
 
+export type titleStyleVariant = RecipeVariants<typeof titleStyle>;

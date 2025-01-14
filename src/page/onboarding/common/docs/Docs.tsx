@@ -1,12 +1,17 @@
 import { ReactNode } from "react";
-import * as styles from "./Docs.css";
-
+import { titleStyleVariant, titleStyle } from "./Docs.css";
 interface DocsProps {
   text: ReactNode;
 }
 
-const Docs = ({ text }: DocsProps) => {
-  return <div className={styles.titleStyle}>{text}</div>;
+type CombinedDocsProps = DocsProps & Exclude<titleStyleVariant, undefined>;
+
+const Docs = ({ state, text }: CombinedDocsProps) => {
+  return (
+    <>
+      <div className={titleStyle({ state })}>{text}</div>
+    </>
+  );
 };
 
 export default Docs;
