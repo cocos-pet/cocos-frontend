@@ -1,15 +1,18 @@
-import clsx from "clsx";
 import React from "react";
-import { styles, variants } from "@common/component/Button/styles.css.ts";
+import {
+  button,
+  ButtonVariants,
+  icon,
+} from "@common/component/Button/styles.css.ts";
 
-interface TextFieldProps {
+interface ButtonProps {
   label?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
-  size?: "small" | "medium" | "large";
-  variant?: "solidPrimary" | "solidNeutral" | "outlinePrimary";
-  disabled?: boolean;
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
 }
+
+type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
 
 /**
  * Button 공통 컴포넌트
@@ -19,31 +22,28 @@ interface TextFieldProps {
  * @param size 버튼 사이즈 small | medium | large
  * @param variant 버튼 종류 solidPrimary | solidNeutral | outlinePrimary
  * @param disabled 비활성화 여부
+ * @param onClick
  * @constructor minjeoong
  */
 
-export const Button: React.FC<TextFieldProps> = ({
+export const Button = ({
   label = "Button",
   leftIcon,
   rightIcon,
   size = "medium",
   variant = "solidPrimary",
   disabled,
-}) => {
+  onClick,
+}: CombinedButtonProps) => {
   return (
     <button
-      className={clsx(
-        styles.button,
-        styles[size],
-        disabled && styles.disabled,
-        !disabled && variants[variant],
-        disabled && variant === "outlinePrimary" && styles.disabledOutline
-      )}
+      className={button({ size, variant, disabled })}
       disabled={disabled}
+      onClick={onClick}
     >
-      {leftIcon && <div className={styles.icon}>{leftIcon}</div>}
+      {leftIcon && <div className={icon}>{leftIcon}</div>}
       {label}
-      {rightIcon && <div className={styles.icon}>{rightIcon}</div>}
+      {rightIcon && <div className={icon}>{rightIcon}</div>}
     </button>
   );
 };

@@ -1,4 +1,5 @@
-export { default as IcoIcontest } from "./IcoIcontest";
+export { default as IcDelete } from "./IcDelete";
+export { default as IcTest } from "./IcTest";
 export { default as IcoMessage } from "./IcoMessage";
 export { default as IcoSkeleton } from "./IcoSkeleton";
 export { default as React } from "./React";
