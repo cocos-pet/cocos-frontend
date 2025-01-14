@@ -1,8 +1,5 @@
-/*
-localhost:5173/main
-*/
 const Main = () => {
-  return <div>Main</div>;
+  return <div>메인</div>;
 };
 
 export default Main;

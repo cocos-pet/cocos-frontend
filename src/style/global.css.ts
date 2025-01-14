@@ -5,7 +5,7 @@ globalStyle("html", {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
-
+  
   fontSize: "16px", //default
   "@media": {
     "(min-width: 450px) and (max-width: 600px)": { fontSize: "13px" },
