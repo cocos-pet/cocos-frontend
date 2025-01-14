@@ -6,18 +6,25 @@ interface ChipProps {
   label: string;
   icon?: boolean;
   color: "blue" | "gray";
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
 
-const Chip = ({ label, icon = false, color = "blue", onClick }: CombinedChipProps) => {
+const Chip = ({
+  label,
+  icon = false,
+  color = "blue",
+  onClick,
+}: CombinedChipProps) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleClick = () => {
     if (color === "gray" || size === "large") return;
     setIsActive(!isActive);
-    onClick();
+    if (onClick) {
+      onClick();
+    }
   };
 
   const size = icon ? "large" : "small";
