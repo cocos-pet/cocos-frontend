@@ -35,8 +35,8 @@ const Comment = ({ comments }: CommentProps) => {
               <p className={styles.text}>{comment.content}</p>
             </div>
             <div className={styles.replyContainer}>
-              <IcMessage className={styles.icon} />
-              <p className={styles.replyText}>답글쓰기</p>
+              <IcMessage />
+              <p>답글쓰기</p>
             </div>
           </div>
         </div>
@@ -44,5 +44,6 @@ const Comment = ({ comments }: CommentProps) => {
     </div>
   );
 };
+``;
 
 export default Comment;

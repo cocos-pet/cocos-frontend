@@ -90,19 +90,11 @@ export const replyContainer = style([
     display: "flex",
     alignItems: "center",
     padding: "0rem 1.1rem 0rem 4rem",
+    gap: "0.4rem", 
   },
-]);
-
-export const replyText = style([
-  font.label01,
+  font.label01, 
   {
-    color: semanticColor.text.assistiveLight,
-  },
-]);
-
-export const icon = style([
-  {
-    gap: "0.4rem",
+    color: semanticColor.text.assistiveLight, 
   },
 ]);
 
