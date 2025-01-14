@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 import { styles } from "@common/component/TextField/styles.css.ts";
+import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
   icon?: React.ReactNode;
@@ -10,6 +11,7 @@ interface TextFieldProps {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+  onClearClick?: () => void;
 }
 
 /**
@@ -17,9 +19,11 @@ interface TextFieldProps {
  * @param icon 오른쪽 아이콘
  * @param state 상태 (default, error)
  * @param active 활성화 여부
- * @param placeholder
- * @param value
- * @param onChange
+ * @param placeholder placeholder
+ * @param value 입력값
+ * @param onChange 입력값 변경 함수
+ * @param onKeyDown 엔터키 입력 함수
+ * @param onClearClick value 제거 함수
  * @constructor minjeoong
  */
 
@@ -31,6 +35,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   value,
   onChange,
   onKeyDown,
+  onClearClick,
 }) => {
   return (
     <div
@@ -49,7 +54,12 @@ export const TextField: React.FC<TextFieldProps> = ({
         onKeyDown={onKeyDown}
         disabled={!active}
       />
-      {icon && <div className={styles.icon}>{icon}</div>}
+      {icon &&
+        (value ? (
+          <IcClear onClick={onClearClick} />
+        ) : (
+          <div className={styles.icon}>{icon}</div>
+        ))}
     </div>
   );
 };

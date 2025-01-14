@@ -1,3 +1,4 @@
+export { default as IcClear } from "./IcClear";
 export { default as IcDelete } from "./IcDelete";
 export { default as IcLeftarrow } from "./IcLeftarrow";
 export { default as IcSearch } from "./IcSearch";

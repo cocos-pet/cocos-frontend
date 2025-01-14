@@ -34,6 +34,7 @@ const Search = () => {
           onChange={onChange}
           onKeyDown={handleKeyDown}
           icon={<IcSearch onClick={() => onSubmit(searchText)} />}
+          onClearClick={() => setSearchText("")}
         />
       </div>
       <div className={styles.searchContent}>
