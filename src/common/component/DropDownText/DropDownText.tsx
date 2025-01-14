@@ -1,7 +1,7 @@
 import { IcUp } from "@asset/svg";
 import * as styles from "./DropDownText.css";
 import { useState } from "react";
-import { CategoryDisease, CategoryKind, CategorySymptom, SymptomItem, useFilterStore } from "@store/filter";
+import { SymptomItem, useFilterStore } from "@store/filter";
 
 interface DropDownTextPropTypes {
   children: string; // title
@@ -10,23 +10,10 @@ interface DropDownTextPropTypes {
 
 //참고) content는 depth가 깊은 symptoms나 disease에 대응하기 위해 만들어둠
 const DropDownText = ({ children, content }: DropDownTextPropTypes) => {
-  const { category, kind, symptoms, disease, toggleChips, categoryData } = useFilterStore();
+  const { category, toggleChips, categoryData } = useFilterStore();
   const [isOpen, setIsOpen] = useState(false);
 
-  let dropDownData: CategoryKind | CategorySymptom | CategoryDisease | null = categoryData[category];
-  switch (category) {
-    case "kind":
-      dropDownData = kind as CategoryKind;
-      break;
-    case "symptoms":
-      dropDownData = symptoms as CategorySymptom;
-      break;
-    case "disease":
-      dropDownData = disease as CategoryDisease;
-      break;
-    default:
-      break;
-  }
+  const dropDownData = categoryData[category];
 
   console.log(dropDownData);
 

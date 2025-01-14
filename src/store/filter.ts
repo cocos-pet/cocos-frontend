@@ -47,10 +47,6 @@ interface FilterState {
   selectedChips: string[];
   toggleChips: (chip: string) => void;
 
-  kind: CategoryKind;
-  symptoms: CategorySymptom;
-  disease: CategoryDisease;
-
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
   setCategoryData: (category: CategoryType, data: CategoryData) => void;
@@ -71,10 +67,6 @@ export const useFilterStore = create<FilterState>((set) => ({
         ? state.selectedChips.filter((f) => f !== chip)
         : [...state.selectedChips, chip],
     })),
-
-  kind: CATEGORY_KIND,
-  symptoms: CATEGORY_SYMPTOM,
-  disease: CATEGORY_DISEASE,
 
   categoryData: { kind: CATEGORY_KIND, symptoms: CATEGORY_SYMPTOM, disease: CATEGORY_DISEASE }, //todo: api 연결 후에는 [] 로 변경할 것
   setCategoryData: (category, data) =>
