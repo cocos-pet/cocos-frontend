@@ -2,11 +2,10 @@ import Spacing from "@common/component/Spacing/Spacing";
 import { Button } from "@common/component/Button";
 import { IcTest } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
-
 import MainFooter from "./mainFooter/MainFooter";
-import MainHeader from "./mainHeader/MainHeader";
 import Divider from "@common/component/Divider/Divider";
-import HotPost from "./hotPost/hotPost";
+import HotPost from "./hotPost/HotPost";
+import MainHeader from "./mainHeader/mainHeader";
 
 const postsData = [
   { id: 1, title: "반려동물 건강 관리법" },
@@ -57,16 +56,15 @@ const Main = () => {
       <Divider size="small" />
       <Spacing marginBottom="10" />
       <Divider />
+
+      <div>
+        <MainHeader />
+        <Divider />
+        <HotPost petName={petName} posts={postsData} />
+        <Divider />
+        <MainFooter />
+      </div>
     </>
-  );
-  return (
-    <div>
-      <MainHeader />
-      <Divider />
-      <HotPost petName={petName} posts={postsData} />
-      <Divider />
-      <MainFooter />
-    </div>
   );
 };
 

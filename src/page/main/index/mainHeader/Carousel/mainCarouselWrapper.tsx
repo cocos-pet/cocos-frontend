@@ -1,13 +1,14 @@
 import MainCarousel from "./mainCarousel";
 
 const MainCarouselWrapper = () => {
-  const images = [
-    "image1.jpg",
-    "image2.jpg",
-    "image3.jpg", 
-  ];
+  const images = ["image1.jpg", "image2.jpg", "image3.jpg"];
 
-  return <MainCarousel images={images} />;
+  const formattedImages = images.map((src, index) => ({
+    id: `image-${index}`,
+    src,
+  }));
+
+  return <MainCarousel images={formattedImages} />;
 };
 
 export default MainCarouselWrapper;

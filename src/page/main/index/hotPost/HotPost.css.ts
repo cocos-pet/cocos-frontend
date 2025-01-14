@@ -38,6 +38,7 @@ export const hotPostListContainer = style({
 
 export const postContent = style({
   display: "flex",
+  gap: "0.4rem",
 });
 
 export const contentId = style([

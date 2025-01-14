@@ -3,8 +3,7 @@ import { useState, useEffect } from "react";
 import * as styles from "./mainCarousel.css";
 
 interface MainCarouselProps {
-  images: string[];
-  slides: number[];
+  images: { id: string; src: string }[];
 }
 
 const MainCarousel = ({ images }: MainCarouselProps) => {
@@ -28,13 +27,9 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
   return (
     <div className={styles.carouselContainer} ref={emblaRef}>
       <div className={styles.carouselSlides}>
-        {images.map((image, index) => (
-          <div key={index} className={styles.carouselSlide}>
-            <img
-              src={image}
-              alt={`Slide ${index + 1}`}
-              className={styles.image}
-            />
+        {images.map((image) => (
+          <div key={image.id} className={styles.carouselSlide}>
+            <img src={image.src} alt={`Slide ${image.id}`} className={styles.image} />
           </div>
         ))}
       </div>
