@@ -23,7 +23,7 @@ interface TextFieldProps {
  * @param value 입력값
  * @param onChange 입력값 변경 함수
  * @param onKeyDown 엔터키 입력 함수
- * @param onClearClick value 제거 함수
+ * @param onClearClick 입력값 삭제 함수
  * @constructor minjeoong
  */
 
@@ -38,16 +38,10 @@ export const TextField: React.FC<TextFieldProps> = ({
   onClearClick,
 }) => {
   return (
-    <div
-      className={clsx(
-        styles.wrapper,
-        !active && styles.disabledWrapper,
-        state === "error" && styles.error
-      )}
-    >
+    <div className={styles.wrapper({ state, active })}>
       <input
         type="text"
-        className={clsx(styles.input, !active && styles.disabledInput)}
+        className={styles.input({ active })}
         placeholder={placeholder}
         value={value}
         onChange={onChange}
