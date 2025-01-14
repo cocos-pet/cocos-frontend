@@ -33,6 +33,12 @@ interface CategoryData {
 // CategoryType과 연계된 타입
 export type CategoryType = keyof CategoryData;
 
+export interface SelectedChips {
+  breedId: number[];
+  diseaseIds: number[];
+  symptomIds: number[];
+}
+
 interface FilterState {
   //필터 바텀 시트 오픈 여부
   isOpen: boolean;
@@ -44,12 +50,12 @@ interface FilterState {
   setCategory: (category: CategoryType) => void;
 
   // 적용된 필터
-  selectedChips: string[];
-  toggleChips: (chip: string) => void;
+  selectedChips: SelectedChips;
+  toggleChips: (chip: { id: number; category: keyof SelectedChips }) => void;
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
-  setCategoryData: (category: CategoryType, data: CategoryData) => void;
+  setCategoryData: (category: CategoryType, data: CategoryKind | CategorySymptom | CategoryDisease) => void;
 }
 
 export const useFilterStore = create<FilterState>((set) => ({
@@ -60,13 +66,38 @@ export const useFilterStore = create<FilterState>((set) => ({
   category: "kind",
   setCategory: (category) => set({ category }),
 
-  selectedChips: [],
-  toggleChips: (chip) =>
-    set((state) => ({
-      selectedChips: state.selectedChips.includes(chip)
-        ? state.selectedChips.filter((f) => f !== chip)
-        : [...state.selectedChips, chip],
-    })),
+  selectedChips: { breedId: [], diseaseIds: [], symptomIds: [] }, // 초기화된 구조
+  toggleChips: ({ id, category }) =>
+    set((state) => {
+      // const keyMap = {
+      //   kind: "breedId",
+      //   disease: "diseaseIds",
+      //   symptoms: "symptomIds",
+      // } as const;
+
+      // // category가 keyMap에 존재하는지 체크
+      // console.log(category);
+
+      // if (!(category in keyMap)) {
+      //   console.error(`Invalid category: ${category}`);
+      //   return state; // 잘못된 category 값인 경우 상태를 그대로 반환
+      // }
+
+      // const key = keyMap[category as keyof typeof keyMap];
+
+      const currentList = state.selectedChips[category] || [];
+      const alreadyExists = currentList.includes(id);
+
+      // ID 추가 또는 제거
+      const updatedList = alreadyExists ? currentList.filter((chipId) => chipId !== id) : [...currentList, id];
+
+      return {
+        selectedChips: {
+          ...state.selectedChips,
+          [category]: updatedList,
+        },
+      };
+    }),
 
   categoryData: { kind: CATEGORY_KIND, symptoms: CATEGORY_SYMPTOM, disease: CATEGORY_DISEASE }, //todo: api 연결 후에는 [] 로 변경할 것
   setCategoryData: (category, data) =>

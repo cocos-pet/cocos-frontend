@@ -4,7 +4,7 @@ import Tab from "@common/component/Tab/Tab";
 import CategoryContent from "./CategoryContent/CategoryContent";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip";
-import { CategoryType, useFilterStore } from "@store/filter";
+import { CategoryType, SelectedChips, useFilterStore } from "@store/filter";
 
 const categories: { id: CategoryType; label: string }[] = [
   { id: "kind", label: "종류" },
@@ -24,14 +24,53 @@ const FilterBottomSheet = () => {
     setCategory(cate);
   };
 
+  const isAnyChipSelected = Object.entries(selectedChips).some(([_, ids]) => {
+    return (ids as number[]).length > 0;
+  });
+
   return (
     <BottomSheet isOpen={isOpen} handleOpen={setOpen}>
       <>
-        {selectedChips.length ? (
+        {isAnyChipSelected ? (
           <div className={styles.selectedZone}>
-            {selectedChips.map((filter) => (
-              <Chip key={`filter-${filter}`} label={filter} icon={true} onClick={() => toggleChips(filter)} />
-            ))}
+            {Object.entries(selectedChips).map(([key, ids]) =>
+              (ids as number[]).map((id) => {
+                const categoryData = useFilterStore.getState().categoryData;
+                const keyMap: Record<keyof SelectedChips, CategoryType> = {
+                  breedId: "kind",
+                  diseaseIds: "disease",
+                  symptomIds: "symptoms",
+                } as const;
+
+                const category = keyMap[key as keyof SelectedChips];
+
+                // 중첩 데이터 탐색
+                const getNameById = (id: number, category: CategoryType): string | undefined => {
+                  if (category === "kind") {
+                    return categoryData.kind.find((item) => item.id === id)?.name;
+                  }
+                  if (category === "disease") {
+                    return categoryData.disease.flatMap((group) => group.diseases).find((item) => item.id === id)?.name;
+                  }
+                  if (category === "symptoms") {
+                    return categoryData.symptoms.flatMap((group) => group.symptoms).find((item) => item.id === id)
+                      ?.name;
+                  }
+                  return undefined;
+                };
+
+                const name = getNameById(id, category);
+
+                return (
+                  <Chip
+                    key={`filter-${key}-${id}`}
+                    label={name || "Unknown"}
+                    icon={true}
+                    onClick={() => toggleChips({ id, category: key as keyof SelectedChips })}
+                  />
+                );
+              }),
+            )}
           </div>
         ) : (
           <></>

@@ -1,18 +1,23 @@
 import { IcUp } from "@asset/svg";
 import * as styles from "./DropDownText.css";
 import { useState } from "react";
-import { DiseaseItem, SymptomItem, useFilterStore } from "@store/filter";
+import { DiseaseItem, SelectedChips, SymptomItem, useFilterStore } from "@store/filter";
 import Chip from "@common/component/Chip/Chip";
 
 interface DropDownTextPropTypes {
   children: string; // title
   content: SymptomItem["symptoms"] | DiseaseItem["diseases"];
+  parentKey: keyof SelectedChips; // 선택된 필터 키
 }
 
 //참고) content는 depth가 깊은 symptoms나 disease에 대응하기 위해 만들어둠
-const DropDownText = ({ children, content }: DropDownTextPropTypes) => {
+const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) => {
   const { toggleChips, selectedChips } = useFilterStore();
   const [isOpen, setIsOpen] = useState(false);
+
+  const isSelected = (id: number): boolean => {
+    return selectedChips[parentKey]?.includes(id) ?? false;
+  };
 
   const renderDropDownData = () => {
     if (content) {
@@ -21,8 +26,8 @@ const DropDownText = ({ children, content }: DropDownTextPropTypes) => {
         <Chip
           key={`dropDown-${data.id}`}
           label={data.name}
-          onClick={() => toggleChips(data.name)}
-          isSelected={selectedChips.includes(data.name)}
+          onClick={() => toggleChips({ category: parentKey, id: data.id })}
+          isSelected={isSelected(data.id)}
         />
       ));
     }
