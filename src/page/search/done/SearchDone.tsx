@@ -8,10 +8,14 @@ const SearchDone = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
 
-  const [searchText, setSearchText] = useState("");
+  const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
+  };
+
+  const onTextFieldClick = () => {
+    navigate(`/search/done?searchText=${searchText}`);
   };
 
   return (
@@ -22,9 +26,9 @@ const SearchDone = () => {
           value={searchText}
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
-          onKeyDown={handleKeyDown}
-          icon={<IcSearch onClick={() => onSubmit(searchText)} />}
+          icon={<IcSearch />}
           onClearClick={() => setSearchText("")}
+          onClick={onTextFieldClick}
         />
       </div>
       <div className={styles.searchContent}></div>

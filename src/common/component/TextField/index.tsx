@@ -10,6 +10,7 @@ interface TextFieldProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
 }
@@ -22,6 +23,7 @@ interface TextFieldProps {
  * @param placeholder placeholder
  * @param value 입력값
  * @param onChange 입력값 변경 함수
+ * @param onClick input 클릭 함수
  * @param onKeyDown 엔터키 입력 함수
  * @param onClearClick 입력값 삭제 함수
  * @constructor minjeoong
@@ -34,6 +36,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   placeholder = "검색어를 입력해주세요",
   value,
   onChange,
+  onClick,
   onKeyDown,
   onClearClick,
 }) => {
@@ -45,6 +48,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onClick={onClick}
         onKeyDown={onKeyDown}
         disabled={!active}
       />
