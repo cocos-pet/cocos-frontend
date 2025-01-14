@@ -14,14 +14,13 @@ export const toast = recipe({
       justifyContent: "space-between",
       alignItems: "center",
       width: "28rem",
-      // height: "4rem",
       position: "fixed",
       top: "4rem",
       left: "50%",
-      transform: "translate(-50%, -50%)", // 중앙 정렬
-      backgroundSize: "inherit", // 배경 이미지가 잘리거나 왜곡되지 않도록 설정
-      backgroundRepeat: "no-repeat", // 반복 방지
-      backgroundPosition: "center", // 이미지 중앙 배치
+      transform: "translate(-50%, -50%)",
+      backgroundSize: "inherit",
+      backgroundRepeat: "no-repeat",
+      backgroundPosition: "center",
     },
   ],
   variants: {

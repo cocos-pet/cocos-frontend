@@ -13,6 +13,15 @@ interface ToastProps {
 
 type CombinedButtonProps = ToastProps & Exclude<ToastVariants, undefined>;
 
+/**
+ * Toast 컴포넌트
+ * @param message 토스트 메세지
+ * @param variant 종류 (default, error)
+ * @param iconColor 아이콘 색상 (black, white)
+ * @param onClick 토스트 삭제 버튼 이벤트
+ * @constructor
+ */
+
 export const Toast = ({
   message,
   variant,
