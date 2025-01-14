@@ -1,3 +1,4 @@
+export { default as IcShape } from "./IcShape";
 export { default as IcDelete } from "./IcDelete";
 export { default as IcTest } from "./IcTest";
 export { default as IcoMessage } from "./IcoMessage";
