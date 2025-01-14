@@ -1,4 +1,4 @@
-import { semanticColor } from "@style/styles.css";
+import { font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const carouselContainer = style({
@@ -30,5 +30,6 @@ export const carouselStatus = style({
   padding: "0.5rem 1rem",
   backgroundColor: semanticColor.neutral.assistive,
   borderRadius: "12px",
+  color: "white",
   zIndex: "4",
 });
