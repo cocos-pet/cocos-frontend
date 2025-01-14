@@ -35,7 +35,37 @@ export const styles = {
   infoDetail: style([
     font.label01,
     {
+      fontWeight: "500",
       color: color.gray.gray700,
+      lineHeight: "130%",
+      letterSpacing: "-0.24px",
     },
   ]),
+  title: style([
+    font.heading02,
+    {
+      marginBottom: "0.4rem",
+      color: color.gray.gray900,
+    },
+  ]),
+  content: style([
+    font.heading03,
+    {
+      color: color.gray.gray800,
+    },
+  ]),
+  image: style({
+    width: "100%",
+    maxHeight: "33.5rem",
+    borderRadius: "0.8rem",
+    objectFit: "cover",
+  }),
+  labelwrap: style({
+    display: "flex",
+    flexDirection: "row",
+    gap: "0.4rem",
+  }),
+  countwrap: style({
+    padding: "0.8rem 0",
+  }),
 };

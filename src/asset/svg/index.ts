@@ -6,6 +6,7 @@ export { default as IcDelete } from "./IcDelete";
 export { default as IcEllipses } from "./IcEllipses";
 export { default as IcLeftarrow } from "./IcLeftarrow";
 export { default as IcMessage } from "./IcMessage";
+export { default as IcPostImageSkeleton } from "./IcPostImageSkeleton";
 export { default as IcSearch } from "./IcSearch";
 export { default as IcSearchFillter } from "./IcSearchFillter";
 export { default as IcSearchFillterBlue } from "./IcSearchFillterBlue";
