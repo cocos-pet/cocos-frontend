@@ -6,7 +6,7 @@ interface DocsProps {
 
 type CombinedDocsProps = DocsProps & Exclude<titleStyleVariant, undefined>;
 
-const Docs = ({ state, text }: CombinedDocsProps) => {
+const Docs = ({ state = "none", text }: CombinedDocsProps) => {
   return (
     <>
       <div className={titleStyle({ state })}>{text}</div>

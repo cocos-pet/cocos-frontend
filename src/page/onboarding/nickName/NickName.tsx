@@ -32,7 +32,7 @@ const NickName = ({ onNickNameChange }: NickNameProps) => {
       </div>
       <div>
         <TextField value={value} onChange={onChange} placeholder="닉네임을 입력해주세요." />
-        <Docs text={ERROR_MSG.nickName.duplicate} />
+        <Docs state="lError" text={ERROR_MSG.nickName.duplicate} />
         <Docs state="sError" text={ERROR_MSG.petAge.length} />
       </div>
     </div>
