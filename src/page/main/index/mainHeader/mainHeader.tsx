@@ -2,7 +2,7 @@ import * as styles from "./mainHeader.css";
 import MainCarousel from "./Carousel/mainCarousel";
 import { carouselMock } from "@shared/constant/carouselMock";
 
-const MainHeader = () => {
+const mainHeader = () => {
   const { Images } = carouselMock;
   const SLIDE_COUNT = 3;
   const SLIDES = Array.from(Array(SLIDE_COUNT).keys());
@@ -25,4 +25,4 @@ const MainHeader = () => {
   );
 };
 
-export default MainHeader;
+export default mainHeader;
