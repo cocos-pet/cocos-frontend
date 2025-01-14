@@ -1,3 +1,6 @@
+export { default as IcEllipse57 } from "./IcEllipse57";
+export { default as IcEllipses } from "./IcEllipses";
+export { default as IcMessage } from "./IcMessage";
 export { default as IcShape } from "./IcShape";
 export { default as IcDelete } from "./IcDelete";
 export { default as IcTest } from "./IcTest";
