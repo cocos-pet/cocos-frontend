@@ -1,17 +1,18 @@
-import { useState } from "react";
-import { useFilterStore } from "@store/filter";
 import Nav from "@common/component/Nav/Nav";
+import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
+import { useFilterStore } from "@store/filter";
 
 const Main = () => {
-  const [isOpen, setIsOpen] = useState(true);
-  const { bears, updateBears, increasePopulation } = useFilterStore();
+  const { setOpen, toggleOpen } = useFilterStore();
 
   return (
     <div style={{ position: "relative" }}>
-      <button onClick={increasePopulation}>증가</button>
-      <div>{bears}</div>
       <Nav />
-      {/* <FilterBottomSheet isOpen={isOpen} handleOpen={() => setIsOpen(false)} />
+      <button onClick={toggleOpen} style={{ width: "4rem", height: "4rem", backgroundColor: "aliceblue" }}>
+        open
+      </button>
+
+      <FilterBottomSheet />
       <div>ㅋㅋ</div>
       <div>ㅋㅋ</div>
       <div>ㅋㅋ</div>
@@ -21,7 +22,7 @@ const Main = () => {
       <div>ㅋㅋ</div>
       <div>ㅋㅋ</div>
       <div>ㅋㅋ</div>
-      <div>ㅋㅋ</div> */}
+      <div>ㅋㅋ</div>
     </div>
   );
 };
