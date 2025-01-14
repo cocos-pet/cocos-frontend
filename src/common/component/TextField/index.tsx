@@ -54,12 +54,11 @@ export const TextField: React.FC<TextFieldProps> = ({
         onKeyDown={onKeyDown}
         disabled={!active}
       />
-      {icon &&
-        (value ? (
-          <IcClear onClick={onClearClick} />
-        ) : (
-          <div className={styles.icon}>{icon}</div>
-        ))}
+      {value ? (
+        <IcClear onClick={onClearClick} /> // `value` 값이 있을 때 표시
+      ) : (
+        icon // 사용자가 입력한 아이콘 표시
+      )}
     </div>
   );
 };
