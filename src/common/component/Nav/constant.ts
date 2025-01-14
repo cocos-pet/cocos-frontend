@@ -8,8 +8,8 @@ type NavItem = {
 };
 
 export const NAV_CONTENT: NavItem[] = [
-  { id: "home", label: "홈", path: "/main", svg: IcShape },
-  { id: "community", label: "커뮤니티", path: "/community", svg: IcShape },
-  { id: "review", label: "병원리뷰", path: "/community", svg: IcShape },
-  { id: "my", label: "마이", path: "/mypage", svg: IcShape },
+  { id: "/main", label: "홈", path: "/main", svg: IcShape },
+  { id: "/community", label: "커뮤니티", path: "/community", svg: IcShape },
+  { id: "/review", label: "병원리뷰", path: "/community", svg: IcShape },
+  { id: "/mypage", label: "마이", path: "/mypage", svg: IcShape },
 ];

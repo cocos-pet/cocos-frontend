@@ -1,15 +1,25 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
 
 const Nav = () => {
-  const [activeItem, setActiveItem] = useState<string>("home");
+  const location = useLocation();
+
+  const extractFirstPath = (): string => {
+    const pathName = location.pathname;
+    const parts = pathName.split("/");
+    const basePath = `/${parts[1]}`;
+
+    return basePath;
+  };
+
+  const [activeItem, setActiveItem] = useState<string>(extractFirstPath());
   const navigate = useNavigate();
 
   const handleClick = (itemId: string, path: string) => {
     setActiveItem(itemId);
-    if (itemId !== "review") {
+    if (itemId !== "/review") {
       navigate(path);
     } else {
       alert("추후 구현 예정입니다.");
