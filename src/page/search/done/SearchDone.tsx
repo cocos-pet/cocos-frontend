@@ -3,6 +3,7 @@ import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { styles } from "@page/search/done/SearchDone.css.ts";
+import { PATH } from "@route/path.ts";
 
 const SearchDone = () => {
   const [searchParams] = useSearchParams();
@@ -15,13 +16,17 @@ const SearchDone = () => {
   };
 
   const onTextFieldClick = () => {
-    navigate(`/search/done?searchText=${searchText}`);
+    navigate(PATH.SEARCH.ROOT + `?searchText=${searchText}`);
+  };
+
+  const onBackClick = () => {
+    navigate(PATH.COMMUNITY.ROOT);
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.searchHeader}>
-        <IcLeftarrow className={styles.icon} />
+        <IcLeftarrow className={styles.icon} onClick={onBackClick} />
         <TextField
           value={searchText}
           placeholder={"검색어를 입력해주세요"}
