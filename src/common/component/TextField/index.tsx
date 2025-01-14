@@ -9,6 +9,7 @@ interface TextFieldProps {
   placeholder?: string;
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
 }
 
 /**
@@ -29,6 +30,7 @@ export const TextField: React.FC<TextFieldProps> = ({
   placeholder = "검색어를 입력해주세요",
   value,
   onChange,
+  onKeyDown,
 }) => {
   return (
     <div
@@ -44,6 +46,7 @@ export const TextField: React.FC<TextFieldProps> = ({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        onKeyDown={onKeyDown}
         disabled={!active}
       />
       {icon && <div className={styles.icon}>{icon}</div>}
