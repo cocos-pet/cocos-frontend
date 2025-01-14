@@ -5,8 +5,8 @@ import { IcDelete } from "@asset/svg/index";
 interface ChipProps {
   label: string;
   icon?: boolean;
-  color: "blue" | "gray";
-  onClick: () => void;
+  color?: "blue" | "gray";
+  onClick?: () => void;
 }
 
 type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;

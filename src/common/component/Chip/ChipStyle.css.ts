@@ -14,17 +14,18 @@ export const chipItem = recipe({
       // background: color.gray.gray000,
       color: color.primary.blue700,
       border: `0.1rem solid ${color.primary.blue500}`,
+      flexShrink: "0",
     },
   ],
 
   variants: {
     size: {
       small: {
-        width: "5.8rem",
+        minWidth: "5.8rem",
         height: "3.6rem",
       },
       large: {
-        width: "8.2rem",
+        minWidth: "8.2rem",
         height: "4rem",
       },
     },

@@ -4,6 +4,7 @@ import Tab from "@common/component/Tab/Tab";
 import { useState } from "react";
 import CategoryContent from "./CategoryContent/CategoryContent";
 import { Button } from "@common/component/Button";
+import Chip from "@common/component/Chip/Chip";
 
 interface FilterBottomSheetPropTypes {
   isOpen: boolean;
@@ -49,7 +50,7 @@ const FilterBottomSheet = ({ isOpen, handleOpen }: FilterBottomSheetPropTypes) =
         {selectedFilters.length ? (
           <div className={styles.selectedZone}>
             {selectedFilters.map((filter) => (
-              <div key={`filter-${filter}`}>{filter}</div>
+              <Chip key={`filter-${filter}`} label={filter}/>
             ))}
           </div>
         ) : (
