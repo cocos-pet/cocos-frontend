@@ -6,7 +6,7 @@ export const PATH = {
   MAIN: "/main",
   COMMUNITY: {
     ROOT: "/community",
-    POST: "/community/post",
+    POST: "/community/:postId",
     SEARCH: "/community/search",
     WRITE: "/community/write",
   },

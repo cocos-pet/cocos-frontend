@@ -1,4 +1,9 @@
-import { IcLeftarrow, IcSearch, IcSearchFillter } from "@asset/svg";
+import {
+  IcLeftarrow,
+  IcSearch,
+  IcSearchFillter,
+  IcSearchFillterBlue,
+} from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -10,7 +15,7 @@ import { searchDoneData } from "@shared/constant/searchDoneData.ts";
 const SearchDone = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
-
+  const [isFilterActive, setIsFilterActive] = useState(false); // TODO: 필터 활성화 설정 필요
   const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +28,10 @@ const SearchDone = () => {
 
   const onBackClick = () => {
     navigate(PATH.COMMUNITY.ROOT);
+  };
+
+  const onClickPost = (postId: number) => {
+    navigate(PATH.COMMUNITY.ROOT + `/${postId}`);
   };
 
   return (
@@ -39,7 +48,7 @@ const SearchDone = () => {
         />
       </div>
       <div className={styles.searchContent}>
-        <IcSearchFillter />
+        {isFilterActive ? <IcSearchFillterBlue /> : <IcSearchFillter />}
         {searchDoneData.map((data, index) => (
           <Content
             key={index}
@@ -50,6 +59,7 @@ const SearchDone = () => {
             likeCnt={data.likeCnt}
             commentCnt={data.commentCnt}
             timeAgo={data.timeAgo}
+            onClick={() => onClickPost(data.id)} //TODO: postId 로 변경
           />
         ))}
       </div>
