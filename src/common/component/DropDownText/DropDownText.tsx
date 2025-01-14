@@ -15,8 +15,6 @@ const DropDownText = ({ children, content }: DropDownTextPropTypes) => {
 
   const dropDownData = categoryData[category];
 
-  console.log(dropDownData);
-
   const renderDropDownData = () => {
     if (content) {
       return content.map((data) => (

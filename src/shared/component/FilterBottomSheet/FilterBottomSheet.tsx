@@ -14,7 +14,7 @@ const categories: { id: CategoryType; label: string }[] = [
 
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
 const FilterBottomSheet = () => {
-  const { category, selectedChips, setCategory, isOpen, setOpen } = useFilterStore();
+  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips } = useFilterStore();
 
   const isSelectedCategory = (cate: CategoryType): boolean => {
     return cate === category;
@@ -30,7 +30,7 @@ const FilterBottomSheet = () => {
         {selectedChips.length ? (
           <div className={styles.selectedZone}>
             {selectedChips.map((filter) => (
-              <Chip key={`filter-${filter}`} label={filter} />
+              <Chip key={`filter-${filter}`} label={filter} icon={true} onClick={() => toggleChips(filter)} />
             ))}
           </div>
         ) : (

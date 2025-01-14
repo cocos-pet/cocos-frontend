@@ -2,10 +2,16 @@ import CheckBoxText from "@common/component/CheckBoxText/CheckBoxText";
 import { styles } from "./CategoryContent.css";
 import DropDownText from "@common/component/DropDownText/DropDownText";
 import { DiseaseItem, SymptomItem, useFilterStore } from "@store/filter";
+import { useEffect } from "react";
 
 // 선택한 카테고리에 맞게 보여줄 내용들
 const CategoryContent = () => {
   const { category, categoryData, selectedChips, toggleChips } = useFilterStore();
+
+  useEffect(() => {
+    console.log(selectedChips);
+  }, [selectedChips]);
+  
   const dropDownData = categoryData[category];
 
   if (category === "kind") {
