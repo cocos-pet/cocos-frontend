@@ -12,6 +12,7 @@ interface ContentPropTypes {
   commentCnt: number;
   timeAgo: string;
   postImage?: React.ReactNode;
+  onClick?: () => void;
 }
 
 /**
@@ -24,7 +25,8 @@ interface ContentPropTypes {
  * @param likeCnt 좋아요 수
  * @param commentCnt 댓글 수
  * @param timeAgo 게시물 작성 시간
- * @param postImage
+ * @param postImage 게시물 이미지
+ * @param onClick 클릭 이벤트
  * @constructor minjeoong
  */
 
@@ -38,6 +40,7 @@ const Content: React.FC<ContentPropTypes> = ({
   commentCnt,
   timeAgo,
   postImage,
+  onClick,
 }) => {
   return (
     <div className={styles.container}>
