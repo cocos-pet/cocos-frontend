@@ -12,19 +12,16 @@ globalStyle(
     margin: 0,
     padding: 0,
     border: 0,
-    fontSize: "100%",
+    // fontSize: "100%",
     font: "inherit",
     verticalAlign: "baseline",
-  }
+  },
 );
 
 /* Display block for HTML5 elements */
-globalStyle(
-  "article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section",
-  {
-    display: "block",
-  }
-);
+globalStyle("article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section", {
+  display: "block",
+});
 
 /* Body styles */
 globalStyle("body", {
@@ -54,4 +51,21 @@ globalStyle("blockquote:before, blockquote:after, q:before, q:after", {
 globalStyle("table", {
   borderCollapse: "collapse",
   borderSpacing: 0,
+});
+
+/* Button 스타일 리셋 */
+globalStyle("button", {
+  background: "none",
+  border: "none",
+  padding: 0,
+  font: "inherit",
+  color: "inherit",
+  cursor: "pointer",
+  outline: "none",
+  appearance: "none",
+});
+
+/* Button 호버 및 포커스 상태 스타일 리셋 */
+globalStyle("button:hover, button:focus", {
+  outline: "none",
 });
