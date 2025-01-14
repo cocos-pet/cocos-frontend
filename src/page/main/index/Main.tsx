@@ -4,7 +4,7 @@ import BottomSheet from "@common/component/BottomSheet/SimpleBottomSheet";
 /*
 localhost:5173/main
 */
-import React, { ChangeEvent, useState } from "react";
+import 
 import { Button } from "@common/component/Button";
 import { IcTest } from "@asset/svg";
 
