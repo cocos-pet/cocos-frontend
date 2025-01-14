@@ -58,11 +58,7 @@ const Search = () => {
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
           {recentSearchData.map((data, index) => (
-            <li
-              key={index}
-              className={styles.listItem}
-              onClick={() => onSubmit(data)}
-            >
+            <li key={index} className={styles.listItem} onClick={() => onSubmit(data)}>
               {data}
             </li>
           ))}
