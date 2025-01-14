@@ -12,10 +12,6 @@ export const commentContainer = style([
   },
 ]);
 
-export const pStyle = style({
-  padding: "0rem, 1.1rem, 0rem, 4rem",
-});
-
 export const containerOptionsIcon = style([
   {
     position: "absolute",
@@ -90,11 +86,11 @@ export const replyContainer = style([
     display: "flex",
     alignItems: "center",
     padding: "0rem 1.1rem 0rem 4rem",
-    gap: "0.4rem", 
+    gap: "0.4rem",
   },
-  font.label01, 
+  font.label01,
   {
-    color: semanticColor.text.assistiveLight, 
+    color: semanticColor.text.assistiveLight,
   },
 ]);
 

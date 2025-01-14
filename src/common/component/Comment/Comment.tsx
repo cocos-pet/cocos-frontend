@@ -31,9 +31,9 @@ const Comment = ({ comments }: CommentProps) => {
                 </span>
               </div>
             </div>
-            <div className={styles.pStyle}>
-              <p className={styles.text}>{comment.content}</p>
-            </div>
+
+            <p className={styles.text}>{comment.content}</p>
+
             <div className={styles.replyContainer}>
               <IcMessage />
               <p>답글쓰기</p>
