@@ -1,5 +1,7 @@
 import { ApiItemTypes } from "./MyPageContent";
 
+export const dummyData1: ApiItemTypes[] = [];
+
 export const dummyData: ApiItemTypes[] = [
   {
     id: 1,
@@ -51,6 +53,30 @@ export const dummyData: ApiItemTypes[] = [
   },
   {
     id: 5,
+    nickname: "User3",
+    title: "Third Post",
+    content: "Third post content goes here.",
+    likeCount: 40,
+    commentCount: 12,
+    createdAt: "2025-01-13:08-15-00",
+    updatedAt: "2025-01-13:08-45-00",
+    image: "https://example.com/image3.jpg",
+    category: "Announcement",
+  },
+  {
+    id: 6,
+    nickname: "User3",
+    title: "Third Post",
+    content: "Third post content goes here.",
+    likeCount: 40,
+    commentCount: 12,
+    createdAt: "2025-01-13:08-15-00",
+    updatedAt: "2025-01-13:08-45-00",
+    image: "https://example.com/image3.jpg",
+    category: "Announcement",
+  },
+  {
+    id: 7,
     nickname: "User3",
     title: "Third Post",
     content: "Third post content goes here.",

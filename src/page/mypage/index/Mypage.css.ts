@@ -40,9 +40,6 @@ export const pleaseLoginText = style([
 export const loginProfile = style({});
 
 export const myPageContentWrapper = style({
-  position: "sticky",
-  top: "6.4rem",
-
   display: "flex",
   width: "37.5rem",
   minHeight: "30.6rem",
@@ -53,10 +50,13 @@ export const myPageContentWrapper = style({
   alignItems: "center",
 
   //backgroundColor: "aliceblue",
-  border: "1px solid black",
+  //border: "1px solid black",
 });
 
 export const contentHeaderWrapper = style({
+  position: "sticky",
+  top: "6.4rem",
+
   display: "flex",
   paddingTop: "1.2rem",
   alignItems: "center",
@@ -65,6 +65,8 @@ export const contentHeaderWrapper = style({
 
   width: "37.5rem",
   height: "5.6rem",
+
+  backgroundColor: "white",
 });
 
 export const contentBody = style({

@@ -1,7 +1,7 @@
 import Content from "@common/component/Content/Content";
 import { ActiveTabType } from "../../Mypage";
 import * as styles from "./MyPageContent.css";
-import { dummyData } from "./costant"; //todo: 더미데이터 렌더링
+import { dummyData, dummyData1 } from "./costant"; //todo: 더미데이터 렌더링
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -42,19 +42,21 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
 
   return (
     <div>
-      {dummyData.map((data) => (
-        <div style={{ paddingTop: "1.6rem" }} key={`post-${data.id}`}>
-          <Content
-            breed="골든 리트리버"
-            age="12살"
-            postTitle="강아지 헥헥거림 증상"
-            postContent="강아지가 2주 전부터 헥헥거림 증상이 심한데..."
-            likeCnt={10}
-            commentCnt={5}
-            timeAgo="1시간 전"
-          />
-        </div>
-      ))}
+      {dummyData1.length === 0
+        ? renderNothingContent(tab)
+        : dummyData.map((data) => (
+            <div style={{ paddingTop: "1.6rem" }} key={`post-${data.id}`}>
+              <Content
+                breed="골든 리트리버"
+                age="12살"
+                postTitle="강아지 헥헥거림 증상"
+                postContent="강아지가 2주 전부터 헥헥거림 증상이 심한데..."
+                likeCnt={data.likeCount}
+                commentCnt={data.commentCount}
+                timeAgo="1시간 전"
+              />
+            </div>
+          ))}
     </div>
   );
 };

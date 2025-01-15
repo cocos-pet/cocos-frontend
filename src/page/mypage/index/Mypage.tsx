@@ -34,20 +34,25 @@ const Mypage = () => {
 
       <Divider />
 
+      <div className={styles.contentHeaderWrapper}>
+        <Tab active={isActiveTab("review")} width={"12.5rem"} onClick={() => handleTabClick("review")}>
+          병원 후기
+        </Tab>
+        <Tab active={isActiveTab("post")} width={"12.5rem"} onClick={() => handleTabClick("post")}>
+          게시글
+        </Tab>
+        <Tab active={isActiveTab("comment")} width={"12.5rem"} onClick={() => handleTabClick("comment")}>
+          댓글
+        </Tab>
+      </div>
+
       <article className={styles.myPageContentWrapper}>
-        <div className={styles.contentHeaderWrapper}>
-          <Tab active={isActiveTab("review")} width={"12.5rem"} onClick={() => handleTabClick("review")}>
-            병원 후기
-          </Tab>
-          <Tab active={isActiveTab("post")} width={"12.5rem"} onClick={() => handleTabClick("post")}>
-            게시글
-          </Tab>
-          <Tab active={isActiveTab("comment")} width={"12.5rem"} onClick={() => handleTabClick("comment")}>
-            댓글
-          </Tab>
-        </div>
         <div className={styles.contentBody}>
-          {isLogin ? <MyPageContent /> : <div className={styles.nothingContent}>로그인을 해주세요!</div>}
+          {isLogin ? (
+            <MyPageContent tab={activeTab} />
+          ) : (
+            <div className={styles.nothingContent}>로그인을 해주세요!</div>
+          )}
         </div>
       </article>
     </div>
