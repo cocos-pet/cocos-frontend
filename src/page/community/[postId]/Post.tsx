@@ -2,7 +2,7 @@ import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useMoreModal from "@shared/hook/useMoreModal";
 
 const PostDetail = () => {
-  const { isOpen, toggleModal } = useMoreModal();
+  const { isOpen, openModal, closeModal, toggleModal } = useMoreModal();
 
   const handleDelete = () => {
     alert("삭제되었습니다!");
@@ -21,6 +21,7 @@ const PostDetail = () => {
         onToggleModal={toggleModal}
         onDelete={handleDelete}
         iconSize="20"
+        onEdit={() => alert("수정하기")}
       />
     </div>
   );
