@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "preview": "vite preview",
-    "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript -- public/svgs",
+    "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript --no-dimensions -- public/svgs",
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write",
