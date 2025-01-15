@@ -3,9 +3,8 @@ import type { SVGProps } from "react";
 const SvgIcBottomSheetLine = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={85}
-    height={4}
     fill="none"
+    viewBox="0 0 85 4"
     {...props}
   >
     <path
