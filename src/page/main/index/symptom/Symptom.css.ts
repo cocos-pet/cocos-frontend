@@ -23,6 +23,7 @@ export const symptomGrid = style({
 });
 
 export const symptomItem = style({
+  marginLeft: "1rem",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
