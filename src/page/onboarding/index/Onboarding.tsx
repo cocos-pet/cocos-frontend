@@ -1,11 +1,9 @@
-import * as styles from "./Onboarding.css";
-
+import DualOptionSelector from "./component/dualOptionSelector/dualOptionSelector";
 const Onboarding = () => {
   return (
-    <div>
-      <span className={styles.largeText}>테스트</span>
-      Onboarding
-    </div>
+    <>
+      <DualOptionSelector />
+    </>
   );
 };
 
