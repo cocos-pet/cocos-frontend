@@ -1,11 +1,11 @@
+import * as styles from "./Nickname.css";
 import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import * as styles from "@page/onboarding/nickname/Nickname.css";
-import { ONBOARDING_GUIDE } from "@page/onboarding/constant/onboardingGuide";
-import Title from "@page/onboarding/component/title/Title";
-import Docs from "@page/onboarding/component/docs/Docs";
+import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
+import Title from "@page/onboarding/index/common/title/Title";
+import Docs from "@page/onboarding/index/common/docs/Docs";
 import onboardingImg from "@asset/image/image 1730.png";
-import { validateNickname } from "../util/validateNickname";
+import { validateNickname } from "@page/onboarding/index/util/validateNickname";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
 
