@@ -20,6 +20,8 @@ export const navItem = recipe({
     justifyContent: "center",
     alignItems: "center",
     padding: "0 1.2rem",
+    width: "5.6rem",
+    whiteSpace: "nowrap",
   },
   variants: {
     state: {
