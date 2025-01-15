@@ -1,9 +1,8 @@
+import * as React from "react";
 import type { SVGProps } from "react";
 const SvgVite = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={31.88}
-    height={32}
     aria-hidden="true"
     className="vite_svg__iconify vite_svg__iconify--logos"
     viewBox="0 0 256 257"
