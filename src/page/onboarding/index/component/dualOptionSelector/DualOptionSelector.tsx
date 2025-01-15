@@ -1,5 +1,4 @@
 import * as styles from "./DualOptionSelector.css";
-import { selector } from "./DualOptionSelector.css";
 import { useState } from "react";
 import selectImg from "@asset/image/image 1733.png";
 
@@ -25,7 +24,7 @@ const DualOptionSelector = ({ leftLabel, rightLabel, onSelect }: DualOptionSelec
     <div className={styles.layout}>
       {/* 왼쪽 선택지 */}
       <div
-        className={selector({ state: selectedOption === leftLabel ? "selected" : "unselected" })}
+        className={styles.selector({ state: selectedOption === leftLabel ? "selected" : "unselected" })}
         onClick={() => handleOptionClick(leftLabel)}
       >
         {leftLabel}
@@ -33,7 +32,7 @@ const DualOptionSelector = ({ leftLabel, rightLabel, onSelect }: DualOptionSelec
       </div>
       {/* 오른쪽 선택지 */}
       <div
-        className={selector({ state: selectedOption === rightLabel ? "selected" : "unselected" })}
+        className={styles.selector({ state: selectedOption === rightLabel ? "selected" : "unselected" })}
         onClick={() => handleOptionClick(rightLabel)}
       >
         {rightLabel}
