@@ -15,11 +15,13 @@ export const container = style([
 
 export const navItem = recipe({
   base: {
+    width: "5.6rem",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     padding: "0 1.2rem",
+    whiteSpace: "nowrap",
   },
   variants: {
     state: {

@@ -7,6 +7,7 @@ import { TextField } from "@common/component/TextField";
 import { useNavigate } from "react-router-dom";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./Main.css";
+import Nav from "@common/component/Nav/Nav";
 
 const postsData = [
   { id: 1, title: "실시간 심장병 질문 1위" },
@@ -16,7 +17,7 @@ const postsData = [
   { id: 5, title: "반려동물과 함께하는 여행 준비" },
 ];
 
-const petName = "";
+const petName = "연진이";
 
 const Main = () => {
   const navigate = useNavigate();
@@ -42,6 +43,7 @@ const Main = () => {
       <HotPost petName={petName} posts={postsData} />
       <Divider />
       <MainFooter />
+      <Nav />
     </div>
   );
 };
