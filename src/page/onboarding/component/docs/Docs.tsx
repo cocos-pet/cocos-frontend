@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { titleStyleVariant, titleStyle } from "./Docs.css";
+import { titleStyleVariant, docsStyle } from "./Docs.css";
 interface DocsProps {
   text: ReactNode;
 }
@@ -9,7 +9,7 @@ type CombinedDocsProps = DocsProps & Exclude<titleStyleVariant, undefined>;
 const Docs = ({ state = "none", text }: CombinedDocsProps) => {
   return (
     <>
-      <div className={titleStyle({ state })}>{text}</div>
+      <div className={docsStyle({ state })}>{text}</div>
     </>
   );
 };

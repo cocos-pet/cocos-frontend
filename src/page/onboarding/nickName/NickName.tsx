@@ -19,8 +19,8 @@ const Nickname = () => {
   };
 
   // 유효성 검사 결과
-  const validationMessage = nickname ? validateNickname(nickname) : "";
-  const isValid = nickname && validationMessage === ""; 
+  const validationMessages = nickname ? validateNickname(nickname) : [];
+  const isValid = nickname && validationMessages.length === 0;
 
   // 뒤로 가기
   const navigate = useNavigate();
@@ -46,7 +46,11 @@ const Nickname = () => {
         {/* 닉네임 입력 영역 */}
         <div>
           <TextField value={nickname} onChange={handleChange} placeholder="닉네임을 입력해주세요." />
-          {validationMessage && <Docs state="lError" text={validationMessage} />}
+          <div className={styles.errorLayout}>
+            {validationMessages.map((message) => (
+              <Docs key={`error-${message}`} state="lError" text={message} />
+            ))}
+          </div>
         </div>
       </div>
 

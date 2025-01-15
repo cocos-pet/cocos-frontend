@@ -23,3 +23,7 @@ export const btnWrapper = style({
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
 });
+
+export const errorLayout = style({
+  marginTop: "0.8rem",
+});

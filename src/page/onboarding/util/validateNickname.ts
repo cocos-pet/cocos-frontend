@@ -1,5 +1,6 @@
 import { ERROR_MSG } from "../constant/errorMsg";
-export function validateNickname(nickname: string): string {
+
+export function validateNickname(nickname: string): string[] {
   const errors: string[] = [];
 
   // 닉네임 길이 검사
@@ -17,11 +18,5 @@ export function validateNickname(nickname: string): string {
     errors.push(ERROR_MSG.nickname.ko);
   }
 
-  // 에러가 없으면 공백 반환
-  if (errors.length === 0) {
-    return "";
-  }
-
-  // 에러 메시지를 순서대로 합쳐서 반환
-  return errors.join(" ");
+  return errors; // 에러 메시지 배열 반환
 }

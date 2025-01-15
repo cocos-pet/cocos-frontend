@@ -1,11 +1,11 @@
 import { color, font } from "@style/styles.css.ts";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
-export const titleStyle = recipe({
+export const docsStyle = recipe({
   base: [
     font.body01,
     {
-      margin: "0.8rem 0 0 0.9rem",
+      marginLeft: "0.9rem",
       color: color.red.warning_red200,
     },
   ],
@@ -18,4 +18,5 @@ export const titleStyle = recipe({
   },
 });
 
-export type titleStyleVariant = RecipeVariants<typeof titleStyle>;
+
+export type titleStyleVariant = RecipeVariants<typeof docsStyle>;
