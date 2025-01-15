@@ -1,4 +1,4 @@
-import DualOptionSelector from "./component/dualOptionSelector/dualOptionSelector";
+import DualOptionSelector from "./component/dualOptionSelector/DualOptionSelector";
 
 const Onboarding = () => {
   return (
