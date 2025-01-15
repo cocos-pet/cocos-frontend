@@ -1,10 +1,11 @@
+import DualOptionSelector from "./component/dualOptionSelector/dualOptionSelector";
 
-// const Onboarding = () => {
-//   return (
-//     <>
-//       <DualOptionSelector leftLabel="고양이" rightLabel="강아지" />
-//     </>
-//   );
-// };
+const Onboarding = () => {
+  return (
+    <>
+      <DualOptionSelector leftLabel="고양이" rightLabel="강아지" />
+    </>
+  );
+};
 
-// export default Onboarding;
+export default Onboarding;
