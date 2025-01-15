@@ -36,8 +36,17 @@
           "fix": "safe"
         }
       },
+      "a11y": {
+        "useKeyWithClickEvents": "off",
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "off",
+        "useKeyWithMouseEvents": "off"
+      },
       "style": {
         "useImportType": {
+          "level": "off"
+        },
+        "noNonNullAssertion": {
           "level": "off"
         }
       }

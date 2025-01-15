@@ -88,6 +88,7 @@ export const button = recipe({
           border: `0.1rem solid ${color.primary.blue500}`,
         },
       },
+      
     },
     disabled: {
       true: {
