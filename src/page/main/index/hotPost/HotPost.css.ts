@@ -14,7 +14,7 @@ export const p = style([
   {
     color: semanticColor.text.normal,
     fontWeight: "500",
-    letterSpacing: "-0.024rem",
+    letterSpacing: "-0.24rem",
   },
 ]);
 
@@ -30,7 +30,7 @@ export const title = style([
   { marginBottom: "1.2rem" },
   font.heading02,
   {
-    letterSpacing: "-0.018rem",
+    letterSpacing: "-0.18rem",
     color: semanticColor.text.normal,
   },
 ]);
@@ -65,7 +65,7 @@ export const contentId = style([
 export const contentTitle = style([
   font.body01,
   {
-    letterSpacing: "-0.028rem",
+    letterSpacing: "-0.28rem",
     color: semanticColor.text.normal,
   },
 ]);
