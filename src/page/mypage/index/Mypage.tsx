@@ -18,9 +18,10 @@ const Mypage = () => {
 
       <Divider />
 
-      <article className={styles.myPageContentWrapper}>하이</article>
-      <article className={styles.myPageContentWrapper}>메이</article>
-      <article className={styles.myPageContentWrapper}>키이</article>
+      <article className={styles.myPageContentWrapper}>
+        <div className={styles.contentHeaderWrapper}></div>
+        <div className={styles.contentBody}></div>
+      </article>
     </div>
   );
 };

@@ -46,7 +46,7 @@ export const myPageContentWrapper = style({
   display: "flex",
   width: "37.5rem",
   minHeight: "30.6rem",
-  height: "70rem",
+  height: "auto",
 
   //overflowY: "hidden",
   flexDirection: "column",
@@ -55,4 +55,23 @@ export const myPageContentWrapper = style({
   backgroundColor: "aliceblue",
 
   border: "1px solid black",
+});
+
+export const contentHeaderWrapper = style({
+  display: "flex",
+  paddingTop: "1.2rem",
+  alignItems: "center",
+  alignSelf: "stretch",
+  borderBottom: `1px solid ${semanticColor.line.strong}`,
+
+  width: "37.5rem",
+  height: "5.6rem",
+});
+
+export const contentBody = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flexStart",
+
+  width: "33.5rem",
 });
