@@ -1,7 +1,7 @@
-import * as styles from "./Comment.css";
+import * as styles from "./SubComment.css";
 import { IcEllipses, IcMessage } from "@asset/svg";
 
-export interface CommentData {
+export interface SubCommentData {
   id: number;
   nickname: string;
   breed: string;
@@ -12,35 +12,36 @@ export interface CommentData {
   profileImage: string;
 }
 
-interface CommentProps {
-  comment: CommentData;
-  onReplyClick? :(id:number) =>void;
+interface SubCommentProps {
+  subComment: SubCommentData;
+  onReplyClick?: (id: number) => void; 
 }
 
-const Comment = ({ comment, onReplyClick }: CommentProps) => {
-  const handleReplyClick = () =>{
-    if(onReplyClick){
-      onReplyClick(comment.id);
+const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
+  const handleReplyClick = () => {
+    if (onReplyClick) {
+      onReplyClick(subComment.id);
     }
-  }
+  };
+
   return (
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={comment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
+          <img src={subComment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
           <div className={styles.headerInfo}>
             <IcEllipses className={styles.containerOptionsIcon} />
-            <span className={styles.nickname}>{comment.nickname}</span>
+            <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
-              {comment.breed}·{comment.petAge}살 · {comment.createdAt}
+              {subComment.breed}·{subComment.petAge}살 · {subComment.createdAt}
             </span>
           </div>
         </div>
 
-        <p className={styles.text}>{comment.content}</p>
+        <p className={styles.text}>{subComment.content}</p>
 
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
-<div className={styles.replyContainer} onClick= {handleReplyClick}>
+        <div className={styles.replyContainer} onClick={handleReplyClick}>
           <IcMessage style={{ width: "1.8rem" }} />
           <p>답글쓰기</p>
         </div>
@@ -49,4 +50,4 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
   );
 };
 
-export default Comment;
+export default SubComment;
