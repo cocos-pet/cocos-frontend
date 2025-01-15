@@ -1,9 +1,8 @@
+import * as React from "react";
 import type { SVGProps } from "react";
 const SvgReact = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
-    width={35.93}
-    height={32}
     aria-hidden="true"
     className="react_svg__iconify react_svg__iconify--logos"
     viewBox="0 0 256 228"
