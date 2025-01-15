@@ -2,6 +2,7 @@ import MainFooter from "./mainFooter/MainFooter";
 import Divider from "@common/component/Divider/Divider";
 import HotPost from "./hotPost/HotPost";
 import MainHeader from "./mainHeader/mainHeader";
+import Symptom from "./symptom/Symptom";
 
 const postsData = [
   { id: 1, title: "반려동물 건강 관리법" },
@@ -11,7 +12,7 @@ const postsData = [
   { id: 5, title: "반려동물과 함께하는 여행 준비" },
 ];
 
-const petName = "";
+const petName = "연진이";
 
 const Main = () => {
   return (
@@ -20,6 +21,8 @@ const Main = () => {
 
       <div>
         <MainHeader />
+        <Divider />
+        <Symptom />
         <Divider />
         <HotPost petName={petName} posts={postsData} />
         <Divider />

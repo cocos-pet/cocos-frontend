@@ -22,17 +22,23 @@ const HotPost = ({ petName, posts }: HotPostProps) => {
       <p className={styles.p}>인기 게시물을 확인해보세요</p>
 
       <div className={styles.title}>
-        {petName ? `${petName}를 위한 인기 게시글을 확인해보세요` : "반려인들이 주목하는 글 TOP 5"}
+        {petName ? (
+          <>
+            <span className={styles.petName}>{petName}</span>를 위한 인기 게시글을 확인해보세요
+          </>
+        ) : (
+          "반려인들이 주목하는 글 TOP 5"
+        )}
       </div>
 
       <div className={styles.hotPostListContainer}>
-        {posts.map((post) => (
+        {posts.map((post, index) => (
           <div key={post.id}>
             <div className={styles.postContent}>
               <div className={styles.contentId}>{post.id}</div>
               <div className={styles.contentTitle}>{post.title}</div>
             </div>
-            <Divider size="small" />
+            {index !== posts.length - 1 && <Divider size="small" />}
           </div>
         ))}
       </div>
