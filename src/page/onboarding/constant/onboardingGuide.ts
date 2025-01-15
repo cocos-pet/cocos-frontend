@@ -1,5 +1,5 @@
 export const ONBOARDING_GUIDE = {
-  nickName: {
+  nickname: {
     title: "사용할 닉네임을 입력해 주세요.",
     docs: "닉네임은 2~8자 한글, 영문, 숫자만 가능해요!",
   },

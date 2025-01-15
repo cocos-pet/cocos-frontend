@@ -1,5 +1,5 @@
 export const ERROR_MSG = {
-  nickName: {
+  nickname: {
     duplicate: "이 닉네임은 누군가 사용 중이에요.",
     koEnNum: "한글, 영문(대소문자), 숫자만 입력할 수 있어요.",
     length: "2자 이상 8자 이하로 입력해주세요.",
