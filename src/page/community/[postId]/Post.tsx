@@ -1,16 +1,11 @@
 import { Button } from "@common/component/Button";
-import {
-  IcoMessage,
-  IcoSkeleton,
-  IcPostImageSkeleton,
-  IcTest,
-} from "@asset/svg";
+import { IcoSkeleton, IcPostImageSkeleton, IcTest } from "@asset/svg";
 import { styles } from "@page/community/[postId]/Post.css.ts";
 import Chip from "@common/component/Chip/Chip.tsx";
-import React, { useState } from "react";
+import { useState } from "react";
 import Divider from "@common/component/Divider/Divider.tsx";
-import Comment from "@common/component/Comment/Comment.tsx";
 import { TextField } from "@common/component/TextField";
+
 const PostDetail = () => {
   const postData = {
     nickname: "리트리버 사랑해",
@@ -99,7 +94,7 @@ const PostDetail = () => {
 
   const [comment, setComment] = useState("");
 
-  const onChange = (e) => {
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
   };
 
