@@ -52,9 +52,8 @@ export const myPageContentWrapper = style({
   flexDirection: "column",
   alignItems: "center",
 
-  backgroundColor: "aliceblue",
-
-  border: "1px solid black",
+  //backgroundColor: "aliceblue",
+  //border: "1px solid black",
 });
 
 export const contentHeaderWrapper = style({
