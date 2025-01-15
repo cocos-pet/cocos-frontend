@@ -3,29 +3,40 @@ import { selector } from "./DualOptionSelector.css";
 import { useState } from "react";
 import selectImg from "@asset/image/image 1733.png";
 
-const DualOptionSelector = () => {
-  // 선택된 옵션을 추적하는 상태
-  const [selectedOption, setSelectedOption] = useState<"female" | "male" | null>(null);
+interface DualOptionSelectorProps {
+  leftLabel: string;
+  rightLabel: string;
+  onSelect?: (value: string) => void; // 부모 컴포넌트가 뭘 선택해야하는지 알아야 하니까
+}
 
-  // 항목 클릭 시 처리 함수
-  const handleOptionClick = (option: "female" | "male") => {
-    setSelectedOption(option);
+const DualOptionSelector = ({ leftLabel, rightLabel, onSelect }: DualOptionSelectorProps) => {
+  // 선택된 옵션 상태
+  const [selectedOption, setSelectedOption] = useState<string | null>(null);
+
+  // 옵션 클릭 시 색상 변경 및 하단 버튼 활성화 (활성화는 합칠 때 구현)
+  const handleOptionClick = (value: string) => {
+    setSelectedOption(value);
+    if (onSelect) {
+      onSelect(value);
+    }
   };
 
   return (
     <div className={styles.layout}>
+      {/* 왼쪽 선택지 */}
       <div
-        className={selector({ state: selectedOption === "female" ? "selected" : "unselected" })}
-        onClick={() => handleOptionClick("female")}
+        className={selector({ state: selectedOption === leftLabel ? "selected" : "unselected" })}
+        onClick={() => handleOptionClick(leftLabel)}
       >
-        암컷
+        {leftLabel}
         <img src={selectImg} alt="onboarding-character" />
       </div>
+      {/* 오른쪽 선택지 */}
       <div
-        className={selector({ state: selectedOption === "male" ? "selected" : "unselected" })}
-        onClick={() => handleOptionClick("male")}
+        className={selector({ state: selectedOption === rightLabel ? "selected" : "unselected" })}
+        onClick={() => handleOptionClick(rightLabel)}
       >
-        수컷
+        {rightLabel}
         <img src={selectImg} alt="onboarding-character" />
       </div>
     </div>
