@@ -2,8 +2,14 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
+import { COMMUNITY_CONTENT } from "./communityConstant";
 
-const Nav = () => {
+type Props = {
+  content: typeof NAV_CONTENT | typeof COMMUNITY_CONTENT;
+  type: "nav" | "community";
+};
+
+const Nav = ({ content }: Props) => {
   const location = useLocation();
 
   const extractFirstPath = (): string => {
@@ -28,7 +34,7 @@ const Nav = () => {
 
   return (
     <div className={styles.container}>
-      {NAV_CONTENT.map((item) => {
+      {content.map((item) => {
         const SvgComponent = item.svg;
 
         return (

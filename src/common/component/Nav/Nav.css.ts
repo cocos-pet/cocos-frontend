@@ -20,8 +20,8 @@ export const navItem = recipe({
     justifyContent: "center",
     alignItems: "center",
     padding: "0 1.2rem",
-    width: "5.6rem",
     whiteSpace: "nowrap",
+    width: "7.2rem",
   },
   variants: {
     state: {
@@ -30,6 +30,14 @@ export const navItem = recipe({
       },
       false: {
         color: color.gray.gray500,
+      },
+    },
+    type: {
+      community: {
+        width: "7.2rem",
+      },
+      nav: {
+        width: "5.6rem",
       },
     },
   },
