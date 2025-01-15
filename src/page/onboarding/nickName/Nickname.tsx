@@ -1,6 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import * as styles from "@page/onboarding/nickName/Nickname.css";
+import * as styles from "@page/onboarding/nickname/Nickname.css";
 import { ONBOARDING_GUIDE } from "@page/onboarding/constant/onboardingGuide";
 import Title from "@page/onboarding/component/title/Title";
 import Docs from "@page/onboarding/component/docs/Docs";
