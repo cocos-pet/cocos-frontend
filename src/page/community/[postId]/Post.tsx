@@ -1,5 +1,23 @@
+import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
+import useMoreModal from "@shared/hook/useMoreModal";
+
 const PostDetail = () => {
-  return <div>Postid</div>;
+  const { isOpen, toggleModal } = useMoreModal();
+
+  const handleDelete = () => {
+    alert("삭제되었습니다!");
+    toggleModal();
+  };
+
+  return (
+    <div>
+      <MoreModal
+        isOpen={isOpen}
+        onToggleModal={toggleModal}
+        onDelete={handleDelete}
+      />
+    </div>
+  );
 };
 
 export default PostDetail;

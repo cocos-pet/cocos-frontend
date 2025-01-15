@@ -8,7 +8,11 @@ interface BottomSheetPropTypes {
 }
 
 //화면 전체를 차지하는 바텀시트 틀 (children 필요)
-const BottomSheet = ({ isOpen, children, handleOpen }: BottomSheetPropTypes) => {
+const BottomSheet = ({
+  isOpen,
+  children,
+  handleOpen,
+}: BottomSheetPropTypes) => {
   if (!isOpen) return;
 
   const handleClose = () => {
@@ -20,12 +24,19 @@ const BottomSheet = ({ isOpen, children, handleOpen }: BottomSheetPropTypes) => 
   };
 
   return (
-    <div className={styles.overlay} onClick={handleClose} onKeyDown={handleClose}>
+    <div
+      className={styles.overlay}
+      onClick={handleClose}
+      onKeyDown={handleClose}
+    >
       <div className={styles.bottomSheet} onClick={handleBottomSheetClick}>
         <div className={styles.bottomTabBar}>
-          <div className={styles.bar} onClick={handleClose} onKeyDown={handleClose} />
+          <div
+            className={styles.bar}
+            onClick={handleClose}
+            onKeyDown={handleClose}
+          />
         </div>
-
         {children}
       </div>
     </div>
