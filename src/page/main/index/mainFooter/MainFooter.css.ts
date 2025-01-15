@@ -1,4 +1,4 @@
-import { font, semanticColor } from "@style/styles.css";
+import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const footerContainer = style({
@@ -9,6 +9,7 @@ export const footerContainer = style({
   justifyContent: "center",
   alignItems: "flex-start",
   gap: "1.2rem",
+  backgroundColor: color.gray.gray100,
 });
 
 export const footerName = style([
