@@ -1,40 +1,61 @@
+import { useState, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
+import * as styles from "@page/onboarding/nickname/Nickname.css";
+import { ONBOARDING_GUIDE } from "@page/onboarding/constant/onboardingGuide";
 import Title from "@page/onboarding/component/title/Title";
 import Docs from "@page/onboarding/component/docs/Docs";
-import { ONBOARDING_GUIDE } from "@page/onboarding/constant/onboardingGuide";
-import { ERROR_MSG } from "@page/onboarding/constant/errorMsg";
 import onboardingImg from "@asset/image/image 1730.png";
+import { validateNickname } from "../util/validateNickname";
+import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
-import * as styles from "@page/onboarding/nickname/Nickname.css";
-import { ChangeEvent, useState } from "react";
 
-interface NicknameProps {
-  onNicknameChange: (value: string) => void;
-}
+const Nickname = () => {
+  // 상태 하나로 관리
+  const [nickname, setNickname] = useState("");
 
-// 닉네임
-const Nickname = ({ onNicknameChange }: NicknameProps) => {
-  const [value, setValue] = useState("");
+  // 닉네임 입력 처리
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setNickname(e.target.value);
+  };
 
-  // 값 변경 시 부모 컴포넌트로 알리기
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const newValue = e.target.value;
-    setValue(newValue);
-    onNicknameChange(newValue);
+  // 유효성 검사 결과
+  const validationMessage = nickname ? validateNickname(nickname) : "";
+  const isValid = nickname && validationMessage === ""; 
+
+  // 뒤로 가기
+  const navigate = useNavigate();
+  const handleGoBack = () => {
+    navigate(-1);
+  };
+
+  // 다음 버튼
+  const handleNext = () => {
+    console.log("다음 pr에서 구현할래욥.");
   };
 
   return (
-    <div className={styles.layout}>
-      <div>
-        <img src={onboardingImg} alt="onboarding-character" className={styles.imgStyle} />
-        <Title text={ONBOARDING_GUIDE.nickname.title} />
-        <Docs text={ONBOARDING_GUIDE.nickname.docs} />
+    <>
+      {/* 상단 영역 */}
+      <div className={styles.layout}>
+        <div>
+          <img src={onboardingImg} alt="onboarding-character" className={styles.imgStyle} />
+          <Title text={ONBOARDING_GUIDE.nickname.title} />
+          <Docs text={ONBOARDING_GUIDE.nickname.docs} />
+        </div>
+
+        {/* 닉네임 입력 영역 */}
+        <div>
+          <TextField value={nickname} onChange={handleChange} placeholder="닉네임을 입력해주세요." />
+          {validationMessage && <Docs state="lError" text={validationMessage} />}
+        </div>
       </div>
-      <div>
-        <TextField value={value} onChange={onChange} placeholder="닉네임을 입력해주세요." />
-        <Docs state="lError" text={ERROR_MSG.nickname.duplicate} />
-        <Docs state="sError" text={ERROR_MSG.petAge.length} />
+
+      {/* 하단 버튼 */}
+      <div className={styles.btnWrapper}>
+        <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
+        <Button label="다음" size="large" variant="solidPrimary" disabled={!isValid} onClick={handleNext} />
       </div>
-    </div>
+    </>
   );
 };
 
