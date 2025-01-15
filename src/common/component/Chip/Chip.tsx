@@ -36,7 +36,6 @@ const Chip = ({ label, icon = false, color = "blue", onClick, isSelected = false
       {label}
       {icon && (
         <IcDelete
-          onClick={() => console.log("first")}
           color={color === "gray" ? "#717171" : "#14B5F0"}
           style={{
             position: "relative",
