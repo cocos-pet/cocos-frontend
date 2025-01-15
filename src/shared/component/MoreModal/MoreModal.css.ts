@@ -46,10 +46,8 @@ export type MoreIconProps = RecipeVariants<typeof moreIcon>;
 
 export const moreModal = style({
   position: "absolute",
-  top: "calc(100% + 0.8rem)", // 아이콘 아래에 0.8rem 간격
-  // left: "", // 아이콘의 왼쪽 경계를 기준
+  top: "calc(100% + 0.8rem)",
   left: "-16rem",
-  // top: "3.2rem",
   display: "flex",
   flexDirection: "column",
   gap: "0.1rem",

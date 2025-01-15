@@ -16,6 +16,12 @@ const PostDetail = () => {
         onToggleModal={toggleModal}
         onDelete={handleDelete}
       />
+      <MoreModal
+        isOpen={isOpen}
+        onToggleModal={toggleModal}
+        onDelete={handleDelete}
+        iconSize="20"
+      />
     </div>
   );
 };
