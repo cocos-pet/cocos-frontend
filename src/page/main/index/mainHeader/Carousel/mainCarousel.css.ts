@@ -25,7 +25,7 @@ export const image = style({
 
 export const carouselStatus = style({
   position: "absolute",
-  bottom: "1rem",
+  bottom: "3rem",
   right: "1rem",
   padding: "0.5rem 1rem",
   backgroundColor: semanticColor.neutral.assistive,

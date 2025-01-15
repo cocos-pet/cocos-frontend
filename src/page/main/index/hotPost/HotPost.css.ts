@@ -6,6 +6,7 @@ export const hotPostContainer = style({
   width: "37.5rem",
   flexDirection: "column",
   padding: "2rem",
+  marginTop: "3rem",
 });
 
 export const p = style([
@@ -13,7 +14,7 @@ export const p = style([
   {
     color: semanticColor.text.normal,
     fontWeight: "500",
-    letterSpacing: "-0.24rem",
+    letterSpacing: "-0.024rem",
   },
 ]);
 
@@ -29,7 +30,7 @@ export const title = style([
   { marginBottom: "1.2rem" },
   font.heading02,
   {
-    letterSpacing: "-0.18rem",
+    letterSpacing: "-0.018rem",
     color: semanticColor.text.normal,
   },
 ]);
@@ -64,7 +65,7 @@ export const contentId = style([
 export const contentTitle = style([
   font.body01,
   {
-    letterSpacing: "-0.28rem",
+    letterSpacing: "-0.028rem",
     color: semanticColor.text.normal,
   },
 ]);

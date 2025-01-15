@@ -6,6 +6,8 @@ export const symptomContainer = style({
   gap: "1.2rem",
   flexDirection: "column",
   width: "37.5rem",
+  marginTop: "4.2rem",
+  marginBottom: "3.2rem",
 });
 
 export const symptomTitle = style([
