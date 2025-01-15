@@ -1,8 +1,10 @@
+export { default as IcNormal } from "./IcNormal";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
 export { default as IcShape } from "./IcShape";
 export { default as IcClear } from "./IcClear";
 export { default as IcDelete } from "./IcDelete";
+export { default as IcLogo } from "./IcLogo";
 export { default as IcEllipses } from "./IcEllipses";
 export { default as IcLeftarrow } from "./IcLeftarrow";
 export { default as IcMessage } from "./IcMessage";
