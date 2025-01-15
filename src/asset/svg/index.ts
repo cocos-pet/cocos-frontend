@@ -9,6 +9,9 @@ export { default as IcMessage } from "./IcMessage";
 export { default as IcSearch } from "./IcSearch";
 export { default as IcSearchFillter } from "./IcSearchFillter";
 export { default as IcSearchFillterBlue } from "./IcSearchFillterBlue";
+
+export { default as Check } from "./Check";
+export { default as IcUp } from "./IcUp";
 export { default as IcTest } from "./IcTest";
 export { default as IcoMessage } from "./IcoMessage";
 export { default as IcoSkeleton } from "./IcoSkeleton";
