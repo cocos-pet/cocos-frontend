@@ -1,4 +1,4 @@
-import Nickname from "../nickname/Nickname";
+import Nickname from "../nickNamec/Nickname";
 
 const Onboarding = () => {
   return (
