@@ -18,12 +18,12 @@ export const symptomTitle = style([
 ]);
 
 export const symptomGrid = style({
+  marginLeft: "1rem",
   display: "grid",
   gridTemplateColumns: "repeat(5, 1fr)",
 });
 
 export const symptomItem = style({
-  marginLeft: "1rem",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
