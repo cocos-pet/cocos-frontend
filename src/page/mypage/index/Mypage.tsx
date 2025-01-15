@@ -9,6 +9,12 @@ import { useNavigate } from "react-router-dom";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
+//todo: 헤더 연결
+//todo: api 형식 맞춰서 유저 프로필 내용, 동물 프로필 내용 불러오기 구성
+//todo: cherveron right 버튼 클릭 시 마이페이지 수정 페이지로 이동하도록 구현
+//todo: 푸터(네비게이션) 연결
+//todo: 코멘트(댓글) 뷰 확정짓고 구현 + api 고려해서 만들어두기
+//남이 볼 때 뷰 분리 : 그떄는 /mypage 가 아니라 /profie?id=3 으로 넘어가서 보도록
 const Mypage = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
