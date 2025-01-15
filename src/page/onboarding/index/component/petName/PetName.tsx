@@ -42,21 +42,21 @@ const PetName = () => {
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />
         </div>
+
+        {/* 펫이름 입력 영역 */}
+        <TextField
+          state={petName === "" ? "default" : isValid ? "default" : "error"}
+          value={petName}
+          onChange={handleChange}
+          placeholder="닉네임을 입력해주세요."
+        />
+        <div className={styles.errorLayout}>
+          {validationMessages.map((message) => (
+            <Docs key={`error-${message}`} state="lError" text={message} />
+          ))}
+        </div>
       </div>
 
-      {/* 펫이름 입력 영역 */}
-      <TextField
-        state={petName === "" ? "default" : isValid ? "default" : "error"}
-        value={petName}
-        onChange={handleChange}
-        placeholder="닉네임을 입력해주세요."
-      />
-      <div className={styles.errorLayout}>
-        {validationMessages.map((message) => (
-          <Docs key={`error-${message}`} state="lError" text={message} />
-        ))}
-      </div>
-      
       {/* 하단 버튼 */}
       <div className={styles.btnWrapper}>
         <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
