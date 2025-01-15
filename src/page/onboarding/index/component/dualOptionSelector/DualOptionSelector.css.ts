@@ -1,4 +1,4 @@
-import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
+import { recipe } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
@@ -36,5 +36,3 @@ export const selector = recipe({
     },
   },
 });
-
-export type selectorVariant = RecipeVariants<typeof selector>;
