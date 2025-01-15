@@ -2,6 +2,8 @@ import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const myProfileWrapper = style({
+  marginTop: "6.4rem",
+
   width: "100%",
   paddingTop: "2rem",
   paddingBottom: "3.2rem",

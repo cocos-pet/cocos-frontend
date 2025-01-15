@@ -4,12 +4,13 @@ import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
 import { useState } from "react";
 import MyPageContent from "./component/MyPageContent/MyPageContent";
-import { IcChevronRight, IcPlus } from "@asset/svg";
+import { IcChevronLeft, IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
 import { useNavigate } from "react-router-dom";
+import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
-//todo: 헤더 연결
+//todo: 헤더 버튼 기능 연결 + 톱니바퀴 흐려지게 구현
 //todo: api 형식 맞춰서 유저 프로필 내용, 동물 프로필 내용 불러오기 구성
 //todo: cherveron right 버튼 클릭 시 마이페이지 수정 페이지로 이동하도록 구현
 //todo: 푸터(네비게이션) 연결
@@ -31,6 +32,14 @@ const Mypage = () => {
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
+      <span style={{ position: "fixed", top: 0 }}>
+        <HeaderNav
+          leftIcon={<IcChevronLeft width={24} height={24} />}
+          centerContent={"마이페이지"}
+          rightBtn={<IcSettings width={24} height={24} />}
+        />
+      </span>
+
       <article className={styles.myProfileWrapper}>
         {isLogin ? (
           <div className={styles.loginProfile}>
