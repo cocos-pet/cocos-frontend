@@ -3,7 +3,7 @@ import { semanticColor, font } from "@style/styles.css";
 
 export const headerContainer = style({
   position: "relative",
-  width: "100%",
+  width: "37.5rem",
   height: "20rem",
   alignItems: "center",
   overflow: "hidden",
