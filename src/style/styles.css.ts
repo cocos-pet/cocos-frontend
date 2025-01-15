@@ -65,6 +65,7 @@ export const semanticColor = createGlobalTheme(":root", {
     inverse: color.gray.gray000,
     assistive: color.gray.gray700,
     assistiveLight: color.gray.gray600,
+    heavy: color.primary.blue700,
   },
   line: {
     normal: color.gray.gray100,

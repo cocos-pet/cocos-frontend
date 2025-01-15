@@ -6,6 +6,8 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import CommentList from "@common/component/Comment/CommentList";
 import { mockComments } from "../../../shared/constant/mockComment";
 const Main = () => {
+  // const { category, categoryData, setOpen, toggleOpen } = useFilterStore();
+
   return (
     <>
       <div style={{ margin: "3rem", display: "flex", gap: "1rem" }}>
