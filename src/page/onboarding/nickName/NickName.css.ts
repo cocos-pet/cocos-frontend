@@ -14,11 +14,12 @@ export const imgStyle = style({
 });
 
 export const btnWrapper = style({
+  width: "100%",
   position: "fixed",
   bottom: 0,
 
   display: "grid",
-  gridTemplateColumns: "96px 227px",
+  gridTemplateColumns: "auto 1fr",
   gap: "1.2rem",
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
