@@ -3,10 +3,12 @@ import * as styles from "./Mypage.css";
 import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
 import { useState } from "react";
+import MyPageContent from "./component/MyPageContent/MyPageContent";
 
-type ActiveTabType = "review" | "post" | "comment";
+export type ActiveTabType = "review" | "post" | "comment";
 
 const Mypage = () => {
+  const [isLogin, setIsLogin] = useState(false);
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
   const isActiveTab = (tab: ActiveTabType) => {
@@ -26,7 +28,7 @@ const Mypage = () => {
             <br />
             {"고민을 공유해보세요!"}
           </span>
-          <Button label={"로그인"} />
+          <Button label={"로그인"} onClick={() => setIsLogin(true)} />
         </div>
       </article>
 
@@ -44,7 +46,9 @@ const Mypage = () => {
             댓글
           </Tab>
         </div>
-        <div className={styles.contentBody}></div>
+        <div className={styles.contentBody}>
+          {isLogin ? <MyPageContent /> : <div className={styles.nothingContent}>로그인을 해주세요!</div>}
+        </div>
       </article>
     </div>
   );

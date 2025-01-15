@@ -53,7 +53,7 @@ export const myPageContentWrapper = style({
   alignItems: "center",
 
   //backgroundColor: "aliceblue",
-  //border: "1px solid black",
+  border: "1px solid black",
 });
 
 export const contentHeaderWrapper = style({
@@ -74,3 +74,18 @@ export const contentBody = style({
 
   width: "33.5rem",
 });
+
+export const nothingContent = style([
+  font.body01,
+  {
+    display: "flex",
+    width: "33.5rem",
+    height: "32rem",
+    flexDirection: "column",
+    justifyContent: "center",
+    alignItems: "center",
+
+    color: semanticColor.disable.text,
+    textAlign: "center",
+  },
+]);
