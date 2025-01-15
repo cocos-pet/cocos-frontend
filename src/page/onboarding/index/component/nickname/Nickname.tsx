@@ -45,7 +45,12 @@ const Nickname = () => {
 
         {/* 닉네임 입력 영역 */}
         <div>
-          <TextField value={nickname} onChange={handleChange} placeholder="닉네임을 입력해주세요." />
+          <TextField
+            state={nickname === "" ? "default" : isValid ? "default" : "error"}
+            value={nickname}
+            onChange={handleChange}
+            placeholder="닉네임을 입력해주세요."
+          />
           <div className={styles.errorLayout}>
             {validationMessages.map((message) => (
               <Docs key={`error-${message}`} state="lError" text={message} />
