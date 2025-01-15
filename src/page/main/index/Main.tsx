@@ -17,8 +17,6 @@ const petName = "연진이";
 const Main = () => {
   return (
     <>
-      <Divider />
-
       <div>
         <MainHeader />
         <Divider />
