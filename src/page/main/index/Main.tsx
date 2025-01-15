@@ -1,3 +1,4 @@
+import Nav from "@common/component/Nav/Nav";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 import { useFilterStore } from "@store/filter";
 import { useEffect } from "react";
@@ -10,6 +11,7 @@ const Main = () => {
   }, [setOpen]);
   return (
     <>
+      <Nav />
       <FilterBottomSheet />
     </>
   );

@@ -14,6 +14,8 @@ export const dummyData: ApiItemTypes[] = [
     updatedAt: "2025-01-15:11-00-00",
     image: "https://example.com/image1.jpg",
     category: "Free",
+    breed: "골든리트리버",
+    age: 12,
   },
   {
     id: 2,
@@ -26,6 +28,8 @@ export const dummyData: ApiItemTypes[] = [
     updatedAt: "2025-01-14:09-30-00",
     image: "https://example.com/image2.jpg",
     category: "Discussion",
+    breed: "골든리트리버",
+    age: 12,
   },
   {
     id: 3,
@@ -38,6 +42,8 @@ export const dummyData: ApiItemTypes[] = [
     updatedAt: "2025-01-13:08-45-00",
     image: "https://example.com/image3.jpg",
     category: "Announcement",
+    breed: "골든리트리버",
+    age: 12,
   },
   {
     id: 4,
@@ -50,6 +56,8 @@ export const dummyData: ApiItemTypes[] = [
     updatedAt: "2025-01-13:08-45-00",
     image: "https://example.com/image3.jpg",
     category: "Announcement",
+    breed: "골든리트리버",
+    age: 12,
   },
   {
     id: 5,
@@ -62,6 +70,8 @@ export const dummyData: ApiItemTypes[] = [
     updatedAt: "2025-01-13:08-45-00",
     image: "https://example.com/image3.jpg",
     category: "Announcement",
+    breed: "골든리트리버",
+    age: 12,
   },
   {
     id: 6,
@@ -74,6 +84,8 @@ export const dummyData: ApiItemTypes[] = [
     updatedAt: "2025-01-13:08-45-00",
     image: "https://example.com/image3.jpg",
     category: "Announcement",
+    breed: "골든리트리버",
+    age: 12,
   },
   {
     id: 7,
@@ -86,5 +98,7 @@ export const dummyData: ApiItemTypes[] = [
     updatedAt: "2025-01-13:08-45-00",
     image: "https://example.com/image3.jpg",
     category: "Announcement",
+    breed: "골든리트리버",
+    age: 12,
   },
 ];

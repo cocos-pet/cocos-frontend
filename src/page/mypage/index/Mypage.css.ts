@@ -1,4 +1,4 @@
-import { font, semanticColor } from "@style/styles.css";
+import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const myProfileWrapper = style({
@@ -37,7 +37,44 @@ export const pleaseLoginText = style([
   },
 ]);
 
-export const loginProfile = style({});
+export const loginProfile = style({
+  display: "flex",
+  width: "33.5rem",
+  padding: "1.6rem",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "1.2rem",
+
+  borderRadius: "16px",
+  border: `1px solid ${semanticColor.line.strong}`,
+});
+
+export const userProfile = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "1.2rem",
+  alignSelf: "stretch",
+});
+
+export const profileImage = style({
+  width: "4.8rem",
+  height: "4.8rem",
+  borderRadius: "999px",
+  border: `1px solid ${semanticColor.line.strong}`,
+  background: color.gray.gray100,
+});
+
+export const userProfileText = style([
+  font.heading02,
+  {
+    alignSelf: "stretch",
+    color: semanticColor.text.normal,
+    textAlign: "center",
+  },
+]);
 
 export const myPageContentWrapper = style({
   display: "flex",
@@ -89,5 +126,45 @@ export const nothingContent = style([
 
     color: semanticColor.disable.text,
     textAlign: "center",
+  },
+]);
+
+export const animalProfileWrapper = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  gap: "1.2rem",
+  alignSelf: "stretch",
+});
+
+export const animalImage = style({
+  width: "3.2rem",
+  height: "3.2rem",
+  borderRadius: "999px",
+  border: `1px solid ${semanticColor.line.strong}`,
+  background: color.gray.gray100,
+});
+
+export const animalProfileTextWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "0.4rem",
+  flex: "1 0 0",
+});
+
+export const animalMainText = style([
+  font.body01,
+  {
+    alignSelf: "stretch",
+    color: semanticColor.text.normal,
+  },
+]);
+
+export const animalSubText = style([
+  font.label01,
+  {
+    alignSelf: "stretch",
+    color: semanticColor.text.assistive,
   },
 ]);
