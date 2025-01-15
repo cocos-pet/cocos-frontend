@@ -1,8 +1,7 @@
+import Nav from "@common/component/Nav/Nav";
 
 const Community = () => {
-  return (
-    <div>Community</div>
-  )
-}
+  return <Nav />;
+};
 
-export default Community
+export default Community;
