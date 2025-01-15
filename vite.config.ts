@@ -15,6 +15,7 @@ export default defineConfig({
       { find: "@shared", replacement: "/src/shared" },
       { find: "@style", replacement: "/src/style" },
       { find: "@type", replacement: "/src/type" },
+      { find: "@store", replacement: "/src/store" },
     ],
   },
 });
