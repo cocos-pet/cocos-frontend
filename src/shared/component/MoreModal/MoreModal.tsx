@@ -5,7 +5,6 @@ import {
   moreIcon,
   MoreIconProps,
   moreModal,
-  moreModalCon,
   moreModalItem,
 } from "@shared/component/MoreModal/MoreModal.css.ts";
 
@@ -24,7 +23,7 @@ const MoreModal = ({
   iconSize,
 }: MoreModalProps) => {
   return (
-    <div className={container}>
+    <div className={container({ iconSize })}>
       <IcEllipses className={moreIcon({ iconSize })} onClick={onToggleModal} />
       {isOpen && (
         <div className={moreModal}>
