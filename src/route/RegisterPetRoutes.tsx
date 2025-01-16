@@ -1,5 +1,5 @@
 import Complete from "@page/registerPet/complete/Complete";
-import RegisterPet from "@page/registerPet/index/RegisterPEt";
+import RegisterPet from "@page/registerPet/index/RegisterPet";
 import { PATH } from "@route/path.ts";
 
 const REGISTER_PET_ROUTES = [
