@@ -49,7 +49,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
         return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
       case "post":
         return dummyData.map((data) => (
-          <div style={{ paddingTop: "1.6rem" }} key={`post-${data.id}`}>
+          <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
               age={`${data.age}살`}
@@ -64,7 +64,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
         return dummyData.map((data) => (
-          <div style={{ paddingTop: "1.6rem" }} key={`post-${data.id}`}>
+          <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
               age={`${data.age}살`}
@@ -81,7 +81,11 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
     }
   };
 
-  return <div>{dummyData.length === 0 ? renderNothingContent(tab) : renderContent(tab)}</div>;
+  return (
+    <div className={styles.contentWrapper}>
+      {dummyData.length === 0 ? renderNothingContent(tab) : renderContent(tab)}
+    </div>
+  );
 };
 
 export default MyPageContent;
