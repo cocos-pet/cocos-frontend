@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import {
-  IcEllipses,
   IcLeftarrow,
   IcoSkeleton,
   IcPostImageSkeleton,
@@ -41,7 +40,7 @@ const PostDetail = () => {
       petAge: 5,
       content:
         "우리 강아지도 비슷한 증상이 있었어요. 병원에 가보니 괜찮다고 하더라고요.",
-      createdAt: new Date(2025, 0, 13), // 2025년 1월 13일
+      createdAt: "2025-01-13T10:00:00Z",
       isWriter: false,
       subComments: [
         {
@@ -51,8 +50,9 @@ const PostDetail = () => {
           breed: "포메라니안",
           petAge: 2,
           content: "정확한 진단을 받으려면 병원 방문이 필수입니다!",
-          createdAt: new Date(2025, 0, 13, 15, 30), // 2025년 1월 13일 오후 3시 30분
+          createdAt: "2025-01-13T10:00:00Z",
           isWriter: true,
+          mentionedNickname: "GoldenRetrieverLover",
         },
       ],
     },
@@ -63,7 +63,7 @@ const PostDetail = () => {
       breed: "비숑프리제",
       petAge: 3,
       content: "우리 집 강아지도 이런 증상이 있어서 동물 병원에 가봤어요.",
-      createdAt: new Date(2025, 0, 12), // 2025년 1월 12일
+      createdAt: "2025-01-13T10:00:00Z",
       isWriter: true,
       subComments: [
         {
@@ -73,8 +73,9 @@ const PostDetail = () => {
           breed: "시츄",
           petAge: 4,
           content: "스트레스나 특정 음식을 먹었을 때 헥헥거릴 수 있습니다.",
-          createdAt: new Date(2025, 0, 12, 10, 0), // 2025년 1월 12일 오전 10시
+          createdAt: "2025-01-13T10:00:00Z",
           isWriter: false,
+          mentionedNickname: "GoldenRetrieverLover",
         },
         {
           id: 103,
@@ -83,8 +84,9 @@ const PostDetail = () => {
           breed: "푸들",
           petAge: 1,
           content: "저희 강아지도 이런 경우가 있었는데 산책 후 회복됐어요!",
-          createdAt: new Date(2025, 0, 12, 12, 15), // 2025년 1월 12일 오후 12시 15분
+          createdAt: "2025-01-13T10:00:00Z",
           isWriter: false,
+          mentionedNickname: "GoldenRetrieverLover",
         },
       ],
     },
@@ -95,7 +97,7 @@ const PostDetail = () => {
       breed: "치와와",
       petAge: 2,
       content: "강아지가 헥헥거리는 이유는 여러 가지가 있을 수 있어요.",
-      createdAt: new Date(2025, 0, 11), // 2025년 1월 11일
+      createdAt: "2025-01-13T10:00:00Z",
       isWriter: false,
       subComments: [],
     },

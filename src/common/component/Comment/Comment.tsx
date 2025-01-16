@@ -10,7 +10,7 @@ export interface SubComment {
   breed: string;
   petAge: number;
   content: string;
-  createdAt: Date;
+  createdAt: string;
   isWriter: boolean;
   mentionedNickname: string;
 }
@@ -22,7 +22,7 @@ export interface CommentType {
   breed: string;
   petAge: number;
   content: string;
-  createdAt: Date;
+  createdAt: string;
   isWriter: boolean;
   subComments: SubComment[]; // 대댓글 배열
 }

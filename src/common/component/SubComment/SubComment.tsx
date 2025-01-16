@@ -8,7 +8,7 @@ export interface SubCommentData {
   breed: string;
   petAge: number;
   content: string;
-  createdAt: Date;
+  createdAt: string;
   isWriter: boolean;
   profileImage: string;
   mentionedNickname: string;
