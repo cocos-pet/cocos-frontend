@@ -30,6 +30,9 @@ const PetAge = () => {
   const validationMessages = petAge ? validatePetAge(petAge) : [];
   const isValid = petAge && validationMessages.length === 0;
 
+  // TextField 상태
+  const textFieldState = petAge === "" || validationMessages.length === 0 ? "default" : "error";
+
   // 뒤로 가기
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -52,7 +55,7 @@ const PetAge = () => {
         <div className={styles.centerLayout}>
           <div>
             <TextField
-              state="error" // 이것도 구현해야함
+              state={textFieldState}
               value={petAge}
               onChange={handleChange}
               placeholder="나이"
