@@ -32,7 +32,7 @@ const Mypage = () => {
     <div style={{ position: "relative", height: "auto" }}>
       <span style={{ position: "fixed", top: 0 }}>
         <HeaderNav
-          leftIcon={<IcChevronLeft width={24} height={24} />}
+          leftIcon={<IcChevronLeft width={24} height={24} onClick={() => navigate(-1)} />}
           centerContent={"마이페이지"}
           rightBtn={
             <span
