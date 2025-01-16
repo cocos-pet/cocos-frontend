@@ -1,9 +1,9 @@
-import Nickname from "@page/onboarding/index/component/nickname/Nickname";
+import PetHealthDualSelector from "./component/petHealthDualSelector/PetHealthDualSelector";
 
 const Onboarding = () => {
   return (
     <>
-      <Nickname />
+      <PetHealthDualSelector />
     </>
   );
 };
