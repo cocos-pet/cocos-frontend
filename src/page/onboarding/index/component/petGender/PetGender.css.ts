@@ -7,12 +7,6 @@ export const layout = style({
   gap: "9rem",
 });
 
-export const imgStyle = style({
-  width: "16.5rem",
-  height: "9.3rem",
-  marginBottom: "1.6rem",
-});
-
 export const btnWrapper = style({
   maxWidth: "76.8rem",
   width: "100%",
@@ -24,8 +18,4 @@ export const btnWrapper = style({
   gap: "1.2rem",
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
-});
-
-export const errorLayout = style({
-  marginTop: "0.8rem",
 });
