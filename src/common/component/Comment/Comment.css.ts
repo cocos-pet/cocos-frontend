@@ -22,7 +22,8 @@ export const contentContainer = style([
     position: "relative",
     display: "flex",
     flexDirection: "column",
-    width: "33.5rem",
+    width: "100%",
+
     padding: "0.8rem 0rem",
     gap: "0.4rem",
   },
@@ -31,7 +32,7 @@ export const contentContainer = style([
 export const header = style([
   {
     display: "flex",
-    alignItems: "center",
+    alignItems: "flex-start",
     gap: "0.8rem",
   },
 ]);
@@ -46,6 +47,7 @@ export const headerInfo = style([
   {
     display: "flex",
     flexDirection: "column",
+    flexGrow: 1,
   },
 ]);
 

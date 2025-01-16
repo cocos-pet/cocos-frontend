@@ -5,10 +5,18 @@ interface CommentListProps {
 }
 
 const CommentList = ({ comments }: CommentListProps) => {
+  const onDelete = (id: number) => {
+    // TODO :  댓글 삭제
+  };
+
   return (
     <div>
       {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} />
+        <Comment
+          key={comment.id}
+          comment={comment}
+          onDelete={() => onDelete(comment.id)}
+        />
       ))}
     </div>
   );

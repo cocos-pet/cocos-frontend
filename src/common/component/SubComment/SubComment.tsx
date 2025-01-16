@@ -1,5 +1,6 @@
 import * as styles from "./SubComment.css";
 import { IcEllipses, IcMessage } from "@asset/svg";
+import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 
 export interface SubCommentData {
   id: number;
@@ -39,18 +40,27 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
     );
   };
 
+  const onDelete = () => {
+    // TODO : 대댓글 삭제
+  };
+
   return (
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={subComment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
+          <img
+            src={subComment.profileImage}
+            className={styles.profileImage}
+            alt="프로필 이미지"
+          />
           <div className={styles.headerInfo}>
-            <IcEllipses className={styles.containerOptionsIcon} />
             <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
-              {subComment.breed} · {subComment.petAge}살 · {subComment.createdAt.toLocaleString()}
+              {subComment.breed} · {subComment.petAge}살 ·{" "}
+              {subComment.createdAt.toLocaleString()}
             </span>
           </div>
+          <MoreModal iconSize={24} onDelete={onDelete} />
         </div>
         <p className={styles.text}>{renderContent()}</p>
 
