@@ -1,9 +1,8 @@
 import Complete from "@page/registerPet/complete/Complete";
-import RegisterPet from "@page/registerPet/index/RegisterPet";
 import { PATH } from "@route/path.ts";
-
+import RegisterPEt from "@page/registerPet/index/RegisterPEt";
 const REGISTER_PET_ROUTES = [
-  { path: PATH.ONBOARDING.ROOT, element: <RegisterPet /> },
+  { path: PATH.ONBOARDING.ROOT, element: <RegisterPEt /> },
   { path: PATH.ONBOARDING.COMPLETE, element: <Complete /> },
 ];
 
