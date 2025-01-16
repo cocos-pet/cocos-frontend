@@ -12,6 +12,7 @@ interface TextFieldProps {
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
+  centerPlaceholder?: boolean; // placeholder 중앙 정렬 여부를 결정하는 프롭
 }
 
 /**
@@ -26,9 +27,7 @@ interface TextFieldProps {
  * @param onKeyDown 엔터키 입력 함수
  * @param onClearClick 입력값 삭제 함수
  * @constructor minjeoong
- */
-
-export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+ */ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
       icon,
@@ -40,6 +39,7 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       onClick,
       onKeyDown,
       onClearClick,
+      centerPlaceholder = false, // 기본값은 false
     },
     ref, // forwardRef를 통해 ref를 받을 수 있도록 설정
   ) => {
@@ -48,7 +48,7 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
         <input
           ref={ref}
           type="text"
-          className={styles.input({ active })}
+          className={styles.input({ active, centerPlaceholder })} // centerPlaceholder 전달
           placeholder={placeholder}
           value={value}
           onChange={onChange}

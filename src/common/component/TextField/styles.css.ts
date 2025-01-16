@@ -34,6 +34,7 @@ export const styles = {
       active: true,
     },
   }),
+
   input: recipe({
     base: [
       font.body01,
@@ -59,11 +60,20 @@ export const styles = {
           color: color.gray.gray500,
         },
       },
+      centerPlaceholder: {
+        true: {
+          maxWidth: "12rem",
+          textAlign: "center", // placeholder 텍스트 중앙 정렬
+        },
+        false: {},
+      },
     },
     defaultVariants: {
       active: true,
+      centerPlaceholder: false, // 기본값은 false
     },
   }),
+
   icon: recipe({
     base: {
       height: "2rem",
