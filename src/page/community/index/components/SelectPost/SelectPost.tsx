@@ -4,8 +4,6 @@ import * as styles from "./SelectPost.css";
 import Divider from "@common/component/Divider/Divider";
 import { IcUnderline, IcMessage, IcShape } from "@asset/svg";
 
-
-
 const PostList = () => {
   const [isActive, setIsActive] = useState(true); // true: 최신글, false: 인기글
 
@@ -16,7 +14,6 @@ const PostList = () => {
 
   // 인기글 데이터 (likeCount 기준 정렬)
   const popularPosts = [...postData].sort((a, b) => b.likeCount - a.likeCount);
-
   const displayedPosts = isActive ? latestPosts : popularPosts;
 
   return (
