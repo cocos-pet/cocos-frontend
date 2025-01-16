@@ -6,6 +6,22 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import DualOptionSelector from "../dualOptionSelector/DualOptionSelector";
 import { Button } from "@common/component/Button";
+import selectImg from "@asset/image/image 1733.png";
+
+const data = {
+  animal: [
+    {
+      id: 1,
+      label: "고양이",
+      image: selectImg, // import한 이미지 사용 (api -> url string)
+    },
+    {
+      id: 2,
+      label: "강아지",
+      image: selectImg,
+    },
+  ],
+};
 
 const PetType = () => {
   // 선택 상태 관리 (초기값: null)
@@ -37,7 +53,7 @@ const PetType = () => {
         </div>
 
         {/* 타입 선택 영역 */}
-        <DualOptionSelector leftLabel="고양이" rightLabel="강아지" onSelect={handleOptionSelect} />
+        <DualOptionSelector data={data.animal} onSelect={handleOptionSelect} />
       </div>
 
       {/* 하단 영역 */}
