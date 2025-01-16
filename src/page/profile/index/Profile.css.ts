@@ -1,6 +1,5 @@
 import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
 
 export const myProfileWrapper = style({
   marginTop: "6.4rem",
@@ -171,12 +170,3 @@ export const animalSubText = style([
     color: semanticColor.text.assistive,
   },
 ]);
-
-export const settingWrapper = recipe({
-  variants: {
-    isLogin: {
-      true: { opacity: "1.0" },
-      false: { opacity: "0.3" },
-    },
-  },
-});
