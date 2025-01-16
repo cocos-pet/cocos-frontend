@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, ChangeEvent } from "react";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
-import Docs from "../../common/docs/Docs";
+import Docs from "../../../../onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { IcRightIcon } from "@asset/svg";
 import { Button } from "@common/component/Button";
