@@ -1,7 +1,7 @@
 import { style } from "@vanilla-extract/css";
 
 export const communityContainer = style({
-  maxWidth: "37.5rem",
+  width: "37.5rem",
   margin: "0 auto",
   position: "relative",
 });
@@ -32,7 +32,6 @@ export const postContainer = style({
 });
 
 export const btnContainer = style({
-  width: "37.5rem",
   position: "fixed",
   bottom: "10rem",
   zIndex: 20,
