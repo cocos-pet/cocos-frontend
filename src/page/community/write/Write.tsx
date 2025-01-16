@@ -6,15 +6,14 @@ import { useDropDown } from "../component/DropDown/useDropDown";
 import { IcMessage, IcUp } from "@asset/svg";
 
 const Write = () => {
-  const [searchText, setSearchText] = useState("");
-  const [selectState, setSelectState] = useState("");
+  const [searchText, setSearchText] = useState<string>("");
+  const [selectState, setSelectState] = useState<string>("");
 
-  const { isDropDownOpen, toggleDropDown, onClickItem, selectState } =
-    useDropDown();
+  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-    if (!isDropDownOpen) openDropDown();
+    if (!isDropDownOpen) closeDropDown();
   };
 
   const onTextFieldClick = () => {
@@ -23,7 +22,8 @@ const Write = () => {
 
   const onClickItem = (item: string) => {
     setSelectState(item);
-    closeDropDown();
+    toggleDropDown();
+    console.log(selectState);
   };
 
   return (

@@ -11,6 +11,7 @@ const DropDown = ({ isOpen, items, onClickItem }: DropDownType) => {
   if (!isOpen) {
     return null;
   }
+
   return (
     <div className={container}>
       {items.map((item, index) => (
