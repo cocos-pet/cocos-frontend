@@ -1,7 +1,9 @@
 import Content from "@common/component/Content/Content";
 import { ActiveTabType } from "../../Mypage";
 import * as styles from "./MyPageContent.css";
-import { dummyData } from "./costant"; //todo: 더미데이터 렌더링
+import { commentDummyData, dummyData } from "./costant"; //todo: 더미데이터 렌더링
+import MyPageComment from "../MyPageComment/MyPageComment";
+import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -64,16 +66,13 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return dummyData.map((data) => (
-          <div className={styles.mypagecontent} key={`post-${data.id}`}>
-            <Content
-              breed={data.breed}
-              age={`${data.age}살`}
-              postTitle={data.title}
-              postContent={data.content}
-              likeCnt={data.likeCount}
-              commentCnt={data.commentCount}
-              timeAgo="1시간 전" //추후 유틸로 대체
+        return renderAllComments(commentDummyData.comments, commentDummyData.subComments).map((data) => (
+          <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
+            <MyPageComment
+              postTitle={data.postTitle}
+              content={data.content}
+              timeAgo={data.createdAt}
+              mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
               onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
             />
           </div>

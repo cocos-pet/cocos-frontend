@@ -102,3 +102,62 @@ export const dummyData: ApiItemTypes[] = [
     age: 12,
   },
 ];
+
+interface Comment {
+  postTitle: string;
+  postId: number; // 게시글 ID
+  id: number; // 댓글 ID
+  content: string; // 댓글 내용
+  createdAt: string; // 생성 시간 (형식: YYYY-MM-DD:HH-MM-SS)
+}
+
+interface SubComment {
+  postTitle: string;
+  postId: number; // 게시글 ID
+  id: number; // 대댓글 ID
+  mentionedNickname: string; // 멘션된 닉네임
+  content: string; // 대댓글 내용
+  createdAt: string; // 생성 시간 (형식: YYYY-MM-DD:HH-MM-SS)
+}
+
+interface Data {
+  comments: Comment[]; // 댓글 목록
+  subComments: SubComment[]; // 대댓글 목록
+}
+
+export const commentDummyData: Data = {
+  comments: [
+    {
+      postTitle: "게시글의 제목1",
+      postId: 1,
+      id: 1,
+      content: "내용",
+      createdAt: "YYYY-MM-DD:HH-MM-SS",
+    },
+    {
+      postTitle: "게시글의 제목1",
+      postId: 1,
+      id: 2,
+      content: "내용2",
+      createdAt: "YYYY-MM-DD:HH-MM-SS",
+    },
+  ],
+  subComments: [
+    {
+      postTitle: "게시글의 제목1",
+      postId: 1,
+      id: 1,
+      mentionedNickname: "리트리버사랑해",
+      content: "호흡기 문제일 수 있는데 다른 증상은 없나요?",
+      createdAt: "YYYY-MM-DD:HH-MM-SS",
+    },
+    {
+      postTitle: "게시글의 제목1",
+      postId: 1,
+      id: 2,
+      mentionedNickname: "닉네임2",
+      content: "내용2",
+      createdAt: "YYYY-MM-DD:HH-MM-SS",
+    },
+  ],
+};
