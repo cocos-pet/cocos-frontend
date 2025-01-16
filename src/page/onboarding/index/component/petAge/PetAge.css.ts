@@ -15,8 +15,8 @@ export const centerLayout = style({
   gap: "1.2rem",
 });
 
-export const fieldSize = style({
-  width: "12rem",
+export const errorLayout = style({
+  marginTop: "0.8rem",
 });
 
 export const ageFontStyle = style([font.body01, {}]);

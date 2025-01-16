@@ -6,17 +6,29 @@ import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuid
 import Title from "../../common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
-
+import { validatePetAge } from "@page/onboarding/index/util/validatePetAge";
 import { Button } from "@common/component/Button";
 
 const PetAge = () => {
   // 상태 하나로 관리
-  const [petName, setPetName] = useState("");
+  const [petAge, setPetAge] = useState("");
 
   // 닉네임 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPetName(e.target.value);
+    const value = e.target.value;
+
+    // 숫자만 입력되도록 필터링 (정규식 사용)
+    const numericValue = value.replace(/[^0-9]/g, "");
+
+    // 최대 3자리까지 입력 허용
+    if (numericValue.length <= 3) {
+      setPetAge(numericValue);
+    }
   };
+
+  // 유효성 검사 결과
+  const validationMessages = petAge ? validatePetAge(petAge) : [];
+  const isValid = petAge && validationMessages.length === 0;
 
   // 뒤로 가기
   const navigate = useNavigate();
@@ -38,8 +50,17 @@ const PetAge = () => {
         </div>
         {/* 나이 입력 영역 */}
         <div className={styles.centerLayout}>
-          <div className={styles.fieldSize}>
-            <TextField value={petName} onChange={handleChange} placeholder="나이" />
+          <div>
+            <TextField
+              state="error" // 이것도 구현해야함
+              value={petAge}
+              onChange={handleChange}
+              placeholder="나이"
+              centerPlaceholder={true}
+            />
+            <div className={styles.errorLayout}>
+              <Docs state="sError" text={validationMessages} />
+            </div>
           </div>
           <span className={styles.ageFontStyle}>살</span>
         </div>
@@ -47,7 +68,7 @@ const PetAge = () => {
       {/* 하단 영역 */}
       <div className={styles.btnWrapper}>
         <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button label="다음" size="large" variant="solidPrimary" disabled={false} onClick={handleNext} />
+        <Button label="다음" size="large" variant="solidPrimary" disabled={!isValid} onClick={handleNext} />
       </div>
     </>
   );
