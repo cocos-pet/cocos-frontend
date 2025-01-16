@@ -85,12 +85,8 @@ export const myPageContentWrapper = style({
   minHeight: "30.6rem",
   height: "auto",
 
-  //overflowY: "hidden",
   flexDirection: "column",
   alignItems: "center",
-
-  //backgroundColor: "aliceblue",
-  //border: "1px solid black",
 });
 
 export const contentHeaderWrapper = style({
