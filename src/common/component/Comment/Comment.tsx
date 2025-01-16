@@ -23,7 +23,7 @@ export interface CommentType {
   content: string;
   createdAt: Date;
   isWriter: boolean;
-  subComments: SubComment[]; // 서브 댓글 배열
+  subComments: SubComment[] | []; // 서브 댓글 배열
 }
 
 interface CommentProps {
