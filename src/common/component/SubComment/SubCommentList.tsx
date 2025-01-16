@@ -6,7 +6,7 @@ interface SubCommentListProps {
 
 const SubCommentList = ({ subComments }: SubCommentListProps) => {
   return (
-    <div style={{ margin: "2.4rem" }}>
+    <div>
       {subComments.map((subComment) => (
         <SubComment key={subComment.id} subComment={subComment} />
       ))}

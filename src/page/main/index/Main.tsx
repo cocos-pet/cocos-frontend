@@ -4,9 +4,7 @@ import { Button } from "@common/component/Button";
 import { IcTest } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import CommentList from "@common/component/Comment/CommentList";
-import { mockComments } from "../../../shared/constant/mockComment";
-import { subMockComments } from "@shared/constant/subComments";
-import SubCommentList from "@common/component/SubComment/SubCommentList";
+import mockComments from "@shared/constant/mockComment";
 
 const Main = () => {
   return (
@@ -50,7 +48,6 @@ const Main = () => {
       <Spacing marginBottom="10" />
       <Divider />
       <CommentList comments={mockComments} />
-      <SubCommentList subComments={subMockComments} />
     </>
   );
 };

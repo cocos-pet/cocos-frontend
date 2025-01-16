@@ -7,14 +7,15 @@ export interface SubCommentData {
   breed: string;
   petAge: number;
   content: string;
-  createdAt: string;
-  isWriter: string;
+  createdAt: Date;
+  isWriter: boolean;
   profileImage: string;
+  mentionedNickname: string;
 }
 
 interface SubCommentProps {
   subComment: SubCommentData;
-  onReplyClick?: (id: number) => void; 
+  onReplyClick?: (id: number) => void;
 }
 
 const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
@@ -22,6 +23,20 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
     if (onReplyClick) {
       onReplyClick(subComment.id);
     }
+  };
+
+  const renderContent = () => {
+    const { content, mentionedNickname } = subComment;
+    //mention 변수에 @ 추가하기
+    const mention = `@${mentionedNickname}`;
+    const parts = content.split(mention);
+    return (
+      <>
+        <span className={styles.mentionedNickname}>{mention} </span>
+        {parts[0]}
+        {parts.slice(1).join(mention)}
+      </>
+    );
   };
 
   return (
@@ -33,12 +48,11 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
             <IcEllipses className={styles.containerOptionsIcon} />
             <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
-              {subComment.breed}·{subComment.petAge}살 · {subComment.createdAt}
+              {subComment.breed} · {subComment.petAge}살 · {subComment.createdAt.toLocaleString()}
             </span>
           </div>
         </div>
-
-        <p className={styles.text}>{subComment.content}</p>
+        <p className={styles.text}>{renderContent()}</p>
 
         {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
         <div className={styles.replyContainer} onClick={handleReplyClick}>
