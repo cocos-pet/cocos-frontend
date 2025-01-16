@@ -39,10 +39,12 @@ export const btnItem = recipe({
   base: [
     font.body01,
     {
+      height: "2.4rem",
       color: color.gray.gray600,
       backgroundColor: "transparent",
       padding: "0",
       border: "none",
+      alignContent: "center",
       textDecoration: "none",
       transition: "background-color 0.3s",
       ":focus": {
