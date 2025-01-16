@@ -1,13 +1,29 @@
 import { style } from "@vanilla-extract/css";
 import { font, semanticColor } from "@style/styles.css";
 
+export const overlay = style({
+  position: "absolute",
+  top: 0,
+  left: 0,
+  zIndex: "99",
+
+  width: "100%",
+  height: "100vh",
+  backgroundColor: "rgba(34, 34, 34, 0.2)",
+});
+
 export const bottomSheetContainer = style({
+  position: "absolute",
+  bottom: "0",
+
   display: "flex",
   width: "37.5rem",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
   borderRadius: "20px 20px 0px 0px",
+
+  backgroundColor: "white",
 });
 
 export const bottomSheetHeader = style({
