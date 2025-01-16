@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom"; // useNavigate 훅 추가
 import { postData } from "../../../../../shared/constant/postData";
 import * as styles from "./SelectPost.css";
 import Divider from "@common/component/Divider/Divider";
@@ -7,6 +8,7 @@ import Content from "@common/component/Content/Content";
 
 const PostList = () => {
   const [isActive, setIsActive] = useState(true); // true: 최신글, false: 인기글
+  const navigate = useNavigate(); // 라우팅 기능 사용
 
   // 최신글 데이터 (createdAt 기준 정렬)
   const latestPosts = [...postData].sort((a, b) => {
@@ -20,7 +22,6 @@ const PostList = () => {
   const displayedPosts = isActive ? latestPosts : popularPosts;
 
   return (
-    
     <div className={styles.container}>
       <div className={styles.tabContainer}>
         <button type="button" className={styles.tabButton({ isActive: isActive })} onClick={() => setIsActive(true)}>
@@ -49,9 +50,7 @@ const PostList = () => {
                 width: "2.4rem",
               }}
             />
-            
           )}
-          
         </button>
       </div>
       <Divider size="small" />
@@ -69,10 +68,10 @@ const PostList = () => {
             commentCount={post.commentCount}
             createdAt={isActive ? post.createdAt : post.updatedAt}
             image={post.image}
-            onClick={() => console.log(`Post ${post.category} clicked`)}
+            onClick={() => navigate(`/post/${post.id}`)}
             id={0}
-            category={""}
             updateAt={""}
+            category={""}
           />
         ))}
       </div>
