@@ -2,15 +2,17 @@ export const PATH = {
   ONBOARDING: {
     ROOT: "/onboarding",
     COMPLETE: "/onboarding/complete",
-    REGISTER: "/register-pet",
-    REGISTERED: "/register-pet/complete",
+  },
+  REGISTER_PET: {
+    ROOT: "/register-pet",
+    COMPLETE: "/register-pet/complete",
   },
   MAIN: "/main",
   COMMUNITY: {
     ROOT: "/community",
     POST: "/community/:postId",
     SEARCH: "/community/search",
-    SEARCHDONE: "/community/search/done",
+    SEARCH_DONE: "/community/search/done",
     WRITE: "/community/write",
   },
   MYPAGE: {
