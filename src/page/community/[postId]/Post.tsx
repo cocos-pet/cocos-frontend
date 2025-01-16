@@ -1,3 +1,20 @@
+import React, { useState } from "react";
+import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
+import {
+  IcEllipses,
+  IcLeftarrow,
+  IcoSkeleton,
+  IcPostImageSkeleton,
+  IcTest,
+} from "@asset/svg";
+import { styles } from "@page/community/[postId]/Post.css.ts";
+import { Button } from "@common/component/Button";
+import Chip from "@common/component/Chip/Chip.tsx";
+import Divider from "@common/component/Divider/Divider.tsx";
+import CommentList from "@common/component/Comment/CommentList.tsx";
+import { TextField } from "@common/component/TextField";
+import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
+
 const PostDetail = () => {
   const postData = {
     nickname: "리트리버 사랑해",
@@ -102,13 +119,17 @@ const PostDetail = () => {
     // TODO : 뒤로가기 버튼 클릭 시 이벤트
   };
 
+  const onDelete = () => {
+    // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
+  };
+
   return (
     <>
       <HeaderNav
         leftIcon={<IcLeftarrow />}
         onLeftClick={onBackClick}
         type={"noTitle"}
-        rightBtn={<IcEllipses width={24} />} // TODO : 아이콘 모달 버튼으로 수정
+        rightBtn={<MoreModal iconSize={24} onDelete={onDelete} />}
       />
       <div className={styles.container}>
         <Button

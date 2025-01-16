@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IcEllipses } from "@asset/svg";
 import {
   container,
@@ -11,29 +11,37 @@ import {
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 
 interface MoreModalParams {
-  isOpen: boolean;
-  onToggleModal: () => void;
   onDelete: () => void;
   iconSize: number;
   onEdit?: () => void;
 }
 
-const MoreModal = ({
-  isOpen,
-  onToggleModal,
-  onDelete,
-  iconSize,
-  onEdit,
-}: MoreModalParams) => {
+const MoreModal = ({ onDelete, iconSize, onEdit }: MoreModalParams) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleToggleModal = () => {
+    setIsOpen((prev) => !prev);
+  };
+
+  const onItemClick = () => {
+    onDelete();
+    setIsOpen(false);
+  };
+
+  const onEditClick = () => {
+    onEdit && onEdit();
+    setIsOpen(false);
+  };
+
   return (
     <div
       className={container}
-      style={assignInlineVars({ [iconSizeVar]: `${iconSize}rem` })}
+      style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
     >
       <IcEllipses
         className={moreIcon}
-        style={assignInlineVars({ [iconSizeVar]: `${iconSize}rem` })}
-        onClick={onToggleModal}
+        style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
+        onClick={handleToggleModal}
       />
       {isOpen && (
         <div className={moreModal({ onEdit: !!onEdit })}>
@@ -41,7 +49,7 @@ const MoreModal = ({
             className={moreModalItem({
               position: !!onEdit ? "first" : "default",
             })}
-            onClick={onDelete}
+            onClick={onItemClick}
           >
             삭제하기
           </button>
@@ -52,7 +60,7 @@ const MoreModal = ({
                 className={moreModalItem({
                   position: !!onEdit ? "last" : "default",
                 })}
-                onClick={onEdit}
+                onClick={onEditClick}
               >
                 수정하기
               </button>
