@@ -44,16 +44,18 @@ const PetName = () => {
         </div>
 
         {/* 펫이름 입력 영역 */}
-        <TextField
-          state={petName === "" ? "default" : isValid ? "default" : "error"}
-          value={petName}
-          onChange={handleChange}
-          placeholder="닉네임을 입력해주세요."
-        />
-        <div className={styles.errorLayout}>
-          {validationMessages.map((message) => (
-            <Docs key={`error-${message}`} state="lError" text={message} />
-          ))}
+        <div>
+          <TextField
+            state={petName === "" ? "default" : isValid ? "default" : "error"}
+            value={petName}
+            onChange={handleChange}
+            placeholder="닉네임을 입력해주세요."
+          />
+          <div className={styles.errorLayout}>
+            {validationMessages.map((message) => (
+              <Docs key={`error-${message}`} state="lError" text={message} />
+            ))}
+          </div>
         </div>
       </div>
 
