@@ -1,19 +1,3 @@
-import { Button } from "@common/component/Button";
-import {
-  IcEllipses,
-  IcLeftarrow,
-  IcoSkeleton,
-  IcPostImageSkeleton,
-  IcTest,
-} from "@asset/svg";
-import { styles } from "@page/community/[postId]/Post.css.ts";
-import Chip from "@common/component/Chip/Chip.tsx";
-import React, { useState } from "react";
-import Divider from "@common/component/Divider/Divider.tsx";
-import { TextField } from "@common/component/TextField";
-import CommentList from "@common/component/Comment/CommentList.tsx";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-
 const PostDetail = () => {
   const postData = {
     nickname: "리트리버 사랑해",

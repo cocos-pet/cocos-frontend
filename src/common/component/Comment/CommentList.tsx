@@ -1,13 +1,12 @@
 import Comment, { CommentType } from "./Comment";
 
-type CommentsData = CommentType[];
-
 interface CommentListProps {
-  comments: CommentsData;
+  comments: CommentType[];
 }
+
 const CommentList = ({ comments }: CommentListProps) => {
   return (
-    <div style={{ margin: "2.4rem" }}>
+    <div>
       {comments.map((comment) => (
         <Comment key={comment.id} comment={comment} />
       ))}
