@@ -2,6 +2,7 @@ import React from "react";
 import { IcEllipses } from "@asset/svg";
 import {
   container,
+  iconSizeVar,
   moreIcon,
   MoreIconProps,
   moreModal,
@@ -26,7 +27,7 @@ const MoreModal = ({
   onEdit,
 }: MoreModalProps) => {
   return (
-    <div className={container({ iconSize })}>
+    <div className={container} style={{ [iconSizeVar]: `${iconSize}rem` }}>
       <IcEllipses className={moreIcon({ iconSize })} onClick={onToggleModal} />
       {isOpen && (
         <div className={moreModal({ onEdit: !!onEdit })}>

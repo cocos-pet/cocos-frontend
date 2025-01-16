@@ -1,26 +1,14 @@
-import { style } from "@vanilla-extract/css";
+import { createVar, style } from "@vanilla-extract/css";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { button } from "@common/component/Button/styles.css.ts";
 import { color, font } from "@style/styles.css.ts";
 
-export const container = recipe({
-  base: {
-    margin: "20rem",
-    position: "relative",
-    width: "2.4rem",
-  },
-  variants: {
-    iconSize: {
-      "24": {
-        width: "2.4rem",
-        height: "2.4rem",
-      },
-      "20": {
-        width: "2.0rem",
-        height: "2.0rem",
-      },
-    },
-  },
+export const iconSizeVar = createVar();
+
+export const container = style({
+  position: "relative",
+  width: iconSizeVar,
+  height: iconSizeVar,
 });
 
 export const moreIcon = recipe({
