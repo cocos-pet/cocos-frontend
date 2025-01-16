@@ -58,6 +58,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
               timeAgo="1시간 전" //추후 유틸로 대체
+              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
             />
           </div>
         ));
@@ -73,6 +74,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
               timeAgo="1시간 전" //추후 유틸로 대체
+              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
             />
           </div>
         ));
