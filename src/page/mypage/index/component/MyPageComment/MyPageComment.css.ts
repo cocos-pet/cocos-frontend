@@ -10,8 +10,8 @@ export const commentWrapper = style({
   gap: "0.4rem",
   borderBottom: `1px solid ${semanticColor.line.heavy}`,
 
-  wordWrap: "break-word", // 긴 단어가 줄 바꿈되도록 설정
-  whiteSpace: "pre-wrap", // 공백과 줄 바꿈을 유지하면서 렌더링
+  wordWrap: "break-word", 
+  whiteSpace: "pre-wrap", 
 });
 
 export const timeText = style({
@@ -27,7 +27,6 @@ export const contentText = style([
     color: semanticColor.text.normal,
     display: "flex",
     flexDirection: "row",
-    //alignItems: "flex-start",
     gap: "1rem",
     alignSelf: "stretch",
   },
@@ -45,7 +44,6 @@ export const wherePostText = style([
   font.label01,
   {
     display: "flex",
-    //justifyContent: "space-between",
     width: "33.5rem",
     height: "1.6rem",
     alignSelf: "stretch",
@@ -54,7 +52,7 @@ export const wherePostText = style([
 ]);
 
 export const whereText = style({
-  display: "inline-block", //이거 있어야 ellipsis 적용 가능
+  display: "inline-block", //ellipsis 적용을 위해 필요
 
   maxWidth: "26.8rem",
   textOverflow: "ellipsis",
