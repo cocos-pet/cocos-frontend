@@ -1,8 +1,8 @@
 import Content from "@common/component/Content/Content";
-import { ActiveTabType } from "../../Mypage";
-import * as styles from "./MyPageContent.css";
+import { ActiveTabType } from "../../Profile";
+import * as styles from "./ProfileContent.css";
 import { commentDummyData, dummyData } from "./costant"; //todo: 더미데이터 렌더링
-import MyPageComment from "../MyPageComment/MyPageComment";
+import MyPageComment from "../ProfileComment/ProfileComment";
 import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
 
 interface MyPageContentPropTypes {

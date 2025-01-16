@@ -1,4 +1,4 @@
-import * as styles from "./MyPageComment.css";
+import * as styles from "./ProfileComment.css";
 
 interface MyPageCommentPropTypes {
   content: string;

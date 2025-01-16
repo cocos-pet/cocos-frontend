@@ -1,4 +1,4 @@
-import { ApiItemTypes } from "./MyPageContent";
+import { ApiItemTypes } from "./ProfileContent";
 
 export const dummyData1: ApiItemTypes[] = [];
 

@@ -3,7 +3,7 @@ import * as styles from "./Profile.css";
 import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
 import { useState } from "react";
-import MyPageContent from "./component/MyPageContent/MyPageContent";
+import MyPageContent from "./component/ProfileContent/ProfileContent";
 import { IcChevronLeft, IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
 import { useNavigate } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
