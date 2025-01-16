@@ -17,7 +17,7 @@ export type ActiveTabType = "review" | "post" | "comment";
 const Mypage = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(true); //서버로부터 받아와서 하기
+  const [isRegister, setIsRegister] = useState(false); //서버로부터 받아와서 하기
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
   const isActiveTab = (tab: ActiveTabType) => {
@@ -98,13 +98,13 @@ const Mypage = () => {
 
       <div className={styles.contentHeaderWrapper}>
         <Tab active={isActiveTab("review")} width={"12.5rem"} onClick={() => handleTabClick("review")}>
-          병원 후기
+          나의 병원 후기
         </Tab>
         <Tab active={isActiveTab("post")} width={"12.5rem"} onClick={() => handleTabClick("post")}>
-          게시글
+          나의 게시글
         </Tab>
         <Tab active={isActiveTab("comment")} width={"12.5rem"} onClick={() => handleTabClick("comment")}>
-          댓글
+          나의 댓글
         </Tab>
       </div>
 
