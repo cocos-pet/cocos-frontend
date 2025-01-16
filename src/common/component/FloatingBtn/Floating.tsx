@@ -7,13 +7,11 @@ interface FloatingBtnProps {
 }
 
 function FloatingBtn({ disabled = false, onClick }: FloatingBtnProps) {
-  const floatingBtn = `${styles.floatingBtnBase} ${
-    disabled ? styles.floatingBtnDisabled : styles.floatingBtnEnabled
-  }`;
+  const floatingBtn = `${styles.floatingBtnBase} ${disabled ? styles.floatingBtnDisabled : styles.floatingBtnEnabled}`;
 
   return (
     <button className={floatingBtn} onClick={onClick} disabled={disabled}>
-      <Plus />
+      <Plus style={{ width: "2.4rem" }} />
     </button>
   );
 }

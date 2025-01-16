@@ -32,8 +32,12 @@ const Community = () => {
       </div>
       <Nav content={COMMUNITY_CONTENT} type="community" />
       <Divider />
-      <SelectPost />
-      <FloatingBtn />
+      <div className={styles.postContainer}>
+        <SelectPost />
+      </div>
+      <div className={styles.btnContainer}>
+        <FloatingBtn />
+      </div>
       <div className={styles.communityFooter}>
         <Nav content={NAV_CONTENT} type="nav" />
       </div>

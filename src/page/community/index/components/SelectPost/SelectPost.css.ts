@@ -21,7 +21,7 @@ export const tabContainer = style({
 
 export const postList = style({
   width: "33.5rem",
-  padding: "1rem",
+  padding: "1rem 1rem 0rem 1rem",
   position: "sticky",
 });
 // 탭 버튼 스타일

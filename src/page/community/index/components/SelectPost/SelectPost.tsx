@@ -4,6 +4,8 @@ import * as styles from "./SelectPost.css";
 import Divider from "@common/component/Divider/Divider";
 import { IcUnderline, IcMessage, IcShape } from "@asset/svg";
 
+
+
 const PostList = () => {
   const [isActive, setIsActive] = useState(true); // true: 최신글, false: 인기글
 
