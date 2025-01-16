@@ -1,4 +1,4 @@
-import PetId from "../../registerPetss/index/compontent/petId/PetId";
+import PetId from "../../registerPet/index/compontent/petId/PetId";
 
 const Onboarding = () => {
   return (
