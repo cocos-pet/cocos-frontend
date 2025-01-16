@@ -74,26 +74,6 @@ export const moreModal = recipe({
   },
 });
 
-// export const moreModalItem = style([
-//   font.body01,
-//   {
-//     background: "none",
-//     border: "none",
-//     borderRadius: "1.2rem",
-//     textAlign: "left",
-//     width: "100%",
-//     padding: "1.8rem 3.2rem",
-//     color: color.red.warning_red200,
-//     ":hover": {
-//       borderRadius: "unset",
-//       backgroundColor: color.gray.gray300,
-//     },
-//     ":active": {
-//       backgroundColor: color.gray.gray300,
-//     },
-//   },
-// ]);
-
 export const moreModalItem = recipe({
   base: [
     font.body01,
