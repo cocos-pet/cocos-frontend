@@ -5,14 +5,13 @@ import selectImg from "@asset/image/image 1733.png";
 interface DualOptionSelectorProps {
   leftLabel: string;
   rightLabel: string;
-  onSelect?: (value: string) => void; // 부모 컴포넌트가 뭘 선택해야하는지 알아야 하니까
+  onSelect?: (value: string) => void;
 }
 
 const DualOptionSelector = ({ leftLabel, rightLabel, onSelect }: DualOptionSelectorProps) => {
-  // 선택된 옵션 상태
   const [selectedOption, setSelectedOption] = useState<string | null>(null);
 
-  // 옵션 클릭 시 색상 변경 및 하단 버튼 활성화 (활성화는 합칠 때 구현)
+  // 옵션 클릭 시 색상 변경 및 부모로 선택값 전달
   const handleOptionClick = (value: string) => {
     setSelectedOption(value);
     if (onSelect) {
