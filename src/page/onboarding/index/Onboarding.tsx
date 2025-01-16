@@ -1,9 +1,8 @@
-import Nickname from "@page/onboarding/index/component/nickname/Nickname";
-
+import PetAge from "./component/petAge/PetAge";
 const Onboarding = () => {
   return (
     <>
-      <Nickname />
+      <PetAge />
     </>
   );
 };
