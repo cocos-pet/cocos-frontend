@@ -91,7 +91,7 @@ export const button = recipe({
           border: `0.1rem solid ${color.primary.blue500}`,
         },
         ":focus": {
-          backgroundColor: "rgba(67, 214, 255, 0.08)",
+          backgroundColor: "rgba(67, 214, 255, 0.16)",
           color: "rgba(33, 46, 50, 1)",
           border: `0.1rem solid ${color.primary.blue500}`,
         },

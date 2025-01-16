@@ -1,19 +1,33 @@
 import * as styles from "./Comment.css";
 import { IcEllipses, IcMessage } from "@asset/svg";
 
-export interface CommentData {
+// 서브 댓글 타입
+interface SubComment {
   id: number;
+  profileImage: string;
   nickname: string;
   breed: string;
   petAge: number;
   content: string;
-  createdAt: string;
-  isWriter: string;
+  createdAt: Date;
+  isWriter: boolean;
+}
+
+// 댓글 타입
+export interface CommentType {
+  id: number;
   profileImage: string;
+  nickname: string;
+  breed: string;
+  petAge: number;
+  content: string;
+  createdAt: Date;
+  isWriter: boolean;
+  subComments: SubComment[]; // 서브 댓글 배열
 }
 
 interface CommentProps {
-  comment: CommentData;
+  comment: CommentType;
 }
 
 const Comment = ({ comment }: CommentProps) => {
@@ -21,12 +35,17 @@ const Comment = ({ comment }: CommentProps) => {
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={comment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
+          <img
+            src={comment.profileImage}
+            className={styles.profileImage}
+            alt="프로필 이미지"
+          />
           <div className={styles.headerInfo}>
             <IcEllipses className={styles.containerOptionsIcon} />
             <span className={styles.nickname}>{comment.nickname}</span>
             <span className={styles.meta}>
-              {comment.breed}·{comment.petAge}살 · {comment.createdAt}
+              {comment.breed}·{comment.petAge}살 ·{" "}
+              {comment.createdAt.toLocaleString()}
             </span>
           </div>
         </div>

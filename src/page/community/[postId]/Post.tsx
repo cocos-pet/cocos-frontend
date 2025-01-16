@@ -2,9 +2,10 @@ import { Button } from "@common/component/Button";
 import { IcoSkeleton, IcPostImageSkeleton, IcTest } from "@asset/svg";
 import { styles } from "@page/community/[postId]/Post.css.ts";
 import Chip from "@common/component/Chip/Chip.tsx";
-import { useState } from "react";
+import React, { useState } from "react";
 import Divider from "@common/component/Divider/Divider.tsx";
 import { TextField } from "@common/component/TextField";
+import CommentList from "@common/component/Comment/CommentList.tsx";
 
 const PostDetail = () => {
   const postData = {
@@ -110,7 +111,7 @@ const PostDetail = () => {
     <>
       <div className={styles.container}>
         <Button
-          leftIcon={<IcTest />}
+          leftIcon={<IcTest width={20} />}
           label={"병원고민"}
           variant={"outlineNeutral"}
           size={"tag"}
@@ -156,7 +157,7 @@ const PostDetail = () => {
           </span>
         </div>
         {/* TODO : 댓글 컴포넌트 완료되면 연결  */}
-        {/*<Comment comments={commentsData} />*/}
+        <CommentList comments={commentsData} />
         <div className={styles.commentContainer}>
           <TextField
             onChange={onChange}
