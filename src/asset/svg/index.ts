@@ -11,6 +11,7 @@ export { default as IcEllipses } from "./IcEllipses";
 export { default as IcLeftarrow } from "./IcLeftarrow";
 export { default as IcLogo } from "./IcLogo";
 export { default as IcMessage } from "./IcMessage";
+export { default as IcRight } from "./IcRight";
 export { default as IcPlus } from "./IcPlus";
 export { default as IcSearch } from "./IcSearch";
 export { default as IcSearchFillter } from "./IcSearchFillter";

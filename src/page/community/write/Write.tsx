@@ -1,8 +1,22 @@
+import Tag from "@page/community/component/Tag/Tag.tsx";
+import { useState } from "react";
 
 const Write = () => {
-  return (
-    <div>Write</div>
-  )
-}
+  const [params, setParams] = useState({
+    tag: "",
+  });
 
-export default Write
+  const setTag = (tag: string) => {
+    setParams({ ...params, tag });
+  };
+
+  return (
+    <div>
+      <Tag label={"#태그1"} value={params.tag} setTag={setTag} />
+      <Tag label={"#태그2"} value={params.tag} setTag={setTag} />
+      <Tag label={"#태그3"} value={params.tag} setTag={setTag} />
+    </div>
+  );
+};
+
+export default Write;
