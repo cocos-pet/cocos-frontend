@@ -1,11 +1,18 @@
 import { Button } from "@common/component/Button";
-import { IcoSkeleton, IcPostImageSkeleton, IcTest } from "@asset/svg";
+import {
+  IcEllipses,
+  IcLeftarrow,
+  IcoSkeleton,
+  IcPostImageSkeleton,
+  IcTest,
+} from "@asset/svg";
 import { styles } from "@page/community/[postId]/Post.css.ts";
 import Chip from "@common/component/Chip/Chip.tsx";
 import React, { useState } from "react";
 import Divider from "@common/component/Divider/Divider.tsx";
 import { TextField } from "@common/component/TextField";
 import CommentList from "@common/component/Comment/CommentList.tsx";
+import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 
 const PostDetail = () => {
   const postData = {
@@ -107,8 +114,18 @@ const PostDetail = () => {
     // TODO : 댓글 등록 API 호출
   };
 
+  const onBackClick = () => {
+    // TODO : 뒤로가기 버튼 클릭 시 이벤트
+  };
+
   return (
     <>
+      <HeaderNav
+        leftIcon={<IcLeftarrow />}
+        onLeftClick={onBackClick}
+        type={"noTitle"}
+        rightBtn={<IcEllipses width={24} />} // TODO : 아이콘 모달 버튼으로 수정
+      />
       <div className={styles.container}>
         <Button
           leftIcon={<IcTest width={20} />}
@@ -156,7 +173,6 @@ const PostDetail = () => {
             {postData.totalCommentCounts}
           </span>
         </div>
-        {/* TODO : 댓글 컴포넌트 완료되면 연결  */}
         <CommentList comments={commentsData} />
         <div className={styles.commentContainer}>
           <TextField
