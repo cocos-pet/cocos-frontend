@@ -110,11 +110,7 @@ const Mypage = () => {
 
       <article className={styles.myPageContentWrapper}>
         <div className={styles.contentBody}>
-          {isLogin ? (
-            <MyPageContent tab={activeTab} />
-          ) : (
-            <div className={styles.nothingContent}>로그인을 해주세요!</div>
-          )}
+          {isLogin ? <MyPageContent tab={activeTab} /> : <div className={styles.nothingContent}>로그인 해주세요.</div>}
         </div>
       </article>
 
