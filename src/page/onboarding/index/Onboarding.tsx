@@ -1,9 +1,6 @@
-import DualOptionSelector from "./component/dualOptionSelector/DualOptionSelector";
-
 const Onboarding = () => {
   return (
     <>
-      <DualOptionSelector leftLabel="고양이" rightLabel="강아지" />
     </>
   );
 };

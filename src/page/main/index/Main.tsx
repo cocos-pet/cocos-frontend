@@ -4,7 +4,8 @@ import { Button } from "@common/component/Button";
 import { IcTest } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import CommentList from "@common/component/Comment/CommentList";
-import { mockComments } from "../../../shared/constant/mockComment";
+import mockComments from "@shared/constant/mockComment";
+
 const Main = () => {
   // const { category, categoryData, setOpen, toggleOpen } = useFilterStore();
 
