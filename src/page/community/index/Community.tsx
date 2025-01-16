@@ -6,6 +6,9 @@ import Divider from "@common/component/Divider/Divider";
 import Banner from "./components/Banner/Banner";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { COMMUNITY_CONTENT } from "@common/component/Nav/communityConstant";
+import SelectPost from "./components/SelectPost/SelectPost";
+import FloatingBtn from "@common/component/FloatingBtn/Floating";
+import * as styles from "./Community.css";
 
 const Community = () => {
   const navigate = useNavigate();
@@ -15,14 +18,25 @@ const Community = () => {
   };
 
   return (
-    <div style={{ width: "37.5rem" }}>
-      <HeaderNav leftIcon={<IcCocos />} centerContent="커뮤니티" rightBtn={<IcSearch onClick={handleSearchClick} />} />
-      <Divider size="small" />
-      <Banner />
+    <div className={styles.communityContainer}>
+      <div className={styles.communityHeader}>
+        <HeaderNav
+          leftIcon={<IcCocos />}
+          centerContent="커뮤니티"
+          rightBtn={<IcSearch onClick={handleSearchClick} />}
+        />
+        <Divider size="small" />
+      </div>
+      <div className={styles.bannerContainer}>
+        <Banner />
+      </div>
       <Nav content={COMMUNITY_CONTENT} type="community" />
-      
       <Divider />
-      <Nav content={NAV_CONTENT} type="nav" />
+      <SelectPost />
+      <FloatingBtn />
+      <div className={styles.communityFooter}>
+        <Nav content={NAV_CONTENT} type="nav" />
+      </div>
     </div>
   );
 };

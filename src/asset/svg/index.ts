@@ -17,6 +17,7 @@ export { default as IcSearchFillterBlue } from "./IcSearchFillterBlue";
 export { default as IcShape } from "./IcShape";
 export { default as IcTest } from "./IcTest";
 export { default as IcToastError } from "./IcToastError";
+export { default as IcUnderline } from "./IcUnderline";
 export { default as IcUp } from "./IcUp";
 export { default as Plus } from "./Plus";
 export { default as React } from "./React";
