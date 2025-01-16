@@ -2,6 +2,8 @@ export const PATH = {
   ONBOARDING: {
     ROOT: "/onboarding",
     COMPLETE: "/onboarding/complete",
+    REGISTER: "/register-pet",
+    REGISTERED: "/register-pet/complete",
   },
   MAIN: "/main",
   COMMUNITY: {
