@@ -137,7 +137,7 @@ const PostDetail = () => {
         <div className={styles.top}>
           {
             // <img src={postData.userProfile} alt="userProfile"/>
-            <IcoSkeleton className={styles.userProfile} />
+            <IcoSkeleton className={styles.userProfile} /> // TODO : 프로필 이미지로 수정
           }
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
@@ -150,6 +150,7 @@ const PostDetail = () => {
           <div className={styles.title}>{postData.title}</div>
           <div className={styles.content}>{postData.content}</div>
         </div>
+        {/* TODO : 서버에서 받아온 이미지로 수정*/}
         <IcPostImageSkeleton className={styles.image} />
         <IcPostImageSkeleton className={styles.image} />
         <div className={styles.labelWrap}>
