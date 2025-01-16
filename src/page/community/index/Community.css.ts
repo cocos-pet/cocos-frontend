@@ -28,12 +28,13 @@ export const communityFooter = style({
 });
 
 export const postContainer = style({
-  marginBottom: "4rem",
+  marginBottom: "10rem",
 });
 
 export const btnContainer = style({
+  width: "37.5rem",
   position: "fixed",
-  bottom: "6.5rem",
-  right: "2rem",
+  bottom: "10rem",
   zIndex: 20,
+  marginLeft: "30rem",
 });
