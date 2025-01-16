@@ -12,6 +12,7 @@ export const styles = {
       padding: "1rem 2rem",
       border: `0.1rem solid ${color.gray.gray200}`,
       borderRadius: "8px",
+      background: color.gray.gray000,
     },
     variants: {
       state: {
@@ -34,6 +35,13 @@ export const styles = {
       active: true,
     },
   }),
+  leftWrap: recipe({
+    base: {
+      display: "flex",
+      alignItems: "center",
+      gap: "1rem",
+    },
+  }),
   input: recipe({
     base: [
       font.body01,
@@ -41,6 +49,7 @@ export const styles = {
         letterSpacing: "-0.28px",
         fontWeight: 500,
         height: "auto",
+        maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",
         "::placeholder": {

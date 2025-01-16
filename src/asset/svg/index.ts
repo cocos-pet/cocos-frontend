@@ -1,3 +1,4 @@
+export { default as IcRight } from "./IcRight";
 export { default as Check } from "./Check";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
