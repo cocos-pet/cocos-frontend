@@ -1,7 +1,4 @@
-import {
-  rightIcon,
-  tagContainer,
-} from "@page/community/component/Tag/Tag.css.ts";
+import { tagContainer } from "@page/community/component/Tag/Tag.css.ts";
 import { IcLeftarrow, IcRight } from "@asset/svg";
 import React from "react";
 import { color } from "@style/styles.css.ts";
