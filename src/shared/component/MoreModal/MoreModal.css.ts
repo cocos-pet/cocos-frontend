@@ -11,26 +11,10 @@ export const container = style({
   height: iconSizeVar,
 });
 
-export const moreIcon = recipe({
-  base: {
-    width: "2.4rem",
-    height: "2.4rem",
-  },
-  variants: {
-    iconSize: {
-      "24": {
-        width: "2.4rem",
-        height: "2.4rem",
-      },
-      "20": {
-        width: "2.0rem",
-        height: "2.0rem",
-      },
-    },
-  },
+export const moreIcon = style({
+  width: iconSizeVar,
+  height: iconSizeVar,
 });
-
-export type MoreIconProps = RecipeVariants<typeof moreIcon>;
 
 export const moreModal = recipe({
   base: {

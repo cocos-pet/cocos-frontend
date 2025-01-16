@@ -4,20 +4,19 @@ import {
   container,
   iconSizeVar,
   moreIcon,
-  MoreIconProps,
   moreModal,
   moreModalDivider,
   moreModalItem,
 } from "@shared/component/MoreModal/MoreModal.css.ts";
+import { assignInlineVars } from "@vanilla-extract/dynamic";
 
 interface MoreModalParams {
   isOpen: boolean;
   onToggleModal: () => void;
   onDelete: () => void;
-  onEdit?: () => void; // 선택적 수정하기 동작
+  iconSize: number;
+  onEdit?: () => void;
 }
-
-type MoreModalProps = MoreModalParams & MoreIconProps;
 
 const MoreModal = ({
   isOpen,
@@ -25,10 +24,17 @@ const MoreModal = ({
   onDelete,
   iconSize,
   onEdit,
-}: MoreModalProps) => {
+}: MoreModalParams) => {
   return (
-    <div className={container} style={{ [iconSizeVar]: `${iconSize}rem` }}>
-      <IcEllipses className={moreIcon({ iconSize })} onClick={onToggleModal} />
+    <div
+      className={container}
+      style={assignInlineVars({ [iconSizeVar]: `${iconSize}rem` })}
+    >
+      <IcEllipses
+        className={moreIcon}
+        style={assignInlineVars({ [iconSizeVar]: `${iconSize}rem` })}
+        onClick={onToggleModal}
+      />
       {isOpen && (
         <div className={moreModal({ onEdit: !!onEdit })}>
           <button
