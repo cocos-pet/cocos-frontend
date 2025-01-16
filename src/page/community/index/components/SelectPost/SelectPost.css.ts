@@ -10,13 +10,14 @@ export const container = style({
 });
 
 export const tabContainer = style({
-  width: "100%",
   display: "flex",
   padding: "1rem 0",
   justifyContent: "space-between",
   position: "sticky",
-  zIndex: 10,
   backgroundColor: "#fff", // 배경색 추가
+  top: "6.4rem",
+  width: "37.5rem",
+  zIndex: 10,
 });
 
 export const postList = style({
@@ -120,12 +121,4 @@ export const postImage = style({
   height: "6rem",
   backgroundColor: color.gray.gray200,
   borderRadius: "8px",
-});
-
-export const hi = style({
-  position: "sticky",
-  top: "6.4rem",
-  width: "37.5rem",
-  backgroundColor: "#fff",
-  zIndex: 10,
 });

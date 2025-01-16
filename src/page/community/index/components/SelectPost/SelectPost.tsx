@@ -20,6 +20,7 @@ const PostList = () => {
   const displayedPosts = isActive ? latestPosts : popularPosts;
 
   return (
+    
     <div className={styles.container}>
       <div className={styles.tabContainer}>
         <button type="button" className={styles.tabButton({ isActive: isActive })} onClick={() => setIsActive(true)}>
@@ -48,7 +49,9 @@ const PostList = () => {
                 width: "2.4rem",
               }}
             />
+            
           )}
+          
         </button>
       </div>
       <Divider size="small" />
