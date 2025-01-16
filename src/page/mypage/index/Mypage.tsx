@@ -8,10 +8,10 @@ import { IcChevronLeft, IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
 import { useNavigate } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
+import { PET_PROFILE, USER_PROFILE } from "./\bconstant";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
-//todo: api 형식 맞춰서 유저 프로필 내용, 동물 프로필 내용 불러오기 구성
 //todo: 코멘트(댓글) 뷰 확정짓고 구현 + api 고려해서 만들어두기
 //남이 볼 때 뷰 분리 : 그떄는 /mypage 가 아니라 /profie?id=3 으로 넘어가서 보도록
 const Mypage = () => {
@@ -50,16 +50,18 @@ const Mypage = () => {
       <article className={styles.myProfileWrapper}>
         {isLogin ? (
           <div className={styles.loginProfile}>
-            <img className={styles.profileImage} alt="프로필 이미지" />
-            <span className={styles.userProfileText}>준혁</span>
+            <img className={styles.profileImage} alt="프로필 이미지" src={USER_PROFILE.profileImage} />
+            <span className={styles.userProfileText}>{USER_PROFILE.nickname}</span>
             <Divider size="small" />
 
             {isRegister ? (
               <div className={styles.animalProfileWrapper}>
-                <img className={styles.animalImage} alt="프로필이미지" />
+                <img className={styles.animalImage} alt="프로필이미지" src={PET_PROFILE.petImage} />
                 <div className={styles.animalProfileTextWrapper}>
-                  <span className={styles.animalMainText}>골든 리트리버 | 12살 | </span>
-                  <span className={styles.animalSubText}>앓고있는 병 #000 #000 #000</span>
+                  <span className={styles.animalMainText}>{`${PET_PROFILE.breed} | ${PET_PROFILE.petAge} |`}</span>
+                  <span className={styles.animalSubText}>
+                    {`앓고있는 병 ${PET_PROFILE.diseases.map((disease) => `#${disease.name}`).join(" ")}`}
+                  </span>
                 </div>
                 <IcChevronRight
                   width={28}
