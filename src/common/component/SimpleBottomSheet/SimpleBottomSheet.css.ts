@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { font, semanticColor } from "@style/styles.css";
+import { color, font, semanticColor } from "@style/styles.css";
 
 export const overlay = style({
   position: "absolute",
@@ -45,12 +45,27 @@ export const contentContainer = style({
   gap: "2.4rem",
 });
 
+export const contentWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "1.2rem",
+});
+
 export const content = style([
   font.heading03,
   {
     alignSelf: "stretch",
     color: semanticColor.text.normal,
     letterSpacing: "-0.16px",
+  },
+]);
+
+export const subContent = style([
+  font.label01,
+  {
+    alignSelf: "stretch",
+    color: color.gray.gray500,
   },
 ]);
 
