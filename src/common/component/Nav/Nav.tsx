@@ -40,7 +40,7 @@ const Nav = () => {
               state: activeItem === item.id,
             })}
           >
-            <SvgComponent />
+            <SvgComponent  />
             {item.label}
           </button>
         );
