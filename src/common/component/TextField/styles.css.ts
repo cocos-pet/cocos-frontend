@@ -19,6 +19,7 @@ export const styles = {
         error: {
           border: `0.1rem solid ${color.red.warning_red200}`,
         },
+        centerPlaceholder: { maxWidth: "12rem" },
       },
       active: {
         true: {},
@@ -28,17 +29,10 @@ export const styles = {
           border: "none",
         },
       },
-      centerPlaceholder: {
-        true: {
-          maxWidth: "12rem",
-        },
-        false: {},
-      },
     },
     defaultVariants: {
       state: "default",
       active: true,
-      centerPlaceholder: false,
     },
   }),
 
@@ -67,17 +61,15 @@ export const styles = {
           color: color.gray.gray500,
         },
       },
-      centerPlaceholder: {
-        true: {
-          maxWidth: "8rem",
-          textAlign: "center",
-        },
-        false: {},
+      state: {
+        default: {},
+        error: {},
+        centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
       },
     },
+
     defaultVariants: {
       active: true,
-      centerPlaceholder: false,
     },
   }),
 

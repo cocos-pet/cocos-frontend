@@ -4,7 +4,7 @@ import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
   icon?: React.ReactNode;
-  state?: "default" | "error";
+  state?: "default" | "error" | "centerPlaceholder";
   active?: boolean;
   placeholder?: string;
   value: string;
@@ -12,7 +12,6 @@ interface TextFieldProps {
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
-  centerPlaceholder?: boolean; // placeholder 중앙 정렬 여부를 결정하는 프롭
   maxLength?: number; // input 입력 가능길이
 }
 
@@ -40,17 +39,16 @@ interface TextFieldProps {
       onClick,
       onKeyDown,
       onClearClick,
-      centerPlaceholder = false, // 기본값은 false
       maxLength,
     },
     ref, // forwardRef를 통해 ref를 받을 수 있도록 설정
   ) => {
     return (
-      <div className={styles.wrapper({ state, active, centerPlaceholder })} onClick={onClick}>
+      <div className={styles.wrapper({ state, active })} onClick={onClick}>
         <input
           ref={ref}
           type="text"
-          className={styles.input({ active,centerPlaceholder })}
+          className={styles.input({ state, active })}
           placeholder={placeholder}
           value={value}
           onChange={onChange}

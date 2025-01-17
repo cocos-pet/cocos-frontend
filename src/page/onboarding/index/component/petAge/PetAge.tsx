@@ -38,10 +38,10 @@ const PetAge = () => {
         <div className={styles.centerLayout}>
           <div>
             <TextField
+              state="centerPlaceholder"
               value={petAge}
               onChange={updatePetAge}
               placeholder="나이"
-              centerPlaceholder={true}
               maxLength={2}
             />
           </div>
