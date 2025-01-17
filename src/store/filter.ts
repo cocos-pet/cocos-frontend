@@ -55,7 +55,10 @@ interface FilterState {
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
-  setCategoryData: (category: CategoryType, data: CategoryKind | CategorySymptom | CategoryDisease) => void;
+  setCategoryData: (
+    category: CategoryType,
+    data: CategoryKind | CategorySymptom | CategoryDisease
+  ) => void;
 }
 
 export const useFilterStore = create<FilterState>((set) => ({
@@ -66,30 +69,26 @@ export const useFilterStore = create<FilterState>((set) => ({
   category: "kind",
   setCategory: (category) => set({ category }),
 
-  selectedChips: { breedId: [], diseaseIds: [], symptomIds: [] }, // 초기화된 구조
+  selectedChips: { breedId: [], diseaseIds: [], symptomIds: [] },
   toggleChips: ({ id, category }) =>
     set((state) => {
-      // const keyMap = {
-      //   kind: "breedId",
-      //   disease: "diseaseIds",
-      //   symptoms: "symptomIds",
-      // } as const;
-
-      // // category가 keyMap에 존재하는지 체크
-      // console.log(category);
-
-      // if (!(category in keyMap)) {
-      //   console.error(`Invalid category: ${category}`);
-      //   return state; // 잘못된 category 값인 경우 상태를 그대로 반환
-      // }
-
-      // const key = keyMap[category as keyof typeof keyMap];
-
       const currentList = state.selectedChips[category] || [];
       const alreadyExists = currentList.includes(id);
 
-      // ID 추가 또는 제거
-      const updatedList = alreadyExists ? currentList.filter((chipId) => chipId !== id) : [...currentList, id];
+      // 카테고리가 'kind'일 경우 하나만 선택 가능
+      if (category === "breedId") {
+        return {
+          selectedChips: {
+            ...state.selectedChips,
+            [category]: alreadyExists ? [] : [id], // 선택된 ID만 남기고 초기화
+          },
+        };
+      }
+
+      // 일반적인 다중 선택 로직
+      const updatedList = alreadyExists
+        ? currentList.filter((chipId) => chipId !== id) // 이미 선택되어 있으면 제거
+        : [...currentList, id]; // 선택되지 않은 경우 추가
 
       return {
         selectedChips: {
@@ -99,7 +98,11 @@ export const useFilterStore = create<FilterState>((set) => ({
       };
     }),
 
-  categoryData: { kind: CATEGORY_KIND, symptoms: CATEGORY_SYMPTOM, disease: CATEGORY_DISEASE }, //todo: api 연결 후에는 [] 로 변경할 것
+  categoryData: {
+    kind: CATEGORY_KIND,
+    symptoms: CATEGORY_SYMPTOM,
+    disease: CATEGORY_DISEASE,
+  }, //todo: api 연결 후에는 [] 로 변경할 것
   setCategoryData: (category, data) =>
     set((state) => ({
       categoryData: { ...state.categoryData, [category]: data }, // todo: 이거 조금 수정 필요할 수도 있음
