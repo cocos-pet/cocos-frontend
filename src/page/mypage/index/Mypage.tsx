@@ -16,7 +16,7 @@ export type ActiveTabType = "review" | "post" | "comment";
 const Mypage = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false); //todo: 서버로부터 받아와서 하기
+  const [isRegister, setIsRegister] = useState(true); //todo: 서버로부터 받아와서 하기
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
   const isActiveTab = (tab: ActiveTabType) => {
