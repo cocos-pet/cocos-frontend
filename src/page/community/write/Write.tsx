@@ -1,6 +1,12 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
-import { IcDeleteBlack, IcImagePlus, IcTest, IcUp } from "@asset/svg";
+import {
+  IcDeleteBlack,
+  IcImagePlus,
+  IcRightArror,
+  IcTest,
+  IcUp,
+} from "@asset/svg";
 import React, { ChangeEvent, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -29,9 +35,24 @@ interface writeProps {
 }
 
 const TagLabel = [
-  { label: "반려동물 종류 추가하기", value: "반려동물 종류 추가하기" },
-  { label: "증상 추가하기", value: "증상 추가하기" },
-  { label: "질병 추가하기", value: "질병 추가하기" },
+  {
+    label: "반려동물 종류 추가하기",
+    value: "반려동물 종류 추가하기",
+  },
+  {
+    label: "증상 추가하기",
+    value: "증상 추가하기",
+  },
+  {
+    label: "질병 추가하기",
+    value: "질병 추가하기",
+  },
+];
+
+const DropDownItems = [
+  { icon: <IcUp width={20} />, label: "증상·질병" },
+  { icon: <IcTest width={20} />, label: "병원고민" },
+  { icon: <IcRightArror width={20} />, label: "일상·치유" },
 ];
 
 const Write = () => {
@@ -43,28 +64,16 @@ const Write = () => {
     tag: "",
     image: [],
   });
-  const [searchText, setSearchText] = useState<string>("");
-  const [selectState, setSelectState] = useState<string>("");
 
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+    onChangeValue("category", e.target.value);
     if (!isDropDownOpen) closeDropDown();
   };
 
   const onTextFieldClick = () => {
     toggleDropDown();
-  };
-
-  const onClickItem = (item: string) => {
-    setSelectState(item);
-    toggleDropDown();
-    console.log(selectState);
-  };
-
-  const setTag = (tag: string) => {
-    setParams({ ...params, tag });
   };
 
   const onChangeValue = (
@@ -77,24 +86,30 @@ const Write = () => {
     });
   };
 
-  const [images, setImages] = useState<string[]>([]); // 이미지 URL 리스트
-  const fileInputRef = useRef<HTMLInputElement>(null); // input 파일 선택기 레퍼런스
+  const [images, setImages] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // 이미지 추가 핸들러
+  // 이미지 추가
   const handleAddImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const newImage = URL.createObjectURL(event.target.files[0]); // 로컬 파일의 URL 생성
-      setImages((prev) => [...prev, newImage]); // 기존 이미지에 추가
+      const newImage = URL.createObjectURL(event.target.files[0]);
+      setImages((prev) => [...prev, newImage]);
     }
   };
 
-  // 이미지 삭제 핸들러
+  // 이미지 삭제
   const handleDeleteImage = (index: number) => {
     setImages((prev) => prev.filter((_, i) => i !== index)); // 선택한 이미지 제거
   };
 
+  // 이미지 업로드 버튼 클릭
   const handleFileUploadClick = () => {
-    fileInputRef.current?.click(); // 숨겨진 input[type="file"] 클릭
+    fileInputRef.current?.click();
+  };
+
+  const getDropdownIcon = (category: string) => {
+    const selectedItem = DropDownItems.find((item) => item.label === category);
+    return selectedItem ? selectedItem.icon : null;
   };
 
   return (
@@ -107,9 +122,9 @@ const Write = () => {
       <div className={writeWrap}>
         <WriteInputSection title={"제목"}>
           <TextField
-            leftIcon={<IcTest width={20} />}
+            leftIcon={getDropdownIcon(params.category)}
+            icon={<IcRightArror width={20} />}
             placeholder={"게시물 선택하기"}
-            icon={<IcRight width={20} />}
             onChange={onTextFieldChange}
             onClick={onTextFieldClick}
             isDelete={false}
@@ -117,11 +132,7 @@ const Write = () => {
           />
           <DropDown
             isOpen={isDropDownOpen}
-            items={[
-              { icon: <IcUp width={20} />, label: "Item 1" },
-              { icon: <IcUp width={20} />, label: "Item 2" },
-              { icon: <IcUp width={20} />, label: "Item 3" },
-            ]}
+            items={DropDownItems}
             onClickItem={onChangeValue}
             toggleDropDown={toggleDropDown}
           />
@@ -129,7 +140,6 @@ const Write = () => {
         <WriteInputSection title={"글 작성"}>
           <TextField
             placeholder={"제목을 입력해주세요"}
-            icon={<IcRight width={20} />}
             onClick={() => {
               console.log("click");
             }}
