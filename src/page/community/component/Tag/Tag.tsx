@@ -1,6 +1,5 @@
 import { tagContainer } from "@page/community/component/Tag/Tag.css.ts";
-import { IcLeftarrow, IcRight } from "@asset/svg";
-import React from "react";
+import { IcRight } from "@asset/svg";
 import { color } from "@style/styles.css.ts";
 
 interface tagType {
@@ -19,10 +18,7 @@ const Tag = ({ label, value, setTag }: tagType) => {
   return (
     <button className={tagContainer({ active: isActive })} onClick={onClickTag}>
       {label}
-      <IcRight
-        width={20}
-        stroke={isActive ? color.primary.blue500 : "#717171"}
-      />
+      <IcRight width={20} stroke={isActive ? color.primary.blue500 : "#717171"} />
     </button>
   );
 };

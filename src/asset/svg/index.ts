@@ -2,6 +2,7 @@ export { default as Check } from "./Check";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
 export { default as IcNormal } from "./IcNormal";
+export {default as IcRight} from "./IcRight"
 export { default as IcRightIcon } from "./IcRightIcon";
 export { default as IcShape } from "./IcShape";
 export { default as IcChevronLeft } from "./IcChevronLeft";
