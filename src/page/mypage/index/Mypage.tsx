@@ -9,15 +9,14 @@ import { useNavigate } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import { PET_PROFILE, USER_PROFILE } from "./constant";
+import { PATH } from "@route/path";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
-//todo: 코멘트(댓글) 뷰 확정짓고 구현 + api 고려해서 만들어두기
-//남이 볼 때 뷰 분리 : 그떄는 /mypage 가 아니라 /profie?id=3 으로 넘어가서 보도록
 const Mypage = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false); //서버로부터 받아와서 하기
+  const [isRegister, setIsRegister] = useState(false); //todo: 서버로부터 받아와서 하기
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
   const isActiveTab = (tab: ActiveTabType) => {
@@ -39,7 +38,7 @@ const Mypage = () => {
               className={styles.settingWrapper({
                 isLogin: isLogin,
               })}
-              onClick={() => isLogin && navigate("/mypage/edit-profile")}
+              onClick={() => isLogin && navigate(PATH.SETTING.ROOT)}
             >
               <IcSettings width={24} height={24} />
             </span>
@@ -67,7 +66,7 @@ const Mypage = () => {
                   width={28}
                   height={28}
                   style={{ cursor: "pointer" }}
-                  onClick={() => navigate("/mypage/edit-pet")}
+                  onClick={() => navigate(PATH.MYPAGE.EDIT_PET)}
                 />
               </div>
             ) : (
@@ -77,7 +76,7 @@ const Mypage = () => {
                   rightIcon={<IcPlus width={20} height={20} />}
                   size={"small"}
                   label="반려동물 추가하기"
-                  onClick={() => navigate("/add-animal")} //todo: 반려동물 추가 뷰 구현하기
+                  onClick={() => navigate(PATH.REGISTER_PET.ROOT)}
                 />
               </span>
             )}
