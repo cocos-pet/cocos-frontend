@@ -23,4 +23,7 @@ export const PATH = {
     ROOT: "/search",
     DONE: "/search/done",
   },
+  PROFILE: {
+    ROOT: "/profile",
+  },
 };

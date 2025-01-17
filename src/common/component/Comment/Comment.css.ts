@@ -4,8 +4,9 @@ import { font, semanticColor } from "@style/styles.css";
 export const commentItem = style([
   {
     display: "flex",
+    flexDirection: "column",
     alignItems: "flex-start",
-    gap: "0.4rem",
+    gap: "1.2rem",
   },
 ]);
 
