@@ -13,6 +13,13 @@ export const selectedZone = style({
   whiteSpace: "nowrap",
   overflowX: "scroll",
   gap: "1rem",
+  selectors: {
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+  msOverflowStyle: "none",
+  scrollbarWidth: "none",
 });
 
 export const categoryZone = style({
