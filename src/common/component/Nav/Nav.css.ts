@@ -15,7 +15,6 @@ export const container = style([
 
 export const navItem = recipe({
   base: {
-    width: "5.6rem",
     display: "flex",
     width: "5.6rem",
     flexDirection: "column",
