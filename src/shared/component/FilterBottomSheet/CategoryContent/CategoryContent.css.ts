@@ -12,7 +12,6 @@ export const styles = {
 
   symptomsWrapper: style({
     display: "flex",
-    width: "33.5rem",
     flexDirection: "column",
     alignItems: "flex-start",
   }),

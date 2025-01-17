@@ -31,8 +31,7 @@ export const categoryZone = style({
 });
 
 export const bodyZone = style({
-  display: "flex",
-  justifyContent: "center",
+  padding: "0 2rem",
 });
 
 export const buttonWrapper = style({
