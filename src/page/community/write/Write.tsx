@@ -7,7 +7,7 @@ import {
   IcTest,
   IcUp,
 } from "@asset/svg";
-import React, { ChangeEvent, useRef, useState } from "react";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import {
@@ -69,6 +69,18 @@ const Write = () => {
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
   const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips } =
     useFilterStore();
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      // 컴포넌트가 언마운트될 때 스크롤 복원
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     onChangeValue("category", e.target.value);
