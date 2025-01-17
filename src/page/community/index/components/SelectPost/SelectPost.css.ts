@@ -13,15 +13,15 @@ export const tabContainer = style({
   padding: "1rem 0",
   justifyContent: "space-between",
   position: "sticky",
-  backgroundColor: "#fff", // 배경색 추가
+  backgroundColor: "#fff", 
   top: "6.4rem",
   width: "100%",
   zIndex: 10,
 });
 
 export const postList = style({
-  width: "33.5rem",
-  padding: "1rem 1rem 0rem 1rem",
+  width: "100%",
+  padding: "1.6rem 2rem 0rem 2rem",
   position: "sticky",
 });
 // 탭 버튼 스타일
@@ -120,4 +120,12 @@ export const postImage = style({
   height: "6rem",
   backgroundColor: color.gray.gray200,
   borderRadius: "8px",
+});
+
+export const underline = style({
+  position: "absolute",
+  bottom: "-1.2rem",
+  left: "50%",
+  transform: "translateX(-50%)",
+  width: "2.4rem",
 });

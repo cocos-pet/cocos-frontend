@@ -35,8 +35,7 @@ export const postContainer = style({
 export const btnContainer = style({
   position: "fixed",
   bottom: "10.8rem",
-  right: "2rem",
-  zIndex: 20,
+  right: "max(2.8rem, calc((100% - 76.8rem) / 2 + 2.8rem))",
   display: "flex",
   alignItems: "flex-end",
 });

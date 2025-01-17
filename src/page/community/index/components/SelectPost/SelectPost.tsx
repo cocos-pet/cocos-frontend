@@ -26,31 +26,11 @@ const PostList = () => {
       <div className={styles.tabContainer}>
         <button type="button" className={styles.tabButton({ isActive: isActive })} onClick={() => setIsActive(true)}>
           최신글
-          {isActive && (
-            <IcUnderline
-              style={{
-                position: "absolute",
-                bottom: "-1.2rem",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "2.4rem",
-              }}
-            />
-          )}
+          {isActive && <IcUnderline className={styles.underline} />}
         </button>
         <button type="button" className={styles.tabButton({ isActive: !isActive })} onClick={() => setIsActive(false)}>
           인기글
-          {!isActive && (
-            <IcUnderline
-              style={{
-                position: "absolute",
-                bottom: "-1.2rem",
-                left: "50%",
-                transform: "translateX(-50%)",
-                width: "2.4rem",
-              }}
-            />
-          )}
+          {!isActive && <IcUnderline className={styles.underline} />}
         </button>
       </div>
       <Divider size="small" />
