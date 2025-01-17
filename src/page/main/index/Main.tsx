@@ -26,9 +26,6 @@ const Main = () => {
     navigate("/search");
   };
 
-  useEffect(() => {
-    setOpen(true);
-  }, [setOpen]);
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
