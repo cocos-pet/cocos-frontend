@@ -6,6 +6,7 @@ import ONBOARDING_ROUTES from "./OnboardingRoutes";
 import REGISTER_PET_ROUTES from "./RegisterPetRoutes";
 import PROFILE_ROUTES from "./ProfileRoutes";
 import Test from "@page/test/Test";
+import SETTING_ROUTES from "./Setting";
 
 //children은 Outlet에서 사용하는 방식 (레이아웃 지정해야할 때)
 const router = createBrowserRouter([
@@ -17,6 +18,7 @@ const router = createBrowserRouter([
   ...MYPAGE_ROUTES,
   ...REGISTER_PET_ROUTES,
   ...PROFILE_ROUTES,
+  ...SETTING_ROUTES,
 ]);
 
 export default router;

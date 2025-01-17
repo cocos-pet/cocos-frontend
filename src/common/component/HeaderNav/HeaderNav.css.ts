@@ -9,11 +9,12 @@ export const headerItem = recipe({
       gridTemplateColumns: "repeat(3, 1fr)",
       alignItems: "center",
       justifyItems: "center",
-
-      width: "37.5rem",
+      width: "100%",
+      maxWidth: "76.8rem",
       height: "6.4rem",
       padding: "1.8rem 2.2rem",
-      borderBottom: `0.1rem solid ${color.gray.gray200}`,
+
+      borderBottom: `1px solid ${color.gray.gray200}`,
       backgroundColor: color.gray.gray000,
       color: color.gray.gray900,
     },

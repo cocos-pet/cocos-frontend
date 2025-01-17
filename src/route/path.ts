@@ -17,7 +17,7 @@ export const PATH = {
   },
   MYPAGE: {
     ROOT: "/mypage",
-    MODIFY: "/mypage/modify",
+    EDIT_PET: "/mypage/edit-pet",
   },
   SEARCH: {
     ROOT: "/search",
@@ -25,5 +25,9 @@ export const PATH = {
   },
   PROFILE: {
     ROOT: "/profile",
+  },
+  SETTING: {
+    ROOT: "/setting",
+    EDIT_PROFILE: "/setting/edit-profile",
   },
 };
