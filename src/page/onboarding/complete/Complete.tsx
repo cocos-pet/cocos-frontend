@@ -3,8 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
 import { Button } from "@common/component/Button";
-import { IcComplete } from "@asset/svg";
-
+import img from "@asset/image/등록전그래픽.png";
 const Complete = () => {
   const navigate = useNavigate();
   const handleSkip = () => {
@@ -25,7 +24,7 @@ const Complete = () => {
           </div>
           <Docs text={"작은 정보가 우리 아이의 건강을 지켜요"} />
         </div>
-        <IcComplete />
+        <img src={img} alt="onboarding-character" width={296} height={325} />
       </div>
       <div className={styles.btnWrapper}>
         <Button label="건너뛰기" size="large" variant="solidNeutral" onClick={handleSkip} />

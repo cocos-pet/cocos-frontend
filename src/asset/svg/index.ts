@@ -7,7 +7,6 @@ export { default as IcShape } from "./IcShape";
 export { default as IcChevronLeft } from "./IcChevronLeft";
 export { default as IcChevronRight } from "./IcChevronRight";
 export { default as IcClear } from "./IcClear";
-export { default as IcComplete } from "./IcComplete";
 export { default as IcDelete } from "./IcDelete";
 export { default as IcEditPen } from "./IcEditPen";
 export { default as IcEllipses } from "./IcEllipses";

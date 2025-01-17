@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import { Button } from "@common/component/Button";
-import { IcComplete } from "@asset/svg";
+import img from "@asset/image/등록전그래픽.png";
 
 const Complete = () => {
   const navigate = useNavigate();
@@ -21,7 +21,7 @@ const Complete = () => {
           </div>
           <Docs text={"반려동물과 함께하는 긴 시간, 더 잘 돌봐드릴게요"} />
         </div>
-        <IcComplete />
+        <img src={img} alt="onboarding-character" width={296} height={325} />
       </div>
 
       <div className={styles.btnWrapper}>
