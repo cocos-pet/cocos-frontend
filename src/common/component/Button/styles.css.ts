@@ -34,6 +34,14 @@ export const button = recipe({
         height: "4.4rem",
         padding: "1.2rem 2.8rem",
       },
+      tag: [
+        font.label01,
+        {
+          height: "2.8rem",
+          width: "fit-content",
+          padding: "0.4rem 1.4rem",
+        },
+      ],
     },
     variant: {
       solidPrimary: {
@@ -44,11 +52,12 @@ export const button = recipe({
           color: "rgb(244, 244, 244)",
         },
         ":focus": {
-          backgroundColor: "rgb(59, 183, 228)",
+          backgroundColor: "rgb(58, 177, 220)",
           color: "rgb(237, 237, 237)",
         },
         ":active": {
-          backgroundColor: "rgb(58, 177, 220)",
+          backgroundColor: "rgb(59, 183, 228)",
+
           color: "rgb(58, 177, 220)",
         },
       },
@@ -60,11 +69,11 @@ export const button = recipe({
           color: "rgb(109, 109, 109)",
         },
         ":focus": {
-          backgroundColor: "rgb(231, 231, 231)",
+          backgroundColor: "rgb(222, 222, 222)",
           color: "rgb(107, 107, 107)",
         },
         ":active": {
-          backgroundColor: "rgb(222, 222, 222)",
+          backgroundColor: "rgb(231, 231, 231)",
           color: "rgb(104, 104, 104)",
         },
       },
@@ -78,17 +87,27 @@ export const button = recipe({
           border: `0.1rem solid ${color.primary.blue500}`,
         },
         ":active": {
-          backgroundColor: "rgba(67, 214, 255, 0.16)",
+          backgroundColor: "rgba(67, 214, 255, 08)",
           color: "rgba(39, 63, 69, 1)",
           border: `0.1rem solid ${color.primary.blue500}`,
         },
         ":focus": {
-          backgroundColor: "rgba(67, 214, 255, 0.08)",
+          backgroundColor: "rgba(67, 214, 255, 0.16)",
           color: "rgba(33, 46, 50, 1)",
           border: `0.1rem solid ${color.primary.blue500}`,
         },
       },
-      
+      outlineNeutral: {
+        border: `0.1rem solid ${color.gray.gray600}`,
+        borderRadius: "10rem",
+        backgroundColor: "transparent",
+        padding: "0.4rem 1.2rem",
+        ":disabled": {
+          color: color.gray.gray800,
+          backgroundColor: "unset",
+          pointerEvents: "none",
+        },
+      },
     },
     disabled: {
       true: {

@@ -1,5 +1,5 @@
-import * as React from "react";
 import type { SVGProps } from "react";
+
 const SvgIcoMessage = (props: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -7,6 +7,7 @@ const SvgIcoMessage = (props: SVGProps<SVGSVGElement>) => (
     viewBox="0 0 20 20"
     {...props}
   >
+    <title>messageICON</title>
     <path
       stroke="#717171"
       strokeLinecap="round"
