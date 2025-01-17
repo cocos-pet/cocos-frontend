@@ -1,4 +1,5 @@
 import * as styles from "./Complete.css";
+
 import { useNavigate } from "react-router-dom";
 import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
@@ -18,8 +19,8 @@ const Complete = () => {
   };
 
   return (
-    <>
-      <div className={styles.layout}>
+    <div className={styles.layout({ type: "petRegister" })}>
+      <div className={styles.topContainer}>
         <div className={styles.titleWrapper}>
           <div>
             <Title text={"@@@님!"} />
@@ -30,10 +31,10 @@ const Complete = () => {
         <img src={img} alt="onboarding-character" width={296} height={325} />
       </div>
       <div className={styles.btnWrapper}>
-        <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button label="다음" size="large" variant="solidPrimary" disabled={false} onClick={handleNext} />
+        <Button label="건너뛰기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
+        <Button label="등록하기" size="large" variant="solidPrimary" disabled={false} onClick={handleNext} />
       </div>
-    </>
+    </div>
   );
 };
 
