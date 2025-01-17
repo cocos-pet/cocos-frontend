@@ -14,6 +14,7 @@ export const headerItem = recipe({
       height: "6.4rem",
       padding: "1.8rem 2.2rem",
 
+      borderBottom: `1px solid ${color.gray.gray200}`,
       backgroundColor: color.gray.gray000,
       color: color.gray.gray900,
     },

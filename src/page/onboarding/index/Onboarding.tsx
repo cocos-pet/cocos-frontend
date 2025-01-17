@@ -1,10 +1,4 @@
-import PetGender from "./component/petGender/PetGender";
 const Onboarding = () => {
-  return (
-    <>
-      <PetGender />
-    </>
-  );
+  return <></>;
 };
-
 export default Onboarding;
