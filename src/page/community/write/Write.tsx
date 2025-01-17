@@ -6,11 +6,13 @@ import { useDropDown } from "../component/DropDown/useDropDown";
 import { IcMessage, IcUp } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcDeleteBlack, IcRight, IcTest } from "@asset/svg";
-import { writeWrap } from "@page/community/write/Write.css.ts";
+import { imageContainer, writeWrap } from "@page/community/write/Write.css.ts";
 import WriteInputSection from "@page/community/component/WriteInputSection/WriteInputSection.tsx";
 
 import Tag from "@page/community/component/Tag/Tag.tsx";
 import TextArea from "@page/community/component/TextArea/TextArea.tsx";
+import Spacing from "@common/component/Spacing/Spacing.tsx";
+import IcoSkeleton from "@asset/svg/IcoSkeleton.tsx";
 
 interface writeProps {
   category: string;
@@ -85,6 +87,16 @@ const Write = () => {
             isDelete={false}
             value={params.category}
           />
+          <DropDown
+            isOpen={isDropDownOpen}
+            items={[
+              { icon: <IcUp width={20} />, label: "Item 1" },
+              { icon: <IcUp width={20} />, label: "Item 2" },
+              { icon: <IcUp width={20} />, label: "Item 3" },
+            ]}
+            onClickItem={onChangeValue}
+            toggleDropDown={toggleDropDown}
+          />
         </WriteInputSection>
         <WriteInputSection title={"글 작성"}>
           <TextField
@@ -95,25 +107,23 @@ const Write = () => {
             }}
             state={"write"}
             value={params.title}
+            onClearClick={() => onChangeValue("title", "")}
             onChange={(e) => onChangeValue("title", e.target.value)}
           />
+          <Spacing marginBottom={"1.2"} />
           <TextArea
             value={params.content}
-            onChange={(e) => onChangeValue("content", e.target.value)}
             placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n\n(예시: ~한 증상은 어디로 가야 하나요?)`}
+            onChange={(e) => onChangeValue("content", e.target.value)}
           />
+          <div className={imageContainer}>
+            <IcoSkeleton />
+            <IcoSkeleton />
+            <IcoSkeleton />
+            <IcoSkeleton />
+          </div>
         </WriteInputSection>
       </div>
-
-      <DropDown
-        isOpen={isDropDownOpen}
-        items={[
-          { icon: <IcUp width={20} />, label: "Item 1" },
-          { icon: <IcUp width={20} />, label: "Item 2" },
-          { icon: <IcUp width={20} />, label: "Item 3" },
-        ]}
-        onClickItem={onClickItem}
-      />
     </div>
   );
 };

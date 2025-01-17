@@ -15,9 +15,4 @@ export const label = style([
   },
 ]);
 
-export const child = style({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  gap: "1.2rem",
-});
+export const child = style({});

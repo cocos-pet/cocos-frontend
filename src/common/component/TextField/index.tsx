@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  InputVariants,
   styles,
   WrapVariants,
 } from "@common/component/TextField/styles.css.ts";
@@ -19,7 +20,7 @@ interface TextFieldProps {
   maxLength?: number; // input 입력 가능길이
 }
 
-type propsType = WrapVariants & TextFieldProps;
+type propsType = WrapVariants & TextFieldProps & InputVariants;
 
 /**
  * TextField 공통 컴포넌트

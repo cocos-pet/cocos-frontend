@@ -1,4 +1,4 @@
-import { recipe } from "@vanilla-extract/recipes";
+import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css.ts";
 
 export const styles = {
@@ -82,7 +82,6 @@ export const styles = {
           },
         },
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
-        
       },
     },
 
@@ -101,3 +100,4 @@ export const styles = {
 };
 
 export type WrapVariants = RecipeVariants<typeof styles.wrapper>;
+export type InputVariants = RecipeVariants<typeof styles.input>;

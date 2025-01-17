@@ -8,3 +8,9 @@ export const writeWrap = style({
   flexDirection: "column",
   gap: "3.2rem",
 });
+
+export const imageContainer = style({
+  display: "flex",
+  gap: "2rem",
+  maxWidth: "10.4rem",
+});
