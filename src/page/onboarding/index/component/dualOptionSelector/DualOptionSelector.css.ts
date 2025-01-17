@@ -5,6 +5,7 @@ import { style } from "@vanilla-extract/css";
 export const layout = style({
   display: "flex",
   gap: "3.2rem",
+  justifyContent: "center",
 });
 
 export const selector = recipe({
