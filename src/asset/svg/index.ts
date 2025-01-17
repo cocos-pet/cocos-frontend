@@ -1,6 +1,4 @@
 export { default as Check } from "./Check";
-export { default as IcoMessage } from "./IcoMessage";
-export { default as IcoSkeleton } from "./IcoSkeleton";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcRightIcon } from "./IcRightIcon";
 export { default as IcShape } from "./IcShape";
@@ -19,9 +17,6 @@ export { default as IcOut } from "./IcOut";
 export { default as IcRight } from "./IcRight";
 export { default as IcPlus } from "./IcPlus";
 export { default as IcSettings } from "./IcSettings";
-export { default as IcTest } from "./IcTest";
-export { default as IcToastError } from "./IcToastError";
-export { default as IcUnderline } from "./IcUnderline";
 export { default as IcUp } from "./IcUp";
 export { default as IcoMessage } from "./IcoMessage";
 export { default as IcoSkeleton } from "./IcoSkeleton";
