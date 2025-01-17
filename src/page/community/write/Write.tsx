@@ -26,6 +26,8 @@ import ImageCover from "@page/community/component/ImageCover/ImageCover.tsx";
 import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "@route/path.ts";
 
 interface writeProps {
   category: string;
@@ -33,22 +35,12 @@ interface writeProps {
   content: string;
   image: string[];
   tag: string;
+  selectedChips: {
+    breedId: number[];
+    diseaseIds: number[];
+    symptomIds: number[];
+  };
 }
-
-const TagLabel = [
-  {
-    label: "반려동물 종류 추가하기",
-    value: "반려동물 종류 추가하기",
-  },
-  {
-    label: "증상 추가하기",
-    value: "증상 추가하기",
-  },
-  {
-    label: "질병 추가하기",
-    value: "질병 추가하기",
-  },
-];
 
 const DropDownItems = [
   { icon: <IcUp width={20} />, label: "증상·질병" },
@@ -57,18 +49,43 @@ const DropDownItems = [
 ];
 
 const Write = () => {
-  const onBackClick = () => {};
+  const navigate = useNavigate();
+  const onBackClick = () => {
+    navigate(PATH.COMMUNITY.ROOT);
+  };
   const [params, setParams] = useState<writeProps>({
     category: "",
     title: "",
     content: "",
     tag: "",
     image: [],
+    selectedChips: {
+      breedId: [],
+      diseaseIds: [],
+      symptomIds: [],
+    },
   });
+  const [images, setImages] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
   const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips } =
     useFilterStore();
+
+  const TagLabel = [
+    {
+      label: "반려동물 종류 추가하기",
+      value: selectedChips.breedId,
+    },
+    {
+      label: "증상 추가하기",
+      value: selectedChips.symptomIds,
+    },
+    {
+      label: "질병 추가하기",
+      value: selectedChips.diseaseIds,
+    },
+  ];
 
   useEffect(() => {
     if (isOpen) {
@@ -77,7 +94,6 @@ const Write = () => {
       document.body.style.overflow = "";
     }
     return () => {
-      // 컴포넌트가 언마운트될 때 스크롤 복원
       document.body.style.overflow = "";
     };
   }, [isOpen]);
@@ -100,9 +116,6 @@ const Write = () => {
       [target]: value,
     });
   };
-
-  const [images, setImages] = useState<string[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
   // 이미지 추가
   const handleAddImage = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -127,6 +140,20 @@ const Write = () => {
     return selectedItem ? selectedItem.icon : null;
   };
 
+  useEffect(() => {
+    // selectedChips의 값을 params에 반영
+    setParams((prevParams) => ({
+      ...prevParams,
+      selectedChips: {
+        ...prevParams.selectedChips,
+        breedId: selectedChips.breedId,
+        diseaseIds: selectedChips.diseaseIds,
+        symptomIds: selectedChips.symptomIds,
+      },
+    }));
+    console.log(params);
+  }, [selectedChips]);
+
   return (
     <>
       <div>
@@ -136,6 +163,7 @@ const Write = () => {
           centerContent={"글쓰기"}
         />
         <div className={writeWrap}>
+          {/* 제목 영역 */}
           <WriteInputSection title={"제목"}>
             <TextField
               leftIcon={getDropdownIcon(params.category)}
@@ -153,6 +181,7 @@ const Write = () => {
               toggleDropDown={toggleDropDown}
             />
           </WriteInputSection>
+          {/* 글 작성 영역 */}
           <WriteInputSection title={"글 작성"}>
             <TextField
               placeholder={"제목을 입력해주세요"}
@@ -192,26 +221,23 @@ const Write = () => {
               ))}
             </div>
           </WriteInputSection>
+          {/* 태그 선택 영역 */}
           <WriteInputSection title={"태그 선택"}>
-            {TagLabel.map((label, index) => {
-              return (
-                <>
-                  <Tag
-                    key={index}
-                    label={label.label}
-                    value={params.tag}
-                    setTag={(value: string) => {
-                      onChangeValue("tag", value);
-                      setOpen(true);
-                    }}
-                  />
-                  <Spacing marginBottom={"0.8"} />
-                </>
-              );
-            })}
+            {TagLabel.map((tag, index) => (
+              <React.Fragment key={index}>
+                <Tag
+                  placeholder={tag.label}
+                  value={tag.value.length > 0 ? tag.value.join(", ") : ""}
+                  isActive={tag.value.length > 0}
+                  onClick={() => setOpen(true)}
+                />
+                <Spacing marginBottom={"0.8"} />
+              </React.Fragment>
+            ))}
           </WriteInputSection>
           <Spacing marginBottom={"13.5"} />
         </div>
+        {/* 바닥 버튼 영역 */}
         <div className={bottomButton}>
           <Button
             variant={"solidNeutral"}
