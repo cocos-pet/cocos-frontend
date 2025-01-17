@@ -9,7 +9,7 @@ type DropDownType = {
 
 const DropDown = ({ isOpen, items, onClickItem }: DropDownType) => {
   if (!isOpen) {
-    return null;
+    return;
   }
 
   return (
