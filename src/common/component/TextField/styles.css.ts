@@ -23,9 +23,6 @@ export const styles = {
         },
         write: {
           padding: "1.2rem",
-          ":placeholder": {
-            color: color.gray.gray600,
-          },
         },
       },
       active: {
@@ -74,6 +71,14 @@ export const styles = {
         false: {
           background: color.gray.gray300,
           color: color.gray.gray500,
+        },
+      },
+      state: {
+        default: {},
+        write: {
+          "::placeholder": {
+            color: color.gray.gray600,
+          },
         },
       },
     },

@@ -60,7 +60,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
           <input
             ref={ref}
             type="text"
-            className={styles.input({ active })}
+            className={styles.input({ state, active })}
             placeholder={placeholder}
             value={value}
             onChange={onChange}
