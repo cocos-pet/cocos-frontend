@@ -13,6 +13,7 @@ interface TextFieldProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
   centerPlaceholder?: boolean; // placeholder 중앙 정렬 여부를 결정하는 프롭
+  maxLength?: number; // input 입력 가능길이
 }
 
 /**
@@ -40,6 +41,7 @@ interface TextFieldProps {
       onKeyDown,
       onClearClick,
       centerPlaceholder = false, // 기본값은 false
+      maxLength,
     },
     ref, // forwardRef를 통해 ref를 받을 수 있도록 설정
   ) => {
@@ -54,6 +56,7 @@ interface TextFieldProps {
           onChange={onChange}
           onKeyDown={onKeyDown}
           disabled={!active}
+          maxLength={maxLength}
         />
         {value ? <IcClear onClick={onClearClick} /> : icon}
       </div>

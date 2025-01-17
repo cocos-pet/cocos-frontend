@@ -10,39 +10,26 @@ import { validatePetAge } from "@page/onboarding/index/util/validatePetAge";
 import { Button } from "@common/component/Button";
 
 const PetAge = () => {
-  // 상태 하나로 관리
   const [petAge, setPetAge] = useState("");
 
-  // 닉네임 입력 처리
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-
-    // 숫자만 입력되도록 필터링 (정규식 사용)
-    const numericValue = value.replace(/[^0-9]/g, "");
-
-    // 최대 3자리까지 입력 허용
-    if (numericValue.length <= 3) {
-      setPetAge(numericValue);
-    }
+  // 유효성 검사 통과한 반려동물 나이
+  const updatePetAge = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+    setPetAge(value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
 
-  // 유효성 검사 결과
+  // 유효성 검사 결과 에러 메시지
   const validationMessages = petAge ? validatePetAge(petAge) : [];
+  // '다음으로' 버튼 활성화 유무
   const isValid = petAge && validationMessages.length === 0;
-
-  // TextField 상태
   const textFieldState = petAge === "" || validationMessages.length === 0 ? "default" : "error";
 
-  // 뒤로 가기
+  // 뒤로가기 TODO: 플로우대로 구현
   const navigate = useNavigate();
-  const handleGoBack = () => {
-    navigate(-1);
-  };
-
-  // 다음 버튼
+  const handleGoBack = () => navigate(-1);
   const handleNext = () => {
     console.log("다음 pr에서 구현할래욥.");
   };
+
   return (
     <>
       {/* 상단 영역 */}
@@ -57,9 +44,10 @@ const PetAge = () => {
             <TextField
               state={textFieldState}
               value={petAge}
-              onChange={handleChange}
+              onChange={updatePetAge}
               placeholder="나이"
               centerPlaceholder={true}
+              maxLength={3}
             />
             <div className={styles.errorLayout}>
               <Docs state="sError" text={validationMessages} />
