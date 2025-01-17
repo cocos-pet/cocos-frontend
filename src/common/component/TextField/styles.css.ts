@@ -20,7 +20,6 @@ export const styles = {
           border: `0.1rem solid ${color.red.warning_red200}`,
         },
         search: {
-          display: "flex",
           width: "100%",
           marginLeft: "2rem",
           border: `0.1rem solid ${semanticColor.line.strong}`,

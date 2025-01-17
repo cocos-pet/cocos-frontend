@@ -1,10 +1,6 @@
+import { useNavigate } from "react-router-dom";
 import Divider from "@common/component/Divider/Divider";
 import * as styles from "./HotPost.css";
-
-//props 뚫어서 반려동물 등록 했고/ 안했고 나누기
-//반려동물 등록안했으면 -> 전체 인기글이 보이고
-//반려동물 등록했을 경우 -> 그 동물을 위한 인기글 list 가 보임
-//반려동물 이름 = petName
 
 interface Post {
   id: number;
@@ -17,6 +13,12 @@ interface HotPostProps {
 }
 
 const HotPost = ({ petName, posts }: HotPostProps) => {
+  const navigate = useNavigate();
+
+  const handlePostClick = (postId: number) => {
+    navigate(`/community/${postId}`);
+  };
+
   return (
     <div className={styles.hotPostContainer}>
       <p className={styles.p}>인기 게시물을 확인해보세요</p>
@@ -34,7 +36,7 @@ const HotPost = ({ petName, posts }: HotPostProps) => {
       <div className={styles.hotPostListContainer}>
         {posts.map((post, index) => (
           <div key={post.id}>
-            <div className={styles.postContent}>
+            <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
               <div className={styles.contentId}>{post.id}</div>
               <div className={styles.contentTitle}>{post.title}</div>
             </div>
