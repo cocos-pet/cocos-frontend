@@ -28,8 +28,8 @@ const PostDetail = () => {
     images: [],
     category: "category",
     tags: ["tag1", "tag2"],
-    createdAt: "2025-01-17T08:00:00Z",
-    updatedAt: "2025-01-17T08:00:00Z",
+    createdAt: "2025-01-17T01:23:00Z",
+    updatedAt: "2025-01-17T01:23:00Z",
   };
 
   const commentsData = [
@@ -125,51 +125,6 @@ const PostDetail = () => {
   const onDelete = () => {
     // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
   };
-
-  const now = new Date();
-
-  // 테스트 케이스
-  const testCases = [
-    {
-      createdAt: new Date(now.getTime() - 30 * 1000).toISOString(),
-      expected: "방금 전",
-    }, // 30초 전
-    {
-      createdAt: new Date(now.getTime() - 5 * 60 * 1000).toISOString(),
-      expected: "5분 전",
-    }, // 5분 전
-    {
-      createdAt: new Date(now.getTime() - 3 * 60 * 60 * 1000).toISOString(),
-      expected: "3시간 전",
-    }, // 3시간 전
-    {
-      createdAt: new Date(
-        now.getTime() - 2 * 24 * 60 * 60 * 1000
-      ).toISOString(),
-      expected: "2일 전",
-    }, // 2일 전
-    {
-      createdAt: new Date(
-        now.getTime() - 10 * 24 * 60 * 60 * 1000
-      ).toISOString(),
-      expected: `${new Date(now.getTime() - 10 * 24 * 60 * 60 * 1000)
-        .toISOString()
-        .split("T")[0]
-        .replace(/-/g, ".")}`,
-    }, // 10일 전
-    { createdAt: "2024-01-17T12:00:00Z", expected: "2024.01.17" }, // 1년 전
-  ];
-
-  // 실행
-  testCases.forEach(({ createdAt, expected }, idx) => {
-    const result = formatTimeAgo(createdAt);
-    console.log(
-      `테스트 ${idx + 1}:`,
-      result === expected
-        ? "통과"
-        : `실패 (결과: ${result}, 기대값: ${expected})`
-    );
-  });
 
   return (
     <>
