@@ -16,6 +16,7 @@ interface TextFieldProps {
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
+  maxLength?: number; // input 입력 가능길이
 }
 
 type propsType = WrapVariants & TextFieldProps;
@@ -50,6 +51,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       onClick,
       onKeyDown,
       onClearClick,
+      maxLength,
     },
     ref
   ) => {
@@ -66,6 +68,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
             onChange={onChange}
             onKeyDown={onKeyDown}
             disabled={!active}
+            maxLength={maxLength}
           />
         </div>
         {value && isDelete ? <IcClear onClick={onClearClick} /> : icon}

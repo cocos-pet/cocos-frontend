@@ -1,6 +1,5 @@
-import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
+import { recipe } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css.ts";
-import { button } from "@common/component/Button/styles.css.ts";
 
 export const styles = {
   wrapper: recipe({
@@ -24,6 +23,7 @@ export const styles = {
         write: {
           padding: "1.2rem",
         },
+        centerPlaceholder: { maxWidth: "12rem" },
       },
       active: {
         true: {},
@@ -39,6 +39,7 @@ export const styles = {
       active: true,
     },
   }),
+
   leftWrap: recipe({
     base: {
       display: "flex",
@@ -80,12 +81,16 @@ export const styles = {
             color: color.gray.gray600,
           },
         },
+        centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
+        
       },
     },
+
     defaultVariants: {
       active: true,
     },
   }),
+
   icon: recipe({
     base: {
       height: "2rem",

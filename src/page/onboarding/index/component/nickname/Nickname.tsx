@@ -22,6 +22,9 @@ const Nickname = () => {
   const validationMessages = nickname ? validateNickname(nickname) : [];
   const isValid = nickname && validationMessages.length === 0;
 
+  // TextField 상태
+  const textFieldState = nickname === "" || validationMessages.length === 0 ? "default" : "error";
+
   // 뒤로 가기
   const navigate = useNavigate();
   const handleGoBack = () => {
@@ -46,7 +49,7 @@ const Nickname = () => {
         {/* 닉네임 입력 영역 */}
         <div>
           <TextField
-            state={nickname === "" ? "default" : isValid ? "default" : "error"}
+            state={textFieldState}
             value={nickname}
             onChange={handleChange}
             placeholder="닉네임을 입력해주세요."
