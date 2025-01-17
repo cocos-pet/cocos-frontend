@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as styles from "./PetEdit.css";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { validateNickname } from "@shared/util/validateNickname";
 
@@ -13,6 +13,8 @@ const DEFAULT_TYPE = ["종류", "세부 종류", "성별", "나이"] as const;
 
 const PetEdit = () => {
   const navigate = useNavigate();
+  const ref = useRef<HTMLInputElement>(null);
+
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("포리");
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
@@ -25,6 +27,12 @@ const PetEdit = () => {
       setIsVaild(inVaildateMessages.length === 0); // 유효성 상태 설정
     }
   }, [name]);
+
+  useEffect(() => {
+    if (isEditing && ref.current) {
+      ref.current.focus();
+    }
+  }, [isEditing]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setName(e.target.value);
@@ -60,6 +68,7 @@ const PetEdit = () => {
             {isEditing ? (
               <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
                 <input
+                  ref={ref}
                   className={styles.nameInput}
                   value={name}
                   onChange={handleInputChange}
