@@ -18,11 +18,15 @@ const postsData = [
 ];
 
 const petName = "모모";
+
 const Main = () => {
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
     navigate("/search");
+  };
+
+  const handleTextFieldChange = () => {
   };
 
   return (
@@ -32,6 +36,7 @@ const Main = () => {
           state="search"
           placeholder="심장병, 백내장"
           onClick={handleSearchClick}
+          onChange={handleTextFieldChange} 
           value=""
           icon={<IcSearch />}
         />
