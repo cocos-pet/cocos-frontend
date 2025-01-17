@@ -86,6 +86,7 @@ export const replyContainer = style([
     alignItems: "center",
     padding: "0rem 1.1rem 0rem 4rem",
     gap: "0.4rem",
+    cursor: "pointer",
   },
   font.label01,
   {

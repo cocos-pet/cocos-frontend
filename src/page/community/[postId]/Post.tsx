@@ -13,7 +13,7 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
 import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
-import { formatTime, formatTimeAgo } from "@shared/util/formatTime.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
 
 const PostDetail = () => {
   const postData = {
