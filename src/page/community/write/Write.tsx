@@ -1,31 +1,22 @@
-
-import React, { ChangeEvent, useState } from "react";
-import { useDropDown } from "../component/DropDown/useDropDown";
+import Tag from "@page/community/component/Tag/Tag.tsx";
+import { useState } from "react";
 
 const Write = () => {
-  const [searchText, setSearchText] = useState<string>("");
-  const [selectState, setSelectState] = useState<string>("");
+  const [params, setParams] = useState({
+    tag: "",
+  });
 
-  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-
-  const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
-    if (!isDropDownOpen) closeDropDown();
-  };
-
-  const onTextFieldClick = () => {
-    toggleDropDown();
-  };
-
-  const onClickItem = (item: string) => {
-    setSelectState(item);
-    toggleDropDown();
-    console.log(selectState);
+  const setTag = (tag: string) => {
+    setParams({ ...params, tag });
   };
 
   return (
-    <div>Write</div>
-  )
-}
+    <div>
+      <Tag label={"#태그1"} value={params.tag} setTag={setTag} />
+      <Tag label={"#태그2"} value={params.tag} setTag={setTag} />
+      <Tag label={"#태그3"} value={params.tag} setTag={setTag} />
+    </div>
+  );
+};
 
-export default Write;
+export default Write
