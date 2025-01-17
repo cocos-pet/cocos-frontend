@@ -1,6 +1,7 @@
 import * as styles from "./SubComment.css";
 import { IcEllipses, IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
+import useModalStore from "@store/moreModalStore.ts";
 
 export interface SubCommentData {
   id: number;
@@ -25,6 +26,7 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
       onReplyClick(subComment.id);
     }
   };
+  const { openModalId, setOpenModalId } = useModalStore();
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
@@ -60,7 +62,12 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
               {subComment.createdAt.toLocaleString()}
             </span>
           </div>
-          <MoreModal iconSize={24} onDelete={onDelete} />
+          <MoreModal
+            iconSize={24}
+            onDelete={onDelete}
+            isOpen={openModalId === subComment.id}
+            onToggleModal={() => setOpenModalId(subComment.id)}
+          />
         </div>
         <p className={styles.text}>{renderContent()}</p>
 

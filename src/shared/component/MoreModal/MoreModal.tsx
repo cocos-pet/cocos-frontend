@@ -11,26 +11,28 @@ import {
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 
 interface MoreModalParams {
+  isOpen?: boolean;
+  onToggleModal: () => void;
   onDelete: () => void;
   iconSize: number;
   onEdit?: () => void;
 }
 
-const MoreModal = ({ onDelete, iconSize, onEdit }: MoreModalParams) => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  const handleToggleModal = () => {
-    setIsOpen((prev) => !prev);
-  };
-
+const MoreModal = ({
+  isOpen = false,
+  onToggleModal,
+  onDelete,
+  iconSize,
+  onEdit,
+}: MoreModalParams) => {
   const onItemClick = () => {
     onDelete();
-    setIsOpen(false);
+    onToggleModal();
   };
 
   const onEditClick = () => {
     onEdit && onEdit();
-    setIsOpen(false);
+    onToggleModal();
   };
 
   return (
@@ -41,7 +43,7 @@ const MoreModal = ({ onDelete, iconSize, onEdit }: MoreModalParams) => {
       <IcEllipses
         className={moreIcon}
         style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
-        onClick={handleToggleModal}
+        onClick={onToggleModal}
       />
       {isOpen && (
         <div className={moreModal({ onEdit: !!onEdit })}>

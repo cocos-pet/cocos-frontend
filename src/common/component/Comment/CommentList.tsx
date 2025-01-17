@@ -1,4 +1,5 @@
 import Comment, { CommentType } from "./Comment";
+import useModalStore from "@store/moreModalStore.ts";
 
 interface CommentListProps {
   comments: CommentType[];

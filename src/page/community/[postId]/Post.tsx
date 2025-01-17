@@ -14,9 +14,11 @@ import CommentList from "@common/component/Comment/CommentList.tsx";
 import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
+import useModalStore from "@store/moreModalStore.ts";
 
 const PostDetail = () => {
   const postData = {
+    id: 100000,
     nickname: "리트리버 사랑해",
     userProfile: "userProfile",
     breed: "골든리트리버",
@@ -126,13 +128,22 @@ const PostDetail = () => {
     // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
   };
 
+  const { openModalId, setOpenModalId } = useModalStore();
+
   return (
     <>
       <HeaderNav
         leftIcon={<IcLeftarrow />}
         onLeftClick={onBackClick}
         type={"noTitle"}
-        rightBtn={<MoreModal iconSize={24} onDelete={onDelete} />}
+        rightBtn={
+          <MoreModal
+            iconSize={24}
+            onDelete={onDelete}
+            isOpen={openModalId === postData.id}
+            onToggleModal={() => setOpenModalId(postData.id)}
+          />
+        }
       />
       <div className={styles.container}>
         <Button
