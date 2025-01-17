@@ -11,6 +11,7 @@ export const PATH = {
   COMMUNITY: {
     ROOT: "/community",
     POST: "/community/:postId",
+    CATEGORY:"/community/category",
     SEARCH: "/community/search",
     SEARCH_DONE: "/community/search/done",
     WRITE: "/community/write",
