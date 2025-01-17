@@ -2,7 +2,7 @@ import { semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const overlay = style({
-  position: "absolute",
+  position: "fixed",
   top: 0,
   left: 0,
   zIndex: "99",

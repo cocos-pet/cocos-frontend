@@ -40,7 +40,7 @@ export const buttonWrapper = style({
   bottom: "0",
 
   display: "flex",
-  width: "37.5rem",
+  width: "100%",
   height: "8.8rem",
   padding: "1.2rem 2rem 3.2rem 2rem",
   justifyContent: "center",
