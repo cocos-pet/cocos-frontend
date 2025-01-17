@@ -12,12 +12,15 @@ import { writeWrap } from "@page/community/write/Write.css.ts";
 import WriteInputSection from "@page/community/component/WriteInputSection/WriteInputSection.tsx";
 import { TextField } from "@common/component/TextField";
 import { useState } from "react";
+import Tag from "@page/community/component/Tag/Tag.tsx";
+
 
 interface writeProps {
   category: string;
   title: string;
   content: string;
   image: string[];
+  tag: string;
 }
 
 const Write = () => {
@@ -26,8 +29,13 @@ const Write = () => {
     category: "",
     title: "",
     content: "",
+    tag: "",
     image: [],
   });
+  
+  const setTag = (tag: string) => {
+    setParams({ ...params, tag });
+  };
 
   const onChangeValue = (
     target: string,
@@ -41,38 +49,11 @@ const Write = () => {
 
   return (
     <div>
-      <HeaderNav
-        leftIcon={<IcDeleteBlack width={24} />}
-        onLeftClick={onBackClick}
-        // type={"field"}
-        centerContent={"글쓰기"}
-      />
-      <div className={writeWrap}>
-        <WriteInputSection title={"제목"}>
-          <TextField
-            leftIcon={<IcTest width={20} />}
-            placeholder={"게시물 선택하기"}
-            icon={<IcRight width={20} />}
-            onClick={() => {
-              //todo: 게시물 카테고리 선택하기 모달 띄우기
-              console.log("click");
-            }}
-            isDelete={false}
-            value={params.category}
-          />
-        </WriteInputSection>
-        <WriteInputSection title={"글 작성"}>
-          <TextField
-            placeholder={"제목을 입력해주세요"}
-            isDelete={true}
-            value={params.title}
-            onChange={(e) => onChangeValue("title", e.target.value)}
-            onClearClick={() => onChangeValue("title", "")}
-          />
-        </WriteInputSection>
-      </div>
+      <Tag label={"#태그1"} value={params.tag} setTag={setTag} />
+      <Tag label={"#태그2"} value={params.tag} setTag={setTag} />
+      <Tag label={"#태그3"} value={params.tag} setTag={setTag} />
     </div>
   );
 };
 
-export default Write;
+export default Write

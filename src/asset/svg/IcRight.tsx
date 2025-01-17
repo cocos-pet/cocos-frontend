@@ -1,6 +1,6 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgIcRight = (props: SVGProps<SVGSVGElement>) => (
+const SvgIcRight = ({ stroke, ...props }: SVGProps<SVGSVGElement>) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
@@ -8,7 +8,7 @@ const SvgIcRight = (props: SVGProps<SVGSVGElement>) => (
     {...props}
   >
     <path
-      stroke="#717171"
+      stroke={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
