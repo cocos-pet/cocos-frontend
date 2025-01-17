@@ -1,6 +1,7 @@
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
 export { default as IcNormal } from "./IcNormal";
+export { default as IcRightIcon } from "./IcRightIcon";
 export { default as IcShape } from "./IcShape";
 export { default as IcChevronLeft } from "./IcChevronLeft";
 export { default as IcChevronRight } from "./IcChevronRight";
@@ -8,6 +9,7 @@ export { default as IcDelete } from "./IcDelete";
 export { default as IcEllipses } from "./IcEllipses";
 export { default as IcLogo } from "./IcLogo";
 export { default as IcMessage } from "./IcMessage";
+export { default as IcRight } from "./IcRight";
 export { default as IcPlus } from "./IcPlus";
 export { default as IcSettings } from "./IcSettings";
 export { default as IcTest } from "./IcTest";

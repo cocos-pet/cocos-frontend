@@ -1,3 +1,4 @@
+// 워딩 최종 확인할 때 컴포넌트 명이랑 키값 맞추기
 export const ONBOARDING_GUIDE = {
   nickname: {
     title: "사용할 닉네임을 입력해 주세요.",

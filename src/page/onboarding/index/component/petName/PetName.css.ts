@@ -20,7 +20,7 @@ export const btnWrapper = style({
   bottom: 0,
 
   display: "grid",
-  gridTemplateColumns: "9.6rem calc(100% - 10.8rem)",
+  gridTemplateColumns: "9.6rem calc(100% - 9.6rem)",
   gap: "1.2rem",
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
