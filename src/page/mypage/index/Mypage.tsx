@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import { PET_PROFILE, USER_PROFILE } from "./constant";
+import { PATH } from "@route/path";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -37,7 +38,7 @@ const Mypage = () => {
               className={styles.settingWrapper({
                 isLogin: isLogin,
               })}
-              onClick={() => isLogin && navigate("/setting")}
+              onClick={() => isLogin && navigate(PATH.SETTING.ROOT)}
             >
               <IcSettings width={24} height={24} />
             </span>
@@ -65,7 +66,7 @@ const Mypage = () => {
                   width={28}
                   height={28}
                   style={{ cursor: "pointer" }}
-                  onClick={() => navigate("/mypage/edit-pet")}
+                  onClick={() => navigate(PATH.MYPAGE.EDIT_PET)}
                 />
               </div>
             ) : (
@@ -75,7 +76,7 @@ const Mypage = () => {
                   rightIcon={<IcPlus width={20} height={20} />}
                   size={"small"}
                   label="반려동물 추가하기"
-                  onClick={() => navigate("/register-pet")}
+                  onClick={() => navigate(PATH.REGISTER_PET.ROOT)}
                 />
               </span>
             )}
