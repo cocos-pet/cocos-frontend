@@ -3,7 +3,7 @@ export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
 export { default as IcNormal } from "./IcNormal";
 export { default as IcRightIcon } from "./IcRightIcon";
-\export { default as IcShape } from "./IcShape";
+export { default as IcShape } from "./IcShape";
 export { default as IcChevronLeft } from "./IcChevronLeft";
 export { default as IcChevronRight } from "./IcChevronRight";
 export { default as IcClear } from "./IcClear";
