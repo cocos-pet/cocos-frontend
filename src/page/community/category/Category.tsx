@@ -1,27 +1,82 @@
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import * as styles from "./Category.css";
+import { validTypes } from "./Category";
+import { postData } from "@shared/constant/postData";
+import Content from "@common/component/Content/Content";
+import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import { Icfilter, IcLeftarrow, IcSearch } from "@asset/svg";
+import FloatingBtn from "@common/component/FloatingBtn/Floating";
 
-const validTypes = ["symptom", "hospital", "healing", "magazine"]; // 유효한 타입 리스트
+// 카테고리 이름 매핑 객체
+const categoryMapping: { [key: string]: string } = {
+  symptom: "증상·질병",
+  hospital: "병원고민",
+  healing: "일상·치유",
+  magazine: "코코스매거진",
+};
 
 const Category = () => {
   const [searchParams] = useSearchParams();
-  const type = searchParams.get("type"); // 쿼리 파라미터에서 `type` 값 가져오기
+  const type = searchParams.get("type"); // 쿼리 파라미터에서 type 가져오기
+  const navigate = useNavigate();
 
+  // 해당 카테고리의 게시글 필터링
+  const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
+
+  // 유효하지 않은 타입 처리
   if (!type || !validTypes.includes(type)) {
-    // 유효하지 않은 타입 처리
     return (
-      <div className={styles.invalidType}>
-        <h1>해당 타입은 존재하지 않습니다.</h1>
-        <p>올바른 카테고리를 선택해주세요.</p>
+      <div>
+        <h1>해당 카테고리는 존재하지 않습니다.</h1>
       </div>
     );
   }
 
-  // 유효한 타입 처리 -> 대분류 눌렀을 때
+  // 게시글이 없는 경우 처리
+  if (filteredPosts.length === 0) {
+    return (
+      <div>
+        <h1>게시글이 없습니다.</h1>
+      </div>
+    );
+  }
+
+  const categoryName = categoryMapping[type] || "알 수 없는 카테고리";
+
   return (
     <div className={styles.categoryContainer}>
-      <h1>{type} 카테고리</h1>
-      <p>이곳에 {type} 카테고리에 대한 내용을 추가하세요.</p>
+      <HeaderNav
+        leftIcon={<IcLeftarrow />}
+        centerContent={categoryName} // 매핑된 카테고리 이름 사용
+        rightBtn={<IcSearch />}
+      />
+      <div className={styles.filterContainer}>
+        <Icfilter width={24} />
+      </div>
+
+      {/* 게시글 목록 */}
+      <div className={styles.postsContainer}>
+        {filteredPosts.map((post) => (
+          <Content
+            key={post.id}
+            breed={post.breed}
+            petAge={post.petAge}
+            title={post.title}
+            content={post.content}
+            likeCount={post.likeCount}
+            commentCount={post.commentCount}
+            createdAt={post.createdAt}
+            image={post.image}
+            onClick={() => navigate(`/community/post/${post.id}`)} // 게시글 클릭 시 이동
+            id={post.id}
+            updateAt={post.updatedAt}
+            category={post.category}
+          />
+        ))}
+      </div>
+      <div className={styles.floatingBtnContainer}>
+        <FloatingBtn />
+      </div>
     </div>
   );
 };

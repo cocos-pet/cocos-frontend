@@ -4,7 +4,7 @@ import { PATH } from "@route/path.ts";
 import PostDetail from "@page/community/[postId]/Post.tsx";
 import SearchDone from "@page/community/search/done/SearchDone.tsx";
 import Search from "@page/community/search/index/Search.tsx";
-import Category from "@page/community/category/category";
+import Category from "@page/community/category/Category.tsx";
 
 const COMMUNITY_ROUTES = [
   { path: PATH.COMMUNITY.ROOT, element: <Community /> },
