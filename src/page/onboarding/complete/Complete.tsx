@@ -4,16 +4,17 @@ import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
 import { Button } from "@common/component/Button";
 import { IcComplete } from "@asset/svg";
+
 const Complete = () => {
-  // 뒤로 가기 (추후 플로우에 맞게 구현)
   const navigate = useNavigate();
   const handleSkip = () => {
     navigate("/main");
   };
-  // 다음 버튼
+
   const handleNext = () => {
     navigate("/register-pet");
   };
+
   return (
     <div className={styles.backGround}>
       <div className={styles.layout}>
@@ -27,8 +28,8 @@ const Complete = () => {
         <IcComplete />
       </div>
       <div className={styles.btnWrapper}>
-        <Button label="건너뛰기" size="large" variant="solidNeutral" disabled={false} onClick={handleSkip} />
-        <Button label="등록하기" size="large" variant="solidPrimary" disabled={false} onClick={handleNext} />
+        <Button label="건너뛰기" size="large" variant="solidNeutral" onClick={handleSkip} />
+        <Button label="등록하기" size="large" variant="solidPrimary" onClick={handleNext} />
       </div>
     </div>
   );
