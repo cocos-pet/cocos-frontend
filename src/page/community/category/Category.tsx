@@ -7,7 +7,6 @@ import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { Icfilter, IcLeftarrow, IcSearch } from "@asset/svg";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 
-// 카테고리 이름 매핑 객체
 const categoryMapping: { [key: string]: string } = {
   symptom: "증상·질병",
   hospital: "병원고민",
@@ -47,12 +46,14 @@ const Category = () => {
     <div className={styles.categoryContainer}>
       <HeaderNav leftIcon={<IcLeftarrow />} centerContent={categoryName} rightBtn={<IcSearch />} />
 
+      {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}
       {type !== "magazine" && (
         <div className={styles.filterContainer}>
           <Icfilter width={24} />
         </div>
       )}
 
+      {/* 게시글 목록 */}
       <div className={styles.postsContainer}>
         {filteredPosts.map((post) => (
           <Content
@@ -72,9 +73,13 @@ const Category = () => {
           />
         ))}
       </div>
-      <div className={styles.floatingBtnContainer}>
-        <FloatingBtn />
-      </div>
+
+      {/* 코코스매거진이 아닐 때만 플로팅 버튼 표시 */}
+      {type !== "magazine" && (
+        <div className={styles.floatingBtnContainer}>
+          <FloatingBtn />
+        </div>
+      )}
     </div>
   );
 };
