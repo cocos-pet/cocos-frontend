@@ -34,7 +34,6 @@ interface writeProps {
   title: string;
   content: string;
   image: string[];
-  tag: string;
   selectedChips: {
     breedId: number[];
     diseaseIds: number[];
@@ -57,7 +56,6 @@ const Write = () => {
     category: "",
     title: "",
     content: "",
-    tag: "",
     image: [],
     selectedChips: {
       breedId: [],
@@ -65,12 +63,10 @@ const Write = () => {
       symptomIds: [],
     },
   });
-  const [images, setImages] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips } =
-    useFilterStore();
+  const { selectedChips, isOpen, setOpen } = useFilterStore();
 
   const TagLabel = [
     {
@@ -121,13 +117,19 @@ const Write = () => {
   const handleAddImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
       const newImage = URL.createObjectURL(event.target.files[0]);
-      setImages((prev) => [...prev, newImage]);
+      setParams((prevParams) => ({
+        ...prevParams,
+        image: [...prevParams.image, newImage],
+      }));
     }
   };
 
   // 이미지 삭제
   const handleDeleteImage = (index: number) => {
-    setImages((prev) => prev.filter((_, i) => i !== index)); // 선택한 이미지 제거
+    setParams((prevParams) => ({
+      ...prevParams,
+      image: prevParams.image.filter((_, i) => i !== index), // 선택한 이미지 제거
+    }));
   };
 
   // 이미지 업로드 버튼 클릭
@@ -151,8 +153,13 @@ const Write = () => {
         symptomIds: selectedChips.symptomIds,
       },
     }));
-    console.log(params);
   }, [selectedChips]);
+
+  const isAllParamsFilled =
+    params.category &&
+    params.title &&
+    params.content &&
+    params.selectedChips.breedId.length > 0;
 
   return (
     <>
@@ -212,7 +219,7 @@ const Write = () => {
                 className={plusImage}
                 onClick={handleFileUploadClick}
               />
-              {images.map((imageSrc, index) => (
+              {params.image.map((imageSrc, index) => (
                 <ImageCover
                   key={index}
                   imageSrc={imageSrc}
@@ -224,15 +231,16 @@ const Write = () => {
           {/* 태그 선택 영역 */}
           <WriteInputSection title={"태그 선택"}>
             {TagLabel.map((tag, index) => (
-              <React.Fragment key={index}>
+              <>
                 <Tag
+                  key={index}
                   placeholder={tag.label}
                   value={tag.value.length > 0 ? tag.value.join(", ") : ""}
                   isActive={tag.value.length > 0}
                   onClick={() => setOpen(true)}
                 />
                 <Spacing marginBottom={"0.8"} />
-              </React.Fragment>
+              </>
             ))}
           </WriteInputSection>
           <Spacing marginBottom={"13.5"} />
@@ -240,7 +248,7 @@ const Write = () => {
         {/* 바닥 버튼 영역 */}
         <div className={bottomButton}>
           <Button
-            variant={"solidNeutral"}
+            variant={isAllParamsFilled ? "solidPrimary" : "solidNeutral"}
             label={"글 작성 마치기"}
             size={"large"}
           />
