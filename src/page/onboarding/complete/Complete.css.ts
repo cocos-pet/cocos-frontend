@@ -3,14 +3,18 @@ import { style } from "@vanilla-extract/css";
 export const layout = style({
   display: "flex",
   flexDirection: "column",
-  padding: "8rem 2rem",
-  gap: "9rem",
+  alignItems: "center",
+  gap: "3.2rem",
+  margin: "7.2rem 2rem 6rem 2rem",
 });
 
-export const imgStyle = style({
-  width: "16.5rem",
-  height: "9.3rem",
-  marginBottom: "1.6rem",
+export const titleWrapper = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  textAlign: "center",
+  gap: "0.8rem",
 });
 
 export const btnWrapper = style({
@@ -24,8 +28,4 @@ export const btnWrapper = style({
   gap: "1.2rem",
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
-});
-
-export const errorLayout = style({
-  marginTop: "0.8rem",
 });
