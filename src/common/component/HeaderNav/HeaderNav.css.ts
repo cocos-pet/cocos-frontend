@@ -10,11 +10,12 @@ export const headerItem = recipe({
       gridTemplateColumns: "repeat(3, 1fr)",
       alignItems: "center",
       justifyItems: "center",
-
-      width: "37.5rem",
+      width: "100%",
+      maxWidth: "76.8rem",
       height: "6.4rem",
       padding: "1.8rem 2.2rem",
-      borderBottom: `0.1rem solid ${color.gray.gray200}`,
+
+      borderBottom: `1px solid ${color.gray.gray200}`,
       backgroundColor: color.gray.gray000,
       color: color.gray.gray900,
     },
@@ -40,10 +41,12 @@ export const btnItem = recipe({
   base: [
     font.body01,
     {
+      height: "2.4rem",
       color: color.gray.gray600,
       backgroundColor: "transparent",
       padding: "0",
       border: "none",
+      alignContent: "center",
       textDecoration: "none",
       transition: "background-color 0.3s",
       ":focus": {

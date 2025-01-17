@@ -2,9 +2,10 @@ import { createVar, style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css.ts";
 
 export const container = style({
+  position: "absolute",
   backgroundColor: "white",
-  margin: "0 2rem",
-  width: "calc(100% - 4rem)",
+  width: "calc(100vw - 4rem)",
+  maxWidth: "72.8rem",
   borderRadius: "1.6rem",
   boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
   fontSize: "1.4rem",
