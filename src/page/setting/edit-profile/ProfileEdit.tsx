@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import * as styles from "./ProfileEdit.css";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
+import { PATH } from "@route/path";
 
 //todo : 사용자 조회 api로 데이터 렌더링
 const ProfileEdit = () => {
@@ -14,7 +15,7 @@ const ProfileEdit = () => {
       <HeaderNav
         leftIcon={<IcChevronLeft width={20} height={20} />}
         centerContent={"내 정보 수정"}
-        onLeftClick={() => navigate("/setting")}
+        onLeftClick={() => navigate(PATH.SETTING.ROOT)}
       />
       <section className={styles.profileEditWrapper}>
         <img className={styles.profile} src="어쩌구저쩌구" alt="프로필 이미지" />

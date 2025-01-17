@@ -5,6 +5,7 @@ import Divider from "@common/component/Divider/Divider";
 import { useNavigate } from "react-router-dom";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
+import { PATH } from "@route/path";
 
 //todo: 로그아웃 api 연결 필요
 const Setting = () => {
@@ -24,7 +25,7 @@ const Setting = () => {
           <span className={styles.myprofileText}>마이 프로필</span>
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
-            <span className={styles.myProfileSpan} onClick={() => navigate("/setting/edit-profile")}>
+            <span className={styles.myProfileSpan} onClick={() => navigate(PATH.SETTING.EDIT_PROFILE)}>
               <IcEditPen width={20} height={20} />
               <span className={styles.myProfileSpanText}>내 정보수정</span>
             </span>
