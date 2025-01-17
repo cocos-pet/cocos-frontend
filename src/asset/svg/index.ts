@@ -12,7 +12,6 @@ export { default as IcLogo } from "./IcLogo";
 export { default as IcMessage } from "./IcMessage";
 export { default as IcRight } from "./IcRight";
 export { default as IcOut } from "./IcOut";
-export { default as IcOut } from "./IcOut";
 export { default as IcPlus } from "./IcPlus";
 export { default as IcSettings } from "./IcSettings";
 export { default as IcTest } from "./IcTest";
