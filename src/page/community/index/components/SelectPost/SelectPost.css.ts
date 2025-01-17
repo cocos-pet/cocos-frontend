@@ -6,7 +6,6 @@ export const container = style({
   flexDirection: "column",
   alignItems: "center",
   gap: "0.2rem",
-  width: "37.5rem",
 });
 
 export const tabContainer = style({
@@ -16,7 +15,7 @@ export const tabContainer = style({
   position: "sticky",
   backgroundColor: "#fff", // 배경색 추가
   top: "6.4rem",
-  width: "37.5rem",
+  width: "100%",
   zIndex: 10,
 });
 

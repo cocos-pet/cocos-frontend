@@ -7,7 +7,7 @@ export const container = style([
   {
     display: "flex",
     justifyContent: "space-between",
-    width: "37.5rem",
+    width: "100%",
     height: "8rem",
     padding: "1.2rem 3.2rem 0 3.2rem",
   },
@@ -43,5 +43,6 @@ export const navItem = recipe({
   },
   defaultVariants: {
     state: false,
+    type: "nav",
   },
 });

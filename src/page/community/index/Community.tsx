@@ -25,7 +25,6 @@ const Community = () => {
           centerContent="커뮤니티"
           rightBtn={<IcSearch onClick={handleSearchClick} />}
         />
-        <Divider size="small" />
       </div>
       <div className={styles.bannerContainer}>
         <Banner />

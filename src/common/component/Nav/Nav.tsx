@@ -9,7 +9,7 @@ type Props = {
   type: "nav" | "community";
 };
 
-const Nav = ({ content }: Props) => {
+const Nav = ({ content, type }: Props) => {
   const location = useLocation();
 
   const extractFirstPath = (): string => {
@@ -33,7 +33,7 @@ const Nav = ({ content }: Props) => {
   };
 
   return (
-    <div className={styles.container}>
+    <div className={styles.container} data-type={type}>
       {content.map((item) => {
         const SvgComponent = item.svg;
 
@@ -44,9 +44,10 @@ const Nav = ({ content }: Props) => {
             onClick={() => handleClick(item.id, item.path)}
             className={styles.navItem({
               state: activeItem === item.id,
+              type,
             })}
           >
-            <SvgComponent  />
+            <SvgComponent />
             {item.label}
           </button>
         );
