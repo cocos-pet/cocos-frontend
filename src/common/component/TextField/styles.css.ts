@@ -21,7 +21,7 @@ export const styles = {
         },
         search: {
           display: "flex",
-          width: "33.5rem",
+          width: "100%",
           marginLeft: "2rem",
           border: `0.1rem solid ${semanticColor.line.strong}`,
           backgroundColor: semanticColor.neutral.normal,

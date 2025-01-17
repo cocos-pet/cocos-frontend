@@ -5,7 +5,7 @@ export const symptomContainer = style({
   display: "flex",
   gap: "1.2rem",
   flexDirection: "column",
-  width: "37.5rem",
+  width: "100%",
   marginTop: "4.2rem",
   marginBottom: "3.2rem",
 });
@@ -14,7 +14,6 @@ export const symptomTitle = style([
   { marginLeft: "2rem" },
   font.heading02,
   {
-    letterSpacing: "-0.18rem",
     color: semanticColor.text.normal,
   },
 ]);
@@ -36,6 +35,5 @@ export const symptomName = style([
     color: semanticColor.text.normal,
     textAlign: "center",
     fontWeight: "500",
-    letterSpacing: "-0.24rem",
   },
 ]);

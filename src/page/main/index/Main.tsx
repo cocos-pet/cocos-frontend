@@ -17,8 +17,7 @@ const postsData = [
   { id: 5, title: "반려동물과 함께하는 여행 준비" },
 ];
 
-const petName = "연진이";
-
+const petName = "모모";
 const Main = () => {
   const navigate = useNavigate();
 

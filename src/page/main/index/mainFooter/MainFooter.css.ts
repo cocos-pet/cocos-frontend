@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const footerContainer = style({
   display: "flex",
-  width: "37.5rem",
+  width: "100%",
   padding: "1.9rem 3.2rem",
   flexDirection: "column",
   justifyContent: "center",
