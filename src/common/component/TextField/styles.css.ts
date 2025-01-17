@@ -28,10 +28,17 @@ export const styles = {
           border: "none",
         },
       },
+      centerPlaceholder: {
+        true: {
+          maxWidth: "12rem",
+        },
+        false: {},
+      },
     },
     defaultVariants: {
       state: "default",
       active: true,
+      centerPlaceholder: false,
     },
   }),
 
@@ -62,15 +69,15 @@ export const styles = {
       },
       centerPlaceholder: {
         true: {
-          maxWidth: "12rem",
-          textAlign: "center", // placeholder 텍스트 중앙 정렬
+          maxWidth: "8rem",
+          textAlign: "center",
         },
         false: {},
       },
     },
     defaultVariants: {
       active: true,
-      centerPlaceholder: false, // 기본값은 false
+      centerPlaceholder: false,
     },
   }),
 

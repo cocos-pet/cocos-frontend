@@ -46,11 +46,11 @@ interface TextFieldProps {
     ref, // forwardRef를 통해 ref를 받을 수 있도록 설정
   ) => {
     return (
-      <div className={styles.wrapper({ state, active })} onClick={onClick}>
+      <div className={styles.wrapper({ state, active, centerPlaceholder })} onClick={onClick}>
         <input
           ref={ref}
           type="text"
-          className={styles.input({ active, centerPlaceholder })} // centerPlaceholder 전달
+          className={styles.input({ active,centerPlaceholder })}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
