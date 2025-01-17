@@ -45,16 +45,14 @@ const Category = () => {
 
   return (
     <div className={styles.categoryContainer}>
-      <HeaderNav
-        leftIcon={<IcLeftarrow />}
-        centerContent={categoryName} // 매핑된 카테고리 이름 사용
-        rightBtn={<IcSearch />}
-      />
-      <div className={styles.filterContainer}>
-        <Icfilter width={24} />
-      </div>
+      <HeaderNav leftIcon={<IcLeftarrow />} centerContent={categoryName} rightBtn={<IcSearch />} />
 
-      {/* 게시글 목록 */}
+      {type !== "magazine" && (
+        <div className={styles.filterContainer}>
+          <Icfilter width={24} />
+        </div>
+      )}
+
       <div className={styles.postsContainer}>
         {filteredPosts.map((post) => (
           <Content
@@ -67,7 +65,7 @@ const Category = () => {
             commentCount={post.commentCount}
             createdAt={post.createdAt}
             image={post.image}
-            onClick={() => navigate(`/community/post/${post.id}`)} // 게시글 클릭 시 이동
+            onClick={() => navigate(`/community/post/${post.id}`)}
             id={post.id}
             updateAt={post.updatedAt}
             category={post.category}
