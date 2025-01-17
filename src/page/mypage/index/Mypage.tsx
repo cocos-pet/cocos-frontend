@@ -37,7 +37,7 @@ const Mypage = () => {
               className={styles.settingWrapper({
                 isLogin: isLogin,
               })}
-              onClick={() => isLogin && navigate("/mypage/edit-profile")}
+              onClick={() => isLogin && navigate("/setting")}
             >
               <IcSettings width={24} height={24} />
             </span>
