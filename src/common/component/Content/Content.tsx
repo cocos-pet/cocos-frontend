@@ -1,17 +1,19 @@
 import { IcoMessage, IcTest } from "@asset/svg";
-import React from "react";
 import { styles } from "@common/component/Content/Content.css.ts";
 
 interface ContentPropTypes {
+  id: number;
   breed: string;
-  age: string;
-  postTitle: string;
-  postContent: string;
+  petAge: number;
+  title: string;
+  content: string;
   likeIconType?: "curious" | "support";
-  likeCnt?: number;
-  commentCnt: number;
-  timeAgo: string;
-  postImage?: string;
+  likeCount?: number;
+  commentCount?: number;
+  createdAt: string;
+  updateAt: string;
+  image?: string;
+  category: string;
   onClick?: () => void;
 }
 
@@ -32,41 +34,41 @@ interface ContentPropTypes {
 
 const Content = ({
   breed,
-  age,
-  postTitle,
-  postContent,
+  petAge,
+  title,
+  content,
   likeIconType,
-  likeCnt,
-  commentCnt,
-  timeAgo,
-  postImage,
+  likeCount,
+  commentCount,
+  createdAt,
+  updateAt,
+  image,
   onClick,
 }: ContentPropTypes) => {
   return (
     <div className={styles.container} onClick={onClick}>
       <div className={styles.left}>
         <div className={styles.category}>
-          {breed} · {age}
+          {breed}·{petAge}
         </div>
-        <div className={styles.title}>{postTitle}</div>
-        <div className={styles.contents}>{postContent}</div>
+        <div className={styles.title}>{title}</div>
+        <div className={styles.contents}>{content}</div>
         <div className={styles.subContents}>
           <div className={styles.item}>
             {/* 궁금해요/응원해요 아아콘 결정되면 수정 */}
             {likeIconType === "curious" ? <IcTest /> : <IcTest />}
-            <span>{likeCnt}</span>
+            <span>{likeCount}</span>
           </div>
           <div className={styles.item}>
             <IcoMessage />
-            <span>{commentCnt}</span>
+            <span>{commentCount}</span>
           </div>
           <div className={styles.item}>·</div>
-          <div className={styles.item}>{timeAgo}</div>
+          <div className={styles.item}>{createdAt}</div>
+          <div className={styles.item}>{updateAt}</div>
         </div>
       </div>
-      {postImage && (
-        <img src={postImage} alt="postImage" className={styles.postImage} />
-      )}
+      {image && <img src={image} alt="postImage" className={styles.postImage} />}
     </div>
   );
 };
