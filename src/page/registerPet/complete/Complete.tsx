@@ -25,7 +25,7 @@ const Complete = () => {
       </div>
 
       <div className={styles.btnWrapper}>
-        <Button label="동물 등록 끝내기" size="large" variant="solidPrimary" disabled={false} onClick={handleSkip} />
+        <Button label="동물 등록 끝내기" size="large" variant="solidPrimary" onClick={handleSkip} />
       </div>
     </div>
   );
