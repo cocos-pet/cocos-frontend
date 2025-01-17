@@ -11,6 +11,24 @@ export const writeWrap = style({
 
 export const imageContainer = style({
   display: "flex",
-  gap: "2rem",
-  maxWidth: "10.4rem",
+  gap: "1.2rem",
+  overflow: "auto",
+  scrollbarWidth: "none",
+});
+
+export const fileInput = style({
+  display: "none",
+});
+
+export const plusImage = style({
+  width: "10.4rem",
+  height: "10.4rem",
+  minWidth: "10.4rem",
+  borderRadius: "0.8rem",
+});
+
+export const bottomButton = style({
+  backgroundColor: color.gray.gray000,
+  width: "100%",
+  padding: "1.2rem 2rem 3.2rem 2rem",
 });

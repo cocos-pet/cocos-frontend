@@ -1,18 +1,24 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
-import { IcSearch } from "@asset/svg";
-import React, { ChangeEvent, useState } from "react";
+import { IcDeleteBlack, IcImagePlus, IcTest, IcUp } from "@asset/svg";
+import React, { ChangeEvent, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
-import { IcMessage, IcUp } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { IcDeleteBlack, IcRight, IcTest } from "@asset/svg";
-import { imageContainer, writeWrap } from "@page/community/write/Write.css.ts";
+import {
+  bottomButton,
+  fileInput,
+  imageContainer,
+  plusImage,
+  writeWrap,
+} from "@page/community/write/Write.css.ts";
 import WriteInputSection from "@page/community/component/WriteInputSection/WriteInputSection.tsx";
 
 import Tag from "@page/community/component/Tag/Tag.tsx";
 import TextArea from "@page/community/component/TextArea/TextArea.tsx";
 import Spacing from "@common/component/Spacing/Spacing.tsx";
-import IcoSkeleton from "@asset/svg/IcoSkeleton.tsx";
+import ImageCover from "@page/community/component/ImageCover/ImageCover.tsx";
+import IcRight from "@asset/svg/IcRight.tsx";
+import { Button } from "@common/component/Button";
 
 interface writeProps {
   category: string;
@@ -22,12 +28,14 @@ interface writeProps {
   tag: string;
 }
 
+const TagLabel = [
+  { label: "반려동물 종류 추가하기", value: "반려동물 종류 추가하기" },
+  { label: "증상 추가하기", value: "증상 추가하기" },
+  { label: "질병 추가하기", value: "질병 추가하기" },
+];
+
 const Write = () => {
   const onBackClick = () => {};
-  const [category, setCategory] = useState<string>("");
-  const [title, setTitle] = useState<string>("");
-  const [content, setContent] = useState<string>("");
-  const [image, setImage] = useState<string[]>("");
   const [params, setParams] = useState<writeProps>({
     category: "",
     title: "",
@@ -67,6 +75,26 @@ const Write = () => {
       ...params,
       [target]: value,
     });
+  };
+
+  const [images, setImages] = useState<string[]>([]); // 이미지 URL 리스트
+  const fileInputRef = useRef<HTMLInputElement>(null); // input 파일 선택기 레퍼런스
+
+  // 이미지 추가 핸들러
+  const handleAddImage = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files[0]) {
+      const newImage = URL.createObjectURL(event.target.files[0]); // 로컬 파일의 URL 생성
+      setImages((prev) => [...prev, newImage]); // 기존 이미지에 추가
+    }
+  };
+
+  // 이미지 삭제 핸들러
+  const handleDeleteImage = (index: number) => {
+    setImages((prev) => prev.filter((_, i) => i !== index)); // 선택한 이미지 제거
+  };
+
+  const handleFileUploadClick = () => {
+    fileInputRef.current?.click(); // 숨겨진 input[type="file"] 클릭
   };
 
   return (
@@ -116,13 +144,51 @@ const Write = () => {
             placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n\n(예시: ~한 증상은 어디로 가야 하나요?)`}
             onChange={(e) => onChangeValue("content", e.target.value)}
           />
+          <Spacing marginBottom={"1.2"} />
+          <input
+            type="file"
+            onChange={handleAddImage}
+            accept="image/*"
+            ref={fileInputRef}
+            className={fileInput}
+          />
           <div className={imageContainer}>
-            <IcoSkeleton />
-            <IcoSkeleton />
-            <IcoSkeleton />
-            <IcoSkeleton />
+            <IcImagePlus
+              className={plusImage}
+              onClick={handleFileUploadClick}
+            />
+            {images.map((imageSrc, index) => (
+              <ImageCover
+                key={index}
+                imageSrc={imageSrc}
+                onDeleteClick={() => handleDeleteImage(index)}
+              />
+            ))}
           </div>
         </WriteInputSection>
+        <WriteInputSection title={"태그 선택"}>
+          {TagLabel.map((label, index) => {
+            return (
+              <>
+                <Tag
+                  key={index}
+                  label={label.label}
+                  value={params.tag}
+                  setTag={onChangeValue}
+                />
+                <Spacing marginBottom={"0.8"} />
+              </>
+            );
+          })}
+        </WriteInputSection>
+        <Spacing marginBottom={"13.5"} />
+      </div>
+      <div className={bottomButton}>
+        <Button
+          variant={"solidNeutral"}
+          label={"글 작성 마치기"}
+          size={"large"}
+        />
       </div>
     </div>
   );

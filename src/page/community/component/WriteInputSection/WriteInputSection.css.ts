@@ -10,7 +10,7 @@ export const container = style({
 export const label = style([
   font.body01,
   {
-    fontWeight: 500,
+    fontWeight: 600,
     color: color.gray.gray900,
   },
 ]);

@@ -1,19 +1,20 @@
 import { tagContainer } from "@page/community/component/Tag/Tag.css.ts";
-import { IcLeftarrow, IcRight } from "@asset/svg";
+import { IcLeftarrow } from "@asset/svg";
 import React from "react";
 import { color } from "@style/styles.css.ts";
+import IcRight from "@asset/svg/IcRight.tsx";
 
 interface tagType {
   label: string;
   value?: string;
-  setTag: (tag: string) => void;
+  setTag: (tag: string, value: string) => void;
 }
 
 const Tag = ({ label, value, setTag }: tagType) => {
   const isActive = value === label;
 
   const onClickTag = () => {
-    setTag(label);
+    setTag("tag", label);
   };
 
   return (
