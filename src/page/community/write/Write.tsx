@@ -1,19 +1,16 @@
+import DropDown from "@page/community/component/DropDown/DropDown.tsx";
+import { TextField } from "@common/component/TextField";
+import { IcSearch } from "@asset/svg";
+import React, { ChangeEvent, useState } from "react";
+import { useDropDown } from "../component/DropDown/useDropDown";
+import { IcMessage, IcUp } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import {
-  IcClear,
-  IcDelete,
-  IcDeleteBlack,
-  IcLeftarrow,
-  IcRight,
-  IcTest,
-  React,
-} from "@asset/svg";
+import { IcDeleteBlack, IcRight, IcTest } from "@asset/svg";
 import { writeWrap } from "@page/community/write/Write.css.ts";
 import WriteInputSection from "@page/community/component/WriteInputSection/WriteInputSection.tsx";
-import { TextField } from "@common/component/TextField";
-import { useState } from "react";
-import Tag from "@page/community/component/Tag/Tag.tsx";
 
+import Tag from "@page/community/component/Tag/Tag.tsx";
+import TextArea from "@page/community/component/TextArea/TextArea.tsx";
 
 interface writeProps {
   category: string;
@@ -25,6 +22,10 @@ interface writeProps {
 
 const Write = () => {
   const onBackClick = () => {};
+  const [category, setCategory] = useState<string>("");
+  const [title, setTitle] = useState<string>("");
+  const [content, setContent] = useState<string>("");
+  const [image, setImage] = useState<string[]>("");
   const [params, setParams] = useState<writeProps>({
     category: "",
     title: "",
@@ -32,7 +33,26 @@ const Write = () => {
     tag: "",
     image: [],
   });
-  
+  const [searchText, setSearchText] = useState<string>("");
+  const [selectState, setSelectState] = useState<string>("");
+
+  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
+
+  const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+    if (!isDropDownOpen) closeDropDown();
+  };
+
+  const onTextFieldClick = () => {
+    toggleDropDown();
+  };
+
+  const onClickItem = (item: string) => {
+    setSelectState(item);
+    toggleDropDown();
+    console.log(selectState);
+  };
+
   const setTag = (tag: string) => {
     setParams({ ...params, tag });
   };
@@ -49,11 +69,53 @@ const Write = () => {
 
   return (
     <div>
-      <Tag label={"#태그1"} value={params.tag} setTag={setTag} />
-      <Tag label={"#태그2"} value={params.tag} setTag={setTag} />
-      <Tag label={"#태그3"} value={params.tag} setTag={setTag} />
+      <HeaderNav
+        leftIcon={<IcDeleteBlack width={24} />}
+        onLeftClick={onBackClick}
+        centerContent={"글쓰기"}
+      />
+      <div className={writeWrap}>
+        <WriteInputSection title={"제목"}>
+          <TextField
+            leftIcon={<IcTest width={20} />}
+            placeholder={"게시물 선택하기"}
+            icon={<IcRight width={20} />}
+            onChange={onTextFieldChange}
+            onClick={onTextFieldClick}
+            isDelete={false}
+            value={params.category}
+          />
+        </WriteInputSection>
+        <WriteInputSection title={"글 작성"}>
+          <TextField
+            placeholder={"제목을 입력해주세요"}
+            icon={<IcRight width={20} />}
+            onClick={() => {
+              console.log("click");
+            }}
+            state={"write"}
+            value={params.title}
+            onChange={(e) => onChangeValue("title", e.target.value)}
+          />
+          <TextArea
+            value={params.content}
+            onChange={(e) => onChangeValue("content", e.target.value)}
+            placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n\n(예시: ~한 증상은 어디로 가야 하나요?)`}
+          />
+        </WriteInputSection>
+      </div>
+
+      <DropDown
+        isOpen={isDropDownOpen}
+        items={[
+          { icon: <IcUp width={20} />, label: "Item 1" },
+          { icon: <IcUp width={20} />, label: "Item 2" },
+          { icon: <IcUp width={20} />, label: "Item 3" },
+        ]}
+        onClickItem={onClickItem}
+      />
     </div>
   );
 };
 
-export default Write
+export default Write;

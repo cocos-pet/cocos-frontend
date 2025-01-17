@@ -1,5 +1,6 @@
-import { recipe } from "@vanilla-extract/recipes";
+import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css.ts";
+import { button } from "@common/component/Button/styles.css.ts";
 
 export const styles = {
   wrapper: recipe({
@@ -19,6 +20,12 @@ export const styles = {
         default: {},
         error: {
           border: `0.1rem solid ${color.red.warning_red200}`,
+        },
+        write: {
+          padding: "1.2rem",
+          ":placeholder": {
+            color: color.gray.gray600,
+          },
         },
       },
       active: {
@@ -81,3 +88,5 @@ export const styles = {
     },
   }),
 };
+
+export type WrapVariants = RecipeVariants<typeof styles.wrapper>;

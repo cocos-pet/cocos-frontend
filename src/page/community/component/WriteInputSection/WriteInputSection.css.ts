@@ -4,7 +4,7 @@ import { style } from "@vanilla-extract/css";
 export const container = style({
   display: "flex",
   flexDirection: "column",
-  gap: "0.8rem",
+  gap: "1.2rem",
 });
 
 export const label = style([
@@ -15,4 +15,9 @@ export const label = style([
   },
 ]);
 
-export const child = style({});
+export const child = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "1.2rem",
+});

@@ -1,5 +1,6 @@
 import React from "react";
 import { textareaContainer } from "./TextArea.css";
+import { WrapVariants } from "@common/component/TextField/styles.css.ts";
 
 interface TextAreaProps {
   value: string;
@@ -7,7 +8,9 @@ interface TextAreaProps {
   placeholder?: string;
 }
 
-const TextArea = ({ value, onChange, placeholder }: TextAreaProps) => {
+type typeProps = WrapVariants & TextAreaProps;
+
+const TextArea = ({ value, onChange, placeholder }: typeProps) => {
   return (
     <textarea
       value={value}

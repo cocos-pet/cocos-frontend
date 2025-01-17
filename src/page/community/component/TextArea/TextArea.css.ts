@@ -8,7 +8,7 @@ export const textareaContainer = style([
     color: color.gray.gray900,
     width: "100%",
     minHeight: "23.5rem",
-    padding: "1.2rem",
+    padding: "1.5rem",
     borderRadius: "0.8rem",
     border: `0.1rem solid ${color.gray.gray200}`,
     background: color.gray.gray000,

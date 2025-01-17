@@ -1,11 +1,13 @@
 import React from "react";
-import { styles } from "@common/component/TextField/styles.css.ts";
+import {
+  styles,
+  WrapVariants,
+} from "@common/component/TextField/styles.css.ts";
 import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
   icon?: React.ReactNode;
   leftIcon?: React.ReactNode;
-  state?: "default" | "error";
   active?: boolean;
   isDelete?: boolean;
   placeholder?: string;
@@ -15,6 +17,8 @@ interface TextFieldProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
 }
+
+type propsType = WrapVariants & TextFieldProps;
 
 /**
  * TextField 공통 컴포넌트
@@ -32,7 +36,7 @@ interface TextFieldProps {
  * @constructor minjeoong
  */
 
-export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+export const TextField = React.forwardRef<HTMLInputElement, propsType>(
   (
     {
       icon,
