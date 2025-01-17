@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { IcEllipses } from "@asset/svg";
 import {
   container,
@@ -11,7 +11,7 @@ import {
 import { assignInlineVars } from "@vanilla-extract/dynamic";
 
 interface MoreModalParams {
-  isOpen: boolean;
+  isOpen?: boolean;
   onToggleModal: () => void;
   onDelete: () => void;
   iconSize: number;
@@ -19,20 +19,30 @@ interface MoreModalParams {
 }
 
 const MoreModal = ({
-  isOpen,
+  isOpen = false,
   onToggleModal,
   onDelete,
   iconSize,
   onEdit,
 }: MoreModalParams) => {
+  const onItemClick = () => {
+    onDelete();
+    onToggleModal();
+  };
+
+  const onEditClick = () => {
+    onEdit && onEdit();
+    onToggleModal();
+  };
+
   return (
     <div
       className={container}
-      style={assignInlineVars({ [iconSizeVar]: `${iconSize}rem` })}
+      style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
     >
       <IcEllipses
         className={moreIcon}
-        style={assignInlineVars({ [iconSizeVar]: `${iconSize}rem` })}
+        style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
         onClick={onToggleModal}
       />
       {isOpen && (
@@ -41,7 +51,7 @@ const MoreModal = ({
             className={moreModalItem({
               position: !!onEdit ? "first" : "default",
             })}
-            onClick={onDelete}
+            onClick={onItemClick}
           >
             삭제하기
           </button>
@@ -52,7 +62,7 @@ const MoreModal = ({
                 className={moreModalItem({
                   position: !!onEdit ? "last" : "default",
                 })}
-                onClick={onEdit}
+                onClick={onEditClick}
               >
                 수정하기
               </button>
