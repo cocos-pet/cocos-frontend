@@ -46,7 +46,7 @@ const Nav = ({ content }: Props) => {
               state: activeItem === item.id,
             })}
           >
-            <SvgComponent />
+            <SvgComponent  />
             {item.label}
           </button>
         );

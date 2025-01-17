@@ -16,12 +16,12 @@ export const container = style([
 export const navItem = recipe({
   base: {
     display: "flex",
+    width: "5.6rem",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     padding: "0 1.2rem",
     whiteSpace: "nowrap",
-    width: "7.2rem",
   },
   variants: {
     state: {
