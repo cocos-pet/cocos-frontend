@@ -29,7 +29,7 @@ const Mypage = () => {
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
-      <span style={{ position: "fixed", top: 0 }}>
+      <span style={{ position: "fixed", top: 0, width: "100%" }}>
         <HeaderNav
           leftIcon={<IcChevronLeft width={24} height={24} onClick={() => navigate(-1)} />}
           centerContent={"마이페이지"}
@@ -96,13 +96,13 @@ const Mypage = () => {
       <Divider />
 
       <div className={styles.contentHeaderWrapper}>
-        <Tab active={isActiveTab("review")} width={"12.5rem"} onClick={() => handleTabClick("review")}>
+        <Tab active={isActiveTab("review")} width={"100%"} onClick={() => handleTabClick("review")}>
           나의 병원 후기
         </Tab>
-        <Tab active={isActiveTab("post")} width={"12.5rem"} onClick={() => handleTabClick("post")}>
+        <Tab active={isActiveTab("post")} width={"100%"} onClick={() => handleTabClick("post")}>
           나의 게시글
         </Tab>
-        <Tab active={isActiveTab("comment")} width={"12.5rem"} onClick={() => handleTabClick("comment")}>
+        <Tab active={isActiveTab("comment")} width={"100%"} onClick={() => handleTabClick("comment")}>
           나의 댓글
         </Tab>
       </div>

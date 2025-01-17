@@ -8,6 +8,8 @@ import { Button } from "@common/component/Button";
 import { useEffect, useRef, useState } from "react";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { validateNickname } from "@shared/util/validateNickname";
+import { useFilterStore } from "@store/filter";
+import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 
 const DEFAULT_TYPE = ["종류", "세부 종류", "성별", "나이"] as const;
 
@@ -19,6 +21,13 @@ const PetEdit = () => {
   const [name, setName] = useState("포리");
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
+
+  const { isOpen, setOpen, setCategoryData, selectedChips, categoryData } = useFilterStore();
+
+  useEffect(() => {
+    console.log(selectedChips);
+    console.log(categoryData);
+  }, [selectedChips]);
 
   useEffect(() => {
     if (name) {
@@ -115,6 +124,7 @@ const PetEdit = () => {
               leftIcon={<IcEditPen width={20} height={20} />}
               label={"수정하기"}
               size="small"
+              onClick={() => setOpen(true)}
             />
           </span>
         </article>
@@ -128,9 +138,11 @@ const PetEdit = () => {
               leftIcon={<IcEditPen width={20} height={20} />}
               label={"수정하기"}
               size="small"
+              onClick={() => setOpen(true)}
             />
           </span>
         </article>
+        <FilterBottomSheet />
       </section>
     </div>
   );

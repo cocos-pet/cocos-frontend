@@ -3,15 +3,15 @@ import { style } from "@vanilla-extract/css";
 
 export const commentWrapper = style({
   display: "flex",
-  width: "33.5rem",
+  width: "100%",
   padding: "1.2rem 0rem",
   flexDirection: "column",
   alignItems: "flex-start",
   gap: "0.4rem",
   borderBottom: `1px solid ${semanticColor.line.heavy}`,
 
-  wordWrap: "break-word", 
-  whiteSpace: "pre-wrap", 
+  wordWrap: "break-word",
+  whiteSpace: "pre-wrap",
 });
 
 export const timeText = style({
