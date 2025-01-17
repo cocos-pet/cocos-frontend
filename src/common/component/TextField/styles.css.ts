@@ -1,5 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
-import { color, font } from "@style/styles.css.ts";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   wrapper: recipe({
@@ -18,6 +18,14 @@ export const styles = {
         default: {},
         error: {
           border: `0.1rem solid ${color.red.warning_red200}`,
+        },
+        search: {
+          display: "flex",
+          width: "33.5rem",
+          marginLeft: "2rem",
+          border: `0.1rem solid ${semanticColor.line.strong}`,
+          backgroundColor: semanticColor.neutral.normal,
+          boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
         },
       },
       active: {

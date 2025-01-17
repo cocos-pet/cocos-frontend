@@ -4,11 +4,11 @@ import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
   icon?: React.ReactNode;
-  state?: "default" | "error";
+  state?: "default" | "error" | "search";
   active?: boolean;
   placeholder?: string;
   value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
