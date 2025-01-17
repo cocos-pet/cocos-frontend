@@ -16,7 +16,6 @@ export const headerItem = recipe({
       borderBottom: `0.1rem solid ${color.gray.gray200}`,
       backgroundColor: color.gray.gray000,
       color: color.gray.gray900,
-      borderBottom: `1px solid ${color.gray.gray200}`,
     },
   ],
   variants: {
