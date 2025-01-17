@@ -4,7 +4,7 @@ import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
   icon?: React.ReactNode;
-  state?: "default" | "error";
+  state?: "default" | "error" | "centerPlaceholder";
   active?: boolean;
   placeholder?: string;
   value: string;
@@ -12,6 +12,7 @@ interface TextFieldProps {
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
+  maxLength?: number; // input 입력 가능길이
 }
 
 /**
@@ -26,9 +27,7 @@ interface TextFieldProps {
  * @param onKeyDown 엔터키 입력 함수
  * @param onClearClick 입력값 삭제 함수
  * @constructor minjeoong
- */
-
-export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
+ */ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
   (
     {
       icon,
@@ -40,25 +39,25 @@ export const TextField = React.forwardRef<HTMLInputElement, TextFieldProps>(
       onClick,
       onKeyDown,
       onClearClick,
+      maxLength,
     },
-    ref, // forwardRef를 통해 ref를 받을 수 있도록 설정
+    ref
   ) => {
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
         <input
           ref={ref}
           type="text"
-          className={styles.input({ active })}
+          className={styles.input({ state, active })}
           placeholder={placeholder}
           value={value}
           onChange={onChange}
           onKeyDown={onKeyDown}
           disabled={!active}
+          maxLength={maxLength}
         />
         {value ? <IcClear onClick={onClearClick} /> : icon}
       </div>
     );
-  },
+  }
 );
-
-TextField.displayName = "TextField"; // React DevTools에서 이름이 올바르게 표시되도록 설정

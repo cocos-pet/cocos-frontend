@@ -8,7 +8,7 @@ import { IcChevronLeft, IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
 import { useNavigate } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import { PET_PROFILE, USER_PROFILE } from "./\bconstant";
+import { PET_PROFILE, USER_PROFILE } from "./constant";
 
 export type ActiveTabType = "review" | "post" | "comment";
 

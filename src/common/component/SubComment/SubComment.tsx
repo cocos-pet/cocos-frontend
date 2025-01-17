@@ -1,5 +1,7 @@
 import * as styles from "./SubComment.css";
 import { IcEllipses, IcMessage } from "@asset/svg";
+import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
+import useModalStore from "@store/moreModalStore.ts";
 
 export interface SubCommentData {
   id: number;
@@ -7,7 +9,7 @@ export interface SubCommentData {
   breed: string;
   petAge: number;
   content: string;
-  createdAt: Date;
+  createdAt: string;
   isWriter: boolean;
   profileImage: string;
   mentionedNickname: string;
@@ -24,6 +26,7 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
       onReplyClick(subComment.id);
     }
   };
+  const { openModalId, setOpenModalId } = useModalStore();
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
@@ -39,18 +42,32 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
     );
   };
 
+  const onDelete = () => {
+    // TODO : 대댓글 삭제
+  };
+
   return (
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={subComment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
+          <img
+            src={subComment.profileImage}
+            className={styles.profileImage}
+            alt="프로필 이미지"
+          />
           <div className={styles.headerInfo}>
-            <IcEllipses className={styles.containerOptionsIcon} />
             <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
-              {subComment.breed} · {subComment.petAge}살 · {subComment.createdAt.toLocaleString()}
+              {subComment.breed} · {subComment.petAge}살 ·{" "}
+              {subComment.createdAt.toLocaleString()}
             </span>
           </div>
+          <MoreModal
+            iconSize={24}
+            onDelete={onDelete}
+            isOpen={openModalId === subComment.id}
+            onToggleModal={() => setOpenModalId(subComment.id)}
+          />
         </div>
         <p className={styles.text}>{renderContent()}</p>
 

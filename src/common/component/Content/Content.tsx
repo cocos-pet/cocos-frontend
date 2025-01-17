@@ -1,5 +1,4 @@
 import { IcoMessage, IcTest } from "@asset/svg";
-import React from "react";
 import { styles } from "@common/component/Content/Content.css.ts";
 
 interface ContentPropTypes {
