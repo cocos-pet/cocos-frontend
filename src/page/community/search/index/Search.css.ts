@@ -1,7 +1,6 @@
-import { createVar, style } from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css.ts";
 
-//동적 스타일링 (style 관련된 코드는 반드시 .css.ts에 작성하는게 rule
 export const styles = {
   container: style({}),
   icon: style({

@@ -9,7 +9,7 @@ const COMMUNITY_ROUTES = [
   { path: PATH.COMMUNITY.ROOT, element: <Community /> },
   { path: PATH.COMMUNITY.POST, element: <PostDetail /> },
   { path: PATH.COMMUNITY.SEARCH, element: <Search /> },
-  { path: PATH.COMMUNITY.SEARCHDONE, element: <SearchDone /> },
+  { path: PATH.COMMUNITY.SEARCH_DONE, element: <SearchDone /> },
   { path: PATH.COMMUNITY.WRITE, element: <Write /> },
 ];
 

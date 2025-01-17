@@ -34,6 +34,14 @@ export const button = recipe({
         height: "4.4rem",
         padding: "1.2rem 2.8rem",
       },
+      tag: [
+        font.label01,
+        {
+          height: "2.8rem",
+          width: "fit-content",
+          padding: "0.4rem 1.4rem",
+        },
+      ],
     },
     variant: {
       solidPrimary: {
