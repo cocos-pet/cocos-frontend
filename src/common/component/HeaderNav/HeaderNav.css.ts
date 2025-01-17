@@ -9,8 +9,8 @@ export const headerItem = recipe({
       gridTemplateColumns: "repeat(3, 1fr)",
       alignItems: "center",
       justifyItems: "center",
-
-      width: "37.5rem",
+      width: "100%",
+      maxWidth: "76.8rem",
       height: "6.4rem",
       padding: "1.8rem 2.2rem",
 
