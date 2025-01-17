@@ -4,13 +4,23 @@ import React from "react";
 type DropDownType = {
   isOpen: boolean;
   items: Array<{ icon: React.ReactNode; label: string }>;
-  onClickItem: (item: string) => void;
+  onClickItem: (target: string, value: string) => void;
+  toggleDropDown: () => void;
 };
 
-const DropDown = ({ isOpen, items, onClickItem }: DropDownType) => {
+const DropDown = ({
+  isOpen,
+  items,
+  onClickItem,
+  toggleDropDown,
+}: DropDownType) => {
   if (!isOpen) {
     return;
   }
+  const onClick = (label: string) => {
+    onClickItem("category", label);
+    toggleDropDown();
+  };
 
   return (
     <div className={container}>
@@ -18,7 +28,7 @@ const DropDown = ({ isOpen, items, onClickItem }: DropDownType) => {
         <div
           key={index}
           className={itemStyle}
-          onClick={() => onClickItem(item.label)}
+          onClick={() => onClick(item.label)}
         >
           {item.icon}
           <span>{item.label}</span>
