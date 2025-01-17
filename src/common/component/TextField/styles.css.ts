@@ -81,6 +81,7 @@ export const styles = {
             color: color.gray.gray600,
           },
         },
+        error: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
       },
     },
