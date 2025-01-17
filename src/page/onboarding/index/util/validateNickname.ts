@@ -24,5 +24,5 @@ export function validateNickname(nickname: string): string[] {
     errors.push(ERROR_MSG.nickname.ko);
   }
 
-  return errors; // 에러 메시지 배열 반환
+  return errors;
 }

@@ -34,6 +34,14 @@ export const button = recipe({
         height: "4.4rem",
         padding: "1.2rem 2.8rem",
       },
+      tag: [
+        font.label01,
+        {
+          height: "2.8rem",
+          width: "fit-content",
+          padding: "0.4rem 1.4rem",
+        },
+      ],
     },
     variant: {
       solidPrimary: {
@@ -83,12 +91,22 @@ export const button = recipe({
           border: `0.1rem solid ${color.primary.blue500}`,
         },
         ":focus": {
-          backgroundColor: "rgba(67, 214, 255, 0.08)",
+          backgroundColor: "rgba(67, 214, 255, 0.16)",
           color: "rgba(33, 46, 50, 1)",
           border: `0.1rem solid ${color.primary.blue500}`,
         },
       },
-      
+      outlineNeutral: {
+        border: `0.1rem solid ${color.gray.gray600}`,
+        borderRadius: "10rem",
+        backgroundColor: "transparent",
+        padding: "0.4rem 1.2rem",
+        ":disabled": {
+          color: color.gray.gray800,
+          backgroundColor: "unset",
+          pointerEvents: "none",
+        },
+      },
     },
     disabled: {
       true: {

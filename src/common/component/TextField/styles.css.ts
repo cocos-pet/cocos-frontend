@@ -59,6 +59,7 @@ export const styles = {
         maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",
+        width: "100%",
         "::placeholder": {
           color: color.gray.gray700,
         },
