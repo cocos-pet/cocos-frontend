@@ -1,22 +1,31 @@
-import TextArea from "@page/community/component/TextArea/TextArea.tsx";
-import React, { useState } from "react";
+
+import React, { ChangeEvent, useState } from "react";
+import { useDropDown } from "../component/DropDown/useDropDown";
 
 const Write = () => {
-  const [value, setValue] = useState("");
-  const onChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setValue(e.target.value);
+  const [searchText, setSearchText] = useState<string>("");
+  const [selectState, setSelectState] = useState<string>("");
+
+  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
+
+  const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+    if (!isDropDownOpen) closeDropDown();
   };
+
+  const onTextFieldClick = () => {
+    toggleDropDown();
+  };
+
+  const onClickItem = (item: string) => {
+    setSelectState(item);
+    toggleDropDown();
+    console.log(selectState);
+  };
+
   return (
-    <div>
-      <TextArea
-        value={value}
-        onChange={onChange}
-        placeholder={
-          "커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n\n (예시: ~한 증상은 어디로 가야 하나요?)"
-        }
-      />
-    </div>
-  );
-};
+    <div>Write</div>
+  )
+}
 
 export default Write;
