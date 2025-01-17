@@ -1,11 +1,5 @@
-import PetHealth from "@page/onboarding/index/component/petHealth/PetHealth";
-
 const Onboarding = () => {
-  return (
-    <>
-      <PetHealth />
-    </>
-  );
+  return <></>;
 };
 
 export default Onboarding;

@@ -89,6 +89,17 @@ export const button = recipe({
           border: `0.1rem solid ${color.primary.blue500}`,
         },
       },
+      outlineNeutral: {
+        border: `0.1rem solid ${color.gray.gray600}`,
+        borderRadius: "10rem",
+        backgroundColor: "transparent",
+        padding: "0.4rem 1.2rem",
+        ":disabled": {
+          color: color.gray.gray800,
+          backgroundColor: "unset",
+          pointerEvents: "none",
+        },
+      },
     },
     disabled: {
       true: {
