@@ -1,11 +1,16 @@
 import { style } from "@vanilla-extract/css";
 
+export const backGround = style({
+  height: "100vh",
+  background: "linear-gradient(180deg, #DEFEFF 0%, #FFF 36.13%)",
+});
+
 export const layout = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
   gap: "3.2rem",
-  margin: "7.2rem 2rem 6rem 2rem",
+  padding: "7.2rem 2rem 6rem 2rem",
 });
 export const titleWrapper = style({
   display: "flex",
@@ -21,7 +26,7 @@ export const btnWrapper = style({
   position: "fixed",
   bottom: 0,
   display: "grid",
-  gridTemplateColumns: "9.6rem calc(100% - 10.8rem)",
+  gridTemplateColumns: "repeat(2, 1fr)",
   gap: "1.2rem",
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
