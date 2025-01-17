@@ -31,5 +31,6 @@ export const carouselStatus = style({
   backgroundColor: semanticColor.neutral.assistive,
   borderRadius: "12px",
   color: "white",
+  opacity: "0.4",
   zIndex: "4",
 });

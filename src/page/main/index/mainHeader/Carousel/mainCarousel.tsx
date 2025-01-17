@@ -7,7 +7,7 @@ interface MainCarouselProps {
 }
 
 const MainCarousel = ({ images }: MainCarouselProps) => {
-  const [emblaRef, emblaApi] = useEmblaCarousel();
+  const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
   const [currentIndex, setCurrentIndex] = useState(0);
 
   useEffect(() => {
@@ -22,6 +22,16 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
     return () => {
       emblaApi.off("select", onSelect);
     };
+  }, [emblaApi]);
+
+  useEffect(() => {
+    if (!emblaApi) return;
+
+    const autoplay = setInterval(() => {
+      emblaApi.scrollNext();
+    }, 3000);
+
+    return () => clearInterval(autoplay);
   }, [emblaApi]);
 
   return (
