@@ -6,7 +6,6 @@ import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuid
 import Title from "../../common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
-import { validatePetAge } from "@page/onboarding/index/util/validatePetAge";
 import { Button } from "@common/component/Button";
 
 const PetAge = () => {
@@ -17,11 +16,8 @@ const PetAge = () => {
     setPetAge(value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
 
-  // 유효성 검사 결과 에러 메시지
-  const validationMessages = petAge ? validatePetAge(petAge) : [];
   // '다음으로' 버튼 활성화 유무
-  const isValid = petAge && validationMessages.length === 0;
-  const textFieldState = petAge === "" || validationMessages.length === 0 ? "default" : "error";
+  const isValid = petAge && updatePetAge.length !== 0;
 
   // 뒤로가기 TODO: 플로우대로 구현
   const navigate = useNavigate();
@@ -42,16 +38,12 @@ const PetAge = () => {
         <div className={styles.centerLayout}>
           <div>
             <TextField
-              state={textFieldState}
               value={petAge}
               onChange={updatePetAge}
               placeholder="나이"
               centerPlaceholder={true}
-              maxLength={3}
+              maxLength={2}
             />
-            <div className={styles.errorLayout}>
-              <Docs state="sError" text={validationMessages} />
-            </div>
           </div>
           <span className={styles.ageFontStyle}>살</span>
         </div>
