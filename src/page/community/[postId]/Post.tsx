@@ -13,7 +13,7 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
 import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
-import { formatTimeAgo } from "@shared/util/formatTime.ts";
+import { formatTime, formatTimeAgo } from "@shared/util/formatTime.ts";
 
 const PostDetail = () => {
   const postData = {
@@ -151,7 +151,7 @@ const PostDetail = () => {
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
               {postData.breed}·{postData.petAge}개 ·{" "}
-              {formatTimeAgo(postData.createdAt)}
+              {formatTime(postData.createdAt)}
             </div>
           </div>
         </div>
@@ -189,6 +189,7 @@ const PostDetail = () => {
             onChange={onChange}
             value={comment}
             onClearClick={onClearClick}
+            placeholder={"댓글을 입력해주세요."}
           />
           {comment && (
             <button className={styles.upload} onClick={onSubmitComment}>

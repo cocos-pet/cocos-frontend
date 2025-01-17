@@ -1,4 +1,4 @@
-export const formatTimeAgo = (createdAt: string): string => {
+export const formatTime = (createdAt: string): string => {
   const now = new Date();
   const createdDate = new Date(createdAt);
   const diffMs = now.getTime() - createdDate.getTime();
@@ -11,8 +11,6 @@ export const formatTimeAgo = (createdAt: string): string => {
   const diffMinutes = Math.floor(diffSeconds / 60);
   const diffHours = Math.floor(diffMinutes / 60);
   const diffDays = Math.floor(diffHours / 24);
-
-  console.log(diffMs, diffSeconds, diffMinutes, diffHours, diffDays);
 
   if (diffSeconds < 60) {
     return "방금 전";
