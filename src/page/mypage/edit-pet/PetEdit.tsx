@@ -7,7 +7,7 @@ import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 import { useEffect, useState } from "react";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import { validateNickname } from "@page/onboarding/index/util/validateNickname";
+import { validateNickname } from "@shared/util/validateNickname";
 
 const DEFAULT_TYPE = ["종류", "세부 종류", "성별", "나이"] as const;
 

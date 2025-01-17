@@ -1,5 +1,4 @@
-import { ERROR_MSG } from "../constant/errorMsg";
-
+import { ERROR_MSG } from "@shared/constant/errorMsg";
 // 목데이터(추후 api연결시 삭제)
 const existingNicknames = ["0준혁", "딤민정C", "얄뭉", "알콜주도개발자"];
 
