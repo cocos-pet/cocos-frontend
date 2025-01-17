@@ -13,12 +13,13 @@ interface ChipProps {
 type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
 
 const Chip = ({ label, icon = false, color = "blue", onClick, isSelected = false }: CombinedChipProps) => {
+  
   const [isActive, setIsActive] = useState(isSelected);
-
+  
   useEffect(() => {
     setIsActive(isSelected);
   }, [isSelected]);
-
+  
   const handleClick = () => {
     if (color === "gray" || (size === "large" && icon === false)) return;
     if (!icon) setIsActive(!isActive);

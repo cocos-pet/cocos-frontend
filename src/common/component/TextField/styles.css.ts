@@ -45,6 +45,7 @@ export const styles = {
         height: "auto",
         color: color.gray.gray900,
         border: "none",
+        width: "100%",
         "::placeholder": {
           color: color.gray.gray700,
         },

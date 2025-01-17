@@ -41,7 +41,7 @@ interface TextFieldProps {
       onClearClick,
       maxLength,
     },
-    ref, // forwardRef를 통해 ref를 받을 수 있도록 설정
+    ref
   ) => {
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
@@ -59,7 +59,5 @@ interface TextFieldProps {
         {value ? <IcClear onClick={onClearClick} /> : icon}
       </div>
     );
-  },
+  }
 );
-
-TextField.displayName = "TextField"; // React DevTools에서 이름이 올바르게 표시되도록 설정
