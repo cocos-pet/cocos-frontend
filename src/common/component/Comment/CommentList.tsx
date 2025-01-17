@@ -9,6 +9,10 @@ const CommentList = ({ comments }: CommentListProps) => {
     // TODO :  댓글 삭제
   };
 
+  const onReplyClick = (id: number) => {
+    // TODO : 대댓글 작성
+  };
+
   return (
     <div>
       {comments.map((comment) => (
@@ -16,6 +20,7 @@ const CommentList = ({ comments }: CommentListProps) => {
           key={comment.id}
           comment={comment}
           onDelete={() => onDelete(comment.id)}
+          onReplyClick={onReplyClick}
         />
       ))}
     </div>
