@@ -160,16 +160,16 @@ const PetEdit = () => {
                   {item.tab === "animal" &&
                     (animalChips.animalId
                       ? getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData)
-                      : "선택해주세요")}
+                      : "_")}
                   {item.tab === "breeds" &&
                     (animalChips.breedId
                       ? getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData)
-                      : "선택해주세요")}
+                      : "_")}
                   {item.tab === "gender" &&
                     (animalChips.gender
                       ? getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData)
-                      : "선택해주세요")}
-                  {item.tab === "age" && "선택해주세요"} {/* 나이 처리 */}
+                      : "_")}
+                  {item.tab === "age" && "_"} {/* 나이 처리 */}
                   <IcChevronRight width={20} height={20} />
                 </button>
               </div>
