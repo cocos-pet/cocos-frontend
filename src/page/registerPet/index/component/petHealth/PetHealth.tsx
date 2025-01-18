@@ -1,5 +1,5 @@
 import { useState } from "react";
-import PetHealthDualSelector from "@page/onboarding/index/component/petHealth/petHealthDualSelector/PetHealthDualSelector";
+import PetHealthDualSelector from "./petHealthDualSelector/PetHealthDualSelector";
 import Disease from "./disease/Disease";
 import Symptom from "./symptom/Symptom";
 
