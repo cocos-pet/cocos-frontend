@@ -5,17 +5,18 @@ export const title = style({
   display: "flex",
   flexDirection: "column",
   gap: "0.7rem",
-  padding: "7.2rem 2rem 7rem",
+  padding: "8rem 2rem 3.2rem",
 });
 
 export const contentLayout = style({
+  position: "fixed",
+  top: "18.4rem",
   display: "flex",
   flexDirection: "column",
   gap: "3.2rem",
   overflowY: "auto",
-  overflowX: "hidden",
   padding: "0 2rem",
-  //   height: "calc(100vh - 11.8rem)",
+  height: "calc(100vh - 33.6rem)",
 });
 
 export const chipLayout = style({
@@ -45,5 +46,4 @@ export const btnWrapper = style({
   gap: "1.2rem",
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
-  backgroundColor: color.gray.gray000,
 });
