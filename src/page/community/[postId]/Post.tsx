@@ -11,9 +11,11 @@ import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
 import { usePostGet } from "@api/domain/community/post/hook";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { PATH } from "@route/path.ts";
 
 const PostDetail = () => {
+  const navigate = useNavigate();
   const { postId } = useParams();
   const { data: postData, isLoading } = usePostGet(Number(postId));
   if (!postId) return <>loading</>;
@@ -104,7 +106,7 @@ const PostDetail = () => {
   };
 
   const onBackClick = () => {
-    // TODO : 뒤로가기 버튼 클릭 시 이벤트
+    navigate(PATH.COMMUNITY.ROOT);
   };
 
   const onDelete = () => {
@@ -125,8 +127,8 @@ const PostDetail = () => {
           <MoreModal
             iconSize={24}
             onDelete={onDelete}
-            isOpen={Number(postId) === openModalId} // postId를 number로 변환
-            onToggleModal={() => setOpenModalId(Number(postId))} // setOpenModalId도 number 타입으로 맞춤
+            isOpen={Number(postId) === openModalId}
+            onToggleModal={() => setOpenModalId(Number(postId))}
           />
         }
       />
@@ -139,7 +141,13 @@ const PostDetail = () => {
           disabled={true}
         />
         <div className={styles.top}>
-          {<img src={postData.profileImage} alt="userProfile" />}
+          {
+            <img
+              src={postData.profileImage}
+              alt="userProfile"
+              className={styles.profileImage}
+            />
+          }
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
