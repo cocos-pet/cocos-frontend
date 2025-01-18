@@ -16,7 +16,7 @@ import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
 import { useAnimalFilterStore } from "./store/animalFilter";
 import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
 import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
-import { useGetMemberInfo } from "@api/domain/mypage/edit-pet/hook";
+import { useGetAnimal, useGetMemberInfo } from "@api/domain/mypage/edit-pet/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -31,6 +31,7 @@ const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
   const { isLoading, data: member } = useGetMemberInfo();
+  const { data: animal } = useGetAnimal();
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
@@ -75,11 +76,15 @@ const PetEdit = () => {
     if (member) {
       setName(member.nickname as string);
     }
-  }, [member]);
+    if (animal?.animals) {
+      console.log(animal.animals);
+      setAnimalCategoryData("animal", animal.animals);
+    }
+  }, [member, animal, setAnimalCategoryData]);
 
   console.log(isLoading);
 
-  if (isLoading || !member) return;
+  if (isLoading || !member || !animal) return;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;

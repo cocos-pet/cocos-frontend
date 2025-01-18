@@ -8,3 +8,9 @@ export const getMemberInfo = async () => {
   const { data } = await get<MemberInfoResponse>(API_PATH.MEMBERS, {});
   return data.data;
 };
+
+export const getAnimal = async () => {
+  type AnimalResponse = paths["/api/dev/animals"]["get"]["responses"]["200"]["content"]["*/*"];
+  const { data } = await get<AnimalResponse>(API_PATH.ANIMALS, {});
+  return data.data;
+};

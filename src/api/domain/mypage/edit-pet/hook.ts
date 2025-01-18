@@ -1,8 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import { getMemberInfo } from ".";
+import { getAnimal, getMemberInfo } from ".";
 
 export const MEMBER_QUERY_KEY = {
   MEMBER_INFO: () => ["memeberInfo"],
+};
+
+export const ANIMAL_QUREY_KEY = {
+  ANIMAL_ID: () => ["animalId"],
 };
 
 export const useGetMemberInfo = () => {
@@ -12,5 +16,15 @@ export const useGetMemberInfo = () => {
       return getMemberInfo();
     },
     staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useGetAnimal = () => {
+  return useQuery({
+    queryKey: ANIMAL_QUREY_KEY.ANIMAL_ID(),
+    queryFn: () => {
+      return getAnimal();
+    },
+    staleTime: 1000 * 60 * 10,
   });
 };

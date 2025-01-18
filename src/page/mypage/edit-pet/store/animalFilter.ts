@@ -6,9 +6,9 @@ import {
 } from "@shared/component/FilterBottomSheet/CategoryContent/constant";
 
 export interface AnimalItem {
-  id: number;
-  name: string;
-  image: string;
+  id?: number;
+  name?: string;
+  image?: string;
 }
 
 export interface BreedItem {
