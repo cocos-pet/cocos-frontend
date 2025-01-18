@@ -30,7 +30,7 @@ export const headerItem = recipe({
 
       // 아이콘 + 타이틀없음 + 아이콘
       noTitle: {
-        gridTemplateColumns: "repeat(2, 1fr)",
+        // gridTemplateColumns: "repeat(2, 1fr)",
       },
     },
   },
