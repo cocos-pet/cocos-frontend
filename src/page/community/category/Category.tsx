@@ -54,11 +54,7 @@ const Category = () => {
       {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}
       {type !== "magazine" && (
         <div className={styles.filterContainer}>
-          {isFilterOn ? (
-            <Icfilteron className={styles.filter({ applied: true })} onClick={toggleOpen} />
-          ) : (
-            <Icfilter className={styles.filter({ applied: false })} onClick={toggleOpen} />
-          )}
+          {isFilterOn ? <Icfilteron onClick={toggleOpen} width={24} /> : <Icfilter onClick={toggleOpen} width={24} />}
           <FilterBottomSheet />
         </div>
       )}
