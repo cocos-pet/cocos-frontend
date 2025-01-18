@@ -22,7 +22,6 @@ const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) =
   const renderDropDownData = () => {
     if (content) {
       return content.map((data) => (
-        //todo: 칩으로 변경, selected 상태일 때 모습도 반영(selectedFilters 이용)
         <Chip
           key={`dropDown-${data.id}`}
           label={data.name}

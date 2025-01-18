@@ -1,4 +1,5 @@
 import { font, color } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
 export const headerItem = recipe({
@@ -59,6 +60,10 @@ export const btnItem = recipe({
       right: { justifySelf: "end" },
     },
   },
+});
+
+export const noWrap = style({
+  whiteSpace: "nowrap",
 });
 
 export type HeaderItemVariant = RecipeVariants<typeof headerItem>;

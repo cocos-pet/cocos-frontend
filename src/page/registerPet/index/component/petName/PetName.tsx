@@ -6,8 +6,8 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
-import { validatePetName } from "@page/onboarding/index/util/validatePetName";
 import { PetData } from "@page/registerPet/index/RegisterPet"; 
+import { validatePetName } from "@shared/util/validatePetName";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
