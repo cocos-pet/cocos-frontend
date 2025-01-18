@@ -89,6 +89,7 @@ export const styles = {
           },
         },
         error: {},
+        search: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
       },
     },
