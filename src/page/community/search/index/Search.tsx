@@ -2,15 +2,16 @@ import { styles } from "@page/community/search/index/Search.css.ts";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { recentSearchData } from "@shared/constant/recentSearchData.ts";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
+import { useSearchGet } from "@api/domain/community/search/hook.ts";
 
 const Search = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
+  const { data: recentSearchData, isLoading } = useSearchGet();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -34,11 +35,12 @@ const Search = () => {
   };
 
   useEffect(() => {
-    // 페이지 진입 시 TextField에 포커스 설정
     if (inputRef.current) {
       inputRef.current.focus();
     }
   }, []);
+
+  if (!recentSearchData || !recentSearchData.keywords || isLoading) return null;
 
   return (
     <div className={styles.container}>
@@ -57,9 +59,15 @@ const Search = () => {
       <div className={styles.searchContent}>
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
-          {recentSearchData.map((data) => (
-            <li key={data.id} className={styles.listItem} onClick={() => onSubmit(data.text)}>
-              {data.text}
+          {recentSearchData.keywords.map((data) => (
+            <li
+              key={data.id}
+              className={styles.listItem}
+              onClick={() => {
+                if (data.content) onSubmit(data.content);
+              }}
+            >
+              {data.content || ""}
             </li>
           ))}
         </ul>
