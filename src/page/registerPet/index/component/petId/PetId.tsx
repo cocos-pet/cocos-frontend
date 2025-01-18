@@ -27,7 +27,7 @@ const PetId = () => {
   const isDropDownOpen = input.length > 0 && filteredItems.length > 0;
 
   const handleDropDownClick = (value: string) => {
-    setInput(value); 
+    setInput(value);
   };
 
   // 뒤로 가기
@@ -40,6 +40,9 @@ const PetId = () => {
   const handleNext = () => {
     console.log("다음 pr에서 구현할래욥.");
   };
+
+  // 상태 input이 ANIMAL 객체의 name 중 하나와 일치하는지 확인
+  const isInputValid = ANIMAL.data.breeds.some((breed) => breed.name === input);
 
   return (
     <>
@@ -59,7 +62,13 @@ const PetId = () => {
       {/* 하단 영역 */}
       <div className={styles.btnWrapper}>
         <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button label="다음" size="large" variant="solidPrimary" disabled={false} onClick={handleNext} />
+        <Button
+          label="다음"
+          size="large"
+          variant="solidPrimary"
+          disabled={!isInputValid} 
+          onClick={handleNext}
+        />
       </div>
     </>
   );
