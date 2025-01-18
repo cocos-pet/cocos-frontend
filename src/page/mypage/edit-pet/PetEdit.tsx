@@ -22,12 +22,12 @@ const PetEdit = () => {
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
 
-  const { isOpen, setOpen, setCategoryData, selectedChips, categoryData } = useCategoryFilterStore();
+  const { isOpen, setOpen, setCategory, setCategoryData, selectedChips, categoryData } = useCategoryFilterStore();
 
-  useEffect(() => {
-    console.log(selectedChips);
-    console.log(categoryData);
-  }, [selectedChips]);
+  // useEffect(() => {
+  //   console.log(selectedChips);
+  //   console.log(categoryData);
+  // }, [selectedChips]);
 
   useEffect(() => {
     if (name) {
@@ -60,6 +60,17 @@ const PetEdit = () => {
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && isValid) {
       setIsEditing(false);
+    }
+  };
+
+  type SelectedTab = "disease" | "symptom";
+  const openBottomSheet = (which: SelectedTab) => {
+    if (which === "disease") {
+      setCategory("disease");
+      setOpen(true);
+    } else {
+      setCategory("symptoms");
+      setOpen(true);
     }
   };
 
@@ -124,7 +135,7 @@ const PetEdit = () => {
               leftIcon={<IcEditPen width={20} height={20} />}
               label={"수정하기"}
               size="small"
-              onClick={() => alert("구현 예정")}
+              onClick={() => openBottomSheet("disease")}
             />
           </span>
         </article>
@@ -138,7 +149,7 @@ const PetEdit = () => {
               leftIcon={<IcEditPen width={20} height={20} />}
               label={"수정하기"}
               size="small"
-              onClick={() => setOpen(true)}
+              onClick={() => openBottomSheet("symptom")}
             />
           </span>
         </article>
