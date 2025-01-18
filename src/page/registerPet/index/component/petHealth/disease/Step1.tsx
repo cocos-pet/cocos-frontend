@@ -6,11 +6,22 @@ import { DISEASE, BodyPart } from "@page/registerPet/index/component/petHealth/d
 
 const Step1 = ({
   selectedIds,
-  onBodyPartSelection
+  onBodyPartSelection,
 }: {
   selectedIds: number[];
   onBodyPartSelection: (id: number) => void;
 }) => {
+  const handleSelection = (id: number) => {
+    if (selectedIds.includes(id)) {
+      // 이미 선택된 항목은 선택 해제
+      onBodyPartSelection(id);
+    } else if (selectedIds.length < 2) {
+      // 2개 미만일 때만 새 항목 추가
+      onBodyPartSelection(id);
+    }
+    // 선택 개수가 2개를 초과하는 경우 무시
+  };
+
   return (
     <>
       {/* 상단 영역 */}
@@ -28,7 +39,7 @@ const Step1 = ({
           <button
             key={body.id}
             className={`${styles.contentItem} ${selectedIds.includes(body.id) ? styles.selected : ""}`}
-            onClick={() => onBodyPartSelection(body.id)}
+            onClick={() => handleSelection(body.id)}
             type="button"
           >
             <IcIcons width={56} height={56} />
