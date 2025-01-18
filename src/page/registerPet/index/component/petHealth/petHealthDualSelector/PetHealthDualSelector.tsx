@@ -8,13 +8,13 @@ import Docs from "@page/onboarding/index/common/docs/Docs";
 import { Button } from "@common/component/Button";
 
 interface PetHealthDualSelectorProps {
-  stepChange: (step: string) => void;
+  setStep: React.Dispatch<React.SetStateAction<number>>;
 }
 
-const PetHealthDualSelector = ({ stepChange }: PetHealthDualSelectorProps) => {
+const PetHealthDualSelector = ({ setStep }: PetHealthDualSelectorProps) => {
   const [selected, setSelected] = useState<string | null>(null);
 
-  // 선택한 값 처리
+  // 선택한 값 처리 (단순히 선택값만 처리)
   const handleSelect = (choice: string) => {
     setSelected(choice);
   };
@@ -25,10 +25,12 @@ const PetHealthDualSelector = ({ stepChange }: PetHealthDualSelectorProps) => {
     navigate(-1);
   };
 
-  // 다음 버튼 (부모로 선택값을 전달_예 or 아니오)
+  // 다음 버튼 (선택값이 있을 때만 다음 단계로 이동)
   const handleNext = () => {
-    if (selected) {
-      stepChange(selected);
+    if (selected === "예") {
+      setStep((prevStep) => prevStep + 1);
+    } else {
+      setStep((prevStep) => prevStep + 2);
     }
   };
 
@@ -45,19 +47,19 @@ const PetHealthDualSelector = ({ stepChange }: PetHealthDualSelectorProps) => {
           <Button
             label="궁금한 질병이 있어요"
             size="large"
-            variant="outlinePrimary"
+            variant={"outlinePrimary"}
             onClick={() => handleSelect("예")}
           />
           <Button
             label="궁금한 증상이 있어요"
             size="large"
-            variant="outlinePrimary"
+            variant={"outlinePrimary"}
             onClick={() => handleSelect("아니오")}
           />
           <Button
             label="특별한 문제는 없지만, 정보를 보고 싶어요."
             size="large"
-            variant="outlinePrimary"
+            variant={"outlinePrimary"}
             onClick={() => handleSelect("아니오")}
           />
         </div>

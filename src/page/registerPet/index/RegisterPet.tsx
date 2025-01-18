@@ -4,13 +4,16 @@ import PetType from "@page/registerPet/index/component/petType/PetType";
 import PetGender from "@page/registerPet/index/component/petGender/PetGender";
 import PetId from "@page/registerPet/index/component/petId/PetId";
 import PetAge from "@page/registerPet/index/component/petAge/PetAge";
+import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
+import Disease from "./component/petHealth/disease/Disease";
+import Symptom from "./component/petHealth/symptom/Symptom";
 
 export interface PetData {
   breedId: number | null;
   name: string;
   gender: "F" | "M" | null;
   age: number | null;
-  diseaseIds: number[];
+  diseaseIds: number[] | null;
   symptomIds: number[];
 }
 
@@ -61,9 +64,13 @@ const RegisterPet = () => {
       case 3:
         return <PetId setStep={setStep} updatePetData={updatePetData} />;
       case 4:
-        return <PetAge setStep={setStep} updatePetData={updatePetData}  />;
-      // case 5:
-      // return <PetHealth setStep={setStep} updatePetData={updatePetData} onSubmit={handleSubmit} />;
+        return <PetAge setStep={setStep} updatePetData={updatePetData} />;
+      case 5:
+        return <PetHealthDualSelector setStep={setStep} />;
+      case 6:
+        return <Disease setStep={setStep} updatePetData={updatePetData}/>;
+      case 7:
+        return <Symptom />;
       default:
         return null;
     }
