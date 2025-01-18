@@ -1,5 +1,5 @@
 import { API_PATH } from "@api/constants/apiPath";
-import { api } from "@api/index";
+import { get } from "@api/index";
 import { paths } from "src/type/schema";
 
 type searchGetResponse =
@@ -17,6 +17,6 @@ type searchPostRequest = paths["/api/dev/search"]["post"]["requestBody"];
 // };
 
 export const getSearch = async () => {
-  const { data } = await api.get<searchGetResponse>(API_PATH.SEARCH, {});
+  const { data } = await get<searchGetResponse>(API_PATH.SEARCH, {});
   return data.data;
 };
