@@ -12,7 +12,6 @@ const Search = () => {
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData } = useSearchGet();
-  console.log(recentSearchData);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

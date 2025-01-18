@@ -17,6 +17,6 @@ type searchPostRequest = paths["/api/dev/search"]["post"]["requestBody"];
 // };
 
 export const getSearch = async () => {
-  const { data } = await api.get<searchGetResponse>(API_PATH.ANIMALS, {});
+  const { data } = await api.get<searchGetResponse>(API_PATH.SEARCH, {});
   return data.data;
 };
