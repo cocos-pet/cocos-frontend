@@ -1,4 +1,5 @@
 import { font, color } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
 export const headerItem = recipe({
@@ -40,10 +41,12 @@ export const btnItem = recipe({
   base: [
     font.body01,
     {
+      height: "2.4rem",
       color: color.gray.gray600,
       backgroundColor: "transparent",
       padding: "0",
       border: "none",
+      alignContent: "center",
       textDecoration: "none",
       transition: "background-color 0.3s",
       ":focus": {
@@ -57,6 +60,10 @@ export const btnItem = recipe({
       right: { justifySelf: "end" },
     },
   },
+});
+
+export const noWrap = style({
+  whiteSpace: "nowrap",
 });
 
 export type HeaderItemVariant = RecipeVariants<typeof headerItem>;

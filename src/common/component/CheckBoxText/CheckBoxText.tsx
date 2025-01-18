@@ -1,12 +1,16 @@
 import { checkboxText } from "./CheckBoxText.css";
-import { Check } from "@asset/svg";
+import Check from "@asset/svg/Check.tsx";
 
 interface CheckBoxTextPropTypes {
   children: string;
   isSelected: boolean;
   onClick: () => void;
 }
-const CheckBoxText = ({ children, isSelected, onClick }: CheckBoxTextPropTypes) => {
+const CheckBoxText = ({
+  children,
+  isSelected,
+  onClick,
+}: CheckBoxTextPropTypes) => {
   const handleClickTextBox = () => {
     onClick();
   };
@@ -19,7 +23,13 @@ const CheckBoxText = ({ children, isSelected, onClick }: CheckBoxTextPropTypes) 
       onClick={handleClickTextBox}
     >
       <span style={{ width: "100%" }}>{children}</span>
-      {isSelected && <Check width={24} height={24} style={{ position: "relative", bottom: "3" }} />}
+      {isSelected && (
+        <Check
+          width={24}
+          height={24}
+          style={{ position: "relative", bottom: "3" }}
+        />
+      )}
     </div>
   );
 };

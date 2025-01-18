@@ -1,5 +1,5 @@
-import { recipe } from "@vanilla-extract/recipes";
-import { color, font } from "@style/styles.css.ts";
+import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   wrapper: recipe({
@@ -12,6 +12,7 @@ export const styles = {
       padding: "1rem 2rem",
       border: `0.1rem solid ${color.gray.gray200}`,
       borderRadius: "8px",
+      background: color.gray.gray000,
     },
     variants: {
       state: {
@@ -19,7 +20,17 @@ export const styles = {
         error: {
           border: `0.1rem solid ${color.red.warning_red200}`,
         },
+        write: {
+          padding: "1.2rem",
+        },
         centerPlaceholder: { maxWidth: "12rem" },
+        search: {
+          width: "100%",
+          marginLeft: "2rem",
+          border: `0.1rem solid ${semanticColor.line.strong}`,
+          backgroundColor: semanticColor.neutral.normal,
+          boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
+        },
       },
       active: {
         true: {},
@@ -36,6 +47,13 @@ export const styles = {
     },
   }),
 
+  leftWrap: recipe({
+    base: {
+      display: "flex",
+      alignItems: "center",
+      gap: "1rem",
+    },
+  }),
   input: recipe({
     base: [
       font.body01,
@@ -43,6 +61,7 @@ export const styles = {
         letterSpacing: "-0.28px",
         fontWeight: 500,
         height: "auto",
+        maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",
         width: "100%",
@@ -64,7 +83,13 @@ export const styles = {
       },
       state: {
         default: {},
+        write: {
+          "::placeholder": {
+            color: color.gray.gray600,
+          },
+        },
         error: {},
+        search: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
       },
     },
@@ -82,3 +107,6 @@ export const styles = {
     },
   }),
 };
+
+export type WrapVariants = RecipeVariants<typeof styles.wrapper>;
+export type InputVariants = RecipeVariants<typeof styles.input>;
