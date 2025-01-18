@@ -4,8 +4,10 @@ import { validTypes } from "./Category";
 import { postData } from "@shared/constant/postData";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { Icfilter, IcLeftarrow, IcSearch } from "@asset/svg";
+import { Icfilter, IcLeftarrow, IcSearch, Icfilteron } from "@asset/svg";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
+import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
+import { useFilterStore } from "@store/filter";
 
 const categoryMapping: { [key: string]: string } = {
   symptom: "증상·질병",
@@ -19,7 +21,10 @@ const Category = () => {
   const type = searchParams.get("type"); // 쿼리 파라미터에서 type 가져오기
   const navigate = useNavigate();
 
-  // 해당 카테고리의 게시글 필터링
+  const { toggleOpen, selectedChips } = useFilterStore();
+  const isFilterOn =
+    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
+
   const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
 
   // 유효하지 않은 타입 처리
@@ -49,7 +54,12 @@ const Category = () => {
       {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}
       {type !== "magazine" && (
         <div className={styles.filterContainer}>
-          <Icfilter width={24} />
+          {isFilterOn ? (
+            <Icfilteron className={styles.filter({ applied: true })} onClick={toggleOpen} />
+          ) : (
+            <Icfilter className={styles.filter({ applied: false })} onClick={toggleOpen} />
+          )}
+          <FilterBottomSheet />
         </div>
       )}
 
