@@ -1,8 +1,4 @@
 const Onboarding = () => {
-  return (
-    <>
-    </>
-  );
+  return <></>;
 };
-
 export default Onboarding;

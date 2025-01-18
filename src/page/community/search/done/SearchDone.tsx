@@ -5,7 +5,7 @@ import {
   IcSearchFillterBlue,
 } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
-import React, { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { styles } from "@page/community/search/done/SearchDone.css.ts";
 import { PATH } from "@route/path.ts";

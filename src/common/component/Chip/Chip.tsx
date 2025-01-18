@@ -12,7 +12,13 @@ interface ChipProps {
 
 type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
 
-const Chip = ({ label, icon = false, color = "blue", onClick, isSelected = false }: CombinedChipProps) => {
+const Chip = ({
+  label,
+  icon = false,
+  color = "blue",
+  onClick,
+  isSelected = false,
+}: CombinedChipProps) => {
   const [isActive, setIsActive] = useState(isSelected);
 
   useEffect(() => {
@@ -36,6 +42,8 @@ const Chip = ({ label, icon = false, color = "blue", onClick, isSelected = false
       {label}
       {icon && (
         <IcDelete
+          width={24}
+          height={24}
           color={color === "gray" ? "#717171" : "#14B5F0"}
           style={{
             position: "relative",
