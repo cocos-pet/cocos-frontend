@@ -16,7 +16,7 @@ const Search = () => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (searchText: string | undefined) => {
+  const onSubmit = (searchText: string) => {
     searchParams.set("searchText", searchText);
     navigate(`${PATH.COMMUNITY.SEARCH_DONE}?${searchParams.toString()}`);
   };
@@ -59,12 +59,15 @@ const Search = () => {
       <div className={styles.searchContent}>
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
-          {recentSearchData?.keywords.map((data) => (
+          {recentSearchData?.keywords?.map((data) => (
             <li
+              key={data.id}
               className={styles.listItem}
-              onClick={() => onSubmit(data.content)}
+              onClick={() => {
+                if (data.content) onSubmit(data.content);
+              }}
             >
-              {data.content}
+              {data.content || ""}
             </li>
           ))}
         </ul>
