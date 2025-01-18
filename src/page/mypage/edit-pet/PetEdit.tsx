@@ -10,6 +10,8 @@ import Docs from "@page/onboarding/index/common/docs/Docs";
 import { validateNickname } from "@shared/util/validateNickname";
 import CategoryBottomSheet from "./component/CategoryBottomSheet/CategoryBottomSheet";
 import { useCategoryFilterStore } from "./store/categoryFilter";
+import Chip from "@common/component/Chip/Chip";
+import { getSelectedChipNamesById } from "./utils/getSelectedChipNamesById";
 
 const DEFAULT_TYPE = ["종류", "세부 종류", "성별", "나이"] as const;
 
@@ -128,7 +130,11 @@ const PetEdit = () => {
         <article className={styles.knownDisease}>
           <span className={styles.defaultText}>앓고있는/관심있는 질병</span>
           <Divider size="small" />
-          <div className={styles.chipContainer}></div>
+          <div className={styles.chipContainer}>
+            {selectedChips.diseaseIds.map((id) => (
+              <Chip key={`disease-edit-${id}`} label={getSelectedChipNamesById(id, "disease", categoryData) || ""} />
+            ))}
+          </div>
           <span style={{ width: "10.2rem" }}>
             <Button
               variant={"solidNeutral"}
@@ -142,7 +148,11 @@ const PetEdit = () => {
         <article className={styles.knownSymptoms}>
           <span className={styles.defaultText}>앓고있는/관심있는 증상</span>
           <Divider size="small" />
-          <div className={styles.chipContainer}></div>
+          <div className={styles.chipContainer}>
+            {selectedChips.symptomIds.map((id) => (
+              <Chip key={`symptom-edit-${id}`} label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""} />
+            ))}
+          </div>
           <span style={{ width: "10.2rem" }}>
             <Button
               variant={"solidNeutral"}
