@@ -64,21 +64,19 @@ const PetEdit = () => {
   // }, [selectedChips]);
 
   useEffect(() => {
-    if (name) {
-      const inVaildateMessages = validateNickname(name);
-      setValidationMessages(inVaildateMessages); // 유효성 검사 메시지 업데이트
-      setIsVaild(inVaildateMessages.length === 0); // 유효성 상태 설정
-    }
-  }, [name]);
-
-  useEffect(() => {
     if (isEditing && ref.current) {
       ref.current.focus();
     }
   }, [isEditing]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setName(e.target.value);
+    const name = e.target.value;
+    setName(name);
+
+    //유효성 검사, 유효성 상태 설정
+    const inVaildateMessages = validateNickname(name);
+    setValidationMessages(inVaildateMessages);
+    setIsVaild(inVaildateMessages.length === 0);
   };
 
   const handleEditClick = () => {
