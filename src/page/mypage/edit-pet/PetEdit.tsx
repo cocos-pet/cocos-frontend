@@ -30,12 +30,10 @@ const DEFAULT_TYPE = [
 const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
-
-  const { isLoading, data } = useGetMemberInfo();
-  console.log(data);
+  const { isLoading, data: member } = useGetMemberInfo();
 
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState("포리");
+  const [name, setName] = useState("");
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
   const [petAge, setPetAge] = useState("");
@@ -72,6 +70,16 @@ const PetEdit = () => {
       ref.current.focus();
     }
   }, [isEditing]);
+
+  useEffect(() => {
+    if (member) {
+      setName(member.nickname as string);
+    }
+  }, [member]);
+
+  console.log(isLoading);
+
+  if (isLoading || !member) return;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
@@ -135,7 +143,7 @@ const PetEdit = () => {
       />
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
-          <img className={styles.profileImage} alt="프로필 이미지" />
+          <img className={styles.profileImage} alt="프로필 이미지" src={member.profileImage} />
           <span className={styles.nicknameWrapper}>
             {isEditing ? (
               <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
