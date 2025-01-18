@@ -1,0 +1,33 @@
+name: Synchronize develop to forked repos
+on:
+  push:
+    branches:
+      - develop
+
+jobs:
+  sync:
+    name: Sync forked repo
+    if: github.ref == 'refs/heads/develop'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout develop
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.FORKED_REPO_TOKEN }}
+          fetch-depth: 0
+          ref: develop
+
+      - name: Add remote-url
+        run: |
+          git remote add forked-repo https://ocahs9:${{ secrets.FORKED_REPO_TOKEN }}@github.com/ocahs9/35-APPJAM-WEB-COCOS
+          git config user.name ocahs9
+          git config user.email ${{ secrets.EMAIL }}
+
+      - name: Push changes to forked-repo
+        run: |
+          git push -f forked-repo develop
+
+      - name: Clean up
+        run: |
+          git remote remove forked-repo

@@ -16,7 +16,7 @@ export type ActiveTabType = "review" | "post" | "comment";
 const Mypage = () => {
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(false); //todo: 서버로부터 받아와서 하기
+  const [isRegister, setIsRegister] = useState(true); //todo: 서버로부터 받아와서 하기
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
   const isActiveTab = (tab: ActiveTabType) => {
@@ -29,7 +29,7 @@ const Mypage = () => {
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
-      <span style={{ position: "fixed", top: 0 }}>
+      <span style={{ position: "fixed", top: 0, width: "100%" }}>
         <HeaderNav
           leftIcon={<IcChevronLeft width={24} height={24} onClick={() => navigate(-1)} />}
           centerContent={"마이페이지"}
@@ -96,13 +96,13 @@ const Mypage = () => {
       <Divider />
 
       <div className={styles.contentHeaderWrapper}>
-        <Tab active={isActiveTab("review")} width={"12.5rem"} onClick={() => handleTabClick("review")}>
+        <Tab active={isActiveTab("review")} width={"100%"} onClick={() => handleTabClick("review")}>
           나의 병원 후기
         </Tab>
-        <Tab active={isActiveTab("post")} width={"12.5rem"} onClick={() => handleTabClick("post")}>
+        <Tab active={isActiveTab("post")} width={"100%"} onClick={() => handleTabClick("post")}>
           나의 게시글
         </Tab>
-        <Tab active={isActiveTab("comment")} width={"12.5rem"} onClick={() => handleTabClick("comment")}>
+        <Tab active={isActiveTab("comment")} width={"100%"} onClick={() => handleTabClick("comment")}>
           나의 댓글
         </Tab>
       </div>
@@ -113,7 +113,7 @@ const Mypage = () => {
         </div>
       </article>
 
-      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white" }}>
+      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
         <Nav />
       </span>
     </div>
