@@ -61,7 +61,7 @@ const RegisterPet = () => {
       case 3:
         return <PetId setStep={setStep} updatePetData={updatePetData} />;
       case 4:
-        return <PetAge setStep={setStep} updatePetData={updatePetData} onSubmit={handleSubmit} />;
+        return <PetAge setStep={setStep} updatePetData={updatePetData}  />;
       // case 5:
       // return <PetHealth setStep={setStep} updatePetData={updatePetData} onSubmit={handleSubmit} />;
       default:

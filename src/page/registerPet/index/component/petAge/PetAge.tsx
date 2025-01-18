@@ -12,10 +12,9 @@ import { PetData } from "@page/registerPet/index/RegisterPet";
 interface PetAgeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
-  onSubmit: () => void; // 'onSubmit'을 props로 추가
 }
 
-const PetAge = ({ setStep, updatePetData, onSubmit }: PetAgeProps) => {
+const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
   const [petAge, setPetAge] = useState("");
 
   // 유효성 검사 통과한 반려동물 나이
@@ -32,7 +31,6 @@ const PetAge = ({ setStep, updatePetData, onSubmit }: PetAgeProps) => {
       console.log("나이:", age); // 나이가 잘 찍히는지 확인
 
       updatePetData("age", age); // 부모 상태에 나이 업데이트
-      onSubmit(); // 부모로부터 받은 onSubmit 호출
       setStep((prev) => prev + 1); // 다음 단계로 이동
     }
   };
