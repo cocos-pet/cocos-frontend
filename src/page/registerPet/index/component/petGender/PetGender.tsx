@@ -3,9 +3,9 @@ import { useNavigate } from "react-router-dom";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import DualOptionSelector from "../../component/dualOptionSelector/DualOptionSelector";
+import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelector";
 import { Button } from "@common/component/Button";
-import { data } from "@page/onboarding/index/constant/genderData";
+import { data } from "@page/registerPet/index/constant/genderData";
 import { useState } from "react";
 
 const PetGender = () => {
