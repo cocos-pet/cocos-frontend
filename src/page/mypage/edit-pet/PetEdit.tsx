@@ -12,8 +12,16 @@ import CategoryBottomSheet from "./component/CategoryBottomSheet/CategoryBottomS
 import { useCategoryFilterStore } from "./store/categoryFilter";
 import Chip from "@common/component/Chip/Chip";
 import { getSelectedChipNamesById } from "./utils/getSelectedChipNamesById";
+import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
+import { useAnimalFilterStore } from "./store/animalFilter";
+import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
 
-const DEFAULT_TYPE = ["종류", "세부 종류", "성별", "나이"] as const;
+const DEFAULT_TYPE = [
+  { type: "종류", tab: "animal" },
+  { type: "세부 종류", tab: "breeds" },
+  { type: "성별", tab: "gender" },
+  { type: "나이", tab: "age" },
+] as const;
 
 const PetEdit = () => {
   const navigate = useNavigate();
@@ -25,6 +33,21 @@ const PetEdit = () => {
   const [isValid, setIsVaild] = useState(false);
 
   const { isOpen, setOpen, setCategory, setCategoryData, selectedChips, categoryData } = useCategoryFilterStore();
+  const {
+    isOpen: animalOpen,
+    setOpen: setAnimalOpen,
+    setCategory: setAnimalCategory,
+    setCategoryData: setAnimalCategoryData,
+    selectedChips: animalChips,
+    categoryData: animalCategoryData,
+  } = useAnimalFilterStore();
+
+  useEffect(() => {
+    console.log(animalChips);
+    console.log(getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData));
+    console.log(getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData));
+    console.log(getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData));
+  }, [animalChips]);
 
   // useEffect(() => {
   //   console.log(selectedChips);
@@ -66,13 +89,27 @@ const PetEdit = () => {
   };
 
   type SelectedTab = "disease" | "symptom";
-  const openBottomSheet = (which: SelectedTab) => {
+  const openCategoryBottomSheet = (which: SelectedTab) => {
     if (which === "disease") {
       setCategory("disease");
       setOpen(true);
     } else {
       setCategory("symptoms");
       setOpen(true);
+    }
+  };
+
+  type SelectedAnimalTab = "animal" | "breeds" | "gender" | "age";
+  const openAnimalBottomSheet = (which: SelectedAnimalTab) => {
+    if (which === "animal") {
+      setAnimalCategory("animal");
+      setAnimalOpen(true);
+    } else if (which === "breeds") {
+      setAnimalCategory("breeds");
+      setAnimalOpen(true);
+    } else if (which === "gender") {
+      setAnimalCategory("gender");
+      setAnimalOpen(true);
     }
   };
 
@@ -117,10 +154,22 @@ const PetEdit = () => {
           <Divider size="small" />
           <div className={styles.defaultInfoListWrapper}>
             {DEFAULT_TYPE.map((item) => (
-              <div key={`default-type-${item}`} className={styles.defaultInfoList}>
-                <span className={styles.defaultInfoListLeft}>{item}</span>
-                <button className={styles.defaultInfoListRight}>
-                  강아지
+              <div key={`default-type-${item.tab}`} className={styles.defaultInfoList}>
+                <span className={styles.defaultInfoListLeft}>{item.type}</span>
+                <button className={styles.defaultInfoListRight} onClick={() => openAnimalBottomSheet(item.tab)}>
+                  {item.tab === "animal" &&
+                    (animalChips.animalId
+                      ? getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData)
+                      : "선택해주세요")}
+                  {item.tab === "breeds" &&
+                    (animalChips.breedId
+                      ? getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData)
+                      : "선택해주세요")}
+                  {item.tab === "gender" &&
+                    (animalChips.gender
+                      ? getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData)
+                      : "선택해주세요")}
+                  {item.tab === "age" && "선택해주세요"} {/* 나이 처리 */}
                   <IcChevronRight width={20} height={20} />
                 </button>
               </div>
@@ -141,7 +190,7 @@ const PetEdit = () => {
               leftIcon={<IcEditPen width={20} height={20} />}
               label={"수정하기"}
               size="small"
-              onClick={() => openBottomSheet("disease")}
+              onClick={() => openCategoryBottomSheet("disease")}
             />
           </span>
         </article>
@@ -159,10 +208,12 @@ const PetEdit = () => {
               leftIcon={<IcEditPen width={20} height={20} />}
               label={"수정하기"}
               size="small"
-              onClick={() => openBottomSheet("symptom")}
+              onClick={() => openCategoryBottomSheet("symptom")}
             />
           </span>
         </article>
+        {/*새벽 작업으로 인해 Category랑 Disease를 반대로 만듦 -> 나중에 폴더명, 파일명 수정 필요 */}
+        <AnimalBottomSheet />
         <CategoryBottomSheet />
       </section>
     </div>
