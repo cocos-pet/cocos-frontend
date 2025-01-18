@@ -1,3 +1,5 @@
+import * as styles from "./Disease.css";
+
 import { useState } from "react";
 import Step1 from "./Step1";
 import Step2 from "./Step2";
@@ -53,25 +55,33 @@ const Disease = ({ setStep, updatePetData }: DiseaseProps) => {
       {currentStep === 1 && (
         <>
           <Step1 selectedIds={selectedBodyParts} onBodyPartSelection={handleBodyPartSelection} />
-          <Button
-            label="다음"
-            size="large"
-            variant="solidPrimary"
-            disabled={selectedBodyParts.length === 0} // 부위 선택 없으면 버튼 비활성화
-            onClick={handleNextFromStep1}
-          />
+          {/* // 돌아가기 구현 안됨 */}
+          <div className={styles.btnWrapper}>
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleNextStep} />
+
+            <Button
+              label="다음"
+              size="large"
+              variant="solidPrimary"
+              disabled={selectedBodyParts.length === 0} // 부위 선택 없으면 버튼 비활성화
+              onClick={handleNextFromStep1}
+            />
+          </div>
         </>
       )}
       {currentStep === 2 && (
         <>
           <Step2 selectedDiseases={selectedDiseases} onDiseaseSelection={handleDiseaseSelection} />
-          <Button
-            label="다음"
-            size="large"
-            variant="solidPrimary"
-            disabled={selectedDiseases.length === 0} // 질병 선택 없으면 버튼 비활성화
-            onClick={handleNextStep}
-          />
+          <div className={styles.btnWrapper}>
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleNextStep} />
+            <Button
+              label="다음"
+              size="large"
+              variant="solidPrimary"
+              disabled={selectedDiseases.length === 0}
+              onClick={handleNextStep}
+            />
+          </div>
         </>
       )}
     </>
