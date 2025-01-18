@@ -13,10 +13,10 @@ export const dropdownText = style([
   {
     display: "flex",
     width: "100%",
-    height: "44px",
-    padding: "12px 8px",
+    height: "4.4rem",
+    padding: "1.2rem 0.8rem",
     alignItems: "flex-start",
-    gap: "16px",
+    gap: "1.6rem",
     color: semanticColor.text.normal,
     borderBottom: `1px solid ${color.gray.gray100}`,
   },
