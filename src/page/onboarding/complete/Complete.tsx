@@ -4,14 +4,16 @@ import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
 import { Button } from "@common/component/Button";
 import img from "@asset/image/등록전그래픽.png";
+import { PATH } from "@route/path";
+
 const Complete = () => {
   const navigate = useNavigate();
   const handleSkip = () => {
-    navigate("/main");
+    navigate(PATH.MAIN);
   };
 
   const handleNext = () => {
-    navigate("/register-pet");
+    navigate(PATH.REGISTER_PET.ROOT);
   };
 
   return (
