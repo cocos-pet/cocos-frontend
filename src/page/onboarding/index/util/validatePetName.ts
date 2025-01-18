@@ -1,4 +1,4 @@
-import { ERROR_MSG } from "../constant/errorMsg";
+import { ERROR_MSG } from "@page/onboarding/index/constant/errorMsg";
 
 export function validatePetName(petName: string): string[] {
   const errors: string[] = [];

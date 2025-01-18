@@ -4,7 +4,7 @@ import { useState } from "react";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import DualOptionSelector from "../dualOptionSelector/DualOptionSelector";
+import DualOptionSelector from "../../../../registerPet/index/common/dualOptionSelector/DualOptionSelector";
 import { Button } from "@common/component/Button";
 import selectImg from "@asset/image/image 1733.png";
 

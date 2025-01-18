@@ -7,7 +7,7 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
-import { validatePetName } from "../../util/validatePetName";
+import { validatePetName } from "@page/onboarding/index/util/validatePetName";
 
 const PetName = () => {
   // 상태 하나로 관리

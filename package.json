@@ -12,7 +12,8 @@
     "format": "biome format --write",
     "check": "biome check --write",
     "reporter": "biome check --reporter=summary",
-    "generate-types": "openapi-typescript {추후_들어갈_api_baseUrl}/api-docs -o ./src/__generated__/schema.d.ts"
+    "generate-types": "openapi-typescript http://3.35.148.64/v3/api-docs -o ./src/type/schema.d.ts"
+
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.11",
