@@ -11,7 +11,7 @@ const Search = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
-  const { data: recentSearchData } = useSearchGet();
+  const { data: recentSearchData, isLoading } = useSearchGet();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -40,6 +40,8 @@ const Search = () => {
     }
   }, []);
 
+  if (!recentSearchData || !recentSearchData.keywords || isLoading) return null;
+
   return (
     <div className={styles.container}>
       <div className={styles.searchHeader}>
@@ -57,7 +59,7 @@ const Search = () => {
       <div className={styles.searchContent}>
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
-          {recentSearchData?.keywords?.map((data) => (
+          {recentSearchData.keywords.map((data) => (
             <li
               key={data.id}
               className={styles.listItem}
