@@ -1,8 +1,13 @@
 import { IcUp } from "@asset/svg";
 import * as styles from "./DropDownText.css";
 import { useState } from "react";
-import { DiseaseItem, SelectedChips, SymptomItem, useFilterStore } from "@store/filter";
 import Chip from "@common/component/Chip/Chip";
+import {
+  DiseaseItem,
+  SelectedChips,
+  SymptomItem,
+  useCategoryFilterStore,
+} from "@page/mypage/edit-pet/store/categoryFilter";
 
 interface DropDownTextPropTypes {
   children: string; // title
@@ -12,7 +17,7 @@ interface DropDownTextPropTypes {
 
 //참고) content는 depth가 깊은 symptoms나 disease에 대응하기 위해 만들어둠
 const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) => {
-  const { toggleChips, selectedChips } = useFilterStore();
+  const { toggleChips, selectedChips } = useCategoryFilterStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const isSelected = (id: number): boolean => {
