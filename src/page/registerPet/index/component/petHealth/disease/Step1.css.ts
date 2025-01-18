@@ -1,15 +1,10 @@
 import { style } from "@vanilla-extract/css";
 
-export const layout = style({
+export const title = style({
   display: "flex",
   flexDirection: "column",
-  padding: "8rem 2rem",
-  gap: "9rem",
-});
-export const dualSelectorWrapper = style({
-  display: "grid",
-  gridTemplateColumns: "1fr 1fr",
-  gap: "1.2rem",
+  gap: "0.7rem",
+  padding: "0 2rem",
 });
 
 export const btnWrapper = style({
