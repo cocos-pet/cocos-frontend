@@ -88,6 +88,46 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/members/logout": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 로그아웃 API
+         * @description 로그아웃 API 입니다.
+         */
+        post: operations["logout"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/members/login": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 로그인 API
+         * @description 로그인 API 입니다.
+         */
+        post: operations["login"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/likes/{postId}": {
         parameters: {
             query?: never;
@@ -180,7 +220,47 @@ export interface paths {
         patch: operations["updatePet"];
         trace?: never;
     };
-    "/api/v1/test/token-check": {
+    "/api/dev/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 사용자 조회 API
+         * @description 사용자를 조회하는 API 입니다.
+         */
+        get: operations["getMemberProfile"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * 사용자 정보 업데이트 API
+         * @description 사용자를 정보 업데이트 API 입니다.
+         */
+        patch: operations["updateMemberProfile"];
+        trace?: never;
+    };
+    "/api/dev/test/token-valid": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get: operations["tokenValid"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/test/token-check": {
         parameters: {
             query?: never;
             header?: never;
@@ -200,7 +280,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/v1/test/health-check": {
+    "/api/dev/test/health-check": {
         parameters: {
             query?: never;
             header?: never;
@@ -254,6 +334,10 @@ export interface paths {
         get: operations["getPostDetail"];
         put?: never;
         post?: never;
+        /**
+         * 게시글 삭제 API
+         * @description 게시글을 삭제하는 API입니다.
+         */
         delete: operations["deletePost"];
         options?: never;
         head?: never;
@@ -272,6 +356,26 @@ export interface paths {
          * @description 인기 게시글을 조회하는 API입니다.
          */
         get: operations["getPopularPosts"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/posts/my": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 사용자 게시글 조회 API
+         * @description 사용자 게시글을 조회하는 API입니다.
+         */
+        get: operations["getMemberPosts"];
         put?: never;
         post?: never;
         delete?: never;
@@ -300,6 +404,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/members/refresh": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 토큰 재발급 API
+         * @description 토큰 재발급 API 입니다.
+         */
+        get: operations["reIssueToken"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/diseases": {
         parameters: {
             query?: never;
@@ -312,6 +436,26 @@ export interface paths {
          * @description 질병 리스트를 조회하는 API입니다.
          */
         get: operations["getDiseases"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/comments/my": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 나의 댓글&대댓글 조회 API
+         * @description 내가 단 댓글과 대댓글을 조회하는 API입니다.
+         */
+        get: operations["getMyComments"];
         put?: never;
         post?: never;
         delete?: never;
@@ -655,6 +799,46 @@ export interface components {
              */
             symptomIds?: number[];
         };
+        LoginRequest: {
+            /**
+             * @description 소셜 플랫폼
+             * @example KAKAO
+             * @enum {string}
+             */
+            platform?: "KAKAO";
+            /**
+             * @description 코드
+             * @example egagasdgasdgdagdasgasgasdgdasgasdglkj
+             */
+            code?: string;
+        };
+        BaseResponseLoginResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["LoginResponse"];
+        };
+        LoginResponse: {
+            /** @description 토큰 */
+            token?: components["schemas"]["TokenResponse"];
+            /**
+             * @description 기존 멤버 여부
+             * @example false
+             */
+            isCompletedSignUp?: boolean;
+        };
+        TokenResponse: {
+            /**
+             * @description 어세스 토큰
+             * @example egwg.adgad.asdgas
+             */
+            accessToken?: string;
+            /**
+             * @description 리프레시 토큰
+             * @example egwg.adgad.asdgas
+             */
+            refreshToken?: string;
+        };
         CommentContentRequest: {
             /**
              * @description 댓글 내용
@@ -718,6 +902,15 @@ export interface components {
              *     ]
              */
             symptomIds?: number[];
+        };
+        BaseResponseNicknameExistenceResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["NicknameExistenceResponse"];
+        };
+        NicknameExistenceResponse: {
+            isExistNickname?: boolean;
         };
         BaseResponseSymptomsOfBodiesResponse: {
             /** Format: int32 */
@@ -884,6 +1077,80 @@ export interface components {
             /** @description 인기 게시글 리스트 */
             posts?: components["schemas"]["PopularPostResponse"][];
         };
+        BaseResponseMemberPostsResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["MemberPostsResponse"];
+        };
+        MemberPostDetailResponse: {
+            /**
+             * Format: int64
+             * @description 게시글 아이디
+             * @example 1
+             */
+            id?: number;
+            nickname?: string;
+            /**
+             * @description 게시글 제목
+             * @example title
+             */
+            title?: string;
+            /**
+             * @description 게시글 내용
+             * @example content
+             */
+            content?: string;
+            /**
+             * Format: int32
+             * @description 게시글 좋아요 개수
+             * @example 1
+             */
+            likeCount?: number;
+            /**
+             * Format: int32
+             * @description 게시글 댓글 개수
+             * @example 1
+             */
+            commentCount?: number;
+            /**
+             * Format: date-time
+             * @description 게시글 생성일
+             * @example 1
+             */
+            createdAt?: string;
+            /**
+             * Format: date-time
+             * @description 게시글 수정일
+             * @example 1
+             */
+            updatedAt?: string;
+            /**
+             * @description 게시글 이미지
+             * @example 1
+             */
+            image?: string;
+            /**
+             * @description 게시글 카테고리
+             * @example 1
+             */
+            category?: string;
+            /**
+             * @description 반려동물 품종
+             * @example 포메라니안
+             */
+            breed?: string;
+            /**
+             * Format: int32
+             * @description 반려동물 나이
+             * @example 14
+             */
+            age?: number;
+        };
+        MemberPostsResponse: {
+            /** @description 사용자 게시글 리스트 */
+            posts?: components["schemas"]["MemberPostDetailResponse"][];
+        };
         BaseResponsePostCategoriesResponse: {
             /** Format: int32 */
             code?: number;
@@ -999,6 +1266,34 @@ export interface components {
              * @example 증상1
              */
             name?: string;
+        };
+        BaseResponseMemberProfileResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["MemberProfileResponse"];
+        };
+        MemberProfileResponse: {
+            /**
+             * @description 닉네임
+             * @example 모모
+             */
+            nickname?: string;
+            /**
+             * @description 프로필 이미지
+             * @example http://~~
+             */
+            profileImage?: string;
+        };
+        BaseResponseReissueTokenResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["ReissueTokenResponse"];
+        };
+        ReissueTokenResponse: {
+            /** @description 토큰 */
+            tokens?: components["schemas"]["TokenResponse"];
         };
         BaseResponseDiseasesOfBodiesResponse: {
             /** Format: int32 */
@@ -1139,8 +1434,85 @@ export interface components {
              */
             isWriter?: boolean;
             /**
-             * @description 댓글 사용자 닉네임
-             * @example 언급 표시를 위한 사용자 닉네임입니다.
+             * @description 언급 표시를 위한 사용자 닉네임
+             * @example 빵빵이
+             */
+            mentionedNickname?: string;
+        };
+        BaseResponseMyAllCommentsResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["MyAllCommentsResponse"];
+        };
+        MyAllCommentsResponse: {
+            /** @description 댓글 리스트 */
+            comments?: components["schemas"]["MyCommentResponse"][];
+            /** @description 대댓글 리스트 */
+            subComments?: components["schemas"]["MySubCommentResponse"][];
+        };
+        MyCommentResponse: {
+            /**
+             * Format: int64
+             * @description 댓글 아이디
+             * @example 1
+             */
+            id?: number;
+            /**
+             * @description 댓글 내용
+             * @example content
+             */
+            content?: string;
+            /**
+             * Format: int64
+             * @description 게시글 아이디
+             * @example 1
+             */
+            postId?: number;
+            /**
+             * @description 게시글 제목
+             * @example 오늘 무슨 일이..
+             */
+            postTitle?: string;
+            /**
+             * Format: date-time
+             * @description 댓글 생성일
+             * @example 2025-01-01T00:00:00
+             */
+            createdAt?: string;
+        };
+        MySubCommentResponse: {
+            /**
+             * Format: int64
+             * @description 대댓글 아이디
+             * @example 1
+             */
+            id?: number;
+            /**
+             * @description 대댓글 내용
+             * @example content
+             */
+            content?: string;
+            /**
+             * Format: int64
+             * @description 게시글 아이디
+             * @example 1
+             */
+            postId?: number;
+            /**
+             * @description 게시글 제목
+             * @example 오늘 무슨 일이..
+             */
+            postTitle?: string;
+            /**
+             * Format: date-time
+             * @description 대댓글 생성일
+             * @example 2025-01-01T00:00:00
+             */
+            createdAt?: string;
+            /**
+             * @description 언급 표시를 위한 사용자 닉네임
+             * @example 빵빵이
              */
             mentionedNickname?: string;
         };
@@ -1369,6 +1741,50 @@ export interface operations {
             };
         };
     };
+    logout: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 로그아웃에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseVoid"];
+                };
+            };
+        };
+    };
+    login: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["LoginRequest"];
+            };
+        };
+        responses: {
+            /** @description 로그인에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseLoginResponse"];
+                };
+            };
+        };
+    };
     addPostLike: {
         parameters: {
             query?: never;
@@ -1541,6 +1957,70 @@ export interface operations {
             };
         };
     };
+    getMemberProfile: {
+        parameters: {
+            query?: {
+                nickname?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 사용자 조회에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseMemberProfileResponse"];
+                };
+            };
+        };
+    };
+    updateMemberProfile: {
+        parameters: {
+            query: {
+                nickname: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 요청에 성공했습니다.  */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseNicknameExistenceResponse"];
+                };
+            };
+        };
+    };
+    tokenValid: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": string;
+                };
+            };
+        };
+    };
     tokenCheck: {
         parameters: {
             query?: never;
@@ -1670,6 +2150,29 @@ export interface operations {
             };
         };
     };
+    getMemberPosts: {
+        parameters: {
+            query?: {
+                /** @description 모모 */
+                nickname?: unknown;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 사용자 게시글 조회 성공 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseMemberPostsResponse"];
+                };
+            };
+        };
+    };
     getPostCategories: {
         parameters: {
             query?: never;
@@ -1686,6 +2189,26 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["BaseResponsePostCategoriesResponse"];
+                };
+            };
+        };
+    };
+    reIssueToken: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 토큰 재발급에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseReissueTokenResponse"];
                 };
             };
         };
@@ -1709,6 +2232,28 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["BaseResponseDiseasesOfBodiesResponse"];
+                };
+            };
+        };
+    };
+    getMyComments: {
+        parameters: {
+            query?: {
+                nickname?: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 요청에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseMyAllCommentsResponse"];
                 };
             };
         };

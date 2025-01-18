@@ -1,21 +1,19 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
-import * as styles from "./FilterBottomSheet.css";
+import { CategoryType, SelectedChips, useCategoryFilterStore } from "../../store/categoryFilter";
 import Tab from "@common/component/Tab/Tab";
-import CategoryContent from "./CategoryContent/CategoryContent";
+import * as styles from "./CategoryBottomSheet.css";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip";
-import { CategoryType, SelectedChips, useFilterStore } from "@store/filter";
-import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById";
+import { getSelectedChipNamesById } from "../../utils/getSelectedChipNamesById";
+import CategoryContent from "./components/CategoryContent/CategoryContent";
 
 const categories: { id: CategoryType; label: string }[] = [
-  { id: "kind", label: "종류" },
   { id: "symptoms", label: "증상" },
   { id: "disease", label: "질병" },
 ];
 
-//커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
-const FilterBottomSheet = () => {
-  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips, categoryData } = useFilterStore();
+const CategoryBottomSheet = () => {
+  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips, categoryData } = useCategoryFilterStore();
 
   const isSelectedCategory = (cate: CategoryType): boolean => {
     return cate === category;
@@ -37,7 +35,6 @@ const FilterBottomSheet = () => {
             {Object.entries(selectedChips).map(([key, ids]) =>
               (ids as number[]).map((id) => {
                 const keyMap: Record<keyof SelectedChips, CategoryType> = {
-                  breedId: "kind",
                   diseaseIds: "disease",
                   symptomIds: "symptoms",
                 } as const;
@@ -80,4 +77,4 @@ const FilterBottomSheet = () => {
   );
 };
 
-export default FilterBottomSheet;
+export default CategoryBottomSheet;

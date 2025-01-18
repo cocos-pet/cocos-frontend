@@ -5,7 +5,7 @@ import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuid
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import onboardingImg from "@asset/image/image 1730.png";
-import { validateNickname } from "@page/onboarding/index/util/validateNickname";
+import { validateNickname } from "@shared/util/validateNickname";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
 

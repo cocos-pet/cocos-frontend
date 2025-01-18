@@ -1,4 +1,4 @@
-import { HeaderItemVariant, headerItem, btnItem } from "./HeaderNav.css";
+import { HeaderItemVariant, headerItem, btnItem, noWrap } from "./HeaderNav.css";
 import React from "react";
 
 interface HeaderNavProps {
@@ -8,38 +8,22 @@ interface HeaderNavProps {
   onLeftClick?: () => void;
   onRightClick?: () => void;
 }
-type CombinedHeaderNavProps = HeaderNavProps &
-  Exclude<HeaderItemVariant, undefined>;
+type CombinedHeaderNavProps = HeaderNavProps & Exclude<HeaderItemVariant, undefined>;
 
-const HeaderNav = ({
-  centerContent,
-  leftIcon,
-  rightBtn,
-  type,
-  onLeftClick,
-  onRightClick,
-}: CombinedHeaderNavProps) => {
+const HeaderNav = ({ centerContent, leftIcon, rightBtn, type, onLeftClick, onRightClick }: CombinedHeaderNavProps) => {
   return (
     <div className={headerItem({ type })}>
       {/* 왼쪽 아이콘 영역 */}
-      <button
-        type="button"
-        className={btnItem({ side: "left" })}
-        onClick={onLeftClick}
-      >
+      <button type="button" className={btnItem({ side: "left" })} onClick={onLeftClick}>
         {leftIcon}
       </button>
 
       {/* 중앙 컨텐츠 영역_라벨 또는 텍스트필드 */}
-      {centerContent}
+      <span className={noWrap}>{centerContent}</span>
 
       {/* 오른쪽 버튼 영역_아이콘 또는 텍스트 */}
       {rightBtn && (
-        <button
-          type="button"
-          className={btnItem({ side: "right" })}
-          onClick={onRightClick}
-        >
+        <button type="button" className={btnItem({ side: "right" })} onClick={onRightClick}>
           {rightBtn}
         </button>
       )}

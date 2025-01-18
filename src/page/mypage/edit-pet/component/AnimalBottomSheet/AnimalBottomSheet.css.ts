@@ -1,11 +1,11 @@
-import { color, font } from "@style/styles.css";
+import { color } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const selectedZone = style({
   display: "flex",
   width: "100%",
-  minHeight: "64px",
-  padding: "12px 20px",
+  minHeight: "6.4rem",
+  padding: "1.2rem 2rem",
   flexDirection: "row",
   justifyContent: "flex-start",
   alignItems: "center",
@@ -25,8 +25,8 @@ export const selectedZone = style({
 export const categoryZone = style({
   display: "flex",
   width: "100%",
-  minHeight: "56px",
-  paddingTop: "11px",
+  minHeight: "5.6rem",
+  paddingTop: "1.1rem",
   flexDirection: "row",
   justifyContent: "space-around",
   alignItems: "center",
@@ -41,20 +41,15 @@ export const bodyZone = style({
   padding: "0 2rem",
 });
 
-export const buttonWrapper = style([
-  font.body01,
-  {
-    position: "absolute",
-    bottom: "0",
+export const buttonWrapper = style({
+  position: "absolute",
+  bottom: "0",
 
-    display: "flex",
-    width: "100%",
-    height: "8.8rem",
-    padding: "1.2rem 2rem 3.2rem 2rem",
-    justifyContent: "center",
-    alignItems: "center",
-    flexShrink: 0,
-
-    color: "#000",
-  },
-]);
+  display: "flex",
+  width: "100%",
+  height: "8.8rem",
+  padding: "1.2rem 2rem 3.2rem 2rem",
+  justifyContent: "center",
+  alignItems: "center",
+  flexShrink: 0,
+});

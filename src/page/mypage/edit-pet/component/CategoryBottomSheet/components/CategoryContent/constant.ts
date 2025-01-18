@@ -1,9 +1,7 @@
-import { CategoryGender } from "@page/mypage/edit-pet/store/animalFilter";
-
 // todo: api 요청으로 받아오는 예시
 export const CATEGORY_KIND = [
-  { id: 1, name: "강아지", image: "dkqwjkwq" },
-  { id: 2, name: "고양이", image: "dkqgjgj" },
+  { id: 1, name: "강아지" },
+  { id: 2, name: "고양이" },
 ];
 
 export const CATEGORY_SYMPTOM = [
@@ -87,22 +85,4 @@ export const CATEGORY_DISEASE = [
       },
     ],
   },
-];
-
-//todo : 이 정보는 추후 api 요청으로 받아와야함
-export const CATEGORY_BREED = [
-  {
-    id: 1,
-    name: "포메라니안",
-  },
-  {
-    id: 3,
-    name: "달마시안",
-  },
-];
-
-//이건 그냥 고정
-export const CATEGORY_GENDER: CategoryGender = [
-  { gender: "M", value: "수컷" },
-  { gender: "F", value: "암컷" },
 ];

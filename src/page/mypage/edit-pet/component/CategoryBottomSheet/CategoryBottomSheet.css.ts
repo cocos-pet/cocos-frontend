@@ -1,4 +1,4 @@
-import { color, font } from "@style/styles.css";
+import { color } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const selectedZone = style({
@@ -41,20 +41,15 @@ export const bodyZone = style({
   padding: "0 2rem",
 });
 
-export const buttonWrapper = style([
-  font.body01,
-  {
-    position: "absolute",
-    bottom: "0",
+export const buttonWrapper = style({
+  position: "absolute",
+  bottom: "0",
 
-    display: "flex",
-    width: "100%",
-    height: "8.8rem",
-    padding: "1.2rem 2rem 3.2rem 2rem",
-    justifyContent: "center",
-    alignItems: "center",
-    flexShrink: 0,
-
-    color: "#000",
-  },
-]);
+  display: "flex",
+  width: "100%",
+  height: "8.8rem",
+  padding: "1.2rem 2rem 3.2rem 2rem",
+  justifyContent: "center",
+  alignItems: "center",
+  flexShrink: 0,
+});
