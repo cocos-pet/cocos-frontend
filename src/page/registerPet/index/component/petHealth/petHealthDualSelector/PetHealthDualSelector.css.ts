@@ -8,7 +8,6 @@ export const layout = style({
 });
 export const dualSelectorWrapper = style({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
   gap: "1.2rem",
 });
 
