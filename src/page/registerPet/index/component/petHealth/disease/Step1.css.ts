@@ -10,7 +10,6 @@ export const title = style({
 export const contentWrapper = style({
   display: "flex",
   flexDirection: "row",
-  justifyContent: "center",
   alignItems: "center",
   gap: "0.8rem 2rem",
   flexWrap: "wrap",
