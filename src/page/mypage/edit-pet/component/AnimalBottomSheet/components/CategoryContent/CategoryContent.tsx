@@ -35,12 +35,14 @@ const CategoryContent = () => {
   return (
     <div className={styles.kindWrapper}>
       {category === "breeds" && (
-        <TextField
-          value={searchString}
-          onChange={(e) => setSearchString(e.target.value)}
-          onClearClick={() => setSearchString("")}
-          ref={ref}
-        />
+        <span style={{ width: "100%", marginBottom: "0.4rem" }}>
+          <TextField
+            value={searchString}
+            onChange={(e) => setSearchString(e.target.value)}
+            onClearClick={() => setSearchString("")}
+            ref={ref}
+          />
+        </span>
       )}
 
       {/* 현재 카테고리에 따라 적절한 UI 렌더링 */}
