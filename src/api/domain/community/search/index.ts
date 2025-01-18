@@ -11,11 +11,6 @@ type searchPostRequest = paths["/api/dev/search"]["post"]["requestBody"];
  * @description 최근 검색어 조회 API
  */
 
-// export const getSearch = async () => {
-//   const { data } = await api.get<searchGetResponse>(API_PATH.SEARCH, {});
-//   return data.data;
-// };
-
 export const getSearch = async () => {
   const { data } = await get<searchGetResponse>(API_PATH.SEARCH, {});
   return data.data;
