@@ -1,6 +1,7 @@
 export { default as Check } from "./Check";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
+export { default as IcIcons } from "./IcIcons";
 export { default as IcImagePlus } from "./IcImagePlus";
 export { default as IcNormal } from "./IcNormal";
 export { default as IcRightIcon } from "./IcRightIcon";
