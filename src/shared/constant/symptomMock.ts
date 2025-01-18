@@ -1,24 +1,23 @@
-import { IcTemporary } from "@asset/svg";
+import skin from "@asset/image/skin.png";
 
 //이 목데이터 지울 예정~
 
 export type SymptomItem = {
   id: number;
   name: string;
-  icon: typeof IcTemporary;
+  image: string;
 };
 
 /*아이콘은 바뀔 예정~*/
 export const symptomMock: SymptomItem[] = [
-  { id: 1, name: "눈", icon: IcTemporary },
-  { id: 2, name: "손", icon: IcTemporary },
-  { id: 3, name: "코", icon: IcTemporary },
-  { id: 4, name: "피부", icon: IcTemporary },
-  { id: 5, name: "피부", icon: IcTemporary },
-  { id: 6, name: "김의진", icon: IcTemporary },
-  { id: 8, name: "머리", icon: IcTemporary },
-  { id: 9, name: "발바닥", icon: IcTemporary },
-  { id: 10, name: "꼬리", icon: IcTemporary },
-  { id: 7, name: "의진 눈", icon: IcTemporary },
-  { id: 11, name: "의진 눈", icon: IcTemporary },
+  { id: 1, name: "피부/털", image: skin },
+  { id: 2, name: "배/소화기", image: skin },
+  { id: 3, name: "눈", image: skin },
+  { id: 4, name: "귀", image: skin },
+  { id: 5, name: "입", image: skin },
+  { id: 6, name: "소변/신장", image: skin },
+  { id: 7, name: "배설", image: skin },
+  { id: 8, name: "폐/호흡기", image: skin },
+  { id: 9, name: "뼈/관절/근육", image: skin },
+  { id: 10, name: "뇌/신경계", image: skin },
 ];

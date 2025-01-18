@@ -18,7 +18,7 @@ const Symptom = () => {
             aria-label={`증상 부위: ${symptom.name}`}
             type="button"
           >
-            <symptom.icon />
+            <img src={symptom.image} alt={`${symptom.name} 아이콘`} />
 
             <p className={styles.symptomName}>{symptom.name}</p>
           </button>
