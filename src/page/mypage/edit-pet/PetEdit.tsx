@@ -17,6 +17,8 @@ import { useAnimalFilterStore } from "./store/animalFilter";
 import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
 import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
 
+//todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
+//todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
 const DEFAULT_TYPE = [
   { type: "종류", tab: "animal" },
   { type: "세부 종류", tab: "breeds" },
