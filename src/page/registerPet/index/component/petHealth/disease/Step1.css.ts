@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-
+import { color } from "@style/styles.css";
 export const title = style({
   display: "flex",
   flexDirection: "column",
@@ -24,6 +24,10 @@ export const contentItem = style({
   alignItems: "center",
   gap: "0.4rem",
   textAlign: "center",
+});
+
+export const selected = style({
+  color: color.primary.blue600,
 });
 
 export const btnWrapper = style({

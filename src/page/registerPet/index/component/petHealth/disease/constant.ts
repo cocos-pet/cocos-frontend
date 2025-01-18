@@ -35,6 +35,30 @@ export const DISEASE = {
             id: 3,
             name: "눈이 붓고 빨갛게 변해요",
           },
+          {
+            id: 4,
+            name: "눈이 아파요",
+          },
+          {
+            id: 5,
+            name: "눈이 시려요",
+          },
+          {
+            id: 6,
+            name: "눈이 붓고 빨갛게 변해요",
+          },
+          {
+            id: 7,
+            name: "눈이 아파요",
+          },
+          {
+            id: 8,
+            name: "눈이 시려요",
+          },
+          {
+            id: 9,
+            name: "눈이 붓고 빨갛게 변해요",
+          },
         ],
       },
       {
@@ -43,15 +67,39 @@ export const DISEASE = {
         diseases: [
           {
             id: 1,
-            name: "코가 아파요",
+            name: "눈이 아파요",
           },
           {
             id: 2,
-            name: "코가 시려요",
+            name: "눈이 시려요",
           },
           {
             id: 3,
-            name: "코 막힘",
+            name: "눈이 붓고 빨갛게 변해요",
+          },
+          {
+            id: 4,
+            name: "눈이 아파요",
+          },
+          {
+            id: 5,
+            name: "눈이 시려요",
+          },
+          {
+            id: 6,
+            name: "눈이 붓고 빨갛게 변해요",
+          },
+          {
+            id: 7,
+            name: "눈이 아파요",
+          },
+          {
+            id: 8,
+            name: "눈이 시려요",
+          },
+          {
+            id: 9,
+            name: "눈이 붓고 빨갛게 변해요",
           },
         ],
       },
@@ -111,7 +159,7 @@ export const DISEASE = {
       },
       {
         id: 6,
-        name: "눈",
+        name: "다리미",
         diseases: [
           {
             id: 1,
@@ -129,7 +177,7 @@ export const DISEASE = {
       },
       {
         id: 7,
-        name: "코",
+        name: "정강이",
         diseases: [
           {
             id: 1,
@@ -147,7 +195,7 @@ export const DISEASE = {
       },
       {
         id: 8,
-        name: "목",
+        name: "이마",
         diseases: [
           {
             id: 1,
@@ -165,7 +213,7 @@ export const DISEASE = {
       },
       {
         id: 9,
-        name: "팔",
+        name: "귓볼",
         diseases: [
           {
             id: 1,
@@ -183,7 +231,7 @@ export const DISEASE = {
       },
       {
         id: 10,
-        name: "다리",
+        name: "손톱",
         diseases: [
           {
             id: 1,
@@ -201,7 +249,7 @@ export const DISEASE = {
       },
       {
         id: 11,
-        name: "눈",
+        name: "발톱",
         diseases: [
           {
             id: 1,
@@ -219,7 +267,7 @@ export const DISEASE = {
       },
       {
         id: 12,
-        name: "코",
+        name: "발목",
         diseases: [
           {
             id: 1,
@@ -237,7 +285,7 @@ export const DISEASE = {
       },
       {
         id: 13,
-        name: "목",
+        name: "복숭아뼈",
         diseases: [
           {
             id: 1,
@@ -255,7 +303,7 @@ export const DISEASE = {
       },
       {
         id: 14,
-        name: "팔",
+        name: "구름과자",
         diseases: [
           {
             id: 1,
@@ -273,7 +321,7 @@ export const DISEASE = {
       },
       {
         id: 15,
-        name: "다리",
+        name: "옴냠냠",
         diseases: [
           {
             id: 1,
@@ -291,7 +339,7 @@ export const DISEASE = {
       },
       {
         id: 16,
-        name: "눈",
+        name: "얄루",
         diseases: [
           {
             id: 1,
