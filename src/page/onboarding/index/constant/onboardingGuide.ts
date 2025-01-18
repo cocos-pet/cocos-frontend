@@ -25,8 +25,8 @@ export const ONBOARDING_GUIDE = {
     docs: "몇 살인지 알려주세요 🐾",
   },
   isPetDisease: {
-    title: "반려동물이 앓고 있는 병이나 궁금한 병이 있나요 ?",
-    docs: '병은 모르시고, 증상만 아시면 "아니요"를 눌러주세요.',
+    title: "반려동물 건강 관련 고민이 있나요?",
+    docs: "자세히 알려주시면 더 많은 도움을 드릴 수 있어요",
   },
   petDisease: {
     title: "반려동물이 앓고 있는 질병이나 궁금한 병이 있나요 ?",

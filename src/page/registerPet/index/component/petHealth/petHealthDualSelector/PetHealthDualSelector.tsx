@@ -42,8 +42,24 @@ const PetHealthDualSelector = ({ stepChange }: PetHealthDualSelectorProps) => {
         </div>
         {/* 질병 유무 선택 영역 */}
         <div className={styles.dualSelectorWrapper}>
-          <Button label="아니오" size="large" variant="outlinePrimary" onClick={() => handleSelect("아니오")} />
-          <Button label="예" size="large" variant="outlinePrimary" onClick={() => handleSelect("예")} />
+          <Button
+            label="궁금한 질병이 있어요"
+            size="large"
+            variant="outlinePrimary"
+            onClick={() => handleSelect("예")}
+          />
+          <Button
+            label="궁금한 증상이 있어요"
+            size="large"
+            variant="outlinePrimary"
+            onClick={() => handleSelect("아니오")}
+          />
+          <Button
+            label="특별한 문제는 없지만, 정보를 보고 싶어요."
+            size="large"
+            variant="outlinePrimary"
+            onClick={() => handleSelect("아니오")}
+          />
         </div>
       </div>
       {/* 하단 영역 */}
