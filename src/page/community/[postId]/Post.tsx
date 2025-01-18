@@ -136,7 +136,6 @@ const PostDetail = () => {
         leftIcon={<IcLeftarrow />}
         onLeftClick={onBackClick}
         type={"noTitle"}
-        // centerContent={postData.category}
         rightBtn={
           <MoreModal
             iconSize={24}
