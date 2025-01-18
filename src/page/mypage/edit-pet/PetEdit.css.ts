@@ -134,6 +134,8 @@ export const nameInput = style([
 
     color: semanticColor.text.normal,
 
+    textAlign: "center",
+
     border: "none",
     borderBottom: "1px solid #ccc",
     padding: "0.2rem 0",

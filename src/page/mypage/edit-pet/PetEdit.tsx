@@ -178,7 +178,7 @@ const PetEdit = () => {
                     (animalChips.gender
                       ? getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData)
                       : "_")}
-                  {item.tab === "age" && petAge} {/* 나이 처리 */}
+                  {item.tab === "age" && (petAge || "_")}
                   <IcChevronRight width={20} height={20} />
                 </button>
               </div>
