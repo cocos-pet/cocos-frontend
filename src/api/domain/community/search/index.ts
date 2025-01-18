@@ -14,9 +14,6 @@ export interface MeetingPeopleResponse {
 //import { paths } from "src/__generated__/schema;
 // type Post = paths['/post/v2']['get']['responses']['200']['content']['application/json;charset=UTF-8']['posts'];
 
-import { paths } from "src/type/schema";
-type recentSearchGet = paths["/api/dev/search"][""];
-
 //아래와 같이 requset용 타입 , response용 타입으로 사용하는게 당장은 편해도 장기적인 유지 보수에는 불리.
 //따라서 아래와 같은 방식은 사용 x
 // import { components } from "@typings/api/schema";
