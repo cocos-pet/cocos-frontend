@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./Main.css";
 import Nav from "@common/component/Nav/Nav";
+import Spacing from "@common/component/Spacing/Spacing";
 
 const postsData = [
   { id: 1, title: "실시간 심장병 질문 1위" },
@@ -26,8 +27,7 @@ const Main = () => {
     navigate("/search");
   };
 
-  const handleTextFieldChange = () => {
-  };
+  const handleTextFieldChange = () => {};
 
   return (
     <div className={styles.mainContainer}>
@@ -36,7 +36,7 @@ const Main = () => {
           state="search"
           placeholder="심장병, 백내장"
           onClick={handleSearchClick}
-          onChange={handleTextFieldChange} 
+          onChange={handleTextFieldChange}
           value=""
           icon={<IcSearch />}
         />
@@ -47,7 +47,10 @@ const Main = () => {
       <HotPost petName={petName} posts={postsData} />
       <Divider />
       <MainFooter />
-      <Nav />
+      <Spacing marginBottom="8" />
+      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
+        <Nav />
+      </span>
     </div>
   );
 };

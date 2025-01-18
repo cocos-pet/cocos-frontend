@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import * as styles from "./MainFooter.css";
 
 const MainFooter = () => {
@@ -6,19 +7,24 @@ const MainFooter = () => {
       <p className={styles.footerName}>코코스</p>
       <div className={styles.footerDetail}>
         <div>
-          <a href="https://example.com/terms" target="_blank" rel="noopener noreferrer" className={styles.footerDetail}>
+          <Link
+            to="https://example.com/terms"
+            target="_blank"
+            rel="noopener noreferrer"
+            className={styles.footerDetail}
+          >
             이용약관 및 개인정보 취급방침
-          </a>
+          </Link>
         </div>
         <div>
-          <a
-            href="https://example.com/review-policy"
+          <Link
+            to="https://example.com/review-policy"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.footerDetail}
           >
             리뷰운영정책
-          </a>
+          </Link>
         </div>
       </div>
     </div>
