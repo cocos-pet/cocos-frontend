@@ -8,16 +8,17 @@ interface ChipProps {
   color?: "blue" | "gray";
   onClick?: () => void;
   isSelected?: boolean;
+  disabled?: boolean;
 }
 
 type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
-
 const Chip = ({
   label,
   icon = false,
   color = "blue",
   onClick,
   isSelected = false,
+  disabled = false,
 }: CombinedChipProps) => {
   const [isActive, setIsActive] = useState(isSelected);
 
@@ -26,6 +27,7 @@ const Chip = ({
   }, [isSelected]);
 
   const handleClick = () => {
+    if (disabled) return;
     if (color === "gray" || (size === "large" && icon === false)) return;
     if (!icon) setIsActive(!isActive);
     onClick?.();
@@ -34,11 +36,7 @@ const Chip = ({
   const size = icon ? "large" : "small";
 
   return (
-    // biome-ignore lint/a11y/useKeyWithClickEvents: <explanation>
-    <div
-      className={chipItem({ size, color, active: isActive })} // 스타일 적용
-      onClick={handleClick}
-    >
+    <div className={chipItem({ size, color, active: isActive })} onClick={handleClick}>
       {label}
       {icon && (
         <IcDelete

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import PetHealthDualSelector from "./petHealthDualSelector/PetHealthDualSelector";
-import Disease from "./disease/Disease";
-import Symptom from "./symptom/Symptom";
+import Step1 from "@page/registerPet/index/component/petHealth/disease/Step1"
+import Step2 from  "@page/registerPet/index/component/petHealth/symptom/Step2"
 
 const PetHealth = () => {
   // 제출 할 폼 정보 저장 로직은 PetHealth 하위 컴포넌트 퍼블리싱 완료 후 구현 예정
@@ -15,8 +15,8 @@ const PetHealth = () => {
   return (
     <>
       {healthStep === "" && <PetHealthDualSelector stepChange={stepChange} />}
-      {healthStep === "예" && <Disease />}
-      {healthStep === "아니오" && <Symptom />}
+      {healthStep === "예" && <Step1 />}
+      {healthStep === "아니오" && <Step2 />}
     </>
   );
 };
