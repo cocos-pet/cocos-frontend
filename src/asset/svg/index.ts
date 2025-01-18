@@ -2,7 +2,6 @@ export { default as Check } from "./Check";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcoMessage } from "./IcoMessage";
 export { default as IcoSkeleton } from "./IcoSkeleton";
-export { default as IcDelete } from "./IcDelete";
 export { default as IcEllipse57 } from "./IcEllipse57";
 export { default as IcImagePlus } from "./IcImagePlus";
 export { default as IcNormal } from "./IcNormal";
