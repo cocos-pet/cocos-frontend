@@ -5,15 +5,29 @@ import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuid
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "../../../../onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
-import { IcRightIcon } from "@asset/svg";
 import { Button } from "@common/component/Button";
+import { ANIMAL } from "@page/registerPet/index/common/dropDown/constant";
+import DropDown from "@page/registerPet/index/common/dropDown/DropDown";
 
 const PetId = () => {
-  const [petId, setPetId] = useState("");
+  const [input, setInput] = useState("");
+  const [filteredItems, setFilteredItems] = useState(ANIMAL.data.breeds);
 
-  // 펫 종류 탐색 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setPetId(e.target.value);
+    const inputValue = e.target.value.trim();
+    setInput(inputValue);
+
+    const filtered = inputValue
+      ? ANIMAL.data.breeds.filter((item) => item.name.includes(inputValue))
+      : ANIMAL.data.breeds;
+
+    setFilteredItems(filtered);
+  };
+
+  const isDropDownOpen = input.length > 0 && filteredItems.length > 0;
+
+  const handleDropDownClick = (value: string) => {
+    setInput(value); 
   };
 
   // 뒤로 가기
@@ -36,12 +50,11 @@ const PetId = () => {
           <Docs text={ONBOARDING_GUIDE.petSpecies.docs} />
         </div>
         {/* 종류 탐색 영역 */}
-        <TextField
-          value={petId}
-          onChange={handleChange}
-          placeholder="종류를 입력해주세요"
-          icon={<IcRightIcon width={"2rem"} height={"2rem"} />}
-        />
+        <div>
+          {/* 종류 탐색 입력 */}
+          <TextField value={input} onChange={handleChange} placeholder="종류를 입력해주세요" isDelete={false} />
+          <DropDown isOpen={isDropDownOpen} items={filteredItems} onClickItem={handleDropDownClick} />
+        </div>
       </div>
       {/* 하단 영역 */}
       <div className={styles.btnWrapper}>

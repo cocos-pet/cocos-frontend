@@ -6,11 +6,9 @@ export const container = style({
 
   display: "flex",
   flexDirection: "column",
-  justifyContent: "space-between",
   width: "calc(100vw - 4rem)",
   maxWidth: "72.8rem",
-  height: "19rem",
-  padding: "1.2rem 2rem",
+  padding: "0 2rem",
 
   borderRadius: "1.6rem",
   boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
@@ -18,6 +16,7 @@ export const container = style({
 
 export const span = style({
   padding: "0.6rem 1.2rem",
+  margin: "1.2rem 0",
 });
 
 export const itemStyle = style([

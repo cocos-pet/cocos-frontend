@@ -4,11 +4,10 @@ import { container, itemStyle, span } from "./DropDown.css";
 type DropDownType = {
   isOpen: boolean;
   items: Array<{ id: number; name: string }>;
-  onClickItem: (target: string, value: string) => void;
-  toggleDropDown: () => void;
+  onClickItem: (value: string) => void;
 };
 
-const DropDown = ({ isOpen, items, onClickItem, toggleDropDown }: DropDownType) => {
+const DropDown = ({ isOpen, items, onClickItem }: DropDownType) => {
   if (!isOpen) {
     return null;
   }
@@ -16,15 +15,10 @@ const DropDown = ({ isOpen, items, onClickItem, toggleDropDown }: DropDownType) 
   // 최대 4개의 항목
   const visibleItems = items.slice(0, 4);
 
-  const onClick = (label: string) => {
-    onClickItem("category", label);
-    toggleDropDown();
-  };
-
   return (
     <div className={container}>
       {visibleItems.map((item, index) => (
-        <div key={item.id} className={itemStyle} onClick={() => onClick(item.id.toString())}>
+        <div key={item.id} className={itemStyle} onClick={() => onClickItem(item.name)}>
           <span className={span}>{item.name}</span>
           {index < visibleItems.length - 1 && <Divider size="small" />}
         </div>
