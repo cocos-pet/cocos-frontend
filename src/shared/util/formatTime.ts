@@ -3,10 +3,6 @@ export const formatTime = (createdAt: string): string => {
   const createdDate = new Date(createdAt);
   const diffMs = now.getTime() - createdDate.getTime();
 
-  if (diffMs < 0) {
-    return "미래 시간";
-  }
-
   const diffSeconds = Math.floor(diffMs / 1000);
   const diffMinutes = Math.floor(diffSeconds / 60);
   const diffHours = Math.floor(diffMinutes / 60);
