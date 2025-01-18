@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import * as styles from "./PetEdit.css";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { validateNickname } from "@shared/util/validateNickname";
 import CategoryBottomSheet from "./component/CategoryBottomSheet/CategoryBottomSheet";
@@ -15,6 +15,7 @@ import { getSelectedChipNamesById } from "./utils/getSelectedChipNamesById";
 import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
 import { useAnimalFilterStore } from "./store/animalFilter";
 import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
+import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
 
 const DEFAULT_TYPE = [
   { type: "종류", tab: "animal" },
@@ -31,6 +32,7 @@ const PetEdit = () => {
   const [name, setName] = useState("포리");
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
+  const [petAge, setPetAge] = useState("");
 
   const { isOpen, setOpen, setCategory, setCategoryData, selectedChips, categoryData } = useCategoryFilterStore();
   const {
@@ -41,13 +43,18 @@ const PetEdit = () => {
     selectedChips: animalChips,
     categoryData: animalCategoryData,
   } = useAnimalFilterStore();
+  const [ageBottomSheetOpen, setAgeBottomSheetOpen] = useState(false);
 
-  useEffect(() => {
-    console.log(animalChips);
-    console.log(getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData));
-    console.log(getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData));
-    console.log(getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData));
-  }, [animalChips]);
+  const updatePetAge = (e: ChangeEvent<HTMLInputElement>) => {
+    setPetAge(e.target.value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
+  };
+
+  // useEffect(() => {
+  //   console.log(animalChips);
+  //   console.log(getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData));
+  //   console.log(getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData));
+  //   console.log(getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData));
+  // }, [animalChips]);
 
   // useEffect(() => {
   //   console.log(selectedChips);
@@ -110,6 +117,8 @@ const PetEdit = () => {
     } else if (which === "gender") {
       setAnimalCategory("gender");
       setAnimalOpen(true);
+    } else {
+      setAgeBottomSheetOpen(true);
     }
   };
 
@@ -169,7 +178,7 @@ const PetEdit = () => {
                     (animalChips.gender
                       ? getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData)
                       : "_")}
-                  {item.tab === "age" && "_"} {/* 나이 처리 */}
+                  {(item.tab === "age" && petAge) || "_"} {/* 나이 처리 */}
                   <IcChevronRight width={20} height={20} />
                 </button>
               </div>
@@ -215,6 +224,12 @@ const PetEdit = () => {
         {/*새벽 작업으로 인해 Category랑 Disease를 반대로 만듦 -> 나중에 폴더명, 파일명 수정 필요 */}
         <AnimalBottomSheet />
         <CategoryBottomSheet />
+        <AgeBottomSheet
+          isOpen={ageBottomSheetOpen}
+          setIsOpen={setAgeBottomSheetOpen}
+          age={petAge}
+          updatePetAge={updatePetAge}
+        />
       </section>
     </div>
   );
