@@ -2,19 +2,21 @@ import { styles } from "@page/community/search/index/Search.css.ts";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { recentSearchData } from "@shared/constant/recentSearchData.ts";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
+import { useSearchGet } from "@api/domain/community/search/hook.ts";
 
 const Search = () => {
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
+  const { data: recentSearchData } = useSearchGet();
+  console.log(recentSearchData);
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onSubmit = (searchText: string) => {
+  const onSubmit = (searchText: string | undefined) => {
     searchParams.set("searchText", searchText);
     navigate(`${PATH.COMMUNITY.SEARCH_DONE}?${searchParams.toString()}`);
   };
@@ -57,9 +59,12 @@ const Search = () => {
       <div className={styles.searchContent}>
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
-          {recentSearchData.map((data) => (
-            <li key={data.id} className={styles.listItem} onClick={() => onSubmit(data.text)}>
-              {data.text}
+          {recentSearchData?.keywords.map((data) => (
+            <li
+              className={styles.listItem}
+              onClick={() => onSubmit(data.content)}
+            >
+              {data.content}
             </li>
           ))}
         </ul>
