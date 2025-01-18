@@ -6,7 +6,7 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
-import { PetData } from "@page/registerPet/index/RegisterPet"; 
+import { PetData } from "@page/registerPet/index/RegisterPet";
 import { validatePetName } from "@shared/util/validatePetName";
 
 interface PetNameProps {
@@ -51,7 +51,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
             state={petName === "" ? "default" : isValid ? "default" : "error"}
             value={petName}
             onChange={handleChange}
-            placeholder="닉네임을 입력해주세요."
+            placeholder="반려동물의 이름을 입력해주세요."
           />
           <div className={styles.errorLayout}>
             {validationMessages.map((message) => (
