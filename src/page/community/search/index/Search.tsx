@@ -35,7 +35,6 @@ const Search = () => {
   };
 
   useEffect(() => {
-    // 페이지 진입 시 TextField에 포커스 설정
     if (inputRef.current) {
       inputRef.current.focus();
     }
