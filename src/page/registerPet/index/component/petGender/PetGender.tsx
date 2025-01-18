@@ -21,7 +21,7 @@ const PetGender = ({ setStep, updatePetData }: PetGenderProps) => {
   // 성별 선택
   const handleOptionSelect = (value: string) => {
     setGender(value);
-    updatePetData("gender", value === "남성" ? "M" : "F"); // 남성은 "M", 여성은 "F"
+    updatePetData("gender", value === "수컷" ? "M" : "F");
   };
 
   // 뒤로 가기
