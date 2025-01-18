@@ -4,7 +4,7 @@ const getAccessToken = (): string | null => {
   const user = localStorage.getItem("user");
   if (user) {
     const userObj = JSON.parse(user);
-    return userObj || "";
+    return userObj.accessToken || "";
   }
   return "";
 };
