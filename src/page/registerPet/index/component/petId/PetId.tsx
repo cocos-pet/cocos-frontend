@@ -8,8 +8,14 @@ import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
 import { ANIMAL } from "@page/registerPet/index/common/dropDown/constant";
 import DropDown from "@page/registerPet/index/common/dropDown/DropDown";
+import { PetData } from "@page/registerPet/index/RegisterPet";
 
-const PetId = () => {
+interface PetIdProps {
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
+}
+
+const PetId = ({ setStep, updatePetData }: PetIdProps) => {
   const [input, setInput] = useState("");
   const [filteredItems, setFilteredItems] = useState(ANIMAL.data.breeds);
 
@@ -28,17 +34,17 @@ const PetId = () => {
 
   const handleDropDownClick = (value: string) => {
     setInput(value);
+    // 품종 선택 후 breedId 업데이트
+    const selectedBreed = ANIMAL.data.breeds.find((breed) => breed.name === value);
+    if (selectedBreed) {
+      updatePetData("breedId", selectedBreed.id); // breedId 업데이트
+    }
   };
 
   // 뒤로 가기
   const navigate = useNavigate();
   const handleGoBack = () => {
     navigate(-1);
-  };
-
-  // 다음 버튼
-  const handleNext = () => {
-    console.log("다음 pr에서 구현할래욥.");
   };
 
   // 상태 input이 ANIMAL 객체의 name 중 하나와 일치하는지 확인
@@ -66,8 +72,8 @@ const PetId = () => {
           label="다음"
           size="large"
           variant="solidPrimary"
-          disabled={!isInputValid} 
-          onClick={handleNext}
+          disabled={!isInputValid}
+          onClick={() => setStep((prev) => prev + 1)} // 다음 단계로 이동
         />
       </div>
     </>
