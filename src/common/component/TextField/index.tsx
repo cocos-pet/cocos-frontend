@@ -11,7 +11,6 @@ interface TextFieldProps {
   placeholder?: string;
   value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;

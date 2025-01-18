@@ -1,6 +1,4 @@
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
-import { color, font } from "@style/styles.css.ts";
-import { recipe } from "@vanilla-extract/recipes";
 import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
