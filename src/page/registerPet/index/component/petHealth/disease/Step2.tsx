@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Chip from "@common/component/Chip/Chip";
-import { GOGO, BodyPart } from "./constant";
+import { GOGO, BodyPart } from "./Step1Constant";
 import { Button } from "@common/component/Button";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";

@@ -3,7 +3,7 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { Button } from "@common/component/Button";
 import { IcIcons } from "@asset/svg";
-import { DISEASE, BodyPart } from "@page/registerPet/index/component/petHealth/disease/constant";
+import { DISEASE, BodyPart } from "@page/registerPet/index/component/petHealth/disease/Step1Constant";
 import { useState } from "react";
 
 const Step1 = () => {
