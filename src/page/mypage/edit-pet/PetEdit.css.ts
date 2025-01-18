@@ -4,7 +4,7 @@ import { style } from "@vanilla-extract/css";
 export const petEditWrapper = style({
   display: "flex",
   width: "37.5rem",
-  padding: "20px 0px 72px 0px",
+  padding: "2rem 0rem 7.2rem 0rem",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
