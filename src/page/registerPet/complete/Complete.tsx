@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import { Button } from "@common/component/Button";
-import img from "@asset/image/등록전그래픽.png";
+import img from "@asset/image/beforeRegisterGraphic.png";
 
 const Complete = () => {
   const navigate = useNavigate();
