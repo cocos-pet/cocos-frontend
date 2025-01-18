@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import PetName from "@page/registerPet/index/component/petName/PetName";
 import PetType from "@page/registerPet/index/component/petType/PetType";
 import PetGender from "@page/registerPet/index/component/petGender/PetGender";
-import PetId from "./component/petId/PetId";
-import PetAge from "./component/petAge/PetAge";
+import PetId from "@page/registerPet/index/component/petId/PetId";
+import PetAge from "@page/registerPet/index/component/petAge/PetAge";
 
 export interface PetData {
   breedId: number | null;
