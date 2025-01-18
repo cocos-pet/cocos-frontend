@@ -3,8 +3,12 @@ import axios from "axios";
 const getAccessToken = (): string | null => {
   const user = localStorage.getItem("user");
   if (user) {
-    const userObj = JSON.parse(user);
-    return userObj.accessToken || "";
+    try {
+      const userObj = JSON.parse(user);
+      return userObj.accessToken || "";
+    } catch (error) {
+      console.log(error);
+    }
   }
   return "";
 };
