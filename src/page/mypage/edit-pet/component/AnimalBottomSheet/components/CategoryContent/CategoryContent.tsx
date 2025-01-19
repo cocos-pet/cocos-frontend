@@ -33,9 +33,9 @@ const CategoryContent = () => {
   };
 
   return (
-    <div className={styles.kindWrapper}>
+    <>
       {category === "breeds" && (
-        <span style={{ width: "100%", marginBottom: "0.4rem" }}>
+        <span style={{ width: "calc(100% - 4rem)", position: "absolute", top: "1.2rem" }}>
           <TextField
             value={searchString}
             onChange={(e) => setSearchString(e.target.value)}
@@ -45,42 +45,44 @@ const CategoryContent = () => {
         </span>
       )}
 
-      {/* 현재 카테고리에 따라 적절한 UI 렌더링 */}
-      {category === "animal" &&
-        (dropDownData as CategoryAnimal).map((animal) => (
-          <CheckBoxText
-            key={`${category}-${animal.id}`}
-            onClick={() => handleToggle("animalId", animal.id as number)}
-            isSelected={isSelected("animalId", animal.id as number)}
-          >
-            {animal.name as string}
-          </CheckBoxText>
-        ))}
-
-      {category === "breeds" &&
-        (dropDownData as CategoryBreed)
-          .filter((breed) => breed.name.toLowerCase().includes(searchString.toLowerCase())) // 필터링
-          .map((breed) => (
+      <div className={styles.kindWrapper({ isBreed: category === "breeds" })}>
+        {/* 현재 카테고리에 따라 적절한 UI 렌더링 */}
+        {category === "animal" &&
+          (dropDownData as CategoryAnimal).map((animal) => (
             <CheckBoxText
-              key={`${category}-${breed.id}`}
-              onClick={() => handleToggle("breedId", breed.id)}
-              isSelected={isSelected("breedId", breed.id)}
+              key={`${category}-${animal.id}`}
+              onClick={() => handleToggle("animalId", animal.id as number)}
+              isSelected={isSelected("animalId", animal.id as number)}
             >
-              {breed.name}
+              {animal.name as string}
             </CheckBoxText>
           ))}
 
-      {category === "gender" &&
-        (dropDownData as CategoryGender).map((gender) => (
-          <CheckBoxText
-            key={`${category}-${gender.gender}`}
-            onClick={() => handleToggle("gender", gender.gender)}
-            isSelected={isSelected("gender", gender.gender)}
-          >
-            {gender.value}
-          </CheckBoxText>
-        ))}
-    </div>
+        {category === "breeds" &&
+          (dropDownData as CategoryBreed)
+            .filter((breed) => breed.name.toLowerCase().includes(searchString.toLowerCase())) // 필터링
+            .map((breed) => (
+              <CheckBoxText
+                key={`${category}-${breed.id}`}
+                onClick={() => handleToggle("breedId", breed.id)}
+                isSelected={isSelected("breedId", breed.id)}
+              >
+                {breed.name}
+              </CheckBoxText>
+            ))}
+
+        {category === "gender" &&
+          (dropDownData as CategoryGender).map((gender) => (
+            <CheckBoxText
+              key={`${category}-${gender.gender}`}
+              onClick={() => handleToggle("gender", gender.gender)}
+              isSelected={isSelected("gender", gender.gender)}
+            >
+              {gender.value}
+            </CheckBoxText>
+          ))}
+      </div>
+    </>
   );
 };
 

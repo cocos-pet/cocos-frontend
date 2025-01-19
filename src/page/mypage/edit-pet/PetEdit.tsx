@@ -16,7 +16,7 @@ import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
 import { useAnimalFilterStore } from "./store/animalFilter";
 import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
 import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
-import { useGetAnimal, useGetMemberInfo } from "@api/domain/mypage/edit-pet/hook";
+import { useGetAnimal, useGetBreed, useGetMemberInfo } from "@api/domain/mypage/edit-pet/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -30,8 +30,6 @@ const DEFAULT_TYPE = [
 const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
-  const { isLoading, data: member } = useGetMemberInfo();
-  const { data: animal } = useGetAnimal();
 
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
@@ -43,6 +41,7 @@ const PetEdit = () => {
   const {
     isOpen: animalOpen,
     setOpen: setAnimalOpen,
+    category: animalCategory,
     setCategory: setAnimalCategory,
     setCategoryData: setAnimalCategoryData,
     selectedChips: animalChips,
@@ -53,6 +52,16 @@ const PetEdit = () => {
   const updatePetAge = (e: ChangeEvent<HTMLInputElement>) => {
     setPetAge(e.target.value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
+
+  const { isLoading, data: member } = useGetMemberInfo();
+  const { data: animal } = useGetAnimal();
+  const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
+
+  // setAnimalCategoryData("breeds",data?.breeds)
+
+  useEffect(() => {
+    console.log(animalCategory);
+  }, [animalCategory]);
 
   // useEffect(() => {
   //   console.log(animalChips);
@@ -80,9 +89,10 @@ const PetEdit = () => {
       console.log(animal.animals);
       setAnimalCategoryData("animal", animal.animals);
     }
-  }, [member, animal, setAnimalCategoryData]);
-
-  console.log(isLoading);
+    if (breed?.breeds) {
+      setAnimalCategoryData("breeds", breed.breeds);
+    }
+  }, [member, animal, breed, setAnimalCategoryData]);
 
   if (isLoading || !member || !animal) return;
 

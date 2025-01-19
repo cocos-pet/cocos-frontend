@@ -14,3 +14,11 @@ export const getAnimal = async () => {
   const { data } = await get<AnimalResponse>(API_PATH.ANIMALS, {});
   return data.data;
 };
+
+export const getBreed = async (animalId: number, breedName?: string) => {
+  type BreedResponse = paths["/api/dev/breeds/{animalId}"]["get"]["responses"]["200"]["content"]["*/*"];
+  const { data } = await get<BreedResponse>(`${API_PATH.BREEDS}/${animalId}`, {
+    params: { breedName },
+  });
+  return data.data;
+};
