@@ -1,13 +1,16 @@
-//0. 가능하면, 쿼리 키는 상수화해서 사용하기
-// export const BOOKING_QUERY_KEY = {
-//     MEMBER_BOOKING_LIST: (userId: number) => ["memberBookingList", userId],
-//     GUEST_BOOKING_LIST: (name: string, phone: string, password: string) => [
-//       "guestBookingList",
-//       name,
-//       phone,
-//       password,
-//     ],
-//   };
+import { useQuery } from "@tanstack/react-query";
+import { getPopular } from ".";
+
+export const useQueryGetPopular = () => {
+  return useQuery({
+    queryKey: [MAIN_QUERY_KEY.POST_POPULAR_LIST],
+    queryFn: () => getPopular(),
+  });
+};
+
+export const MAIN_QUERY_KEY = {
+  POST_POPULAR_LIST: () => ["postPopularList"],
+};
 
 //🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶
 // 2. 쿼리 함수를 작성한다

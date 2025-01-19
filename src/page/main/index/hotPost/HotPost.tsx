@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import Divider from "@common/component/Divider/Divider";
 import * as styles from "./HotPost.css";
+import Divider from "@common/component/Divider/Divider";
 
 interface Post {
   id: number;
@@ -9,11 +9,12 @@ interface Post {
 
 interface HotPostProps {
   petName?: string;
-  posts: Post[];
+  posts?: Post[];
 }
 
 const HotPost = ({ petName, posts }: HotPostProps) => {
   const navigate = useNavigate();
+  console.log(posts);
 
   const handlePostClick = (postId: number) => {
     navigate(`/community/${postId}`);
@@ -34,7 +35,7 @@ const HotPost = ({ petName, posts }: HotPostProps) => {
       </div>
 
       <div className={styles.hotPostListContainer}>
-        {posts.map((post, index) => (
+        {posts?.map((post, index) => (
           <div key={post.id}>
             <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
               <div className={styles.contentId}>{post.id}</div>
