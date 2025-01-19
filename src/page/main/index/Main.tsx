@@ -10,6 +10,7 @@ import * as styles from "./Main.css";
 import Nav from "@common/component/Nav/Nav";
 import Spacing from "@common/component/Spacing/Spacing";
 import { useQueryGetPopular } from "@api/domain/main/hook";
+import { PATH } from "@route/path";
 
 const petName = "모모";
 
@@ -19,7 +20,7 @@ const Main = () => {
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
-    navigate("/search");
+    navigate(PATH.SEARCH.ROOT);
   };
 
   const user = {
