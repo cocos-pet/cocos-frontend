@@ -4,14 +4,14 @@ import { CATEGORY_SYMPTOM, CATEGORY_DISEASE } from "@shared/component/FilterBott
 // todo: 추후 타입들 분리하기
 // 각 필터 항목의 기본 타입
 export interface FilterItem {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }
 export interface SymptomItem extends FilterItem {
-  symptoms: FilterItem[];
+  symptoms?: FilterItem[];
 }
 export interface DiseaseItem extends FilterItem {
-  diseases: FilterItem[];
+  diseases?: FilterItem[];
 }
 
 // API로부터 GET 해오는 데이터 타입들 중 일부

@@ -21,7 +21,7 @@ export const chipItem = recipe({
   variants: {
     size: {
       small: {
-        minWidth: "5.8rem",
+        //minWidth: "5.8rem",
         height: "3.6rem",
       },
       large: {

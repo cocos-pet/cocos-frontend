@@ -31,3 +31,19 @@ export const getBodys = async (petProblem: "DISEASE" | "SYMPTOM") => {
   });
   return data.data;
 };
+
+export const getSymptoms = async (bodyIds: number[]) => {
+  type SymptomsResponse = paths["/api/dev/symptoms"]["get"]["responses"]["200"]["content"]["*/*"];
+  const { data } = await get<SymptomsResponse>(`${API_PATH.SYMPTOMS}`, {
+    params: { bodyIds: bodyIds.join(",") },
+  });
+  return data.data;
+};
+
+export const getDisease = async (bodyIds: number[]) => {
+  type DiseaseResponse = paths["/api/dev/diseases"]["get"]["responses"]["200"]["content"]["*/*"];
+  const { data } = await get<DiseaseResponse>(`${API_PATH.DISEASE}`, {
+    params: { bodyIds: bodyIds.join(",") },
+  });
+  return data.data;
+};

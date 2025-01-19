@@ -16,7 +16,14 @@ import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
 import { useAnimalFilterStore } from "./store/animalFilter";
 import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
 import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
-import { useGetAnimal, useGetBodies, useGetBreed, useGetMemberInfo } from "@api/domain/mypage/edit-pet/hook";
+import {
+  useGetAnimal,
+  useGetBodies,
+  useGetBreed,
+  useGetDisease,
+  useGetMemberInfo,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -60,6 +67,8 @@ const PetEdit = () => {
   const { data: animal } = useGetAnimal();
   const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
   const { data: bodies } = useGetBodies(category === "disease" ? "DISEASE" : "SYMPTOM");
+  const { data: symptoms } = useGetSymptoms(bodyIds);
+  const { data: disease } = useGetDisease(bodyIds);
 
   useEffect(() => {
     if (bodies?.bodies) {
@@ -97,7 +106,13 @@ const PetEdit = () => {
     if (breed?.breeds) {
       setAnimalCategoryData("breeds", breed.breeds);
     }
-  }, [member, animal, breed, setAnimalCategoryData]);
+    if (symptoms?.bodies) {
+      setCategoryData("symptoms", symptoms.bodies);
+    }
+    if (disease?.bodies) {
+      setCategoryData("disease", disease.bodies);
+    }
+  }, [member, animal, breed, symptoms, disease, setCategoryData, setAnimalCategoryData]);
 
   if (isLoading || !member || !animal) return;
 

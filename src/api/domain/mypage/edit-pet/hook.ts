@@ -1,4 +1,4 @@
-import { getBodys, getBreed } from "./index";
+import { getBodys, getBreed, getDisease, getSymptoms } from "./index";
 import { useQuery } from "@tanstack/react-query";
 import { getAnimal, getMemberInfo } from ".";
 
@@ -17,6 +17,14 @@ export const BREED_QUERY_KEY = {
 
 export const BODY_QUERY_KEY = {
   BODIES: (petProblem: "DISEASE" | "SYMPTOM") => ["bodies", petProblem],
+};
+
+export const SYMPTOMS_QUERY_KEY = {
+  SYMPTOMS: (bodyIds: number[]) => ["symptoms", ...bodyIds],
+};
+
+export const DISEASE_QUERY_KEY = {
+  DISEASE: (bodyIds: number[]) => ["disease", ...bodyIds],
 };
 
 export const useGetMemberInfo = () => {
@@ -55,6 +63,22 @@ export const useGetBodies = (petProblem: "DISEASE" | "SYMPTOM") => {
     queryFn: () => {
       return getBodys(petProblem);
     },
+    staleTime: 1000 * 60 * 10,
+  });
+};
+
+export const useGetSymptoms = (bodyIds: number[]) => {
+  return useQuery({
+    queryKey: SYMPTOMS_QUERY_KEY.SYMPTOMS(bodyIds),
+    queryFn: () => getSymptoms(bodyIds),
+    staleTime: 1000 * 60 * 10,
+  });
+};
+
+export const useGetDisease = (bodyIds: number[]) => {
+  return useQuery({
+    queryKey: DISEASE_QUERY_KEY.DISEASE(bodyIds),
+    queryFn: () => getDisease(bodyIds),
     staleTime: 1000 * 60 * 10,
   });
 };
