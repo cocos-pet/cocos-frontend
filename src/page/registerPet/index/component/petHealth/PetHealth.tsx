@@ -1,20 +1,19 @@
 import * as styles from "./PetHealth.css";
-import { PetData } from "@page/registerPet/index/RegisterPet";
-import { Button } from "@common/component/Button";
-import Step1 from "./disease/Step1";
-import Step2 from "./disease/Step2";
-import SymStep1 from "./symptom/SymStep1";
-import SymStep2 from "./symptom/SymStep2";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@route/path";
+import { PetData } from "@page/registerPet/index/RegisterPet";
+import { Button } from "@common/component/Button";
+import Step1 from "@page/registerPet/index/component/petHealth/disease/Step1";
+import Step2 from "@page/registerPet/index/component/petHealth/disease/Step2";
+import SymStep1 from "@page/registerPet/index/component/petHealth/symptom/SymStep1";
+import SymStep2 from "@page/registerPet/index/component/petHealth/symptom/SymStep2";
 
 interface PetHealthPropTypes {
-  currentStep: number | null;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
-
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
+  currentStep: number | null;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
   isSkipDisease: boolean | null;
   handleSubmit: () => void;
 }
@@ -27,11 +26,17 @@ const PetHealth = ({
   handleSubmit,
   isSkipDisease,
 }: PetHealthPropTypes) => {
-  const [selectedBodyParts, setSelectedBodyParts] = useState<number[]>([]);
+  // 질병 대분류, 소분류
+  const [selectedDiseaseBody, setSelectedDiseaseBody] = useState<number[]>([]);
   const [selectedDiseases, setSelectedDiseases] = useState<number[]>([]);
+  // 증상 대분류, 소분류
+  const [selectedSymptomBody, setSelectedSymBodyParts] = useState<number[]>([]);
+  const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
 
+  // 질병 선택 부위 (최대 2개 선택 가능???)
   const handleBodyPartSelection = (bodyPartId: number) => {
-    setSelectedBodyParts((prevSelected) => {
+    setSelectedDiseaseBody((prevSelected) => {
+      // 두 번 클릭시 해제
       if (prevSelected.includes(bodyPartId)) {
         return prevSelected.filter((id) => id !== bodyPartId);
       }
@@ -39,8 +44,10 @@ const PetHealth = ({
     });
   };
 
+  // 질병 명 (최대 7개 선택 가능)
   const handleDiseaseSelection = (diseaseId: number) => {
     setSelectedDiseases((prevSelected) => {
+      // 두 번 클릭시 해지
       if (prevSelected.includes(diseaseId)) {
         return prevSelected.filter((id) => id !== diseaseId);
       }
@@ -52,30 +59,26 @@ const PetHealth = ({
   };
 
   // 질병 1단계에서 질병유무 컴포넌트로
-  const handleGoHealth = () => {
+  const handleBackDual = () => {
     setStep(5);
   };
 
   // 질병 1단계에서 질병 2단계로
-  const handleNextFromStep1 = () => {
-    console.log("Next button clicked");
-
+  const handleGoDisease2 = () => {
     setCurrentStep(2);
   };
 
   // 질병 2단계에서 질병 1단계로
-  const handleGoBack = () => {
+  const handleBackDisease1 = () => {
     setCurrentStep(1);
   };
 
   // 질병 2단계에서 증상 1단계로
-  const handleNextStep = () => {
+  const handleGoSymptom1 = () => {
     updatePetData("diseaseIds", selectedDiseases);
     setCurrentStep(3);
   };
   //////////////////////이제부터 증상
-  const [selectedSymBodyParts, setSelectedSymBodyParts] = useState<number[]>([]);
-  const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
 
   const handleBodyPartSymSelection = (bodyPartId: number) => {
     setSelectedSymBodyParts((prevSelected) => {
@@ -100,7 +103,7 @@ const PetHealth = ({
 
   // 질병 단계를 거치지 않았다면, 질병 유무 컴포넌트로
   // 질병 단계를 거쳤다면, 증상 1단계에서 질병 2단계로
-  const handleGoBlank = () => {
+  const handleBack = () => {
     if (isSkipDisease === true) {
       setStep(5);
     } else {
@@ -109,20 +112,18 @@ const PetHealth = ({
   };
 
   // 증상 1단계에서 2단계로
-  const handleNextFromBodyPart = () => {
+  const handleGoSymptom2 = () => {
     setCurrentStep(4);
   };
 
   // 증상 2단계에서 1단계로
-  const handleSymGoBack = () => {
-    if (currentStep === 4) {
-      setCurrentStep(3); // 증상 선택에서 부위 선택으로 돌아가기
-    }
+  const handleBackSymptom1 = () => {
+    setCurrentStep(3);
   };
 
   // 최종 폼 제출
   const navigate = useNavigate();
-  const handleSymNextStep = () => {
+  const handleGoComplete = () => {
     console.log("최종 증상 ID들:", selectedSymptom); // 폼 제출 전에 상태 확인
     updatePetData("symptomIds", selectedSymptom);
     handleSubmit();
@@ -133,17 +134,17 @@ const PetHealth = ({
     <>
       {currentStep === 1 && (
         <>
-          <Step1 selectedIds={selectedBodyParts} onBodyPartSelection={handleBodyPartSelection} />
+          <Step1 selectedIds={selectedDiseaseBody} onBodyPartSelection={handleBodyPartSelection} />
           {/* // 돌아가기 구현 안됨 */}
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoHealth} />
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBackDual} />
 
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedBodyParts.length === 0}
-              onClick={handleNextFromStep1}
+              disabled={selectedDiseaseBody.length === 0}
+              onClick={handleGoDisease2}
             />
           </div>
         </>
@@ -152,28 +153,34 @@ const PetHealth = ({
         <>
           <Step2 selectedDiseases={selectedDiseases} onDiseaseSelection={handleDiseaseSelection} />
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
+            <Button
+              label="이전으로"
+              size="large"
+              variant="solidNeutral"
+              disabled={false}
+              onClick={handleBackDisease1}
+            />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
               disabled={selectedDiseases.length === 0}
-              onClick={handleNextStep}
+              onClick={handleGoSymptom1}
             />
           </div>
         </>
       )}
       {currentStep === 3 && (
         <>
-          <SymStep1 selectedIds={selectedSymBodyParts} onBodyPartSelection={handleBodyPartSymSelection} />
+          <SymStep1 selectedIds={selectedSymptomBody} onBodyPartSelection={handleBodyPartSymSelection} />
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBlank} />
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBack} />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedSymBodyParts.length === 0}
-              onClick={handleNextFromBodyPart}
+              disabled={selectedSymptomBody.length === 0}
+              onClick={handleGoSymptom2}
             />
           </div>
         </>
@@ -182,13 +189,19 @@ const PetHealth = ({
         <>
           <SymStep2 selectedSymptom={selectedSymptom} onSymptomSelection={handleSymptomSelection} />
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleSymGoBack} />
+            <Button
+              label="이전으로"
+              size="large"
+              variant="solidNeutral"
+              disabled={false}
+              onClick={handleBackSymptom1}
+            />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
               disabled={selectedSymptom.length === 0}
-              onClick={handleSymNextStep} // 증상 선택 후 폼 제출
+              onClick={handleGoComplete} // 증상 선택 후 폼 제출
             />
           </div>
         </>
