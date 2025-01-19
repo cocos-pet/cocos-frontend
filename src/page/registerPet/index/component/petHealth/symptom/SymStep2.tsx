@@ -5,11 +5,11 @@ import Title from "@page/onboarding/index/common/title/Title";
 import * as styles from "@page/registerPet/index/component/petHealth/disease/Step2.css";
 
 const SymStep2 = ({
-  selectedDiseases,
-  onDiseaseSelection,
+  selectedSymptom,
+  onSymptomSelection,
 }: {
-  selectedDiseases: number[];
-  onDiseaseSelection: (diseaseId: number) => void;
+  selectedSymptom: number[];
+  onSymptomSelection: (diseaseId: number) => void;
 }) => {
   return (
     <>
@@ -27,9 +27,9 @@ const SymStep2 = ({
                 <Chip
                   key={symptom.id}
                   label={symptom.name}
-                  isSelected={selectedDiseases.includes(symptom.id)}
-                  onClick={() => onDiseaseSelection(symptom.id)}
-                  disabled={selectedDiseases.length >= 7 && !selectedDiseases.includes(symptom.id)} // 7개 선택 시 비활성화
+                  isSelected={selectedSymptom.includes(symptom.id)}
+                  onClick={() => onSymptomSelection(symptom.id)}
+                  disabled={selectedSymptom.length >= 7 && !selectedSymptom.includes(symptom.id)} // 7개 선택 시 비활성화
                 />
               ))}
             </div>

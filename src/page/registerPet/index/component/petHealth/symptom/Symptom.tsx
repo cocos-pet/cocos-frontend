@@ -14,7 +14,7 @@ interface SymptomProps {
 const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
   const [currentStep, setCurrentStep] = useState(3); // 부위 선택 (3) -> 증상 선택 (4)
   const [selectedBodyParts, setSelectedBodyParts] = useState<number[]>([]);
-  const [selectedDiseases, setSelectedDiseases] = useState<number[]>([]);
+  const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
 
   // 부위 선택 핸들러
   const handleBodyPartSelection = (bodyPartId: number) => {
@@ -27,13 +27,13 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
   };
 
   // 증상 선택 핸들러
-  const handleDiseaseSelection = (diseaseId: number) => {
-    setSelectedDiseases((prevSelected) => {
-      if (prevSelected.includes(diseaseId)) {
-        return prevSelected.filter((id) => id !== diseaseId);
+  const handleSymptomSelection = (symptomId: number) => {
+    setSelectedSymptoms((prevSelected) => {
+      if (prevSelected.includes(symptomId)) {
+        return prevSelected.filter((id) => id !== symptomId);
       }
       if (prevSelected.length < 7) {
-        return [...prevSelected, diseaseId];
+        return [...prevSelected, symptomId];
       }
       return prevSelected;
     });
@@ -48,7 +48,7 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
 
   // 증상 선택 -> 다음 단계로 이동
   const handleNextStep = () => {
-    updatePetData("symptomIds", selectedDiseases); // 증상 정보만 업데이트
+    updatePetData("symptomIds", selectedSymptom); // 증상 정보만 업데이트
     setStep(7); // Step2 -> 다음 단계로 이동
   };
 
@@ -61,7 +61,8 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
 
   // 부위 -> 질병-증상 or 유무선택
   const handleGoBlank = () => {
-    if (selectedDiseases.length > 0) {
+    if (selectedSymptom.length > 0) {
+      // 이거 질병 가져와야 함
       setCurrentStep(2);
     } else {
       setStep(5);
@@ -89,7 +90,7 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
       {currentStep === 4 && (
         <>
           {/* 증상 선택 Step */}
-          <SymStep2 selectedDiseases={selectedDiseases} onDiseaseSelection={handleDiseaseSelection} />
+          <SymStep2 selectedSymptom={selectedSymptom} onSymptomSelection={handleSymptomSelection} />
           <div className={styles.btnWrapper}>
             <Button
               label="이전으로"
@@ -102,7 +103,7 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedDiseases.length === 0} // 증상 선택 없으면 버튼 비활성화
+              disabled={selectedSymptom.length === 0} // 증상 선택 없으면 버튼 비활성화
               onClick={handleNextStep} // 증상 선택 -> 다음 단계로 이동
             />
           </div>
