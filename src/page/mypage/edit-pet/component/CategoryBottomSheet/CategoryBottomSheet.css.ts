@@ -46,6 +46,8 @@ export const bodyZone = style({
       display: "none",
     },
   },
+
+  marginBottom: "8.8rem",
 });
 
 export const buttonWrapper = style({
@@ -59,4 +61,6 @@ export const buttonWrapper = style({
   justifyContent: "center",
   alignItems: "center",
   flexShrink: 0,
+
+  backgroundColor: "white",
 });
