@@ -7,13 +7,23 @@ import { Button } from "@common/component/Button";
 import { PATH } from "@route/path";
 import { useNavigate } from "react-router-dom";
 interface SymptomProps {
+  currentStep: number;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
   handleSubmit: () => void; // handleSubmit 함수 받기
+  isSkipDisease: boolean;
 }
 
-const Symptom = ({ setStep, updatePetData, handleSubmit }: SymptomProps) => {
-  const [currentStep, setCurrentStep] = useState(3); // 부위 선택 (3) -> 증상 선택 (4)
+const Symptom = ({
+  currentStep,
+  setCurrentStep,
+  setStep,
+  updatePetData,
+  handleSubmit,
+  isSkipDisease,
+}: SymptomProps) => {
   const [selectedBodyParts, setSelectedBodyParts] = useState<number[]>([]);
   const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
 
@@ -38,32 +48,35 @@ const Symptom = ({ setStep, updatePetData, handleSubmit }: SymptomProps) => {
     });
   };
 
-  const handleNextFromBodyPart = () => {
-    if (selectedBodyParts.length > 0) {
-      setCurrentStep(4); // 부위 선택 후 증상 선택으로 이동
+  // 질병 단계를 거치지 않았다면, 질병 유무 컴포넌트로
+  // 질병 단계를 거쳤다면, 증상 1단계에서 질병 2단계로
+  const handleGoBlank = () => {
+    if (isSkipDisease === true) {
+      setStep(5);
+    } else {
+      setCurrentStep(2);
     }
   };
 
-  // 최종 등록
-  const navigate = useNavigate();
-  const handleNextStep = () => {
-    updatePetData("symptomIds", selectedSymptom); 
-    handleSubmit(); // 폼 제출
-    navigate(PATH.REGISTER_PET.COMPLETE);
+  // 증상 1단계에서 2단계로
+  const handleNextFromBodyPart = () => {
+    setCurrentStep(4);
   };
 
+  // 증상 2단계에서 1단계로
   const handleGoBack = () => {
     if (currentStep === 4) {
       setCurrentStep(3); // 증상 선택에서 부위 선택으로 돌아가기
     }
   };
 
-  const handleGoBlank = () => {
-    if (selectedSymptom.length > 0) {
-      setCurrentStep(2);
-    } else {
-      setStep(5);
-    }
+  // 최종 폼 제출
+  const navigate = useNavigate();
+  const handleNextStep = () => {
+    console.log("최종 증상 ID들:", selectedSymptom); // 폼 제출 전에 상태 확인
+    updatePetData("symptomIds", selectedSymptom);
+    handleSubmit();
+    navigate(PATH.REGISTER_PET.COMPLETE);
   };
 
   return (

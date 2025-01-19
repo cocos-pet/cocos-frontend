@@ -1,5 +1,5 @@
 import * as styles from "./PetHealthDualSelector.css";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 
 import Title from "@page/onboarding/index/common/title/Title";
@@ -7,15 +7,21 @@ import Docs from "@page/onboarding/index/common/docs/Docs";
 import { Button } from "@common/component/Button";
 
 interface PetHealthDualSelectorProps {
-  setStep: React.Dispatch<React.SetStateAction<number>>;
+  setStep: Dispatch<SetStateAction<number>>;
+  isSkipDisease: boolean;
+  setIsSkipDisease: Dispatch<SetStateAction<boolean>>;
 }
 
-const PetHealthDualSelector = ({ setStep }: PetHealthDualSelectorProps) => {
+const PetHealthDualSelector = ({ setStep, setIsSkipDisease }: PetHealthDualSelectorProps) => {
   const [selected, setSelected] = useState<string | null>(null);
-
   // 선택한 값 처리 (단순히 선택값만 처리)
   const handleSelect = (choice: string) => {
     setSelected(choice);
+    if (choice === "예") {
+      setIsSkipDisease(false);
+    } else if (choice === "아니오") {
+      setIsSkipDisease(true);
+    }
   };
 
   // 뒤로 가기

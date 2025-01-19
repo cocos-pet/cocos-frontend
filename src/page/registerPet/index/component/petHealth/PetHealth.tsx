@@ -1,24 +1,40 @@
-// import { useState } from "react";
-// import PetHealthDualSelector from "./petHealthDualSelector/PetHealthDualSelector";
-// import Step1 from "@page/registerPet/index/component/petHealth/disease/Step1";
-// import Step2 from "@page/registerPet/index/component/petHealth/disease/Step2";
+import { useState } from "react";
+import Symptom from "@page/registerPet/index/component/petHealth/symptom/Symptom";
+import Disease from "./disease/Disease";
+import { PetData } from "@page/registerPet/index/RegisterPet";
 
-// const PetHealth = () => {
-//   // 제출 할 폼 정보 저장 로직은 PetHealth 하위 컴포넌트 퍼블리싱 완료 후 구현 예정
-//   const [healthStep, setHealthStep] = useState<string>("");
+interface PetHealthPropTypes {
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+  updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
+  isSkipDisease: boolean;
+  handleSubmit: () => void;
+}
 
-//   // healthStep 상태를 업데이트하는 핸들러
-//   const stepChange = (step: string) => {
-//     setHealthStep(step);
-//   };
+const PetHealth = ({ setStep, updatePetData, isSkipDisease, handleSubmit }: PetHealthPropTypes) => {
+  const [currentStep, setCurrentStep] = useState(1);
 
-//   return (
-//     <>
-//       {healthStep === "" && <PetHealthDualSelector stepChange={stepChange} />}
-//       {healthStep === "예" && <Step1 />}
-//       {healthStep === "아니오" && <Step2 />}
-//     </>
-//   );
-// };
+  return (
+    <>
+      {(currentStep === 1 || currentStep === 2) && (
+        <Disease
+          currentStep={currentStep}
+          setStep={setStep}
+          updatePetData={updatePetData}
+          setCurrentStep={setCurrentStep}
+        />
+      )}
+      {(currentStep === 3 || currentStep === 4) && (
+        <Symptom
+          setStep={setStep}
+          updatePetData={updatePetData}
+          isSkipDisease={isSkipDisease}
+          handleSubmit={handleSubmit}
+          currentStep={currentStep}
+          setCurrentStep={setCurrentStep}
+        />
+      )}
+    </>
+  );
+};
 
-// export default PetHealth;
+export default PetHealth;

@@ -7,12 +7,14 @@ import { PetData } from "@page/registerPet/index/RegisterPet";
 import { Button } from "@common/component/Button";
 
 interface DiseaseProps {
+  currentStep: number;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
 }
 
-const Disease = ({ setStep, updatePetData }: DiseaseProps) => {
-  const [currentStep, setCurrentStep] = useState(1);
+const Disease = ({ currentStep, setStep, updatePetData, setCurrentStep }: DiseaseProps) => {
   const [selectedBodyParts, setSelectedBodyParts] = useState<number[]>([]);
   const [selectedDiseases, setSelectedDiseases] = useState<number[]>([]);
 
@@ -37,26 +39,25 @@ const Disease = ({ setStep, updatePetData }: DiseaseProps) => {
     });
   };
 
-  const handleNextFromStep1 = () => {
-    if (selectedBodyParts.length > 0) {
-      setCurrentStep(2); // Step1에서 Step2로 이동
-    }
-  };
-
-  // 질병 1단계 뒤로가기
+  // 질병 1단계에서 질병유무 컴포넌트로
   const handleGoHealth = () => {
     setStep(5);
   };
 
-  // 상세에서 부위로 넘어가기
+  // 질병 1단계에서 질병 2단계로
+  const handleNextFromStep1 = () => {
+    setCurrentStep(2);
+  };
+
+  // 질병 2단계에서 질병 1단계로
   const handleGoBack = () => {
     setCurrentStep(1);
   };
 
+  // 질병 2단계에서 증상 1단계로
   const handleNextStep = () => {
-    // Step2에서 선택된 데이터 업데이트
     updatePetData("diseaseIds", selectedDiseases);
-    setStep(7);
+    setCurrentStep(3);
   };
   return (
     <>

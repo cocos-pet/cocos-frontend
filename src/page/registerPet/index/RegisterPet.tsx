@@ -5,8 +5,7 @@ import PetGender from "@page/registerPet/index/component/petGender/PetGender";
 import PetId from "@page/registerPet/index/component/petId/PetId";
 import PetAge from "@page/registerPet/index/component/petAge/PetAge";
 import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
-import Disease from "@page/registerPet/index/component/petHealth/disease/Disease";
-import Symptom from "@page/registerPet/index/component/petHealth/symptom/Symptom";
+import PetHealth from "@page/registerPet/index/component/petHealth/PetHealth";
 export interface PetData {
   breedId: number | null;
   name: string;
@@ -16,7 +15,11 @@ export interface PetData {
   symptomIds: number[];
 }
 const RegisterPet = () => {
+  // 등록 전체 조절
   const [step, setStep] = useState(0);
+
+  // 질병 단계 스킵 했는지 확인하는 상태
+  const [isSkipDisease, setIsSkipDisease] = useState(false);
 
   const [petData, setPetData] = useState<PetData>({
     breedId: null,
@@ -38,15 +41,14 @@ const RegisterPet = () => {
   const handleSubmit = () => {
     console.log("제출 데이터:", petData);
     // 서버로 데이터 전송 로직 추가
-
-    // setPetData({
-    //   breedId: null,
-    //   name: "",
-    //   gender: null,
-    //   age: null,
-    //   diseaseIds: [],
-    //   symptomIds: [],
-    // });
+    setPetData({
+      breedId: null,
+      name: "",
+      gender: null,
+      age: null,
+      diseaseIds: [],
+      symptomIds: [],
+    });
   };
 
   const getComponent = () => {
@@ -62,15 +64,16 @@ const RegisterPet = () => {
       case 4:
         return <PetAge setStep={setStep} updatePetData={updatePetData} />;
       case 5:
-        return <PetHealthDualSelector setStep={setStep} />;
-      case 6:
-        return <Disease setStep={setStep} updatePetData={updatePetData} />;
-      case 7:
         return (
-          <Symptom
+          <PetHealthDualSelector setStep={setStep} isSkipDisease={isSkipDisease} setIsSkipDisease={setIsSkipDisease} />
+        );
+      case 6:
+        return (
+          <PetHealth
             setStep={setStep}
             updatePetData={updatePetData}
-            handleSubmit={handleSubmit} // handleSubmit을 Symptom에 전달
+            isSkipDisease={isSkipDisease}
+            handleSubmit={handleSubmit}
           />
         );
 
