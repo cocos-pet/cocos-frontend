@@ -8,7 +8,7 @@ import { Button } from "@common/component/Button";
 
 interface DiseaseProps {
   currentStep: number;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
 
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
@@ -46,6 +46,8 @@ const Disease = ({ currentStep, setStep, updatePetData, setCurrentStep }: Diseas
 
   // 질병 1단계에서 질병 2단계로
   const handleNextFromStep1 = () => {
+    console.log("Next button clicked");
+
     setCurrentStep(2);
   };
 
@@ -72,7 +74,7 @@ const Disease = ({ currentStep, setStep, updatePetData, setCurrentStep }: Diseas
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedBodyParts.length === 0} // 부위 선택 없으면 버튼 비활성화
+              disabled={selectedBodyParts.length === 0}
               onClick={handleNextFromStep1}
             />
           </div>
@@ -80,6 +82,7 @@ const Disease = ({ currentStep, setStep, updatePetData, setCurrentStep }: Diseas
       )}
       {currentStep === 2 && (
         <>
+          <div>Step2 렌더링 중...</div> {/* 디버깅용 텍스트 */}
           <Step2 selectedDiseases={selectedDiseases} onDiseaseSelection={handleDiseaseSelection} />
           <div className={styles.btnWrapper}>
             <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />

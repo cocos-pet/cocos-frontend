@@ -1,4 +1,3 @@
-import { useState } from "react";
 import Symptom from "@page/registerPet/index/component/petHealth/symptom/Symptom";
 import Disease from "./disease/Disease";
 import { PetData } from "@page/registerPet/index/RegisterPet";
@@ -6,16 +5,24 @@ import { PetData } from "@page/registerPet/index/RegisterPet";
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
-  isSkipDisease: boolean;
+  isSkipDisease: boolean | null;
   handleSubmit: () => void;
+  currentStep: number | null;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
 }
 
-const PetHealth = ({ setStep, updatePetData, isSkipDisease, handleSubmit }: PetHealthPropTypes) => {
-  const [currentStep, setCurrentStep] = useState(1);
-
+const PetHealth = ({
+  setStep,
+  updatePetData,
+  isSkipDisease,
+  handleSubmit,
+  currentStep,
+  setCurrentStep,
+}: PetHealthPropTypes) => {
+  console.log("펫헬스임",currentStep)
   return (
     <>
-      {(currentStep === 1 || currentStep === 2) && (
+      {currentStep === 1 && (
         <Disease
           currentStep={currentStep}
           setStep={setStep}
@@ -23,7 +30,7 @@ const PetHealth = ({ setStep, updatePetData, isSkipDisease, handleSubmit }: PetH
           setCurrentStep={setCurrentStep}
         />
       )}
-      {(currentStep === 3 || currentStep === 4) && (
+      {currentStep === 3 && (
         <Symptom
           setStep={setStep}
           updatePetData={updatePetData}

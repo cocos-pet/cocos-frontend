@@ -8,12 +8,12 @@ import { PATH } from "@route/path";
 import { useNavigate } from "react-router-dom";
 interface SymptomProps {
   currentStep: number;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
 
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
-  handleSubmit: () => void; // handleSubmit 함수 받기
-  isSkipDisease: boolean;
+  handleSubmit: () => void;
+  isSkipDisease: boolean | null;
 }
 
 const Symptom = ({

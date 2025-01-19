@@ -8,11 +8,12 @@ import { Button } from "@common/component/Button";
 
 interface PetHealthDualSelectorProps {
   setStep: Dispatch<SetStateAction<number>>;
-  isSkipDisease: boolean;
-  setIsSkipDisease: Dispatch<SetStateAction<boolean>>;
+  isSkipDisease: boolean | null;
+  setIsSkipDisease: Dispatch<SetStateAction<boolean | null>>;
+  setCurrentStep: Dispatch<SetStateAction<number | null>>;
 }
 
-const PetHealthDualSelector = ({ setStep, setIsSkipDisease }: PetHealthDualSelectorProps) => {
+const PetHealthDualSelector = ({ setStep, setIsSkipDisease, setCurrentStep }: PetHealthDualSelectorProps) => {
   const [selected, setSelected] = useState<string | null>(null);
   // 선택한 값 처리 (단순히 선택값만 처리)
   const handleSelect = (choice: string) => {
@@ -24,17 +25,20 @@ const PetHealthDualSelector = ({ setStep, setIsSkipDisease }: PetHealthDualSelec
     }
   };
 
-  // 뒤로 가기
+  // 뒤로가기
   const handleGoBack = () => {
     setStep((prev) => Math.max(prev - 1, 0));
   };
 
   // 다음 버튼 (선택값이 있을 때만 다음 단계로 이동)
   const handleNext = () => {
+    setStep((prevStep) => prevStep + 1);
     if (selected === "예") {
-      setStep((prevStep) => prevStep + 1);
+      // setStep((prevStep) => prevStep + 1);
+      setCurrentStep(1);
     } else {
-      setStep((prevStep) => prevStep + 2);
+      // setStep((prevStep) => prevStep + 1);
+      setCurrentStep(3);
     }
   };
 

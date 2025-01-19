@@ -19,7 +19,10 @@ const RegisterPet = () => {
   const [step, setStep] = useState(0);
 
   // 질병 단계 스킵 했는지 확인하는 상태
-  const [isSkipDisease, setIsSkipDisease] = useState(false);
+  const [isSkipDisease, setIsSkipDisease] = useState<boolean | null>(null);
+
+  // 질병, 증상 세부 단계 조절
+  const [currentStep, setCurrentStep] = useState<number | null>(null);
 
   const [petData, setPetData] = useState<PetData>({
     breedId: null,
@@ -65,7 +68,12 @@ const RegisterPet = () => {
         return <PetAge setStep={setStep} updatePetData={updatePetData} />;
       case 5:
         return (
-          <PetHealthDualSelector setStep={setStep} isSkipDisease={isSkipDisease} setIsSkipDisease={setIsSkipDisease} />
+          <PetHealthDualSelector
+            setStep={setStep}
+            isSkipDisease={isSkipDisease}
+            setIsSkipDisease={setIsSkipDisease}
+            setCurrentStep={setCurrentStep}
+          />
         );
       case 6:
         return (
@@ -74,6 +82,8 @@ const RegisterPet = () => {
             updatePetData={updatePetData}
             isSkipDisease={isSkipDisease}
             handleSubmit={handleSubmit}
+            currentStep={currentStep}
+            setCurrentStep={setCurrentStep}
           />
         );
 
