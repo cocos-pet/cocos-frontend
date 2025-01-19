@@ -1,22 +1,22 @@
 import * as styles from "@page/registerPet/index/component/petHealth/disease/Disease.css";
-
 import { useState } from "react";
 import SymStep1 from "./SymStep1"; // 부위 선택 컴포넌트
 import SymStep2 from "./SymStep2"; // 증상 선택 컴포넌트
 import { PetData } from "@page/registerPet/index/RegisterPet";
 import { Button } from "@common/component/Button";
-
+import { PATH } from "@route/path";
+import { useNavigate } from "react-router-dom";
 interface SymptomProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
+  handleSubmit: () => void; // handleSubmit 함수 받기
 }
 
-const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
+const Symptom = ({ setStep, updatePetData, handleSubmit }: SymptomProps) => {
   const [currentStep, setCurrentStep] = useState(3); // 부위 선택 (3) -> 증상 선택 (4)
   const [selectedBodyParts, setSelectedBodyParts] = useState<number[]>([]);
   const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
 
-  // 부위 선택 핸들러
   const handleBodyPartSelection = (bodyPartId: number) => {
     setSelectedBodyParts((prevSelected) => {
       if (prevSelected.includes(bodyPartId)) {
@@ -26,7 +26,6 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
     });
   };
 
-  // 증상 선택 핸들러
   const handleSymptomSelection = (symptomId: number) => {
     setSelectedSymptoms((prevSelected) => {
       if (prevSelected.includes(symptomId)) {
@@ -39,30 +38,28 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
     });
   };
 
-  // 부위 선택 -> 증상 선택으로 이동
   const handleNextFromBodyPart = () => {
     if (selectedBodyParts.length > 0) {
       setCurrentStep(4); // 부위 선택 후 증상 선택으로 이동
     }
   };
 
-  // 증상 선택 -> 다음 단계로 이동
+  // 최종 등록
+  const navigate = useNavigate();
   const handleNextStep = () => {
-    updatePetData("symptomIds", selectedSymptom); // 증상 정보만 업데이트
-    setStep(7); // Step2 -> 다음 단계로 이동
+    updatePetData("symptomIds", selectedSymptom); 
+    handleSubmit(); // 폼 제출
+    navigate(PATH.REGISTER_PET.COMPLETE);
   };
 
-  // 이전 단계로 이동
   const handleGoBack = () => {
     if (currentStep === 4) {
       setCurrentStep(3); // 증상 선택에서 부위 선택으로 돌아가기
     }
   };
 
-  // 부위 -> 질병-증상 or 유무선택
   const handleGoBlank = () => {
     if (selectedSymptom.length > 0) {
-      // 이거 질병 가져와야 함
       setCurrentStep(2);
     } else {
       setStep(5);
@@ -73,7 +70,6 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
     <>
       {currentStep === 3 && (
         <>
-          {/* 부위 선택 Step */}
           <SymStep1 selectedIds={selectedBodyParts} onBodyPartSelection={handleBodyPartSelection} />
           <div className={styles.btnWrapper}>
             <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBlank} />
@@ -81,30 +77,23 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedBodyParts.length === 0} // 부위 선택 없으면 버튼 비활성화
-              onClick={handleNextFromBodyPart} // 부위 선택 -> 증상 선택으로 이동
+              disabled={selectedBodyParts.length === 0}
+              onClick={handleNextFromBodyPart}
             />
           </div>
         </>
       )}
       {currentStep === 4 && (
         <>
-          {/* 증상 선택 Step */}
           <SymStep2 selectedSymptom={selectedSymptom} onSymptomSelection={handleSymptomSelection} />
           <div className={styles.btnWrapper}>
-            <Button
-              label="이전으로"
-              size="large"
-              variant="solidNeutral"
-              disabled={false}
-              onClick={handleGoBack} // 이전으로 돌아가기
-            />
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedSymptom.length === 0} // 증상 선택 없으면 버튼 비활성화
-              onClick={handleNextStep} // 증상 선택 -> 다음 단계로 이동
+              disabled={selectedSymptom.length === 0}
+              onClick={handleNextStep} // 증상 선택 후 폼 제출
             />
           </div>
         </>

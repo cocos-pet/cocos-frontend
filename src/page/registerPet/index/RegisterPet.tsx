@@ -5,9 +5,8 @@ import PetGender from "@page/registerPet/index/component/petGender/PetGender";
 import PetId from "@page/registerPet/index/component/petId/PetId";
 import PetAge from "@page/registerPet/index/component/petAge/PetAge";
 import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
-import Disease from "./component/petHealth/disease/Disease";
-import Symptom from "./component/petHealth/symptom/Symptom";
-
+import Disease from "@page/registerPet/index/component/petHealth/disease/Disease";
+import Symptom from "@page/registerPet/index/component/petHealth/symptom/Symptom";
 export interface PetData {
   breedId: number | null;
   name: string;
@@ -16,7 +15,6 @@ export interface PetData {
   diseaseIds: number[] | null;
   symptomIds: number[];
 }
-
 const RegisterPet = () => {
   const [step, setStep] = useState(0);
 
@@ -29,10 +27,9 @@ const RegisterPet = () => {
     symptomIds: [],
   });
 
-  // 상태 변경을 확인하기 위한 useEffect
   useEffect(() => {
     console.log("업데이트된 반려동물 데이터:", petData);
-  }, [petData]); // petData가 변경될 때마다 실행
+  }, [petData]);
 
   const updatePetData = <K extends keyof PetData>(field: K, value: PetData[K]) => {
     setPetData((prev) => ({ ...prev, [field]: value }));
@@ -42,15 +39,14 @@ const RegisterPet = () => {
     console.log("제출 데이터:", petData);
     // 서버로 데이터 전송 로직 추가
 
-    // 데이터 전송 후 초기화
-    setPetData({
-      breedId: null,
-      name: "",
-      gender: null,
-      age: null,
-      diseaseIds: [],
-      symptomIds: [],
-    });
+    // setPetData({
+    //   breedId: null,
+    //   name: "",
+    //   gender: null,
+    //   age: null,
+    //   diseaseIds: [],
+    //   symptomIds: [],
+    // });
   };
 
   const getComponent = () => {
@@ -70,7 +66,14 @@ const RegisterPet = () => {
       case 6:
         return <Disease setStep={setStep} updatePetData={updatePetData} />;
       case 7:
-        return <Symptom setStep={setStep} updatePetData={updatePetData} />;
+        return (
+          <Symptom
+            setStep={setStep}
+            updatePetData={updatePetData}
+            handleSubmit={handleSubmit} // handleSubmit을 Symptom에 전달
+          />
+        );
+
       default:
         return null;
     }
@@ -78,5 +81,4 @@ const RegisterPet = () => {
 
   return <>{getComponent()}</>;
 };
-
 export default RegisterPet;
