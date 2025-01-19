@@ -68,9 +68,9 @@ const RegisterPet = () => {
       case 5:
         return <PetHealthDualSelector setStep={setStep} />;
       case 6:
-        return <Disease setStep={setStep} updatePetData={updatePetData}/>;
+        return <Disease setStep={setStep} updatePetData={updatePetData} />;
       case 7:
-        return <Symptom />;
+        return <Symptom setStep={setStep} updatePetData={updatePetData} />;
       default:
         return null;
     }
