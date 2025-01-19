@@ -45,6 +45,7 @@ const PetEdit = () => {
     setCategory: setAnimalCategory,
     setCategoryData: setAnimalCategoryData,
     selectedChips: animalChips,
+    toggleChips: animalToggleChips,
     categoryData: animalCategoryData,
   } = useAnimalFilterStore();
   const [ageBottomSheetOpen, setAgeBottomSheetOpen] = useState(false);
@@ -56,24 +57,15 @@ const PetEdit = () => {
   const { isLoading, data: member } = useGetMemberInfo();
   const { data: animal } = useGetAnimal();
   const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
-
   // setAnimalCategoryData("breeds",data?.breeds)
 
   useEffect(() => {
     console.log(animalCategory);
   }, [animalCategory]);
 
-  // useEffect(() => {
-  //   console.log(animalChips);
-  //   console.log(getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData));
-  //   console.log(getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData));
-  //   console.log(getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData));
-  // }, [animalChips]);
-
-  // useEffect(() => {
-  //   console.log(selectedChips);
-  //   console.log(categoryData);
-  // }, [selectedChips]);
+  useEffect(() => {
+    animalToggleChips({ id: null, category: "breedId" }); // animalId가 변경되면 breedId 초기화
+  }, [animalChips.animalId, animalToggleChips]);
 
   useEffect(() => {
     if (isEditing && ref.current) {
