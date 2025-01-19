@@ -27,7 +27,6 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
   const handleNext = () => {
     if (isValid) {
       const age = Number.parseInt(petAge, 10);
-      console.log("나이:", age); // 나이가 잘 찍히는지 확인
 
       updatePetData("age", age); // 부모 상태에 나이 업데이트
       setStep((prev) => prev + 1); // 다음 단계로 이동
