@@ -16,7 +16,7 @@ import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
 import { useAnimalFilterStore } from "./store/animalFilter";
 import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
 import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
-import { useGetAnimal, useGetBreed, useGetMemberInfo } from "@api/domain/mypage/edit-pet/hook";
+import { useGetAnimal, useGetBodies, useGetBreed, useGetMemberInfo } from "@api/domain/mypage/edit-pet/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -36,8 +36,10 @@ const PetEdit = () => {
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
   const [petAge, setPetAge] = useState("");
+  const [bodyIds, setBodyIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
 
-  const { isOpen, setOpen, setCategory, setCategoryData, selectedChips, categoryData } = useCategoryFilterStore();
+  const { isOpen, setOpen, category, setCategory, setCategoryData, selectedChips, categoryData } =
+    useCategoryFilterStore();
   const {
     isOpen: animalOpen,
     setOpen: setAnimalOpen,
@@ -57,6 +59,17 @@ const PetEdit = () => {
   const { isLoading, data: member } = useGetMemberInfo();
   const { data: animal } = useGetAnimal();
   const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
+  const { data: bodies } = useGetBodies(category === "disease" ? "DISEASE" : "SYMPTOM");
+
+  useEffect(() => {
+    if (bodies?.bodies) {
+      const idArr = bodies.bodies.map((item) => item.id as number);
+      if (idArr) {
+        setBodyIds(idArr);
+      }
+    }
+  }, [bodies]);
+
   // setAnimalCategoryData("breeds",data?.breeds)
 
   useEffect(() => {
@@ -240,7 +253,7 @@ const PetEdit = () => {
             />
           </span>
         </article>
-        {/*새벽 작업으로 인해 Category랑 Disease를 반대로 만듦 -> 나중에 폴더명, 파일명 수정 필요 */}
+
         <AnimalBottomSheet />
         <CategoryBottomSheet />
         <AgeBottomSheet

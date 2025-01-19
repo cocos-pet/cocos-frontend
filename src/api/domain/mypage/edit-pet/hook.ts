@@ -1,4 +1,4 @@
-import { getBreed } from "./index";
+import { getBodys, getBreed } from "./index";
 import { useQuery } from "@tanstack/react-query";
 import { getAnimal, getMemberInfo } from ".";
 
@@ -13,6 +13,10 @@ export const ANIMAL_QUREY_KEY = {
 // animalId가 변할 때마다 쿼리를 계속 보낼 수 있음
 export const BREED_QUERY_KEY = {
   BREED_ID: (animalId: number, breedName?: string) => ["breedId", animalId, breedName],
+};
+
+export const BODY_QUERY_KEY = {
+  BODIES: (petProblem: "DISEASE" | "SYMPTOM") => ["bodies", petProblem],
 };
 
 export const useGetMemberInfo = () => {
@@ -42,5 +46,15 @@ export const useGetBreed = (animalId: number, breedName?: string) => {
     queryFn: () => {
       return getBreed(animalId, breedName);
     },
+  });
+};
+
+export const useGetBodies = (petProblem: "DISEASE" | "SYMPTOM") => {
+  return useQuery({
+    queryKey: BODY_QUERY_KEY.BODIES(petProblem),
+    queryFn: () => {
+      return getBodys(petProblem);
+    },
+    staleTime: 1000 * 60 * 10,
   });
 };
