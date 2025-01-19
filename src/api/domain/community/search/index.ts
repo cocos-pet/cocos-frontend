@@ -18,7 +18,6 @@ export const getSearch = async () => {
 };
 
 export const postSearch = async (body: searchPostRequest) => {
-  console.log("postSearch", body);
   return await post<searchPostRequest>(
     API_PATH.SEARCH + `?keyword=${body.keyword}`
   );

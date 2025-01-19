@@ -31,14 +31,18 @@ const Search = () => {
       { keyword: searchText },
       {
         onSuccess: () => {
-          searchParams.set("searchText", searchText);
-          navigate(`${PATH.COMMUNITY.SEARCH_DONE}?searchText=${searchText}`);
+          handleNavigate(searchText);
         },
         onError: () => {
           alert("검색에 실패했습니다.");
         },
       }
     );
+  };
+
+  const handleNavigate = (searchText: string) => {
+    searchParams.set("searchText", searchText);
+    navigate(`${PATH.COMMUNITY.SEARCH_DONE}?searchText=${searchText}`);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -85,7 +89,7 @@ const Search = () => {
               key={data.id}
               className={styles.listItem}
               onClick={() => {
-                if (data.content) onSubmit(data.content);
+                if (data.content) handleNavigate(data.content);
               }}
             >
               {data.content || ""}
