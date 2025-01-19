@@ -42,11 +42,9 @@ const Symptom = ({ setStep, updatePetData }: SymptomProps) => {
       setCurrentStep(2); // Step1에서 Step2로 이동
     }
   };
-
   const handleNextStep = () => {
     // Step2에서 선택된 데이터 업데이트
-    updatePetData("symptomIds", selectedDiseases); // 증상 정보를 업데이트
-    updatePetData("diseaseIds", selectedBodyParts); // 질병 정보를 업데이트
+    updatePetData("symptomIds", selectedDiseases); // 증상 정보만 업데이트
     setStep(7); // Step2 -> 다음 단계로 이동
   };
 
