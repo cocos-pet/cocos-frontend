@@ -26,6 +26,7 @@ const Search = () => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = (searchText: string) => {
+    if (!searchText || isLoading) return;
     mutate(
       { keyword: searchText },
       {
