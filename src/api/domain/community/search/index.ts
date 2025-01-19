@@ -1,11 +1,12 @@
 import { API_PATH } from "@api/constants/apiPath";
-import { get } from "@api/index";
+import { get, post } from "@api/index";
 import { paths } from "src/type/schema";
 
-type searchGetResponse =
+export type searchGetResponse =
   paths["/api/dev/search"]["get"]["responses"]["200"]["content"]["*/*"];
 
-type searchPostRequest = paths["/api/dev/search"]["post"]["requestBody"];
+export type searchPostRequest =
+  paths["/api/dev/search"]["post"]["parameters"]["query"];
 
 /**
  * @description 최근 검색어 조회 API
@@ -14,4 +15,11 @@ type searchPostRequest = paths["/api/dev/search"]["post"]["requestBody"];
 export const getSearch = async () => {
   const { data } = await get<searchGetResponse>(API_PATH.SEARCH, {});
   return data.data;
+};
+
+export const postSearch = async (body: searchPostRequest) => {
+  console.log("postSearch", body);
+  return await post<searchPostRequest>(
+    API_PATH.SEARCH + `?keyword=${body.keyword}`
+  );
 };
