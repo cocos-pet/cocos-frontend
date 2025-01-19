@@ -27,7 +27,7 @@ const SymStep1 = ({
       {/* 상단 영역 */}
       <div className={styles.title}>
         <div>
-          <Title text=" 부위를 선택하면" />
+          <Title text="증상 부위를 선택하면" />
           <Title text="맞춤형 정보를 추천해드려요" />
         </div>
         <Docs text="최대 2개까지 선택할 수 있어요" />

@@ -1,5 +1,4 @@
 import * as styles from "./PetGender.css";
-import { useNavigate } from "react-router-dom";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
@@ -25,9 +24,8 @@ const PetGender = ({ setStep, updatePetData }: PetGenderProps) => {
   };
 
   // 뒤로 가기
-  const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    setStep((prev) => Math.max(prev - 1, 0));
   };
 
   return (

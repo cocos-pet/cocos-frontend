@@ -1,6 +1,5 @@
 import * as styles from "./PetAge.css";
 import { useState, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
@@ -36,8 +35,9 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
   };
 
   // 뒤로가기
-  const navigate = useNavigate();
-  const handleGoBack = () => navigate(-1);
+  const handleGoBack = () => {
+    setStep((prev) => Math.max(prev - 1, 0));
+  };
 
   return (
     <>

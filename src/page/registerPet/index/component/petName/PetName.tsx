@@ -1,4 +1,5 @@
 import { useState, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import * as styles from "./PetName.css";
 import onboardingImg from "@asset/image/image 1730.png";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
@@ -24,8 +25,10 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
   const validationMessages = petName ? validatePetName(petName) : [];
   const isValid = petName && validationMessages.length === 0;
 
+  // 뒤로 가기
+  const navigate = useNavigate();
   const handleGoBack = () => {
-    setStep((prev) => Math.max(prev - 1, 0)); // 이전 단계로 이동 (0방지!)
+    navigate(-1);
   };
 
   const handleNext = () => {

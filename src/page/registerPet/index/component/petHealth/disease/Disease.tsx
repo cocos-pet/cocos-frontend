@@ -12,7 +12,7 @@ interface DiseaseProps {
 }
 
 const Disease = ({ setStep, updatePetData }: DiseaseProps) => {
-  const [currentStep, setCurrentStep] = useState(1); // 현재 스텝 상태
+  const [currentStep, setCurrentStep] = useState(1);
   const [selectedBodyParts, setSelectedBodyParts] = useState<number[]>([]);
   const [selectedDiseases, setSelectedDiseases] = useState<number[]>([]);
 
@@ -42,10 +42,21 @@ const Disease = ({ setStep, updatePetData }: DiseaseProps) => {
       setCurrentStep(2); // Step1에서 Step2로 이동
     }
   };
+
+  // 질병 1단계 뒤로가기
+  const handleGoHealth = () => {
+    setStep(5);
+  };
+
+  // 상세에서 부위로 넘어가기
+  const handleGoBack = () => {
+    setCurrentStep(1);
+  };
+
   const handleNextStep = () => {
     // Step2에서 선택된 데이터 업데이트
-    updatePetData("diseaseIds", selectedDiseases); // 질병 정보만 업데이트
-    setStep(7); // Step2 -> 다음 단계로 이동
+    updatePetData("diseaseIds", selectedDiseases);
+    setStep(7);
   };
   return (
     <>
@@ -54,7 +65,7 @@ const Disease = ({ setStep, updatePetData }: DiseaseProps) => {
           <Step1 selectedIds={selectedBodyParts} onBodyPartSelection={handleBodyPartSelection} />
           {/* // 돌아가기 구현 안됨 */}
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleNextStep} />
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoHealth} />
 
             <Button
               label="다음"
@@ -70,7 +81,7 @@ const Disease = ({ setStep, updatePetData }: DiseaseProps) => {
         <>
           <Step2 selectedDiseases={selectedDiseases} onDiseaseSelection={handleDiseaseSelection} />
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleNextStep} />
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
             <Button
               label="다음"
               size="large"

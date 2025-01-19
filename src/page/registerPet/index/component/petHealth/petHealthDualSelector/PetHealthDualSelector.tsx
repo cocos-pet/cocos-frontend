@@ -1,6 +1,5 @@
 import * as styles from "./PetHealthDualSelector.css";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 
 import Title from "@page/onboarding/index/common/title/Title";
@@ -20,9 +19,8 @@ const PetHealthDualSelector = ({ setStep }: PetHealthDualSelectorProps) => {
   };
 
   // 뒤로 가기
-  const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    setStep((prev) => Math.max(prev - 1, 0));
   };
 
   // 다음 버튼 (선택값이 있을 때만 다음 단계로 이동)

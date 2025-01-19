@@ -1,5 +1,4 @@
 import * as styles from "./PetType.css";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
@@ -39,10 +38,8 @@ const PetType = ({ setStep, updatePetData }: PetTypeProps) => {
     updatePetData("breedId", value === "고양이" ? 1 : 2); // "고양이"는 1, "강아지"는 2
   };
 
-  // 뒤로 가기 (조립시 수정 예정)
-  const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    setStep((prev) => Math.max(prev - 1, 0)); 
   };
 
   return (
