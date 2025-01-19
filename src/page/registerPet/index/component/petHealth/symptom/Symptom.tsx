@@ -24,11 +24,11 @@ const Symptom = ({
   handleSubmit,
   isSkipDisease,
 }: SymptomProps) => {
-  const [selectedBodyParts, setSelectedBodyParts] = useState<number[]>([]);
+  const [selectedSymBodyParts, setSelectedSymBodyParts] = useState<number[]>([]);
   const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
 
-  const handleBodyPartSelection = (bodyPartId: number) => {
-    setSelectedBodyParts((prevSelected) => {
+  const handleBodyPartSymSelection = (bodyPartId: number) => {
+    setSelectedSymBodyParts((prevSelected) => {
       if (prevSelected.includes(bodyPartId)) {
         return prevSelected.filter((id) => id !== bodyPartId);
       }
@@ -83,14 +83,14 @@ const Symptom = ({
     <>
       {currentStep === 3 && (
         <>
-          <SymStep1 selectedIds={selectedBodyParts} onBodyPartSelection={handleBodyPartSelection} />
+          <SymStep1 selectedIds={selectedSymBodyParts} onBodyPartSelection={handleBodyPartSymSelection} />
           <div className={styles.btnWrapper}>
             <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBlank} />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedBodyParts.length === 0}
+              disabled={selectedSymBodyParts.length === 0}
               onClick={handleNextFromBodyPart}
             />
           </div>
