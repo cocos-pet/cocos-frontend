@@ -22,8 +22,8 @@ import { getAccessToken } from "@api/index.ts";
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
-  const { data: postData, isLoading } = usePostGet(Number(postId));
   const { openModalId, setOpenModalId } = useModalStore();
+  const { data: postData, isLoading } = usePostGet(Number(postId));
   if (!postId) return <>loading</>;
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
@@ -98,7 +98,8 @@ const PostDetail = () => {
       subComments: [],
     },
   ];
-
+  // postData?.isLiked || TODO : 서버에서 받아온 데이터로 수정
+  const [isLiked, setIsLiked] = useState(true);
   const [comment, setComment] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,34 +123,39 @@ const PostDetail = () => {
   };
 
   const handleLike = () => {
+    // 로그인 안되어 있을 때 로그인 페이지로
     if (getAccessToken() === null) {
       navigate(PATH.ONBOARDING.ROOT);
       return;
     }
 
-    likePost(
-      { postId },
-      {
-        onSuccess: (data) => {
-          console.log("좋아요 츄가 완", data);
-        },
-        onError: (error) => {
-          console.error("좋아요 츄가 놉", error);
-        },
-      }
-    );
-
-    likeDelete(
-      { postId },
-      {
-        onSuccess: (data) => {
-          console.log("좋아요 삭제 완", data);
-        },
-        onError: (error) => {
-          console.error("좋아요 삭제 놉", error);
-        },
-      }
-    );
+    if (isLiked) {
+      likeDelete(
+        { postId },
+        {
+          onSuccess: (data) => {
+            console.log("좋아요 삭제 완", data);
+            setIsLiked(false);
+          },
+          onError: (error) => {
+            console.error("좋아요 삭제 놉", error);
+          },
+        }
+      );
+    } else {
+      likePost(
+        { postId },
+        {
+          onSuccess: (data) => {
+            console.log("좋아요 츄가 완", data);
+            setIsLiked(true);
+          },
+          onError: (error) => {
+            console.error("좋아요 츄가 놉", error);
+          },
+        }
+      );
+    }
   };
 
   if (isLoading || !postData || !postId) return <>loading</>;

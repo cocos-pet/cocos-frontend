@@ -1,5 +1,5 @@
 import { API_PATH } from "@api/constants/apiPath";
-import { get, post } from "@api/index";
+import { del, get, post } from "@api/index";
 import { paths } from "src/type/schema";
 
 /**
@@ -37,6 +37,6 @@ type likeDeleteResponse =
   paths["/api/dev/likes/{postId}"]["delete"]["responses"]["204"]["content"]["*/*"];
 
 export const deleteLike = async (postId: string) => {
-  const { data } = await post<likeDeleteResponse>(API_PATH.LIKE + `${postId}`);
+  const { data } = await del<likeDeleteResponse>(API_PATH.LIKE + `${postId}`);
   return data;
 };
