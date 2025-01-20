@@ -3,15 +3,28 @@ import { Button } from "@common/component/Button";
 import * as styles from "./AgeBottomSheet.css";
 import { TextField } from "@common/component/TextField";
 import { ChangeEvent } from "react";
+import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
 
 interface AgeBottomSheetPropTypes {
   isOpen: boolean;
   setIsOpen: (isOpen: boolean) => void;
   age: string;
   updatePetAge: (e: ChangeEvent<HTMLInputElement>) => void;
+  petId: number;
 }
 
-const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge }: AgeBottomSheetPropTypes) => {
+const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge, petId }: AgeBottomSheetPropTypes) => {
+  const { mutate: patchPetInfo } = usePatchPetInfo();
+
+  const handleClickButton = () => {
+    if (age) {
+      patchPetInfo({ petId, reqBody: { age: Number(age) } });
+      setIsOpen(false);
+    } else {
+      alert("올바른 나이를 입력해주세요");
+    }
+  };
+
   return (
     <BottomSheet isOpen={isOpen} handleOpen={setIsOpen}>
       <>
@@ -39,7 +52,7 @@ const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge }: AgeBottomSheet
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="확인하기" size="large" width="100%" onClick={() => setIsOpen(false)} />
+          <Button label="확인하기" size="large" width="100%" onClick={handleClickButton} />
         </div>
       </>
     </BottomSheet>

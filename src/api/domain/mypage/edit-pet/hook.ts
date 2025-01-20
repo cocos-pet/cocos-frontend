@@ -1,9 +1,19 @@
-import { getBodys, getBreed, getDisease, getPetInfo, getSymptoms } from "./index";
-import { useQuery } from "@tanstack/react-query";
+import {
+  getBodys,
+  getBreed,
+  getDisease,
+  getPetInfo,
+  getSymptoms,
+  patchPetInfo,
+  PatchPetInfoRequestType,
+} from "./index";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAnimal, getMemberInfo } from ".";
 
+const PET_EDIT_USER_QUERY_COMMON_KEY = "petEditInfo";
+
 export const MEMBER_QUERY_KEY = {
-  MEMBER_INFO: () => ["memeberInfo"],
+  MEMBER_INFO: () => [PET_EDIT_USER_QUERY_COMMON_KEY, "memeberInfo"],
 };
 
 export const ANIMAL_QUREY_KEY = {
@@ -28,7 +38,7 @@ export const DISEASE_QUERY_KEY = {
 };
 
 export const PETINFO_QUERY_KEY = {
-  PET_INFO: (nickname?: string) => ["petInfo", nickname],
+  PET_INFO: (nickname?: string) => [PET_EDIT_USER_QUERY_COMMON_KEY, "petInfo", nickname],
 };
 
 export const useGetMemberInfo = () => {
@@ -52,7 +62,6 @@ export const useGetAnimal = () => {
 };
 
 export const useGetBreed = (animalId: number, breedName?: string) => {
-  // if (!animalId) return;
   return useQuery({
     queryKey: BREED_QUERY_KEY.BREED_ID(animalId, breedName),
     queryFn: () => {
@@ -94,5 +103,21 @@ export const useGetPetInfo = (nickname?: string) => {
     queryKey: PETINFO_QUERY_KEY.PET_INFO(nickname),
     queryFn: () => getPetInfo(nickname),
     staleTime: 1000 * 60 * 10,
+  });
+};
+
+// default: exact : false, refetchType: active (사용 중인 쿼리 자동 refetching)
+// Note: mutationFn은 기본적으로 하나의 매개변수를 받음(여러개 넘기고 싶으면 객체로 감싸야함)
+export const usePatchPetInfo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["mutationPetInfo"],
+    mutationFn: (variables: { petId: number; reqBody: PatchPetInfoRequestType }) =>
+      patchPetInfo(variables.petId, variables.reqBody),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: [PET_EDIT_USER_QUERY_COMMON_KEY],
+      });
+    },
   });
 };

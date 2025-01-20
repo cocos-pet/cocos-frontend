@@ -24,6 +24,7 @@ import {
   useGetMemberInfo,
   useGetPetInfo,
   useGetSymptoms,
+  usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
@@ -85,6 +86,7 @@ const PetEdit = () => {
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
   const { data: disease } = useGetDisease(bodyDiseaseIds);
   const { data: petInfo } = useGetPetInfo();
+  const { mutate: patchPetInfo } = usePatchPetInfo();
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
@@ -155,6 +157,9 @@ const PetEdit = () => {
       //todo : 추후 요청 보낼 때는 다시 number로 변환 필요
       setPetAge(String(petInfo.petAge));
     }
+    if (petInfo?.petId) {
+      setPetId(petInfo.petId);
+    }
   }, [breed, petInfo, setAnimalCategoryData]);
 
   if (isLoading || !member || !animal) return;
@@ -173,14 +178,24 @@ const PetEdit = () => {
     setIsEditing(true);
   };
 
+  const handleRequestFixName = () => {
+    if (petInfo?.petId) {
+      patchPetInfo({ petId: petInfo?.petId, reqBody: { name: name } });
+    } else {
+      alert("pet ID가 존재하지 않습니다.");
+    }
+  };
+
   const handleInputBlur = () => {
     if (isValid) {
+      handleRequestFixName();
       setIsEditing(false);
     }
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && isValid) {
+      handleRequestFixName();
       setIsEditing(false);
     }
   };
@@ -211,6 +226,10 @@ const PetEdit = () => {
       setAgeBottomSheetOpen(true);
     }
   };
+
+  if (!petInfo?.petId) {
+    return <div>petId 미존재</div>;
+  }
 
   return (
     <div>
@@ -312,13 +331,14 @@ const PetEdit = () => {
           </span>
         </article>
 
-        <AnimalBottomSheet />
-        <CategoryBottomSheet />
+        <AnimalBottomSheet petId={petInfo.petId} />
+        <CategoryBottomSheet petId={petInfo.petId} />
         <AgeBottomSheet
           isOpen={ageBottomSheetOpen}
           setIsOpen={setAgeBottomSheetOpen}
           age={petAge}
           updatePetAge={updatePetAge}
+          petId={petInfo.petId}
         />
       </section>
     </div>

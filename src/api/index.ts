@@ -34,6 +34,10 @@ export const post = <T>(...args: Parameters<typeof api.post>) => {
   return api.post<T>(...args);
 };
 
+export const patch = <T>(...args: Parameters<typeof api.patch>) => {
+  return api.patch<T>(...args);
+};
+
 export const put = <T>(...args: Parameters<typeof api.put>) => {
   return api.put<T>(...args);
 };

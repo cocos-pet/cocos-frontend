@@ -1,7 +1,8 @@
 import { API_PATH } from "@api/constants/apiPath";
-import { get } from "@api/index";
+import { get, patch } from "@api/index";
 import { paths } from "@type/schema";
 
+//todo : try-catch문 작성하기
 export const getMemberInfo = async () => {
   //type getMemberInfoRequest = paths["/api/dev/members"]["get"]["requestBody"];
   type MemberInfoResponse = paths["/api/dev/members"]["get"]["responses"]["200"]["content"]["*/*"];
@@ -57,4 +58,13 @@ export const getPetInfo = async (nickname?: string) => {
     },
   });
   return data.data;
+};
+
+export type PatchPetInfoRequestType =
+  paths["/api/dev/pets/{petId}"]["patch"]["requestBody"]["content"]["application/json"];
+export const patchPetInfo = async (petId: number, reqBody: PatchPetInfoRequestType) => {
+  console.log(petId);
+  type PatchPetInfoResponseType = paths["/api/dev/pets/{petId}"]["patch"]["responses"]["200"]["content"]["*/*"];
+  const response = await patch<PatchPetInfoResponseType>(`${API_PATH.PETS}/${petId}`, reqBody);
+  return response;
 };
