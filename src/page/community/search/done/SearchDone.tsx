@@ -38,45 +38,38 @@ const SearchDone = () => {
   const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
   const { mutate } = usePostPostFilters();
-  const {
-    category,
-    selectedChips,
-    setCategory,
-    isOpen,
-    setOpen,
-    toggleOpen,
-    toggleChips,
-    categoryData,
-  } = useFilterStore();
+  const { selectedChips, setOpen } = useFilterStore();
 
   useEffect(() => {
-    if (searchText) {
-      mutate(
-        {
-          keyword: searchText,
-          animalIds: selectedChips.breedId,
-          symptomIds: selectedChips.symptomIds,
-          diseaseIds: selectedChips.diseaseIds,
-          sortBy: "RECENT",
-          cursorId: undefined,
-          categoryId: undefined,
-          likeCount: undefined,
-          createAt: undefined,
+    if (!searchText) return;
+
+    mutate(
+      {
+        keyword: searchText,
+        animalIds: selectedChips.breedId,
+        symptomIds: selectedChips.symptomIds,
+        diseaseIds: selectedChips.diseaseIds,
+        sortBy: "RECENT",
+      },
+      {
+        onSuccess: (data) => {
+          setSearchDoneData(data || []);
         },
-        {
-          onSuccess: (data) => {
-            console.log(data);
-            if (data) {
-              setSearchDoneData(data);
-            }
-          },
-          onError: (error) => {
-            console.log(error);
-          },
-        }
-      );
-    }
-  }, [isOpen, selectedChips]);
+        onError: (error) => {
+          console.error("Search Error:", error);
+        },
+      }
+    );
+  }, [searchText, selectedChips, mutate]);
+
+  // 필터 활성화 여부 계산
+  useEffect(() => {
+    setIsFilterActive(
+      selectedChips.breedId.length > 0 ||
+        selectedChips.symptomIds.length > 0 ||
+        selectedChips.diseaseIds.length > 0
+    );
+  }, [selectedChips]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -85,7 +78,6 @@ const SearchDone = () => {
   const onTextFieldClick = () => {
     navigate(PATH.COMMUNITY.SEARCH + `?searchText=${searchText}`);
   };
-  console.log(searchDoneData);
 
   const onBackClick = () => {
     navigate(PATH.COMMUNITY.ROOT);
