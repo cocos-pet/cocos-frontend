@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import { IcLeftarrow, IcLikeActive, IcLikeDisabled, IcTest } from "@asset/svg";
 import { styles } from "@page/community/[postId]/Post.css.ts";
@@ -98,8 +98,8 @@ const PostDetail = () => {
       subComments: [],
     },
   ];
-  const [isLiked, setIsLiked] = useState(postData?.isLiked || false);
-  const [likeCount, setLikeCount] = useState(postData?.likeCounts || 0);
+  const [isLiked, setIsLiked] = useState(postData?.isLiked);
+  const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [comment, setComment] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,6 +122,14 @@ const PostDetail = () => {
     // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
   };
 
+  useEffect(() => {
+    // 초기 데이터 세팅
+    if (postData) {
+      setIsLiked(postData.isLiked);
+      setLikeCount(postData.likeCounts);
+    }
+  }, [postData]);
+
   const onLikePostClick = () => {
     if (getAccessToken() === null) {
       navigate(PATH.ONBOARDING.ROOT);
@@ -133,7 +141,9 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) => Number(prevState - 1));
+          setLikeCount((prevState) =>
+            Number(prevState !== undefined ? prevState - 1 : 0)
+          );
         },
         onError: (error) => {},
       }
@@ -151,7 +161,9 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) => Number(prevState + 1));
+          setLikeCount((prevState) =>
+            prevState !== undefined ? prevState + 1 : 0
+          );
         },
         onError: (error) => {},
       }
