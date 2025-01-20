@@ -81,7 +81,7 @@ const CategoryBottomSheet = ({ petId }: { petId: number }) => {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="확인하기" size="large" width="100%" onClick={handleClickButton} />
+          <Button label="수정하기" size="large" width="100%" onClick={handleClickButton} />
         </div>
       </>
     </BottomSheet>
