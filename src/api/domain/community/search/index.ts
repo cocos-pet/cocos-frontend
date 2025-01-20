@@ -25,7 +25,7 @@ type likePostResponse =
   paths["/api/dev/likes/{postId}"]["post"]["responses"]["204"]["content"]["*/*"];
 
 export const postLike = async (postId: string) => {
-  const { data } = await post<likePostResponse>(API_PATH.LIKE + `${postId}`);
+  const { data } = await post<likePostResponse>(`${API_PATH.LIKE}/${postId}`);
   return data;
 };
 
@@ -37,6 +37,6 @@ type likeDeleteResponse =
   paths["/api/dev/likes/{postId}"]["delete"]["responses"]["204"]["content"]["*/*"];
 
 export const deleteLike = async (postId: string) => {
-  const { data } = await del<likeDeleteResponse>(API_PATH.LIKE + `${postId}`);
+  const { data } = await del<likeDeleteResponse>(`${API_PATH.LIKE}/${postId}`);
   return data;
 };
