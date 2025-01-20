@@ -45,7 +45,8 @@ const PetEdit = () => {
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
   const [petAge, setPetAge] = useState("");
-  const [bodyIds, setBodyIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
   const [petId, setPetId] = useState<number | null>(null);
 
   const {
@@ -77,19 +78,23 @@ const PetEdit = () => {
   const { isLoading, data: member } = useGetMemberInfo();
   const { data: animal } = useGetAnimal();
   const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
-  const { data: bodies } = useGetBodies(category === "disease" ? "DISEASE" : "SYMPTOM");
-  const { data: symptoms } = useGetSymptoms(bodyIds);
-  const { data: disease } = useGetDisease(bodyIds);
+  const { data: diseaseBodies } = useGetBodies("DISEASE");
+  const { data: symptomBodies } = useGetBodies("SYMPTOM");
+
+  const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
+  const { data: disease } = useGetDisease(bodyDiseaseIds);
   const { data: petInfo } = useGetPetInfo();
 
   useEffect(() => {
-    if (bodies?.bodies) {
-      const idArr = bodies.bodies.map((item) => item.id as number);
-      if (idArr) {
-        setBodyIds(idArr);
+    if (diseaseBodies?.bodies && symptomBodies?.bodies) {
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      if (diseaseIdArr.length && symptomIdArr.length) {
+        setBodyDiseaseIds(diseaseIdArr);
+        setBodySymptomsIds(symptomIdArr);
       }
     }
-  }, [bodies]);
+  }, [diseaseBodies, symptomBodies]);
 
   useEffect(() => {
     console.log(animalCategory);
