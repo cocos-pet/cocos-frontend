@@ -9,13 +9,13 @@ import { COMMUNITY_CONTENT } from "@common/component/Nav/communityConstant";
 import SelectPost from "./components/SelectPost/SelectPost";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import * as styles from "./Community.css";
-import { API_PATH } from "@api/constants/apiPath";
+import { PATH } from "@route/path";
 
 const Community = () => {
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
-    navigate(API_PATH.SEARCH);
+    navigate(PATH.SEARCH.ROOT);
   };
 
   return (
