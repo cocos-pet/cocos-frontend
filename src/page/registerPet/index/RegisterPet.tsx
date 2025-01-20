@@ -6,6 +6,8 @@ import PetId from "@page/registerPet/index/component/petId/PetId";
 import PetAge from "@page/registerPet/index/component/petAge/PetAge";
 import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
 import PetHealth from "@page/registerPet/index/component/petHealth/PetHealth";
+import ProgressBar from "@page/registerPet/index/common/ProgressBar/ProgressBar";
+
 export interface PetData {
   breedId: number | null;
   name: string;
@@ -92,6 +94,11 @@ const RegisterPet = () => {
     }
   };
 
-  return <>{getComponent()}</>;
+  return (
+    <>
+      <ProgressBar max={6} current={step} />
+      {getComponent()}
+    </>
+  );
 };
 export default RegisterPet;
