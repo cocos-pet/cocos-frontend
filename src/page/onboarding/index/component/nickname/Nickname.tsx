@@ -9,7 +9,11 @@ import { validateNickname } from "@shared/util/validateNickname";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
 
-const Nickname = () => {
+interface NicknamePros {
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Nickname = ({ setStep }: NicknamePros) => {
   // 상태 하나로 관리
   const [nickname, setNickname] = useState("");
 
@@ -33,7 +37,7 @@ const Nickname = () => {
 
   // 다음 버튼
   const handleNext = () => {
-    console.log("다음 pr에서 구현할래욥.");
+    setStep(2);
   };
 
   return (
