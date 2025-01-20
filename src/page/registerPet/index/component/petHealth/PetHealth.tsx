@@ -8,6 +8,7 @@ import Step1 from "@page/registerPet/index/component/petHealth/disease/Step1";
 import Step2 from "@page/registerPet/index/component/petHealth/disease/Step2";
 import SymStep1 from "@page/registerPet/index/component/petHealth/symptom/SymStep1";
 import SymStep2 from "@page/registerPet/index/component/petHealth/symptom/SymStep2";
+import { useBodiesGet } from "@api/domain/registerPet/bodies/hook";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -140,13 +141,20 @@ const PetHealth = ({
     // 완료 페이지로 이동
     navigate(PATH.REGISTER_PET.COMPLETE);
   };
+  const { data: diseaseData } = useBodiesGet("disease");
+  const { data: symptomData } = useBodiesGet("symptom");
+
+  if (!diseaseData || !symptomData) return null;
 
   return (
     <>
       {currentStep === 1 && (
         <>
-          <Step1 selectedIds={selectedDiseaseBody} onBodyPartSelection={handleBodyPartSelection} />
-          {/* // 돌아가기 구현 안됨 */}
+          <Step1
+            data={diseaseData?.data}
+            selectedIds={selectedDiseaseBody}
+            onBodyPartSelection={handleBodyPartSelection}
+          />
           <div className={styles.btnWrapper}>
             <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBackDual} />
 
@@ -183,7 +191,11 @@ const PetHealth = ({
       )}
       {currentStep === 3 && (
         <>
-          <SymStep1 selectedIds={selectedSymptomBody} onBodyPartSelection={handleBodyPartSymSelection} />
+          <SymStep1
+            data={symptomData?.data}
+            selectedIds={selectedSymptomBody}
+            onBodyPartSelection={handleBodyPartSymSelection}
+          />
           <div className={styles.btnWrapper}>
             <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBack} />
             <Button

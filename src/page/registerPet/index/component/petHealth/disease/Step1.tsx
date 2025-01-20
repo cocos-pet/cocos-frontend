@@ -1,16 +1,18 @@
 import * as styles from "./Step1.css";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import { IcIcons } from "@asset/svg";
-import { DISEASE, BodyPart } from "@page/registerPet/index/component/petHealth/disease/Step1Constant";
+import { bodiesGetResponse } from "@api/domain/registerPet/bodies";
 
-const Step1 = ({
-  selectedIds,
-  onBodyPartSelection,
-}: {
+interface Step1Props {
   selectedIds: number[];
   onBodyPartSelection: (id: number) => void;
-}) => {
+  data: bodiesGetResponse["data"];
+}
+
+const Step1 = ({ selectedIds, data, onBodyPartSelection }: Step1Props) => {
+  if (!data || !data.bodies) {
+    return null; // 데이터가 없으면 컴포넌트 렌더링하지 않음
+  }
   const handleSelection = (id: number) => {
     if (selectedIds.includes(id)) {
       // 이미 선택된 항목은 선택 해제
@@ -19,9 +21,7 @@ const Step1 = ({
       // 2개 미만일 때만 새 항목 추가
       onBodyPartSelection(id);
     }
-    // 선택 개수가 2개를 초과하는 경우 무시
   };
-
   return (
     <>
       {/* 상단 영역 */}
@@ -35,14 +35,18 @@ const Step1 = ({
 
       {/* 컨텐츠 영역 */}
       <div className={styles.contentWrapper}>
-        {DISEASE.data.bodies.map((body: BodyPart) => (
+        {data.bodies.map((body) => (
           <button
             key={body.id}
-            className={`${styles.contentItem} ${selectedIds.includes(body.id) ? styles.selected : ""}`}
-            onClick={() => handleSelection(body.id)}
+            className={styles.contentItem}
+            onClick={() => {
+              if (body.id !== undefined) {
+                handleSelection(body.id);
+              }
+            }}
             type="button"
           >
-            <IcIcons width={56} height={56} />
+            <img src={body.image} width={56} height={56} alt="body-img" />
             <p>{body.name}</p>
           </button>
         ))}

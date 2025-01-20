@@ -1,16 +1,18 @@
 import * as styles from "@page/registerPet/index/component/petHealth/disease/Step1.css";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import { IcIcons } from "@asset/svg";
-import { SYMPTOM, BodyPart } from "@page/registerPet/index/component/petHealth/symptom/SymStep1Constant";
+import { bodiesGetResponse } from "@api/domain/registerPet/bodies";
 
-const SymStep1 = ({
-  selectedIds,
-  onBodyPartSelection,
-}: {
+interface SymStepProps {
   selectedIds: number[];
   onBodyPartSelection: (id: number) => void;
-}) => {
+  data: bodiesGetResponse["data"];
+}
+
+const SymStep1 = ({ data, selectedIds, onBodyPartSelection }: SymStepProps) => {
+  if (!data || !data.bodies) {
+    return null;
+  }
   const handleSelection = (id: number) => {
     if (selectedIds.includes(id)) {
       // 이미 선택된 항목은 선택 해제
@@ -19,7 +21,6 @@ const SymStep1 = ({
       // 2개 미만일 때만 새 항목 추가
       onBodyPartSelection(id);
     }
-    // 선택 개수가 2개를 초과하는 경우 무시
   };
 
   return (
@@ -35,15 +36,18 @@ const SymStep1 = ({
 
       {/* 컨텐츠 영역 */}
       <div className={styles.contentWrapper}>
-        {SYMPTOM.data.bodies.map((body: BodyPart) => (
+        {data.bodies.map((body) => (
           <button
             key={body.id}
-            className={`${styles.contentItem} ${selectedIds.includes(body.id) ? styles.selected : ""}`}
-            onClick={() => handleSelection(body.id)}
+            className={styles.contentItem}
+            onClick={() => {
+              if (body.id !== undefined) {
+                handleSelection(body.id);
+              }
+            }}
             type="button"
           >
-            {/* 아이콘도 api */}
-            <IcIcons width={56} height={56} />
+            <img src={body.image} width={56} height={56} alt="body-img" />
             <p>{body.name}</p>
           </button>
         ))}
