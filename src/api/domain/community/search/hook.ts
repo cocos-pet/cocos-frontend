@@ -1,14 +1,9 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import {
-  deleteLike,
-  getSearch,
-  postLike,
-} from "@api/domain/community/search/index.ts";
+
+import { getSearch } from "@api/domain/community/search/index.ts";
 
 export const SEARCH_QUERY_KEY = {
   SEARCH_QUERY_KEY: () => ["search"],
-  LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
-  LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
 };
 
 /**
@@ -19,32 +14,6 @@ export const useSearchGet = () => {
     queryKey: SEARCH_QUERY_KEY.SEARCH_QUERY_KEY(),
     queryFn: () => {
       return getSearch();
-    },
-  });
-};
-
-/**
- * @description 좋아요 추가 API
- * @param postId
- */
-export const useLikePost = (postId: string) => {
-  return useMutation({
-    mutationKey: SEARCH_QUERY_KEY.LIKE_POST_QUERY_KEY(postId),
-    mutationFn: (postId: { postId: string }) => {
-      return postLike(postId.postId);
-    },
-  });
-};
-
-/**
- * @description 좋아요 삭제 API
- * @param postId
- */
-export const useDeleteLike = (postId: string) => {
-  return useMutation({
-    mutationKey: SEARCH_QUERY_KEY.LIKE_DELETE_QUERY_KEY(postId),
-    mutationFn: (postId: { postId: string }) => {
-      return deleteLike(postId.postId);
     },
   });
 };
