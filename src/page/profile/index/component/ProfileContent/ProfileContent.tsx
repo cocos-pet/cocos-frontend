@@ -54,12 +54,14 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
-              petAge={`${data.age}살`}
+              age={`${data.age}살`}
               postTitle={data.title}
               postContent={data.content}
-              likeCount={data.likeCount}
-              commentCount={data.commentCount}
-              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)} id={0} createdAt={""} updateAt={""} category={""}            />
+              likeCnt={data.likeCount}
+              commentCnt={data.commentCount}
+              timeAgo="1시간 전" //추후 유틸로 대체
+              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
+            />
           </div>
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
