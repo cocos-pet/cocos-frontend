@@ -52,6 +52,7 @@ export const styles = {
       display: "flex",
       alignItems: "center",
       gap: "1rem",
+      width: "inherit",
     },
   }),
   input: recipe({
@@ -61,6 +62,8 @@ export const styles = {
         letterSpacing: "-0.28px",
         fontWeight: 500,
         height: "auto",
+        minWidth: "100%",
+
         maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",

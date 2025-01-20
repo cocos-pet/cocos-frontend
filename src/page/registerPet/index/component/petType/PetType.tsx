@@ -1,28 +1,12 @@
 import * as styles from "./PetType.css";
-import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import DualOptionSelector from "../../../../registerPet/index/common/dualOptionSelector/DualOptionSelector";
 import { Button } from "@common/component/Button";
-import selectImg from "@asset/image/image 1733.png";
 import { PetData } from "@page/registerPet/index/RegisterPet";
-
-const data = {
-  animal: [
-    {
-      id: 1,
-      label: "고양이",
-      image: selectImg, // import한 이미지 사용 (api -> url string)
-    },
-    {
-      id: 2,
-      label: "강아지",
-      image: selectImg,
-    },
-  ],
-};
+import { useAnimalGet } from "@api/domain/registerPet/animal/hook";
 
 interface PetTypeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -39,11 +23,13 @@ const PetType = ({ setStep, updatePetData }: PetTypeProps) => {
     updatePetData("breedId", value === "고양이" ? 1 : 2); // "고양이"는 1, "강아지"는 2
   };
 
-  // 뒤로 가기 (조립시 수정 예정)
-  const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    setStep((prev) => Math.max(prev - 1, 0));
   };
+
+  const { data, isLoading } = useAnimalGet();
+
+  if (isLoading || !data) return null;
 
   return (
     <>
@@ -55,7 +41,7 @@ const PetType = ({ setStep, updatePetData }: PetTypeProps) => {
         </div>
 
         {/* 타입 선택 영역 */}
-        <DualOptionSelector data={data.animal} onSelect={handleOptionSelect} />
+        <DualOptionSelector data={data} onSelect={handleOptionSelect} />
       </div>
 
       {/* 하단 영역 */}
