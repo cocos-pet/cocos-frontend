@@ -10,7 +10,10 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-import { useLikePost } from "@api/domain/community/search/hook.ts";
+import {
+  useDeleteLike,
+  useLikePost,
+} from "@api/domain/community/search/hook.ts";
 import { usePostGet } from "@api/domain/community/post/hook";
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
@@ -23,6 +26,7 @@ const PostDetail = () => {
   const { openModalId, setOpenModalId } = useModalStore();
   if (!postId) return <>loading</>;
   const { mutate: likePost } = useLikePost(postId);
+  const { mutate: likeDelete } = useDeleteLike(postId);
   const commentsData = [
     {
       id: 1,
@@ -127,10 +131,22 @@ const PostDetail = () => {
       { postId },
       {
         onSuccess: (data) => {
-          console.log("Post liked successfully", data);
+          console.log("좋아요 츄가 완", data);
         },
         onError: (error) => {
-          console.error("Error liking post", error);
+          console.error("좋아요 츄가 놉", error);
+        },
+      }
+    );
+
+    likeDelete(
+      { postId },
+      {
+        onSuccess: (data) => {
+          console.log("좋아요 삭제 완", data);
+        },
+        onError: (error) => {
+          console.error("좋아요 삭제 놉", error);
         },
       }
     );
