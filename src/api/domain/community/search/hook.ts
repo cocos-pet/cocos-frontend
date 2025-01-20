@@ -7,10 +7,7 @@ import {
 
 export const SEARCH_QUERY_KEY = {
   SEARCH_QUERY_KEY: () => ["search"],
-  SEARCH_POST_FILTERS_QUERY_KEY: (params: postPostFiltersRequest) => [
-    "postFilters",
-    params,
-  ],
+  SEARCH_POST_FILTERS_QUERY_KEY: () => ["postFilters"],
 };
 
 /**
@@ -25,9 +22,9 @@ export const useSearchGet = () => {
   });
 };
 
-export const usePostPostFilters = (params: postPostFiltersRequest) => {
+export const usePostPostFilters = () => {
   return useMutation({
-    mutationKey: SEARCH_QUERY_KEY.SEARCH_POST_FILTERS_QUERY_KEY(params),
+    mutationKey: SEARCH_QUERY_KEY.SEARCH_POST_FILTERS_QUERY_KEY(),
     mutationFn: (params: {
       keyword?: string;
       animalIds?: number[];

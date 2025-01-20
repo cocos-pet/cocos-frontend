@@ -48,32 +48,48 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
+        return (
+          <div className={styles.nothingContent}>
+            {"아직 작성한 후기가 없어요."}
+          </div>
+        );
       case "post":
         return dummyData.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
-              age={`${data.age}살`}
+              age={data.age}
               postTitle={data.title}
               postContent={data.content}
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
               timeAgo="1시간 전" //추후 유틸로 대체
-              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
+              onClick={() =>
+                alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)
+              }
             />
           </div>
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return renderAllComments(commentDummyData.comments, commentDummyData.subComments).map((data) => (
-          <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
+        return renderAllComments(
+          commentDummyData.comments,
+          commentDummyData.subComments
+        ).map((data) => (
+          <div
+            className={styles.mypagecontent}
+            key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}
+          >
             <MyPageComment
               postTitle={data.postTitle}
               content={data.content}
               timeAgo={data.createdAt}
-              mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
-              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
+              mentionedNickname={
+                isSubComment(data) ? data.mentionedNickname : undefined
+              }
+              onClick={() =>
+                alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)
+              }
             />
           </div>
         ));
