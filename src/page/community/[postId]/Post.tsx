@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow, IcTest } from "@asset/svg";
+import { IcLeftarrow, IcLikeActive, IcLikeDisabled, IcTest } from "@asset/svg";
 import { styles } from "@page/community/[postId]/Post.css.ts";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
@@ -98,8 +98,8 @@ const PostDetail = () => {
       subComments: [],
     },
   ];
-  // postData?.isLiked || TODO : 서버에서 받아온 데이터로 수정
-  const [isLiked, setIsLiked] = useState(true);
+  const [isLiked, setIsLiked] = useState(postData?.isLiked || false);
+  const [likeCount, setLikeCount] = useState(postData?.likeCounts || 0);
   const [comment, setComment] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -122,40 +122,42 @@ const PostDetail = () => {
     // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
   };
 
-  const handleLike = () => {
-    // 로그인 안되어 있을 때 로그인 페이지로
+  const onLikePostClick = () => {
     if (getAccessToken() === null) {
       navigate(PATH.ONBOARDING.ROOT);
       return;
     }
 
-    if (isLiked) {
-      likeDelete(
-        { postId },
-        {
-          onSuccess: (data) => {
-            console.log("좋아요 삭제 완", data);
-            setIsLiked(false);
-          },
-          onError: (error) => {
-            console.error("좋아요 삭제 놉", error);
-          },
-        }
-      );
-    } else {
-      likePost(
-        { postId },
-        {
-          onSuccess: (data) => {
-            console.log("좋아요 츄가 완", data);
-            setIsLiked(true);
-          },
-          onError: (error) => {
-            console.error("좋아요 츄가 놉", error);
-          },
-        }
-      );
+    likeDelete(
+      { postId },
+      {
+        onSuccess: (data) => {
+          setIsLiked(false);
+          setLikeCount((prevState) => Number(prevState - 1));
+        },
+        onError: (error) => {},
+      }
+    );
+  };
+
+  const onLikeDeleteClick = () => {
+    if (getAccessToken() === null) {
+      navigate(PATH.ONBOARDING.ROOT);
+      return;
     }
+
+    likePost(
+      { postId },
+      {
+        onSuccess: (data) => {
+          setIsLiked(true);
+          setLikeCount((prevState) => Number(prevState + 1));
+        },
+        onError: (error) => {
+          console.error("좋아요 츄가 놉", error);
+        },
+      }
+    );
   };
 
   if (isLoading || !postData || !postId) return <>loading</>;
@@ -219,9 +221,17 @@ const PostDetail = () => {
         </div>
         <div className={styles.subContents}>
           <div className={styles.item}>
-            {/* TODO : 궁금해요/응원해요 아아콘 결정되면 수정 */}
-            <IcTest width={24} height={24} onClick={handleLike} />
-            <span>{postData.likeCounts}</span>
+            {isLiked ? (
+              <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
+            ) : (
+              <IcLikeDisabled
+                width={24}
+                height={24}
+                onClick={onLikeDeleteClick}
+              />
+            )}
+            {/*<span>{postData.likeCounts}</span>*/}
+            <span>{likeCount}</span>
           </div>
         </div>
       </div>

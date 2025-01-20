@@ -170,11 +170,7 @@ export interface paths {
          * @description 게시글에 댓글을 추가하는 API 입니다.
          */
         post: operations["addPostComment"];
-        /**
-         * 게시글 댓글 삭제 API
-         * @description 게시글의 댓글을 삭제하는 API 입니다.
-         */
-        delete: operations["deletePostComment"];
+        delete?: never;
         options?: never;
         head?: never;
         patch?: never;
@@ -424,6 +420,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/members/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 닉네임 중복 조회 API
+         * @description 중복된 닉네임이 있는지 검사합니다.
+         */
+        get: operations["checkNickname"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/diseases": {
         parameters: {
             query?: never;
@@ -519,6 +535,26 @@ export interface paths {
         put?: never;
         post?: never;
         delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/comments/{commentId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * 게시글 댓글 삭제 API
+         * @description 게시글의 댓글을 삭제하는 API 입니다.
+         */
+        delete: operations["deletePostComment"];
         options?: never;
         head?: never;
         patch?: never;
@@ -1053,6 +1089,11 @@ export interface components {
              * @example yyyy-mm-dd:hh-mm-ss~
              */
             updatedAt?: string;
+            /**
+             * @description 좋아요 클릭 여부
+             * @example true
+             */
+            isLiked?: boolean;
         };
         BaseResponsePopularPostsResponse: {
             /** Format: int32 */
@@ -1881,28 +1922,6 @@ export interface operations {
             };
         };
     };
-    deletePostComment: {
-        parameters: {
-            query?: never;
-            header?: never;
-            path: {
-                postId: number;
-            };
-            cookie?: never;
-        };
-        requestBody?: never;
-        responses: {
-            /** @description 요청이 성공했습니다.  */
-            200: {
-                headers: {
-                    [name: string]: unknown;
-                };
-                content: {
-                    "*/*": components["schemas"]["BaseResponseVoid"];
-                };
-            };
-        };
-    };
     addPostSubComment: {
         parameters: {
             query?: never;
@@ -2213,6 +2232,28 @@ export interface operations {
             };
         };
     };
+    checkNickname: {
+        parameters: {
+            query: {
+                nickname: string;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 요청에 성공했습니다.  */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseNicknameExistenceResponse"];
+                };
+            };
+        };
+    };
     getDiseases: {
         parameters: {
             query: {
@@ -2260,9 +2301,9 @@ export interface operations {
     };
     getBreeds: {
         parameters: {
-            query: {
+            query?: {
                 /** @description 품종 이름 */
-                breedName: unknown;
+                breedName?: unknown;
             };
             header?: never;
             path: {
@@ -2287,7 +2328,7 @@ export interface operations {
     getBodies: {
         parameters: {
             query: {
-                /** @description 반려동물 문제 */
+                /** @description 반려동물 문제(DISEASE or SYMPTOM) */
                 petProblem: unknown;
             };
             header?: never;
@@ -2323,6 +2364,29 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["BaseResponseAnimalsResponse"];
+                };
+            };
+        };
+    };
+    deletePostComment: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description 댓글 아이디 */
+                commentId: unknown;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 요청이 성공했습니다.  */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseVoid"];
                 };
             };
         };

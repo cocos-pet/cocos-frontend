@@ -30,7 +30,8 @@ export const postLike = async (postId: string) => {
 };
 
 /**
- *
+ * @description 좋아요 삭제 API
+ * @param postId
  */
 
 type likeDeleteResponse =
