@@ -10,9 +10,8 @@ const SEARCH_QUERY_KEY = {
   SEARCH_POST_QUERY_KEY: () => ["searchPost"],
 };
 
-
 /**
- * @description 최근 검색어 조회 API
+ * @description 최근 검색어 GET API
  */
 export const useSearchGet = () => {
   return useQuery({

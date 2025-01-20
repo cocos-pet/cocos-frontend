@@ -1,13 +1,14 @@
-import SubComment, { SubCommentData } from "./SubComment";
+import SubComment from "./SubComment";
+import { SubCommentType } from "@common/component/Comment/Comment.tsx";
 
 interface SubCommentListProps {
-  subComments: SubCommentData[];
+  subComments?: SubCommentType[];
 }
 
 const SubCommentList = ({ subComments }: SubCommentListProps) => {
   return (
     <div>
-      {subComments.map((subComment) => (
+      {subComments?.map((subComment) => (
         <SubComment key={subComment.id} subComment={subComment} />
       ))}
     </div>

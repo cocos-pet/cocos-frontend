@@ -3,34 +3,35 @@ import { IcEllipses, IcMessage } from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
+import { commentGetResponse } from "@api/domain/community/post";
+import { components } from "@type/schema";
 
-export interface SubComment {
-  id: number;
-  profileImage: string;
-  nickname: string;
-  breed: string;
-  petAge: number;
-  content: string;
-  createdAt: string;
-  isWriter: boolean;
-  mentionedNickname: string;
+export interface SubCommentType {
+  id?: number;
+  profileImage?: string;
+  nickname?: string;
+  breed?: string;
+  petAge?: number;
+  content?: string;
+  createdAt?: string;
+  isWriter?: boolean;
+  mentionedNickname?: string;
 }
 
 export interface CommentType {
-  id: number;
-  profileImage: string;
-  nickname: string;
-  breed: string;
-  petAge: number;
-  content: string;
-  createdAt: string;
-  isWriter: boolean;
-  subComments: SubComment[]; // 대댓글 배열
+  id?: number;
+  profileImage?: string;
+  nickname?: string;
+  breed?: string;
+  petAge?: number;
+  content?: string;
+  createdAt?: string;
+  isWriter?: boolean;
+  subComments?: SubCommentType[];
 }
-
 interface CommentProps {
   comment: CommentType;
-  onReplyClick?: (id: number) => void;
+  onReplyClick?: (id: number | undefined) => void;
   onDelete: () => void;
 }
 
@@ -40,6 +41,7 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
       onReplyClick(comment.id);
     }
   };
+
   const { openModalId, setOpenModalId } = useModalStore();
 
   return (
@@ -55,7 +57,7 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
             <span className={styles.nickname}>{comment.nickname}</span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt.toLocaleString()}
+              {comment.createdAt ? comment.createdAt.toLocaleString() : ""}
             </span>
           </div>
           <MoreModal
@@ -76,7 +78,7 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
       </div>
 
       {/* 대댓글 리스트 */}
-      {comment.subComments.length > 0 && (
+      {comment.subComments && (
         <div>
           <SubCommentList subComments={comment.subComments} />
         </div>

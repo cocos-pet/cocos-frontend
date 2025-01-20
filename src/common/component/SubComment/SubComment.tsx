@@ -2,22 +2,11 @@ import * as styles from "./SubComment.css";
 import { IcEllipses, IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
-
-export interface SubCommentData {
-  id: number;
-  nickname: string;
-  breed: string;
-  petAge: number;
-  content: string;
-  createdAt: string;
-  isWriter: boolean;
-  profileImage: string;
-  mentionedNickname: string;
-}
+import { SubCommentType } from "@common/component/Comment/Comment.tsx";
 
 interface SubCommentProps {
-  subComment: SubCommentData;
-  onReplyClick?: (id: number) => void;
+  subComment: SubCommentType;
+  onReplyClick?: (id: number | undefined) => void;
 }
 
 const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
@@ -31,6 +20,9 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
+    if (!content) {
+      return;
+    }
     //mention 변수에 @ 추가하기
     const mention = `@${mentionedNickname}`;
     const parts = content.split(mention);
@@ -60,7 +52,9 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
             <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt.toLocaleString()}
+              {subComment.createdAt
+                ? subComment.createdAt.toLocaleString()
+                : ""}
             </span>
           </div>
           <MoreModal
