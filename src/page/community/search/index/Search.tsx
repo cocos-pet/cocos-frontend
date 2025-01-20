@@ -22,21 +22,21 @@ const Search = () => {
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
-  const { mutate } = useSearchPost();
+  const { mutate, isPending, isError } = useSearchPost({ keyword: searchText });
 
   const inputRef = useRef<HTMLInputElement>(null);
 
   const onSubmit = (searchText: string) => {
-    if (!searchText || isLoading) return;
+    if (!searchText || isPending || isError) return;
     mutate(
       { keyword: searchText },
       {
         onSuccess: () => {
           handleNavigate(searchText);
         },
-        onError: () => {
-          alert("검색에 실패했습니다.");
-        },
+        // onError: () => {
+        //   alert("검색에 실패했습니다.");
+        // },
       }
     );
   };
@@ -78,7 +78,7 @@ const Search = () => {
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
           onKeyDown={handleKeyDown}
-          icon={<IcSearch onClick={() => onSubmit(searchText)} />}
+          icon={<IcSearch />}
           onClearClick={() => setSearchText("")}
         />
       </div>

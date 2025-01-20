@@ -8,6 +8,13 @@ export type searchGetResponse =
 export type searchPostRequest =
   paths["/api/dev/search"]["post"]["parameters"]["query"];
 
+export type searchPostResponse =
+  paths["/api/dev/search"]["post"]["responses"]["200"]["content"]["*/*"];
+
+export interface searchPostType {
+  keyword: string;
+}
+
 /**
  * @description 최근 검색어 조회 API
  */
@@ -17,8 +24,8 @@ export const getSearch = async () => {
   return data.data;
 };
 
-export const postSearch = async (body: searchPostRequest) => {
-  return await post<searchPostRequest>(
+export const postSearch = async (body: searchPostType) => {
+  return await post<searchPostType>(
     API_PATH.SEARCH + `?keyword=${body.keyword}`
   );
 };
