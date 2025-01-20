@@ -32,7 +32,7 @@ export const selector = recipe({
       },
       selected: {
         color: color.primary.blue600,
-        backgroundColor: color.yellow.yellow100,
+        backgroundColor: " rgba(67, 214, 255, 0.16)",
       },
     },
   },

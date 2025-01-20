@@ -26,6 +26,7 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
       onReplyClick(subComment.id);
     }
   };
+
   const { openModalId, setOpenModalId } = useModalStore();
 
   const renderContent = () => {

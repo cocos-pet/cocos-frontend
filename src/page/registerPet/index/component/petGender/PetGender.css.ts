@@ -4,7 +4,7 @@ export const layout = style({
   display: "flex",
   flexDirection: "column",
   padding: "8rem 2rem",
-  gap: "9rem",
+  gap: "7.2rem",
 });
 
 export const btnWrapper = style({
