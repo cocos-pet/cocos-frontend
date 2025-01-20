@@ -7,7 +7,7 @@ import Docs from "@page/onboarding/index/common/docs/Docs";
 import { validateNickname } from "@shared/util/validateNickname";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
-import nicknameCoco from "@asset/image/nicknameCoco.png";
+import nicknameCoco from "@asset/image/nicknameCoco.png";
 
 interface NicknamePros {
   setStep: React.Dispatch<React.SetStateAction<number>>;
