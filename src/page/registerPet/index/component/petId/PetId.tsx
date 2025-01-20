@@ -36,28 +36,30 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
+    const value = e.target.value.replace(/\s+/g, ""); // 모든 공백을 제거
     setInput(value);
 
     const allItems = getAllItems();
-    if (value.trim().length > 0) {
-      const filtered = allItems.filter((item) => item.name.includes(value));
+    if (value.length > 0) {
+      // 입력값과 품종명에서 모든 공백을 제거하고 비교
+      const filtered = allItems.filter((item) => item.name.replace(/\s+/g, "").includes(value));
       setFilteredItems(filtered);
     } else {
-      setFilteredItems(allItems);
+      setFilteredItems(allItems); // 입력값이 없으면 전체 품종 목록
     }
   };
 
   const handleDropDownClick = (value: string) => {
-    setInput(value);
-    const selectedBreed = filteredItems.find((breed) => breed.name === value);
+    const trimmedValue = value.replace(/\s+/g, ""); // 선택된 값에서 모든 공백 제거
+    setInput(trimmedValue);
+    const selectedBreed = filteredItems.find((breed) => breed.name.replace(/\s+/g, "") === trimmedValue);
     if (selectedBreed) {
       updatePetData("breedId", selectedBreed.id);
     }
   };
 
   const isDropDownOpen = input.length > 0 && filteredItems.length > 0;
-  const isInputValid = filteredItems.some((breed) => breed.name === input);
+  const isInputValid = filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === input);
 
   const handleGoBack = () => {
     setStep((prev) => Math.max(prev - 1, 0));
