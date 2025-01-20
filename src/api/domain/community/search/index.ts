@@ -26,6 +26,6 @@ export const getSearch = async () => {
 
 export const postSearch = async (body: searchPostType) => {
   return await post<searchPostType>(
-    API_PATH.SEARCH + `?keyword=${body.keyword}`
+    `${API_PATH.SEARCH}?keyword=${body.keyword}`
   );
 };
