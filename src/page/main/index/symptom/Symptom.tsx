@@ -17,10 +17,6 @@ const Symptom = ({ petProblem }: GetBodyProps) => {
       <p className={styles.symptomTitle}>증상이 나타나는 부위가 어딘가요?</p>
       <div className={styles.symptomGrid}>
         {body.map((body) => {
-          console.log(body.image);
-          if (!body.image) {
-            console.log(`Image not found for ${body.name}`);
-          }
           return (
             <button
               key={body.id}
