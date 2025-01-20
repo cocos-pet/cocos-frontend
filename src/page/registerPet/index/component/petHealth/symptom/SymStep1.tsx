@@ -42,6 +42,7 @@ const SymStep1 = ({
             onClick={() => handleSelection(body.id)}
             type="button"
           >
+            {/* 아이콘도 api */}
             <IcIcons width={56} height={56} />
             <p>{body.name}</p>
           </button>
