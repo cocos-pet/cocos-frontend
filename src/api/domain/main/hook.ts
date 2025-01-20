@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPopular } from ".";
+import { getBodyPartsResponse, getPopular } from ".";
 
 export const useQueryGetPopular = () => {
   return useQuery({
@@ -12,6 +12,18 @@ export const MAIN_QUERY_KEY = {
   POST_POPULAR_LIST: () => ["postPopularList"],
 };
 
+export const MAIN_BODY_PARTS_QUERY_KEY = {
+  BODY_PARTS_KEY: (petProblem: string) => ["body", petProblem],
+};
+
+// useGetBodyParts 훅
+export const useGetBodyParts = (petProblem: string) => {
+  return useQuery({
+    queryKey: MAIN_BODY_PARTS_QUERY_KEY.BODY_PARTS_KEY(petProblem),
+    queryFn: () => getBodyPartsResponse(petProblem),
+    initialData: [],
+  });
+};
 //🐶🐶🐶🐶🐶🐶🐶🐶🐶🐶
 // 2. 쿼리 함수를 작성한다
 // 이때 쿼리 키는 고유하게 설정한다.

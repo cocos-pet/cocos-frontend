@@ -12,8 +12,6 @@ import Spacing from "@common/component/Spacing/Spacing";
 import { useQueryGetPopular } from "@api/domain/main/hook";
 import { PATH } from "@route/path";
 
-const petName = "모모";
-
 const Main = () => {
   const { data: postsData } = useQueryGetPopular();
 
@@ -47,9 +45,9 @@ const Main = () => {
         />
       </div>
       <MainHeader />
-      <Symptom />
+      <Symptom bodies={[]} />
       <Divider />
-      <HotPost petName={petName} posts={postsData.data?.posts} />
+      <HotPost posts={[]} />
       <Divider />
       <MainFooter />
       <Spacing marginBottom="8" />

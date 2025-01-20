@@ -1,23 +1,35 @@
 import { useNavigate } from "react-router-dom";
 import * as styles from "./HotPost.css";
 import Divider from "@common/component/Divider/Divider";
+import { useQueryGetPopular } from "@api/domain/main/hook"; // `useQueryGetPopular` import 확인
 
 interface Post {
-  id: number;
-  title: string;
+  id?: number; // id가 optional로 설정
+  title?: string; // title도 optional로 설정
 }
 
 interface HotPostProps {
   petName?: string;
-  posts?: Post[];
 }
 
-const HotPost = ({ petName, posts }: HotPostProps) => {
+const HotPost = ({ petName }: HotPostProps) => {
   const navigate = useNavigate();
-  console.log(posts);
 
-  const handlePostClick = (postId: number) => {
-    navigate(`/community/${postId}`);
+  const { data: postsData, isLoading, isError } = useQueryGetPopular();
+
+  if (isLoading) {
+    return <p>로딩 중...</p>;
+  }
+
+  if (isError || !postsData?.data?.posts) {
+    return <p>데이터를 불러오는 데 실패했습니다.</p>;
+  }
+
+  const posts = postsData.data.posts || [];
+  const handlePostClick = (postId?: number) => {
+    if (postId !== undefined) {
+      navigate(`/community/${postId}`);
+    }
   };
 
   return (
@@ -35,13 +47,13 @@ const HotPost = ({ petName, posts }: HotPostProps) => {
       </div>
 
       <div className={styles.hotPostListContainer}>
-        {posts?.map((post, index) => (
+        {posts.map((post, index) => (
           <div key={post.id}>
             <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
-              <div className={styles.contentId}>{post.id}</div>
+              <div className={styles.contentId}>{index + 1}</div>
               <div className={styles.contentTitle}>{post.title}</div>
             </div>
-            {index !== posts.length - 1 && <Divider size="small" />}
+            {post.id !== posts[posts.length - 1]?.id && <Divider size="small" />}
           </div>
         ))}
       </div>

@@ -1540,12 +1540,14 @@ export interface components {
             breeds?: components["schemas"]["BreedResponse"][];
         };
         BaseResponseBodiesResponse: {
+            [x: string]: never[];
             /** Format: int32 */
             code?: number;
             message?: string;
             data?: components["schemas"]["BodiesResponse"];
         };
         BodiesResponse: {
+            [x: string]: any;
             /** @description 신체 부위 리스트 */
             bodies?: components["schemas"]["BodyResponse"][];
         };

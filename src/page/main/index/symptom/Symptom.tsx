@@ -1,7 +1,21 @@
+import { useGetBodyParts } from "@api/domain/main/hook";
 import * as styles from "./Symptom.css";
-import { symptomMock } from "@shared/constant/symptomMock";
 
-const Symptom = () => {
+
+interface SymptomItem {
+  id: number;
+  name: string;
+  image: string;
+};
+interface GetBodyProps {
+  bodies: SymptomItem[];
+}
+
+const Symptom = ({ bodies }: GetBodyProps) => {
+  const { data } = useGetBodyParts("symptom");
+
+  const symptom = data;
+
   const handleClick = (name: string) => {
     console.log(`${name} 버튼이 클릭되었습니다.`);
   };
@@ -10,7 +24,7 @@ const Symptom = () => {
     <div className={styles.symptomContainer}>
       <p className={styles.symptomTitle}>증상이 나타나는 부위가 어딘가요?</p>
       <div className={styles.symptomGrid}>
-        {symptomMock.map((symptom) => (
+        {bodies.map((symptom: SymptomItem) => (
           <button
             key={symptom.id}
             className={styles.symptomItem}
@@ -19,7 +33,6 @@ const Symptom = () => {
             type="button"
           >
             <img src={symptom.image} alt={`${symptom.name} 아이콘`} />
-
             <p className={styles.symptomName}>{symptom.name}</p>
           </button>
         ))}
