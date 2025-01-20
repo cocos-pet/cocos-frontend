@@ -6,10 +6,10 @@ import { COMMUNITY_CONTENT } from "./communityConstant";
 
 type Props = {
   content: typeof NAV_CONTENT | typeof COMMUNITY_CONTENT;
-  type: "nav" | "community";
+  type?: "nav" | "community";
 };
 
-const Nav = ({ content, type }: Props) => {
+const Nav = ({ content, type = "nav" }: Props) => {
   const location = useLocation();
 
   const extractFirstPath = (): string => {

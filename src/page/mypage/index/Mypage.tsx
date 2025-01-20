@@ -10,6 +10,7 @@ import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import { PET_PROFILE, USER_PROFILE } from "./constant";
 import { PATH } from "@route/path";
+import { NAV_CONTENT } from "@common/component/Nav/constant";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -114,7 +115,7 @@ const Mypage = () => {
       </article>
 
       <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
-        <Nav />
+        <Nav content={NAV_CONTENT} type={"nav"} />
       </span>
     </div>
   );
