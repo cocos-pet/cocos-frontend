@@ -24,7 +24,7 @@ const Symptom = ({ petProblem }: GetBodyProps) => {
               onClick={() => handleClick(body.name as string)}
               aria-label={`증상 부위: ${body.name}`}
               type="button"
-            >
+            >`
               <img src={body.image} alt={`${body.name} 아이콘`} />
               <p className={styles.symptomName}>{body.name}</p>
             </button>

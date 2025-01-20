@@ -7,7 +7,6 @@ type GetPopularResponse = paths["/api/dev/posts/popular"]["get"]["responses"]["2
 
 export const getPopular = async (): Promise<GetPopularResponse> => {
   const { data } = await get<GetPopularResponse>(API_PATH.POST_POPULAR);
-  console.log(data);
   return data;
 };
 
@@ -18,8 +17,6 @@ export const getBodyParts = async (petProblem: string): Promise<GetBodyPartsResp
   const validProblem = petProblem === "symptom" || petProblem === "disease" ? petProblem : "symptom";
 
   const { data } = await get<GetBodyPartsResponse>(`${API_PATH.BODY}?petProblem=${validProblem}`);
-  console.log("Request URL:", `${API_PATH.BODY}?petProblem=${validProblem}`);
-  console.log(data);
   return data;
 };
 

@@ -12,7 +12,7 @@ export interface FilterItem {
   name: string;
 }
 export interface SymptomItem extends FilterItem {
-  [x: string]: string | undefined;
+  [x: number]: string | undefined;
   symptoms: FilterItem[];
 }
 export interface DiseaseItem extends FilterItem {
