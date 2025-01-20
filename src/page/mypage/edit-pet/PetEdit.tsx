@@ -22,6 +22,7 @@ import {
   useGetBreed,
   useGetDisease,
   useGetMemberInfo,
+  useGetPetInfo,
   useGetSymptoms,
 } from "@api/domain/mypage/edit-pet/hook";
 
@@ -38,15 +39,26 @@ const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
 
+  //todo: reducer 혹은 하나의 객체로 상태 관리하기
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
   const [petAge, setPetAge] = useState("");
   const [bodyIds, setBodyIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const [petId, setPetId] = useState<number | null>(null);
 
-  const { isOpen, setOpen, category, setCategory, setCategoryData, selectedChips, categoryData } =
-    useCategoryFilterStore();
+  const {
+    isOpen,
+    setOpen,
+    category,
+    setCategory,
+    setCategoryData,
+    selectedChips,
+    toggleChips,
+    categoryData,
+    setSelectedChips,
+  } = useCategoryFilterStore();
   const {
     isOpen: animalOpen,
     setOpen: setAnimalOpen,
@@ -58,7 +70,6 @@ const PetEdit = () => {
     categoryData: animalCategoryData,
   } = useAnimalFilterStore();
   const [ageBottomSheetOpen, setAgeBottomSheetOpen] = useState(false);
-
   const updatePetAge = (e: ChangeEvent<HTMLInputElement>) => {
     setPetAge(e.target.value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
@@ -69,6 +80,7 @@ const PetEdit = () => {
   const { data: bodies } = useGetBodies(category === "disease" ? "DISEASE" : "SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodyIds);
   const { data: disease } = useGetDisease(bodyIds);
+  const { data: petInfo } = useGetPetInfo();
 
   useEffect(() => {
     if (bodies?.bodies) {
@@ -79,15 +91,16 @@ const PetEdit = () => {
     }
   }, [bodies]);
 
-  // setAnimalCategoryData("breeds",data?.breeds)
-
   useEffect(() => {
     console.log(animalCategory);
   }, [animalCategory]);
 
   useEffect(() => {
-    animalToggleChips({ id: null, category: "breedId" }); // animalId가 변경되면 breedId 초기화
-  }, [animalChips.animalId, animalToggleChips]);
+    // animalId가 변경되었을 때만 breedId를 초기화
+    if (animalChips.animalId !== petInfo?.animalId) {
+      animalToggleChips({ id: null, category: "breedId" });
+    }
+  }, [animalChips.animalId, animalToggleChips, petInfo?.animalId]);
 
   useEffect(() => {
     if (isEditing && ref.current) {
@@ -103,16 +116,36 @@ const PetEdit = () => {
       console.log(animal.animals);
       setAnimalCategoryData("animal", animal.animals);
     }
-    if (breed?.breeds) {
-      setAnimalCategoryData("breeds", breed.breeds);
-    }
     if (symptoms?.bodies) {
       setCategoryData("symptoms", symptoms.bodies);
     }
     if (disease?.bodies) {
       setCategoryData("disease", disease.bodies);
     }
-  }, [member, animal, breed, symptoms, disease, setCategoryData, setAnimalCategoryData]);
+    if (petInfo?.animalId && petInfo?.breedId && petInfo?.petGender) {
+      // 상태가 이미 동일한 값을 가지고 있다면 업데이트하지 않음 -> 무한 렌더링 방지
+      if (
+        animalChips.animalId !== petInfo.animalId ||
+        animalChips.breedId !== petInfo.breedId ||
+        animalChips.gender !== petInfo.petGender
+      ) {
+        animalToggleChips({ id: petInfo.animalId, category: "animalId" });
+        animalToggleChips({ category: "breedId", id: petInfo.breedId });
+        animalToggleChips({ category: "gender", id: petInfo.petGender });
+        console.log(petInfo.symptoms);
+        if (petInfo.symptoms && petInfo.diseases) {
+          setSelectedChips({ ids: petInfo.symptoms.map((item) => item.id), category: "symptomIds" });
+          setSelectedChips({ ids: petInfo.diseases.map((item) => item.id), category: "diseaseIds" });
+        }
+      }
+    }
+  }, [member, animal, symptoms, disease, petInfo, setCategoryData, setAnimalCategoryData, animalToggleChips]);
+
+  useEffect(() => {
+    if (breed?.breeds) {
+      setAnimalCategoryData("breeds", breed.breeds);
+    }
+  }, [breed, setAnimalCategoryData]);
 
   if (isLoading || !member || !animal) return;
 

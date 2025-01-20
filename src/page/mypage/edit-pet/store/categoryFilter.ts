@@ -42,6 +42,18 @@ interface CategoryFilterState {
   // 적용된 필터
   selectedChips: SelectedChips;
   toggleChips: (chip: { id: number; category: keyof SelectedChips }) => void;
+  setSelectedChips: ({
+    ids,
+    category,
+  }: {
+    ids: (number | undefined)[] | undefined;
+    category: keyof SelectedChips;
+  }) => void;
+
+  symptoms?: {
+    id?: number;
+    name?: string;
+  }[];
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
@@ -69,6 +81,21 @@ export const useCategoryFilterStore = create<CategoryFilterState>((set) => ({
         selectedChips: {
           ...state.selectedChips,
           [category]: updatedList,
+        },
+      };
+    }),
+  setSelectedChips: ({
+    ids,
+    category,
+  }: {
+    ids: (number | undefined)[] | undefined;
+    category: keyof SelectedChips;
+  }) =>
+    set((state) => {
+      return {
+        selectedChips: {
+          ...state.selectedChips,
+          [category]: ids,
         },
       };
     }),

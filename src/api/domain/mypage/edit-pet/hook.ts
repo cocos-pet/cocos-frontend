@@ -1,4 +1,4 @@
-import { getBodys, getBreed, getDisease, getSymptoms } from "./index";
+import { getBodys, getBreed, getDisease, getPetInfo, getSymptoms } from "./index";
 import { useQuery } from "@tanstack/react-query";
 import { getAnimal, getMemberInfo } from ".";
 
@@ -25,6 +25,10 @@ export const SYMPTOMS_QUERY_KEY = {
 
 export const DISEASE_QUERY_KEY = {
   DISEASE: (bodyIds: number[]) => ["disease", ...bodyIds],
+};
+
+export const PETINFO_QUERY_KEY = {
+  PET_INFO: (nickname?: string) => ["petInfo", nickname],
 };
 
 export const useGetMemberInfo = () => {
@@ -79,6 +83,16 @@ export const useGetDisease = (bodyIds: number[]) => {
   return useQuery({
     queryKey: DISEASE_QUERY_KEY.DISEASE(bodyIds),
     queryFn: () => getDisease(bodyIds),
+    staleTime: 1000 * 60 * 10,
+  });
+};
+
+//궁금증 : undefind을 인자로 보내면, 인식을 할까?
+//todo: invaildate 필요(나중에 patch 되면)
+export const useGetPetInfo = (nickname?: string) => {
+  return useQuery({
+    queryKey: PETINFO_QUERY_KEY.PET_INFO(nickname),
+    queryFn: () => getPetInfo(nickname),
     staleTime: 1000 * 60 * 10,
   });
 };

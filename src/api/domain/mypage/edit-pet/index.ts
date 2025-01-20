@@ -47,3 +47,14 @@ export const getDisease = async (bodyIds: number[]) => {
   });
   return data.data;
 };
+
+//nickname을 안주고 accessToken만 주면 나의 반려동물 정보
+export const getPetInfo = async (nickname?: string) => {
+  type MyPetInfo = paths["/api/dev/pets"]["get"]["responses"]["200"]["content"]["*/*"];
+  const { data } = await get<MyPetInfo>(`${API_PATH.PETS}`, {
+    params: {
+      nickname,
+    },
+  });
+  return data.data;
+};
