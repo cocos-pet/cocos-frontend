@@ -1,6 +1,5 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import * as styles from "./Category.css";
-import { validTypes } from "./Category";
 import { postData } from "@shared/constant/postData";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -9,6 +8,13 @@ import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 import { useFilterStore } from "@store/filter";
 
+interface CategoryItem {
+  id: number;
+  name: string;
+  image: string;
+}
+
+export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
   symptom: "증상·질병",
   hospital: "병원고민",
