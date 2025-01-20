@@ -4,7 +4,7 @@ export const title = style({
   display: "flex",
   flexDirection: "column",
   gap: "0.7rem",
-  margin: "7.2rem 2rem 3.2rem",
+  margin: "8rem 2rem 3.6rem",
 });
 
 export const contentWrapper = style({

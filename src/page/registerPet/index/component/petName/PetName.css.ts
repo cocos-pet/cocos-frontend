@@ -1,9 +1,14 @@
 import { style } from "@vanilla-extract/css";
 
 export const layout = style({
+  position: "absolute",
+  top: "8rem",
+
+  minWidth: "37.1rem",
+
   display: "flex",
   flexDirection: "column",
-  padding: "8rem 2rem",
+  padding: "0 2rem",
   gap: "9rem",
 });
 

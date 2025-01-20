@@ -96,7 +96,7 @@ const RegisterPet = () => {
 
   return (
     <>
-      <ProgressBar max={6} current={step} />
+      <ProgressBar max={7} current={step} />
       {getComponent()}
     </>
   );
