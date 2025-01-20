@@ -89,7 +89,7 @@ const Category = () => {
       {/* 코코스매거진이 아닐 때만 플로팅 버튼 표시 */}
       {type !== "magazine" && (
         <div className={styles.floatingBtnContainer}>
-          <FloatingBtn />
+          <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
         </div>
       )}
     </div>
