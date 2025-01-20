@@ -4,9 +4,9 @@ import { styles } from "@common/component/Content/Content.css.ts";
 interface ContentPropTypes {
   id: number;
   breed: string;
-  petAge: number;
-  title: string;
-  content: string;
+  petAge: string;
+  postTitle: string;
+  postContent: string;
   likeIconType?: "curious" | "support";
   likeCount?: number;
   commentCount?: number;
@@ -35,8 +35,8 @@ interface ContentPropTypes {
 const Content = ({
   breed,
   petAge,
-  title,
-  content,
+  postTitle,
+  postContent,
   likeIconType,
   likeCount,
   commentCount,
@@ -51,8 +51,8 @@ const Content = ({
         <div className={styles.category}>
           {breed}·{petAge}
         </div>
-        <div className={styles.title}>{title}</div>
-        <div className={styles.contents}>{content}</div>
+        <div className={styles.title}>{postTitle}</div>
+        <div className={styles.contents}>{postContent}</div>
         <div className={styles.subContents}>
           <div className={styles.item}>
             {/* 궁금해요/응원해요 아아콘 결정되면 수정 */}
