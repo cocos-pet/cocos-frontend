@@ -1,8 +1,8 @@
-import Comment, { CommentType } from "./Comment";
+import Comment from "./Comment";
 import { commentGetResponse } from "@api/domain/community/post";
 
 interface CommentListProps {
-  comments: commentGetResponse["data"];
+  comments?: commentGetResponse["data"];
 }
 
 const CommentList = ({ comments }: CommentListProps) => {

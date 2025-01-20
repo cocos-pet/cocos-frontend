@@ -18,10 +18,7 @@ const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { data: postData, isLoading } = usePostGet(Number(postId));
-  if (!postId) return <>loading</>;
   const { data: commentsData } = useCommentsGet(Number(postId));
-
-  console.log(commentsData);
 
   const user = {
     accessToken:
@@ -53,8 +50,9 @@ const PostDetail = () => {
 
   const { openModalId, setOpenModalId } = useModalStore();
 
-  if (isLoading || !postData || !postId) return <>loading</>;
+  if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
 
+  // @ts-ignore
   return (
     <>
       <HeaderNav
@@ -65,8 +63,8 @@ const PostDetail = () => {
           <MoreModal
             iconSize={24}
             onDelete={onDelete}
-            isOpen={Number(postId) === openModalId}
-            onToggleModal={() => setOpenModalId(Number(postId))}
+            isOpen={openModalId === `post-${postId}`}
+            onToggleModal={() => setOpenModalId(`post-${postId}`)}
           />
         }
       />
@@ -128,7 +126,7 @@ const PostDetail = () => {
             {postData.totalCommentCounts}
           </span>
         </div>
-        <CommentList comments={commentsData} />
+        <CommentList comments={{ comments: commentsData }} />
         <div className={styles.commentContainer}>
           <TextField
             onChange={onChange}

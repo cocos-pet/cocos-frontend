@@ -1,35 +1,13 @@
 import * as styles from "./Comment.css";
-import { IcMessage } from "@asset/svg";
+import { IcEllipses, IcMessage } from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
-import { v4 as uuidv4 } from "uuid";
+import { commentGetResponseCommentType } from "@api/domain/community/post";
+import { components } from "@type/schema";
 
-export interface SubCommentType {
-  id?: number;
-  profileImage?: string;
-  nickname?: string;
-  breed?: string;
-  petAge?: number;
-  content?: string;
-  createdAt?: string;
-  isWriter?: boolean;
-  mentionedNickname?: string;
-}
-
-export interface CommentType {
-  id?: number;
-  profileImage?: string;
-  nickname?: string;
-  breed?: string;
-  petAge?: number;
-  content?: string;
-  createdAt?: string;
-  isWriter?: boolean;
-  subComments?: SubCommentType[];
-}
 interface CommentProps {
-  comment: CommentType;
+  comment: commentGetResponseCommentType;
   onReplyClick?: (id: number | undefined) => void;
   onDelete: () => void;
 }
@@ -42,7 +20,6 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
   };
 
   const { openModalId, setOpenModalId } = useModalStore();
-  const uniqueId = uuidv4(); // 댓글 삭제 모달을 위한 고유 id
 
   return (
     <div className={styles.commentItem}>
@@ -63,8 +40,8 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
           <MoreModal
             onDelete={onDelete}
             iconSize={24}
-            isOpen={openModalId === Number(uniqueId)}
-            onToggleModal={() => setOpenModalId(uniqueId)}
+            isOpen={openModalId === `comment-${comment.id}`}
+            onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
           />
         </div>
 

@@ -1,8 +1,8 @@
 import SubComment from "./SubComment";
-import { SubCommentType } from "@common/component/Comment/Comment.tsx";
+import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 
 interface SubCommentListProps {
-  subComments?: SubCommentType[];
+  subComments: commentGetRequestSubCommentType[];
 }
 
 const SubCommentList = ({ subComments }: SubCommentListProps) => {

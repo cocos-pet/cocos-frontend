@@ -1,4 +1,4 @@
-import { paths } from "@type/schema";
+import { components, paths } from "@type/schema";
 import { get } from "@api/index.ts";
 import { API_PATH } from "@api/constants/apiPath.ts";
 
@@ -23,9 +23,15 @@ export const getPost = async (postId: number) => {
 export type commentGetResponse =
   paths["/api/dev/comments/{postId}"]["get"]["responses"]["200"]["content"]["*/*"];
 
+export type commentGetResponseCommentType =
+  components["schemas"]["CommentAndSubCommentsResponse"];
+
+export type commentGetRequestSubCommentType =
+  components["schemas"]["SubCommentResponse"];
+
 export const getComments = async (postId: number) => {
   const { data } = await get<commentGetResponse>(
     `${API_PATH.COMMENTS}/${postId}`
   );
-  return data.data;
+  return data.data?.comments;
 };
