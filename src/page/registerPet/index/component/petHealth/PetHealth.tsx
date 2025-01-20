@@ -1,5 +1,5 @@
 import * as styles from "./PetHealth.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@route/path";
 import { PetData } from "@page/registerPet/index/RegisterPet";
@@ -78,6 +78,7 @@ const PetHealth = ({
     updatePetData("diseaseIds", selectedDiseases);
     setCurrentStep(3);
   };
+
   //////////////////////이제부터 증상
 
   const handleBodyPartSymSelection = (bodyPartId: number) => {
@@ -121,12 +122,22 @@ const PetHealth = ({
     setCurrentStep(3);
   };
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
+  useEffect(() => {
+    // 증상 상태가 변경될 때만 updatePetData 호출
+    if (selectedSymptom.length > 0) {
+      updatePetData("symptomIds", selectedSymptom);
+    }
+  }, [selectedSymptom]);
+
   // 최종 폼 제출
   const navigate = useNavigate();
   const handleGoComplete = () => {
-    console.log("최종 증상 ID들:", selectedSymptom); // 폼 제출 전에 상태 확인
-    updatePetData("symptomIds", selectedSymptom);
+    if (selectedSymptom.length > 0) {
+      updatePetData("symptomIds", selectedSymptom);
+    }
     handleSubmit();
+    // 완료 페이지로 이동
     navigate(PATH.REGISTER_PET.COMPLETE);
   };
 
