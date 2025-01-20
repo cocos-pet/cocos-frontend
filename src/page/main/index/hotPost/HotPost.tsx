@@ -1,12 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import * as styles from "./HotPost.css";
 import Divider from "@common/component/Divider/Divider";
-import { useQueryGetPopular } from "@api/domain/main/hook"; // `useQueryGetPopular` import 확인
+import { useQueryGetPopular } from "@api/domain/main/hook";
 
-interface Post {
-  id?: number; // id가 optional로 설정
-  title?: string; // title도 optional로 설정
-}
+// interface Post {
+//   id?: number;
+//   title?: string;
+// }
 
 interface HotPostProps {
   petName?: string;
@@ -47,18 +47,18 @@ const HotPost = ({ petName }: HotPostProps) => {
       </div>
 
       <div className={styles.hotPostListContainer}>
-        {posts.map((post, index) => (
+        {posts.slice(0, 5).map((post, index) => (
           <div key={post.id}>
             <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
               <div className={styles.contentId}>{index + 1}</div>
               <div className={styles.contentTitle}>{post.title}</div>
             </div>
-            {post.id !== posts[posts.length - 1]?.id && <Divider size="small" />}
+            {post.id !== posts.slice(0, 5)[posts.slice(0, 5).length - 1]?.id && <Divider size="small" />}
           </div>
         ))}
       </div>
     </div>
   );
 };
-
+0;
 export default HotPost;

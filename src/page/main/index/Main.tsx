@@ -1,19 +1,20 @@
+import Symptom from "./symptom/Symptom";
+import * as styles from "./Main.css";
+import { useNavigate } from "react-router-dom";
+import { TextField } from "@common/component/TextField";
+import { IcSearch } from "@asset/svg";
 import MainFooter from "./mainFooter/MainFooter";
 import Divider from "@common/component/Divider/Divider";
 import HotPost from "./hotPost/HotPost";
 import MainHeader from "./mainHeader/mainHeader";
-import Symptom from "./symptom/Symptom";
-import { TextField } from "@common/component/TextField";
-import { useNavigate } from "react-router-dom";
-import { IcSearch } from "@asset/svg";
-import * as styles from "./Main.css";
 import Nav from "@common/component/Nav/Nav";
 import Spacing from "@common/component/Spacing/Spacing";
-import { useQueryGetPopular } from "@api/domain/main/hook";
 import { PATH } from "@route/path";
+import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
 
 const Main = () => {
   const { data: postsData } = useQueryGetPopular();
+  const { data: getBodyParts } = useGetBodyParts("symptom");
 
   const navigate = useNavigate();
 
@@ -30,7 +31,7 @@ const Main = () => {
 
   const handleTextFieldChange = () => {};
 
-  if (!postsData) return null;
+  if (!postsData || !getBodyParts) return null;
 
   return (
     <div className={styles.mainContainer}>
@@ -45,9 +46,9 @@ const Main = () => {
         />
       </div>
       <MainHeader />
-      <Symptom bodies={[]} />
+      <Symptom petProblem="symptom" />
       <Divider />
-      <HotPost posts={[]} />
+      <HotPost />
       <Divider />
       <MainFooter />
       <Spacing marginBottom="8" />

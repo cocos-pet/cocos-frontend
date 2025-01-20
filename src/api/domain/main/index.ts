@@ -1,7 +1,6 @@
 import { API_PATH } from "@api/constants/apiPath";
 import { get } from "@api/index";
 import { paths } from "@type/schema";
-import { SymptomItem } from "@store/filter";
 
 //인기글 조회 API
 type GetPopularResponse = paths["/api/dev/posts/popular"]["get"]["responses"]["200"]["content"]["*/*"];
@@ -15,13 +14,13 @@ export const getPopular = async (): Promise<GetPopularResponse> => {
 //신체 부위 조회 API
 type GetBodyPartsResponse = paths["/api/dev/bodies"]["get"]["responses"]["200"]["content"]["*/*"];
 
-// API 호출 함수
-export const getBodyPartsResponse = async (petProblem: string): Promise<SymptomItem[]> => {
+export const getBodyParts = async (petProblem: string): Promise<GetBodyPartsResponse> => {
   const validProblem = petProblem === "symptom" || petProblem === "disease" ? petProblem : "symptom";
 
   const { data } = await get<GetBodyPartsResponse>(`${API_PATH.BODY}?petProblem=${validProblem}`);
   console.log("Request URL:", `${API_PATH.BODY}?petProblem=${validProblem}`);
   console.log(data);
+  return data;
 };
 
 //아래는 예시입니다.
