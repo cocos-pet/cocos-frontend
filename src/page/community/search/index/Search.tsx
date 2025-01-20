@@ -22,7 +22,7 @@ const Search = () => {
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
-  const { mutate } = useSearchPost({ keyword: searchText });
+  const { mutate } = useSearchPost();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
