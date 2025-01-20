@@ -1,13 +1,14 @@
 import { useState, ChangeEvent } from "react";
+import { useNavigate } from "react-router-dom";
 import * as styles from "./PetName.css";
-import onboardingImg from "@asset/image/image 1730.png";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
-import { PetData } from "@page/registerPet/index/RegisterPet"; 
+import { PetData } from "@page/registerPet/index/RegisterPet";
 import { validatePetName } from "@shared/util/validatePetName";
+import petNameBori from "@asset/image/petNameBori.png";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -24,8 +25,10 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
   const validationMessages = petName ? validatePetName(petName) : [];
   const isValid = petName && validationMessages.length === 0;
 
+  // 뒤로 가기
+  const navigate = useNavigate();
   const handleGoBack = () => {
-    setStep((prev) => Math.max(prev - 1, 0)); // 이전 단계로 이동 (0방지!)
+    navigate(-1);
   };
 
   const handleNext = () => {
@@ -40,7 +43,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div>
-          <img src={onboardingImg} alt="onboarding-character" className={styles.imgStyle} />
+          <img src={petNameBori} alt="onboarding-character" className={styles.imgStyle} />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />
         </div>
@@ -51,7 +54,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
             state={petName === "" ? "default" : isValid ? "default" : "error"}
             value={petName}
             onChange={handleChange}
-            placeholder="닉네임을 입력해주세요."
+            placeholder="반려동물의 이름을 입력해주세요."
           />
           <div className={styles.errorLayout}>
             {validationMessages.map((message) => (

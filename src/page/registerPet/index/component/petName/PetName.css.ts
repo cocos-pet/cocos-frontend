@@ -1,9 +1,14 @@
 import { style } from "@vanilla-extract/css";
 
 export const layout = style({
+  position: "absolute",
+  top: "8rem",
+
+  minWidth: "37.1rem",
+
   display: "flex",
   flexDirection: "column",
-  padding: "8rem 2rem",
+  padding: "0 2rem",
   gap: "9rem",
 });
 
@@ -20,7 +25,7 @@ export const btnWrapper = style({
   bottom: 0,
 
   display: "grid",
-  gridTemplateColumns: "9.6rem calc(100% - 9.6rem)",
+  gridTemplateColumns: "9.6rem calc(100% - 10.8rem)",
   gap: "1.2rem",
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
