@@ -11,6 +11,11 @@ export const styles = {
   icon: style({
     width: "2.4rem",
   }),
+  profileImage: style({
+    width: "3.2rem",
+    height: "3.2rem",
+    borderRadius: "50%",
+  }),
   top: style({
     display: "flex",
     flexDirection: "row",
