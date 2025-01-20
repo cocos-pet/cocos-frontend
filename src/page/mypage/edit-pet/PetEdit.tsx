@@ -35,6 +35,7 @@ const DEFAULT_TYPE = [
   { type: "나이", tab: "age" },
 ] as const;
 
+//todo: patch 함수만 연결하면 끝!
 const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
@@ -137,9 +138,7 @@ const PetEdit = () => {
         animalToggleChips({ id: petInfo.animalId, category: "animalId" });
         animalToggleChips({ category: "breedId", id: petInfo.breedId });
         animalToggleChips({ category: "gender", id: petInfo.petGender });
-        if (petInfo.petAge) {
-          setPetAge(String(petInfo.petAge));
-        }
+
         if (petInfo.symptoms && petInfo.diseases) {
           setSelectedChips({ ids: petInfo.symptoms.map((item) => item.id), category: "symptomIds" });
           setSelectedChips({ ids: petInfo.diseases.map((item) => item.id), category: "diseaseIds" });
@@ -152,7 +151,11 @@ const PetEdit = () => {
     if (breed?.breeds) {
       setAnimalCategoryData("breeds", breed.breeds);
     }
-  }, [breed, setAnimalCategoryData]);
+    if (petInfo?.petAge) {
+      //todo : 추후 요청 보낼 때는 다시 number로 변환 필요
+      setPetAge(String(petInfo.petAge));
+    }
+  }, [breed, petInfo, setAnimalCategoryData]);
 
   if (isLoading || !member || !animal) return;
 
