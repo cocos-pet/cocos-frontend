@@ -1,6 +1,5 @@
 import * as styles from "./PetAge.css";
 import { useState, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
 
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
@@ -12,10 +11,9 @@ import { PetData } from "@page/registerPet/index/RegisterPet";
 interface PetAgeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
-  onSubmit: () => void; // 'onSubmit'을 props로 추가
 }
 
-const PetAge = ({ setStep, updatePetData, onSubmit }: PetAgeProps) => {
+const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
   const [petAge, setPetAge] = useState("");
 
   // 유효성 검사 통과한 반려동물 나이
@@ -29,17 +27,16 @@ const PetAge = ({ setStep, updatePetData, onSubmit }: PetAgeProps) => {
   const handleNext = () => {
     if (isValid) {
       const age = Number.parseInt(petAge, 10);
-      console.log("나이:", age); // 나이가 잘 찍히는지 확인
 
       updatePetData("age", age); // 부모 상태에 나이 업데이트
-      onSubmit(); // 부모로부터 받은 onSubmit 호출
       setStep((prev) => prev + 1); // 다음 단계로 이동
     }
   };
 
   // 뒤로가기
-  const navigate = useNavigate();
-  const handleGoBack = () => navigate(-1);
+  const handleGoBack = () => {
+    setStep((prev) => Math.max(prev - 1, 0));
+  };
 
   return (
     <>

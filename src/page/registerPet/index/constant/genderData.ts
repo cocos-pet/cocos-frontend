@@ -1,17 +1,15 @@
-import selectImg from "@asset/image/image 1733.png";
+import genderCoco from "@asset/image/genderCoco.png";
+import genderBori from "@asset/image/genderBori.png";
 
-// 여기는 api 연결 아니나, api연결뷰와 컴포넌트를 공유해 다음과 같이 구현
-export const data = {
-  gender: [
-    {
-      id: 1,
-      label: "암컷",
-      image: selectImg,
-    },
-    {
-      id: 2,
-      label: "수컷",
-      image: selectImg,
-    },
-  ],
-};
+export const genderOptions = [
+  {
+    id: 1,
+    name: "암컷",
+    image: genderCoco,
+  },
+  {
+    id: 2,
+    name: "수컷",
+    image: genderBori,
+  },
+];

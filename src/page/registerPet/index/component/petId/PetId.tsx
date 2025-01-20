@@ -1,5 +1,4 @@
 import * as styles from "./PetId.css";
-import { useNavigate } from "react-router-dom";
 import { useState, ChangeEvent } from "react";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
@@ -42,9 +41,8 @@ const PetId = ({ setStep, updatePetData }: PetIdProps) => {
   };
 
   // 뒤로 가기
-  const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    setStep((prev) => Math.max(prev - 1, 0));
   };
 
   // 상태 input이 ANIMAL 객체의 name 중 하나와 일치하는지 확인
