@@ -29,9 +29,9 @@ const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) =
       return content.map((data) => (
         <Chip
           key={`dropDown-${data.id}`}
-          label={data.name}
-          onClick={() => toggleChips({ category: parentKey, id: data.id })}
-          isSelected={isSelected(data.id)}
+          label={data.name as string}
+          onClick={() => toggleChips({ category: parentKey, id: data.id as number })}
+          isSelected={isSelected(data.id as number)}
         />
       ));
     }
