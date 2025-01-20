@@ -153,9 +153,7 @@ const PostDetail = () => {
           setIsLiked(true);
           setLikeCount((prevState) => Number(prevState + 1));
         },
-        onError: (error) => {
-          console.error("좋아요 츄가 놉", error);
-        },
+        onError: (error) => {},
       }
     );
   };
@@ -205,7 +203,6 @@ const PostDetail = () => {
           <div className={styles.title}>{postData.title}</div>
           <div className={styles.content}>{postData.content}</div>
         </div>
-        {/* TODO : 서버에서 받아온 이미지로 수정*/}
         {postData.images?.map((image, index) => (
           <img
             key={index}
@@ -230,7 +227,6 @@ const PostDetail = () => {
                 onClick={onLikeDeleteClick}
               />
             )}
-            {/*<span>{postData.likeCounts}</span>*/}
             <span>{likeCount}</span>
           </div>
         </div>
