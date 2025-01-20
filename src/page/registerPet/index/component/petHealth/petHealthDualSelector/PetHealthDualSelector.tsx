@@ -14,30 +14,25 @@ interface PetHealthDualSelectorProps {
 }
 
 const PetHealthDualSelector = ({ setStep, setIsSkipDisease, setCurrentStep }: PetHealthDualSelectorProps) => {
-  const [selected, setSelected] = useState<string | null>(null);
-  // 선택한 값 처리 (단순히 선택값만 처리)
-  const handleSelect = (choice: string) => {
+  const [selected, setSelected] = useState<boolean | null>(null);
+
+  // 선택한 값 처리 (true: 질병, false: 증상/정보)
+  const handleSelect = (choice: boolean) => {
     setSelected(choice);
-    if (choice === "예") {
-      setIsSkipDisease(false);
-    } else if (choice === "아니오") {
-      setIsSkipDisease(true);
-    }
+    setIsSkipDisease(!choice);
   };
 
-  // 뒤로가기
+  // 뒤로 가기
   const handleGoBack = () => {
     setStep((prev) => Math.max(prev - 1, 0));
   };
 
-  // 다음 버튼 (선택값이 있을 때만 다음 단계로 이동)
+  // 다음 버튼
   const handleNext = () => {
     setStep((prevStep) => prevStep + 1);
-    if (selected === "예") {
-      // setStep((prevStep) => prevStep + 1);
+    if (selected) {
       setCurrentStep(1);
     } else {
-      // setStep((prevStep) => prevStep + 1);
       setCurrentStep(3);
     }
   };
@@ -56,19 +51,19 @@ const PetHealthDualSelector = ({ setStep, setIsSkipDisease, setCurrentStep }: Pe
             label="궁금한 질병이 있어요"
             size="large"
             variant={"outlinePrimary"}
-            onClick={() => handleSelect("예")}
+            onClick={() => handleSelect(true)}
           />
           <Button
             label="궁금한 증상이 있어요"
             size="large"
             variant={"outlinePrimary"}
-            onClick={() => handleSelect("아니오")}
+            onClick={() => handleSelect(false)}
           />
           <Button
             label="특별한 문제는 없지만, 정보를 보고 싶어요."
             size="large"
             variant={"outlinePrimary"}
-            onClick={() => handleSelect("아니오")}
+            onClick={() => handleSelect(false)}
           />
         </div>
       </div>

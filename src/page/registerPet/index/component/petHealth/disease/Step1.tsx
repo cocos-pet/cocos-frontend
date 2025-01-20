@@ -40,9 +40,7 @@ const Step1 = ({ selectedIds, data, onBodyPartSelection }: Step1Props) => {
             key={body.id}
             className={styles.contentItem}
             onClick={() => {
-              if (body.id !== undefined) {
-                handleSelection(body.id);
-              }
+              body.id && handleSelection(body.id);
             }}
             type="button"
           >
