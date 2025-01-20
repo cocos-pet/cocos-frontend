@@ -12,6 +12,6 @@ type postGetRequest = paths["/api/dev/posts/{postId}"]["get"]["requestBody"];
  */
 
 export const getPost = async (postId: number) => {
-  const { data } = await get<postGetResponse>(API_PATH.POST + `/${postId}`);
+  const { data } = await get<postGetResponse>(`${API_PATH.POST}/${postId}`);
   return data.data;
 };
