@@ -4,9 +4,9 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelector";
 import { Button } from "@common/component/Button";
-import { data } from "@page/registerPet/index/constant/genderData";
 import { PetData } from "@page/registerPet/index/RegisterPet";
 import { useState } from "react";
+import { genderOptions } from "@page/registerPet/index/constant/genderData";
 
 interface PetGenderProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -14,7 +14,6 @@ interface PetGenderProps {
 }
 
 const PetGender = ({ setStep, updatePetData }: PetGenderProps) => {
-  // 선택 상태 관리 (초기값: null)
   const [gender, setGender] = useState<string | null>(null);
 
   // 성별 선택
@@ -28,6 +27,15 @@ const PetGender = ({ setStep, updatePetData }: PetGenderProps) => {
     setStep((prev) => Math.max(prev - 1, 0));
   };
 
+  // 선택한 성별에 따라 변환된 데이터 생성
+  const selectedGenderData = {
+    animals: genderOptions.map((option) => ({
+      id: option.id,
+      name: option.name,
+      image: option.image,
+    })),
+  };
+
   return (
     <>
       {/* 상단 영역 */}
@@ -37,7 +45,12 @@ const PetGender = ({ setStep, updatePetData }: PetGenderProps) => {
           <Docs text={ONBOARDING_GUIDE.petGender.docs} />
         </div>
         {/* 성별 선택 영역 */}
-        <DualOptionSelector data={data.gender} onSelect={handleOptionSelect} />
+        <DualOptionSelector
+          data={selectedGenderData}
+          onSelect={(value: string) => {
+            handleOptionSelect(value);
+          }}
+        />
       </div>
       {/* 하단 영역 */}
       <div className={styles.btnWrapper}>
@@ -47,7 +60,7 @@ const PetGender = ({ setStep, updatePetData }: PetGenderProps) => {
           size="large"
           variant="solidPrimary"
           disabled={!gender}
-          onClick={() => setStep((prev) => prev + 1)} // 다음 단계로 이동
+          onClick={() => setStep((prev) => prev + 1)}
         />
       </div>
     </>
