@@ -1,10 +1,9 @@
 import * as styles from "./Comment.css";
-import { IcEllipses, IcMessage } from "@asset/svg";
+import { IcMessage } from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
-import { commentGetResponse } from "@api/domain/community/post";
-import { components } from "@type/schema";
+import { v4 as uuidv4 } from "uuid";
 
 export interface SubCommentType {
   id?: number;
@@ -43,6 +42,7 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
   };
 
   const { openModalId, setOpenModalId } = useModalStore();
+  const uniqueId = uuidv4(); // 댓글 삭제 모달을 위한 고유 id
 
   return (
     <div className={styles.commentItem}>
@@ -63,8 +63,8 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
           <MoreModal
             onDelete={onDelete}
             iconSize={24}
-            isOpen={openModalId === comment.id}
-            onToggleModal={() => setOpenModalId(comment.id)}
+            isOpen={openModalId === Number(uniqueId)}
+            onToggleModal={() => setOpenModalId(uniqueId)}
           />
         </div>
 

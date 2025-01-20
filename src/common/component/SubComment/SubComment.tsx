@@ -1,8 +1,9 @@
 import * as styles from "./SubComment.css";
-import { IcEllipses, IcMessage } from "@asset/svg";
+import { IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { SubCommentType } from "@common/component/Comment/Comment.tsx";
+import { v4 as uuidv4 } from "uuid";
 
 interface SubCommentProps {
   subComment: SubCommentType;
@@ -17,6 +18,7 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
   };
 
   const { openModalId, setOpenModalId } = useModalStore();
+  const uniqueId = uuidv4(); // 댓글 삭제 모달을 위한 고유 id
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
@@ -60,8 +62,8 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
           <MoreModal
             iconSize={24}
             onDelete={onDelete}
-            isOpen={openModalId === subComment.id}
-            onToggleModal={() => setOpenModalId(subComment.id)}
+            isOpen={openModalId === Number(uniqueId)}
+            onToggleModal={() => setOpenModalId(uniqueId)}
           />
         </div>
         <p className={styles.text}>{renderContent()}</p>

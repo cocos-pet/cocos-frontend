@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface ModalState {
   openModalId: number | undefined;
-  setOpenModalId: (id: number | undefined) => void;
+  setOpenModalId: (id: number) => void;
 }
 
 const useModalStore = create<ModalState>((set) => ({
