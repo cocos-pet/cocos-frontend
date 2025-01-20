@@ -10,15 +10,19 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
+import { useLikePost } from "@api/domain/community/search/hook.ts";
 import { usePostGet } from "@api/domain/community/post/hook";
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
+import { getAccessToken } from "@api/index.ts";
 
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { data: postData, isLoading } = usePostGet(Number(postId));
+  const { openModalId, setOpenModalId } = useModalStore();
   if (!postId) return <>loading</>;
+  const { mutate: likePost } = useLikePost(postId);
   const commentsData = [
     {
       id: 1,
@@ -113,7 +117,24 @@ const PostDetail = () => {
     // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
   };
 
-  const { openModalId, setOpenModalId } = useModalStore();
+  const handleLike = () => {
+    if (getAccessToken() === null) {
+      navigate(PATH.ONBOARDING.ROOT);
+      return;
+    }
+
+    likePost(
+      { postId },
+      {
+        onSuccess: (data) => {
+          console.log("Post liked successfully", data);
+        },
+        onError: (error) => {
+          console.error("Error liking post", error);
+        },
+      }
+    );
+  };
 
   if (isLoading || !postData || !postId) return <>loading</>;
 
@@ -177,7 +198,7 @@ const PostDetail = () => {
         <div className={styles.subContents}>
           <div className={styles.item}>
             {/* TODO : 궁금해요/응원해요 아아콘 결정되면 수정 */}
-            <IcTest width={24} height={24} />
+            <IcTest width={24} height={24} onClick={handleLike} />
             <span>{postData.likeCounts}</span>
           </div>
         </div>

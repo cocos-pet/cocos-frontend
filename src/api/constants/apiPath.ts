@@ -2,7 +2,7 @@ export const API_PATH = {
   COMMENTS: "/api/dev/comments",
   SUBCOMMENTS: "/api/dev/comments/sub",
 
-  LIKE: "/api/dev/likes",
+  LIKE: "/api/dev/likes/",
   BREEDS: "/api/dev/breeds",
   PETS: "/api/dev/pets",
   SYMPTOMS: "/api/dev/symptoms",
