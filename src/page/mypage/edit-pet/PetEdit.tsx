@@ -137,7 +137,9 @@ const PetEdit = () => {
         animalToggleChips({ id: petInfo.animalId, category: "animalId" });
         animalToggleChips({ category: "breedId", id: petInfo.breedId });
         animalToggleChips({ category: "gender", id: petInfo.petGender });
-        console.log(petInfo.symptoms);
+        if (petInfo.petAge) {
+          setPetAge(String(petInfo.petAge));
+        }
         if (petInfo.symptoms && petInfo.diseases) {
           setSelectedChips({ ids: petInfo.symptoms.map((item) => item.id), category: "symptomIds" });
           setSelectedChips({ ids: petInfo.diseases.map((item) => item.id), category: "diseaseIds" });
