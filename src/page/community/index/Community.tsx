@@ -1,7 +1,7 @@
 import { IcCocos, IcSearch } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import Divider from "@common/component/Divider/Divider";
 import Banner from "./components/Banner/Banner";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
@@ -13,6 +13,8 @@ import { PATH } from "@route/path";
 
 const Community = () => {
   const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const type = searchParams.get("type");
 
   const handleSearchClick = () => {
     navigate(PATH.SEARCH.ROOT);
@@ -36,7 +38,7 @@ const Community = () => {
         <SelectPost />
       </div>
       <div className={styles.btnContainer}>
-        <FloatingBtn />
+        <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
       </div>
       <div className={styles.communityFooter}>
         <Nav content={NAV_CONTENT} type="nav" />
