@@ -22,21 +22,25 @@ const Search = () => {
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
-  const { mutate, isPending, isError } = useSearchPost({ keyword: searchText });
+  const { mutate } = useSearchPost({ keyword: searchText });
 
   const inputRef = useRef<HTMLInputElement>(null);
+  let isSubmitting = false;
 
   const onSubmit = (searchText: string) => {
-    if (!searchText || isPending || isError) return;
+    if (isSubmitting) return;
+    isSubmitting = true;
     mutate(
       { keyword: searchText },
       {
         onSuccess: () => {
+          isSubmitting = false;
           handleNavigate(searchText);
         },
-        // onError: () => {
-        //   alert("검색에 실패했습니다.");
-        // },
+        onError: () => {
+          isSubmitting = false;
+          alert("검색에 실패했습니다.");
+        },
       }
     );
   };
@@ -52,6 +56,7 @@ const Search = () => {
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
+      e.preventDefault(); // 기본 동작 방지
       onSubmit(searchText);
     }
   };
@@ -77,7 +82,7 @@ const Search = () => {
           value={searchText}
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
-          onKeyDown={handleKeyDown}
+          onKeyDown={(e) => handleKeyDown(e)}
           icon={<IcSearch />}
           onClearClick={() => setSearchText("")}
         />
