@@ -25,24 +25,31 @@ const Search = () => {
   const { mutate } = useSearchPost({ keyword: searchText });
 
   const inputRef = useRef<HTMLInputElement>(null);
-  let isSubmitting = false;
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (searchText: string) => {
-    if (isSubmitting) return;
-    isSubmitting = true;
     mutate(
       { keyword: searchText },
       {
         onSuccess: () => {
-          isSubmitting = false;
           handleNavigate(searchText);
         },
         onError: () => {
-          isSubmitting = false;
           alert("검색에 실패했습니다.");
         },
       }
     );
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !isSubmitting) {
+      setIsSubmitting(true);
+      onSubmit(searchText);
+
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, 500);
+    }
   };
 
   const handleNavigate = (searchText: string) => {
@@ -52,13 +59,6 @@ const Search = () => {
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      e.preventDefault(); // 기본 동작 방지
-      onSubmit(searchText);
-    }
   };
 
   const onBackClick = () => {
