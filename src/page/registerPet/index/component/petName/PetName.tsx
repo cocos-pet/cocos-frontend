@@ -1,7 +1,6 @@
 import { useState, ChangeEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import * as styles from "./PetName.css";
-import onboardingImg from "@asset/image/image 1730.png";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
@@ -9,6 +8,7 @@ import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
 import { PetData } from "@page/registerPet/index/RegisterPet";
 import { validatePetName } from "@shared/util/validatePetName";
+import petNameBori from "@asset/image/petNameBori.png";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -43,7 +43,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div>
-          <img src={onboardingImg} alt="onboarding-character" className={styles.imgStyle} />
+          <img src={petNameBori} alt="onboarding-character" className={styles.imgStyle} />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />
         </div>

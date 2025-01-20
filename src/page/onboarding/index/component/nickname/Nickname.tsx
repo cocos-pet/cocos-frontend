@@ -4,10 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import onboardingImg from "@asset/image/image 1730.png";
 import { validateNickname } from "@shared/util/validateNickname";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
+import nicknameCoco from "@asset/image/nicknameCoco.png";
 
 interface NicknamePros {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -45,7 +45,7 @@ const Nickname = ({ setStep }: NicknamePros) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div>
-          <img src={onboardingImg} alt="onboarding-character" className={styles.imgStyle} />
+          <img src={nicknameCoco} alt="onboarding-character" className={styles.imgStyle} />
           <Title text={ONBOARDING_GUIDE.nickname.title} />
           <Docs text={ONBOARDING_GUIDE.nickname.docs} />
         </div>
