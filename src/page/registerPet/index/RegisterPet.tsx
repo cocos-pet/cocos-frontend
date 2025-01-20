@@ -39,8 +39,16 @@ const RegisterPet = () => {
     console.log("업데이트된 반려동물 데이터:", petData);
   }, [petData]);
 
-  const updatePetData = <K extends keyof PetData>(field: K, value: PetData[K]) => {
-    setPetData((prev) => ({ ...prev, [field]: value }));
+  const updatePetData = <K extends keyof PetData>(
+    field: K,
+    value: PetData[K],
+    callback?: (updatedData: PetData) => void,
+  ) => {
+    setPetData((prev) => {
+      const updatedData = { ...prev, [field]: value };
+      if (callback) callback(updatedData);
+      return updatedData;
+    });
   };
 
   const handleSubmit = () => {

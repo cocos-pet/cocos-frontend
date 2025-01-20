@@ -1,5 +1,5 @@
 import * as styles from "./PetHealth.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@route/path";
 import { PetData } from "@page/registerPet/index/RegisterPet";
@@ -12,7 +12,11 @@ import { useBodiesGet } from "@api/domain/registerPet/bodies/hook";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
+  updatePetData: (
+    field: keyof PetData,
+    value: PetData[keyof PetData],
+    callback?: (updatedData: PetData) => void,
+  ) => void;
   currentStep: number | null;
   setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
   isSkipDisease: boolean | null;
@@ -106,7 +110,7 @@ const PetHealth = ({
   // 질병 단계를 거치지 않았다면, 질병 유무 컴포넌트로
   // 질병 단계를 거쳤다면, 증상 1단계에서 질병 2단계로
   const handleBack = () => {
-    if (isSkipDisease === true) {
+    if (isSkipDisease) {
       setStep(5);
     } else {
       setCurrentStep(2);
@@ -123,23 +127,17 @@ const PetHealth = ({
     setCurrentStep(3);
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
-  useEffect(() => {
-    // 증상 상태가 변경될 때만 updatePetData 호출
-    if (selectedSymptom.length > 0) {
-      updatePetData("symptomIds", selectedSymptom);
-    }
-  }, [selectedSymptom]);
-
   // 최종 폼 제출
   const navigate = useNavigate();
   const handleGoComplete = () => {
     if (selectedSymptom.length > 0) {
-      updatePetData("symptomIds", selectedSymptom);
+      updatePetData("symptomIds", selectedSymptom, () => {
+        handleSubmit();
+        navigate(PATH.REGISTER_PET.COMPLETE);
+      });
+    } else {
+      return;
     }
-    handleSubmit();
-    // 완료 페이지로 이동
-    navigate(PATH.REGISTER_PET.COMPLETE);
   };
   const { data: diseaseData } = useBodiesGet("disease");
   const { data: symptomData } = useBodiesGet("symptom");
