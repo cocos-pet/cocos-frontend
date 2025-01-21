@@ -1,11 +1,17 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { deleteComment, getComments, deleteLike, getPost, postLike } from "@api/domain/community/post";
+import {
+  deleteComment,
+  getComments,
+  deleteLike,
+  getPost,
+  postLike,
+  deleteSubComment,
+} from "@api/domain/community/post";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
-
 };
 
 export const COMMENT_QUERY_KEY = {
@@ -18,7 +24,7 @@ export const COMMENT_QUERY_KEY = {
     "deleteSubComment",
     subCommentId,
   ],
- };
+};
 
 /**
  * @description 게시글 조회 API
@@ -82,7 +88,8 @@ export const useDeleteComment = (commentId: number | undefined) => {
   return useMutation({
     mutationKey: COMMENT_QUERY_KEY.DELETE_COMMENT(commentId),
     mutationFn: () => {
-      return deleteComment(commentId);
+      console.log("commentId", commentId);
+      // return deleteComment(commentId);
     },
   });
 };
@@ -95,7 +102,9 @@ export const useDeleteSubComment = (subCommentId: number | undefined) => {
   return useMutation({
     mutationKey: COMMENT_QUERY_KEY.DELETE_SUB_COMMENT(subCommentId),
     mutationFn: () => {
-      return deleteComment(subCommentId);
+      console.log("subCommentId", subCommentId);
+
+      return deleteSubComment(subCommentId);
     },
   });
 };

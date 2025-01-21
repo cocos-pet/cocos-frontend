@@ -7,9 +7,13 @@ import {
   commentGetResponseCommentType,
   deleteComment,
 } from "@api/domain/community/post";
-import { useDeleteComment } from "@api/domain/community/post/hook.ts";
+import {
+  useDeleteComment,
+  useDeleteSubComment,
+} from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import { formatTime } from "@shared/util/formatTime.ts";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -24,12 +28,14 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
   };
 
   if (!comment) return;
-  const { isOpen, setOpen } = useCategoryFilterStore();
-
+  const { isOpen, setOpen, setContentsType } = useCategoryFilterStore();
   const { mutate: deleteComment } = useDeleteComment(comment.id);
 
+  // @공준혁 : 댓글 삭제 버튼 클릭시 subcomment 로 보내줄 함수입니다.
   const onDeleteClick = () => {
     deleteComment();
+    console.log("deleteComment");
+    setOpen(false);
   };
 
   const { openModalId, setOpenModalId } = useModalStore();
@@ -47,11 +53,14 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
             <span className={styles.nickname}>{comment.nickname}</span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt ? comment.createdAt.toLocaleString() : ""}
+              {comment.createdAt ? formatTime(comment.createdAt) : ""}
             </span>
           </div>
           <MoreModal
-            onDelete={() => setOpen(true)}
+            onDelete={() => {
+              setOpen(true);
+              // setContentsType("comment");
+            }}
             iconSize={24}
             isOpen={openModalId === `comment-${comment.id}`}
             onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
@@ -70,18 +79,24 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
       {/* 대댓글 리스트 */}
       {comment.subComments && (
         <div>
-          <SubCommentList subComments={comment.subComments} />
+          <SubCommentList
+            subComments={comment.subComments}
+            onCommentDelete={() => onDeleteClick()}
+          />
         </div>
       )}
-      <SimpleBottomSheet
-        isOpen={isOpen}
-        content={"댓글을 정말 삭제할까요?"}
-        handleClose={() => setOpen(false)}
-        leftOnClick={() => setOpen(false)}
-        leftText={"취소"}
-        rightOnClick={onDeleteClick}
-        rightText={"삭제할게요"}
-      />
+      {/*<SimpleBottomSheet*/}
+      {/*  isOpen={isOpen}*/}
+      {/*  content={"댓글을 정말 삭제할까요?"}*/}
+      {/*  handleClose={() => setOpen(false)}*/}
+      {/*  leftOnClick={() => setOpen(false)}*/}
+      {/*  leftText={"취소"}*/}
+      {/*  rightOnClick={() => {*/}
+      {/*    onDeleteClick();*/}
+      {/*    console.log("deleteSubComment");*/}
+      {/*  }}*/}
+      {/*  rightText={"삭제할게요"}*/}
+      {/*/>*/}
     </div>
   );
 };

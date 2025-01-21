@@ -3,13 +3,21 @@ import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 
 interface SubCommentListProps {
   subComments: commentGetRequestSubCommentType[];
+  onCommentDelete?: () => void;
 }
 
-const SubCommentList = ({ subComments }: SubCommentListProps) => {
+const SubCommentList = ({
+  subComments,
+  onCommentDelete,
+}: SubCommentListProps) => {
   return (
     <div>
       {subComments?.map((subComment) => (
-        <SubComment key={subComment.id} subComment={subComment} />
+        <SubComment
+          key={subComment.id}
+          subComment={subComment}
+          onCommentDelete={onCommentDelete}
+        />
       ))}
     </div>
   );

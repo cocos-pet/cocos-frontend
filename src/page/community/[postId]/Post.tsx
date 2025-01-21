@@ -157,7 +157,7 @@ const PostDetail = () => {
         </div>
         {postData.images?.map((image, index) => (
           <img
-            key={index}
+            key={`postImage-${index}`}
             src={image}
             alt="postImage"
             className={styles.image}
@@ -165,7 +165,7 @@ const PostDetail = () => {
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
-            <Chip label={tag} color={"blue"} />
+            <Chip key={`postTag-${index}`} label={tag} color={"blue"} />
           ))}
         </div>
         <div className={styles.subContents}>

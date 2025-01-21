@@ -9,13 +9,20 @@ import {
   useDeleteComment,
   useDeleteSubComment,
 } from "@api/domain/community/post/hook.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { useEffect } from "react";
 
 interface SubCommentProps {
   subComment: commentGetRequestSubCommentType;
   onReplyClick?: (id: number | undefined) => void;
+  onCommentDelete?: () => void;
 }
 
-const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
+const SubComment = ({
+  subComment,
+  onReplyClick,
+  onCommentDelete,
+}: SubCommentProps) => {
   const handleReplyClick = () => {
     if (onReplyClick) {
       onReplyClick(subComment.id);
@@ -24,7 +31,8 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
   const { mutate: deleteSubComment } = useDeleteSubComment(subComment.id);
 
   const { openModalId, setOpenModalId } = useModalStore();
-  const { isOpen, setOpen } = useCategoryFilterStore();
+  const { isOpen, setOpen, setContentsType, contentsType } =
+    useCategoryFilterStore();
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
@@ -42,9 +50,22 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
       </>
     );
   };
+  useEffect(() => {
+    console.log("contentsType", contentsType);
+  }, [contentsType]);
 
+  // @공준혁 : 대댓글 or 댓글 삭제 버튼 클릭시 api 호출부 입니다.
   const onDeleteClick = () => {
-    deleteSubComment();
+    console.log("deleteSubComment");
+
+    if (contentsType == "subComment") {
+      deleteSubComment();
+    } else {
+      if (onCommentDelete) {
+        onCommentDelete();
+      }
+    }
+    setOpen(false);
   };
 
   return (
@@ -60,14 +81,16 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
             <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt
-                ? subComment.createdAt.toLocaleString()
-                : ""}
+              {subComment.createdAt ? formatTime(subComment.createdAt) : ""}
             </span>
           </div>
           <MoreModal
             iconSize={24}
-            onDelete={() => setOpen(true)}
+            onDelete={() => {
+              console.log("deleteSubComment");
+              setOpen(true);
+              setContentsType("subComment");
+            }}
             isOpen={openModalId === `subComment-${subComment.id}`}
             onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
           />
@@ -86,7 +109,10 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
         handleClose={() => setOpen(false)}
         leftOnClick={() => setOpen(false)}
         leftText={"취소"}
-        rightOnClick={onDeleteClick}
+        rightOnClick={() => {
+          onDeleteClick();
+          console.log("deleteSubComment");
+        }}
         rightText={"삭제할게요"}
       />
     </div>
