@@ -21,3 +21,15 @@ export const getPetInfo = async (nickname?: string) => {
   });
   return data.data;
 };
+
+export const getMyPost = async (nickname?: string) => {
+  type GetMyPostResponse = paths["/api/dev/posts/my"]["get"]["responses"]["200"]["content"]["*/*"];
+  const { data } = await get<GetMyPostResponse>(`${API_PATH.POST}/my`, {
+    params: {
+      nickname,
+    },
+  });
+  
+  if(!data.data?.posts?.length) return;
+  return data.data.posts;
+};
