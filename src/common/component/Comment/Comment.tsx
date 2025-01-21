@@ -8,16 +8,10 @@ import { commentGetResponseCommentType } from "@api/domain/community/post";
 interface CommentProps {
   comment: commentGetResponseCommentType;
   onCommentReplyClick?: (nickname: string | undefined) => void;
-  onSubCommentReplyClick?: (nickname: string | undefined) => void;
   onDelete: () => void;
 }
 
-const Comment = ({
-  comment,
-  onCommentReplyClick,
-  onSubCommentReplyClick,
-  onDelete,
-}: CommentProps) => {
+const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname);
@@ -64,7 +58,7 @@ const Comment = ({
         <div>
           <SubCommentList
             subComments={comment.subComments}
-            onSubCommentReplyClick={onSubCommentReplyClick}
+            onCommentReplyClick={onCommentReplyClick}
           />
         </div>
       )}

@@ -20,6 +20,7 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
+import subComment from "@common/component/SubComment/SubComment.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -30,35 +31,49 @@ const PostDetail = () => {
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
   const { data: commentsData } = useCommentsGet(Number(postId));
+  const [isLiked, setIsLiked] = useState(postData?.isLiked);
+  const [likeCount, setLikeCount] = useState(postData?.likeCounts);
+  const [parsedComment, setParsedComment] = useState<{
+    mention: string;
+    text: string;
+  }>({
+    mention: "",
+    text: "",
+  });
 
+  // TODO : 삭제 해라.
   const user = {
     accessToken:
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0OTQ1MDksImV4cCI6MTczODA5OTMwOSwibWVtYmVySWQiOjJ9.JhS3oRdiCmYpsa3VCrsxEdDP4DBt8hf5rGdzetF9LFNQltZd1yEQ1ARIskYkt_WDfKbcC-EYmH_J3q1iT6A9Lg",
   };
   localStorage.setItem("user", JSON.stringify(user));
 
-  const [isLiked, setIsLiked] = useState(postData?.isLiked);
-  const [likeCount, setLikeCount] = useState(postData?.likeCounts);
-  const [comment, setComment] = useState("");
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
-  };
-
   const onClearClick = () => {
-    setComment("");
+    setParsedComment({ mention: "", text: "" });
   };
 
   const onSubmitComment = () => {
-    // TODO : 댓글 등록 API 호출
+    const fullComment = `${parsedComment.mention}${parsedComment.text}`.trim();
+    if (fullComment) {
+      // TODO: 댓글 등록 API 호출
+      console.log("댓글 등록:", fullComment);
+      onClearClick();
+    }
   };
 
   const onCommentReplyClick = (nickname: string | undefined) => {
-    setComment(`@${nickname} `);
+    if (nickname) {
+      setParsedComment({ mention: `@${nickname} `, text: "" });
+    }
   };
 
-  const onSubCommentReplyClick = (nickname: string | undefined) => {
-    setComment(`@${nickname} `);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const mentionMatch = value.match(/^@(\S+)\s/); // @유저이름 매칭
+    setParsedComment({
+      mention: parsedComment.mention,
+      text: mentionMatch ? value.replace(mentionMatch[0], "") : value,
+    });
   };
 
   const onBackClick = () => {
@@ -201,16 +216,16 @@ const PostDetail = () => {
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
-          onSubCommentReplyClick={onSubCommentReplyClick}
         />
         <div className={styles.commentContainer}>
           <TextField
+            mentionedNickname={parsedComment.mention}
             onChange={onChange}
-            value={comment}
+            value={parsedComment.text}
             onClearClick={onClearClick}
             placeholder={"댓글을 입력해주세요."}
           />
-          {comment && (
+          {parsedComment.text && (
             <button className={styles.upload} onClick={onSubmitComment}>
               올리기
             </button>

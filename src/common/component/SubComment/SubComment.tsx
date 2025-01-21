@@ -6,16 +6,13 @@ import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 
 interface SubCommentProps {
   subComment: commentGetRequestSubCommentType;
-  onSubCommentReplyClick?: (nickname: string | undefined) => void;
+  onCommentReplyClick?: (nickname: string | undefined) => void;
 }
 
-const SubComment = ({
-  subComment,
-  onSubCommentReplyClick,
-}: SubCommentProps) => {
+const SubComment = ({ subComment, onCommentReplyClick }: SubCommentProps) => {
   const handleReplyClick = () => {
-    if (onSubCommentReplyClick) {
-      onSubCommentReplyClick(subComment.nickname);
+    if (onCommentReplyClick) {
+      onCommentReplyClick(subComment.nickname);
     }
   };
 
