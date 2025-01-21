@@ -88,7 +88,7 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
               content={data.content as string}
               timeAgo={data.createdAt as string}
               mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
+              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>
         ));
