@@ -11,7 +11,10 @@ export const POST_QUERY_KEY = {
 
 export const COMMENT_QUERY_KEY = {
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
-  DELETE_COMMENT: (commentId: string) => ["deleteComment", commentId],
+  DELETE_COMMENT: (commentId: number | undefined) => [
+    "deleteComment",
+    commentId,
+  ],
 };
 
 /**
@@ -45,10 +48,10 @@ export const useCommentsGet = (postId: number) => {
  * @description 댓글 삭제 API
  */
 
-export const useDeleteComment = (commentId: string) => {
+export const useDeleteComment = (commentId: number | undefined) => {
   return useMutation({
     mutationKey: COMMENT_QUERY_KEY.DELETE_COMMENT(commentId),
-    mutationFn: (commentId: number) => {
+    mutationFn: () => {
       return deleteComment(commentId);
     },
   });

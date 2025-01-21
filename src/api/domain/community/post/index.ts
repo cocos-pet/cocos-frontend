@@ -43,7 +43,7 @@ export const getComments = async (postId: number) => {
 export type deleteCommentResponse =
   paths["/api/dev/comments/{commentId}"]["delete"]["responses"]["200"]["content"]["*/*"];
 
-export const deleteComment = async (commentId: number) => {
+export const deleteComment = async (commentId: number | undefined) => {
   const { data } = await del<deleteCommentResponse>(
     `${API_PATH.COMMENTS}/${commentId}`
   );

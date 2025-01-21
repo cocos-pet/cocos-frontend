@@ -10,7 +10,11 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-import { useCommentsGet, usePostGet } from "@api/domain/community/post/hook";
+import {
+  useCommentsGet,
+  useDeleteComment,
+  usePostGet,
+} from "@api/domain/community/post/hook";
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 
