@@ -37,7 +37,7 @@ export const bottomSheetHeader = style({
 
 export const contentContainer = style({
   display: "flex",
-  width: "33.5rem",
+  width: "90%",
   padding: "2rem 0rem 3.2rem 0rem",
   flexDirection: "column",
   alignItems: "flex-start",
