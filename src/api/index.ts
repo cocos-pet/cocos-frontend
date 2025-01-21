@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const getAccessToken = (): string | null => {
+export const getAccessToken = (): string | null => {
   const user = localStorage.getItem("user");
   if (user) {
     try {
