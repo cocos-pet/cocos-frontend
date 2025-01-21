@@ -11,7 +11,7 @@ import Nav from "@common/component/Nav/Nav";
 import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { isLoggedIn } from "@api/index";
-import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/edit-pet/hook";
+import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 
 export type ActiveTabType = "review" | "post" | "comment";
 

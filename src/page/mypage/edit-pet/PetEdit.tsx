@@ -21,10 +21,10 @@ import {
   useGetBodies,
   useGetBreed,
   useGetDisease,
-  useGetPetInfo,
   useGetSymptoms,
   usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
+import { useGetPetInfo } from "@api/domain/mypage/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -35,7 +35,6 @@ const DEFAULT_TYPE = [
   { type: "나이", tab: "age" },
 ] as const;
 
-//todo: patch 함수만 연결하면 끝!
 const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
