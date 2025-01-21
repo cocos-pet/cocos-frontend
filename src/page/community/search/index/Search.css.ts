@@ -35,6 +35,9 @@ export const styles = {
     font.body01,
     {
       fontWeight: "500",
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+      textOverflow: "ellipsis",
     },
   ]),
 };

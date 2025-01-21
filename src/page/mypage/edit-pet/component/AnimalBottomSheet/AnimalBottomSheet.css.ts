@@ -38,7 +38,9 @@ export const categoryZone = style({
 });
 
 export const bodyZone = style({
+  position: "relative",
   padding: "0 2rem",
+  width: "100%",
 });
 
 export const buttonWrapper = style({
@@ -52,4 +54,6 @@ export const buttonWrapper = style({
   justifyContent: "center",
   alignItems: "center",
   flexShrink: 0,
+
+  backgroundColor: "white",
 });

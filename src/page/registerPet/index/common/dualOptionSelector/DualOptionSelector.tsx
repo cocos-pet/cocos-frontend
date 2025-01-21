@@ -1,14 +1,9 @@
 import * as styles from "./DualOptionSelector.css";
 import { useState } from "react";
-
-interface AnimalData {
-  id: number;
-  label: string;
-  image: string;
-}
+import { animalGetResponse } from "@api/domain/registerPet/animal/index";
 
 interface DualOptionSelectorProps {
-  data: AnimalData[];
+  data: animalGetResponse["data"];
   onSelect?: (value: string) => void;
 }
 
@@ -17,7 +12,8 @@ const DualOptionSelector = ({ data, onSelect }: DualOptionSelectorProps) => {
   const [selectedOption, setSelectedOption] = useState<number | null>(null);
 
   // 옵션 클릭 시 색상 변경 및 부모로 선택 값 전달
-  const handleOptionClick = (id: number, name: string) => {
+  const handleOptionClick = (id: number | undefined, name: string | undefined) => {
+    if (id === undefined || name === undefined) return; // name이 undefined일 경우 아무 작업도 하지 않음
     setSelectedOption(id);
     if (onSelect) {
       onSelect(name);
@@ -26,16 +22,16 @@ const DualOptionSelector = ({ data, onSelect }: DualOptionSelectorProps) => {
 
   return (
     <div className={styles.layout}>
-      {data.map((item) => (
+      {data?.animals?.map((item) => (
         <div
           key={item.id}
           className={styles.selector({
             state: selectedOption === item.id ? "selected" : "unselected",
           })}
-          onClick={() => handleOptionClick(item.id, item.label)}
+          onClick={() => handleOptionClick(item.id, item.name)}
         >
-          {item.label}
-          <img src={item.image} alt={item.label} />
+          {item.name}
+          <img src={item.image} alt={item.name} width={104} height={59} />
         </div>
       ))}
     </div>

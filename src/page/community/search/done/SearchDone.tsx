@@ -5,19 +5,72 @@ import {
   IcSearchFillterBlue,
 } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { styles } from "@page/community/search/done/SearchDone.css.ts";
 import { PATH } from "@route/path.ts";
 import Content from "@common/component/Content/Content.tsx";
-import { searchDoneData } from "@shared/constant/searchDoneData.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { useFilterStore } from "@store/filter.ts";
+import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
+
+interface SearchDonePropTypes {
+  id?: number;
+  breed?: string;
+  petAge?: number;
+  title?: string;
+  content?: string;
+  likeCount?: number;
+  commentCount?: number;
+  createdAt?: string;
+  updatedAt?: string;
+  image?: string;
+  category?: string;
+}
 
 const SearchDone = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [isFilterActive, setIsFilterActive] = useState(false); // TODO: 필터 활성화 설정 필요
+  const [searchDoneData, setSearchDoneData] = useState<
+    Array<SearchDonePropTypes>
+  >([]);
   const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
+  const { mutate } = usePostPostFilters();
+  const { selectedChips, setOpen } = useFilterStore();
+
+  useEffect(() => {
+    if (!searchText) return;
+
+    mutate(
+      {
+        keyword: searchText,
+        animalIds: selectedChips.breedId,
+        symptomIds: selectedChips.symptomIds,
+        diseaseIds: selectedChips.diseaseIds,
+        sortBy: "RECENT",
+      },
+      {
+        onSuccess: (data) => {
+          setSearchDoneData(data || []);
+        },
+        onError: (error) => {
+          console.error("Search Error:", error);
+        },
+      }
+    );
+  }, [searchText, selectedChips, mutate]);
+
+  // 필터 활성화 여부 계산
+  useEffect(() => {
+    setIsFilterActive(
+      selectedChips.breedId.length > 0 ||
+        selectedChips.symptomIds.length > 0 ||
+        selectedChips.diseaseIds.length > 0
+    );
+  }, [selectedChips]);
+
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
@@ -30,7 +83,7 @@ const SearchDone = () => {
     navigate(PATH.COMMUNITY.ROOT);
   };
 
-  const onClickPost = (postId: number) => {
+  const onClickPost = (postId: number | undefined) => {
     navigate(PATH.COMMUNITY.ROOT + `/${postId}`);
   };
 
@@ -48,21 +101,34 @@ const SearchDone = () => {
         />
       </div>
       <div className={styles.searchContent}>
-        {isFilterActive ? <IcSearchFillterBlue /> : <IcSearchFillter />}
-        {searchDoneData.map((data, index) => (
+        {isFilterActive ? (
+          <IcSearchFillterBlue
+            onClick={() => {
+              setOpen(true);
+            }}
+          />
+        ) : (
+          <IcSearchFillter
+            onClick={() => {
+              setOpen(true);
+            }}
+          />
+        )}
+        {searchDoneData?.map((data, index) => (
           <Content
             key={index}
-            breed={data.breed}
-            age={data.age}
-            postTitle={data.postTitle}
-            postContent={data.postContent}
-            likeCnt={data.likeCnt}
-            commentCnt={data.commentCnt}
-            timeAgo={data.timeAgo}
-            onClick={() => onClickPost(data.id)} //TODO: postId 로 변경
+            breed={data?.breed}
+            petAge={data?.petAge}
+            postTitle={data?.title}
+            postContent={data.content}
+            likeCnt={data.likeCount}
+            commentCnt={data.commentCount}
+            timeAgo={data.createdAt}
+            onClick={() => onClickPost(data?.id)} //TODO: postId 로 변경
           />
         ))}
       </div>
+      <FilterBottomSheet />
     </div>
   );
 };

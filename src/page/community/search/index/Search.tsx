@@ -4,30 +4,61 @@ import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
-import { useSearchGet } from "@api/domain/community/search/hook.ts";
+import {
+  useSearchGet,
+  useSearchPost,
+} from "@api/domain/community/search/hook.ts";
 
 const Search = () => {
+  const user = {
+    // TODO : 나중에 지워야함.
+    accessToken:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMTAxMzgsImV4cCI6MTczNzgxNDkzOCwibWVtYmVySWQiOjF9.f6sCaL3PFg7yMb6J4PM1h30ADsiq_fbON31IXPguJ_Pb4otyJ_Qh-Z_JYRxC8a2SMzaa6jr68uLc6w0_tuag3A",
+  };
+  localStorage.setItem("user", JSON.stringify(user));
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
+  const { mutate } = useSearchPost();
 
   const inputRef = useRef<HTMLInputElement>(null);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (searchText: string) => {
+    mutate(
+      { keyword: searchText },
+      {
+        onSuccess: () => {
+          handleNavigate(searchText);
+        },
+        onError: () => {
+          alert("검색에 실패했습니다.");
+        },
+      }
+    );
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !isSubmitting) {
+      setIsSubmitting(true);
+      onSubmit(searchText);
+
+      setTimeout(() => {
+        setIsSubmitting(false);
+      }, 500);
+    }
+  };
+
+  const handleNavigate = (searchText: string) => {
     searchParams.set("searchText", searchText);
-    navigate(`${PATH.COMMUNITY.SEARCH_DONE}?${searchParams.toString()}`);
+    navigate(`${PATH.COMMUNITY.SEARCH_DONE}?searchText=${searchText}`);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      onSubmit(searchText);
-    }
   };
 
   const onBackClick = () => {
@@ -51,8 +82,8 @@ const Search = () => {
           value={searchText}
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
-          onKeyDown={handleKeyDown}
-          icon={<IcSearch onClick={() => onSubmit(searchText)} />}
+          onKeyDown={(e) => handleKeyDown(e)}
+          icon={<IcSearch />}
           onClearClick={() => setSearchText("")}
         />
       </div>
@@ -64,7 +95,7 @@ const Search = () => {
               key={data.id}
               className={styles.listItem}
               onClick={() => {
-                if (data.content) onSubmit(data.content);
+                if (data.content) handleNavigate(data.content);
               }}
             >
               {data.content || ""}
