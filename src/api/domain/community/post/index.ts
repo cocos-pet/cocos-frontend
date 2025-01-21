@@ -80,3 +80,23 @@ export const postComment = async (postId: number, content: string) => {
   );
   return data;
 };
+
+/**
+ * @description 대댓글 작성 API
+ */
+
+type subCommentPostResponse =
+  paths["/api/dev/comments/sub/{commentId}"]["post"]["responses"]["201"]["content"]["*/*"];
+
+export const postSubComment = async (
+  commentId: number,
+  content: { content: string; nickname: string }
+) => {
+  const { data } = await post<subCommentPostResponse>(
+    `${API_PATH.SUBCOMMENTS}/${commentId}`,
+    {
+      content,
+    }
+  );
+  return data;
+};

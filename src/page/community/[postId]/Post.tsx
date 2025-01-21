@@ -12,10 +12,12 @@ import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
 
 import {
+  useCommentPost,
   useCommentsGet,
   useDeleteLike,
   useLikePost,
   usePostGet,
+  useSubCommentPost,
 } from "@api/domain/community/post/hook";
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
@@ -31,8 +33,11 @@ const PostDetail = () => {
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
   const { data: commentsData } = useCommentsGet(Number(postId));
+  const { mutate: commentPost } = useCommentPost(Number(postId));
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
+  const [subCommentId, setSubCommentId] = useState<number | undefined>();
+  const { mutate: subCommentPost } = useSubCommentPost(Number(subCommentId));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -54,22 +59,45 @@ const PostDetail = () => {
 
   const onSubmitComment = () => {
     const fullComment = `${parsedComment.mention}${parsedComment.text}`.trim();
-    if (fullComment) {
+    if (parsedComment.mention) {
+      // 대댓글 등록
       // TODO: 댓글 등록 API 호출
       console.log("댓글 등록:", fullComment);
+      subCommentPost(
+        {
+          nickname: parsedComment.mention,
+          content: fullComment,
+        },
+        {
+          onSuccess: (data) => {
+            onClearClick();
+          },
+          onError: (error) => {},
+        }
+      );
       onClearClick();
     }
   };
 
   const onCommentReplyClick = (nickname: string | undefined) => {
     if (nickname) {
-      setParsedComment({ mention: `@${nickname} `, text: "" });
+      setParsedComment({ mention: nickname, text: "" });
     }
+  };
+
+  const onSubCommentReplyClick = (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => {
+    if (nickname) {
+      setParsedComment({ mention: nickname, text: "" });
+    }
+    setSubCommentId(commentId);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const mentionMatch = value.match(/^@(\S+)\s/); // @유저이름 매칭
+    const mentionMatch = value.match(/^@(\S+)\s/);
     setParsedComment({
       mention: parsedComment.mention,
       text: mentionMatch ? value.replace(mentionMatch[0], "") : value,
@@ -216,10 +244,13 @@ const PostDetail = () => {
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
+          onSubCommentReplyClick={onSubCommentReplyClick}
         />
         <div className={styles.commentContainer}>
           <TextField
-            mentionedNickname={parsedComment.mention}
+            mentionedNickname={
+              parsedComment.mention ? `@${parsedComment.mention} ` : ``
+            }
             onChange={onChange}
             value={parsedComment.text}
             onClearClick={onClearClick}

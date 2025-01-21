@@ -4,9 +4,17 @@ import { commentGetResponse } from "@api/domain/community/post";
 interface CommentListProps {
   comments?: commentGetResponse["data"];
   onCommentReplyClick?: (nickname: string | undefined) => void;
+  onSubCommentReplyClick?: (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => void;
 }
 
-const CommentList = ({ comments, onCommentReplyClick }: CommentListProps) => {
+const CommentList = ({
+  comments,
+  onCommentReplyClick,
+  onSubCommentReplyClick,
+}: CommentListProps) => {
   const onDelete = (id?: number) => {
     // TODO :  댓글 삭제
   };
@@ -23,6 +31,7 @@ const CommentList = ({ comments, onCommentReplyClick }: CommentListProps) => {
           comment={comment}
           onDelete={() => onDelete(comment.id)}
           onCommentReplyClick={onCommentReplyClick}
+          onSubCommentReplyClick={onSubCommentReplyClick}
         />
       ))}
     </div>

@@ -5,12 +5,17 @@ import {
   getPost,
   postLike,
   postComment,
+  postSubComment,
 } from "@api/domain/community/post";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
   COMMENTS_POST_QUERY_KEY: (postId: number) => ["commentPost", postId],
+  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => [
+    "subCommentPost",
+    commentId,
+  ],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
 };
@@ -78,6 +83,19 @@ export const useCommentPost = (postId: number) => {
     mutationKey: POST_QUERY_KEY.COMMENTS_POST_QUERY_KEY(postId),
     mutationFn: (content: { content: string }) => {
       return postComment(postId, content.content);
+    },
+  });
+};
+
+/**
+ * @description 대댓글 작성 API
+ */
+
+export const useSubCommentPost = (commentId: number) => {
+  return useMutation({
+    mutationKey: POST_QUERY_KEY.SUB_COMMENTS_POST_QUERY_KEY(commentId),
+    mutationFn: (content: { nickname: string; content: string }) => {
+      return postSubComment(commentId, content);
     },
   });
 };

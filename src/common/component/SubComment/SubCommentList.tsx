@@ -3,12 +3,15 @@ import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 
 interface SubCommentListProps {
   subComments: commentGetRequestSubCommentType[];
-  onCommentReplyClick?: (nickname: string | undefined) => void;
+  onSubCommentReplyClick?: (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => void;
 }
 
 const SubCommentList = ({
   subComments,
-  onCommentReplyClick,
+  onSubCommentReplyClick,
 }: SubCommentListProps) => {
   return (
     <div>
@@ -16,7 +19,7 @@ const SubCommentList = ({
         <SubComment
           key={subComment.id}
           subComment={subComment}
-          onCommentReplyClick={onCommentReplyClick}
+          onSubCommentReplyClick={onSubCommentReplyClick}
         />
       ))}
     </div>
