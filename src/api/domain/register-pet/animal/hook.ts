@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getAnimal } from "@api/domain/registerPet/animal/index";
+import { getAnimal } from "@api/domain/register-pet/animal/index";
 
 export const ANIMALS_QUERY_KEY = {
   ANIMALS_QUERY_KEY: () => ["animals"],

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getPetId } from "@api/domain/registerPet/petId/index";
+import { getPetId } from "@api/domain/register-pet/petId/index";
 
 export const BREEDS_QUERY_KEY = {
   BREEDS_QUERY_KEY: (type: number) => ["petId", type],

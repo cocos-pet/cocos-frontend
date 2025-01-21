@@ -8,7 +8,7 @@ import { Button } from "@common/component/Button";
 // import { ANIMAL } from "@page/registerPet/index/common/dropDown/constant";
 import DropDown from "@page/register-pet/index/common/dropDown/DropDown";
 import { PetData } from "@page/register-pet/index/RegisterPet";
-import { usePetIdGet } from "@api/domain/registerPet/petId/hook";
+import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
 // breedItem 타입 정의
 interface BreedItem {
   id: number;

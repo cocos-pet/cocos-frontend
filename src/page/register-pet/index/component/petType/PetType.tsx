@@ -6,7 +6,7 @@ import Docs from "@page/onboarding/index/common/docs/Docs";
 import DualOptionSelector from "@page/register-pet/index/common/dualOptionSelector/DualOptionSelector";
 import { Button } from "@common/component/Button";
 import { PetData } from "@page/register-pet/index/RegisterPet";
-import { useAnimalGet } from "@api/domain/registerPet/animal/hook";
+import { useAnimalGet } from "@api/domain/register-pet/animal/hook";
 
 interface PetTypeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;

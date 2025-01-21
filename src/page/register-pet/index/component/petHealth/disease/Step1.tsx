@@ -1,7 +1,7 @@
 import * as styles from "./Step1.css";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import { bodiesGetResponse } from "@api/domain/registerPet/bodies";
+import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
 
 interface Step1Props {
   selectedIds: number[];

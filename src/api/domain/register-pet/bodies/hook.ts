@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import { getBodies } from "@api/domain/registerPet/bodies/index";
+import { getBodies } from "@api/domain/register-pet/bodies/index";
 
 export const BODY_QUERY_KEY = {
   // 키값 동적으로

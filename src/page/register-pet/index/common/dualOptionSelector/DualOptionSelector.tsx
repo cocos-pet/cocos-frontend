@@ -1,6 +1,6 @@
 import * as styles from "./DualOptionSelector.css";
 import { useState } from "react";
-import { animalGetResponse } from "@api/domain/registerPet/animal/index";
+import { animalGetResponse } from "@api/domain/register-pet/animal/index";
 
 interface DualOptionSelectorProps {
   data: animalGetResponse["data"];
