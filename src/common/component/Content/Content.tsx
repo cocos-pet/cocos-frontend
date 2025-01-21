@@ -3,7 +3,7 @@ import { styles } from "@common/component/Content/Content.css.ts";
 
 interface ContentPropTypes {
   breed?: string;
-  age?: number;
+  petAge?: number;
   postTitle?: string;
   postContent?: string;
   likeIconType?: "curious" | "support";
@@ -17,7 +17,7 @@ interface ContentPropTypes {
 /**
  * 게시물 컴포넌트
  * @param breed 강아지 종
- * @param age 나이
+ * @param petAge 나이
  * @param postTitle 게시물 제목
  * @param postContent 게시물 내용
  * @param likeIconType 좋아요 아이콘 타입 ( 궁금해요, 응원해요 )
@@ -31,7 +31,7 @@ interface ContentPropTypes {
 
 const Content = ({
   breed,
-  age,
+  petAge,
   postTitle,
   postContent,
   likeIconType,
@@ -45,7 +45,7 @@ const Content = ({
     <div className={styles.container} onClick={onClick}>
       <div className={styles.left}>
         <div className={styles.category}>
-          {breed} · {age}살
+          {breed} · {petAge}살
         </div>
         <div className={styles.title}>{postTitle}</div>
         <div className={styles.contents}>{postContent}</div>
