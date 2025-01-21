@@ -10,6 +10,7 @@ import SymStep1 from "@page/registerPet/index/component/petHealth/symptom/SymSte
 import SymStep2 from "@page/registerPet/index/component/petHealth/symptom/SymStep2";
 import { useBodiesGet } from "@api/domain/registerPet/bodies/hook";
 import { useDiseaseGet } from "@api/domain/registerPet/disease/hook";
+import { useSymptomGet } from "@api/domain/registerPet/symptom/hook";
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (
@@ -142,6 +143,7 @@ const PetHealth = ({
   const { data: diseaseData } = useBodiesGet("disease");
   const { data: symptomData } = useBodiesGet("symptom");
   const { data: diseaseBodyData } = useDiseaseGet(selectedDiseaseBody);
+  const { data: symptomBodyData } = useSymptomGet(selectedSymptomBody);
 
   if (!diseaseData || !symptomData) return null;
 
@@ -213,7 +215,11 @@ const PetHealth = ({
       )}
       {currentStep === 4 && (
         <>
-          <SymStep2 selectedSymptom={selectedSymptom} onSymptomSelection={handleSymptomSelection} />
+          <SymStep2
+            data={symptomBodyData}
+            selectedSymptom={selectedSymptom}
+            onSymptomSelection={handleSymptomSelection}
+          />
           <div className={styles.btnWrapper}>
             <Button
               label="이전으로"
