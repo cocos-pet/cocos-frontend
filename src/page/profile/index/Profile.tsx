@@ -31,7 +31,7 @@ const Profile = () => {
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
-      <span style={{ position: "fixed", top: 0 }}>
+      <span style={{ position: "fixed", top: 0, width: "100%" }}>
         <HeaderNav
           leftIcon={<IcChevronLeft width={24} height={24} onClick={() => navigate(-1)} />}
           centerContent={"프로필"}
@@ -59,13 +59,13 @@ const Profile = () => {
       <Divider />
 
       <div className={styles.contentHeaderWrapper}>
-        <Tab active={isActiveTab("review")} width={"12.5rem"} onClick={() => handleTabClick("review")}>
+        <Tab active={isActiveTab("review")} width={"100%"} onClick={() => handleTabClick("review")}>
           병원 후기
         </Tab>
-        <Tab active={isActiveTab("post")} width={"12.5rem"} onClick={() => handleTabClick("post")}>
+        <Tab active={isActiveTab("post")} width={"100%"} onClick={() => handleTabClick("post")}>
           게시글
         </Tab>
-        <Tab active={isActiveTab("comment")} width={"12.5rem"} onClick={() => handleTabClick("comment")}>
+        <Tab active={isActiveTab("comment")} width={"100%"} onClick={() => handleTabClick("comment")}>
           댓글
         </Tab>
       </div>
@@ -74,7 +74,7 @@ const Profile = () => {
         <div className={styles.contentBody}>{<MyPageContent tab={activeTab} />}</div>
       </article>
 
-      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white" }}>
+      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
         <Nav content={NAV_CONTENT} type={"nav"} />
       </span>
     </div>
