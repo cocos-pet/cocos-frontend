@@ -7,7 +7,7 @@ import PetAge from "@page/register-pet/index/component/petAge/PetAge";
 import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
 import PetHealth from "@page/register-pet/index/component/petHealth/PetHealth";
 import ProgressBar from "@page/register-pet/index/common/ProgressBar/ProgressBar";
-
+import { useMyPetPost } from "@api/domain/register-pet/pets/hook";
 export interface PetData {
   breedId: number | null;
   name: string;
@@ -25,6 +25,9 @@ const RegisterPet = () => {
 
   // 질병, 증상 세부 단계 조절
   const [currentStep, setCurrentStep] = useState<number | null>(null);
+
+  // api
+  const { mutate: myPet } = useMyPetPost();
 
   const [petData, setPetData] = useState<PetData>({
     breedId: null,
@@ -52,15 +55,20 @@ const RegisterPet = () => {
   };
 
   const handleSubmit = () => {
-    console.log("제출 데이터:", petData);
-    // 서버로 데이터 전송 로직 추가
-    setPetData({
-      breedId: null,
-      name: "",
-      gender: null,
-      age: null,
-      diseaseIds: [],
-      symptomIds: [],
+    // 데이터 전송 로직
+    myPet(petData, {
+      onSuccess: (response) => {
+        console.log("반려동물 등록 성공:", response);
+        // 데이터 초기화 및 초기 단계로 이동
+        setPetData({
+          breedId: null,
+          name: "",
+          gender: null,
+          age: null,
+          diseaseIds: [],
+          symptomIds: [],
+        });
+      },
     });
   };
 
