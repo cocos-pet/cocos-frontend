@@ -29,7 +29,17 @@ export const getMyPost = async (nickname?: string) => {
       nickname,
     },
   });
-  
-  if(!data.data?.posts?.length) return;
+
+  if (!data.data?.posts?.length) return;
   return data.data.posts;
+};
+
+export const getMyComment = async (nickname?: string) => {
+  type GetMyCommentResponse = paths["/api/dev/comments/my"]["get"]["responses"]["200"]["content"]["*/*"];
+  const { data } = await get<GetMyCommentResponse>(`${API_PATH.COMMENTS}/my`, {
+    params: {
+      nickname,
+    },
+  });
+  return data.data;
 };

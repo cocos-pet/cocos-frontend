@@ -1,10 +1,10 @@
 import Content from "@common/component/Content/Content";
 import { ActiveTabType } from "../../Mypage";
 import * as styles from "./MyPageContent.css";
-import { commentDummyData, dummyData } from "./costant"; //todo: 더미데이터 렌더링
+import { dummyData } from "./costant"; //todo: 더미데이터 렌더링
 import MyPageComment from "../MyPageComment/MyPageComment";
 import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
-import { useGetMyPost } from "@api/domain/mypage/hook";
+import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
 import { formatTime } from "@shared/util/formatTime";
 import { PATH } from "@route/path";
 import { useNavigate } from "react-router-dom";
@@ -33,8 +33,9 @@ export interface ApiItemTypes {
 const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const navigate = useNavigate();
   const { data: myPosts } = useGetMyPost();
+  const { data: myComments } = useGetMyComment();
 
-  if (!myPosts) {
+  if (!myPosts || !myComments || !myComments.comments || !myComments.subComments) {
     return;
   }
 
@@ -77,14 +78,14 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return renderAllComments(commentDummyData.comments, commentDummyData.subComments).map((data) => (
+        return renderAllComments(myComments.comments, myComments.subComments).map((data) => (
           <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
             <MyPageComment
-              postTitle={data.postTitle}
-              content={data.content}
-              timeAgo={data.createdAt}
+              postTitle={data.postTitle as string}
+              content={data.content as string}
+              timeAgo={data.createdAt as string}
               mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
+              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>
         ));
