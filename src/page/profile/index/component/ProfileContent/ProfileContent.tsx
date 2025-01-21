@@ -7,6 +7,7 @@ import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
 import { PATH } from "@route/path";
+import { formatTime } from "@shared/util/formatTime";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -73,7 +74,7 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
               postContent={data.content}
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
-              timeAgo="1시간 전" //추후 유틸로 대체
+              timeAgo={formatTime(data.createdAt as string)}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
             />
           </div>

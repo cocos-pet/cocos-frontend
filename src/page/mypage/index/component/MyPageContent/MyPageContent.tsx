@@ -35,9 +35,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const { data: myPosts } = useGetMyPost();
   const { data: myComments } = useGetMyComment();
 
-  if (!myPosts || !myComments || !myComments.comments || !myComments.subComments) {
-    return;
-  }
+  if ((tab === "post" && !myPosts) || (tab === "comment" && !myComments)) return;
 
   const renderNothingContent = (tab: ActiveTabType) => {
     let content = "";
@@ -62,7 +60,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
       case "review":
         return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
       case "post":
-        return myPosts.map((data) => (
+        return myPosts?.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
@@ -73,13 +71,12 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
               commentCnt={data.commentCount}
               timeAgo={formatTime(data.createdAt as string)}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
-              likeIconType={"support"}
             />
           </div>
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return renderAllComments(myComments.comments, myComments.subComments).map((data) => (
+        return renderAllComments(myComments?.comments, myComments?.subComments).map((data) => (
           <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
             <MyPageComment
               postTitle={data.postTitle as string}
