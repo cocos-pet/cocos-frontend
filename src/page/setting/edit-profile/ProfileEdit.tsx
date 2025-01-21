@@ -11,7 +11,7 @@ const ProfileEdit = () => {
   const navigate = useNavigate();
 
   return (
-    <>
+    <div className={styles.profileEditContainer}>
       <HeaderNav
         leftIcon={<IcChevronLeft width={20} height={20} />}
         centerContent={"내 정보 수정"}
@@ -34,7 +34,7 @@ const ProfileEdit = () => {
           onClick={() => alert("이스터에그 발견! 수정은 추후 구현될 예정입니다 :)")}
         />
       </div>
-    </>
+    </div>
   );
 };
 
