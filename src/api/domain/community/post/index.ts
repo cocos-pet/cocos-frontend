@@ -70,6 +70,18 @@ export const deleteSubComment = async (subCommentId: number | undefined) => {
 };
 
 /**
+ * @description 게시글 삭제 API
+ */
+
+export type deletePostResponse =
+  paths["/api/dev/posts/{postId}"]["delete"]["responses"]["200"]["content"]["*/*"];
+
+export const deletePost = async (postId: number) => {
+  const { data } = await del<deletePostResponse>(`${API_PATH.POST}/${postId}`);
+  return data.data;
+};
+
+/**
  * @description 좋아요 추가 API
  * @param postId
  */

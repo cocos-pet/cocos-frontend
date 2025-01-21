@@ -6,8 +6,10 @@ import {
   getPost,
   postLike,
   deleteSubComment,
+  deletePost,
 } from "@api/domain/community/post";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { PATH } from "@route/path.ts";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
@@ -77,6 +79,22 @@ export const useCommentsGet = (postId: number) => {
     queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
     queryFn: () => {
       return getComments(postId);
+    },
+  });
+};
+
+/**
+ * @description 게시글 삭제 API
+ */
+export const usePostDelete = (postId: number) => {
+  const navigate = useNavigate();
+  return useMutation({
+    mutationKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
+    mutationFn: (postId: number) => {
+      return deletePost(postId);
+    },
+    onSuccess: () => {
+      navigate(-1);
     },
   });
 };

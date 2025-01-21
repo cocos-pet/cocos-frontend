@@ -14,6 +14,7 @@ import {
   useCommentsGet,
   useDeleteLike,
   useLikePost,
+  usePostDelete,
   usePostGet,
 } from "@api/domain/community/post/hook";
 
@@ -42,6 +43,7 @@ const PostDetail = () => {
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [comment, setComment] = useState("");
+  const { mutate: deletePost } = usePostDelete(Number(postId));
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setComment(e.target.value);
@@ -60,8 +62,7 @@ const PostDetail = () => {
   };
 
   const onDelete = () => {
-    // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
-    // deletePost(postId);
+    deletePost(Number(postId));
     setOpen(false);
   };
 
