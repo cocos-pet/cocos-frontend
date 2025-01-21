@@ -73,7 +73,7 @@ const RegisterPet = () => {
       case 2:
         return <PetGender setStep={setStep} updatePetData={updatePetData} />;
       case 3:
-        return <PetId setStep={setStep} updatePetData={updatePetData} />;
+        return <PetId setStep={setStep} updatePetData={updatePetData} petData={petData} />;
       case 4:
         return <PetAge setStep={setStep} updatePetData={updatePetData} />;
       case 5:
@@ -98,7 +98,7 @@ const RegisterPet = () => {
         );
 
       default:
-        return null;
+        return;
     }
   };
 

@@ -1,6 +1,6 @@
 export const ANIMAL = {
   data: {
-    breeds: [
+    dogs: [
       { id: 1, name: "포메라니안" },
       { id: 2, name: "말티푸" },
       { id: 3, name: "말티팡" },
@@ -11,6 +11,8 @@ export const ANIMAL = {
       { id: 8, name: "래브라도 리트리버" },
       { id: 9, name: "샴푸" },
       { id: 10, name: "시추" },
+    ],
+    cats: [
       { id: 11, name: "페르시안" },
       { id: 12, name: "샴" },
       { id: 13, name: "러시안 블루" },
