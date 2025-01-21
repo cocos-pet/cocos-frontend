@@ -23,16 +23,9 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
       onReplyClick(comment.id);
     }
   };
+  ㄴ;
   if (!comment) return;
-  const {
-    category,
-    selectedChips,
-    setCategory,
-    isOpen,
-    setOpen,
-    toggleChips,
-    categoryData,
-  } = useCategoryFilterStore();
+  const { isOpen, setOpen } = useCategoryFilterStore();
 
   const { mutate: deleteComment } = useDeleteComment(comment.id);
 
