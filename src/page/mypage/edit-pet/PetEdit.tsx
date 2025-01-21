@@ -49,7 +49,6 @@ const PetEdit = () => {
   const [petAge, setPetAge] = useState("");
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
-  const [petId, setPetId] = useState<number | null>(null);
 
   const {
     isOpen,
@@ -156,9 +155,6 @@ const PetEdit = () => {
     if (petInfo?.petAge) {
       //todo : 추후 요청 보낼 때는 다시 number로 변환 필요
       setPetAge(String(petInfo.petAge));
-    }
-    if (petInfo?.petId) {
-      setPetId(petInfo.petId);
     }
   }, [breed, petInfo, setAnimalCategoryData]);
 
@@ -299,7 +295,11 @@ const PetEdit = () => {
           <Divider size="small" />
           <div className={styles.chipContainer}>
             {selectedChips.diseaseIds.map((id) => (
-              <Chip key={`disease-edit-${id}`} label={getSelectedChipNamesById(id, "disease", categoryData) || ""} />
+              <Chip
+                key={`disease-edit-${id}`}
+                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
+                disabled={true}
+              />
             ))}
           </div>
           <span style={{ width: "10.2rem" }}>
@@ -317,7 +317,11 @@ const PetEdit = () => {
           <Divider size="small" />
           <div className={styles.chipContainer}>
             {selectedChips.symptomIds.map((id) => (
-              <Chip key={`symptom-edit-${id}`} label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""} />
+              <Chip
+                key={`symptom-edit-${id}`}
+                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
+                disabled={true}
+              />
             ))}
           </div>
           <span style={{ width: "10.2rem" }}>

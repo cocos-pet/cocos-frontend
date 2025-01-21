@@ -2,7 +2,7 @@ import { Button } from "@common/component/Button";
 import * as styles from "./Mypage.css";
 import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyPageContent from "./component/MyPageContent/MyPageContent";
 import { IcChevronLeft, IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
 import { useNavigate } from "react-router-dom";
@@ -11,6 +11,7 @@ import Nav from "@common/component/Nav/Nav";
 import { PET_PROFILE, USER_PROFILE } from "./constant";
 import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
+import { isLoggedIn } from "@api/index";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -19,6 +20,10 @@ const Mypage = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(true); //todo: 서버로부터 받아와서 하기
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
+
+  useEffect(() => {
+    setIsLogin(isLoggedIn());
+  }, []);
 
   const isActiveTab = (tab: ActiveTabType) => {
     return activeTab === tab;
