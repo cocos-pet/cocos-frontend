@@ -116,7 +116,6 @@ export const useDeleteSubComment = (subCommentId: number | undefined) => {
   return useMutation({
     mutationKey: COMMENT_QUERY_KEY.DELETE_SUB_COMMENT(subCommentId),
     mutationFn: () => {
-      // console.log("deleteSubComment");
       return deleteSubComment(subCommentId);
     },
     onSuccess: () => {

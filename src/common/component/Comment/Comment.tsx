@@ -9,7 +9,7 @@ import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilt
 import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
 import { useParams } from "react-router-dom";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -24,20 +24,16 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
   };
 
   if (!comment) return;
-  const { isOpen, setOpen, setContentsType, contentsType } =
-    useCategoryFilterStore();
+  const { setContentsType } = useCategoryFilterStore();
+  const [isOpen, setOpen] = useState(false);
   const { mutate: deleteComment } = useDeleteComment(comment.id);
   const { openModalId, setOpenModalId } = useModalStore();
 
   const onDeleteClick = (id: number) => {
     deleteComment(id);
-    console.log("deleteComment");
+    console.log("deleteComment", id);
     setOpen(false);
   };
-
-  useEffect(() => {
-    console.log("콘텐츠 타입", contentsType);
-  }, [contentsType]);
 
   return (
     <div className={styles.commentItem}>

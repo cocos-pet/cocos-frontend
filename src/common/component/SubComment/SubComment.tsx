@@ -89,12 +89,11 @@ const SubComment = ({
         leftOnClick={() => setIsOpen(false)}
         leftText={"취소"}
         rightOnClick={() => {
-          console.log(contentsType);
-          // if (contentsType === "subComment") {
-          //   deleteSubComment();
-          // } else {
-          //   onCommentDelete();
-          // }
+          if (contentsType === "subComment") {
+            deleteSubComment();
+          } else {
+            onCommentDelete();
+          }
           setIsOpen(false);
         }}
         rightText={"삭제할게요"}

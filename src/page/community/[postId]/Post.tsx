@@ -10,11 +10,17 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-import { useCommentsGet, useDeleteLike, useLikePost, usePostGet } from "@api/domain/community/post/hook";
+import {
+  useCommentsGet,
+  useDeleteLike,
+  useLikePost,
+  usePostGet,
+} from "@api/domain/community/post/hook";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
+import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -25,14 +31,14 @@ const PostDetail = () => {
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
   const { data: commentsData } = useCommentsGet(Number(postId));
-  console.log(commentsData);
 
   const user = {
     accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMTAxMzgsImV4cCI6MTczNzgxNDkzOCwibWVtYmVySWQiOjF9.f6sCaL3PFg7yMb6J4PM1h30ADsiq_fbON31IXPguJ_Pb4otyJ_Qh-Z_JYRxC8a2SMzaa6jr68uLc6w0_tuag3A",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0ODQwNDAsImV4cCI6MTczODA4ODg0MCwibWVtYmVySWQiOjF9.NLB2jdV8n1pUCBoFxtLrTUKw8Lqi0CLyduNt5w4JEyJ0UL6tBuyahredqvfuB31D5E_saVb9OOVqe6WtClwufw",
   };
   localStorage.setItem("user", JSON.stringify(user));
 
+  const [isOpen, setOpen] = useState(false);
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [comment, setComment] = useState("");
@@ -55,6 +61,8 @@ const PostDetail = () => {
 
   const onDelete = () => {
     // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
+    // deletePost(postId);
+    setOpen(false);
   };
 
   useEffect(() => {
@@ -76,10 +84,12 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
+          setLikeCount((prevState) =>
+            Number(prevState !== undefined ? prevState - 1 : 0)
+          );
         },
         onError: (error) => {},
-      },
+      }
     );
   };
 
@@ -94,10 +104,12 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
+          setLikeCount((prevState) =>
+            prevState !== undefined ? prevState + 1 : 0
+          );
         },
         onError: (error) => {},
-      },
+      }
     );
   };
 
@@ -111,8 +123,10 @@ const PostDetail = () => {
         type={"noTitle"}
         rightBtn={
           <MoreModal
+            onDelete={() => {
+              setOpen(true);
+            }}
             iconSize={24}
-            onDelete={onDelete}
             isOpen={openModalId === `post-${postId}`}
             onToggleModal={() => setOpenModalId(`post-${postId}`)}
           />
@@ -127,11 +141,18 @@ const PostDetail = () => {
           disabled={true}
         />
         <div className={styles.top}>
-          {<img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />}
+          {
+            <img
+              src={postData.profileImage}
+              alt="userProfile"
+              className={styles.profileImage}
+            />
+          }
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 ·{" "}
+              {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -140,7 +161,12 @@ const PostDetail = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <img key={`postImage-${index}`} src={image} alt="postImage" className={styles.image} />
+          <img
+            key={`postImage-${index}`}
+            src={image}
+            alt="postImage"
+            className={styles.image}
+          />
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
@@ -152,7 +178,11 @@ const PostDetail = () => {
             {isLiked ? (
               <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
             ) : (
-              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
+              <IcLikeDisabled
+                width={24}
+                height={24}
+                onClick={onLikeDeleteClick}
+              />
             )}
             <span>{likeCount}</span>
           </div>
@@ -161,7 +191,10 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.container}>
         <div className={styles.commentTitle}>
-          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
+          댓글{" "}
+          <span className={styles.commentCount}>
+            {postData.totalCommentCounts}
+          </span>
         </div>
         <CommentList comments={{ comments: commentsData }} />
         <div className={styles.commentContainer}>
@@ -178,6 +211,17 @@ const PostDetail = () => {
           )}
         </div>
       </div>
+      <SimpleBottomSheet
+        isOpen={isOpen}
+        content={"댓글을 정말 삭제할까요?"}
+        handleClose={() => setOpen(false)}
+        leftOnClick={() => setOpen(false)}
+        leftText={"취소"}
+        rightOnClick={() => {
+          onDelete();
+        }}
+        rightText={"삭제할게요"}
+      />
     </>
   );
 };
