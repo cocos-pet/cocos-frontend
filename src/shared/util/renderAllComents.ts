@@ -38,4 +38,6 @@ export const renderAllComments = (comment?: Comment[], subComment?: SubComment[]
       (a, b) => new Date(b.createdAt as string).getTime() - new Date(a.createdAt as string).getTime(),
     );
   }
+
+  return [];
 };

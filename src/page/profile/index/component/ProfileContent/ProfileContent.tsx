@@ -1,9 +1,12 @@
 import Content from "@common/component/Content/Content";
 import { ActiveTabType } from "../../Profile";
 import * as styles from "./ProfileContent.css";
-import { commentDummyData, dummyData } from "./costant"; //todo: 더미데이터 렌더링
+import { dummyData } from "./costant"; //todo: 더미데이터 렌더링
 import MyPageComment from "../ProfileComment/ProfileComment";
 import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
+import { PATH } from "@route/path";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -26,7 +29,18 @@ export interface ApiItemTypes {
 }
 
 //todo: 여기서 탭 별로 api 요청 보내서 데이터 받아와 렌더링하기
-const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
+const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
+  const [searchParams] = useSearchParams();
+  const query = searchParams.get("nickname");
+  if (!query) return;
+
+  const navigate = useNavigate();
+  console.log(query);
+  const { data: profilePosts } = useGetMyPost(query);
+  const { data: profileComments } = useGetMyComment(query);
+
+  if ((tab === "post" && !profilePosts) || (tab === "comment" && !profileComments)) return;
+
   const renderNothingContent = (tab: ActiveTabType) => {
     let content = "";
     switch (tab) {
@@ -48,13 +62,9 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return (
-          <div className={styles.nothingContent}>
-            {"아직 작성한 후기가 없어요."}
-          </div>
-        );
+        return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
       case "post":
-        return dummyData.map((data) => (
+        return profilePosts?.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
@@ -64,32 +74,20 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
               timeAgo="1시간 전" //추후 유틸로 대체
-              onClick={() =>
-                alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)
-              }
+              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
             />
           </div>
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return renderAllComments(
-          commentDummyData.comments,
-          commentDummyData.subComments
-        ).map((data) => (
-          <div
-            className={styles.mypagecontent}
-            key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}
-          >
+        return renderAllComments(profileComments?.comments, profileComments?.subComments).map((data) => (
+          <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
             <MyPageComment
-              postTitle={data.postTitle}
-              content={data.content}
-              timeAgo={data.createdAt}
-              mentionedNickname={
-                isSubComment(data) ? data.mentionedNickname : undefined
-              }
-              onClick={() =>
-                alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)
-              }
+              postTitle={data.postTitle as string}
+              content={data.content as string}
+              timeAgo={data.createdAt as string}
+              mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
+              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
             />
           </div>
         ));
@@ -105,4 +103,4 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   );
 };
 
-export default MyPageContent;
+export default ProfileContent;

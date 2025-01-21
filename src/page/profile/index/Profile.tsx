@@ -2,25 +2,25 @@ import * as styles from "./Profile.css";
 import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
 import { useState } from "react";
-import MyPageContent from "./component/ProfileContent/ProfileContent";
 import { IcChevronLeft } from "@asset/svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
+import ProfileContent from "./component/ProfileContent/ProfileContent";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
 //남이 볼 때 뷰 분리 : /profie?nickname=칠칠이최고 으로 넘어가서 보도록
 const Profile = () => {
   const navigate = useNavigate();
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
-  //todo: 이 쿼리로 상대 프로필 내용 받아오기
   const query = searchParams.get("nickname");
   if (!query) return;
+
   const { data: memeberInfo } = useGetMemberInfo(query);
   const { data: petInfo } = useGetPetInfo(query);
 
@@ -76,7 +76,7 @@ const Profile = () => {
       </div>
 
       <article className={styles.myPageContentWrapper}>
-        <div className={styles.contentBody}>{<MyPageContent tab={activeTab} />}</div>
+        <div className={styles.contentBody}>{<ProfileContent tab={activeTab} />}</div>
       </article>
 
       <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
