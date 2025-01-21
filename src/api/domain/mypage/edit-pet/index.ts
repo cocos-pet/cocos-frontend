@@ -2,15 +2,6 @@ import { API_PATH } from "@api/constants/apiPath";
 import { get, patch } from "@api/index";
 import { paths } from "@type/schema";
 
-//todo : try-catch문 작성하기
-export const getMemberInfo = async () => {
-  //type getMemberInfoRequest = paths["/api/dev/members"]["get"]["requestBody"];
-  type MemberInfoResponse = paths["/api/dev/members"]["get"]["responses"]["200"]["content"]["*/*"];
-  const { data } = await get<MemberInfoResponse>(API_PATH.MEMBERS, {});
-
-  return data.data;
-};
-
 export const getAnimal = async () => {
   type AnimalResponse = paths["/api/dev/animals"]["get"]["responses"]["200"]["content"]["*/*"];
   const { data } = await get<AnimalResponse>(API_PATH.ANIMALS, {});
@@ -45,17 +36,6 @@ export const getDisease = async (bodyIds: number[]) => {
   type DiseaseResponse = paths["/api/dev/diseases"]["get"]["responses"]["200"]["content"]["*/*"];
   const { data } = await get<DiseaseResponse>(`${API_PATH.DISEASE}`, {
     params: { bodyIds: bodyIds.join(",") },
-  });
-  return data.data;
-};
-
-//nickname을 안주고 accessToken만 주면 나의 반려동물 정보
-export const getPetInfo = async (nickname?: string) => {
-  type MyPetInfo = paths["/api/dev/pets"]["get"]["responses"]["200"]["content"]["*/*"];
-  const { data } = await get<MyPetInfo>(`${API_PATH.PETS}`, {
-    params: {
-      nickname,
-    },
   });
   return data.data;
 };
