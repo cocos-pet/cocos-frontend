@@ -58,7 +58,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
-              age={data.age}
+              petAge={data.age}
               postTitle={data.title}
               postContent={data.content}
               likeCnt={data.likeCount}

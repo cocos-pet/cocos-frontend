@@ -1,7 +1,6 @@
 import {
   getSearch,
   postPostFilters,
-  postPostFiltersRequest,
 } from "@api/domain/community/search/index.ts";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -16,7 +15,6 @@ const SEARCH_QUERY_KEY = {
   SEARCH_POST_FILTERS_QUERY_KEY: () => ["postFilters"],
 };
 
-
 /**
  * @description 최근 검색어 조회 API
  */
@@ -28,6 +26,10 @@ export const useSearchGet = () => {
     },
   });
 };
+
+/**
+ * @description 게시물 필터 조회 API
+ */
 
 export const usePostPostFilters = () => {
   return useMutation({

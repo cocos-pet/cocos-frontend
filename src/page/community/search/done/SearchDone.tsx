@@ -118,7 +118,7 @@ const SearchDone = () => {
           <Content
             key={index}
             breed={data?.breed}
-            age={data?.petAge}
+            petAge={data?.petAge}
             postTitle={data?.title}
             postContent={data.content}
             likeCnt={data.likeCount}
