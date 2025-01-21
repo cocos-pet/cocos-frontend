@@ -1,9 +1,17 @@
-import { useQuery } from "@tanstack/react-query";
-import { getComments, getPost } from "@api/domain/community/post/index.ts";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  deleteComment,
+  getComments,
+  getPost,
+} from "@api/domain/community/post/index.ts";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
+};
+
+export const COMMENT_QUERY_KEY = {
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
+  DELETE_COMMENT: (commentId: string) => ["deleteComment", commentId],
 };
 
 /**
@@ -26,9 +34,22 @@ export const usePostGet = (postId: number) => {
 
 export const useCommentsGet = (postId: number) => {
   return useQuery({
-    queryKey: POST_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+    queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
     queryFn: () => {
       return getComments(postId);
+    },
+  });
+};
+
+/**
+ * @description 댓글 삭제 API
+ */
+
+export const useDeleteComment = (commentId: string) => {
+  return useMutation({
+    mutationKey: COMMENT_QUERY_KEY.DELETE_COMMENT(commentId),
+    mutationFn: (commentId: number) => {
+      return deleteComment(commentId);
     },
   });
 };

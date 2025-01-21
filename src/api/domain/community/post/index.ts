@@ -1,5 +1,5 @@
 import { components, paths } from "@type/schema";
-import { get } from "@api/index.ts";
+import { del, get } from "@api/index.ts";
 import { API_PATH } from "@api/constants/apiPath.ts";
 
 type postGetResponse =
@@ -34,4 +34,18 @@ export const getComments = async (postId: number) => {
     `${API_PATH.COMMENTS}/${postId}`
   );
   return data.data?.comments;
+};
+
+/**
+ * @description 댓글 삭제 API
+ */
+
+export type deleteCommentResponse =
+  paths["/api/dev/comments/{commentId}"]["delete"]["responses"]["200"]["content"]["*/*"];
+
+export const deleteComment = async (commentId: number) => {
+  const { data } = await del<deleteCommentResponse>(
+    `${API_PATH.COMMENTS}/${commentId}`
+  );
+  return data.data;
 };
