@@ -13,15 +13,13 @@ export const MAIN_QUERY_KEY = {
 };
 
 export const MAIN_BODY_PARTS_QUERY_KEY = {
-  BODY_PARTS_KEY: (petProblem: string) => ["body", petProblem],
+  BODY_PARTS_KEY: (petProblem: "DISEASE" | "SYMPTOM") => ["body", petProblem],
 };
 
-export const useGetBodyParts = (petProblem: string) => {
-  const validProblem = petProblem || "symptom";
-
+export const useGetBodyParts = (petProblem: "DISEASE" | "SYMPTOM") => {
   return useQuery({
-    queryKey: MAIN_BODY_PARTS_QUERY_KEY.BODY_PARTS_KEY(validProblem),
-    queryFn: () => getBodyParts(validProblem),
+    queryKey: MAIN_BODY_PARTS_QUERY_KEY.BODY_PARTS_KEY(petProblem),
+    queryFn: () => getBodyParts(petProblem),
   });
 };
 

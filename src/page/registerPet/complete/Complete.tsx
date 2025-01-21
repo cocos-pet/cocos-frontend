@@ -4,11 +4,11 @@ import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import { Button } from "@common/component/Button";
 import img from "@asset/image/beforeRegisterGraphic.png";
-
+import { PATH } from "@route/path";
 const Complete = () => {
   const navigate = useNavigate();
   const handleSkip = () => {
-    navigate("/main");
+    navigate(PATH.MAIN);
   };
 
   return (

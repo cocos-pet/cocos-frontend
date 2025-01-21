@@ -4,11 +4,10 @@ export const layout = style({
   display: "flex",
   flexDirection: "column",
   padding: "8rem 2rem",
-  gap: "9rem",
+  gap: "7.2rem",
 });
 export const dualSelectorWrapper = style({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
   gap: "1.2rem",
 });
 

@@ -1,39 +1,27 @@
 import * as styles from "./Step1.css";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import { Button } from "@common/component/Button";
-import { IcIcons } from "@asset/svg";
-import { DISEASE, BodyPart } from "@page/registerPet/index/component/petHealth/disease/constant";
-import { useState } from "react";
+import { bodiesGetResponse } from "@api/domain/registerPet/bodies";
 
-const Step1 = () => {
-  const [selectedIds, setSelectedIds] = useState<number[]>([]);
+interface Step1Props {
+  selectedIds: number[];
+  onBodyPartSelection: (id: number) => void;
+  data: bodiesGetResponse["data"];
+}
 
-  const handleBody = (id: number) => {
-    setSelectedIds((prev) => {
-      // 이미 선택된 아이템일 경우 해제
-      if (prev.includes(id)) {
-        return prev.filter((item) => item !== id);
-      }
-
-      // 선택된 아이템이 2개 미만일 경우 추가
-      if (prev.length < 2) {
-        return [...prev, id];
-      }
-
-      // 선택된 아이템이 2개 이상이면 변경하지 않음
-      return prev;
-    });
+const Step1 = ({ selectedIds, data, onBodyPartSelection }: Step1Props) => {
+  if (!data || !data.bodies) {
+    return null; // 데이터가 없으면 컴포넌트 렌더링하지 않음
+  }
+  const handleSelection = (id: number) => {
+    if (selectedIds.includes(id)) {
+      // 이미 선택된 항목은 선택 해제
+      onBodyPartSelection(id);
+    } else if (selectedIds.length < 2) {
+      // 2개 미만일 때만 새 항목 추가
+      onBodyPartSelection(id);
+    }
   };
-
-  const handleGoBack = () => {
-    console.log("다음 pr에서 구현할래욥.");
-  };
-
-  const handleNext = () => {
-    console.log("다음 pr에서 구현할래욥.");
-  };
-
   return (
     <>
       {/* 상단 영역 */}
@@ -47,30 +35,19 @@ const Step1 = () => {
 
       {/* 컨텐츠 영역 */}
       <div className={styles.contentWrapper}>
-        {DISEASE.data.bodies.map((body: BodyPart) => (
+        {data.bodies.map((body) => (
           <button
             key={body.id}
-            // 선택에따른 색상변화 효과가 아직 확정이 안나서 일단 아래와 같이 구현해 두었습니다
-            className={`${styles.contentItem} ${selectedIds.includes(body.id) ? styles.selected : ""}`}
-            onClick={() => handleBody(body.id)}
+            className={styles.contentItem}
+            onClick={() => {
+              body.id && handleSelection(body.id);
+            }}
             type="button"
           >
-            <IcIcons width={56} height={56} />
+            <img src={body.image} width={56} height={56} alt="body-img" />
             <p>{body.name}</p>
           </button>
         ))}
-      </div>
-
-      {/* 하단 영역 */}
-      <div className={styles.btnWrapper}>
-        <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button
-          label="다음"
-          size="large"
-          variant="solidPrimary"
-          disabled={selectedIds.length === 0}
-          onClick={handleNext}
-        />
       </div>
     </>
   );

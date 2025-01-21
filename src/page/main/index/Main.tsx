@@ -9,12 +9,14 @@ import HotPost from "./hotPost/HotPost";
 import MainHeader from "./mainHeader/mainHeader";
 import Nav from "@common/component/Nav/Nav";
 import Spacing from "@common/component/Spacing/Spacing";
+import { NAV_CONTENT } from "@common/component/Nav/constant";
+
 import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
 
 const Main = () => {
   const { data: postsData } = useQueryGetPopular();
-  const { data: getBodyParts } = useGetBodyParts("symptom");
+  const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
 
   const navigate = useNavigate();
 
@@ -46,14 +48,14 @@ const Main = () => {
         />
       </div>
       <MainHeader />
-      <Symptom petProblem="symptom" />
+      <Symptom />
       <Divider />
       <HotPost />
       <Divider />
       <MainFooter />
       <Spacing marginBottom="8" />
       <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
-        <Nav />
+        <Nav content={NAV_CONTENT} type={"nav"} />
       </span>
     </div>
   );

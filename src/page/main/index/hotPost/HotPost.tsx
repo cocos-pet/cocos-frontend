@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import * as styles from "./HotPost.css";
 import Divider from "@common/component/Divider/Divider";
 import { useQueryGetPopular } from "@api/domain/main/hook";
+import { PATH } from "@route/path";
 
 // interface Post {
 //   id?: number;
@@ -28,7 +29,7 @@ const HotPost = ({ petName }: HotPostProps) => {
   const posts = postsData.data.posts || [];
   const handlePostClick = (postId?: number) => {
     if (postId !== undefined) {
-      navigate(`/community/${postId}`);
+      navigate(PATH.COMMUNITY.POST);
     }
   };
 

@@ -4,14 +4,14 @@ import { CATEGORY_SYMPTOM, CATEGORY_DISEASE } from "@shared/component/FilterBott
 // todo: 추후 타입들 분리하기
 // 각 필터 항목의 기본 타입
 export interface FilterItem {
-  id: number;
-  name: string;
+  id?: number;
+  name?: string;
 }
 export interface SymptomItem extends FilterItem {
-  symptoms: FilterItem[];
+  symptoms?: FilterItem[];
 }
 export interface DiseaseItem extends FilterItem {
-  diseases: FilterItem[];
+  diseases?: FilterItem[];
 }
 
 // API로부터 GET 해오는 데이터 타입들 중 일부
@@ -42,6 +42,18 @@ interface CategoryFilterState {
   // 적용된 필터
   selectedChips: SelectedChips;
   toggleChips: (chip: { id: number; category: keyof SelectedChips }) => void;
+  setSelectedChips: ({
+    ids,
+    category,
+  }: {
+    ids: (number | undefined)[] | undefined;
+    category: keyof SelectedChips;
+  }) => void;
+
+  symptoms?: {
+    id?: number;
+    name?: string;
+  }[];
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
@@ -69,6 +81,21 @@ export const useCategoryFilterStore = create<CategoryFilterState>((set) => ({
         selectedChips: {
           ...state.selectedChips,
           [category]: updatedList,
+        },
+      };
+    }),
+  setSelectedChips: ({
+    ids,
+    category,
+  }: {
+    ids: (number | undefined)[] | undefined;
+    category: keyof SelectedChips;
+  }) =>
+    set((state) => {
+      return {
+        selectedChips: {
+          ...state.selectedChips,
+          [category]: ids,
         },
       };
     }),
