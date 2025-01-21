@@ -13,7 +13,7 @@ export const API_PATH = {
   ANIMALS: "/api/dev/animals",
 
   POST: "/api/dev/posts",
-  POST_FILTERS: "/api/dev/posts/filters/",
+  POST_FILTERS: "/api/dev/posts/filters",
   POST_POPULAR: "/api/dev/posts/popular",
   POST_CATEGORIES: "/api/dev/posts/categories",
 
