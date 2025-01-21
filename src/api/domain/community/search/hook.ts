@@ -1,13 +1,11 @@
 import {
   getSearch,
   postPostFilters,
-} from "@api/domain/community/search/index.ts";
-
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import {
   postSearch,
   searchPostType,
 } from "@api/domain/community/search/index.ts";
+
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
 const SEARCH_QUERY_KEY = {
   SEARCH_QUERY_KEY: () => ["search"],
