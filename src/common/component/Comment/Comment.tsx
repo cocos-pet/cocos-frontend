@@ -8,6 +8,8 @@ import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
+import { useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -22,33 +24,41 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
   };
 
   if (!comment) return;
-  const { isOpen, setOpen, setContentsType } = useCategoryFilterStore();
+  const { isOpen, setOpen, setContentsType, contentsType } =
+    useCategoryFilterStore();
   const { mutate: deleteComment } = useDeleteComment(comment.id);
+  const { openModalId, setOpenModalId } = useModalStore();
 
-  // @공준혁 : 댓글 삭제 버튼 클릭시 subcomment 로 보내줄 함수입니다.
   const onDeleteClick = (id: number) => {
     deleteComment(id);
     console.log("deleteComment");
     setOpen(false);
   };
 
-  const { openModalId, setOpenModalId } = useModalStore();
+  useEffect(() => {
+    console.log("콘텐츠 타입", contentsType);
+  }, [contentsType]);
 
   return (
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={comment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
+          <img
+            src={comment.profileImage}
+            className={styles.profileImage}
+            alt="프로필 이미지"
+          />
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>{comment.nickname}</span>
             <span className={styles.meta}>
-              {comment.breed} · {comment.petAge}살 · {comment.createdAt ? formatTime(comment.createdAt) : ""}
+              {comment.breed} · {comment.petAge}살 ·{" "}
+              {comment.createdAt ? formatTime(comment.createdAt) : ""}
             </span>
           </div>
           <MoreModal
             onDelete={() => {
               setOpen(true);
-              // setContentsType("comment");
+              setContentsType("comment");
             }}
             iconSize={24}
             isOpen={openModalId === `comment-${comment.id}`}
@@ -68,7 +78,10 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
       {/* 대댓글 리스트 */}
       {comment.subComments && (
         <div>
-          <SubCommentList subComments={comment.subComments} onCommentDelete={onDeleteClick} />
+          <SubCommentList
+            subComments={comment.subComments}
+            onCommentDelete={onDeleteClick}
+          />
         </div>
       )}
       <SimpleBottomSheet

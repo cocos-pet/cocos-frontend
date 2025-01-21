@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   deleteComment,
   getComments,
@@ -7,6 +7,7 @@ import {
   postLike,
   deleteSubComment,
 } from "@api/domain/community/post";
+import { useParams } from "react-router-dom";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
@@ -16,8 +17,14 @@ export const POST_QUERY_KEY = {
 
 export const COMMENT_QUERY_KEY = {
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
-  DELETE_COMMENT: (commentId: number | undefined) => ["deleteComment", commentId],
-  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => ["deleteSubComment", subCommentId],
+  DELETE_COMMENT: (commentId: number | undefined) => [
+    "deleteComment",
+    commentId,
+  ],
+  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => [
+    "deleteSubComment",
+    subCommentId,
+  ],
 };
 
 /**
@@ -79,11 +86,20 @@ export const useCommentsGet = (postId: number) => {
  */
 
 export const useDeleteComment = (commentId: number | undefined) => {
+  const { postId } = useParams();
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: COMMENT_QUERY_KEY.DELETE_COMMENT(commentId),
     mutationFn: (commentId: number) => {
-      // return console.log("commentId", commentId);
       return deleteComment(commentId);
+    },
+    onSuccess: () => {
+      // 댓글 삭제 성공시 댓글 쿼리 무효화
+      if (postId != null) {
+        queryClient.invalidateQueries({
+          queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(Number(postId)),
+        });
+      }
     },
   });
 };
@@ -93,12 +109,23 @@ export const useDeleteComment = (commentId: number | undefined) => {
  */
 
 export const useDeleteSubComment = (subCommentId: number | undefined) => {
+  const { postId } = useParams();
+
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: COMMENT_QUERY_KEY.DELETE_SUB_COMMENT(subCommentId),
     mutationFn: () => {
-      console.log("subCommentId", subCommentId);
-
+      // console.log("deleteSubComment");
       return deleteSubComment(subCommentId);
+    },
+    onSuccess: () => {
+      // 댓글 삭제 성공시 댓글 쿼리 무효화
+      if (postId != null) {
+        queryClient.invalidateQueries({
+          queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(Number(postId)),
+        });
+      }
     },
   });
 };
