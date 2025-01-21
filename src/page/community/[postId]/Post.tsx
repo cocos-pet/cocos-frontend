@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow, IcTest } from "@asset/svg";
+import { IcLeftarrow, IcLikeActive, IcLikeDisabled, IcTest } from "@asset/svg";
 import { styles } from "@page/community/[postId]/Post.css.ts";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
@@ -12,16 +12,24 @@ import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
 import {
   useCommentsGet,
+  useDeleteLike,
+  useLikePost,
   useDeleteComment,
   usePostGet,
 } from "@api/domain/community/post/hook";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
+import { getAccessToken } from "@api/index.ts";
 
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
+  const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postId));
+  if (!postId) return <>loading</>;
+  const { mutate: likePost } = useLikePost(postId);
+  const { mutate: likeDelete } = useDeleteLike(postId);
   const { data: commentsData } = useCommentsGet(Number(postId));
 
   const user = {
@@ -30,6 +38,8 @@ const PostDetail = () => {
   };
   localStorage.setItem("user", JSON.stringify(user));
 
+  const [isLiked, setIsLiked] = useState(postData?.isLiked);
+  const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [comment, setComment] = useState("");
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,11 +62,56 @@ const PostDetail = () => {
     // TODO : 게시물 삭제하기 버튼 클릭 시 이벤트
   };
 
-  const { openModalId, setOpenModalId } = useModalStore();
+  useEffect(() => {
+    // 초기 데이터 세팅
+    if (postData) {
+      setIsLiked(postData.isLiked);
+      setLikeCount(postData.likeCounts);
+    }
+  }, [postData]);
+
+  const onLikePostClick = () => {
+    if (getAccessToken() === null) {
+      navigate(PATH.ONBOARDING.ROOT);
+      return;
+    }
+
+    likeDelete(
+      { postId },
+      {
+        onSuccess: (data) => {
+          setIsLiked(false);
+          setLikeCount((prevState) =>
+            Number(prevState !== undefined ? prevState - 1 : 0)
+          );
+        },
+        onError: (error) => {},
+      }
+    );
+  };
+
+  const onLikeDeleteClick = () => {
+    if (getAccessToken() === null) {
+      navigate(PATH.ONBOARDING.ROOT);
+      return;
+    }
+
+    likePost(
+      { postId },
+      {
+        onSuccess: (data) => {
+          setIsLiked(true);
+          setLikeCount((prevState) =>
+            prevState !== undefined ? prevState + 1 : 0
+          );
+        },
+        onError: (error) => {},
+      }
+    );
+  };
 
   if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
 
-  // @ts-ignore
   return (
     <>
       <HeaderNav
@@ -100,7 +155,6 @@ const PostDetail = () => {
           <div className={styles.title}>{postData.title}</div>
           <div className={styles.content}>{postData.content}</div>
         </div>
-        {/* TODO : 서버에서 받아온 이미지로 수정*/}
         {postData.images?.map((image, index) => (
           <img
             key={index}
@@ -116,9 +170,16 @@ const PostDetail = () => {
         </div>
         <div className={styles.subContents}>
           <div className={styles.item}>
-            {/* TODO : 궁금해요/응원해요 아아콘 결정되면 수정 */}
-            <IcTest width={24} height={24} />
-            <span>{postData.likeCounts}</span>
+            {isLiked ? (
+              <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
+            ) : (
+              <IcLikeDisabled
+                width={24}
+                height={24}
+                onClick={onLikeDeleteClick}
+              />
+            )}
+            <span>{likeCount}</span>
           </div>
         </div>
       </div>

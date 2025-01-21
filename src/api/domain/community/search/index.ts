@@ -1,9 +1,9 @@
-import { API_PATH } from "@api/constants/apiPath";
 import { get, post } from "@api/index";
+import { API_PATH } from "@api/constants/apiPath.ts";
 import { components, paths } from "src/type/schema";
 
 /**
- * @description 최근 검색어 조회 API
+ * @description 최근 검색어 GET API
  */
 
 /**
@@ -24,10 +24,6 @@ export const getSearch = async () => {
 export type searchPostRequest =
   paths["/api/dev/search"]["post"]["parameters"]["query"];
 
-
-
-export type searchPostResponse =
-  paths["/api/dev/search"]["post"]["responses"]["200"]["content"]["*/*"];
 
 export interface searchPostType {
   keyword: string;

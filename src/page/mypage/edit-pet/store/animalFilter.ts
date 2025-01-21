@@ -6,9 +6,9 @@ import {
 } from "@shared/component/FilterBottomSheet/CategoryContent/constant";
 
 export interface AnimalItem {
-  id: number;
-  name: string;
-  image: string;
+  id?: number;
+  name?: string;
+  image?: string;
 }
 
 export interface BreedItem {
@@ -51,7 +51,7 @@ interface AnimalFilterState {
 
   // 적용된 필터
   selectedChips: SelectedChips;
-  toggleChips: (chip: { id: number | "M" | "F"; category: keyof SelectedChips }) => void;
+  toggleChips: (chip: { id: number | "M" | "F" | null; category: keyof SelectedChips }) => void;
   //animalId, breedId, gender
 
   // 각 category에 해당하는 데이터 배열
