@@ -6,8 +6,20 @@ import { components, paths } from "src/type/schema";
  * @description 최근 검색어 GET API
  */
 
+/**
+ * @description 최근 검색어 GET API
+ */
 export type searchGetResponse =
   paths["/api/dev/search"]["get"]["responses"]["200"]["content"]["*/*"];
+
+export const getSearch = async () => {
+  const { data } = await get<searchGetResponse>(API_PATH.SEARCH, {});
+  return data.data;
+};
+
+/**
+ * @description 최근 검색어 POST API
+ */
 
 export type searchPostRequest =
   paths["/api/dev/search"]["post"]["parameters"]["query"];
@@ -16,15 +28,6 @@ export type searchPostRequest =
 export interface searchPostType {
   keyword: string;
 }
-
-/**
- * @description 최근 검색어 조회 API
- */
-
-export const getSearch = async () => {
-  const { data } = await get<searchGetResponse>(API_PATH.SEARCH, {});
-  return data.data;
-};
 
 export const postSearch = async (body: searchPostType) => {
   return await post<searchPostType>(
