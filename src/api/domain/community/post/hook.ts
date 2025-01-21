@@ -16,14 +16,8 @@ export const POST_QUERY_KEY = {
 
 export const COMMENT_QUERY_KEY = {
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
-  DELETE_COMMENT: (commentId: number | undefined) => [
-    "deleteComment",
-    commentId,
-  ],
-  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => [
-    "deleteSubComment",
-    subCommentId,
-  ],
+  DELETE_COMMENT: (commentId: number | undefined) => ["deleteComment", commentId],
+  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => ["deleteSubComment", subCommentId],
 };
 
 /**
@@ -87,9 +81,9 @@ export const useCommentsGet = (postId: number) => {
 export const useDeleteComment = (commentId: number | undefined) => {
   return useMutation({
     mutationKey: COMMENT_QUERY_KEY.DELETE_COMMENT(commentId),
-    mutationFn: () => {
-      console.log("commentId", commentId);
-      // return deleteComment(commentId);
+    mutationFn: (commentId: number) => {
+      // return console.log("commentId", commentId);
+      return deleteComment(commentId);
     },
   });
 };

@@ -10,13 +10,7 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-import {
-  useCommentsGet,
-  useDeleteLike,
-  useLikePost,
-  useDeleteComment,
-  usePostGet,
-} from "@api/domain/community/post/hook";
+import { useCommentsGet, useDeleteLike, useLikePost, usePostGet } from "@api/domain/community/post/hook";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
@@ -31,6 +25,7 @@ const PostDetail = () => {
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
   const { data: commentsData } = useCommentsGet(Number(postId));
+  console.log(commentsData);
 
   const user = {
     accessToken:
@@ -81,12 +76,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) =>
-            Number(prevState !== undefined ? prevState - 1 : 0)
-          );
+          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -101,12 +94,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) =>
-            prevState !== undefined ? prevState + 1 : 0
-          );
+          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -136,18 +127,11 @@ const PostDetail = () => {
           disabled={true}
         />
         <div className={styles.top}>
-          {
-            <img
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-            />
-          }
+          {<img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 ·{" "}
-              {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -156,12 +140,7 @@ const PostDetail = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <img
-            key={`postImage-${index}`}
-            src={image}
-            alt="postImage"
-            className={styles.image}
-          />
+          <img key={`postImage-${index}`} src={image} alt="postImage" className={styles.image} />
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
@@ -173,11 +152,7 @@ const PostDetail = () => {
             {isLiked ? (
               <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
             ) : (
-              <IcLikeDisabled
-                width={24}
-                height={24}
-                onClick={onLikeDeleteClick}
-              />
+              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
             )}
             <span>{likeCount}</span>
           </div>
@@ -186,10 +161,7 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.container}>
         <div className={styles.commentTitle}>
-          댓글{" "}
-          <span className={styles.commentCount}>
-            {postData.totalCommentCounts}
-          </span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList comments={{ comments: commentsData }} />
         <div className={styles.commentContainer}>
