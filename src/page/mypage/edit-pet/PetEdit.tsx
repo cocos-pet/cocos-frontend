@@ -117,8 +117,8 @@ const PetEdit = () => {
   }, [isEditing]);
 
   useEffect(() => {
-    if (member) {
-      setName(member.nickname as string);
+    if (petInfo) {
+      setName(petInfo.petName as string);
     }
     if (animal?.animals) {
       console.log(animal.animals);
@@ -147,7 +147,7 @@ const PetEdit = () => {
         }
       }
     }
-  }, [member, animal, symptoms, disease, petInfo, setCategoryData, setAnimalCategoryData, animalToggleChips]);
+  }, [animal, symptoms, disease, petInfo, setCategoryData, setAnimalCategoryData, animalToggleChips]);
 
   useEffect(() => {
     if (breed?.breeds) {
@@ -162,7 +162,7 @@ const PetEdit = () => {
     }
   }, [breed, petInfo, setAnimalCategoryData]);
 
-  if (isLoading || !member || !animal) return;
+  if (isLoading || !animal) return;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
@@ -240,7 +240,7 @@ const PetEdit = () => {
       />
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
-          <img className={styles.profileImage} alt="프로필 이미지" src={member.profileImage} />
+          <img className={styles.profileImage} alt="프로필 이미지" src={petInfo.petImage} />
           <span className={styles.nicknameWrapper}>
             {isEditing ? (
               <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
