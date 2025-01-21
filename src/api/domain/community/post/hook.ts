@@ -15,6 +15,10 @@ export const COMMENT_QUERY_KEY = {
     "deleteComment",
     commentId,
   ],
+  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => [
+    "deleteSubComment",
+    subCommentId,
+  ],
 };
 
 /**
@@ -53,6 +57,19 @@ export const useDeleteComment = (commentId: number | undefined) => {
     mutationKey: COMMENT_QUERY_KEY.DELETE_COMMENT(commentId),
     mutationFn: () => {
       return deleteComment(commentId);
+    },
+  });
+};
+
+/**
+ * @description 대댓글 삭제 API
+ */
+
+export const useDeleteSubComment = (subCommentId: number | undefined) => {
+  return useMutation({
+    mutationKey: COMMENT_QUERY_KEY.DELETE_SUB_COMMENT(subCommentId),
+    mutationFn: () => {
+      return deleteComment(subCommentId);
     },
   });
 };

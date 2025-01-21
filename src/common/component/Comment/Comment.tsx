@@ -8,7 +8,6 @@ import {
   deleteComment,
 } from "@api/domain/community/post";
 import { useDeleteComment } from "@api/domain/community/post/hook.ts";
-import BottomSheet from "@common/component/BottomSheet/BottomSheet.tsx";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
@@ -23,7 +22,7 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
       onReplyClick(comment.id);
     }
   };
-  ㄴ;
+
   if (!comment) return;
   const { isOpen, setOpen } = useCategoryFilterStore();
 

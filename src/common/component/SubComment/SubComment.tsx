@@ -3,6 +3,12 @@ import { IcEllipses, IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
+import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import {
+  useDeleteComment,
+  useDeleteSubComment,
+} from "@api/domain/community/post/hook.ts";
 
 interface SubCommentProps {
   subComment: commentGetRequestSubCommentType;
@@ -15,8 +21,10 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
       onReplyClick(subComment.id);
     }
   };
+  const { mutate: deleteSubComment } = useDeleteSubComment(subComment.id);
 
   const { openModalId, setOpenModalId } = useModalStore();
+  const { isOpen, setOpen } = useCategoryFilterStore();
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
@@ -35,8 +43,8 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
     );
   };
 
-  const onDelete = () => {
-    // TODO : 대댓글 삭제
+  const onDeleteClick = () => {
+    deleteSubComment();
   };
 
   return (
@@ -59,7 +67,7 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
           </div>
           <MoreModal
             iconSize={24}
-            onDelete={onDelete}
+            onDelete={() => setOpen(true)}
             isOpen={openModalId === `subComment-${subComment.id}`}
             onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
           />
@@ -72,6 +80,15 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
           <p>답글쓰기</p>
         </div>
       </div>
+      <SimpleBottomSheet
+        isOpen={isOpen}
+        content={"댓글을 정말 삭제할까요?"}
+        handleClose={() => setOpen(false)}
+        leftOnClick={() => setOpen(false)}
+        leftText={"취소"}
+        rightOnClick={onDeleteClick}
+        rightText={"삭제할게요"}
+      />
     </div>
   );
 };

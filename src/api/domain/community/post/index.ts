@@ -49,3 +49,17 @@ export const deleteComment = async (commentId: number | undefined) => {
   );
   return data.data;
 };
+
+/**
+ * @description 대댓글 삭제 API
+ */
+
+export type deleteSubCommentResponse =
+  paths["/api/dev/comments/sub/{subCommentId}"]["delete"]["responses"]["200"]["content"]["*/*"];
+
+export const deleteSubComment = async (subCommentId: number | undefined) => {
+  const { data } = await del<deleteSubCommentResponse>(
+    `${API_PATH.SUBCOMMENTS}/${subCommentId}`
+  );
+  return data.data;
+};
