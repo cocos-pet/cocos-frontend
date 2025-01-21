@@ -8,12 +8,12 @@ import PROFILE_ROUTES from "./ProfileRoutes";
 import Test from "@page/test/Test";
 import SETTING_ROUTES from "./Setting";
 import NotFound from "@page/notFound/NotFound";
+import Index from "@page/index/Index";
 
 //children은 Outlet에서 사용하는 방식 (레이아웃 지정해야할 때)
 const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
-
-  { path: "/", element: <>just home</> },
+  { path: "/", element: <Index /> },
   ...ONBOARDING_ROUTES,
   ...MAIN_ROUTES,
   ...COMMUNITY_ROUTES,
