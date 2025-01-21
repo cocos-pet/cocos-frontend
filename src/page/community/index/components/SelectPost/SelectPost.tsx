@@ -50,16 +50,14 @@ const PostList = () => {
             key={post.id}
             breed={post.breed}
             petAge={post.petAge}
-            title={post.title}
-            content={post.content}
-            likeCount={post.likeCount}
-            commentCount={post.commentCount}
-            createdAt={isRecentPost ? post.createdAt : post.updatedAt}
-            image={post.image}
+            postTitle={post.title}
+            postContent={post.content}
+            likeCnt={post.likeCount}
+            commentCnt={post.commentCount}
+            postImage={post.image}
             onClick={() => navigate(`/post/${post.id}`)}
-            id={0}
-            updateAt={""}
-            category={""}
+            timeAgo={post.updatedAt}
+            category={post.category}
           />
         ))}
       </div>

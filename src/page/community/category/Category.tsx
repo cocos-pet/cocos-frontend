@@ -7,6 +7,7 @@ import { Icfilter, IcLeftarrow, IcSearch, Icfilteron } from "@asset/svg";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 import { useFilterStore } from "@store/filter";
+import { PATH } from "@route/path";
 
 interface CategoryItem {
   id: number;
@@ -72,15 +73,13 @@ const Category = () => {
             key={post.id}
             breed={post.breed}
             petAge={post.petAge}
-            title={post.title}
-            content={post.content}
-            likeCount={post.likeCount}
-            commentCount={post.commentCount}
-            createdAt={post.createdAt}
-            image={post.image}
-            onClick={() => navigate(`/community/post/${post.id}`)}
-            id={post.id}
-            updateAt={post.updatedAt}
+            postTitle={post.title}
+            postContent={post.content}
+            likeCnt={post.likeCount}
+            commentCnt={post.commentCount}
+            postImage={post.image}
+            onClick={() => navigate(PATH.COMMUNITY.POST)}
+            timeAgo={post.updatedAt}
             category={post.category}
           />
         ))}

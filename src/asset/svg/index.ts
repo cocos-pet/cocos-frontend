@@ -9,8 +9,6 @@ export { default as IcIcons } from "./IcIcons";
 export { default as IcImagePlus } from "./IcImagePlus";
 export { default as IcLeftIcon } from "./IcLeftIcon";
 export { default as IcNormal } from "./IcNormal";
-export { default as IcRightIcon } from "./IcRightIcon";
-export { default as IcShape } from "./IcShape";
 export { default as IcRight } from "./IcRight";
 export { default as IcChevronLeft } from "./IcChevronLeft";
 export { default as IcChevronRight } from "./IcChevronRight";

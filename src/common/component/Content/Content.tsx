@@ -6,22 +6,12 @@ interface ContentPropTypes {
   petAge?: number;
   postTitle?: string;
   postContent?: string;
-  id: number;
-  breed: string;
-  petAge: number;
-  title: string;
-  content: string;
   likeIconType?: "curious" | "support";
   likeCnt?: number;
   commentCnt?: number;
   timeAgo?: string;
   postImage?: string;
-  likeCount?: number;
-  commentCount?: number;
-  createdAt: string;
-  updateAt: string;
-  image?: string;
-  category: string;
+  category?: string;
   onClick?: () => void;
 }
 
@@ -45,15 +35,11 @@ const Content = ({
   petAge,
   postTitle,
   postContent,
-  petAge,
-  title,
-  content,
   likeIconType,
-  likeCount,
-  commentCount,
-  createdAt,
-  updateAt,
-  image,
+  likeCnt,
+  commentCnt,
+  timeAgo,
+  postImage,
   onClick,
 }: ContentPropTypes) => {
   return (
@@ -61,26 +47,24 @@ const Content = ({
       <div className={styles.left}>
         <div className={styles.category}>
           {breed} · {petAge}살
-          {breed}·{petAge}
         </div>
-        <div className={styles.title}>{title}</div>
-        <div className={styles.contents}>{content}</div>
+        <div className={styles.title}>{postTitle}</div>
+        <div className={styles.contents}>{postContent}</div>
         <div className={styles.subContents}>
           <div className={styles.item}>
             {/* 궁금해요/응원해요 아아콘 결정되면 수정 */}
             {likeIconType === "curious" ? <IcTest /> : <IcTest />}
-            <span>{likeCount}</span>
+            <span>{likeCnt}</span>
           </div>
           <div className={styles.item}>
             <IcoMessage />
-            <span>{commentCount}</span>
+            <span>{commentCnt}</span>
           </div>
           <div className={styles.item}>·</div>
-          <div className={styles.item}>{createdAt}</div>
-          <div className={styles.item}>{updateAt}</div>
+          <div className={styles.item}>{timeAgo}</div>
         </div>
       </div>
-      {image && <img src={image} alt="postImage" className={styles.postImage} />}
+      {postImage && <img src={postImage} alt="postImage" className={styles.postImage} />}
     </div>
   );
 };
