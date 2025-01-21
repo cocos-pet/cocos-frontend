@@ -38,7 +38,16 @@ export const categoryZone = style({
 });
 
 export const bodyZone = style({
+  maxHeight: "44rem",
   padding: "0 2rem",
+  overflowY: "scroll",
+  selectors: {
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+
+  marginBottom: "8.8rem",
 });
 
 export const buttonWrapper = style({
@@ -52,4 +61,6 @@ export const buttonWrapper = style({
   justifyContent: "center",
   alignItems: "center",
   flexShrink: 0,
+
+  backgroundColor: "white",
 });

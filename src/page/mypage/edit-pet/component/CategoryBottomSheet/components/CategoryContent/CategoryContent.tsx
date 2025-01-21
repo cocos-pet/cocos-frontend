@@ -22,7 +22,7 @@ const CategoryContent = () => {
             content={(symptom as SymptomItem).symptoms}
             parentKey="symptomIds"
           >
-            {symptom.name}
+            {symptom.name as string}
           </DropDownText>
         ))}
       </div>
@@ -38,7 +38,7 @@ const CategoryContent = () => {
             content={(disease as DiseaseItem).diseases}
             parentKey="diseaseIds"
           >
-            {disease.name}
+            {disease.name as string}
           </DropDownText>
         ))}
       </div>
