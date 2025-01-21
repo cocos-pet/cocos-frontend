@@ -10,7 +10,7 @@ export const PETINFO_QUERY_KEY = {
 };
 
 export const MEMBER_QUERY_KEY = {
-  MEMBER_INFO: () => [PET_EDIT_USER_QUERY_COMMON_KEY, "memeberInfo"],
+  MEMBER_INFO: (nickname?: string) => [PET_EDIT_USER_QUERY_COMMON_KEY, "memeberInfo", nickname],
 };
 
 export const MY_POST_QUERY_KEY = {
@@ -30,11 +30,11 @@ export const useGetPetInfo = (nickname?: string) => {
   });
 };
 
-export const useGetMemberInfo = () => {
+export const useGetMemberInfo = (nickname?: string) => {
   return useQuery({
     queryKey: MEMBER_QUERY_KEY.MEMBER_INFO(),
     queryFn: () => {
-      return getMemberInfo();
+      return getMemberInfo(nickname);
     },
     staleTime: 1000 * 60 * 5,
   });

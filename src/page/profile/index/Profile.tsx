@@ -7,8 +7,8 @@ import { IcChevronLeft } from "@asset/svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import { PET_PROFILE, USER_PROFILE } from "./constant";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
+import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -20,6 +20,9 @@ const Profile = () => {
 
   //todo: 이 쿼리로 상대 프로필 내용 받아오기
   const query = searchParams.get("nickname");
+  if (!query) return;
+  const { data: memeberInfo } = useGetMemberInfo(query);
+  const { data: petInfo } = useGetPetInfo(query);
 
   const isActiveTab = (tab: ActiveTabType) => {
     return activeTab === tab;
@@ -28,6 +31,8 @@ const Profile = () => {
   const handleTabClick = (tab: ActiveTabType) => {
     setActiveTab(tab);
   };
+
+  if (!memeberInfo || !petInfo) return;
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
@@ -40,16 +45,16 @@ const Profile = () => {
 
       <article className={styles.myProfileWrapper}>
         <div className={styles.loginProfile}>
-          <img className={styles.profileImage} alt="프로필 이미지" src={USER_PROFILE.profileImage} />
-          <span className={styles.userProfileText}>{USER_PROFILE.nickname}</span>
+          <img className={styles.profileImage} alt="프로필 이미지" src={memeberInfo.profileImage} />
+          <span className={styles.userProfileText}>{memeberInfo.nickname}</span>
           <Divider size="small" />
 
           <div className={styles.animalProfileWrapper}>
-            <img className={styles.animalImage} alt="프로필이미지" src={PET_PROFILE.petImage} />
+            <img className={styles.animalImage} alt="프로필이미지" src={petInfo.petImage} />
             <div className={styles.animalProfileTextWrapper}>
-              <span className={styles.animalMainText}>{`${PET_PROFILE.breed} | ${PET_PROFILE.petAge} |`}</span>
+              <span className={styles.animalMainText}>{`${petInfo.breed} | ${petInfo.petAge} |`}</span>
               <span className={styles.animalSubText}>
-                {`앓고있는 병 ${PET_PROFILE.diseases.map((disease) => `#${disease.name}`).join(" ")}`}
+                {`앓고있는 병 ${petInfo.diseases?.map((disease) => `#${disease.name}`).join(" ")}`}
               </span>
             </div>
           </div>

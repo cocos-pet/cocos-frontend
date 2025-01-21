@@ -3,10 +3,14 @@ import { get } from "@api/index";
 import { paths } from "@type/schema";
 
 //todo : try-catch문 작성하기
-export const getMemberInfo = async () => {
+export const getMemberInfo = async (nickname?: string) => {
   //type getMemberInfoRequest = paths["/api/dev/members"]["get"]["requestBody"];
   type MemberInfoResponse = paths["/api/dev/members"]["get"]["responses"]["200"]["content"]["*/*"];
-  const { data } = await get<MemberInfoResponse>(API_PATH.MEMBERS, {});
+  const { data } = await get<MemberInfoResponse>(API_PATH.MEMBERS, {
+    params: {
+      nickname,
+    },
+  });
 
   return data.data;
 };
