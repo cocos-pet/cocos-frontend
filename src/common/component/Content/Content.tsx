@@ -11,6 +11,7 @@ interface ContentPropTypes {
   commentCnt?: number;
   timeAgo?: string;
   postImage?: string;
+  category?: string;
   onClick?: () => void;
 }
 
@@ -63,9 +64,7 @@ const Content = ({
           <div className={styles.item}>{timeAgo}</div>
         </div>
       </div>
-      {postImage && (
-        <img src={postImage} alt="postImage" className={styles.postImage} />
-      )}
+      {postImage && <img src={postImage} alt="postImage" className={styles.postImage} />}
     </div>
   );
 };

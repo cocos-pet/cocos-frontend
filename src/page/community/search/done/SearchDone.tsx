@@ -1,9 +1,4 @@
-import {
-  IcLeftarrow,
-  IcSearch,
-  IcSearchFillter,
-  IcSearchFillterBlue,
-} from "@asset/svg";
+import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";

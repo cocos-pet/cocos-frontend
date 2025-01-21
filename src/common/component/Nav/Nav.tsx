@@ -2,8 +2,14 @@ import { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
+import { COMMUNITY_CONTENT } from "./communityConstant";
 
-const Nav = () => {
+type Props = {
+  content: typeof NAV_CONTENT | typeof COMMUNITY_CONTENT;
+  type?: "nav" | "community";
+};
+
+const Nav = ({ content, type = "nav" }: Props) => {
   const location = useLocation();
 
   const extractFirstPath = (): string => {
@@ -27,8 +33,8 @@ const Nav = () => {
   };
 
   return (
-    <div className={styles.container}>
-      {NAV_CONTENT.map((item) => {
+    <div className={styles.container} data-type={type}>
+      {content.map((item) => {
         const SvgComponent = item.svg;
 
         return (
@@ -38,9 +44,10 @@ const Nav = () => {
             onClick={() => handleClick(item.id, item.path)}
             className={styles.navItem({
               state: activeItem === item.id,
+              type,
             })}
           >
-            <SvgComponent  />
+            <SvgComponent />
             {item.label}
           </button>
         );

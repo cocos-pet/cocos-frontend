@@ -9,6 +9,7 @@ import { IcSearch } from "@asset/svg";
 import * as styles from "./Main.css";
 import Nav from "@common/component/Nav/Nav";
 import Spacing from "@common/component/Spacing/Spacing";
+import { NAV_CONTENT } from "@common/component/Nav/constant";
 
 const postsData = [
   { id: 1, title: "실시간 심장병 질문 1위" },
@@ -33,7 +34,7 @@ const Main = () => {
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
         <TextField
-          state="search"
+          state="default"
           placeholder="심장병, 백내장"
           onClick={handleSearchClick}
           onChange={handleTextFieldChange}
@@ -49,7 +50,7 @@ const Main = () => {
       <MainFooter />
       <Spacing marginBottom="8" />
       <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
-        <Nav />
+        <Nav content={NAV_CONTENT} type={"nav"} />
       </span>
     </div>
   );

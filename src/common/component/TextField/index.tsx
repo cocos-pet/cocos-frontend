@@ -1,9 +1,5 @@
 import React from "react";
-import {
-  InputVariants,
-  styles,
-  WrapVariants,
-} from "@common/component/TextField/styles.css.ts";
+import { InputVariants, styles, WrapVariants } from "@common/component/TextField/styles.css.ts";
 import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
@@ -54,7 +50,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       onClearClick,
       maxLength,
     },
-    ref
+    ref,
   ) => {
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
@@ -75,5 +71,5 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
         {value && isDelete ? <IcClear onClick={onClearClick} /> : icon}
       </div>
     );
-  }
+  },
 );
