@@ -17,11 +17,20 @@ interface DropDownTextPropTypes {
 
 //참고) content는 depth가 깊은 symptoms나 disease에 대응하기 위해 만들어둠
 const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) => {
-  const { toggleChips, selectedChips } = useCategoryFilterStore();
+  const { toggleChips, selectedChips, category } = useCategoryFilterStore();
+
   const [isOpen, setIsOpen] = useState(false);
 
   const isSelected = (id: number): boolean => {
     return selectedChips[parentKey]?.includes(id) ?? false;
+  };
+
+  const handleToggle = (id: number) => {
+    if (selectedChips.diseaseIds.length < 7 && category === "disease") {
+      toggleChips({ category: parentKey, id });
+    } else if (selectedChips.symptomIds.length < 7 && category === "symptoms") {
+      toggleChips({ category: parentKey, id });
+    }
   };
 
   const renderDropDownData = () => {
@@ -30,8 +39,15 @@ const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) =
         <Chip
           key={`dropDown-${data.id}`}
           label={data.name as string}
-          onClick={() => toggleChips({ category: parentKey, id: data.id as number })}
+          onClick={() => handleToggle(data.id as number)}
           isSelected={isSelected(data.id as number)}
+          disabled={
+            isSelected(data.id as number)
+              ? false
+              : category === "disease"
+                ? selectedChips.diseaseIds.length >= 7
+                : selectedChips.symptomIds.length >= 7
+          }
         />
       ));
     }

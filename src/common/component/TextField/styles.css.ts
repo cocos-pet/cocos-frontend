@@ -50,7 +50,6 @@ export const styles = {
   leftWrap: recipe({
     base: {
       display: "flex",
-      width: "100%",
       alignItems: "center",
       gap: "1rem",
       width: "inherit",
