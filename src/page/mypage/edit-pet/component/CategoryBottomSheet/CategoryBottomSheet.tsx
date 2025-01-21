@@ -6,14 +6,25 @@ import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip";
 import { getSelectedChipNamesById } from "../../utils/getSelectedChipNamesById";
 import CategoryContent from "./components/CategoryContent/CategoryContent";
+import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
 
 const categories: { id: CategoryType; label: string }[] = [
   { id: "symptoms", label: "증상" },
   { id: "disease", label: "질병" },
 ];
 
-const CategoryBottomSheet = () => {
+const CategoryBottomSheet = ({ petId }: { petId: number }) => {
   const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips, categoryData } = useCategoryFilterStore();
+  const { mutate: patchPetInfo } = usePatchPetInfo();
+
+  const handleClickButton = () => {
+    if (selectedChips.diseaseIds && selectedChips.symptomIds) {
+      patchPetInfo({ petId, reqBody: { diseaseIds: selectedChips.diseaseIds, symptomIds: selectedChips.symptomIds } });
+      setOpen(false);
+    } else {
+      alert("에러 발생");
+    }
+  };
 
   const isSelectedCategory = (cate: CategoryType): boolean => {
     return cate === category;
@@ -70,7 +81,7 @@ const CategoryBottomSheet = () => {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="확인하기" size="large" width="100%" onClick={() => setOpen(false)} />
+          <Button label="수정하기" size="large" width="100%" onClick={handleClickButton} />
         </div>
       </>
     </BottomSheet>

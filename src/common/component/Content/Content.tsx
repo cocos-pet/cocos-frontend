@@ -2,12 +2,20 @@ import { IcoMessage, IcTest } from "@asset/svg";
 import { styles } from "@common/component/Content/Content.css.ts";
 
 interface ContentPropTypes {
+  breed?: string;
+  petAge?: number;
+  postTitle?: string;
+  postContent?: string;
   id: number;
   breed: string;
   petAge: number;
   title: string;
   content: string;
   likeIconType?: "curious" | "support";
+  likeCnt?: number;
+  commentCnt?: number;
+  timeAgo?: string;
+  postImage?: string;
   likeCount?: number;
   commentCount?: number;
   createdAt: string;
@@ -20,7 +28,7 @@ interface ContentPropTypes {
 /**
  * 게시물 컴포넌트
  * @param breed 강아지 종
- * @param age 나이
+ * @param petAge 나이
  * @param postTitle 게시물 제목
  * @param postContent 게시물 내용
  * @param likeIconType 좋아요 아이콘 타입 ( 궁금해요, 응원해요 )
@@ -34,6 +42,9 @@ interface ContentPropTypes {
 
 const Content = ({
   breed,
+  petAge,
+  postTitle,
+  postContent,
   petAge,
   title,
   content,
@@ -49,6 +60,7 @@ const Content = ({
     <div className={styles.container} onClick={onClick}>
       <div className={styles.left}>
         <div className={styles.category}>
+          {breed} · {petAge}살
           {breed}·{petAge}
         </div>
         <div className={styles.title}>{title}</div>
