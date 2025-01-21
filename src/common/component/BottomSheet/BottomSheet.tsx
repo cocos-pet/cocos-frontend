@@ -1,4 +1,4 @@
-import {} from "react";
+import { useEffect } from "react";
 import * as styles from "./BottomSheet.css";
 
 interface BottomSheetPropTypes {
@@ -9,6 +9,17 @@ interface BottomSheetPropTypes {
 
 //화면 전체를 차지하는 바텀시트 틀 (children 필요)
 const BottomSheet = ({ isOpen, children, handleOpen }: BottomSheetPropTypes) => {
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   if (!isOpen) return;
 
   const handleClose = () => {

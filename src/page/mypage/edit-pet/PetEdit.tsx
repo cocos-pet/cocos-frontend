@@ -16,6 +16,16 @@ import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
 import { useAnimalFilterStore } from "./store/animalFilter";
 import { getAnimalChipNamesById } from "./utils/getAnimalChipNamesById";
 import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
+import {
+  useGetAnimal,
+  useGetBodies,
+  useGetBreed,
+  useGetDisease,
+  useGetMemberInfo,
+  useGetPetInfo,
+  useGetSymptoms,
+  usePatchPetInfo,
+} from "@api/domain/mypage/edit-pet/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -26,48 +36,133 @@ const DEFAULT_TYPE = [
   { type: "나이", tab: "age" },
 ] as const;
 
+//todo: patch 함수만 연결하면 끝!
 const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
 
+  //todo: reducer 혹은 하나의 객체로 상태 관리하기
   const [isEditing, setIsEditing] = useState(false);
-  const [name, setName] = useState("포리");
+  const [name, setName] = useState("");
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
   const [petAge, setPetAge] = useState("");
+  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const [petId, setPetId] = useState<number | null>(null);
 
-  const { isOpen, setOpen, setCategory, setCategoryData, selectedChips, categoryData } = useCategoryFilterStore();
+  const {
+    isOpen,
+    setOpen,
+    category,
+    setCategory,
+    setCategoryData,
+    selectedChips,
+    toggleChips,
+    categoryData,
+    setSelectedChips,
+  } = useCategoryFilterStore();
   const {
     isOpen: animalOpen,
     setOpen: setAnimalOpen,
+    category: animalCategory,
     setCategory: setAnimalCategory,
     setCategoryData: setAnimalCategoryData,
     selectedChips: animalChips,
+    toggleChips: animalToggleChips,
     categoryData: animalCategoryData,
   } = useAnimalFilterStore();
   const [ageBottomSheetOpen, setAgeBottomSheetOpen] = useState(false);
-
   const updatePetAge = (e: ChangeEvent<HTMLInputElement>) => {
     setPetAge(e.target.value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
 
-  // useEffect(() => {
-  //   console.log(animalChips);
-  //   console.log(getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData));
-  //   console.log(getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData));
-  //   console.log(getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData));
-  // }, [animalChips]);
+  const { isLoading, data: member } = useGetMemberInfo();
+  const { data: animal } = useGetAnimal();
+  const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
+  const { data: diseaseBodies } = useGetBodies("DISEASE");
+  const { data: symptomBodies } = useGetBodies("SYMPTOM");
 
-  // useEffect(() => {
-  //   console.log(selectedChips);
-  //   console.log(categoryData);
-  // }, [selectedChips]);
+  const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
+  const { data: disease } = useGetDisease(bodyDiseaseIds);
+  const { data: petInfo } = useGetPetInfo();
+  const { mutate: patchPetInfo } = usePatchPetInfo();
+
+  useEffect(() => {
+    if (diseaseBodies?.bodies && symptomBodies?.bodies) {
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      if (diseaseIdArr.length && symptomIdArr.length) {
+        setBodyDiseaseIds(diseaseIdArr);
+        setBodySymptomsIds(symptomIdArr);
+      }
+    }
+  }, [diseaseBodies, symptomBodies]);
+
+  useEffect(() => {
+    console.log(animalCategory);
+  }, [animalCategory]);
+
+  useEffect(() => {
+    // animalId가 변경되었을 때만 breedId를 초기화
+    if (animalChips.animalId !== petInfo?.animalId) {
+      animalToggleChips({ id: null, category: "breedId" });
+    }
+  }, [animalChips.animalId, animalToggleChips, petInfo?.animalId]);
 
   useEffect(() => {
     if (isEditing && ref.current) {
       ref.current.focus();
     }
   }, [isEditing]);
+
+  useEffect(() => {
+    if (petInfo) {
+      setName(petInfo.petName as string);
+    }
+    if (animal?.animals) {
+      console.log(animal.animals);
+      setAnimalCategoryData("animal", animal.animals);
+    }
+    if (symptoms?.bodies) {
+      setCategoryData("symptoms", symptoms.bodies);
+    }
+    if (disease?.bodies) {
+      setCategoryData("disease", disease.bodies);
+    }
+    if (petInfo?.animalId && petInfo?.breedId && petInfo?.petGender) {
+      // 상태가 이미 동일한 값을 가지고 있다면 업데이트하지 않음 -> 무한 렌더링 방지
+      if (
+        animalChips.animalId !== petInfo.animalId ||
+        animalChips.breedId !== petInfo.breedId ||
+        animalChips.gender !== petInfo.petGender
+      ) {
+        animalToggleChips({ id: petInfo.animalId, category: "animalId" });
+        animalToggleChips({ category: "breedId", id: petInfo.breedId });
+        animalToggleChips({ category: "gender", id: petInfo.petGender });
+
+        if (petInfo.symptoms && petInfo.diseases) {
+          setSelectedChips({ ids: petInfo.symptoms.map((item) => item.id), category: "symptomIds" });
+          setSelectedChips({ ids: petInfo.diseases.map((item) => item.id), category: "diseaseIds" });
+        }
+      }
+    }
+  }, [animal, symptoms, disease, petInfo, setCategoryData, setAnimalCategoryData, animalToggleChips]);
+
+  useEffect(() => {
+    if (breed?.breeds) {
+      setAnimalCategoryData("breeds", breed.breeds);
+    }
+    if (petInfo?.petAge) {
+      //todo : 추후 요청 보낼 때는 다시 number로 변환 필요
+      setPetAge(String(petInfo.petAge));
+    }
+    if (petInfo?.petId) {
+      setPetId(petInfo.petId);
+    }
+  }, [breed, petInfo, setAnimalCategoryData]);
+
+  if (isLoading || !animal) return;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
@@ -83,14 +178,24 @@ const PetEdit = () => {
     setIsEditing(true);
   };
 
+  const handleRequestFixName = () => {
+    if (petInfo?.petId) {
+      patchPetInfo({ petId: petInfo?.petId, reqBody: { name: name } });
+    } else {
+      alert("pet ID가 존재하지 않습니다.");
+    }
+  };
+
   const handleInputBlur = () => {
     if (isValid) {
+      handleRequestFixName();
       setIsEditing(false);
     }
   };
 
   const handleInputKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && isValid) {
+      handleRequestFixName();
       setIsEditing(false);
     }
   };
@@ -122,6 +227,10 @@ const PetEdit = () => {
     }
   };
 
+  if (!petInfo?.petId) {
+    return <div>petId 미존재</div>;
+  }
+
   return (
     <div>
       <HeaderNav
@@ -131,7 +240,7 @@ const PetEdit = () => {
       />
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
-          <img className={styles.profileImage} alt="프로필 이미지" />
+          <img className={styles.profileImage} alt="프로필 이미지" src={petInfo.petImage} />
           <span className={styles.nicknameWrapper}>
             {isEditing ? (
               <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
@@ -221,14 +330,15 @@ const PetEdit = () => {
             />
           </span>
         </article>
-        {/*새벽 작업으로 인해 Category랑 Disease를 반대로 만듦 -> 나중에 폴더명, 파일명 수정 필요 */}
-        <AnimalBottomSheet />
-        <CategoryBottomSheet />
+
+        <AnimalBottomSheet petId={petInfo.petId} />
+        <CategoryBottomSheet petId={petInfo.petId} />
         <AgeBottomSheet
           isOpen={ageBottomSheetOpen}
           setIsOpen={setAgeBottomSheetOpen}
           age={petAge}
           updatePetAge={updatePetAge}
+          petId={petInfo.petId}
         />
       </section>
     </div>

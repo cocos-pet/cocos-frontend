@@ -12,8 +12,13 @@ export const API_PATH = {
 
   ANIMALS: "/api/dev/animals",
 
+  MEMBERS: "/api/dev/members",
+  MEMBERS_LOGIN: "/api/dev/members/login",
+  MEMBERS_LOGOUT: "/api/dev/members/logout",
+  MEMBRES_REFRESH: "/api/dev/members/refresh",
+
   POST: "/api/dev/posts",
-  POST_FILTERS: "/api/dev/posts/filters/",
+  POST_FILTERS: "/api/dev/posts/filters",
   POST_POPULAR: "/api/dev/posts/popular",
   POST_CATEGORIES: "/api/dev/posts/categories",
 

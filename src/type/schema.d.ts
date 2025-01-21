@@ -1089,6 +1089,11 @@ export interface components {
              * @example yyyy-mm-dd:hh-mm-ss~
              */
             updatedAt?: string;
+            /**
+             * @description 좋아요 클릭 여부
+             * @example true
+             */
+            isLiked?: boolean;
         };
         BaseResponsePopularPostsResponse: {
             /** Format: int32 */
@@ -2323,7 +2328,7 @@ export interface operations {
     getBodies: {
         parameters: {
             query: {
-                /** @description 반려동물 문제 */
+                /** @description 반려동물 문제(DISEASE or SYMPTOM) */
                 petProblem: unknown;
             };
             header?: never;
