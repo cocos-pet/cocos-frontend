@@ -3,20 +3,36 @@ import { IcEllipses, IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
+import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import {
+  useDeleteComment,
+  useDeleteSubComment,
+} from "@api/domain/community/post/hook.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { useEffect } from "react";
 
 interface SubCommentProps {
   subComment: commentGetRequestSubCommentType;
   onReplyClick?: (id: number | undefined) => void;
+  onCommentDelete?: () => void;
 }
 
-const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
+const SubComment = ({
+  subComment,
+  onReplyClick,
+  onCommentDelete,
+}: SubCommentProps) => {
   const handleReplyClick = () => {
     if (onReplyClick) {
       onReplyClick(subComment.id);
     }
   };
+  const { mutate: deleteSubComment } = useDeleteSubComment(subComment.id);
 
   const { openModalId, setOpenModalId } = useModalStore();
+  const { isOpen, setOpen, setContentsType, contentsType } =
+    useCategoryFilterStore();
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
@@ -34,9 +50,22 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
       </>
     );
   };
+  useEffect(() => {
+    console.log("contentsType", contentsType);
+  }, [contentsType]);
 
-  const onDelete = () => {
-    // TODO : 대댓글 삭제
+  // @공준혁 : 대댓글 or 댓글 삭제 버튼 클릭시 api 호출부 입니다.
+  const onDeleteClick = () => {
+    console.log("deleteSubComment");
+
+    if (contentsType == "subComment") {
+      deleteSubComment();
+    } else {
+      if (onCommentDelete) {
+        onCommentDelete();
+      }
+    }
+    setOpen(false);
   };
 
   return (
@@ -52,14 +81,16 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
             <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt
-                ? subComment.createdAt.toLocaleString()
-                : ""}
+              {subComment.createdAt ? formatTime(subComment.createdAt) : ""}
             </span>
           </div>
           <MoreModal
             iconSize={24}
-            onDelete={onDelete}
+            onDelete={() => {
+              console.log("deleteSubComment");
+              setOpen(true);
+              setContentsType("subComment");
+            }}
             isOpen={openModalId === `subComment-${subComment.id}`}
             onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
           />
@@ -72,6 +103,18 @@ const SubComment = ({ subComment, onReplyClick }: SubCommentProps) => {
           <p>답글쓰기</p>
         </div>
       </div>
+      <SimpleBottomSheet
+        isOpen={isOpen}
+        content={"댓글을 정말 삭제할까요?"}
+        handleClose={() => setOpen(false)}
+        leftOnClick={() => setOpen(false)}
+        leftText={"취소"}
+        rightOnClick={() => {
+          onDeleteClick();
+          console.log("deleteSubComment");
+        }}
+        rightText={"삭제할게요"}
+      />
     </div>
   );
 };

@@ -1,11 +1,29 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getComments, deleteLike, getPost, postLike } from "@api/domain/community/post";
+import {
+  deleteComment,
+  getComments,
+  deleteLike,
+  getPost,
+  postLike,
+  deleteSubComment,
+} from "@api/domain/community/post";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
-  COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
+};
+
+export const COMMENT_QUERY_KEY = {
+  COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
+  DELETE_COMMENT: (commentId: number | undefined) => [
+    "deleteComment",
+    commentId,
+  ],
+  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => [
+    "deleteSubComment",
+    subCommentId,
+  ],
 };
 
 /**
@@ -55,9 +73,38 @@ export const useDeleteLike = (postId: string) => {
 
 export const useCommentsGet = (postId: number) => {
   return useQuery({
-    queryKey: POST_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+    queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
     queryFn: () => {
       return getComments(postId);
+    },
+  });
+};
+
+/**
+ * @description 댓글 삭제 API
+ */
+
+export const useDeleteComment = (commentId: number | undefined) => {
+  return useMutation({
+    mutationKey: COMMENT_QUERY_KEY.DELETE_COMMENT(commentId),
+    mutationFn: () => {
+      console.log("commentId", commentId);
+      // return deleteComment(commentId);
+    },
+  });
+};
+
+/**
+ * @description 대댓글 삭제 API
+ */
+
+export const useDeleteSubComment = (subCommentId: number | undefined) => {
+  return useMutation({
+    mutationKey: COMMENT_QUERY_KEY.DELETE_SUB_COMMENT(subCommentId),
+    mutationFn: () => {
+      console.log("subCommentId", subCommentId);
+
+      return deleteSubComment(subCommentId);
     },
   });
 };

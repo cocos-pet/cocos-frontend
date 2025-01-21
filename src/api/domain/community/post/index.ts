@@ -42,6 +42,34 @@ export const getComments = async (postId: number) => {
 };
 
 /**
+ * @description 댓글 삭제 API
+ */
+
+export type deleteCommentResponse =
+  paths["/api/dev/comments/{commentId}"]["delete"]["responses"]["200"]["content"]["*/*"];
+
+export const deleteComment = async (commentId: number | undefined) => {
+  const { data } = await del<deleteCommentResponse>(
+    `${API_PATH.COMMENTS}/${commentId}`
+  );
+  return data.data;
+};
+
+/**
+ * @description 대댓글 삭제 API
+ */
+
+export type deleteSubCommentResponse =
+  paths["/api/dev/comments/sub/{subCommentId}"]["delete"]["responses"]["200"]["content"]["*/*"];
+
+export const deleteSubComment = async (subCommentId: number | undefined) => {
+  const { data } = await del<deleteSubCommentResponse>(
+    `${API_PATH.SUBCOMMENTS}/${subCommentId}`
+  );
+  return data.data;
+};
+
+/**
  * @description 좋아요 추가 API
  * @param postId
  */

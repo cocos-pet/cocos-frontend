@@ -10,13 +10,14 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-
 import {
   useCommentsGet,
   useDeleteLike,
   useLikePost,
+  useDeleteComment,
   usePostGet,
 } from "@api/domain/community/post/hook";
+
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
@@ -156,7 +157,7 @@ const PostDetail = () => {
         </div>
         {postData.images?.map((image, index) => (
           <img
-            key={index}
+            key={`postImage-${index}`}
             src={image}
             alt="postImage"
             className={styles.image}
@@ -164,7 +165,7 @@ const PostDetail = () => {
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
-            <Chip label={tag} color={"blue"} />
+            <Chip key={`postTag-${index}`} label={tag} color={"blue"} />
           ))}
         </div>
         <div className={styles.subContents}>
