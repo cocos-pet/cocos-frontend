@@ -6,7 +6,7 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
-import { PetData } from "@page/registerPet/index/RegisterPet";
+import { PetData } from "@page/register-pet/index/RegisterPet";
 
 interface PetAgeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;

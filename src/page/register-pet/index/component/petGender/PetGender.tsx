@@ -4,9 +4,9 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelector";
 import { Button } from "@common/component/Button";
-import { PetData } from "@page/registerPet/index/RegisterPet";
+import { PetData } from "@page/register-pet/index/RegisterPet";
 import { useState } from "react";
-import { genderOptions } from "@page/registerPet/index/constant/genderData";
+import { genderOptions } from "@page/register-pet/index/constant/genderData";
 
 interface PetGenderProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;

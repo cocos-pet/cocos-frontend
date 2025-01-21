@@ -2,12 +2,12 @@ import * as styles from "./PetHealth.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@route/path";
-import { PetData } from "@page/registerPet/index/RegisterPet";
+import { PetData } from "@page/register-pet/index/RegisterPet";
 import { Button } from "@common/component/Button";
-import Step1 from "@page/registerPet/index/component/petHealth/disease/Step1";
-import Step2 from "@page/registerPet/index/component/petHealth/disease/Step2";
-import SymStep1 from "@page/registerPet/index/component/petHealth/symptom/SymStep1";
-import SymStep2 from "@page/registerPet/index/component/petHealth/symptom/SymStep2";
+import Step1 from "@page/register-pet/index/component/petHealth/disease/Step1";
+import Step2 from "@page/register-pet/index/component/petHealth/disease/Step2";
+import SymStep1 from "@page/register-pet/index/component/petHealth/symptom/SymStep1";
+import SymStep2 from "@page/register-pet/index/component/petHealth/symptom/SymStep2";
 import { useBodiesGet } from "@api/domain/registerPet/bodies/hook";
 
 interface PetHealthPropTypes {

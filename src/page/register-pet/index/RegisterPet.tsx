@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import PetName from "@page/registerPet/index/component/petName/PetName";
-import PetType from "@page/registerPet/index/component/petType/PetType";
-import PetGender from "@page/registerPet/index/component/petGender/PetGender";
-import PetId from "@page/registerPet/index/component/petId/PetId";
-import PetAge from "@page/registerPet/index/component/petAge/PetAge";
+import PetName from "@page/register-pet/index/component/petName/PetName";
+import PetType from "@page/register-pet/index/component/petType/PetType";
+import PetGender from "@page/register-pet/index/component/petGender/PetGender";
+import PetId from "@page/register-pet/index/component/petId/PetId";
+import PetAge from "@page/register-pet/index/component/petAge/PetAge";
 import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
-import PetHealth from "@page/registerPet/index/component/petHealth/PetHealth";
-import ProgressBar from "@page/registerPet/index/common/ProgressBar/ProgressBar";
+import PetHealth from "@page/register-pet/index/component/petHealth/PetHealth";
+import ProgressBar from "@page/register-pet/index/common/ProgressBar/ProgressBar";
 
 export interface PetData {
   breedId: number | null;
