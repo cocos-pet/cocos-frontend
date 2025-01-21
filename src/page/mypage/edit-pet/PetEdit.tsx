@@ -21,7 +21,6 @@ import {
   useGetBodies,
   useGetBreed,
   useGetDisease,
-  useGetMemberInfo,
   useGetPetInfo,
   useGetSymptoms,
   usePatchPetInfo,
@@ -76,7 +75,6 @@ const PetEdit = () => {
     setPetAge(e.target.value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
 
-  const { isLoading, data: member } = useGetMemberInfo();
   const { data: animal } = useGetAnimal();
   const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
   const { data: diseaseBodies } = useGetBodies("DISEASE");
@@ -158,7 +156,7 @@ const PetEdit = () => {
     }
   }, [breed, petInfo, setAnimalCategoryData]);
 
-  if (isLoading || !animal) return;
+  if (!animal) return;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
