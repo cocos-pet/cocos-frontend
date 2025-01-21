@@ -6,7 +6,10 @@ interface SubCommentListProps {
   onCommentDelete: (id: number) => void;
 }
 
-const SubCommentList = ({ subComments, onCommentDelete }: SubCommentListProps) => {
+const SubCommentList = ({
+  subComments,
+  onCommentDelete,
+}: SubCommentListProps) => {
   return (
     <div>
       {subComments?.map((subComment) => (

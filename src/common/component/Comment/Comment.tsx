@@ -8,7 +8,6 @@ import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
-import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 interface CommentProps {
@@ -31,7 +30,6 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
 
   const onDeleteClick = (id: number) => {
     deleteComment(id);
-    console.log("deleteComment", id);
     setOpen(false);
   };
 
@@ -73,7 +71,7 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
 
       {/* 대댓글 리스트 */}
       {comment.subComments && (
-        <div>
+        <div style={{ width: "100%" }}>
           <SubCommentList
             subComments={comment.subComments}
             onCommentDelete={onDeleteClick}
