@@ -2,14 +2,15 @@ import * as styles from "./Step1.css";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { bodiesGetResponse } from "@api/domain/registerPet/bodies";
+import { ItemType, contentItem } from "./Step1.css";
 
 interface Step1Props {
   selectedIds: number[];
   onBodyPartSelection: (id: number) => void;
   data: bodiesGetResponse["data"];
 }
-
-const Step1 = ({ selectedIds, data, onBodyPartSelection }: Step1Props) => {
+type CombinedStepProps = Step1Props & Exclude<ItemType, undefined>;
+const Step1 = ({ selectedIds, data, onBodyPartSelection }: CombinedStepProps) => {
   if (!data || !data.bodies) {
     return null; // 데이터가 없으면 컴포넌트 렌더링하지 않음
   }
@@ -36,17 +37,18 @@ const Step1 = ({ selectedIds, data, onBodyPartSelection }: Step1Props) => {
       {/* 컨텐츠 영역 */}
       <div className={styles.contentWrapper}>
         {data.bodies.map((body) => (
-          <button
-            key={body.id}
-            className={styles.contentItem}
-            onClick={() => {
-              body.id && handleSelection(body.id);
-            }}
-            type="button"
-          >
-            <img src={body.image} width={56} height={56} alt="body-img" />
+          <div key={body.id} className={contentItem()}>
+            <button
+              className={contentItem({ isClicked: selectedIds.includes(body.id ?? -1) })}
+              onClick={() => {
+                body.id && handleSelection(body.id);
+              }}
+              type="button"
+            >
+              <img src={body.image} width={56} height={56} alt="body-img" />
+            </button>
             <p>{body.name}</p>
-          </button>
+          </div>
         ))}
       </div>
     </>

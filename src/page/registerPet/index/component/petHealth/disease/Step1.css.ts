@@ -1,5 +1,7 @@
 import { style } from "@vanilla-extract/css";
 import { color } from "@style/styles.css";
+import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
+
 export const title = style({
   display: "flex",
   flexDirection: "column",
@@ -17,12 +19,20 @@ export const contentWrapper = style({
   margin: "0 4.55rem",
 });
 
-export const contentItem = style({
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
-  gap: "0.4rem",
-  textAlign: "center",
+export const contentItem = recipe({
+  base: {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    gap: "0.4rem",
+    textAlign: "center",
+  },
+  variants: {
+    isClicked: {
+      true: { backgroundColor: "rgba(67, 214, 255, 0.16)" },
+      false: { backgroundColor: "transparent" },
+    },
+  },
 });
 
 export const selected = style({
@@ -40,3 +50,5 @@ export const btnWrapper = style({
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
 });
+
+export type ItemType = RecipeVariants<typeof contentItem>;
