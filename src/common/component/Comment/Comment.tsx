@@ -4,18 +4,23 @@ import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetResponseCommentType } from "@api/domain/community/post";
-import { components } from "@type/schema";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onReplyClick?: (id: number | undefined) => void;
+  onCommentReplyClick?: (nickname: string | undefined) => void;
+  onSubCommentReplyClick?: (nickname: string | undefined) => void;
   onDelete: () => void;
 }
 
-const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
+const Comment = ({
+  comment,
+  onCommentReplyClick,
+  onSubCommentReplyClick,
+  onDelete,
+}: CommentProps) => {
   const handleReplyClick = () => {
-    if (onReplyClick) {
-      onReplyClick(comment.id);
+    if (onCommentReplyClick) {
+      onCommentReplyClick(comment.nickname);
     }
   };
 
@@ -57,7 +62,10 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
       {/* 대댓글 리스트 */}
       {comment.subComments && (
         <div>
-          <SubCommentList subComments={comment.subComments} />
+          <SubCommentList
+            subComments={comment.subComments}
+            onSubCommentReplyClick={onSubCommentReplyClick}
+          />
         </div>
       )}
     </div>

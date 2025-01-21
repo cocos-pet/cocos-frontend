@@ -33,7 +33,7 @@ const PostDetail = () => {
 
   const user = {
     accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMTAxMzgsImV4cCI6MTczNzgxNDkzOCwibWVtYmVySWQiOjF9.f6sCaL3PFg7yMb6J4PM1h30ADsiq_fbON31IXPguJ_Pb4otyJ_Qh-Z_JYRxC8a2SMzaa6jr68uLc6w0_tuag3A",
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0OTQ1MDksImV4cCI6MTczODA5OTMwOSwibWVtYmVySWQiOjJ9.JhS3oRdiCmYpsa3VCrsxEdDP4DBt8hf5rGdzetF9LFNQltZd1yEQ1ARIskYkt_WDfKbcC-EYmH_J3q1iT6A9Lg",
   };
   localStorage.setItem("user", JSON.stringify(user));
 
@@ -51,6 +51,14 @@ const PostDetail = () => {
 
   const onSubmitComment = () => {
     // TODO : 댓글 등록 API 호출
+  };
+
+  const onCommentReplyClick = (nickname: string | undefined) => {
+    setComment(`@${nickname} `);
+  };
+
+  const onSubCommentReplyClick = (nickname: string | undefined) => {
+    setComment(`@${nickname} `);
   };
 
   const onBackClick = () => {
@@ -190,7 +198,11 @@ const PostDetail = () => {
             {postData.totalCommentCounts}
           </span>
         </div>
-        <CommentList comments={{ comments: commentsData }} />
+        <CommentList
+          comments={{ comments: commentsData }}
+          onCommentReplyClick={onCommentReplyClick}
+          onSubCommentReplyClick={onSubCommentReplyClick}
+        />
         <div className={styles.commentContainer}>
           <TextField
             onChange={onChange}

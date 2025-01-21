@@ -1,9 +1,16 @@
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { getComments, deleteLike, getPost, postLike } from "@api/domain/community/post";
+import {
+  getComments,
+  deleteLike,
+  getPost,
+  postLike,
+  postComment,
+} from "@api/domain/community/post";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
+  COMMENTS_POST_QUERY_KEY: (postId: number) => ["commentPost", postId],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
 };
@@ -58,6 +65,19 @@ export const useCommentsGet = (postId: number) => {
     queryKey: POST_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
     queryFn: () => {
       return getComments(postId);
+    },
+  });
+};
+
+/**
+ * @description 댓글 작성 API
+ */
+
+export const useCommentPost = (postId: number) => {
+  return useMutation({
+    mutationKey: POST_QUERY_KEY.COMMENTS_POST_QUERY_KEY(postId),
+    mutationFn: (content: { content: string }) => {
+      return postComment(postId, content.content);
     },
   });
 };

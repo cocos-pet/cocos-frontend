@@ -63,3 +63,20 @@ export const deleteLike = async (postId: string) => {
   const { data } = await del<likeDeleteResponse>(`${API_PATH.LIKE}/${postId}`);
   return data;
 };
+
+/**
+ * @description 댓글 작성 API
+ */
+
+type commentPostResponse =
+  paths["/api/dev/comments/{postId}"]["post"]["responses"]["201"]["content"]["*/*"];
+
+export const postComment = async (postId: number, content: string) => {
+  const { data } = await post<commentPostResponse>(
+    `${API_PATH.COMMENTS}/${postId}`,
+    {
+      content,
+    }
+  );
+  return data;
+};
