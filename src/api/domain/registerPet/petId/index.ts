@@ -9,6 +9,6 @@ export type petIdGetRequest = paths["/api/dev/breeds/{animalId}"]["get"]["parame
 export const getPetId = async (type: number): Promise<petIdGetResponse> => {
   const validateId = type === 1 || type === 2 ? type : 1;
 
-  const { data } = await get<petIdGetResponse>(`${API_PATH.BREEDS}?type=${validateId}`);
+  const { data } = await get<petIdGetResponse>(`${API_PATH.BREEDS}/${validateId}`);
   return data;
 };

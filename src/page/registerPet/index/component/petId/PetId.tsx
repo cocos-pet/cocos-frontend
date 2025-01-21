@@ -5,10 +5,10 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "../../../../onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
-import { ANIMAL } from "@page/registerPet/index/common/dropDown/constant";
+// import { ANIMAL } from "@page/registerPet/index/common/dropDown/constant";
 import DropDown from "@page/registerPet/index/common/dropDown/DropDown";
 import { PetData } from "@page/registerPet/index/RegisterPet";
-
+import { usePetIdGet } from "@api/domain/registerPet/petId/hook";
 // breedItem 타입 정의
 interface BreedItem {
   id: number;
@@ -20,35 +20,31 @@ interface PetIdProps {
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
   petData: PetData;
 }
-
 const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
   const [input, setInput] = useState("");
   const [filteredItems, setFilteredItems] = useState<BreedItem[]>([]);
 
-  const getAllItems = () => {
-    if (petData.breedId === 2) {
-      return ANIMAL.data.dogs;
-    }
-    if (petData.breedId === 1) {
-      return ANIMAL.data.cats;
-    }
-    return [];
-  };
+  // api
+  const { data } = usePetIdGet(Number(petData.breedId));
 
+  if (!data) return null;
+  const getAllItems = (): BreedItem[] => {
+    const breeds = data.data?.breeds || []; // undefined이면 빈 배열 반환
+    return breeds.filter((breed): breed is BreedItem => breed.id !== undefined && breed.name !== undefined);
+  };
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\s+/g, ""); // 모든 공백을 제거
+    const value = e.target.value.replace(/\s+/g, ""); // 모든 공백 제거
     setInput(value);
 
     const allItems = getAllItems();
     if (value.length > 0) {
-      // 입력값과 품종명에서 모든 공백을 제거하고 비교
+      // 입력값과 품종명에서 모든 공백 제거 후 비교
       const filtered = allItems.filter((item) => item.name.replace(/\s+/g, "").includes(value));
       setFilteredItems(filtered);
     } else {
       setFilteredItems(allItems); // 입력값이 없으면 전체 품종 목록
     }
   };
-
   const handleDropDownClick = (value: string) => {
     const trimmedValue = value.replace(/\s+/g, ""); // 선택된 값에서 모든 공백 제거
     setInput(trimmedValue);
