@@ -9,7 +9,7 @@ import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
-
+import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
 interface NicknamePros {
   setStep: React.Dispatch<React.SetStateAction<number>>;
 }
@@ -20,6 +20,8 @@ const Nickname = ({ setStep }: NicknamePros) => {
 
   // api 참 거짓을 반환
   const { data: isExistNickname } = useCheckNicknameGet(nickname);
+
+  const { mutate: patchNickname } = usePatchNickname();
 
   // 닉네임 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,6 +50,7 @@ const Nickname = ({ setStep }: NicknamePros) => {
   // 다음 버튼
   const handleNext = () => {
     setStep(2);
+    patchNickname(nickname);
   };
 
   return (
