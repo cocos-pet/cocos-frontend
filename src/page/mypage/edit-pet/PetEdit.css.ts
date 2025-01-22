@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const petEditWrapper = style({
   display: "flex",
-  width: "37.5rem",
+  width: "100%",
   padding: "2rem 0rem 7.2rem 0rem",
   flexDirection: "column",
   justifyContent: "center",
@@ -81,7 +81,7 @@ export const defaultText = style([
 
 export const defaultInfoListWrapper = style({
   display: "flex",
-  width: "33.5rem",
+  width: "100%",
   flexDirection: "column",
   alignItems: "flex-start",
   gap: "2rem",

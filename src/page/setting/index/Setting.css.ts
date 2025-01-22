@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const settingWrapper = style({
   display: "flex",
-  width: "37.5rem",
+  width: "100%",
   padding: "2rem 2rem 0 2rem",
   flexDirection: "column",
   alignItems: "flex-start",

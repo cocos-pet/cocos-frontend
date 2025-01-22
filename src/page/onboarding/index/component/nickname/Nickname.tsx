@@ -8,6 +8,7 @@ import { validateNickname } from "@shared/util/validateNickname";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
+import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
 
 interface NicknamePros {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -17,6 +18,9 @@ const Nickname = ({ setStep }: NicknamePros) => {
   // 상태 하나로 관리
   const [nickname, setNickname] = useState("");
 
+  // api 참 거짓을 반환
+  const { data: isExistNickname } = useCheckNicknameGet(nickname);
+
   // 닉네임 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNickname(e.target.value);
@@ -24,6 +28,12 @@ const Nickname = ({ setStep }: NicknamePros) => {
 
   // 유효성 검사 결과
   const validationMessages = nickname ? validateNickname(nickname) : [];
+
+  // 중복 검사 메시지 추가
+  if (isExistNickname?.isExistNickname) {
+    validationMessages.push("이 닉네임은 누군가 사용 중이에요.");
+  }
+
   const isValid = nickname && validationMessages.length === 0;
 
   // TextField 상태
