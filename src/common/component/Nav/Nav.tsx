@@ -8,6 +8,7 @@ type CommunityContent = {
   id: string;
   name?: string;
   image?: string;
+  type?: string;
 };
 
 type Props = {
@@ -16,6 +17,7 @@ type Props = {
 };
 
 const Nav = ({ content, type = "nav" }: Props) => {
+  console.log(content);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -29,10 +31,10 @@ const Nav = ({ content, type = "nav" }: Props) => {
   const [activeItem, setActiveItem] = useState<string>(extractFirstPath());
 
   const handleClick = (itemId: string, path: string) => {
-    setActiveItem(itemId);
     if (itemId === "/review") {
       alert("추후 구현 예정입니다.");
     } else {
+      setActiveItem(itemId);
       navigate(path);
     }
   };
@@ -43,7 +45,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
         if (type === "community") {
           const communityItem = item as CommunityContent;
           //여기 naviage 경로 main API 머지되면 다시 설정할 것??? 뭐지 갑자기 생각이 꼬였어요
-          const communityPath = `${PATH.COMMUNITY.CATEGORY}?category=`;
+          const communityPath = `${PATH.COMMUNITY.CATEGORY}?type=${communityItem.type}`;
 
           return (
             <button
