@@ -6,7 +6,6 @@ import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
 import { useState } from "react";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 

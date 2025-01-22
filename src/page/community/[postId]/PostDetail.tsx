@@ -10,11 +10,10 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-import { useCommentsGet, useDeleteLike, useLikePost, usePostDelete, usePostGet } from "@api/domain/community/post/hook";
-
 import {
-  useCommentPost,
   useCommentsGet,
+  usePostDelete,
+  useCommentPost,
   useDeleteLike,
   useLikePost,
   usePostGet,
@@ -38,6 +37,8 @@ const PostDetail = () => {
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [commentId, setCommentId] = useState<number>();
+  const [isOpen, setOpen] = useState(false);
+  const { mutate: deletePost } = usePostDelete(Number(postId));
   const { mutate: subCommentPost } = useSubCommentPost(
     Number(commentId),
     Number(postId)
@@ -57,16 +58,6 @@ const PostDetail = () => {
   };
 
   localStorage.setItem("user", JSON.stringify(user));
-
-  const [isOpen, setOpen] = useState(false);
-  const [isLiked, setIsLiked] = useState(postData?.isLiked);
-  const [likeCount, setLikeCount] = useState(postData?.likeCounts);
-  const [comment, setComment] = useState("");
-  const { mutate: deletePost } = usePostDelete(Number(postId));
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
-  };
 
   const onClearClick = () => {
     setParsedComment({ mention: "", text: "" });
@@ -153,10 +144,12 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
+          setLikeCount((prevState) =>
+            Number(prevState !== undefined ? prevState - 1 : 0)
+          );
         },
         onError: (error) => {},
-      },
+      }
     );
   };
 
@@ -171,10 +164,12 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
+          setLikeCount((prevState) =>
+            prevState !== undefined ? prevState + 1 : 0
+          );
         },
         onError: (error) => {},
-      },
+      }
     );
   };
 
@@ -206,11 +201,18 @@ const PostDetail = () => {
           disabled={true}
         />
         <div className={styles.top}>
-          {<img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />}
+          {
+            <img
+              src={postData.profileImage}
+              alt="userProfile"
+              className={styles.profileImage}
+            />
+          }
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 ·{" "}
+              {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -219,11 +221,21 @@ const PostDetail = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <img key={`postImage-${index}`} src={image} alt="postImage" className={styles.image} />
+          <img
+            key={`postImage-${index}`}
+            src={image}
+            alt="postImage"
+            className={styles.image}
+          />
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
-            <Chip key={`postTag-${index}`} label={tag} color={"blue"} disabled={true} />
+            <Chip
+              key={`postTag-${index}`}
+              label={tag}
+              color={"blue"}
+              disabled={true}
+            />
           ))}
         </div>
         <div className={styles.subContents}>
@@ -231,7 +243,11 @@ const PostDetail = () => {
             {isLiked ? (
               <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
             ) : (
-              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
+              <IcLikeDisabled
+                width={24}
+                height={24}
+                onClick={onLikeDeleteClick}
+              />
             )}
             <span>{likeCount}</span>
           </div>
@@ -240,7 +256,10 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
+          댓글{" "}
+          <span className={styles.commentCount}>
+            {postData.totalCommentCounts}
+          </span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
