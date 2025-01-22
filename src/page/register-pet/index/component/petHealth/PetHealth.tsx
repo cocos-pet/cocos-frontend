@@ -141,6 +141,8 @@ const PetHealth = ({
   };
   const { data: diseaseData } = useBodiesGet("disease");
   const { data: symptomData } = useBodiesGet("symptom");
+  const { data: diseaseBodyData } = useDiseaseGet(selectedDiseaseBody);
+  const { data: symptomBodyData } = useSymptomGet(selectedSymptomBody);
 
   if (!diseaseData || !symptomData) return null;
 
@@ -168,7 +170,11 @@ const PetHealth = ({
       )}
       {currentStep === 2 && (
         <>
-          <Step2 selectedDiseases={selectedDiseases} onDiseaseSelection={handleDiseaseSelection} />
+          <Step2
+            data={diseaseBodyData}
+            selectedDiseases={selectedDiseases}
+            onDiseaseSelection={handleDiseaseSelection}
+          />
           <div className={styles.btnWrapper}>
             <Button
               label="이전으로"
@@ -208,7 +214,11 @@ const PetHealth = ({
       )}
       {currentStep === 4 && (
         <>
-          <SymStep2 selectedSymptom={selectedSymptom} onSymptomSelection={handleSymptomSelection} />
+          <SymStep2
+            data={symptomBodyData}
+            selectedSymptom={selectedSymptom}
+            onSymptomSelection={handleSymptomSelection}
+          />
           <div className={styles.btnWrapper}>
             <Button
               label="이전으로"

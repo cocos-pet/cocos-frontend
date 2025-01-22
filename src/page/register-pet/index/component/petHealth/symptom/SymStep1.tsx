@@ -2,14 +2,15 @@ import * as styles from "@page/register-pet/index/component/petHealth/disease/St
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
+import { ItemType, contentItem } from "@page/registerPet/index/component/petHealth/disease/Step1.css";
 
 interface SymStepProps {
   selectedIds: number[];
   onBodyPartSelection: (id: number) => void;
   data: bodiesGetResponse["data"];
 }
-
-const SymStep1 = ({ data, selectedIds, onBodyPartSelection }: SymStepProps) => {
+type CombinedSymStepProps = SymStepProps & Exclude<ItemType, undefined>;
+const SymStep1 = ({ data, selectedIds, onBodyPartSelection }: CombinedSymStepProps) => {
   if (!data || !data.bodies) {
     return null;
   }
@@ -37,19 +38,20 @@ const SymStep1 = ({ data, selectedIds, onBodyPartSelection }: SymStepProps) => {
       {/* 컨텐츠 영역 */}
       <div className={styles.contentWrapper}>
         {data.bodies.map((body) => (
-          <button
-            key={body.id}
-            className={styles.contentItem}
-            onClick={() => {
-              if (body.id !== undefined) {
-                handleSelection(body.id);
-              }
-            }}
-            type="button"
-          >
-            <img src={body.image} width={56} height={56} alt="body-img" />
+          <div key={body.id} className={contentItem()}>
+            <button
+              className={contentItem({ isClicked: selectedIds.includes(body.id ?? -1) })}
+              onClick={() => {
+                if (body.id !== undefined) {
+                  handleSelection(body.id);
+                }
+              }}
+              type="button"
+            >
+              <img src={body.image} width={56} height={56} alt="body-img" />
+            </button>
             <p>{body.name}</p>
-          </button>
+          </div>
         ))}
       </div>
     </>

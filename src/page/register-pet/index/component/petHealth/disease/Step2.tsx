@@ -3,14 +3,21 @@ import { GOGO, BodyPart } from "@page/register-pet/index/component/petHealth/dis
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import * as styles from "./Step2.css";
+import { diseaseGetResponse } from "@api/domain/registerPet/disease";
 
 const Step2 = ({
+  data,
   selectedDiseases,
-  onDiseaseSelection
+  onDiseaseSelection,
 }: {
+  data: diseaseGetResponse["data"];
   selectedDiseases: number[];
   onDiseaseSelection: (diseaseId: number) => void;
 }) => {
+  if (!data || !data.bodies) {
+    return null;
+  }
+
   return (
     <>
       <div className={styles.title}>
@@ -19,19 +26,28 @@ const Step2 = ({
       </div>
 
       <div className={styles.contentLayout}>
-        {GOGO.data.bodies.map((body: BodyPart) => (
+        {data?.bodies.map((body) => (
           <div key={body.id} className={styles.selectedBody}>
             <span>{body.name}</span>
             <div className={styles.chipLayout}>
-              {body.diseases.map((disease) => (
-                <Chip
-                  key={disease.id}
-                  label={disease.name}
-                  isSelected={selectedDiseases.includes(disease.id)}
-                  onClick={() => onDiseaseSelection(disease.id)}
-                  disabled={selectedDiseases.length >= 7 && !selectedDiseases.includes(disease.id)} // 7개 선택 시 비활성화
-                />
-              ))}
+              {/* diseases가 존재하는 경우에만 렌더링 */}
+              {body.diseases?.map((disease) => {
+                if (!disease?.id || !disease?.name) return null;
+                return (
+                  <Chip
+                    key={disease.id}
+                    label={disease.name}
+                    isSelected={selectedDiseases.includes(disease.id)}
+                    onClick={() => {
+                      // 추가 조건으로 id 확인
+                      if (disease.id) {
+                        onDiseaseSelection(disease.id);
+                      }
+                    }}
+                    disabled={selectedDiseases.length >= 7 && !selectedDiseases.includes(disease.id)} // 7개 선택 시 비활성화
+                  />
+                );
+              })}
             </div>
           </div>
         ))}

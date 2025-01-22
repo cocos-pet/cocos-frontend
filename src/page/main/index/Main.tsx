@@ -1,34 +1,39 @@
+import Symptom from "./symptom/Symptom";
+import * as styles from "./Main.css";
+import { useNavigate } from "react-router-dom";
+import { TextField } from "@common/component/TextField";
+import { IcSearch } from "@asset/svg";
 import MainFooter from "./mainFooter/MainFooter";
 import Divider from "@common/component/Divider/Divider";
 import HotPost from "./hotPost/HotPost";
 import MainHeader from "./mainHeader/mainHeader";
-import Symptom from "./symptom/Symptom";
-import { TextField } from "@common/component/TextField";
-import { useNavigate } from "react-router-dom";
-import { IcSearch } from "@asset/svg";
-import * as styles from "./Main.css";
 import Nav from "@common/component/Nav/Nav";
 import Spacing from "@common/component/Spacing/Spacing";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 
-const postsData = [
-  { id: 1, title: "실시간 심장병 질문 1위" },
-  { id: 2, title: "가장 인기 있는 산책 코스" },
-  { id: 3, title: "반려동물 먹이 추천" },
-  { id: 4, title: "집에서 하는 셀프 미용 팁" },
-  { id: 5, title: "반려동물과 함께하는 여행 준비" },
-];
-
-const petName = "모모";
+import { PATH } from "@route/path";
+import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
 
 const Main = () => {
+  const { data: postsData } = useQueryGetPopular();
+  const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
+
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
-    navigate("/search");
+    navigate(PATH.SEARCH.ROOT);
   };
 
+  const user = {
+    accessToken:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMDE4NjgsImV4cCI6MTczNzgwNjY2OCwibWVtYmVySWQiOjN9.e3NomRDxNu99lniRbw5fZE6kuSXf5pl9K_SK2jzAhSq2tnoz5Tcv0RQyjTshvPlWESQquZYt_IW3q0Z4MG0AnA",
+  };
+
+  localStorage.setItem("user", JSON.stringify(user));
+
   const handleTextFieldChange = () => {};
+
+  if (!postsData || !getBodyParts) return null;
 
   return (
     <div className={styles.mainContainer}>
@@ -45,7 +50,7 @@ const Main = () => {
       <MainHeader />
       <Symptom />
       <Divider />
-      <HotPost petName={petName} posts={postsData} />
+      <HotPost />
       <Divider />
       <MainFooter />
       <Spacing marginBottom="8" />
