@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import PetName from "@page/register-pet/index/component/petName/PetName";
 import PetType from "@page/register-pet/index/component/petType/PetType";
 import PetGender from "@page/register-pet/index/component/petGender/PetGender";
@@ -38,10 +38,6 @@ const RegisterPet = () => {
     symptomIds: [],
   });
 
-  useEffect(() => {
-    console.log("업데이트된 반려동물 데이터:", petData);
-  }, [petData]);
-
   const updatePetData = <K extends keyof PetData>(
     field: K,
     value: PetData[K],
@@ -57,8 +53,7 @@ const RegisterPet = () => {
   const handleSubmit = () => {
     // 데이터 전송 로직
     myPet(petData, {
-      onSuccess: (response) => {
-        console.log("반려동물 등록 성공:", response);
+      onSuccess: () => {
         // 데이터 초기화 및 초기 단계로 이동
         setPetData({
           breedId: null,
