@@ -31,6 +31,13 @@ import {
   FillterToName,
   getFillterChipNamesById,
 } from "@page/community/utills/getFillterNamebyid.ts";
+import {
+  useGetAnimal,
+  useGetBodies,
+  useGetBreed,
+  useGetDisease,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook.ts";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -47,25 +54,19 @@ interface writeProps {
 const Write = () => {
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
-
-  useEffect(() => {
-    if (category) {
-      const matchedItem = DropDownItems.find(
-        (item) => item.english === category
-      );
-      if (matchedItem) {
-        setParams((prevParams) => ({
-          ...prevParams,
-          categoryId: matchedItem ? matchedItem.value : undefined,
-        }));
-      }
-    }
-  }, []);
-
   const navigate = useNavigate();
-  const onBackClick = () => {
-    navigate(PATH.COMMUNITY.ROOT);
-  };
+  const [imageNames, setImageNames] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
+  const { selectedChips, isOpen, setOpen, categoryData, setCategoryData } =
+    useFilterStore();
+  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const { data: diseaseBodies } = useGetBodies("DISEASE");
+  const { data: symptomBodies } = useGetBodies("SYMPTOM");
+  const { mutate } = useArticlePost();
+  const { data: symptoms } = useGetSymptoms(bodyDiseaseIds);
+  const { data: disease } = useGetDisease(bodySymptomsIds);
   const [params, setParams] = useState<writeProps>({
     categoryId: 1,
     title: "",
@@ -77,11 +78,10 @@ const Write = () => {
       symptomIds: [],
     },
   });
-  const [imageNames, setImageNames] = useState<string[]>([]);
-  const fileInputRef = useRef<HTMLInputElement>(null);
-  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { selectedChips, isOpen, setOpen, categoryData } = useFilterStore();
-  const { mutate } = useArticlePost();
+
+  const onBackClick = () => {
+    navigate(PATH.COMMUNITY.ROOT);
+  };
 
   const TagLabel = [
     {
@@ -108,6 +108,44 @@ const Write = () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
+
+  useEffect(() => {
+    if (category) {
+      const matchedItem = DropDownItems.find(
+        (item) => item.english === category
+      );
+      if (matchedItem) {
+        setParams((prevParams) => ({
+          ...prevParams,
+          categoryId: matchedItem ? matchedItem.value : undefined,
+        }));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (symptoms?.bodies) {
+      setCategoryData("symptoms", symptoms.bodies);
+    }
+    if (disease?.bodies) {
+      setCategoryData("disease", disease.bodies);
+    }
+  }, [symptoms, disease]);
+
+  useEffect(() => {
+    if (diseaseBodies?.bodies && symptomBodies?.bodies) {
+      const diseaseIdArr = diseaseBodies.bodies.map(
+        (item) => item.id as number
+      );
+      const symptomIdArr = symptomBodies.bodies.map(
+        (item) => item.id as number
+      );
+      if (diseaseIdArr.length && symptomIdArr.length) {
+        setBodyDiseaseIds(diseaseIdArr);
+        setBodySymptomsIds(symptomIdArr);
+      }
+    }
+  }, [diseaseBodies, symptomBodies]);
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
     const selectedValue = DropDownItems.find(
@@ -145,7 +183,6 @@ const Write = () => {
       formData.append("file", file);
       setUploadedImageForms((prev) => [...prev, formData]);
 
-      // 2. 로컬 미리보기 이미지 추가
       const previewUrl = URL.createObjectURL(file);
       setParams((prev) => ({
         ...prev,

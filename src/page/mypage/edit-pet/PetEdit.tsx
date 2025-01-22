@@ -86,18 +86,18 @@ const PetEdit = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
-      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      const diseaseIdArr = diseaseBodies.bodies.map(
+        (item) => item.id as number
+      );
+      const symptomIdArr = symptomBodies.bodies.map(
+        (item) => item.id as number
+      );
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
       }
     }
   }, [diseaseBodies, symptomBodies]);
-
-  useEffect(() => {
-    console.log(animalCategory);
-  }, [animalCategory]);
 
   useEffect(() => {
     // animalId가 변경되었을 때만 breedId를 초기화
@@ -117,7 +117,6 @@ const PetEdit = () => {
       setName(petInfo.petName as string);
     }
     if (animal?.animals) {
-      console.log(animal.animals);
       setAnimalCategoryData("animal", animal.animals);
     }
     if (symptoms?.bodies) {
@@ -138,12 +137,26 @@ const PetEdit = () => {
         animalToggleChips({ category: "gender", id: petInfo.petGender });
 
         if (petInfo.symptoms && petInfo.diseases) {
-          setSelectedChips({ ids: petInfo.symptoms.map((item) => item.id), category: "symptomIds" });
-          setSelectedChips({ ids: petInfo.diseases.map((item) => item.id), category: "diseaseIds" });
+          setSelectedChips({
+            ids: petInfo.symptoms.map((item) => item.id),
+            category: "symptomIds",
+          });
+          setSelectedChips({
+            ids: petInfo.diseases.map((item) => item.id),
+            category: "diseaseIds",
+          });
         }
       }
     }
-  }, [animal, symptoms, disease, petInfo, setCategoryData, setAnimalCategoryData, animalToggleChips]);
+  }, [
+    animal,
+    symptoms,
+    disease,
+    petInfo,
+    setCategoryData,
+    setAnimalCategoryData,
+    animalToggleChips,
+  ]);
 
   useEffect(() => {
     if (breed?.breeds) {
@@ -233,10 +246,20 @@ const PetEdit = () => {
       />
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
-          <img className={styles.profileImage} alt="프로필 이미지" src={petInfo.petImage} />
+          <img
+            className={styles.profileImage}
+            alt="프로필 이미지"
+            src={petInfo.petImage}
+          />
           <span className={styles.nicknameWrapper}>
             {isEditing ? (
-              <div style={{ display: "flex", flexDirection: "column", width: "100%" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "100%",
+                }}
+              >
                 <input
                   ref={ref}
                   className={styles.nameInput}
@@ -247,14 +270,23 @@ const PetEdit = () => {
                 />
                 <div className={styles.errorLayout}>
                   {validationMessages.map((message) => (
-                    <Docs key={`error-${message}`} state="lError" text={message} />
+                    <Docs
+                      key={`error-${message}`}
+                      state="lError"
+                      text={message}
+                    />
                   ))}
                 </div>
               </div>
             ) : (
               <>
                 {name}
-                <IcEditPen width={24} height={24} onClick={handleEditClick} style={{ cursor: "pointer" }} />
+                <IcEditPen
+                  width={24}
+                  height={24}
+                  onClick={handleEditClick}
+                  style={{ cursor: "pointer" }}
+                />
               </>
             )}
           </span>
@@ -265,20 +297,38 @@ const PetEdit = () => {
           <Divider size="small" />
           <div className={styles.defaultInfoListWrapper}>
             {DEFAULT_TYPE.map((item) => (
-              <div key={`default-type-${item.tab}`} className={styles.defaultInfoList}>
+              <div
+                key={`default-type-${item.tab}`}
+                className={styles.defaultInfoList}
+              >
                 <span className={styles.defaultInfoListLeft}>{item.type}</span>
-                <button className={styles.defaultInfoListRight} onClick={() => openAnimalBottomSheet(item.tab)}>
+                <button
+                  className={styles.defaultInfoListRight}
+                  onClick={() => openAnimalBottomSheet(item.tab)}
+                >
                   {item.tab === "animal" &&
                     (animalChips.animalId
-                      ? getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData)
+                      ? getAnimalChipNamesById(
+                          animalChips.animalId as number,
+                          "animal",
+                          animalCategoryData
+                        )
                       : "_")}
                   {item.tab === "breeds" &&
                     (animalChips.breedId
-                      ? getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData)
+                      ? getAnimalChipNamesById(
+                          animalChips.breedId as number,
+                          "breeds",
+                          animalCategoryData
+                        )
                       : "_")}
                   {item.tab === "gender" &&
                     (animalChips.gender
-                      ? getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData)
+                      ? getAnimalChipNamesById(
+                          animalChips.gender as "M" | "F",
+                          "gender",
+                          animalCategoryData
+                        )
                       : "_")}
                   {item.tab === "age" && (`${petAge}살` || "_")}
                   <IcChevronRight width={20} height={20} />
@@ -294,7 +344,9 @@ const PetEdit = () => {
             {selectedChips.diseaseIds.map((id) => (
               <Chip
                 key={`disease-edit-${id}`}
-                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
+                label={
+                  getSelectedChipNamesById(id, "disease", categoryData) || ""
+                }
                 disabled={true}
               />
             ))}
@@ -316,7 +368,9 @@ const PetEdit = () => {
             {selectedChips.symptomIds.map((id) => (
               <Chip
                 key={`symptom-edit-${id}`}
-                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
+                label={
+                  getSelectedChipNamesById(id, "symptoms", categoryData) || ""
+                }
                 disabled={true}
               />
             ))}

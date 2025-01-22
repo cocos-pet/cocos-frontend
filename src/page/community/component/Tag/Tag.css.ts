@@ -22,6 +22,10 @@ export const tagContainer = recipe({
       color: color.gray.gray500,
       cursor: "pointer",
       transition: "0.3s",
+
+      whiteSpace: "nowrap",
+      overflow: "hidden",
+
       ":active": {
         border: `1px solid ${semanticColor.primary.normal}`,
         color: semanticColor.text.heavy,
@@ -49,3 +53,14 @@ export const tagContainer = recipe({
     active: false,
   },
 });
+
+export const tagValue = style([
+  font.heading03,
+  {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    textAlign: "left",
+    width: "calc(100% - 2.4rem)",
+  },
+]);

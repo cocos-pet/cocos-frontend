@@ -1,6 +1,12 @@
 import { useFilterStore } from "@store/filter.ts";
 
+interface DetailItem {
+  id?: number;
+  name?: string;
+}
+
 export interface DieasesItem {
+  diseases: DetailItem[];
   id?: number;
   name?: string;
 }
@@ -11,6 +17,7 @@ export interface BreedItem {
 }
 
 export interface SymptomItem {
+  symptoms: DetailItem[];
   id?: number;
   name?: string;
 }
@@ -38,14 +45,19 @@ export const getFillterChipNamesById = (
   category: CategoryType,
   categoryData: CategoryData
 ): string | undefined => {
+  console.log("이게 데이터 리스트", categoryData);
   if (category === "disease") {
-    return categoryData.disease.find((item) => item.id === id)?.name;
+    return categoryData.disease
+      .flatMap((item) => item.diseases)
+      .find((disease) => disease.id === id)?.name;
   }
   if (category === "breeds") {
     return categoryData.breeds.find((item) => item.id === id)?.name;
   }
   if (category === "symptoms") {
-    return categoryData.symptoms.find((item) => item.id === id)?.name;
+    return categoryData.symptoms
+      .flatMap((item) => item.symptoms)
+      .find((symptom) => symptom.id === id)?.name;
   }
   return undefined;
 };
@@ -57,6 +69,8 @@ export const getFillterChipNamesById = (
  */
 export const FillterToName = (list: number[], category: CategoryType) => {
   const { categoryData } = useFilterStore();
+
+  console.log("선택한 리스트", list);
 
   const selectedList = list.map((id) => {
     return getFillterChipNamesById(id, category, categoryData);
