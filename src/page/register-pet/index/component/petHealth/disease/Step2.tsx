@@ -2,7 +2,7 @@ import Chip from "@common/component/Chip/Chip";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import * as styles from "./Step2.css";
-import { diseaseGetResponse } from "@api/domain/registerPet/disease";
+import { diseaseGetResponse } from "@api/domain/register-pet/disease";
 
 const Step2 = ({
   data,
