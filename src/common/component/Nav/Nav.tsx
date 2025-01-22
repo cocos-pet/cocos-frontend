@@ -42,7 +42,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
       {content.map((item) => {
         if (type === "community") {
           const communityItem = item as CommunityContent;
-//여기 naviage 경로 main API 머지되면 다시 설정할 것??? 뭐지 갑자기 생각이 꼬였어요
+          //여기 naviage 경로 main API 머지되면 다시 설정할 것??? 뭐지 갑자기 생각이 꼬였어요
           const communityPath = `${PATH.COMMUNITY.CATEGORY}?category=`;
 
           return (
@@ -66,12 +66,12 @@ const Nav = ({ content, type = "nav" }: Props) => {
         }
 
         const navItem = item as (typeof NAV_CONTENT)[number];
-        const SvgComponent = navItem.svg;
+        const SvgComponent = activeItem === navItem.id ? navItem.activeSvg : navItem.svg;
         return (
           <button
             key={navItem.id}
             type="button"
-            onClick={() => handleClick(navItem.id, navItem.path)} 
+            onClick={() => handleClick(navItem.id, navItem.path)}
             className={styles.navItem({
               state: activeItem === navItem.id,
               type,
