@@ -9,7 +9,7 @@ const Index = () => {
 
   useEffect(() => {
     if (user) navigate(PATH.MAIN);
-    else navigate(PATH.ONBOARDING.ROOT);
+    else navigate(PATH.LOGIN);
   }, [navigate, user]);
 
   return <></>;

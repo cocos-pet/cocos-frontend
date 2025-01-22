@@ -7,6 +7,8 @@ import REGISTER_PET_ROUTES from "./RegisterPetRoutes";
 import PROFILE_ROUTES from "./ProfileRoutes";
 import Test from "@page/test/Test";
 import SETTING_ROUTES from "./Setting";
+import RedirectKakao from "@auth/RedirectKakao";
+import Login from "@page/login/Login";
 import NotFound from "@page/notFound/NotFound";
 import Index from "@page/index/Index";
 
@@ -14,6 +16,7 @@ import Index from "@page/index/Index";
 const router = createBrowserRouter([
   { path: "*", element: <NotFound /> },
   { path: "/", element: <Index /> },
+  { path: "/login", element: <Login /> },
   ...ONBOARDING_ROUTES,
   ...MAIN_ROUTES,
   ...COMMUNITY_ROUTES,
@@ -21,6 +24,7 @@ const router = createBrowserRouter([
   ...REGISTER_PET_ROUTES,
   ...PROFILE_ROUTES,
   ...SETTING_ROUTES,
+  { path: "/auth", element: <RedirectKakao /> },
   { path: "/test", element: <Test /> },
 ]);
 
