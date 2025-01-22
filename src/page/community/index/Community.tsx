@@ -4,12 +4,12 @@ import Nav from "@common/component/Nav/Nav";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Divider from "@common/component/Divider/Divider";
 import Banner from "./components/Banner/Banner";
-import { NAV_CONTENT } from "@common/component/Nav/constant";
-import { COMMUNITY_CONTENT } from "@common/component/Nav/communityConstant";
 import SelectPost from "./components/SelectPost/SelectPost";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import * as styles from "./Community.css";
 import { PATH } from "@route/path";
+import { NAV_CONTENT } from "@common/component/Nav/constant";
+import { useQueryGetCategory } from "@api/domain/community/category/hook";
 
 const Community = () => {
   const navigate = useNavigate();
@@ -19,6 +19,15 @@ const Community = () => {
   const handleSearchClick = () => {
     navigate(PATH.SEARCH.ROOT);
   };
+
+  const { data: categories } = useQueryGetCategory();
+  const categoryList = categories?.data?.categories || [];
+
+  const communityContent = categoryList.map((category) => ({
+    id: String(category.id),
+    name: category.name || "Unnamed",
+    image: category.image || "default-image-url",
+  }));
 
   return (
     <div className={styles.communityContainer}>
@@ -32,7 +41,9 @@ const Community = () => {
       <div className={styles.bannerContainer}>
         <Banner />
       </div>
-      <Nav content={COMMUNITY_CONTENT} type="community" />
+      <div className={styles.categoryContainer}>
+        <Nav content={communityContent} type="community" />
+      </div>
       <Divider />
       <div className={styles.postContainer}>
         <SelectPost />
@@ -41,7 +52,7 @@ const Community = () => {
         <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
       </div>
       <div className={styles.communityFooter}>
-        <Nav content={NAV_CONTENT} type="nav" />
+        <Nav content={NAV_CONTENT} />
       </div>
     </div>
   );
