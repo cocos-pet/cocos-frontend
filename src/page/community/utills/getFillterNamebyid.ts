@@ -1,3 +1,5 @@
+import { useFilterStore } from "@store/filter.ts";
+
 export interface DieasesItem {
   id?: number;
   name?: string;
@@ -24,6 +26,13 @@ export interface CategoryData {
 
 export type CategoryType = keyof CategoryData;
 
+/**
+ * 선택된 칩 ID (단일) 을 카테고리 데이터에 맞는 이름으로 변환
+ * @param id 칩 ID
+ * @param category 카테고리
+ * @param categoryData 카테고리 데이터
+ */
+
 export const getFillterChipNamesById = (
   id: number,
   category: CategoryType,
@@ -33,12 +42,24 @@ export const getFillterChipNamesById = (
     return categoryData.disease.find((item) => item.id === id)?.name;
   }
   if (category === "breeds") {
-    console.log(categoryData.breeds.find((item) => item.id === id)?.name);
     return categoryData.breeds.find((item) => item.id === id)?.name;
   }
   if (category === "symptoms") {
-    console.log(categoryData.symptoms.find((item) => item.id === id)?.name);
     return categoryData.symptoms.find((item) => item.id === id)?.name;
   }
   return undefined;
+};
+
+/**
+ * 선택된 칩 ID 리스트를 이름으로 변환 후 join 처리
+ * @param list 칩 리스트
+ * @param category 카테고리
+ */
+export const FillterToName = (list: number[], category: CategoryType) => {
+  const { categoryData } = useFilterStore();
+
+  const selectedList = list.map((id) => {
+    return getFillterChipNamesById(id, category, categoryData);
+  });
+  return selectedList.join(", ");
 };

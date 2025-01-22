@@ -28,6 +28,7 @@ import { useArticlePost } from "@api/domain/community/write/hook.ts";
 import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
 import {
   CategoryType,
+  FillterToName,
   getFillterChipNamesById,
 } from "@page/community/utills/getFillterNamebyid.ts";
 
@@ -76,21 +77,11 @@ const Write = () => {
       symptomIds: [],
     },
   });
-  const [imageNames, setImageNames] = useState<string[]>([]); // 이미지 이름 저장
-
+  const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
   const { selectedChips, isOpen, setOpen, categoryData } = useFilterStore();
   const { mutate } = useArticlePost();
-
-  const FillterToName = (list: number[], category: CategoryType) => {
-    const selectedList = list.map((id) => {
-      return getFillterChipNamesById(id, category, categoryData);
-    });
-    console.log(list);
-    return selectedList.join(", ");
-  };
 
   const TagLabel = [
     {
@@ -178,7 +169,6 @@ const Write = () => {
 
   const getDropdownIcon = (categoryId: number | undefined) => {
     if (!categoryId) {
-      console.log("categoryId가 없습니다.");
       return <IcDeleteBlack width={24} />;
     }
 
