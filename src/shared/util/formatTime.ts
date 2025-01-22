@@ -10,8 +10,6 @@ export const formatTime = (createdAt: string): string => {
   const diffDays = Math.floor(diffHours / 24);
   const diffYears = now.getFullYear() - createdDate.getFullYear();
 
-  console.log(diffSeconds, diffMinutes, diffHours, diffDays, diffYears);
-
   if (diffSeconds < 60) {
     return "방금 전";
   } else if (diffMinutes < 60) {

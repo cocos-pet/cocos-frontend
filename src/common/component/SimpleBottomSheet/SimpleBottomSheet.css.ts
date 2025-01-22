@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { color, font, semanticColor } from "@style/styles.css";
 
 export const overlay = style({
-  position: "absolute",
+  position: "fixed",
   top: 0,
   left: 0,
   zIndex: "99",
@@ -15,9 +15,8 @@ export const overlay = style({
 export const bottomSheetContainer = style({
   position: "absolute",
   bottom: "0",
-
+  width: "100%",
   display: "flex",
-  width: "37.5rem",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
@@ -38,7 +37,7 @@ export const bottomSheetHeader = style({
 
 export const contentContainer = style({
   display: "flex",
-  width: "33.5rem",
+  width: "90%",
   padding: "2rem 0rem 3.2rem 0rem",
   flexDirection: "column",
   alignItems: "flex-start",
