@@ -4,12 +4,12 @@ import Nav from "@common/component/Nav/Nav";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import Divider from "@common/component/Divider/Divider";
 import Banner from "./components/Banner/Banner";
+import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { COMMUNITY_CONTENT } from "@common/component/Nav/communityConstant";
 import SelectPost from "./components/SelectPost/SelectPost";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import * as styles from "./Community.css";
 import { PATH } from "@route/path";
-import { NAV_CONTENT } from "@common/component/Nav/constant";
 
 const Community = () => {
   const navigate = useNavigate();
@@ -41,10 +41,10 @@ const Community = () => {
         <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
       </div>
       <div className={styles.communityFooter}>
-        <Nav content={NAV_CONTENT} />
+        <Nav content={NAV_CONTENT} type="nav" />
       </div>
     </div>
   );
 };
 
-export default Community;
+export default Community
