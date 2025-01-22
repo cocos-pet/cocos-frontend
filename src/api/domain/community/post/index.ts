@@ -63,3 +63,18 @@ export const deleteLike = async (postId: string) => {
   const { data } = await del<likeDeleteResponse>(`${API_PATH.LIKE}/${postId}`);
   return data;
 };
+
+/**
+ *
+ */
+
+type articlePostResponse =
+  paths["/api/dev/posts"]["post"]["responses"]["200"]["content"]["*/*"];
+
+export type articlePostRequest =
+  paths["/api/dev/posts"]["post"]["requestBody"]["content"]["application/json"];
+
+export const postArticle = async (params: articlePostRequest) => {
+  const { data } = await post<articlePostResponse>(API_PATH.POST, params);
+  return data;
+};

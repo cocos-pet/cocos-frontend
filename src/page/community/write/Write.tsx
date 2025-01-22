@@ -143,7 +143,6 @@ const Write = () => {
   };
 
   useEffect(() => {
-    // selectedChips의 값을 params에 반영
     setParams((prevParams) => ({
       ...prevParams,
       selectedChips: {
@@ -154,6 +153,10 @@ const Write = () => {
       },
     }));
   }, [selectedChips]);
+
+  useEffect(() => {
+    console.log(params);
+  }, [params]);
 
   const isAllParamsFilled =
     params.category &&
