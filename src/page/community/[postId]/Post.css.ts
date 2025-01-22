@@ -108,6 +108,8 @@ export const styles = {
     marginBottom: "7.2rem",
   }),
   textContainer: style({
+    display: "flex",
+    flexDirection: "row",
     position: "fixed",
     bottom: 0,
     width: "100%",
