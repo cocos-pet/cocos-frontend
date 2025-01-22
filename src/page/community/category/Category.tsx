@@ -8,12 +8,7 @@ import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 import { useFilterStore } from "@store/filter";
 import { PATH } from "@route/path";
-
-interface CategoryItem {
-  id: number;
-  name: string;
-  image: string;
-}
+import { formatTime } from "@shared/util/formatTime";
 
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
@@ -25,7 +20,7 @@ const categoryMapping: { [key: string]: string } = {
 
 const Category = () => {
   const [searchParams] = useSearchParams();
-  const type = searchParams.get("type"); // 쿼리 파라미터에서 type 가져오기
+  const type = searchParams.get("type");
   const navigate = useNavigate();
 
   const { toggleOpen, selectedChips } = useFilterStore();
@@ -87,8 +82,8 @@ const Category = () => {
             likeCnt={post.likeCount}
             commentCnt={post.commentCount}
             postImage={post.image}
-            onClick={() => navigate(PATH.COMMUNITY.POST)}
-            timeAgo={post.updatedAt}
+            onClick={() => navigate(PATH.COMMUNITY.CATEGORY)}
+            timeAgo={formatTime(post.updatedAt)}
             category={post.category}
           />
         ))}
