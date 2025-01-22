@@ -21,11 +21,10 @@ import {
   useGetBodies,
   useGetBreed,
   useGetDisease,
-  useGetMemberInfo,
-  useGetPetInfo,
   useGetSymptoms,
   usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
+import { useGetPetInfo } from "@api/domain/mypage/hook";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -36,7 +35,6 @@ const DEFAULT_TYPE = [
   { type: "나이", tab: "age" },
 ] as const;
 
-//todo: patch 함수만 연결하면 끝!
 const PetEdit = () => {
   const navigate = useNavigate();
   const ref = useRef<HTMLInputElement>(null);
@@ -49,7 +47,6 @@ const PetEdit = () => {
   const [petAge, setPetAge] = useState("");
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
-  const [petId, setPetId] = useState<number | null>(null);
 
   const {
     isOpen,
@@ -77,7 +74,6 @@ const PetEdit = () => {
     setPetAge(e.target.value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
 
-  const { isLoading, data: member } = useGetMemberInfo();
   const { data: animal } = useGetAnimal();
   const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
   const { data: diseaseBodies } = useGetBodies("DISEASE");
@@ -157,12 +153,9 @@ const PetEdit = () => {
       //todo : 추후 요청 보낼 때는 다시 number로 변환 필요
       setPetAge(String(petInfo.petAge));
     }
-    if (petInfo?.petId) {
-      setPetId(petInfo.petId);
-    }
   }, [breed, petInfo, setAnimalCategoryData]);
 
-  if (isLoading || !animal) return;
+  if (!animal) return;
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const name = e.target.value;
@@ -299,7 +292,11 @@ const PetEdit = () => {
           <Divider size="small" />
           <div className={styles.chipContainer}>
             {selectedChips.diseaseIds.map((id) => (
-              <Chip key={`disease-edit-${id}`} label={getSelectedChipNamesById(id, "disease", categoryData) || ""} />
+              <Chip
+                key={`disease-edit-${id}`}
+                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
+                disabled={true}
+              />
             ))}
           </div>
           <span style={{ width: "10.2rem" }}>
@@ -317,7 +314,11 @@ const PetEdit = () => {
           <Divider size="small" />
           <div className={styles.chipContainer}>
             {selectedChips.symptomIds.map((id) => (
-              <Chip key={`symptom-edit-${id}`} label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""} />
+              <Chip
+                key={`symptom-edit-${id}`}
+                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
+                disabled={true}
+              />
             ))}
           </div>
           <span style={{ width: "10.2rem" }}>

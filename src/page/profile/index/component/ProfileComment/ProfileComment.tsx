@@ -1,3 +1,4 @@
+import { formatTime } from "@shared/util/formatTime";
 import * as styles from "./ProfileComment.css";
 
 interface MyPageCommentPropTypes {
@@ -9,10 +10,9 @@ interface MyPageCommentPropTypes {
 }
 
 const MyPageComment = ({ content, timeAgo, postTitle, onClick, mentionedNickname }: MyPageCommentPropTypes) => {
-  //todo: '1시간 전' 과 같이 변환하도록 유틸 함수 적용 필요(민정 작성 예정)
   return (
     <div className={styles.commentWrapper} onClick={onClick}>
-      <span className={styles.timeText}>{timeAgo}</span>
+      <span className={styles.timeText}>{formatTime(timeAgo)}</span>
 
       <span className={styles.contentText}>
         <span>

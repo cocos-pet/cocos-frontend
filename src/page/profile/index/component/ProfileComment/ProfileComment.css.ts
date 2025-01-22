@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const commentWrapper = style({
   display: "flex",
-  width: "33.5rem",
+  width: "100%",
   padding: "1.2rem 0rem",
   flexDirection: "column",
   alignItems: "flex-start",

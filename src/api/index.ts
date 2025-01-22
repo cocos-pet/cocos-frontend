@@ -13,6 +13,19 @@ export const getAccessToken = (): string | null => {
   return "";
 };
 
+export const isLoggedIn = (): boolean => {
+  const user = localStorage.getItem("user");
+  if (user) {
+    try {
+      const userObj = JSON.parse(user);
+      if (userObj.accessToken) return true;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  return false;
+};
+
 export const api = axios.create({
   baseURL: import.meta.env.VITE_BASE_URL,
   withCredentials: true,
