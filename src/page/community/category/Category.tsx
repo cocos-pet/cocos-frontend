@@ -33,6 +33,10 @@ const Category = () => {
     navigate(PATH.COMMUNITY.ROOT);
   };
 
+  const handleGoSearch = () => {
+    navigate(PATH.COMMUNITY.SEARCH);
+  };
+
   // 유효하지 않은 타입 처리
   if (!type || !validTypes.includes(type)) {
     return (
@@ -59,6 +63,7 @@ const Category = () => {
         centerContent={categoryName}
         rightBtn={<IcSearch />}
         onLeftClick={handleGoBack}
+        onRightClick={handleGoSearch}
       />
 
       {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}

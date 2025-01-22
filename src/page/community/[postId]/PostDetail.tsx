@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import { IcLeftarrow, IcLikeActive, IcLikeDisabled, IcTest } from "@asset/svg";
-import { styles } from "@page/community/[postId]/Post.css.ts";
+import { styles } from "@page/community/[postId]/PostDetail.css";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
@@ -150,7 +150,7 @@ const PostDetail = () => {
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
-            <Chip key={`postTag-${index}`} label={tag} color={"blue"} />
+            <Chip key={`postTag-${index}`} label={tag} color={"blue"} disabled={true} />
           ))}
         </div>
         <div className={styles.subContents}>
