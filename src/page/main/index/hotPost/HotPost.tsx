@@ -4,6 +4,10 @@ import Divider from "@common/component/Divider/Divider";
 import { useQueryGetPopular } from "@api/domain/main/hook";
 import { PATH } from "@route/path";
 
+// interface Post {
+//   id?: number;
+//   title?: string;
+// }
 
 interface HotPostProps {
   petName?: string;
