@@ -1,5 +1,6 @@
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { color, font, semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 
 export const styles = {
   wrapper: recipe({
@@ -110,6 +111,12 @@ export const styles = {
     },
   }),
 };
+
+export const iconstyle = style({
+  height: "2rem",
+  display: "flex",
+  alignContent: "center",
+});
 
 export type WrapVariants = RecipeVariants<typeof styles.wrapper>;
 export type InputVariants = RecipeVariants<typeof styles.input>;

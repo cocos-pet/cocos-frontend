@@ -8,8 +8,6 @@ import {
   IcImagePlus,
   IcRightArror,
   IcSymptom,
-  IcTest,
-  IcUp,
 } from "@asset/svg";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
@@ -30,47 +28,23 @@ import ImageCover from "@page/community/component/ImageCover/ImageCover.tsx";
 import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
+import axios from "axios";
+import { useArticlePost } from "@api/domain/community/write/hook.ts";
+import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
 
 interface writeProps {
   categoryId: number | undefined;
   title: string;
   content: string;
-  image: string[];
+  images: string[];
   selectedChips: {
     breedId: number[];
     diseaseIds: number[];
     symptomIds: number[];
   };
 }
-
-const DropDownItems = [
-  {
-    icon: <IcSymptom width={20} />,
-    label: "증상·질병",
-    value: 1,
-    english: "symptom",
-  },
-  {
-    icon: <IcHospital width={20} />,
-    label: "병원고민",
-    value: 2,
-    english: "hospital",
-  },
-  {
-    icon: <IcHealing width={20} />,
-    label: "일상·치유",
-    value: 3,
-    english: "healing",
-  },
-  {
-    icon: <IcCocosM width={20} />,
-    label: "코코스매거진",
-    value: 4,
-    english: "cocos",
-  },
-];
 
 const Write = () => {
   const [searchParams] = useSearchParams(); // 쿼리 문자열 파싱
@@ -95,21 +69,23 @@ const Write = () => {
     navigate(PATH.COMMUNITY.ROOT);
   };
   const [params, setParams] = useState<writeProps>({
-    categoryId: undefined,
+    categoryId: 1,
     title: "",
     content: "",
-    image: [],
+    images: [],
     selectedChips: {
       breedId: [],
       diseaseIds: [],
       symptomIds: [],
     },
   });
+  const [imageNames, setImageNames] = useState<string[]>([]); // 이미지 이름 저장
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
   const { selectedChips, isOpen, setOpen } = useFilterStore();
+  const { mutate } = useArticlePost();
 
   const TagLabel = [
     {
@@ -141,7 +117,7 @@ const Write = () => {
     const selectedValue = DropDownItems.find(
       (item) => item.label === e.target.value
     );
-
+    if (!selectedValue) return;
     onChangeValue("categoryId", selectedValue.value);
     if (!isDropDownOpen) closeDropDown();
   };
@@ -152,30 +128,43 @@ const Write = () => {
 
   const onChangeValue = (
     target: string,
-    value: string | number | undefined | React.ChangeEvent<HTMLInputElement>
+    value: string | number | React.ChangeEvent<HTMLInputElement>
   ) => {
     setParams((prevParams) => ({
       ...prevParams,
       [target]: value,
     }));
   };
+  const [uploadedImageForms, setUploadedImageForms] = useState<FormData[]>([]);
 
   // 이미지 추가
   const handleAddImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const newImage = URL.createObjectURL(event.target.files[0]);
-      setParams((prevParams) => ({
-        ...prevParams,
-        image: [...prevParams.image, newImage],
+      const file = event.target.files[0];
+
+      const fileName = file.name;
+      setImageNames((prev) => [...prev, fileName]);
+      const formData = new FormData();
+      formData.append("file", file);
+      setUploadedImageForms((prev) => [...prev, formData]);
+
+      // 2. 로컬 미리보기 이미지 추가
+      const previewUrl = URL.createObjectURL(file);
+      setParams((prev) => ({
+        ...prev,
+        images: [...prev.images, previewUrl],
       }));
     }
   };
 
+  useEffect(() => {
+    console.log(params);
+  }, [params]);
   // 이미지 삭제
   const handleDeleteImage = (index: number) => {
     setParams((prevParams) => ({
       ...prevParams,
-      image: prevParams.image.filter((_, i) => i !== index), // 선택한 이미지 제거
+      image: prevParams.images.filter((_, i) => i !== index), // 선택한 이미지 제거
     }));
   };
 
@@ -185,11 +174,17 @@ const Write = () => {
   };
 
   const getDropdownIcon = (categoryId: number | undefined) => {
+    if (!categoryId) {
+      console.log("categoryId가 없습니다.");
+      return <IcDeleteBlack width={24} />;
+    }
+
     const selectedItem = DropDownItems.find(
       (item) => categoryId === item.value
     );
-    console.log(selectedItem ? selectedItem.icon : undefined);
-    return selectedItem ? selectedItem.icon : undefined;
+    if (!selectedItem) return <IcDeleteBlack width={24} />;
+
+    return selectedItem.icon;
   };
 
   const getDropdownValue = (categoryId: number | undefined) => {
@@ -211,9 +206,52 @@ const Write = () => {
     }));
   }, [selectedChips]);
 
-  useEffect(() => {
-    console.log(getDropdownIcon(params.categoryId));
-  }, [params]);
+  const handleArticlePost = () => {
+    if (isAllParamsFilled) {
+      mutate(
+        {
+          categoryId: params.categoryId || undefined,
+          title: params.title || undefined,
+          content: params.content || undefined,
+          images: imageNames || undefined,
+          animalId: params.selectedChips.breedId[0] || undefined,
+          symptomIds: params.selectedChips.symptomIds || undefined,
+          diseaseIds: params.selectedChips.diseaseIds || undefined,
+        },
+        {
+          onSuccess: async (data) => {
+            if (!data || !data?.data || !data?.data.images) {
+              alert("이미지 업로드 URL이 없습니다.");
+              return;
+            }
+            try {
+              await Promise.all(
+                data.data.images.map((url: string, index: number) => {
+                  const formData = uploadedImageForms[index];
+                  const file = formData.get("file");
+
+                  if (!file) {
+                    throw new Error("FormData에 파일이 없습니다.");
+                  }
+                  return axios.put(url, file, {
+                    headers: {
+                      "Content-Type": (file as File).type,
+                    },
+                  });
+                })
+              );
+              navigate(PATH.COMMUNITY.ROOT);
+            } catch (error) {
+              alert("이미지 업로드에 실패했습니다.");
+            }
+          },
+          onError: (error) => {
+            alert("글 작성에 실패했습니다.");
+          },
+        }
+      );
+    }
+  };
 
   const isAllParamsFilled =
     params.categoryId &&
@@ -276,7 +314,7 @@ const Write = () => {
                 className={plusImage}
                 onClick={handleFileUploadClick}
               />
-              {params.image.map((imageSrc, index) => (
+              {params.images.map((imageSrc, index) => (
                 <ImageCover
                   key={index}
                   imageSrc={imageSrc}
@@ -308,6 +346,7 @@ const Write = () => {
             variant={isAllParamsFilled ? "solidPrimary" : "solidNeutral"}
             label={"글 작성 마치기"}
             size={"large"}
+            onClick={handleArticlePost}
           />
         </div>
       </div>
