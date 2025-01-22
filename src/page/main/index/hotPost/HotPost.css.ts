@@ -6,7 +6,7 @@ export const hotPostContainer = style({
   width: "100%",
   flexDirection: "column",
   padding: "2rem",
-  marginTop: "3rem",
+  marginTop: "3.2rem 2rem 3.2rem 2rem",
 });
 
 export const p = style([

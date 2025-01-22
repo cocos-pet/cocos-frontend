@@ -6,12 +6,10 @@ export const symptomContainer = style({
   gap: "1.2rem",
   flexDirection: "column",
   width: "100%",
-  marginTop: "4.2rem",
-  marginBottom: "3.2rem",
+  padding: "3.2rem 2rem 3.2rem 2rem",
 });
 
 export const symptomTitle = style([
-  { marginLeft: "2rem" },
   font.heading02,
   {
     color: semanticColor.text.normal,
