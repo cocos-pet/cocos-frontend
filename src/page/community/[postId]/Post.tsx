@@ -36,7 +36,10 @@ const PostDetail = () => {
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [commentId, setCommentId] = useState<number>();
-  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId));
+  const { mutate: subCommentPost } = useSubCommentPost(
+    Number(commentId),
+    Number(postId)
+  );
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -68,7 +71,6 @@ const PostDetail = () => {
         },
         {
           onSuccess: (data) => {
-            console.log("된나");
             onClearClick();
           },
           onError: (error) => {},
@@ -83,7 +85,6 @@ const PostDetail = () => {
         },
         {
           onSuccess: (data) => {
-            console.log("된나");
             onClearClick();
           },
           onError: (error) => {},

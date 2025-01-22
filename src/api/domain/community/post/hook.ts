@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
   getComments,
   deleteLike,
@@ -79,9 +79,14 @@ export const useCommentsGet = (postId: number) => {
  */
 
 export const useCommentPost = (postId: number) => {
+  const queryClient = useQueryClient();
+
   return useMutation({
     mutationKey: POST_QUERY_KEY.COMMENTS_POST_QUERY_KEY(postId),
     mutationFn: (content: { content: string }) => {
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
       return postComment(postId, content.content);
     },
   });
@@ -91,7 +96,8 @@ export const useCommentPost = (postId: number) => {
  * @description 대댓글 작성 API
  */
 
-export const useSubCommentPost = (commentId: number) => {
+export const useSubCommentPost = (commentId: number, postId: number) => {
+  const queryClient = useQueryClient();
   return useMutation({
     mutationKey: POST_QUERY_KEY.SUB_COMMENTS_POST_QUERY_KEY(commentId),
     mutationFn: (content: {
@@ -100,6 +106,11 @@ export const useSubCommentPost = (commentId: number) => {
       content: string;
     }) => {
       return postSubComment(content);
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
     },
   });
 };
