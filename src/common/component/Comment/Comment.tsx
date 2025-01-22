@@ -7,7 +7,6 @@ import { commentGetResponseCommentType } from "@api/domain/community/post";
 import { formatTime } from "@shared/util/formatTime.ts";
 import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
 import { useEffect, useState } from "react";
 
@@ -81,10 +80,10 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
       {comment.subComments && (
         <div style={{ width: "100%" }}>
           <SubCommentList
+            commentId={comment.id}
             subComments={comment.subComments}
             onCommentDelete={onDeleteClick}
             onSubCommentReplyClick={onCommentReplyClick}
-          
           />
         </div>
       )}
