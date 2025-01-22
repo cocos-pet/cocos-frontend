@@ -88,14 +88,16 @@ export const postComment = async (postId: number, content: string) => {
 type subCommentPostResponse =
   paths["/api/dev/comments/sub/{commentId}"]["post"]["responses"]["201"]["content"]["*/*"];
 
-export const postSubComment = async (
-  commentId: number,
-  content: { content: string; nickname: string }
-) => {
+export const postSubComment = async (content: {
+  commentId: number | undefined;
+  content: string;
+  nickname: string;
+}) => {
   const { data } = await post<subCommentPostResponse>(
-    `${API_PATH.SUBCOMMENTS}/${commentId}`,
+    `${API_PATH.SUBCOMMENTS}/${content.commentId}`,
     {
-      content,
+      content: content.content,
+      nickname: content.nickname,
     }
   );
   return data;

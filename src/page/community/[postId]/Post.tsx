@@ -22,7 +22,6 @@ import {
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
-import subComment from "@common/component/SubComment/SubComment.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -36,8 +35,8 @@ const PostDetail = () => {
   const { mutate: commentPost } = useCommentPost(Number(postId));
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
-  const [subCommentId, setSubCommentId] = useState<number | undefined>();
-  const { mutate: subCommentPost } = useSubCommentPost(Number(subCommentId));
+  const [commentId, setCommentId] = useState<number>();
+  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -51,6 +50,7 @@ const PostDetail = () => {
     accessToken:
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0OTQ1MDksImV4cCI6MTczODA5OTMwOSwibWVtYmVySWQiOjJ9.JhS3oRdiCmYpsa3VCrsxEdDP4DBt8hf5rGdzetF9LFNQltZd1yEQ1ARIskYkt_WDfKbcC-EYmH_J3q1iT6A9Lg",
   };
+
   localStorage.setItem("user", JSON.stringify(user));
 
   const onClearClick = () => {
@@ -58,18 +58,32 @@ const PostDetail = () => {
   };
 
   const onSubmitComment = () => {
-    const fullComment = `${parsedComment.mention}${parsedComment.text}`.trim();
     if (parsedComment.mention) {
       // 대댓글 등록
-      // TODO: 댓글 등록 API 호출
-      console.log("댓글 등록:", fullComment);
       subCommentPost(
         {
+          commentId: commentId,
           nickname: parsedComment.mention,
-          content: fullComment,
+          content: parsedComment.text,
         },
         {
           onSuccess: (data) => {
+            console.log("된나");
+            onClearClick();
+          },
+          onError: (error) => {},
+        }
+      );
+      onClearClick();
+    } else {
+      // 댓글 등록
+      commentPost(
+        {
+          content: parsedComment.text,
+        },
+        {
+          onSuccess: (data) => {
+            console.log("된나");
             onClearClick();
           },
           onError: (error) => {},
@@ -79,20 +93,14 @@ const PostDetail = () => {
     }
   };
 
-  const onCommentReplyClick = (nickname: string | undefined) => {
-    if (nickname) {
-      setParsedComment({ mention: nickname, text: "" });
-    }
-  };
-
-  const onSubCommentReplyClick = (
+  const onCommentReplyClick = (
     nickname: string | undefined,
     commentId: number | undefined
   ) => {
     if (nickname) {
       setParsedComment({ mention: nickname, text: "" });
     }
-    setSubCommentId(commentId);
+    setCommentId(commentId);
   };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -113,7 +121,6 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    // 초기 데이터 세팅
     if (postData) {
       setIsLiked(postData.isLiked);
       setLikeCount(postData.likeCounts);
@@ -244,7 +251,6 @@ const PostDetail = () => {
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
-          onSubCommentReplyClick={onSubCommentReplyClick}
         />
         <div className={styles.commentContainer}>
           <TextField

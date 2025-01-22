@@ -1,29 +1,25 @@
 import * as styles from "./Comment.css";
-import { IcEllipses, IcMessage } from "@asset/svg";
+import { IcMessage } from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetResponseCommentType } from "@api/domain/community/post";
+import { formatTime } from "@shared/util/formatTime.ts";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onCommentReplyClick?: (nickname: string | undefined) => void;
-  onSubCommentReplyClick?: (
+  onCommentReplyClick?: (
     nickname: string | undefined,
     commentId: number | undefined
   ) => void;
+
   onDelete: () => void;
 }
 
-const Comment = ({
-  comment,
-  onCommentReplyClick,
-  onSubCommentReplyClick,
-  onDelete,
-}: CommentProps) => {
+const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
-      onCommentReplyClick(comment.nickname);
+      onCommentReplyClick(comment.nickname, comment.id);
     }
   };
 
@@ -42,7 +38,9 @@ const Comment = ({
             <span className={styles.nickname}>{comment.nickname}</span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt ? comment.createdAt.toLocaleString() : ""}
+              {comment.createdAt
+                ? formatTime(comment.createdAt).toLocaleString()
+                : ""}
             </span>
           </div>
           <MoreModal
@@ -66,8 +64,9 @@ const Comment = ({
       {comment.subComments && (
         <div>
           <SubCommentList
+            commentId={comment.id}
             subComments={comment.subComments}
-            onSubCommentReplyClick={onSubCommentReplyClick}
+            onSubCommentReplyClick={onCommentReplyClick}
           />
         </div>
       )}

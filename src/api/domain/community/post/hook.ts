@@ -94,8 +94,12 @@ export const useCommentPost = (postId: number) => {
 export const useSubCommentPost = (commentId: number) => {
   return useMutation({
     mutationKey: POST_QUERY_KEY.SUB_COMMENTS_POST_QUERY_KEY(commentId),
-    mutationFn: (content: { nickname: string; content: string }) => {
-      return postSubComment(commentId, content);
+    mutationFn: (content: {
+      commentId: number | undefined;
+      nickname: string;
+      content: string;
+    }) => {
+      return postSubComment(content);
     },
   });
 };

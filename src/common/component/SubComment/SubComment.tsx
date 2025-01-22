@@ -3,8 +3,10 @@ import { IcEllipses, IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
+import { formatTime } from "@shared/util/formatTime.ts";
 
 interface SubCommentProps {
+  commentId: number | undefined;
   subComment: commentGetRequestSubCommentType;
   onSubCommentReplyClick?: (
     nickname: string | undefined,
@@ -13,12 +15,13 @@ interface SubCommentProps {
 }
 
 const SubComment = ({
+  commentId,
   subComment,
   onSubCommentReplyClick,
 }: SubCommentProps) => {
   const handleReplyClick = () => {
     if (onSubCommentReplyClick) {
-      onSubCommentReplyClick(subComment.nickname, subComment.id);
+      onSubCommentReplyClick(subComment.nickname, commentId);
     }
   };
 
@@ -59,7 +62,7 @@ const SubComment = ({
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
               {subComment.createdAt
-                ? subComment.createdAt.toLocaleString()
+                ? formatTime(subComment.createdAt).toLocaleString()
                 : ""}
             </span>
           </div>
