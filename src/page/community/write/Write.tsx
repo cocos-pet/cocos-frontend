@@ -1,17 +1,10 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
-import {
-  IcCocosM,
-  IcDeleteBlack,
-  IcHealing,
-  IcHospital,
-  IcImagePlus,
-  IcRightArror,
-  IcSymptom,
-} from "@asset/svg";
+import { IcDeleteBlack, IcImagePlus, IcRightArror } from "@asset/svg";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+
 import {
   bottomButton,
   fileInput,
@@ -33,6 +26,10 @@ import { PATH } from "@route/path.ts";
 import axios from "axios";
 import { useArticlePost } from "@api/domain/community/write/hook.ts";
 import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
+import {
+  CategoryType,
+  getFillterChipNamesById,
+} from "@page/community/utills/getFillterNamebyid.ts";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -47,8 +44,8 @@ interface writeProps {
 }
 
 const Write = () => {
-  const [searchParams] = useSearchParams(); // 쿼리 문자열 파싱
-  const category = searchParams.get("category"); // category 값 가져오기
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
 
   useEffect(() => {
     if (category) {
@@ -84,21 +81,29 @@ const Write = () => {
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { selectedChips, isOpen, setOpen } = useFilterStore();
+  const { selectedChips, isOpen, setOpen, categoryData } = useFilterStore();
   const { mutate } = useArticlePost();
+
+  const FillterToName = (list: number[], category: CategoryType) => {
+    const selectedList = list.map((id) => {
+      return getFillterChipNamesById(id, category, categoryData);
+    });
+    console.log(list);
+    return selectedList.join(", ");
+  };
 
   const TagLabel = [
     {
       label: "반려동물 종류 추가하기",
-      value: selectedChips.breedId,
+      value: FillterToName(selectedChips.breedId, "breeds"),
     },
     {
       label: "증상 추가하기",
-      value: selectedChips.symptomIds,
+      value: FillterToName(selectedChips.symptomIds, "symptoms"),
     },
     {
       label: "질병 추가하기",
-      value: selectedChips.diseaseIds,
+      value: FillterToName(selectedChips.diseaseIds, "disease"),
     },
   ];
 
@@ -144,6 +149,7 @@ const Write = () => {
 
       const fileName = file.name;
       setImageNames((prev) => [...prev, fileName]);
+
       const formData = new FormData();
       formData.append("file", file);
       setUploadedImageForms((prev) => [...prev, formData]);
@@ -157,9 +163,6 @@ const Write = () => {
     }
   };
 
-  useEffect(() => {
-    console.log(params);
-  }, [params]);
   // 이미지 삭제
   const handleDeleteImage = (index: number) => {
     setParams((prevParams) => ({
@@ -330,7 +333,7 @@ const Write = () => {
                 <Tag
                   key={index}
                   placeholder={tag.label}
-                  value={tag.value.length > 0 ? tag.value.join(", ") : ""}
+                  value={tag.value}
                   isActive={tag.value.length > 0}
                   onClick={() => setOpen(true)}
                 />

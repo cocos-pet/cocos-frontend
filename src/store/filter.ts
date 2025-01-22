@@ -26,7 +26,7 @@ export type CategoryDisease = DiseaseItem[];
 
 // 전체 categoryData의 타입
 export interface CategoryData {
-  kind: CategoryKind;
+  breeds: CategoryKind;
   symptoms: CategorySymptom;
   disease: CategoryDisease;
 }
@@ -56,7 +56,10 @@ interface FilterState {
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
-  setCategoryData: (category: CategoryType, data: CategoryKind | CategorySymptom | CategoryDisease) => void;
+  setCategoryData: (
+    category: CategoryType,
+    data: CategoryKind | CategorySymptom | CategoryDisease
+  ) => void;
 }
 
 export const useFilterStore = create<FilterState>((set) => ({
@@ -64,7 +67,7 @@ export const useFilterStore = create<FilterState>((set) => ({
   toggleOpen: () => set((state) => ({ isOpen: !state.isOpen })),
   setOpen: (state) => set({ isOpen: state }),
 
-  category: "kind",
+  category: "breeds",
   setCategory: (category) => set({ category }),
 
   selectedChips: { breedId: [], diseaseIds: [], symptomIds: [] },
@@ -97,10 +100,10 @@ export const useFilterStore = create<FilterState>((set) => ({
     }),
 
   categoryData: {
-    kind: CATEGORY_KIND,
+    breeds: CATEGORY_KIND,
     symptoms: CATEGORY_SYMPTOM,
     disease: CATEGORY_DISEASE,
-  }, //todo: api 연결 후에는 [] 로 변경할 것
+  },
   setCategoryData: (category, data) =>
     set((state) => ({
       categoryData: { ...state.categoryData, [category]: data }, // todo: 이거 조금 수정 필요할 수도 있음

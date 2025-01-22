@@ -1,5 +1,4 @@
 import { IcCocosM, IcHealing, IcHospital, IcSymptom } from "@asset/svg";
-import { label } from "@page/community/component/WriteInputSection/WriteInputSection.css.ts";
 
 export const DropDownItems = [
   {
