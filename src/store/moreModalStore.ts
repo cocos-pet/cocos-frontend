@@ -1,15 +1,15 @@
 import { create } from "zustand";
 
 interface ModalState {
-  openModalId: number | null;
-  setOpenModalId: (id: number | null) => void;
+  openModalId: string | undefined;
+  setOpenModalId: (id: string | undefined) => void;
 }
 
 const useModalStore = create<ModalState>((set) => ({
-  openModalId: null,
+  openModalId: undefined,
   setOpenModalId: (id) =>
     set((state) => ({
-      openModalId: state.openModalId === id ? null : id, // 동일 ID면 닫기, 아니면 열기
+      openModalId: state.openModalId === id ? undefined : id,
     })),
 }));
 

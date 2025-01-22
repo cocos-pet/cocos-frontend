@@ -1,3 +1,25 @@
+import { API_PATH } from "@api/constants/apiPath";
+import { get } from "@api/index";
+import { paths } from "@type/schema";
+
+//인기글 조회 API
+type GetPopularResponse = paths["/api/dev/posts/popular"]["get"]["responses"]["200"]["content"]["*/*"];
+
+export const getPopular = async (): Promise<GetPopularResponse> => {
+  const { data } = await get<GetPopularResponse>(API_PATH.POST_POPULAR);
+  return data;
+};
+
+//신체 부위 조회 API
+type GetBodyPartsResponse = paths["/api/dev/bodies"]["get"]["responses"]["200"]["content"]["*/*"];
+
+export const getBodyParts = async (petProblem: string): Promise<GetBodyPartsResponse> => {
+  const validProblem = petProblem === "symptom" || petProblem === "disease" ? petProblem : "symptom";
+
+  const { data } = await get<GetBodyPartsResponse>(`${API_PATH.BODY}?petProblem=${validProblem}`);
+  return data;
+};
+
 //아래는 예시입니다.
 //만약 스키마 사용 못할 경우, 아래와 같이 필요한 request body 타입 정의하기 (+ response 인터페이스도 정의하기)
 export interface PostCommentWithMentionRequest {
@@ -40,5 +62,3 @@ export interface MeetingPeopleResponse {
 // export const deleteComment = async (commentId: number) => {
 //     return (await api.delete(`/comment/v2/${commentId}`)).data;
 //   };
-
-

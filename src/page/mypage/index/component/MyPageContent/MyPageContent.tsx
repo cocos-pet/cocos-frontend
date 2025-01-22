@@ -1,9 +1,13 @@
 import Content from "@common/component/Content/Content";
 import { ActiveTabType } from "../../Mypage";
 import * as styles from "./MyPageContent.css";
-import { commentDummyData, dummyData } from "./costant"; //todo: 더미데이터 렌더링
+import { dummyData } from "./costant"; //todo: 더미데이터 렌더링
 import MyPageComment from "../MyPageComment/MyPageComment";
 import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
+import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
+import { formatTime } from "@shared/util/formatTime";
+import { PATH } from "@route/path";
+import { useNavigate } from "react-router-dom";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -27,6 +31,12 @@ export interface ApiItemTypes {
 
 //todo: 여기서 탭 별로 api 요청 보내서 데이터 받아와 렌더링하기
 const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
+  const navigate = useNavigate();
+  const { data: myPosts } = useGetMyPost();
+  const { data: myComments } = useGetMyComment();
+
+  if ((tab === "post" && !myPosts) || (tab === "comment" && !myComments)) return;
+
   const renderNothingContent = (tab: ActiveTabType) => {
     let content = "";
     switch (tab) {
@@ -50,30 +60,30 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
       case "review":
         return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
       case "post":
-        return dummyData.map((data) => (
+        return myPosts?.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
               breed={data.breed}
-              age={`${data.age}살`}
+              petAge={data.age}
               postTitle={data.title}
               postContent={data.content}
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
-              timeAgo="1시간 전" //추후 유틸로 대체
-              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
+              timeAgo={formatTime(data.createdAt as string)}
+              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
             />
           </div>
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return renderAllComments(commentDummyData.comments, commentDummyData.subComments).map((data) => (
+        return renderAllComments(myComments?.comments, myComments?.subComments).map((data) => (
           <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
             <MyPageComment
-              postTitle={data.postTitle}
-              content={data.content}
-              timeAgo={data.createdAt}
+              postTitle={data.postTitle as string}
+              content={data.content as string}
+              timeAgo={data.createdAt as string}
               mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
-              onClick={() => alert(`게시글 ${data.id}로 넘어가는 navigate 해야함`)}
+              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>
         ));

@@ -4,14 +4,22 @@ import { useNavigate } from "react-router-dom";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import onboardingImg from "@asset/image/image 1730.png";
-import { validateNickname } from "@page/onboarding/index/util/validateNickname";
+import { validateNickname } from "@shared/util/validateNickname";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
+import nicknameCoco from "@asset/image/nicknameCoco.png";
+import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
 
-const Nickname = () => {
+interface NicknamePros {
+  setStep: React.Dispatch<React.SetStateAction<number>>;
+}
+
+const Nickname = ({ setStep }: NicknamePros) => {
   // 상태 하나로 관리
   const [nickname, setNickname] = useState("");
+
+  // api 참 거짓을 반환
+  const { data: isExistNickname } = useCheckNicknameGet(nickname);
 
   // 닉네임 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,6 +28,12 @@ const Nickname = () => {
 
   // 유효성 검사 결과
   const validationMessages = nickname ? validateNickname(nickname) : [];
+
+  // 중복 검사 메시지 추가
+  if (isExistNickname?.isExistNickname) {
+    validationMessages.push("이 닉네임은 누군가 사용 중이에요.");
+  }
+
   const isValid = nickname && validationMessages.length === 0;
 
   // TextField 상태
@@ -33,7 +47,7 @@ const Nickname = () => {
 
   // 다음 버튼
   const handleNext = () => {
-    console.log("다음 pr에서 구현할래욥.");
+    setStep(2);
   };
 
   return (
@@ -41,7 +55,7 @@ const Nickname = () => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div>
-          <img src={onboardingImg} alt="onboarding-character" className={styles.imgStyle} />
+          <img src={nicknameCoco} alt="onboarding-character" className={styles.imgStyle} />
           <Title text={ONBOARDING_GUIDE.nickname.title} />
           <Docs text={ONBOARDING_GUIDE.nickname.docs} />
         </div>
@@ -53,6 +67,7 @@ const Nickname = () => {
             value={nickname}
             onChange={handleChange}
             placeholder="닉네임을 입력해주세요."
+            isDelete={false}
           />
           <div className={styles.errorLayout}>
             {validationMessages.map((message) => (

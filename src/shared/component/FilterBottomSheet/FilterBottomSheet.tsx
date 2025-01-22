@@ -5,6 +5,7 @@ import CategoryContent from "./CategoryContent/CategoryContent";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip";
 import { CategoryType, SelectedChips, useFilterStore } from "@store/filter";
+import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById";
 
 const categories: { id: CategoryType; label: string }[] = [
   { id: "kind", label: "종류" },
@@ -14,7 +15,7 @@ const categories: { id: CategoryType; label: string }[] = [
 
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
 const FilterBottomSheet = () => {
-  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips } = useFilterStore();
+  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips, categoryData } = useFilterStore();
 
   const isSelectedCategory = (cate: CategoryType): boolean => {
     return cate === category;
@@ -35,7 +36,6 @@ const FilterBottomSheet = () => {
           <div className={styles.selectedZone}>
             {Object.entries(selectedChips).map(([key, ids]) =>
               (ids as number[]).map((id) => {
-                const categoryData = useFilterStore.getState().categoryData;
                 const keyMap: Record<keyof SelectedChips, CategoryType> = {
                   breedId: "kind",
                   diseaseIds: "disease",
@@ -43,23 +43,7 @@ const FilterBottomSheet = () => {
                 } as const;
 
                 const category = keyMap[key as keyof SelectedChips];
-
-                // 중첩 데이터 탐색
-                const getNameById = (id: number, category: CategoryType): string | undefined => {
-                  if (category === "kind") {
-                    return categoryData.kind.find((item) => item.id === id)?.name;
-                  }
-                  if (category === "disease") {
-                    return categoryData.disease.flatMap((group) => group.diseases).find((item) => item.id === id)?.name;
-                  }
-                  if (category === "symptoms") {
-                    return categoryData.symptoms.flatMap((group) => group.symptoms).find((item) => item.id === id)
-                      ?.name;
-                  }
-                  return undefined;
-                };
-
-                const name = getNameById(id, category);
+                const name = getSelectedChipNamesById(id, category, categoryData);
 
                 return (
                   <Chip

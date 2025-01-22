@@ -1,12 +1,29 @@
 import axios from "axios";
 
-const getAccessToken = (): string | null => {
+export const getAccessToken = (): string | null => {
   const user = localStorage.getItem("user");
   if (user) {
-    const userObj = JSON.parse(user);
-    return userObj || "";
+    try {
+      const userObj = JSON.parse(user);
+      return userObj.accessToken || "";
+    } catch (error) {
+      console.log(error);
+    }
   }
   return "";
+};
+
+export const isLoggedIn = (): boolean => {
+  const user = localStorage.getItem("user");
+  if (user) {
+    try {
+      const userObj = JSON.parse(user);
+      if (userObj.accessToken) return true;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+  return false;
 };
 
 export const api = axios.create({
@@ -28,6 +45,10 @@ export const get = <T>(...args: Parameters<typeof api.get>) => {
 
 export const post = <T>(...args: Parameters<typeof api.post>) => {
   return api.post<T>(...args);
+};
+
+export const patch = <T>(...args: Parameters<typeof api.patch>) => {
+  return api.patch<T>(...args);
 };
 
 export const put = <T>(...args: Parameters<typeof api.put>) => {

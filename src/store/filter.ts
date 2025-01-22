@@ -12,6 +12,7 @@ export interface FilterItem {
   name: string;
 }
 export interface SymptomItem extends FilterItem {
+  [x: number]: string | undefined;
   symptoms: FilterItem[];
 }
 export interface DiseaseItem extends FilterItem {
@@ -24,7 +25,7 @@ export type CategorySymptom = SymptomItem[];
 export type CategoryDisease = DiseaseItem[];
 
 // 전체 categoryData의 타입
-interface CategoryData {
+export interface CategoryData {
   kind: CategoryKind;
   symptoms: CategorySymptom;
   disease: CategoryDisease;
@@ -55,10 +56,7 @@ interface FilterState {
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
-  setCategoryData: (
-    category: CategoryType,
-    data: CategoryKind | CategorySymptom | CategoryDisease
-  ) => void;
+  setCategoryData: (category: CategoryType, data: CategoryKind | CategorySymptom | CategoryDisease) => void;
 }
 
 export const useFilterStore = create<FilterState>((set) => ({

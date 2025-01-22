@@ -7,7 +7,8 @@ export const container = style([
   {
     display: "flex",
     justifyContent: "space-between",
-    width: "37.5rem",
+    width: "100%",
+    maxWidth: "76.8rem",
     height: "8rem",
     padding: "1.2rem 3.2rem 0 3.2rem",
   },
@@ -16,12 +17,12 @@ export const container = style([
 export const navItem = recipe({
   base: {
     display: "flex",
-    width: "5.6rem",
     flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
     padding: "0 1.2rem",
     whiteSpace: "nowrap",
+    width: "7.2rem",
   },
   variants: {
     state: {
@@ -32,8 +33,21 @@ export const navItem = recipe({
         color: color.gray.gray500,
       },
     },
+    type: {
+      community: {
+        width: "7.2rem",
+      },
+      nav: {
+        width: "5.6rem",
+      },
+    },
   },
   defaultVariants: {
     state: false,
+    type: "nav",
   },
 });
+
+export const imgContainer = {
+  width: "7.2rem",
+};

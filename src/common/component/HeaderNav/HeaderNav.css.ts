@@ -1,4 +1,5 @@
 import { font, color } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
 export const headerItem = recipe({
@@ -29,7 +30,7 @@ export const headerItem = recipe({
 
       // 아이콘 + 타이틀없음 + 아이콘
       noTitle: {
-        gridTemplateColumns: "repeat(2, 1fr)",
+        // gridTemplateColumns: "repeat(2, 1fr)",
       },
     },
   },
@@ -59,6 +60,10 @@ export const btnItem = recipe({
       right: { justifySelf: "end" },
     },
   },
+});
+
+export const noWrap = style({
+  whiteSpace: "nowrap",
 });
 
 export type HeaderItemVariant = RecipeVariants<typeof headerItem>;

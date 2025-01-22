@@ -1,5 +1,5 @@
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
-import { color, font } from "@style/styles.css.ts";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   wrapper: recipe({
@@ -24,6 +24,13 @@ export const styles = {
           padding: "1.2rem",
         },
         centerPlaceholder: { maxWidth: "12rem" },
+        search: {
+          width: "100%",
+          marginLeft: "2rem",
+          border: `0.1rem solid ${semanticColor.line.strong}`,
+          backgroundColor: semanticColor.neutral.normal,
+          boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
+        },
       },
       active: {
         true: {},
@@ -45,6 +52,7 @@ export const styles = {
       display: "flex",
       alignItems: "center",
       gap: "1rem",
+      width: "inherit",
     },
   }),
   input: recipe({
@@ -54,6 +62,8 @@ export const styles = {
         letterSpacing: "-0.28px",
         fontWeight: 500,
         height: "auto",
+        minWidth: "100%",
+
         maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",
@@ -82,6 +92,7 @@ export const styles = {
           },
         },
         error: {},
+        search: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
       },
     },

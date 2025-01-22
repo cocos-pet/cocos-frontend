@@ -1,46 +1,37 @@
 import * as styles from "./Comment.css";
-import { IcEllipses, IcMessage } from "@asset/svg";
+import { IcMessage } from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
-
-export interface SubComment {
-  id: number;
-  profileImage: string;
-  nickname: string;
-  breed: string;
-  petAge: number;
-  content: string;
-  createdAt: string;
-  isWriter: boolean;
-  mentionedNickname: string;
-}
-
-export interface CommentType {
-  id: number;
-  profileImage: string;
-  nickname: string;
-  breed: string;
-  petAge: number;
-  content: string;
-  createdAt: string;
-  isWriter: boolean;
-  subComments: SubComment[]; // 대댓글 배열
-}
+import { commentGetResponseCommentType } from "@api/domain/community/post";
+import { useDeleteComment } from "@api/domain/community/post/hook.ts";
+import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
+import { useEffect, useState } from "react";
 
 interface CommentProps {
-  comment: CommentType;
-  onReplyClick?: (id: number) => void;
-  onDelete: () => void;
+  comment: commentGetResponseCommentType;
+  onReplyClick?: (id: number | undefined) => void;
 }
 
-const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
+const Comment = ({ comment, onReplyClick }: CommentProps) => {
   const handleReplyClick = () => {
     if (onReplyClick) {
       onReplyClick(comment.id);
     }
   };
+
+  if (!comment) return;
+  const { setContentsType } = useCategoryFilterStore();
+  const [isOpen, setOpen] = useState(false);
+  const { mutate: deleteComment } = useDeleteComment(comment.id);
   const { openModalId, setOpenModalId } = useModalStore();
+
+  const onDeleteClick = (id: number) => {
+    deleteComment(id);
+    setOpen(false);
+  };
 
   return (
     <div className={styles.commentItem}>
@@ -55,14 +46,17 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
             <span className={styles.nickname}>{comment.nickname}</span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt.toLocaleString()}
+              {comment.createdAt ? formatTime(comment.createdAt) : ""}
             </span>
           </div>
           <MoreModal
-            onDelete={onDelete}
+            onDelete={() => {
+              setOpen(true);
+              setContentsType("comment");
+            }}
             iconSize={24}
-            isOpen={openModalId === comment.id}
-            onToggleModal={() => setOpenModalId(comment.id)}
+            isOpen={openModalId === `comment-${comment.id}`}
+            onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
           />
         </div>
 
@@ -76,11 +70,25 @@ const Comment = ({ comment, onReplyClick, onDelete }: CommentProps) => {
       </div>
 
       {/* 대댓글 리스트 */}
-      {comment.subComments.length > 0 && (
-        <div>
-          <SubCommentList subComments={comment.subComments} />
+      {comment.subComments && (
+        <div style={{ width: "100%" }}>
+          <SubCommentList
+            subComments={comment.subComments}
+            onCommentDelete={onDeleteClick}
+          />
         </div>
       )}
+      <SimpleBottomSheet
+        isOpen={isOpen}
+        content={"댓글을 정말 삭제할까요?"}
+        handleClose={() => setOpen(false)}
+        leftOnClick={() => setOpen(false)}
+        leftText={"취소"}
+        rightOnClick={() => {
+          onDeleteClick(comment.id as number);
+        }}
+        rightText={"삭제할게요"}
+      />
     </div>
   );
 };

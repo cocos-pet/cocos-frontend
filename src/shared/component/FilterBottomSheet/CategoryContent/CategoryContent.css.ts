@@ -3,10 +3,10 @@ import { style } from "@vanilla-extract/css";
 export const styles = {
   kindWrapper: style({
     display: "flex",
-    padding: "16px 0px",
+    padding: "1.6rem 0rem",
     flexDirection: "column",
     alignItems: "flex-start",
-    gap: "8px",
+    gap: "0.8rem",
   }),
 
   symptomsWrapper: style({
