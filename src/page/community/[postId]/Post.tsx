@@ -242,7 +242,7 @@ const PostDetail = () => {
         </div>
       </div>
       <Divider size={"large"} />
-      <div className={styles.container}>
+      <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
           댓글{" "}
           <span className={styles.commentCount}>
@@ -254,23 +254,8 @@ const PostDetail = () => {
           onCommentReplyClick={onCommentReplyClick}
         />
       </div>
-      <div className={styles.commentContainer}>
-        <TextField
-          mentionedNickname={
-            parsedComment.mention ? `@${parsedComment.mention} ` : ``
-          }
-          onChange={onChange}
-          value={parsedComment.text}
-          onClearClick={onClearClick}
-          placeholder={"댓글을 입력해주세요."}
-        />
-        {parsedComment.text && (
-          <button className={styles.upload} onClick={onSubmitComment}>
-            올리기
-          </button>
-        )}
-      </div>
-      <div className={styles.commentContainer}>
+
+      <div className={styles.textContainer}>
         <TextField
           mentionedNickname={
             parsedComment.mention ? `@${parsedComment.mention} ` : ``

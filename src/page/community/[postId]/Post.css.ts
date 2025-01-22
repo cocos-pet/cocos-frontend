@@ -7,7 +7,6 @@ export const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "1.2rem",
-    marginBottom: "9.2rem",
   }),
   icon: style({
     width: "2.4rem",
@@ -102,14 +101,18 @@ export const styles = {
     },
   ]),
   commentContainer: style({
+    padding: "1.6rem 2rem",
     display: "flex",
-    flexDirection: "row",
-    alignItems: "center",
-    padding: "1.2rem 2rem 4rem 2rem",
-    background: color.gray.gray000,
+    flexDirection: "column",
+    gap: "1.2rem",
+    marginBottom: "7.2rem",
+  }),
+  textContainer: style({
     position: "fixed",
     bottom: 0,
     width: "100%",
+    padding: "1.2rem 2rem 4rem 2rem",
+    background: color.gray.gray000,
   }),
   upload: style([
     font.body01,
