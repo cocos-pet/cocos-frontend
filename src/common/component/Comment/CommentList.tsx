@@ -6,10 +6,6 @@ interface CommentListProps {
 }
 
 const CommentList = ({ comments }: CommentListProps) => {
-  const onDelete = (id?: number) => {
-    // TODO :  댓글 삭제
-  };
-
   const onReplyClick = (id?: number) => {
     // TODO : 대댓글 작성
   };
@@ -20,7 +16,6 @@ const CommentList = ({ comments }: CommentListProps) => {
         <Comment
           key={comment.id}
           comment={comment}
-          onDelete={() => onDelete(comment.id)}
           onReplyClick={() => onReplyClick(comment.id)}
         />
       ))}

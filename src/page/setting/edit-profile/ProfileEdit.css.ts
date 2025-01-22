@@ -3,7 +3,7 @@ import { style } from "@vanilla-extract/css";
 
 export const profileEditWrapper = style({
   display: "flex",
-  width: "37.5rem",
+  width: "100%",
   paddingTop: "2rem",
   flexDirection: "column",
   justifyContent: "center",
@@ -48,11 +48,19 @@ export const buttonWrapper = style({
   bottom: "0",
 
   display: "flex",
-  width: "37.5rem",
+  width: "100%",
+  maxWidth: "76.8rem",
   height: "8.8rem",
   padding: "1.2rem ",
   flexDirection: "column",
   alignItems: "flex-start",
   gap: "1rem",
   flexShrink: "0",
+});
+
+export const profileEditContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 });
