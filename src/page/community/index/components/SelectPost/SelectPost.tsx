@@ -7,6 +7,7 @@ import Content from "@common/component/Content/Content";
 import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { postPostFiltersResponse } from "@api/domain/community/search";
 import { PATH } from "@route/path";
+import { formatTime } from "@shared/util/formatTime";
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
@@ -82,7 +83,7 @@ const PostList = () => {
               commentCnt={post.commentCount}
               postImage={post.image}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
-              timeAgo={post.updatedAt}
+              timeAgo={formatTime(post.updatedAt as string)}
               category={post.category}
             />
           ))
