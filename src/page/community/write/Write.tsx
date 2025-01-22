@@ -1,9 +1,13 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
 import {
+  IcCocosM,
   IcDeleteBlack,
+  IcHealing,
+  IcHospital,
   IcImagePlus,
   IcRightArror,
+  IcSymptom,
   IcTest,
   IcUp,
 } from "@asset/svg";
@@ -26,11 +30,11 @@ import ImageCover from "@page/community/component/ImageCover/ImageCover.tsx";
 import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 
 interface writeProps {
-  category: string;
+  categoryId: number | undefined;
   title: string;
   content: string;
   image: string[];
@@ -42,18 +46,56 @@ interface writeProps {
 }
 
 const DropDownItems = [
-  { icon: <IcUp width={20} />, label: "증상·질병" },
-  { icon: <IcTest width={20} />, label: "병원고민" },
-  { icon: <IcRightArror width={20} />, label: "일상·치유" },
+  {
+    icon: <IcSymptom width={20} />,
+    label: "증상·질병",
+    value: 1,
+    english: "symptom",
+  },
+  {
+    icon: <IcHospital width={20} />,
+    label: "병원고민",
+    value: 2,
+    english: "hospital",
+  },
+  {
+    icon: <IcHealing width={20} />,
+    label: "일상·치유",
+    value: 3,
+    english: "healing",
+  },
+  {
+    icon: <IcCocosM width={20} />,
+    label: "코코스매거진",
+    value: 4,
+    english: "cocos",
+  },
 ];
 
 const Write = () => {
+  const [searchParams] = useSearchParams(); // 쿼리 문자열 파싱
+  const category = searchParams.get("category"); // category 값 가져오기
+
+  useEffect(() => {
+    if (category) {
+      const matchedItem = DropDownItems.find(
+        (item) => item.english === category
+      );
+      if (matchedItem) {
+        setParams((prevParams) => ({
+          ...prevParams,
+          categoryId: matchedItem ? matchedItem.value : undefined,
+        }));
+      }
+    }
+  }, []);
+
   const navigate = useNavigate();
   const onBackClick = () => {
     navigate(PATH.COMMUNITY.ROOT);
   };
   const [params, setParams] = useState<writeProps>({
-    category: "",
+    categoryId: undefined,
     title: "",
     content: "",
     image: [],
@@ -63,6 +105,7 @@ const Write = () => {
       symptomIds: [],
     },
   });
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
@@ -95,7 +138,11 @@ const Write = () => {
   }, [isOpen]);
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChangeValue("category", e.target.value);
+    const selectedValue = DropDownItems.find(
+      (item) => item.label === e.target.value
+    );
+
+    onChangeValue("categoryId", selectedValue.value);
     if (!isDropDownOpen) closeDropDown();
   };
 
@@ -105,12 +152,12 @@ const Write = () => {
 
   const onChangeValue = (
     target: string,
-    value: string | React.ChangeEvent<HTMLInputElement>
+    value: string | number | undefined | React.ChangeEvent<HTMLInputElement>
   ) => {
-    setParams({
-      ...params,
+    setParams((prevParams) => ({
+      ...prevParams,
       [target]: value,
-    });
+    }));
   };
 
   // 이미지 추가
@@ -137,13 +184,22 @@ const Write = () => {
     fileInputRef.current?.click();
   };
 
-  const getDropdownIcon = (category: string) => {
-    const selectedItem = DropDownItems.find((item) => item.label === category);
-    return selectedItem ? selectedItem.icon : null;
+  const getDropdownIcon = (categoryId: number | undefined) => {
+    const selectedItem = DropDownItems.find(
+      (item) => categoryId === item.value
+    );
+    console.log(selectedItem ? selectedItem.icon : undefined);
+    return selectedItem ? selectedItem.icon : undefined;
+  };
+
+  const getDropdownValue = (categoryId: number | undefined) => {
+    const selectedItem = DropDownItems.find(
+      (item) => categoryId === item.value
+    );
+    return selectedItem ? selectedItem.label : "";
   };
 
   useEffect(() => {
-    // selectedChips의 값을 params에 반영
     setParams((prevParams) => ({
       ...prevParams,
       selectedChips: {
@@ -155,8 +211,12 @@ const Write = () => {
     }));
   }, [selectedChips]);
 
+  useEffect(() => {
+    console.log(getDropdownIcon(params.categoryId));
+  }, [params]);
+
   const isAllParamsFilled =
-    params.category &&
+    params.categoryId &&
     params.title &&
     params.content &&
     params.selectedChips.breedId.length > 0;
@@ -173,13 +233,13 @@ const Write = () => {
           {/* 제목 영역 */}
           <WriteInputSection title={"제목"}>
             <TextField
-              leftIcon={getDropdownIcon(params.category)}
+              leftIcon={getDropdownIcon(params.categoryId)}
               icon={<IcRightArror width={20} />}
               placeholder={"게시물 선택하기"}
               onChange={onTextFieldChange}
               onClick={onTextFieldClick}
               isDelete={false}
-              value={params.category}
+              value={getDropdownValue(params.categoryId)}
             />
             <DropDown
               isOpen={isDropDownOpen}
@@ -192,9 +252,6 @@ const Write = () => {
           <WriteInputSection title={"글 작성"}>
             <TextField
               placeholder={"제목을 입력해주세요"}
-              onClick={() => {
-                console.log("click");
-              }}
               state={"write"}
               value={params.title}
               onClearClick={() => onChangeValue("title", "")}
