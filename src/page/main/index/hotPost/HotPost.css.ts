@@ -5,8 +5,7 @@ export const hotPostContainer = style({
   display: "flex",
   width: "100%",
   flexDirection: "column",
-  padding: "2rem",
-  marginTop: "3rem",
+  padding: "3.2rem 2rem 3.2rem 2rem",
 });
 
 export const p = style([
