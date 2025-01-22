@@ -253,22 +253,38 @@ const PostDetail = () => {
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
         />
-        <div className={styles.commentContainer}>
-          <TextField
-            mentionedNickname={
-              parsedComment.mention ? `@${parsedComment.mention} ` : ``
-            }
-            onChange={onChange}
-            value={parsedComment.text}
-            onClearClick={onClearClick}
-            placeholder={"댓글을 입력해주세요."}
-          />
-          {parsedComment.text && (
-            <button className={styles.upload} onClick={onSubmitComment}>
-              올리기
-            </button>
-          )}
-        </div>
+      </div>
+      <div className={styles.commentContainer}>
+        <TextField
+          mentionedNickname={
+            parsedComment.mention ? `@${parsedComment.mention} ` : ``
+          }
+          onChange={onChange}
+          value={parsedComment.text}
+          onClearClick={onClearClick}
+          placeholder={"댓글을 입력해주세요."}
+        />
+        {parsedComment.text && (
+          <button className={styles.upload} onClick={onSubmitComment}>
+            올리기
+          </button>
+        )}
+      </div>
+      <div className={styles.commentContainer}>
+        <TextField
+          mentionedNickname={
+            parsedComment.mention ? `@${parsedComment.mention} ` : ``
+          }
+          onChange={onChange}
+          value={parsedComment.text}
+          onClearClick={onClearClick}
+          placeholder={"댓글을 입력해주세요."}
+        />
+        {parsedComment.text && (
+          <button className={styles.upload} onClick={onSubmitComment}>
+            올리기
+          </button>
+        )}
       </div>
     </>
   );

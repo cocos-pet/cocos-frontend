@@ -7,6 +7,7 @@ export const styles = {
     display: "flex",
     flexDirection: "column",
     gap: "1.2rem",
+    marginBottom: "9.2rem",
   }),
   icon: style({
     width: "2.4rem",
@@ -104,6 +105,11 @@ export const styles = {
     display: "flex",
     flexDirection: "row",
     alignItems: "center",
+    padding: "1.2rem 2rem 4rem 2rem",
+    background: color.gray.gray000,
+    position: "fixed",
+    bottom: 0,
+    width: "100%",
   }),
   upload: style([
     font.body01,
