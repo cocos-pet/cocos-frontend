@@ -15,7 +15,6 @@ import { PATH } from "@route/path.ts";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
-  COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
   COMMENTS_POST_QUERY_KEY: (postId: number) => ["commentPost", postId],
   SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => [
     "subCommentPost",
@@ -101,10 +100,12 @@ export const useCommentPost = (postId: number) => {
   return useMutation({
     mutationKey: POST_QUERY_KEY.COMMENTS_POST_QUERY_KEY(postId),
     mutationFn: (content: { content: string }) => {
-      queryClient.invalidateQueries({
-        queryKey: POST_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
-      });
       return postComment(postId, content.content);
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
     },
   });
 };
@@ -126,7 +127,7 @@ export const useSubCommentPost = (commentId: number, postId: number) => {
     },
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({
-        queryKey: POST_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+        queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
       });
     },
   });
