@@ -1,16 +1,21 @@
 import Chip from "@common/component/Chip/Chip";
-import { TOTO, BodyPart } from "@page/registerPet/index/component/petHealth/symptom/SymStep2Constant";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import * as styles from "@page/registerPet/index/component/petHealth/disease/Step2.css";
+import { symptomGetResponse } from "@api/domain/registerPet/symptom";
 
 const SymStep2 = ({
+  data,
   selectedSymptom,
   onSymptomSelection,
 }: {
+  data: symptomGetResponse["data"];
   selectedSymptom: number[];
   onSymptomSelection: (diseaseId: number) => void;
 }) => {
+  if (!data || !data.bodies) {
+    return null;
+  }
   return (
     <>
       <div className={styles.title}>
@@ -19,19 +24,24 @@ const SymStep2 = ({
       </div>
 
       <div className={styles.contentLayout}>
-        {TOTO.data.bodies.map((body: BodyPart) => (
+        {data?.bodies.map((body) => (
           <div key={body.id} className={styles.selectedBody}>
             <span>{body.name}</span>
             <div className={styles.chipLayout}>
-              {body.symptom.map((symptom) => (
-                <Chip
-                  key={symptom.id}
-                  label={symptom.name}
-                  isSelected={selectedSymptom.includes(symptom.id)}
-                  onClick={() => onSymptomSelection(symptom.id)}
-                  disabled={selectedSymptom.length >= 7 && !selectedSymptom.includes(symptom.id)} // 7개 선택 시 비활성화
-                />
-              ))}
+              {body.symptoms?.map((symptom) => {
+                if (!symptom?.id || !symptom?.name) return null;
+                return (
+                  <Chip
+                    key={symptom.id}
+                    label={symptom.name}
+                    isSelected={selectedSymptom.includes(symptom.id)}
+                    onClick={() => {
+                      if (symptom.id) onSymptomSelection(symptom.id);
+                    }}
+                    disabled={selectedSymptom.length >= 7 && !selectedSymptom.includes(symptom.id)} // 7개 선택 시 비활성화
+                  />
+                );
+              })}
             </div>
           </div>
         ))}
