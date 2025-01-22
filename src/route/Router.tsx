@@ -7,11 +7,13 @@ import REGISTER_PET_ROUTES from "./RegisterPetRoutes";
 import PROFILE_ROUTES from "./ProfileRoutes";
 import Test from "@page/test/Test";
 import SETTING_ROUTES from "./Setting";
+import RedirectKakao from "@auth/RedirectKakao";
+import Login from "@page/login/Login";
 
 //children은 Outlet에서 사용하는 방식 (레이아웃 지정해야할 때)
 const router = createBrowserRouter([
   { path: "/", element: <>just home</> },
-  { path: "/test", element: <Test /> },
+  { path: "/login", element: <Login /> },
   ...ONBOARDING_ROUTES,
   ...MAIN_ROUTES,
   ...COMMUNITY_ROUTES,
@@ -19,6 +21,8 @@ const router = createBrowserRouter([
   ...REGISTER_PET_ROUTES,
   ...PROFILE_ROUTES,
   ...SETTING_ROUTES,
+  { path: "/auth", element: <RedirectKakao /> },
+  { path: "/test", element: <Test /> },
 ]);
 
 export default router;
