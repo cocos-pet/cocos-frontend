@@ -68,6 +68,10 @@ export const styles = {
     display: "flex",
     flexDirection: "row",
     gap: "0.4rem",
+    overflow: "auto",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
   }),
   countWrap: style({
     padding: "0.8rem 0",
