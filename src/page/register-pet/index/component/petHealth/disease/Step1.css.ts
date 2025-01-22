@@ -15,7 +15,6 @@ export const contentWrapper = style({
   alignItems: "center",
   gap: "0.8rem 2rem",
   flexWrap: "wrap",
-  width: "28.4rem",
   margin: "0 4.55rem",
 });
 
