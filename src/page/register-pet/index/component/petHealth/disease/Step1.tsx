@@ -45,7 +45,7 @@ const Step1 = ({ selectedIds, data, onBodyPartSelection }: CombinedStepProps) =>
               }}
               type="button"
             >
-              <img src={body.image} width={56} height={56} alt="body-img" />
+              <img src={body.image} height={56} alt="body-img" />
             </button>
             <p>{body.name}</p>
           </div>

@@ -1,6 +1,5 @@
 import { useSearchParams, useNavigate } from "react-router-dom";
 import * as styles from "./Category.css";
-import { postData } from "@shared/constant/postData";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { Icfilter, IcLeftarrow, IcSearch, Icfilteron } from "@asset/svg";
@@ -8,12 +7,10 @@ import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 import { useFilterStore } from "@store/filter";
 import { PATH } from "@route/path";
-
-interface CategoryItem {
-  id: number;
-  name: string;
-  image: string;
-}
+import { formatTime } from "@shared/util/formatTime";
+import { usePostPostFilters } from "@api/domain/community/search/hook";
+import { useCallback, useEffect, useState } from "react";
+import { components } from "@type/schema";
 
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
@@ -25,14 +22,43 @@ const categoryMapping: { [key: string]: string } = {
 
 const Category = () => {
   const [searchParams] = useSearchParams();
-  const type = searchParams.get("type"); // 쿼리 파라미터에서 type 가져오기
+  const type = searchParams.get("type");
+  const typeId = searchParams.get("id");
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
+
+  const { mutate: fetchPosts } = usePostPostFilters();
+
+  const fetchPostData = useCallback(() => {
+    if (!typeId) return;
+    fetchPosts(
+      { categoryId: Number(typeId) },
+      {
+        onSuccess: (data) => {
+          setPosts(data);
+        },
+      },
+    );
+  }, [fetchPosts, typeId]);
+
+  useEffect(() => {
+    fetchPostData();
+  }, [fetchPostData]);
+
   const navigate = useNavigate();
 
   const { toggleOpen, selectedChips } = useFilterStore();
   const isFilterOn =
     !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
 
-  const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
+  // const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
+
+  const handleGoBack = () => {
+    navigate(PATH.COMMUNITY.ROOT);
+  };
+
+  const handleGoSearch = () => {
+    navigate(PATH.COMMUNITY.SEARCH);
+  };
 
   // 유효하지 않은 타입 처리
   if (!type || !validTypes.includes(type)) {
@@ -44,7 +70,7 @@ const Category = () => {
   }
 
   // 게시글이 없는 경우 처리
-  if (filteredPosts.length === 0) {
+  if (posts.length === 0) {
     return (
       <div>
         <h1>게시글이 없습니다.</h1>
@@ -53,10 +79,15 @@ const Category = () => {
   }
 
   const categoryName = categoryMapping[type] || "알 수 없는 카테고리";
-
   return (
     <div className={styles.categoryContainer}>
-      <HeaderNav leftIcon={<IcLeftarrow />} centerContent={categoryName} rightBtn={<IcSearch />} />
+      <HeaderNav
+        leftIcon={<IcLeftarrow />}
+        centerContent={categoryName}
+        rightBtn={<IcSearch />}
+        onLeftClick={handleGoBack}
+        onRightClick={handleGoSearch}
+      />
 
       {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}
       {type !== "magazine" && (
@@ -68,7 +99,7 @@ const Category = () => {
 
       {/* 게시글 목록 */}
       <div className={styles.postsContainer}>
-        {filteredPosts.map((post) => (
+        {posts.map((post) => (
           <Content
             key={post.id}
             breed={post.breed}
@@ -78,8 +109,8 @@ const Category = () => {
             likeCnt={post.likeCount}
             commentCnt={post.commentCount}
             postImage={post.image}
-            onClick={() => navigate(PATH.COMMUNITY.POST)}
-            timeAgo={post.updatedAt}
+            onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
+            timeAgo={formatTime(post.updatedAt as string)}
             category={post.category}
           />
         ))}

@@ -47,3 +47,7 @@ export const navItem = recipe({
     type: "nav",
   },
 });
+
+export const imgContainer = {
+  width: "7.2rem",
+};

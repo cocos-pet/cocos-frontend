@@ -1,7 +1,7 @@
 import Community from "@page/community/index/Community";
 import Write from "@page/community/write/Write";
 import { PATH } from "@route/path.ts";
-import PostDetail from "@page/community/[postId]/Post.tsx";
+import PostDetail from "@page/community/[postId]/PostDetail";
 import SearchDone from "@page/community/search/done/SearchDone.tsx";
 import Search from "@page/community/search/index/Search.tsx";
 import Category from "@page/community/category/Category.tsx";

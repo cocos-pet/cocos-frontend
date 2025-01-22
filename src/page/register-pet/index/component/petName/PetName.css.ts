@@ -4,7 +4,8 @@ export const layout = style({
   position: "absolute",
   top: "8rem",
 
-  minWidth: "37.1rem",
+  width: "100%",
+  maxWidth: "76.8rem",
 
   display: "flex",
   flexDirection: "column",

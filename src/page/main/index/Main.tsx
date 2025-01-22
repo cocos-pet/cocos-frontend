@@ -21,7 +21,7 @@ const Main = () => {
   const navigate = useNavigate();
 
   const handleSearchClick = () => {
-    navigate(PATH.SEARCH.ROOT);
+    navigate(PATH.COMMUNITY.SEARCH);
   };
 
   const user = {

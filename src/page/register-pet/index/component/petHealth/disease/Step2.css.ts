@@ -23,7 +23,7 @@ export const chipLayout = style({
   display: "flex",
   flexWrap: "wrap",
   gap: "1.2rem 0.4rem",
-  width: "33.5rem",
+  maxWidth: "76.8rem",
 });
 
 export const selectedBody = style([
