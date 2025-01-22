@@ -6,6 +6,7 @@ import { createVar } from "@vanilla-extract/css";
 export const progressSizeVar = createVar();
 
 export const barStyle = style({
+  maxWidth: "76.8rem",
   overflow: "hidden",
   position: "fixed",
   top: "4rem",
