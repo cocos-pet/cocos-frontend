@@ -9,6 +9,8 @@ import Step2 from "@page/register-pet/index/component/petHealth/disease/Step2";
 import SymStep1 from "@page/register-pet/index/component/petHealth/symptom/SymStep1";
 import SymStep2 from "@page/register-pet/index/component/petHealth/symptom/SymStep2";
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useDiseaseGet } from "@api/domain/registerPet/disease/hook";
+import { useSymptomGet } from "@api/domain/registerPet/symptom/hook";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;

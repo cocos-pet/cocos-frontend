@@ -2,7 +2,7 @@ import * as styles from "@page/register-pet/index/component/petHealth/disease/St
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
-import { ItemType, contentItem } from "@page/registerPet/index/component/petHealth/disease/Step1.css";
+import { ItemType, contentItem } from "@page/register-pet/index/component/petHealth/disease/Step1.css";
 
 interface SymStepProps {
   selectedIds: number[];

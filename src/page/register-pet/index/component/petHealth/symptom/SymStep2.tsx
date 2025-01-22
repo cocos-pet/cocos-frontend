@@ -1,5 +1,4 @@
 import Chip from "@common/component/Chip/Chip";
-import { TOTO, BodyPart } from "@page/register-pet/index/component/petHealth/symptom/SymStep2Constant";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import * as styles from "@page/register-pet/index/component/petHealth/disease/Step2.css";
