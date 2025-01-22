@@ -44,8 +44,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
       {content.map((item) => {
         if (type === "community") {
           const communityItem = item as CommunityContent;
-          //여기 naviage 경로 main API 머지되면 다시 설정할 것??? 뭐지 갑자기 생각이 꼬였어요
-          const communityPath = `${PATH.COMMUNITY.CATEGORY}?type=${communityItem.type}`;
+          const communityPath = `${PATH.COMMUNITY.CATEGORY}?type=${communityItem.type}&id=${communityItem.id}`;
 
           return (
             <button
