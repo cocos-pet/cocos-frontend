@@ -888,11 +888,10 @@ export interface components {
         };
         SubCommentContentRequest: {
             /**
-             * Format: int64
-             * @description 언급된 멤버의 아이디 정보입니다.
-             * @example 1
+             * @description 언급된 멤버의 닉네임 정보입니다.
+             * @example nickname
              */
-            mentionedMemberId?: number;
+            nickname?: string;
             /**
              * @description 댓글 내용
              * @example 댓글의 내용입니다.
@@ -1582,14 +1581,12 @@ export interface components {
             breeds?: components["schemas"]["BreedResponse"][];
         };
         BaseResponseBodiesResponse: {
-            [x: string]: never[];
             /** Format: int32 */
             code?: number;
             message?: string;
             data?: components["schemas"]["BodiesResponse"];
         };
         BodiesResponse: {
-            [x: string]: any;
             /** @description 신체 부위 리스트 */
             bodies?: components["schemas"]["BodyResponse"][];
         };

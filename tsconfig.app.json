@@ -33,7 +33,8 @@
       "@shared/*": ["src/shared/*"],
       "@style/*": ["src/style/*"],
       "@type/*": ["src/type/*"],
-      "@store/*": ["src/store/*"]
+      "@store/*": ["src/store/*"],
+      "@auth/*": ["src/auth/*"]
     }
   },
   "include": ["src"]

@@ -1,16 +1,11 @@
 import * as styles from "./Login.css";
 import { IcLeftIcon } from "@asset/svg";
 import { IcoSkeleton } from "@asset/svg";
+import { KAKAO_AUTH_URI } from "@auth/OAuth";
 
-
-interface LoginProps {
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-}
-
-const Login = ({ setStep }: LoginProps) => {
+const Login = () => {
   const handleLogin = () => {
-    // 로그인
-    setStep(1);
+    window.location.href = KAKAO_AUTH_URI; // 상수화
   };
 
   return (
@@ -19,7 +14,7 @@ const Login = ({ setStep }: LoginProps) => {
       <div className={styles.buttonStyle} onClick={handleLogin}>
         <IcLeftIcon width={20} height={20} />
 
-        <span>카카오톡 로그인</span>
+        <button onClick={handleLogin}>카카오톡 로그인</button>
       </div>
     </div>
   );
