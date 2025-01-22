@@ -11,6 +11,7 @@ import {
 } from "@api/domain/community/post";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PATH } from "@route/path.ts";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
