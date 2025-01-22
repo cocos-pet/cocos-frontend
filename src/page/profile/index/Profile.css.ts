@@ -80,7 +80,7 @@ export const userProfileText = style([
 
 export const myPageContentWrapper = style({
   display: "flex",
-  width: "37.5rem",
+  width: "100%",
   minHeight: "30.6rem",
   height: "auto",
 
@@ -102,7 +102,7 @@ export const contentHeaderWrapper = style({
   alignSelf: "stretch",
   borderBottom: `1px solid ${semanticColor.line.strong}`,
 
-  width: "37.5rem",
+  width: "100%",
   height: "5.6rem",
 
   backgroundColor: "white",
@@ -113,7 +113,7 @@ export const contentBody = style({
   flexDirection: "column",
   alignItems: "flexStart",
 
-  width: "33.5rem",
+  width: "90%",
 });
 
 export const nothingContent = style([

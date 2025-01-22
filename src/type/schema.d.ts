@@ -57,6 +57,10 @@ export interface paths {
         };
         get?: never;
         put?: never;
+        /**
+         * 게시글 리스트 조회 API
+         * @description 사용자 게시글을 조회하는 API입니다.
+         */
         post: operations["getPosts"];
         delete?: never;
         options?: never;
@@ -360,7 +364,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/dev/posts/my": {
+    "/api/dev/posts/members": {
         parameters: {
             query?: never;
             header?: never;
@@ -460,7 +464,7 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
-    "/api/dev/comments/my": {
+    "/api/dev/comments/members": {
         parameters: {
             query?: never;
             header?: never;
@@ -468,10 +472,10 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * 나의 댓글&대댓글 조회 API
-         * @description 내가 단 댓글과 대댓글을 조회하는 API입니다.
+         * 사용자 댓글 & 대댓글 조회 API
+         * @description 사용자의 댓글과 대댓글을 조회하는 API입니다.
          */
-        get: operations["getMyComments"];
+        get: operations["getMemberComments"];
         put?: never;
         post?: never;
         delete?: never;
@@ -710,7 +714,7 @@ export interface components {
              * @description 마지막 게시글 생성일
              * @example YYYY-MM-DD~ or null
              */
-            createAt?: string;
+            createdAt?: string;
         };
         BaseResponsePostListResponse: {
             /** Format: int32 */
@@ -806,7 +810,7 @@ export interface components {
             name?: string;
             /**
              * @description 성별
-             * @example F
+             * @example F or M
              * @enum {string}
              */
             gender?: "M" | "F";
@@ -838,7 +842,7 @@ export interface components {
         LoginRequest: {
             /**
              * @description 소셜 플랫폼
-             * @example KAKAO
+             * @example KAKAO or GOOGLE or APPLE
              * @enum {string}
              */
             platform?: "KAKAO";
@@ -884,11 +888,10 @@ export interface components {
         };
         SubCommentContentRequest: {
             /**
-             * Format: int64
-             * @description 언급된 멤버의 아이디 정보입니다.
-             * @example 1
+             * @description 언급된 멤버의 닉네임 정보입니다.
+             * @example nickname
              */
-            mentionedMemberId?: number;
+            nickname?: string;
             /**
              * @description 댓글 내용
              * @example 댓글의 내용입니다.
@@ -910,7 +913,7 @@ export interface components {
             name?: string;
             /**
              * @description 성별
-             * @example F
+             * @example F or M
              * @enum {string}
              */
             gender?: "M" | "F";
@@ -1006,10 +1009,7 @@ export interface components {
             content?: string;
         };
         SearchResponse: {
-            /**
-             * @description 검색 내역
-             * @example 1
-             */
+            /** @description 검색 내역 */
             keywords?: components["schemas"]["KeywordResponse"][];
         };
         BaseResponsePostDetailResponse: {
@@ -1264,7 +1264,7 @@ export interface components {
             petAge?: number;
             /**
              * @description 애완동물 나이
-             * @example 애완동물 성별
+             * @example M or F
              * @enum {string}
              */
             petGender?: "M" | "F";
@@ -1725,7 +1725,7 @@ export interface operations {
             };
         };
         responses: {
-            /** @description OK */
+            /** @description 게시글 리스트 조회 성공 */
             200: {
                 headers: {
                     [name: string]: unknown;
@@ -2277,7 +2277,7 @@ export interface operations {
             };
         };
     };
-    getMyComments: {
+    getMemberComments: {
         parameters: {
             query?: {
                 nickname?: string;

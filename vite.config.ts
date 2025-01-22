@@ -16,6 +16,7 @@ export default defineConfig({
       { find: "@style", replacement: "/src/style" },
       { find: "@type", replacement: "/src/type" },
       { find: "@store", replacement: "/src/store" },
+      { find: "@auth", replacement: "/src/auth" },
     ],
   },
 });

@@ -7,6 +7,7 @@ export const commentItem = style([
     alignItems: "flex-start",
     gap: "0.4rem",
     marginLeft: "4rem",
+    width: "calc(100% - 4rem)",
   },
 ]);
 

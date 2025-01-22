@@ -1,20 +1,7 @@
-import {
-  getBodys,
-  getBreed,
-  getDisease,
-  getPetInfo,
-  getSymptoms,
-  patchPetInfo,
-  PatchPetInfoRequestType,
-} from "./index";
+import { getBodys, getBreed, getDisease, getSymptoms, patchPetInfo, PatchPetInfoRequestType } from "./index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { getAnimal, getMemberInfo } from ".";
-
-const PET_EDIT_USER_QUERY_COMMON_KEY = "petEditInfo";
-
-export const MEMBER_QUERY_KEY = {
-  MEMBER_INFO: () => [PET_EDIT_USER_QUERY_COMMON_KEY, "memeberInfo"],
-};
+import { getAnimal } from ".";
+import { PET_EDIT_USER_QUERY_COMMON_KEY } from "../hook";
 
 export const ANIMAL_QUREY_KEY = {
   ANIMAL_ID: () => ["animalId"],
@@ -35,20 +22,6 @@ export const SYMPTOMS_QUERY_KEY = {
 
 export const DISEASE_QUERY_KEY = {
   DISEASE: (bodyIds: number[]) => ["disease", ...bodyIds],
-};
-
-export const PETINFO_QUERY_KEY = {
-  PET_INFO: (nickname?: string) => [PET_EDIT_USER_QUERY_COMMON_KEY, "petInfo", nickname],
-};
-
-export const useGetMemberInfo = () => {
-  return useQuery({
-    queryKey: MEMBER_QUERY_KEY.MEMBER_INFO(),
-    queryFn: () => {
-      return getMemberInfo();
-    },
-    staleTime: 1000 * 60 * 5,
-  });
 };
 
 export const useGetAnimal = () => {
@@ -92,16 +65,6 @@ export const useGetDisease = (bodyIds: number[]) => {
   return useQuery({
     queryKey: DISEASE_QUERY_KEY.DISEASE(bodyIds),
     queryFn: () => getDisease(bodyIds),
-    staleTime: 1000 * 60 * 10,
-  });
-};
-
-//궁금증 : undefind을 인자로 보내면, 인식을 할까?
-//todo: invaildate 필요(나중에 patch 되면)
-export const useGetPetInfo = (nickname?: string) => {
-  return useQuery({
-    queryKey: PETINFO_QUERY_KEY.PET_INFO(nickname),
-    queryFn: () => getPetInfo(nickname),
     staleTime: 1000 * 60 * 10,
   });
 };

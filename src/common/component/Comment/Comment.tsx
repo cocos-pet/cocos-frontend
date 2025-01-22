@@ -5,6 +5,11 @@ import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetResponseCommentType } from "@api/domain/community/post";
 import { formatTime } from "@shared/util/formatTime.ts";
+import { useDeleteComment } from "@api/domain/community/post/hook.ts";
+import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
+import { useEffect, useState } from "react";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -23,7 +28,16 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
     }
   };
 
+  if (!comment) return;
+  const { setContentsType } = useCategoryFilterStore();
+  const [isOpen, setOpen] = useState(false);
+  const { mutate: deleteComment } = useDeleteComment(comment.id);
   const { openModalId, setOpenModalId } = useModalStore();
+
+  const onDeleteClick = (id: number) => {
+    deleteComment(id);
+    setOpen(false);
+  };
 
   return (
     <div className={styles.commentItem}>
@@ -44,7 +58,10 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
             </span>
           </div>
           <MoreModal
-            onDelete={onDelete}
+            onDelete={() => {
+              setOpen(true);
+              setContentsType("comment");
+            }}
             iconSize={24}
             isOpen={openModalId === `comment-${comment.id}`}
             onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
@@ -62,14 +79,26 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
 
       {/* 대댓글 리스트 */}
       {comment.subComments && (
-        <div>
+        <div style={{ width: "100%" }}>
           <SubCommentList
-            commentId={comment.id}
             subComments={comment.subComments}
+            onCommentDelete={onDeleteClick}
             onSubCommentReplyClick={onCommentReplyClick}
+          
           />
         </div>
       )}
+      <SimpleBottomSheet
+        isOpen={isOpen}
+        content={"댓글을 정말 삭제할까요?"}
+        handleClose={() => setOpen(false)}
+        leftOnClick={() => setOpen(false)}
+        leftText={"취소"}
+        rightOnClick={() => {
+          onDeleteClick(comment.id as number);
+        }}
+        rightText={"삭제할게요"}
+      />
     </div>
   );
 };

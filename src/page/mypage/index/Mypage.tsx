@@ -2,15 +2,16 @@ import { Button } from "@common/component/Button";
 import * as styles from "./Mypage.css";
 import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyPageContent from "./component/MyPageContent/MyPageContent";
-import { IcChevronLeft, IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
+import { IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
 import { useNavigate } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import { PET_PROFILE, USER_PROFILE } from "./constant";
 import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
+import { isLoggedIn } from "@api/index";
+import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -20,6 +21,13 @@ const Mypage = () => {
   const [isRegister, setIsRegister] = useState(true); //todo: 서버로부터 받아와서 하기
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
+  const { isLoading, data: member } = useGetMemberInfo();
+  const { data: petInfo } = useGetPetInfo();
+
+  useEffect(() => {
+    setIsLogin(isLoggedIn());
+  }, []);
+
   const isActiveTab = (tab: ActiveTabType) => {
     return activeTab === tab;
   };
@@ -28,11 +36,12 @@ const Mypage = () => {
     setActiveTab(tab);
   };
 
+  if (isLoading || !member || !petInfo) return;
+
   return (
     <div style={{ position: "relative", height: "auto" }}>
       <span style={{ position: "fixed", top: 0, width: "100%" }}>
         <HeaderNav
-          leftIcon={<IcChevronLeft width={24} height={24} onClick={() => navigate(-1)} />}
           centerContent={"마이페이지"}
           rightBtn={
             <span
@@ -50,17 +59,17 @@ const Mypage = () => {
       <article className={styles.myProfileWrapper}>
         {isLogin ? (
           <div className={styles.loginProfile}>
-            <img className={styles.profileImage} alt="프로필 이미지" src={USER_PROFILE.profileImage} />
-            <span className={styles.userProfileText}>{USER_PROFILE.nickname}</span>
+            <img className={styles.profileImage} alt="프로필 이미지" src={member.profileImage} />
+            <span className={styles.userProfileText}>{member.nickname}</span>
             <Divider size="small" />
 
             {isRegister ? (
               <div className={styles.animalProfileWrapper}>
-                <img className={styles.animalImage} alt="프로필이미지" src={PET_PROFILE.petImage} />
+                <img className={styles.animalImage} alt="프로필이미지" src={petInfo.petImage} />
                 <div className={styles.animalProfileTextWrapper}>
-                  <span className={styles.animalMainText}>{`${PET_PROFILE.breed} | ${PET_PROFILE.petAge} |`}</span>
+                  <span className={styles.animalMainText}>{`${petInfo.breed} | ${petInfo.petAge} |`}</span>
                   <span className={styles.animalSubText}>
-                    {`앓고있는 병 ${PET_PROFILE.diseases.map((disease) => `#${disease.name}`).join(" ")}`}
+                    {`앓고있는 병 ${petInfo.diseases?.map((disease) => `#${disease.name}`).join(" ")}`}
                   </span>
                 </div>
                 <IcChevronRight

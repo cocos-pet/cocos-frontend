@@ -8,20 +8,26 @@ interface SubCommentListProps {
     nickname: string | undefined,
     commentId: number | undefined
   ) => void;
+  onCommentDelete: (id: number) => void;
 }
 
 const SubCommentList = ({
   commentId,
   subComments,
   onSubCommentReplyClick,
+  onCommentDelete,
 }: SubCommentListProps) => {
   return (
     <div>
       {subComments?.map((subComment) => (
         <SubComment
           key={subComment.id}
-          commentId={commentId}
           subComment={subComment}
+          commentId={commentId}
+          onCommentDelete={() => {
+            alert(subComment.id);
+            onCommentDelete(subComment.id as number);
+          }}
           onSubCommentReplyClick={onSubCommentReplyClick}
         />
       ))}

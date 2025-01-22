@@ -18,8 +18,13 @@ export const nothingContent = style([
 
 export const mypagecontent = style({
   paddingTop: "1.6rem",
+  width: "100%",
 });
 
 export const contentWrapper = style({
   marginBottom: "8rem",
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
 });

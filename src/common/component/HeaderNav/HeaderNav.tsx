@@ -2,7 +2,7 @@ import { HeaderItemVariant, headerItem, btnItem, noWrap } from "./HeaderNav.css"
 import React from "react";
 
 interface HeaderNavProps {
-  leftIcon: React.ReactNode;
+  leftIcon?: React.ReactNode;
   centerContent?: React.ReactNode;
   rightBtn?: React.ReactNode;
   onLeftClick?: () => void;

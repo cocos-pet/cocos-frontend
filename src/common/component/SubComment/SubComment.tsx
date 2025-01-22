@@ -1,9 +1,14 @@
 import * as styles from "./SubComment.css";
-import { IcEllipses, IcMessage } from "@asset/svg";
+import { IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 import { formatTime } from "@shared/util/formatTime.ts";
+import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { useState } from "react";
+import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 
 interface SubCommentProps {
   commentId: number | undefined;
@@ -12,20 +17,26 @@ interface SubCommentProps {
     nickname: string | undefined,
     commentId: number | undefined
   ) => void;
+  onReplyClick?: (id: number | undefined) => void;
+  onCommentDelete: () => void;
 }
 
 const SubComment = ({
   commentId,
   subComment,
   onSubCommentReplyClick,
+  onCommentDelete,
 }: SubCommentProps) => {
   const handleReplyClick = () => {
     if (onSubCommentReplyClick) {
       onSubCommentReplyClick(subComment.nickname, commentId);
     }
   };
+  const { mutate: deleteSubComment } = useDeleteSubComment(subComment.id);
+  const { setContentsType, contentsType } = useCategoryFilterStore();
 
   const { openModalId, setOpenModalId } = useModalStore();
+  const [isOpen, setIsOpen] = useState(false);
 
   const renderContent = () => {
     const { content, mentionedNickname } = subComment;
@@ -42,10 +53,6 @@ const SubComment = ({
         {parts.slice(1).join(mention)}
       </>
     );
-  };
-
-  const onDelete = () => {
-    // TODO : 대댓글 삭제
   };
 
   return (
@@ -68,7 +75,10 @@ const SubComment = ({
           </div>
           <MoreModal
             iconSize={24}
-            onDelete={onDelete}
+            onDelete={() => {
+              setContentsType("subComment");
+              setIsOpen(true);
+            }}
             isOpen={openModalId === `subComment-${subComment.id}`}
             onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
           />
@@ -81,6 +91,22 @@ const SubComment = ({
           <p>답글쓰기</p>
         </div>
       </div>
+      <SimpleBottomSheet
+        isOpen={isOpen}
+        content={"대댓글을 정말 삭제할까요?"}
+        handleClose={() => setIsOpen(false)}
+        leftOnClick={() => setIsOpen(false)}
+        leftText={"취소"}
+        rightOnClick={() => {
+          if (contentsType === "subComment") {
+            deleteSubComment();
+          } else {
+            onCommentDelete();
+          }
+          setIsOpen(false);
+        }}
+        rightText={"삭제할게요"}
+      />
     </div>
   );
 };
