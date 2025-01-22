@@ -67,6 +67,7 @@ const Nickname = ({ setStep }: NicknamePros) => {
             value={nickname}
             onChange={handleChange}
             placeholder="닉네임을 입력해주세요."
+            isDelete={false}
           />
           <div className={styles.errorLayout}>
             {validationMessages.map((message) => (

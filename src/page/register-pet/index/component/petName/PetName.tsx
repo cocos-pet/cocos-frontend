@@ -55,6 +55,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
             value={petName}
             onChange={handleChange}
             placeholder="반려동물의 이름을 입력해주세요."
+            isDelete={false}
           />
           <div className={styles.errorLayout}>
             {validationMessages.map((message) => (

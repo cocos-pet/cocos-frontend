@@ -5,10 +5,10 @@ import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "../../../../onboarding/index/common/docs/Docs";
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
-// import { ANIMAL } from "@page/registerPet/index/common/dropDown/constant";
 import DropDown from "@page/register-pet/index/common/dropDown/DropDown";
 import { PetData } from "@page/register-pet/index/RegisterPet";
 import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
+
 // breedItem 타입 정의
 interface BreedItem {
   id: number;
@@ -20,6 +20,7 @@ interface PetIdProps {
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
   petData: PetData;
 }
+
 const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
   const [input, setInput] = useState("");
   const [filteredItems, setFilteredItems] = useState<BreedItem[]>([]);
@@ -28,15 +29,16 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
   const { data } = usePetIdGet(Number(petData.breedId));
 
   if (!data) return null;
+
   const getAllItems = (): BreedItem[] => {
     const breeds = data.data?.breeds || []; // undefined이면 빈 배열 반환
     return breeds.filter((breed): breed is BreedItem => breed.id !== undefined && breed.name !== undefined);
   };
+
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\s+/g, ""); // 모든 공백 제거
     setInput(value);
 
-    const allItems = getAllItems();
     if (value.length > 0) {
       // 입력값과 품종명에서 모든 공백 제거 후 비교
       const filtered = allItems.filter((item) => item.name.replace(/\s+/g, "").includes(value));
@@ -45,6 +47,7 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
       setFilteredItems(allItems); // 입력값이 없으면 전체 품종 목록
     }
   };
+
   const handleDropDownClick = (value: string) => {
     const trimmedValue = value.replace(/\s+/g, ""); // 선택된 값에서 모든 공백 제거
     setInput(trimmedValue);
@@ -54,7 +57,14 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
     }
   };
 
-  const isDropDownOpen = input.length > 0 && filteredItems.length > 0;
+  // 드롭다운 열림 여부 결정
+  const allItems = getAllItems();
+  const isDropDownOpen =
+    input.length > 0 &&
+    filteredItems.length > 0 &&
+    JSON.stringify(filteredItems) !== JSON.stringify(allItems) && // 필터된 품종 목록과 전체 목록이 다르면
+    !filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === input); // 입력값이 선택된 품종과 동일하지 않으면
+
   const isInputValid = filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === input);
 
   const handleGoBack = () => {
