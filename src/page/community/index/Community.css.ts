@@ -39,3 +39,7 @@ export const btnContainer = style({
   display: "flex",
   alignItems: "flex-end",
 });
+
+export const categoryContainer = style({
+  padding: "1.2rem 0rem 1.2rem 0rem",
+});
