@@ -4,6 +4,7 @@ import {
   CATEGORY_SYMPTOM,
   CATEGORY_DISEASE,
 } from "@shared/component/FilterBottomSheet/CategoryContent/constant";
+import { components } from "@type/schema";
 
 // todo: 추후 타입들 분리하기
 // 각 필터 항목의 기본 타입
@@ -56,7 +57,10 @@ interface FilterState {
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
-  setCategoryData: (category: CategoryType, data: CategoryKind | CategorySymptom | CategoryDisease) => void;
+  setCategoryData: (
+    category: CategoryType,
+    data: components["schemas"]["SymptomsOfBodyResponse"][]
+  ) => void;
 }
 
 export const useFilterStore = create<FilterState>((set) => ({

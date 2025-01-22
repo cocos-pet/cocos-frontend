@@ -28,6 +28,11 @@ import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomS
 import { useFilterStore } from "@store/filter.ts";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@route/path.ts";
+import {
+  useGetBodies,
+  useGetDisease,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook.ts";
 
 interface writeProps {
   category: string;
