@@ -50,8 +50,6 @@ const Category = () => {
   const isFilterOn =
     !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
 
-  // const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
-
   const handleGoBack = () => {
     navigate(PATH.COMMUNITY.ROOT);
   };
