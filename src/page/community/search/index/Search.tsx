@@ -4,10 +4,7 @@ import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
-import {
-  useSearchGet,
-  useSearchPost,
-} from "@api/domain/community/search/hook.ts";
+import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
 
 const Search = () => {
   const user = {
@@ -37,7 +34,7 @@ const Search = () => {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      }
+      },
     );
   };
 
@@ -62,7 +59,8 @@ const Search = () => {
   };
 
   const onBackClick = () => {
-    navigate(PATH.COMMUNITY.ROOT);
+    navigate(-1);
+    // navigate(PATH.COMMUNITY.ROOT);
   };
 
   useEffect(() => {

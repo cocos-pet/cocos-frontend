@@ -27,9 +27,7 @@ const SearchDone = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [isFilterActive, setIsFilterActive] = useState(false); // TODO: 필터 활성화 설정 필요
-  const [searchDoneData, setSearchDoneData] = useState<
-    Array<SearchDonePropTypes>
-  >([]);
+  const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
   const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
   const { mutate } = usePostPostFilters();
@@ -53,16 +51,14 @@ const SearchDone = () => {
         onError: (error) => {
           console.error("Search Error:", error);
         },
-      }
+      },
     );
   }, [searchText, selectedChips, mutate]);
 
   // 필터 활성화 여부 계산
   useEffect(() => {
     setIsFilterActive(
-      selectedChips.breedId.length > 0 ||
-        selectedChips.symptomIds.length > 0 ||
-        selectedChips.diseaseIds.length > 0
+      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0,
     );
   }, [selectedChips]);
 
@@ -71,15 +67,16 @@ const SearchDone = () => {
   };
 
   const onTextFieldClick = () => {
-    navigate(PATH.COMMUNITY.SEARCH + `?searchText=${searchText}`);
+    navigate(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
   };
 
   const onBackClick = () => {
-    navigate(PATH.COMMUNITY.ROOT);
+    navigate(-2);
+    //navigate(PATH.COMMUNITY.ROOT);
   };
 
   const onClickPost = (postId: number | undefined) => {
-    navigate(PATH.COMMUNITY.ROOT + `/${postId}`);
+    navigate(`${PATH.COMMUNITY.ROOT}/${postId}}`);
   };
 
   return (

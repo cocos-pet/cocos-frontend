@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import { IcLeftarrow, IcLikeActive, IcLikeDisabled, IcTest } from "@asset/svg";
-import { styles } from "@page/community/[postId]/Post.css.ts";
+import { styles } from "@page/community/[postId]/PostDetail.css";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
@@ -10,13 +10,7 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-import {
-  useCommentsGet,
-  useDeleteLike,
-  useLikePost,
-  usePostDelete,
-  usePostGet,
-} from "@api/domain/community/post/hook";
+import { useCommentsGet, useDeleteLike, useLikePost, usePostDelete, usePostGet } from "@api/domain/community/post/hook";
 
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
@@ -58,7 +52,8 @@ const PostDetail = () => {
   };
 
   const onBackClick = () => {
-    navigate(PATH.COMMUNITY.ROOT);
+    //navigate(PATH.COMMUNITY.ROOT);
+    navigate(-1);
   };
 
   const onDelete = () => {
@@ -85,12 +80,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) =>
-            Number(prevState !== undefined ? prevState - 1 : 0)
-          );
+          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -105,12 +98,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) =>
-            prevState !== undefined ? prevState + 1 : 0
-          );
+          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -142,18 +133,11 @@ const PostDetail = () => {
           disabled={true}
         />
         <div className={styles.top}>
-          {
-            <img
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-            />
-          }
+          {<img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 ·{" "}
-              {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -162,16 +146,11 @@ const PostDetail = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <img
-            key={`postImage-${index}`}
-            src={image}
-            alt="postImage"
-            className={styles.image}
-          />
+          <img key={`postImage-${index}`} src={image} alt="postImage" className={styles.image} />
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
-            <Chip key={`postTag-${index}`} label={tag} color={"blue"} />
+            <Chip key={`postTag-${index}`} label={tag} color={"blue"} disabled={true} />
           ))}
         </div>
         <div className={styles.subContents}>
@@ -179,11 +158,7 @@ const PostDetail = () => {
             {isLiked ? (
               <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
             ) : (
-              <IcLikeDisabled
-                width={24}
-                height={24}
-                onClick={onLikeDeleteClick}
-              />
+              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
             )}
             <span>{likeCount}</span>
           </div>
@@ -192,10 +167,7 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.container}>
         <div className={styles.commentTitle}>
-          댓글{" "}
-          <span className={styles.commentCount}>
-            {postData.totalCommentCounts}
-          </span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList comments={{ comments: commentsData }} />
         <div className={styles.commentContainer}>

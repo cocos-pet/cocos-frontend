@@ -17,7 +17,27 @@ const Community = () => {
   const type = searchParams.get("type");
 
   const handleSearchClick = () => {
-    navigate(PATH.SEARCH.ROOT);
+    navigate(PATH.COMMUNITY.SEARCH);
+  };
+
+  const extractTypeFromName = (name: string) => {
+    if (name === "증상·질병") {
+      return "symptom";
+    }
+
+    if (name === "병원고민") {
+      return "hospital";
+    }
+
+    if (name === "일상·치유") {
+      return "healing";
+    }
+
+    if (name === "코코스매거진") {
+      return "magazine";
+    }
+
+    return "null";
   };
 
   const { data: categories } = useQueryGetCategory();
@@ -27,6 +47,7 @@ const Community = () => {
     id: String(category.id),
     name: category.name || "Unnamed",
     image: category.image || "default-image-url",
+    type: extractTypeFromName(category.name as string),
   }));
 
   return (
@@ -58,4 +79,4 @@ const Community = () => {
   );
 };
 
-export default Community
+export default Community;
