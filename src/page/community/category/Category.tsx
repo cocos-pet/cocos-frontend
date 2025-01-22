@@ -34,6 +34,10 @@ const Category = () => {
 
   const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
 
+  const handleGoBack = () => {
+    navigate(PATH.COMMUNITY.ROOT);
+  };
+
   // 유효하지 않은 타입 처리
   if (!type || !validTypes.includes(type)) {
     return (
@@ -56,7 +60,12 @@ const Category = () => {
 
   return (
     <div className={styles.categoryContainer}>
-      <HeaderNav leftIcon={<IcLeftarrow />} centerContent={categoryName} rightBtn={<IcSearch />} />
+      <HeaderNav
+        leftIcon={<IcLeftarrow />}
+        centerContent={categoryName}
+        rightBtn={<IcSearch />}
+        onLeftClick={handleGoBack}
+      />
 
       {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}
       {type !== "magazine" && (

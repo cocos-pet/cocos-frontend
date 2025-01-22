@@ -17,7 +17,7 @@ const Community = () => {
   const type = searchParams.get("type");
 
   const handleSearchClick = () => {
-    navigate(PATH.SEARCH.ROOT);
+    navigate(PATH.COMMUNITY.SEARCH);
   };
 
   return (
@@ -47,4 +47,4 @@ const Community = () => {
   );
 };
 
-export default Community
+export default Community;
