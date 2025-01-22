@@ -1,11 +1,9 @@
-// this is 임시 이미지 file
-
-import _carousel_ex from "@asset/image/_carousel_ex.png";
-import _carousel_ex2 from "@asset/image/_carousel_ex2.png";
-import _carousel_ex3 from "@asset/image/_carousel_ex3.png";
+import _carousel1 from "@asset/image/_carousel1.png";
+import _carousel2 from "@asset/image/_carousel2.png";
+import _carousel3 from "@asset/image/_carousel3.png";
 
 export const carouselImages = [
-  { id: "slide-1", src: _carousel_ex },
-  { id: "slide-2", src: _carousel_ex2 },
-  { id: "slide-3", src: _carousel_ex3 },
+  { id: "slide-1", src: _carousel1 },
+  { id: "slide-2", src: _carousel2 },
+  { id: "slide-3", src: _carousel3 },
 ];
