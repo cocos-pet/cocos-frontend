@@ -13,6 +13,7 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 
 import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
+import SymptomDetail from "./hotPost/SymptomDetail/SymptomDetail";
 
 const Main = () => {
   const { data: postsData } = useQueryGetPopular();
@@ -54,6 +55,7 @@ const Main = () => {
       <HotPost />
       <Divider />
       <MainFooter />
+      <SymptomDetail />
       <Spacing marginBottom="8" />
       <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
         <Nav content={NAV_CONTENT} type={"nav"} />
