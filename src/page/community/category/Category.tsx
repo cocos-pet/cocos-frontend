@@ -52,7 +52,6 @@ const Category = () => {
   }
 
   const categoryName = categoryMapping[type] || "알 수 없는 카테고리";
-
   return (
     <div className={styles.categoryContainer}>
       <HeaderNav
@@ -82,7 +81,7 @@ const Category = () => {
             likeCnt={post.likeCount}
             commentCnt={post.commentCount}
             postImage={post.image}
-            onClick={() => navigate(PATH.COMMUNITY.CATEGORY)}
+            onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
             timeAgo={formatTime(post.updatedAt)}
             category={post.category}
           />

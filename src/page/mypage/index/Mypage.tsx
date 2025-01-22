@@ -4,7 +4,7 @@ import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
 import { useEffect, useState } from "react";
 import MyPageContent from "./component/MyPageContent/MyPageContent";
-import { IcChevronLeft, IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
+import { IcChevronRight, IcPlus, IcSettings } from "@asset/svg";
 import { useNavigate } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
@@ -42,7 +42,6 @@ const Mypage = () => {
     <div style={{ position: "relative", height: "auto" }}>
       <span style={{ position: "fixed", top: 0, width: "100%" }}>
         <HeaderNav
-          leftIcon={<IcChevronLeft width={24} height={24} onClick={() => navigate(-1)} />}
           centerContent={"마이페이지"}
           rightBtn={
             <span

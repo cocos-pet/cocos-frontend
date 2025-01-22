@@ -29,7 +29,7 @@ const HotPost = ({ petName }: HotPostProps) => {
   const posts = postsData.data.posts || [];
   const handlePostClick = (postId?: number) => {
     if (postId !== undefined) {
-      navigate(PATH.COMMUNITY.POST);
+      navigate(`${PATH.COMMUNITY.ROOT}/${postId}`);
     }
   };
 
