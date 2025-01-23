@@ -69,7 +69,7 @@ export const styles = {
         border: "none",
         width: "100%",
         "::placeholder": {
-          color: color.gray.gray700,
+          color: color.gray.gray600,
         },
         ":focus": {
           outline: "none",
