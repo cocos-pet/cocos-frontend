@@ -187,7 +187,7 @@ const SearchDone = () => {
             likeCnt={data.likeCount}
             commentCnt={data.commentCount}
             timeAgo={formatTime(data.createdAt)}
-            onClick={() => onClickPost(data?.id)} //TODO: postId 로 변경
+            onClick={() => onClickPost(data.id)}
           />
         ))}
       </div>

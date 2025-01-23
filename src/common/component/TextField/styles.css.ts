@@ -52,7 +52,7 @@ export const styles = {
     base: {
       display: "flex",
       alignItems: "center",
-      width: "inherit",
+      width: "calc(100% - 20px)",
     },
   }),
   input: recipe({
@@ -63,7 +63,6 @@ export const styles = {
         fontWeight: 500,
         height: "auto",
         minWidth: "100%",
-
         maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",
