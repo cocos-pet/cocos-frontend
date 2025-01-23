@@ -5,23 +5,22 @@ import {
   deleteLike,
   getPost,
   postLike,
+  postArticle,
+  articlePostRequest,
+  postComment,
+  postSubComment,
   deleteSubComment,
   deletePost,
-  postSubComment,
-  postComment,
 } from "@api/domain/community/post";
 import { useNavigate, useParams } from "react-router-dom";
-import { PATH } from "@route/path.ts";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
   COMMENTS_POST_QUERY_KEY: (postId: number) => ["commentPost", postId],
-  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => [
-    "subCommentPost",
-    commentId,
-  ],
+  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => ["subCommentPost", commentId],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
+  ARTICLE_POST_QUERY_KEY: () => ["articlePost"],
 };
 
 export const COMMENT_QUERY_KEY = {
@@ -86,6 +85,19 @@ export const useCommentsGet = (postId: number) => {
     queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
     queryFn: () => {
       return getComments(postId);
+    },
+  });
+};
+
+/**
+ *
+ */
+
+export const useArticlePost = () => {
+  return useMutation({
+    mutationKey: POST_QUERY_KEY.ARTICLE_POST_QUERY_KEY(),
+    mutationFn: (params: articlePostRequest) => {
+      return postArticle(params);
     },
   });
 };

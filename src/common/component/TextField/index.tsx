@@ -80,5 +80,5 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
         )}
       </div>
     );
-  },
+  }
 );
