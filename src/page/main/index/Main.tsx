@@ -39,7 +39,7 @@ const Main = () => {
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
         <TextField
-          state="default"
+          state="main"
           placeholder="심장병, 백내장"
           onClick={handleSearchClick}
           onChange={handleTextFieldChange}

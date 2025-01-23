@@ -10,7 +10,7 @@ export const container = style([
     width: "100%",
     maxWidth: "76.8rem",
     height: "8rem",
-    padding: "1.2rem 3.2rem 0 3.2rem",
+    padding: "1.2rem 3rem 1.2rem 3rem",
   },
 ]);
 
