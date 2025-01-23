@@ -6,6 +6,13 @@ export const layout = style({
   padding: "8rem 2rem",
   gap: "7.2rem",
 });
+
+export const gap = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.8rem",
+});
+
 export const dualSelectorWrapper = style({
   display: "grid",
   gap: "1.2rem",

@@ -75,8 +75,10 @@ const PetHealth = ({
     setCurrentStep(2);
   };
 
+  // 비우기
   // 질병 2단계에서 질병 1단계로
   const handleBackDisease1 = () => {
+    selectedDiseases.length = 0;
     setCurrentStep(1);
   };
 
@@ -124,8 +126,10 @@ const PetHealth = ({
     setCurrentStep(4);
   };
 
+  // 비우기
   // 증상 2단계에서 1단계로
   const handleBackSymptom1 = () => {
+    selectedSymptom.length = 0;
     setCurrentStep(3);
   };
 
