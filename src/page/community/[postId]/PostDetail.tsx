@@ -57,14 +57,6 @@ const PostDetail = () => {
     text: "",
   });
 
-  // TODO : 삭제 해라.
-  const user = {
-    accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0OTQ1MDksImV4cCI6MTczODA5OTMwOSwibWVtYmVySWQiOjJ9.JhS3oRdiCmYpsa3VCrsxEdDP4DBt8hf5rGdzetF9LFNQltZd1yEQ1ARIskYkt_WDfKbcC-EYmH_J3q1iT6A9Lg",
-  };
-
-  localStorage.setItem("user", JSON.stringify(user));
-
   const onClearClick = () => {
     setParsedComment({ mention: "", text: "" });
   };

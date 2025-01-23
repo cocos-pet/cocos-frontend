@@ -29,13 +29,6 @@ const Main = () => {
     navigate(PATH.COMMUNITY.SEARCH);
   };
 
-  const user = {
-    accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMDE4NjgsImV4cCI6MTczNzgwNjY2OCwibWVtYmVySWQiOjN9.e3NomRDxNu99lniRbw5fZE6kuSXf5pl9K_SK2jzAhSq2tnoz5Tcv0RQyjTshvPlWESQquZYt_IW3q0Z4MG0AnA",
-  };
-
-  localStorage.setItem("user", JSON.stringify(user));
-
   const handleTextFieldChange = () => {};
 
   if (!postsData || !getBodyParts) return null;
