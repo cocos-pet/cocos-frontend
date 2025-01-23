@@ -24,7 +24,6 @@ export const getSearch = async () => {
 export type searchPostRequest =
   paths["/api/dev/search"]["post"]["parameters"]["query"];
 
-
 export interface searchPostType {
   keyword: string;
 }
@@ -44,17 +43,19 @@ export type postPostFiltersResponse =
 export type postPostFiltersRequest =
   paths["/api/dev/posts/filters"]["post"]["requestBody"]["content"]["application/json"];
 
-export const postPostFilters = async (payload: {
+export interface postPostFiltersRequestType {
   keyword?: string;
   animalIds?: number[];
   symptomIds?: number[];
   diseaseIds?: number[];
   sortBy?: "RECENT" | "POPULAR";
-  cursorId?: number;
-  categoryId?: number;
-  likeCount?: number;
-  createAt?: string;
-}) => {
+  cursorId?: number | null;
+  categoryId?: number | null;
+  likeCount?: number | null;
+  createdAt?: string | null;
+}
+
+export const postPostFilters = async (payload: postPostFiltersRequestType) => {
   const { data } = await post<postPostFiltersResponse>(
     API_PATH.POST_FILTERS,
     payload

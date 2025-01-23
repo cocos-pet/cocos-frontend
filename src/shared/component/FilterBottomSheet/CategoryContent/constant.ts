@@ -2,8 +2,8 @@ import { CategoryGender } from "@page/mypage/edit-pet/store/animalFilter";
 
 // todo: api 요청으로 받아오는 예시
 export const CATEGORY_KIND = [
-  { id: 1, name: "강아지", image: "dkqwjkwq" },
-  { id: 2, name: "고양이", image: "dkqgjgj" },
+  { id: 1, name: "고양이" },
+  { id: 2, name: "강아지" },
 ];
 
 export const CATEGORY_SYMPTOM = [

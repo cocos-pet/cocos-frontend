@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, font } from "@style/styles.css.ts";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   container: style({
@@ -68,6 +68,10 @@ export const styles = {
     display: "flex",
     flexDirection: "row",
     gap: "0.4rem",
+    overflow: "auto",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
   }),
   countWrap: style({
     padding: "0.8rem 0",
@@ -81,7 +85,9 @@ export const styles = {
   item: style([
     font.label01,
     {
-      width: "6.2rem",
+      marginTop: "0.4rem",
+
+      width: "100%",
       display: "flex",
       alignItems: "center",
       gap: "0.4rem",
@@ -101,9 +107,18 @@ export const styles = {
     },
   ]),
   commentContainer: style({
+    padding: "1.6rem 2rem 0 2rem",
+    display: "flex",
+    flexDirection: "column",
+  }),
+  textContainer: style({
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    position: "sticky",
+    bottom: 0,
+    width: "100%",
+    padding: "1.2rem 2rem 4rem 2rem",
+    background: color.gray.gray000,
   }),
   upload: style([
     font.body01,
@@ -112,6 +127,20 @@ export const styles = {
       flexShrink: 0,
       padding: "1rem 1.2rem",
       borderRadius: "1rem",
+    },
+  ]),
+  categoryName: style([
+    font.label01,
+    {
+      color: color.gray.gray600,
+      fontWeight: "600",
+      fontSize: "1.4rem",
+    },
+  ]),
+  blue: style([
+    font.label01,
+    {
+      color: semanticColor.text.heavy,
     },
   ]),
 };

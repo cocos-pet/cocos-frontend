@@ -13,6 +13,12 @@ export const layout = style({
   gap: "9rem",
 });
 
+export const gap = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.8rem",
+});
+
 export const imgStyle = style({
   width: "16.5rem",
   height: "9.3rem",

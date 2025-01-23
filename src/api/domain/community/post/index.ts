@@ -105,3 +105,57 @@ export const deleteLike = async (postId: string) => {
   const { data } = await del<likeDeleteResponse>(`${API_PATH.LIKE}/${postId}`);
   return data;
 };
+
+/**
+ *
+ */
+
+type articlePostResponse =
+  paths["/api/dev/posts"]["post"]["responses"]["200"]["content"]["*/*"];
+
+export type articlePostRequest =
+  paths["/api/dev/posts"]["post"]["requestBody"]["content"]["application/json"];
+
+export const postArticle = async (params: articlePostRequest) => {
+  const { data } = await post<articlePostResponse>(API_PATH.POST, params);
+  return data;
+};
+
+/**
+ * @description 댓글 작성 API
+ */
+
+type commentPostResponse =
+  paths["/api/dev/comments/{postId}"]["post"]["responses"]["201"]["content"]["*/*"];
+
+export const postComment = async (postId: number, content: string) => {
+  const { data } = await post<commentPostResponse>(
+    `${API_PATH.COMMENTS}/${postId}`,
+    {
+      content,
+    }
+  );
+  return data;
+};
+
+/**
+ * @description 대댓글 작성 API
+ */
+
+type subCommentPostResponse =
+  paths["/api/dev/comments/sub/{commentId}"]["post"]["responses"]["201"]["content"]["*/*"];
+
+export const postSubComment = async (content: {
+  commentId: number | undefined;
+  content: string;
+  nickname: string;
+}) => {
+  const { data } = await post<subCommentPostResponse>(
+    `${API_PATH.SUBCOMMENTS}/${content.commentId}`,
+    {
+      content: content.content,
+      nickname: content.nickname,
+    }
+  );
+  return data;
+};

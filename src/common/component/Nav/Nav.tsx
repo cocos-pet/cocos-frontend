@@ -17,7 +17,6 @@ type Props = {
 };
 
 const Nav = ({ content, type = "nav" }: Props) => {
-  console.log(content);
   const location = useLocation();
   const navigate = useNavigate();
 

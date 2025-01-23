@@ -9,8 +9,8 @@ import Step2 from "@page/register-pet/index/component/petHealth/disease/Step2";
 import SymStep1 from "@page/register-pet/index/component/petHealth/symptom/SymStep1";
 import SymStep2 from "@page/register-pet/index/component/petHealth/symptom/SymStep2";
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
-import { useDiseaseGet } from "@api/domain/registerPet/disease/hook";
-import { useSymptomGet } from "@api/domain/registerPet/symptom/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -75,8 +75,10 @@ const PetHealth = ({
     setCurrentStep(2);
   };
 
+  // 비우기
   // 질병 2단계에서 질병 1단계로
   const handleBackDisease1 = () => {
+    selectedDiseases.length = 0;
     setCurrentStep(1);
   };
 
@@ -124,8 +126,10 @@ const PetHealth = ({
     setCurrentStep(4);
   };
 
+  // 비우기
   // 증상 2단계에서 1단계로
   const handleBackSymptom1 = () => {
+    selectedSymptom.length = 0;
     setCurrentStep(3);
   };
 

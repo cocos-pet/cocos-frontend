@@ -7,10 +7,12 @@ export const container = style([
   {
     display: "flex",
     justifyContent: "space-between",
+    gap: "1.6rem",
+    paddingLeft: "2rem",
+    paddingRight: "2rem",
     width: "100%",
     maxWidth: "76.8rem",
     height: "8rem",
-    padding: "1.2rem 3.2rem 0 3.2rem",
   },
 ]);
 
@@ -28,6 +30,8 @@ export const navItem = recipe({
     state: {
       true: {
         color: color.gray.gray900,
+        font: font.body01,
+        
       },
       false: {
         color: color.gray.gray500,
@@ -36,6 +40,7 @@ export const navItem = recipe({
     type: {
       community: {
         width: "7.2rem",
+        color: color.gray.gray900,
       },
       nav: {
         width: "5.6rem",

@@ -13,10 +13,15 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 
 import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
+import { useEffect } from "react";
 
 const Main = () => {
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
+
+  useEffect(() => {
+    sessionStorage.setItem("searchBackUrl", PATH.MAIN);
+  }, []);
 
   const navigate = useNavigate();
 
@@ -39,7 +44,7 @@ const Main = () => {
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
         <TextField
-          state="default"
+          state="main"
           placeholder="심장병, 백내장"
           onClick={handleSearchClick}
           onChange={handleTextFieldChange}
@@ -51,10 +56,16 @@ const Main = () => {
       <Symptom />
       <Divider />
       <HotPost />
-      <Divider />
       <MainFooter />
       <Spacing marginBottom="8" />
-      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
+      <span
+        style={{
+          position: "fixed",
+          bottom: "0",
+          backgroundColor: "white",
+          width: "100%",
+        }}
+      >
         <Nav content={NAV_CONTENT} type={"nav"} />
       </span>
     </div>

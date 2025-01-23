@@ -9,7 +9,7 @@ export const mainContainer = style({
 export const headerContainer = style({
   position: "absolute",
   top: "18rem",
-  width: "100%",
   padding: "0rem 2rem 0rem 2rem",
   zIndex: 4,
+  width: "100%",
 });
