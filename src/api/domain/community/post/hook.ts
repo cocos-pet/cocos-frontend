@@ -12,32 +12,21 @@ import {
   deletePost,
 } from "@api/domain/community/post";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { PATH } from "@route/path.ts";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
   COMMENTS_POST_QUERY_KEY: (postId: number) => ["commentPost", postId],
-  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => [
-    "subCommentPost",
-    commentId,
-  ],
+  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => ["subCommentPost", commentId],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
-  ARTICLE_POST_QUERY_KEY: () => ["articlePost"],
   ARTICLE_POST_QUERY_KEY: () => ["articlePost"],
 };
 
 export const COMMENT_QUERY_KEY = {
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
-  DELETE_COMMENT: (commentId: number | undefined) => [
-    "deleteComment",
-    commentId,
-  ],
-  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => [
-    "deleteSubComment",
-    subCommentId,
-  ],
+  DELETE_COMMENT: (commentId: number | undefined) => ["deleteComment", commentId],
+  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => ["deleteSubComment", subCommentId],
 };
 
 /**
