@@ -1,27 +1,37 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
-import {TextField} from "@common/component/TextField";
-import {IcDeleteBlack, IcImagePlus, IcRightArror} from "@asset/svg";
-import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {useDropDown} from "../component/DropDown/useDropDown";
+import { TextField } from "@common/component/TextField";
+import { IcDeleteBlack, IcImagePlus, IcRightArror } from "@asset/svg";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useDropDown } from "../component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 
-import {bottomButton, fileInput, imageContainer, plusImage, writeWrap,} from "@page/community/write/Write.css.ts";
+import {
+  bottomButton,
+  fileInput,
+  imageContainer,
+  plusImage,
+  writeWrap,
+} from "@page/community/write/Write.css.ts";
 import WriteInputSection from "@page/community/component/WriteInputSection/WriteInputSection.tsx";
 
 import Tag from "@page/community/component/Tag/Tag.tsx";
 import TextArea from "@page/community/component/TextArea/TextArea.tsx";
 import Spacing from "@common/component/Spacing/Spacing.tsx";
 import ImageCover from "@page/community/component/ImageCover/ImageCover.tsx";
-import {Button} from "@common/component/Button";
+import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import {useFilterStore} from "@store/filter.ts";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {PATH} from "@route/path.ts";
+import { useFilterStore } from "@store/filter.ts";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { PATH } from "@route/path.ts";
 import axios from "axios";
-import {useArticlePost} from "@api/domain/community/write/hook.ts";
-import {DropDownItems} from "@page/community/constant/writeConfig.tsx";
-import {FillterToName,} from "@page/community/utills/getFillterNamebyid.ts";
-import {useGetBodies, useGetDisease, useGetSymptoms,} from "@api/domain/mypage/edit-pet/hook.ts";
+import { useArticlePost } from "@api/domain/community/write/hook.ts";
+import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
+import { FillterToName } from "@page/community/utills/getFillterNamebyid.ts";
+import {
+  useGetBodies,
+  useGetDisease,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook.ts";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -44,8 +54,8 @@ const Write = () => {
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
   const { selectedChips, isOpen, setOpen, categoryData, setCategoryData } =
     useFilterStore();
-  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
-  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
+  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { mutate } = useArticlePost();

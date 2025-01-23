@@ -53,6 +53,7 @@ interface FilterState {
 
   // 적용된 필터
   selectedChips: SelectedChips;
+  clearAllChips: () => void;
   toggleChips: (chip: { id: number; category: keyof SelectedChips }) => void;
 
   // 각 category에 해당하는 데이터 배열
@@ -72,6 +73,11 @@ export const useFilterStore = create<FilterState>((set) => ({
   setCategory: (category) => set({ category }),
 
   selectedChips: { breedId: [], diseaseIds: [], symptomIds: [] },
+  clearAllChips: () =>
+    set(() => ({
+      selectedChips: { breedId: [], diseaseIds: [], symptomIds: [] },
+    })),
+
   toggleChips: ({ id, category }) =>
     set((state) => {
       const currentList = state.selectedChips[category] || [];

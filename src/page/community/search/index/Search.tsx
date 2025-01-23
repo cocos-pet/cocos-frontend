@@ -23,7 +23,7 @@ const Search = () => {
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
   const { mutate } = useSearchPost();
-  const {} = useFilterStore();
+  const { clearAllChips } = useFilterStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,6 +34,7 @@ const Search = () => {
       {
         onSuccess: () => {
           handleNavigate(searchText);
+          clearAllChips();
         },
         onError: () => {
           alert("검색에 실패했습니다.");
@@ -46,6 +47,7 @@ const Search = () => {
     if (e.key === "Enter" && !isSubmitting) {
       setIsSubmitting(true);
       onSubmit(searchText);
+      clearAllChips();
 
       setTimeout(() => {
         setIsSubmitting(false);
@@ -64,6 +66,7 @@ const Search = () => {
 
   const onBackClick = () => {
     navigate(-1);
+    clearAllChips();
   };
 
   useEffect(() => {

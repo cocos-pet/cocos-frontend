@@ -5,10 +5,10 @@ import {
   deleteLike,
   getPost,
   postLike,
-  postComment,
-  postSubComment,
   deleteSubComment,
   deletePost,
+  postSubComment,
+  postComment,
 } from "@api/domain/community/post";
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";

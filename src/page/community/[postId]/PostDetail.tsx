@@ -117,7 +117,6 @@ const PostDetail = () => {
   };
 
   const onBackClick = () => {
-    //navigate(PATH.COMMUNITY.ROOT);
     navigate(-1);
   };
 

@@ -52,7 +52,6 @@ export const styles = {
     base: {
       display: "flex",
       alignItems: "center",
-      gap: "1rem",
       width: "inherit",
     },
   }),
@@ -125,6 +124,7 @@ export const iconstyle = style({
   height: "2rem",
   display: "flex",
   alignContent: "center",
+  marginRight: "1rem",
 });
 
 export type WrapVariants = RecipeVariants<typeof styles.wrapper>;

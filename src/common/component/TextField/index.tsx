@@ -62,7 +62,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
         <div className={styles.leftWrap()}>
-          {leftIcon && <p className={iconstyle}>leftIcon</p>}
+          {leftIcon && <p className={iconstyle}>{leftIcon}</p>}
           <span className={styles.mention}>{mentionedNickname}</span>
           <input
             ref={ref}
