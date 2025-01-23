@@ -27,7 +27,6 @@ const SubCommentList = ({
           subComment={subComment}
           commentId={commentId}
           onCommentDelete={() => {
-            alert(subComment.id);
             onCommentDelete(subComment.id as number);
           }}
           onSubCommentReplyClick={onSubCommentReplyClick}

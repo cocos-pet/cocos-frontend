@@ -54,7 +54,10 @@ const Comment = ({
             alt="프로필 이미지"
           />
           <div className={styles.headerInfo}>
-            <span className={styles.nickname}>{comment.nickname}</span>
+            <span className={styles.nickname}>
+              {comment.nickname}
+              <p className={styles.blue}>{comment.isWriter && "작성자"}</p>
+            </span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
               {comment.createdAt
@@ -62,15 +65,17 @@ const Comment = ({
                 : ""}
             </span>
           </div>
-          <MoreModal
-            onDelete={() => {
-              setOpen(true);
-              setContentsType("comment");
-            }}
-            iconSize={24}
-            isOpen={openModalId === `comment-${comment.id}`}
-            onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
-          />
+          {comment.isWriter && (
+            <MoreModal
+              onDelete={() => {
+                setOpen(true);
+                setContentsType("comment");
+              }}
+              iconSize={24}
+              isOpen={openModalId === `comment-${comment.id}`}
+              onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
+            />
+          )}
         </div>
 
         <p className={styles.text}>{comment.content}</p>
