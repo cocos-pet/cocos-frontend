@@ -4,21 +4,26 @@ import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetResponseCommentType } from "@api/domain/community/post";
+import { formatTime } from "@shared/util/formatTime.ts";
 import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
 import { useEffect, useState } from "react";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onReplyClick?: (id: number | undefined) => void;
+  onCommentReplyClick?: (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => void;
+
+  onDelete: () => void;
 }
 
-const Comment = ({ comment, onReplyClick }: CommentProps) => {
+const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
   const handleReplyClick = () => {
-    if (onReplyClick) {
-      onReplyClick(comment.id);
+    if (onCommentReplyClick) {
+      onCommentReplyClick(comment.nickname, comment.id);
     }
   };
 
@@ -46,7 +51,9 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
             <span className={styles.nickname}>{comment.nickname}</span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt ? formatTime(comment.createdAt) : ""}
+              {comment.createdAt
+                ? formatTime(comment.createdAt).toLocaleString()
+                : ""}
             </span>
           </div>
           <MoreModal
@@ -73,8 +80,10 @@ const Comment = ({ comment, onReplyClick }: CommentProps) => {
       {comment.subComments && (
         <div style={{ width: "100%" }}>
           <SubCommentList
+            commentId={comment.id}
             subComments={comment.subComments}
             onCommentDelete={onDeleteClick}
+            onSubCommentReplyClick={onCommentReplyClick}
           />
         </div>
       )}

@@ -4,7 +4,11 @@ import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
-import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
+import {
+  useSearchGet,
+  useSearchPost,
+} from "@api/domain/community/search/hook.ts";
+import { useFilterStore } from "@store/filter.ts";
 
 const Search = () => {
   const user = {
@@ -13,13 +17,13 @@ const Search = () => {
       "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMTAxMzgsImV4cCI6MTczNzgxNDkzOCwibWVtYmVySWQiOjF9.f6sCaL3PFg7yMb6J4PM1h30ADsiq_fbON31IXPguJ_Pb4otyJ_Qh-Z_JYRxC8a2SMzaa6jr68uLc6w0_tuag3A",
   };
   localStorage.setItem("user", JSON.stringify(user));
-
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
   const { mutate } = useSearchPost();
+  const {} = useFilterStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -34,7 +38,7 @@ const Search = () => {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      },
+      }
     );
   };
 
@@ -60,7 +64,6 @@ const Search = () => {
 
   const onBackClick = () => {
     navigate(-1);
-    // navigate(PATH.COMMUNITY.ROOT);
   };
 
   useEffect(() => {

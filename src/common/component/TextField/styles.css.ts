@@ -1,5 +1,6 @@
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { color, font, semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 
 export const styles = {
   wrapper: recipe({
@@ -29,6 +30,10 @@ export const styles = {
           marginLeft: "2rem",
           border: `0.1rem solid ${semanticColor.line.strong}`,
           backgroundColor: semanticColor.neutral.normal,
+          boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
+        },
+
+        main: {
           boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
         },
       },
@@ -93,6 +98,7 @@ export const styles = {
         },
         error: {},
         search: {},
+        main: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
       },
     },
@@ -109,6 +115,15 @@ export const styles = {
       alignContent: "center",
     },
   }),
+
+  mention: style([
+    font.body01,
+    {
+      color: semanticColor.primary.heavy,
+      fontWeight: 500,
+      flexShrink: 0,
+    },
+  ]),
 };
 
 export type WrapVariants = RecipeVariants<typeof styles.wrapper>;

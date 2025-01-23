@@ -3,26 +3,32 @@ import { IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
+import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
 import { useState } from "react";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 
 interface SubCommentProps {
+  commentId: number | undefined;
   subComment: commentGetRequestSubCommentType;
+  onSubCommentReplyClick?: (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => void;
   onReplyClick?: (id: number | undefined) => void;
   onCommentDelete: () => void;
 }
 
 const SubComment = ({
+  commentId,
   subComment,
-  onReplyClick,
+  onSubCommentReplyClick,
   onCommentDelete,
 }: SubCommentProps) => {
   const handleReplyClick = () => {
-    if (onReplyClick) {
-      onReplyClick(subComment.id);
+    if (onSubCommentReplyClick) {
+      onSubCommentReplyClick(subComment.nickname, commentId);
     }
   };
   const { mutate: deleteSubComment } = useDeleteSubComment(subComment.id);
@@ -61,7 +67,9 @@ const SubComment = ({
             <span className={styles.nickname}>{subComment.nickname}</span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt ? formatTime(subComment.createdAt) : ""}
+              {subComment.createdAt
+                ? formatTime(subComment.createdAt).toLocaleString()
+                : ""}
             </span>
           </div>
           <MoreModal
