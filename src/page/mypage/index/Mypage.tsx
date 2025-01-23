@@ -16,11 +16,12 @@ import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 export type ActiveTabType = "review" | "post" | "comment";
 
 const Mypage = () => {
+  const preSavedActiveTab = sessionStorage.getItem("activeTab");
+
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(true); //todo: 서버로부터 받아와서 하기
-  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
-  
+  const [isRegister, setIsRegister] = useState(true);
+  const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
 
   const { isLoading, data: member } = useGetMemberInfo();
   const { data: petInfo } = useGetPetInfo();
@@ -28,6 +29,10 @@ const Mypage = () => {
   useEffect(() => {
     setIsLogin(isLoggedIn());
   }, []);
+
+  useEffect(() => {
+    sessionStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   const isActiveTab = (tab: ActiveTabType) => {
     return activeTab === tab;

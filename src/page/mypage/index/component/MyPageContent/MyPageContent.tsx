@@ -29,7 +29,6 @@ export interface ApiItemTypes {
   age: number;
 }
 
-//todo: 여기서 탭 별로 api 요청 보내서 데이터 받아와 렌더링하기
 const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const navigate = useNavigate();
   const { data: myPosts } = useGetMyPost();
@@ -74,7 +73,6 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
             />
           </div>
         ));
-      //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
         return renderAllComments(myComments?.comments, myComments?.subComments).map((data) => (
           <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
