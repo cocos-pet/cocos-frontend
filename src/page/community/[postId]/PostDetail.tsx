@@ -2,13 +2,11 @@ import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import {
   IcBaseProfileImage,
-  IcCurious,
   IcCuriousActive,
   IcCuriousUnactive,
   IcLeftarrow,
   IcLikeActive,
   IcLikeDisabled,
-  IcTest,
 } from "@asset/svg";
 import { styles } from "@page/community/[postId]/PostDetail.css";
 import { Button } from "@common/component/Button";
@@ -34,7 +32,6 @@ import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
-import Spacing from "@common/component/Spacing/Spacing.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -51,10 +48,7 @@ const PostDetail = () => {
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
-  const { mutate: subCommentPost } = useSubCommentPost(
-    Number(commentId),
-    Number(postId)
-  );
+  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId), Number(postId));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -89,7 +83,7 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     } else {
@@ -103,16 +97,13 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     }
   };
 
-  const onCommentReplyClick = (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => {
+  const onCommentReplyClick = (nickname: string | undefined, commentId: number | undefined) => {
     if (nickname) {
       setParsedComment({ mention: nickname, text: "" });
     }
@@ -165,12 +156,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) =>
-            Number(prevState !== undefined ? prevState - 1 : 0)
-          );
+          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -185,12 +174,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) =>
-            prevState !== undefined ? prevState + 1 : 0
-          );
+          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -232,19 +219,14 @@ const PostDetail = () => {
         />
         <div className={styles.top}>
           {postData.profileImage ? (
-            <img
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-            />
+            <img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
           ) : (
             <IcBaseProfileImage width={32} height={32} />
           )}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 ·{" "}
-              {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -254,7 +236,10 @@ const PostDetail = () => {
         </div>
         {postData.images?.map((image, index) => (
           <img
-            key={`postImage-${index}`}
+            key={`postImage-${
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              index
+            }`}
             src={image}
             alt="postImage"
             className={styles.image}
@@ -263,7 +248,10 @@ const PostDetail = () => {
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
             <Chip
-              key={`postTag-${index}`}
+              key={`postTag-${
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                index
+              }`}
               label={tag}
               color={"blue"}
               disabled={true}
@@ -275,62 +263,46 @@ const PostDetail = () => {
           <div className={styles.item}>
             {getCategoryResponse(postData.category) === "curious" ? (
               isLiked ? (
-                <IcCuriousActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcCuriousUnactive
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : getCategoryResponse(postData.category) === "support" ? (
               isLiked ? (
-                <IcLikeActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcLikeDisabled
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData.category) === "curious"
-                ? "궁금해요 "
-                : "응원해요 "}
+              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
               {likeCount}
             </span>
+            {isLiked ? (
+              <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
+            ) : (
+              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
+            )}
+            <span>{likeCount}</span>
           </div>
         </div>
       </div>
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글{" "}
-          <span className={styles.commentCount}>
-            {postData.totalCommentCounts}
-          </span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
           onModalClose={onModalClose}
         />
+        <CommentList comments={{ comments: commentsData }} onCommentReplyClick={onCommentReplyClick} />
       </div>
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={
-            parsedComment.mention ? `@${parsedComment.mention} ` : ``
-          }
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ``}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
@@ -345,7 +317,7 @@ const PostDetail = () => {
       </div>
       <SimpleBottomSheet
         isOpen={isOpen}
-        content={"댓글을 정말 삭제할까요?"}
+        content={"게시글을 정말 삭제할까요?"}
         handleClose={() => setOpen(false)}
         leftOnClick={() => setOpen(false)}
         leftText={"취소"}
