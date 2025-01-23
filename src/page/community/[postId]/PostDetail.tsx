@@ -185,7 +185,11 @@ const PostDetail = () => {
     setOpenModalId(undefined);
   };
 
-  if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
+  const handleProfileClick = () => {
+    if (postData?.nickname) {
+      navigate(`/profile?nickname=${postData.nickname}`);
+    }
+  };
 
   return (
     <>
@@ -208,8 +212,8 @@ const PostDetail = () => {
       />
       <div className={styles.container} onClick={onModalClose}>
         <Button
-          leftIcon={getDropdownValuetoIcon(postData.category)}
-          label={postData.category}
+          leftIcon={getDropdownValuetoIcon(postData?.category)}
+          label={postData?.category}
           variant={"outlineNeutral"}
           size={"tag"}
           disabled={true}
@@ -217,24 +221,24 @@ const PostDetail = () => {
             console.log("category");
           }}
         />
-        <div className={styles.top}>
-          {postData.profileImage ? (
+        <div className={styles.top} onClick={handleProfileClick}>
+          {postData?.profileImage ? (
             <img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
           ) : (
             <IcBaseProfileImage width={32} height={32} />
           )}
           <div className={styles.info}>
-            <div className={styles.infoName}>{postData.nickname}</div>
+            <div className={styles.infoName}>{postData?.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
+              {postData?.breed}·{postData?.petAge}살 · {formatTime(postData?.createdAt ?? "")}
             </div>
           </div>
         </div>
         <div>
-          <div className={styles.title}>{postData.title}</div>
-          <div className={styles.content}>{postData.content}</div>
+          <div className={styles.title}>{postData?.title}</div>
+          <div className={styles.content}>{postData?.content}</div>
         </div>
-        {postData.images?.map((image, index) => (
+        {postData?.images?.map((image, index) => (
           <img
             key={`postImage-${
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
@@ -246,7 +250,7 @@ const PostDetail = () => {
           />
         ))}
         <div className={styles.labelWrap}>
-          {postData.tags?.map((tag, index) => (
+          {postData?.tags?.map((tag, index) => (
             <Chip
               key={`postTag-${
                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
@@ -261,13 +265,13 @@ const PostDetail = () => {
         <Divider size={"small"} />
         <div className={styles.subContents}>
           <div className={styles.item}>
-            {getCategoryResponse(postData.category) === "curious" ? (
+            {getCategoryResponse(postData?.category) === "curious" ? (
               isLiked ? (
                 <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
                 <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
               )
-            ) : getCategoryResponse(postData.category) === "support" ? (
+            ) : getCategoryResponse(postData?.category) === "support" ? (
               isLiked ? (
                 <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
@@ -275,7 +279,7 @@ const PostDetail = () => {
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
+              {getCategoryResponse(postData?.category) === "curious" ? "궁금해요 " : "응원해요 "}
               {likeCount}
             </span>
             {isLiked ? (
@@ -290,7 +294,7 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
+          댓글 <span className={styles.commentCount}>{postData?.totalCommentCounts}</span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
@@ -309,11 +313,11 @@ const PostDetail = () => {
           placeholder={"댓글을 입력해주세요."}
           onKeyDown={onKeyDown}
         />
-        {parsedComment.text && (
-          <button className={styles.upload} onClick={onSubmitComment}>
-            올리기
-          </button>
-        )}
+        parsedComment.text && (
+        <button className={styles.upload} onClick={onSubmitComment}>
+          올리기
+        </button>
+        )
       </div>
       <SimpleBottomSheet
         isOpen={isOpen}
