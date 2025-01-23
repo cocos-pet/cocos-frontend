@@ -20,6 +20,7 @@ const Mypage = () => {
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(true); //todo: 서버로부터 받아와서 하기
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
+  
 
   const { isLoading, data: member } = useGetMemberInfo();
   const { data: petInfo } = useGetPetInfo();
