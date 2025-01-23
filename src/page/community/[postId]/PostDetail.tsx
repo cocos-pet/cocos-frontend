@@ -30,7 +30,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
-import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
+import {
+  getCategorytoEnglish,
+  getCategorytoId,
+  getDropdownValuetoIcon,
+} from "@page/community/utills/handleCategoryItem.tsx";
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
 
 const PostDetail = () => {
@@ -204,16 +208,16 @@ const PostDetail = () => {
         onLeftClick={onBackClick}
         type={"noTitle"}
         rightBtn={
-          // postData.isWriter && (
-          <MoreModal
-            onDelete={() => {
-              setOpen(true);
-            }}
-            iconSize={24}
-            isOpen={openModalId === `post-${postId}`}
-            onToggleModal={() => setOpenModalId(`post-${postId}`)}
-          />
-          // )
+          postData.isWriter && (
+            <MoreModal
+              onDelete={() => {
+                setOpen(true);
+              }}
+              iconSize={24}
+              isOpen={openModalId === `post-${postId}`}
+              onToggleModal={() => setOpenModalId(`post-${postId}`)}
+            />
+          )
         }
       />
       <div className={styles.container} onClick={onModalClose}>
@@ -222,9 +226,13 @@ const PostDetail = () => {
           label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
-          disabled={true}
+          // disabled={true}
           onClick={() => {
-            console.log("category");
+            navigate(
+              `${PATH.COMMUNITY.CATEGORY}?type=${getCategorytoEnglish(
+                postData.category
+              )}&id=${getCategorytoId(postData.category)}`
+            );
           }}
         />
         <div className={styles.top}>
@@ -311,16 +319,6 @@ const PostDetail = () => {
                 : "응원해요 "}
               {likeCount}
             </span>
-            {isLiked ? (
-              <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
-            ) : (
-              <IcLikeDisabled
-                width={24}
-                height={24}
-                onClick={onLikeDeleteClick}
-              />
-            )}
-            <span>{likeCount}</span>
           </div>
         </div>
       </div>
@@ -341,9 +339,7 @@ const PostDetail = () => {
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={
-            parsedComment.mention ? `@${parsedComment.mention} ` : ``
-          }
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ``}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}

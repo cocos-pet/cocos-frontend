@@ -1094,6 +1094,11 @@ export interface components {
              * @example true
              */
             isLiked?: boolean;
+            /**
+             * @description 작성자 여부
+             * @example true
+             */
+            isWriter?: boolean;
         };
         BaseResponsePopularPostsResponse: {
             /** Format: int32 */
