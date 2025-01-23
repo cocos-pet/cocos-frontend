@@ -21,32 +21,11 @@ const SvgIcSymptom = (props: SVGProps<SVGSVGElement>) => (
       stroke="#555"
       transform="scale(-1 1)rotate(37.162 -5.937 -15.173)"
     />
-    <mask id="ic_symptom_svg__a" fill="#fff">
-      <rect
-        width={2.47}
-        height={5.157}
-        rx={0.997}
-        transform="scale(-1 1)rotate(37.162 -25.537 -14.074)"
-      />
-    </mask>
-    <rect
-      width={2.47}
-      height={5.157}
-      stroke="#555"
-      strokeWidth={2}
-      mask="url(#ic_symptom_svg__a)"
-      rx={0.997}
-      transform="scale(-1 1)rotate(37.162 -25.537 -14.074)"
-    />
-    <rect
-      width={0.617}
-      height={1.343}
-      x={-0.06}
-      y={0.433}
-      stroke="#555"
-      strokeWidth={0.617}
-      rx={0.309}
-      transform="scale(-1 1)rotate(37.162 -23.638 -11.807)"
+    <path
+      fill="#555"
+      fillRule="evenodd"
+      d="M12.674 12.25a.617.617 0 1 0-.984.746l.438.578a.6.6 0 0 0 .148.14 1 1 0 0 0 .046 1.14l1.91 2.522a.997.997 0 0 0 1.397.192l.38-.288a.997.997 0 0 0 .192-1.396l-1.911-2.521a1 1 0 0 0-1.083-.353.6.6 0 0 0-.095-.182zm2.728 4.235-1.907-2.516-.375.284 1.907 2.516z"
+      clipRule="evenodd"
     />
   </svg>
 );

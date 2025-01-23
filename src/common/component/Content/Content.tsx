@@ -1,4 +1,4 @@
-import { IcoMessage, IcTest } from "@asset/svg";
+import { IcCurious, IcoMessage, IcTest } from "@asset/svg";
 import { styles } from "@common/component/Content/Content.css.ts";
 
 interface ContentPropTypes {
@@ -53,7 +53,7 @@ const Content = ({
         <div className={styles.subContents}>
           <div className={styles.item}>
             {/* 궁금해요/응원해요 아아콘 결정되면 수정 */}
-            {likeIconType === "curious" ? <IcTest /> : <IcTest />}
+            {likeIconType === "curious" ? <IcCurious /> : <IcTest />}
             <span>{likeCnt}</span>
           </div>
           <div className={styles.item}>
@@ -64,7 +64,9 @@ const Content = ({
           <div className={styles.item}>{timeAgo}</div>
         </div>
       </div>
-      {postImage && <img src={postImage} alt="postImage" className={styles.postImage} />}
+      {postImage && (
+        <img src={postImage} alt="postImage" className={styles.postImage} />
+      )}
     </div>
   );
 };

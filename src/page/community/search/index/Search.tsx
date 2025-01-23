@@ -65,7 +65,7 @@ const Search = () => {
   };
 
   const onBackClick = () => {
-    navigate(-1);
+    navigate(-2);
     clearAllChips();
   };
 

@@ -94,6 +94,7 @@ const SearchDone = () => {
       {
         onSuccess: (data) => {
           setSearchDoneData(data || []);
+          console.log("Search Success:", data);
         },
         onError: (error) => {
           console.error("Search Error:", error);
@@ -122,12 +123,30 @@ const SearchDone = () => {
 
   const onBackClick = () => {
     clearAllChips();
-    navigate(-1);
+    navigate(-2);
   };
 
   const onClickPost = (postId: number | undefined) => {
     navigate(`${PATH.COMMUNITY.ROOT}/${postId}}`);
   };
+
+  if (searchDoneData.length == 0)
+    return (
+      <div className={styles.container}>
+        <div className={styles.searchHeader}>
+          <IcLeftarrow className={styles.icon} onClick={onBackClick} />
+          <TextField
+            value={searchText}
+            placeholder={"검색어를 입력해주세요"}
+            onChange={onChange}
+            icon={<IcSearch />}
+            onClearClick={() => setSearchText("")}
+            onClick={onTextFieldClick}
+          />
+        </div>
+        <div className={styles.noSearchData}> 검색 결과가 없습니다. </div>
+      </div>
+    );
 
   return (
     <div className={styles.container}>
@@ -142,6 +161,7 @@ const SearchDone = () => {
           onClick={onTextFieldClick}
         />
       </div>
+
       <div className={styles.searchContent}>
         {isFilterActive ? (
           <IcSearchFillterBlue

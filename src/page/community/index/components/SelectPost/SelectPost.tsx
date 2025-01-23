@@ -11,7 +11,9 @@ import { formatTime } from "@shared/util/formatTime";
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
-  const [posts, setPosts] = useState<NonNullable<postPostFiltersResponse["data"]>["posts"]>([]);
+  const [posts, setPosts] = useState<
+    NonNullable<postPostFiltersResponse["data"]>["posts"]
+  >([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); // 페이지 이동
 
@@ -32,12 +34,15 @@ const PostList = () => {
           }
         },
         onError: (error) => {
-          console.error("게시물 데이터를 가져오는 중 오류가 발생했습니다:", error);
+          console.error(
+            "게시물 데이터를 가져오는 중 오류가 발생했습니다:",
+            error
+          );
         },
         onSettled: () => {
           setIsLoading(false);
         },
-      },
+      }
     );
   }, [isRecentPost, fetchPosts]);
 
@@ -82,6 +87,7 @@ const PostList = () => {
               likeCnt={post.likeCount}
               commentCnt={post.commentCount}
               postImage={post.image}
+              likeIconType={"curious"}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
               timeAgo={formatTime(post.updatedAt as string)}
               category={post.category}
