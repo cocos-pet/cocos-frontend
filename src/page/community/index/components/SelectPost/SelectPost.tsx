@@ -11,9 +11,7 @@ import { formatTime } from "@shared/util/formatTime";
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
-  const [posts, setPosts] = useState<
-    NonNullable<postPostFiltersResponse["data"]>["posts"]
-  >([]);
+  const [posts, setPosts] = useState<NonNullable<postPostFiltersResponse["data"]>["posts"]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); // 페이지 이동
 
@@ -22,27 +20,32 @@ const PostList = () => {
   const fetchPostData = useCallback(() => {
     setIsLoading(true);
     const sortBy = isRecentPost ? "RECENT" : "POPULAR";
+
     fetchPosts(
       { sortBy },
       {
         onSuccess: (data) => {
-          const fetchedPosts = data;
-          if (fetchedPosts) {
-            setPosts(fetchedPosts);
-          } else {
-            console.error("API 응답에서 posts 데이터를 찾을 수 없습니다.");
+          if (data) {
+            const sortedPosts = [...data].sort((a, b) => {
+              if (isRecentPost) {
+
+                return new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+              }
+              if (b.likeCount === a.likeCount) {
+                return new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+              }
+              return (b.likeCount ?? 0) - (a.likeCount ?? 0);
+            });
+            setPosts(sortedPosts);
           }
         },
         onError: (error) => {
-          console.error(
-            "게시물 데이터를 가져오는 중 오류가 발생했습니다:",
-            error
-          );
+          console.error("게시물 데이터를 가져오는 중 오류가 발생했습니다:", error);
         },
         onSettled: () => {
           setIsLoading(false);
         },
-      }
+      },
     );
   }, [isRecentPost, fetchPosts]);
 
@@ -87,11 +90,7 @@ const PostList = () => {
               likeCnt={post.likeCount}
               commentCnt={post.commentCount}
               postImage={post.image}
-              likeIconType={
-                post.category === "증상·질병" || post.category === "병원고민"
-                  ? "curious"
-                  : "support"
-              }
+              likeIconType={post.category === "증상·질병" || post.category === "병원고민" ? "curious" : "support"}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
               timeAgo={formatTime(post.updatedAt as string)}
               category={post.category}
