@@ -1,7 +1,7 @@
 import * as styles from "./Profile.css";
 import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { IcChevronLeft } from "@asset/svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -14,15 +14,21 @@ export type ActiveTabType = "review" | "post" | "comment";
 
 //남이 볼 때 뷰 분리 : /profie?nickname=칠칠이최고 으로 넘어가서 보도록
 const Profile = () => {
+  const preSavedActiveTab = sessionStorage.getItem("activeTab");
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
+  const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
 
   const query = searchParams.get("nickname");
   if (!query) return;
 
   const { data: memeberInfo } = useGetMemberInfo(query);
   const { data: petInfo } = useGetPetInfo(query);
+
+  useEffect(() => {
+    sessionStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   const isActiveTab = (tab: ActiveTabType) => {
     return activeTab === tab;

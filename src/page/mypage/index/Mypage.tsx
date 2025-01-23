@@ -73,9 +73,19 @@ const Mypage = () => {
               <div className={styles.animalProfileWrapper}>
                 <img className={styles.animalImage} alt="프로필이미지" src={petInfo.petImage} />
                 <div className={styles.animalProfileTextWrapper}>
-                  <span className={styles.animalMainText}>{`${petInfo.breed} | ${petInfo.petAge} |`}</span>
+                  <span className={styles.animalMainText}>
+                    {`${petInfo.breed} `}
+                    <span className={styles.textDivider}>|</span>
+                    {` ${petInfo.petAge} `}
+                    <span className={styles.textDivider}>|</span>
+                  </span>
                   <span className={styles.animalSubText}>
-                    {`앓고있는 병 ${petInfo.diseases?.map((disease) => `#${disease.name}`).join(" ")}`}
+                    {`앓고있는 병 `}
+                    {petInfo.diseases?.map((disease) => (
+                      <span className={styles.spanNoWrap} key={`hash-disease-${disease.id}`}>
+                        {`#${disease.name}`}&nbsp;
+                      </span>
+                    ))}
                   </span>
                 </div>
                 <IcChevronRight
