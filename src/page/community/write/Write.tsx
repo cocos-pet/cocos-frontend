@@ -52,7 +52,7 @@ const Write = () => {
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { selectedChips, isOpen, setOpen, categoryData, setCategoryData } =
+  const { selectedChips, isOpen, setOpen, clearAllChips, setCategoryData } =
     useFilterStore();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
@@ -75,6 +75,7 @@ const Write = () => {
 
   const onBackClick = () => {
     navigate(PATH.COMMUNITY.ROOT);
+    clearAllChips();
   };
 
   const TagLabel = [
