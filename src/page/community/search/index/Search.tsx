@@ -4,10 +4,7 @@ import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
-import {
-  useSearchGet,
-  useSearchPost,
-} from "@api/domain/community/search/hook.ts";
+import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 
 const Search = () => {
@@ -29,6 +26,9 @@ const Search = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (searchText: string) => {
+    if (searchText.trim() === "") {
+      return;
+    }
     mutate(
       { keyword: searchText },
       {
@@ -39,7 +39,7 @@ const Search = () => {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      }
+      },
     );
   };
 
