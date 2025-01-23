@@ -42,7 +42,6 @@ const Category = () => {
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
   const { data: disease } = useGetDisease(bodyDiseaseIds);
 
-  // body overflow 처리
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -54,7 +53,6 @@ const Category = () => {
     };
   }, [isOpen]);
 
-  // 필터 데이터 설정
   useEffect(() => {
     if (symptoms?.bodies) {
       setCategoryData("symptoms", symptoms.bodies);
@@ -64,7 +62,6 @@ const Category = () => {
     }
   }, [symptoms, disease, setCategoryData]);
 
-  // body IDs 설정
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
       const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
@@ -75,7 +72,6 @@ const Category = () => {
       }
     }
   }, [diseaseBodies, symptomBodies]);
-  // 필터 변경시 게시글 다시 불러오기
   useEffect(() => {
     fetchPostData();
   }, [selectedChips]);
@@ -92,10 +88,6 @@ const Category = () => {
       animalIds: selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
       symptomIds: selectedChips.symptomIds.length > 0 ? selectedChips.symptomIds : undefined,
       diseaseIds: selectedChips.diseaseIds.length > 0 ? selectedChips.diseaseIds : undefined,
-      keyword: undefined,
-      cursorId: undefined,
-      likeCount: undefined,
-      createdAt: undefined,
     };
 
     fetchPosts(filterPayload, {
