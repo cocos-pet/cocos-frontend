@@ -8,6 +8,7 @@ import {
   useSearchGet,
   useSearchPost,
 } from "@api/domain/community/search/hook.ts";
+import { useFilterStore } from "@store/filter.ts";
 
 const Search = () => {
   const user = {
@@ -22,6 +23,7 @@ const Search = () => {
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
   const { mutate } = useSearchPost();
+  const {} = useFilterStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
