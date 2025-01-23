@@ -41,7 +41,7 @@ const PetHealthDualSelector = ({ setStep, setIsSkipDisease, setCurrentStep }: Pe
     <>
       {/* 상단 영역 */}
       <div className={styles.layout}>
-        <div>
+        <div className={styles.gap}> 
           <Title text={ONBOARDING_GUIDE.isPetDisease.title} />
           <Docs text={ONBOARDING_GUIDE.isPetDisease.docs} />
         </div>

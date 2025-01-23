@@ -1,10 +1,25 @@
 import { style } from "@vanilla-extract/css";
-import { font } from "@style/styles.css";
+import { font, color } from "@style/styles.css";
 export const layout = style({
   display: "flex",
-  justifyContent: "center",
-  padding: "13.5rem 2rem 0 2rem",
+  flexDirection: "column",
+  alignItems: "center",
+  gap: "1.7rem",
+  padding: "12.5rem 2rem 0 2rem",
+
+  height: "100vh",
+  backgroundColor: color.primary.blue500,
 });
+
+export const span = style([
+  font.heading03,
+  {
+    width: "15.9rem",
+    color: color.gray.gray000,
+    textAlign: "center",
+    marginTop: "0.9rem",
+  },
+]);
 
 export const buttonStyle = style([
   font.body01,

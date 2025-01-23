@@ -8,6 +8,9 @@ export const categoryContainer = style({
 
 export const postsContainer = style({
   padding: "1.6rem 2rem 2rem 2rem",
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.6rem",
 });
 
 export const filterContainer = style({
@@ -15,6 +18,7 @@ export const filterContainer = style({
   display: "flex",
   justifyContent: "space-between",
   alignItems: "center",
+
   padding: "1.6rem 2rem 0rem 2rem",
 });
 

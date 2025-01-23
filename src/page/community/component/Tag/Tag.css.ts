@@ -25,14 +25,17 @@ export const tagContainer = recipe({
 
       whiteSpace: "nowrap",
       overflow: "hidden",
-
+      selectors: {
+        "&": {
+          "-webkit-tap-highlight-color": "transparent",
+        } as any,
+      },
       ":active": {
-        border: `1px solid ${semanticColor.primary.normal}`,
-        color: semanticColor.text.heavy,
+        backgroundColor: "transparent",
+        boxShadow: "none",
       },
       ":focus": {
-        border: `1px solid ${semanticColor.primary.normal}`,
-        color: semanticColor.text.heavy,
+        backgroundColor: "transparent",
       },
     },
   ],
@@ -57,6 +60,7 @@ export const tagContainer = recipe({
 export const tagValue = style([
   font.heading03,
   {
+    fontWeight: "500",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",

@@ -1,5 +1,15 @@
 import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
+import {
+  IcBaseProfileImage,
+  IcCurious,
+  IcCuriousActive,
+  IcCuriousUnactive,
+  IcLeftarrow,
+  IcLikeActive,
+  IcLikeDisabled,
+  IcTest,
+} from "@asset/svg";
 import { IcBaseProfileImage, IcLeftarrow, IcLikeActive, IcLikeDisabled } from "@asset/svg";
 import { styles } from "@page/community/[postId]/PostDetail.css";
 import { Button } from "@common/component/Button";
@@ -24,6 +34,8 @@ import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
+import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
+import Spacing from "@common/component/Spacing/Spacing.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -111,6 +123,16 @@ const PostDetail = () => {
     });
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 조건: 텍스트가 비어있고 Backspace 키를 누를 때 -> 멘션 제거
+    if (e.key === "Backspace" && !parsedComment.text) {
+      setParsedComment((prevState) => ({
+        ...prevState,
+        mention: "",
+      }));
+    }
+  };
+
   const onBackClick = () => {
     navigate(-1);
   };
@@ -163,6 +185,10 @@ const PostDetail = () => {
     );
   };
 
+  const onModalClose = () => {
+    setOpenModalId(undefined);
+  };
+
   if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
 
   return (
@@ -172,6 +198,7 @@ const PostDetail = () => {
         onLeftClick={onBackClick}
         type={"noTitle"}
         rightBtn={
+          // postData.isWriter && (
           <MoreModal
             onDelete={() => {
               setOpen(true);
@@ -180,15 +207,19 @@ const PostDetail = () => {
             isOpen={openModalId === `post-${postId}`}
             onToggleModal={() => setOpenModalId(`post-${postId}`)}
           />
+          // )
         }
       />
-      <div className={styles.container}>
+      <div className={styles.container} onClick={onModalClose}>
         <Button
           leftIcon={getDropdownValuetoIcon(postData.category)}
           label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
           disabled={true}
+          onClick={() => {
+            console.log("category");
+          }}
         />
         <div className={styles.top}>
           {postData.profileImage ? (
@@ -215,8 +246,44 @@ const PostDetail = () => {
             <Chip key={`postTag-${index}`} label={tag} color={"blue"} disabled={true} />
           ))}
         </div>
+        <Divider size={"small"} />
         <div className={styles.subContents}>
           <div className={styles.item}>
+            {getCategoryResponse(postData.category) === "curious" ? (
+              isLiked ? (
+                <IcCuriousActive
+                  width={24}
+                  height={24}
+                  onClick={onLikePostClick}
+                />
+              ) : (
+                <IcCuriousUnactive
+                  width={24}
+                  height={24}
+                  onClick={onLikeDeleteClick}
+                />
+              )
+            ) : getCategoryResponse(postData.category) === "support" ? (
+              isLiked ? (
+                <IcLikeActive
+                  width={24}
+                  height={24}
+                  onClick={onLikePostClick}
+                />
+              ) : (
+                <IcLikeDisabled
+                  width={24}
+                  height={24}
+                  onClick={onLikeDeleteClick}
+                />
+              )
+            ) : null}
+            <span className={styles.categoryName}>
+              {getCategoryResponse(postData.category) === "curious"
+                ? "궁금해요 "
+                : "응원해요 "}
+              {likeCount}
+            </span>
             {isLiked ? (
               <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
             ) : (
@@ -231,6 +298,11 @@ const PostDetail = () => {
         <div className={styles.commentTitle}>
           댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
+        <CommentList
+          comments={{ comments: commentsData }}
+          onCommentReplyClick={onCommentReplyClick}
+          onModalClose={onModalClose}
+        />
         <CommentList comments={{ comments: commentsData }} onCommentReplyClick={onCommentReplyClick} />
       </div>
 
@@ -241,6 +313,7 @@ const PostDetail = () => {
           value={parsedComment.text}
           onClearClick={onClearClick}
           placeholder={"댓글을 입력해주세요."}
+          onKeyDown={onKeyDown}
         />
         {parsedComment.text && (
           <button className={styles.upload} onClick={onSubmitComment}>

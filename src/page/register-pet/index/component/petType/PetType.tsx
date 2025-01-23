@@ -35,7 +35,7 @@ const PetType = ({ setStep, updatePetData }: PetTypeProps) => {
     <>
       {/* 상단 영역 */}
       <div className={styles.layout}>
-        <div>
+        <div className={styles.gap}>
           <Title text={ONBOARDING_GUIDE.petType.title} />
           <Docs text={ONBOARDING_GUIDE.petType.docs} />
         </div>

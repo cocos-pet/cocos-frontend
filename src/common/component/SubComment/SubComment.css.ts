@@ -11,6 +11,13 @@ export const commentItem = style([
   },
 ]);
 
+export const blue = style([
+  font.label01,
+  {
+    color: semanticColor.text.heavy,
+  },
+]);
+
 export const containerOptionsIcon = style([
   {
     position: "absolute",
@@ -58,6 +65,8 @@ export const nickname = style([
     fontWeight: 600,
     color: semanticColor.text.assistive,
     letterSpacing: "-0.024rem",
+    display: "flex",
+    gap: "0.4rem",
   },
 ]);
 

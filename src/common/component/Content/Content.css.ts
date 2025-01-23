@@ -7,7 +7,6 @@ export const styles = {
     alignItems: "flex-end",
     justifyContent: "space-between",
     gap: "1.2rem",
-    marginTop: "1.6rem",
     paddingBottom: "1.6rem",
     borderBottom: `1px solid ${color.gray.gray200}`,
   }),

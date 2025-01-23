@@ -308,7 +308,7 @@ const Write = () => {
             <Spacing marginBottom={"1.2"} />
             <TextArea
               value={params.content}
-              placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n\n(예시: ~한 증상은 어디로 가야 하나요?)`}
+              placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n(예시: ~한 증상은 어디로 가야 하나요?)`}
               onChange={(e) => onChangeValue("content", e.target.value)}
             />
             <Spacing marginBottom={"1.2"} />

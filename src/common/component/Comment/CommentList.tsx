@@ -1,5 +1,6 @@
 import Comment from "./Comment";
 import { commentGetResponse } from "@api/domain/community/post";
+import React from "react";
 
 interface CommentListProps {
   comments?: commentGetResponse["data"];
@@ -7,9 +8,14 @@ interface CommentListProps {
     nickname: string | undefined,
     commentId: number | undefined
   ) => void;
+  onModalClose: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const CommentList = ({ comments, onCommentReplyClick }: CommentListProps) => {
+const CommentList = ({
+  comments,
+  onCommentReplyClick,
+  onModalClose,
+}: CommentListProps) => {
   const onDelete = (id?: number) => {
     // TODO :  댓글 삭제
   };
@@ -22,6 +28,7 @@ const CommentList = ({ comments, onCommentReplyClick }: CommentListProps) => {
           comment={comment}
           onDelete={() => onDelete(comment.id)}
           onCommentReplyClick={onCommentReplyClick}
+          onModalClose={onModalClose}
         />
       ))}
     </div>

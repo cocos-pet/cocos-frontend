@@ -31,7 +31,7 @@ const Nickname = () => {
 
   // 중복 검사 메시지 추가
   if (isExistNickname?.isExistNickname) {
-    validationMessages.push("이 닉네임은 누군가 사용 중이에요.");
+    validationMessages.push("이 닉네임은 이미 사용 중이에요.");
   }
 
   const isValid = nickname && validationMessages.length === 0;
