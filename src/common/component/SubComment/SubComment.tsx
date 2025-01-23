@@ -12,13 +12,10 @@ import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilt
 interface SubCommentProps {
   commentId: number | undefined;
   subComment: commentGetRequestSubCommentType;
-  onSubCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onSubCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
   onReplyClick?: (id: number | undefined) => void;
   onCommentDelete: () => void;
-  onModalClose: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const SubComment = ({
@@ -60,11 +57,7 @@ const SubComment = ({
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img
-            src={subComment.profileImage}
-            className={styles.profileImage}
-            alt="프로필 이미지"
-          />
+          <img src={subComment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {subComment.nickname}
@@ -72,9 +65,7 @@ const SubComment = ({
             </span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt
-                ? formatTime(subComment.createdAt).toLocaleString()
-                : ""}
+              {subComment.createdAt ? formatTime(subComment.createdAt).toLocaleString() : ""}
             </span>
           </div>
           {subComment.isWriter && (
@@ -85,9 +76,7 @@ const SubComment = ({
                 setIsOpen(true);
               }}
               isOpen={openModalId === `subComment-${subComment.id}`}
-              onToggleModal={() =>
-                setOpenModalId(`subComment-${subComment.id}`)
-              }
+              onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
             />
           )}
         </div>

@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  iconstyle,
-  InputVariants,
-  styles,
-  WrapVariants,
-} from "@common/component/TextField/styles.css.ts";
+import { iconstyle, InputVariants, styles, WrapVariants } from "@common/component/TextField/styles.css.ts";
 import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
@@ -17,7 +12,7 @@ interface TextFieldProps {
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
-  onClearClick?: () => void;
+  onClearClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
   maxLength?: number; // input 입력 가능길이
   mentionedNickname?: string; // 언급된 닉네임
 }
@@ -57,7 +52,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       maxLength,
       mentionedNickname,
     },
-    ref
+    ref,
   ) => {
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
@@ -77,11 +72,13 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
           />
         </div>
         {value && isDelete ? (
-          <IcClear onClick={onClearClick} height={20} width={20} />
+          <button onClick={onClearClick}>
+            <IcClear height={20} width={20} />
+          </button>
         ) : (
           icon
         )}
       </div>
     );
-  }
+  },
 );

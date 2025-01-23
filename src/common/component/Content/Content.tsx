@@ -1,10 +1,4 @@
-import {
-  IcCurious,
-  IcLikeActive,
-  IcLikeDisabled,
-  IcoMessage,
-  IcTest,
-} from "@asset/svg";
+import { IcCurious, IcLikeDisabled, IcoMessage } from "@asset/svg";
 import { styles } from "@common/component/Content/Content.css.ts";
 
 interface ContentPropTypes {
@@ -52,7 +46,8 @@ const Content = ({
     <div className={styles.container} onClick={onClick}>
       <div className={styles.left}>
         <div className={styles.category}>
-          {breed} · {petAge}살
+          {breed}
+          {petAge && <span> · {petAge}살</span>}
         </div>
         <div className={styles.title}>{postTitle}</div>
         <div className={styles.contents}>{postContent}</div>
@@ -74,9 +69,7 @@ const Content = ({
           <div className={styles.item}>{timeAgo}</div>
         </div>
       </div>
-      {postImage && (
-        <img src={postImage} alt="postImage" className={styles.postImage} />
-      )}
+      {postImage && <img src={postImage} alt="postImage" className={styles.postImage} />}
     </div>
   );
 };

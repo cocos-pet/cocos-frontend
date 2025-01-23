@@ -8,25 +8,17 @@ import { formatTime } from "@shared/util/formatTime.ts";
 import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
 
-  onDelete: () => void;
-  onModalClose: (e: React.MouseEvent<HTMLDivElement>) => void;
+  onDelete?: () => void;
+  onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Comment = ({
-  comment,
-  onCommentReplyClick,
-  onDelete,
-  onModalClose,
-}: CommentProps) => {
+const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname, comment.id);
@@ -48,11 +40,7 @@ const Comment = ({
     <div className={styles.commentItem} onClick={onModalClose}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img
-            src={comment.profileImage}
-            className={styles.profileImage}
-            alt="프로필 이미지"
-          />
+          <img src={comment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {comment.nickname}
@@ -60,9 +48,7 @@ const Comment = ({
             </span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt
-                ? formatTime(comment.createdAt).toLocaleString()
-                : ""}
+              {comment.createdAt ? formatTime(comment.createdAt).toLocaleString() : ""}
             </span>
           </div>
           {comment.isWriter && (
