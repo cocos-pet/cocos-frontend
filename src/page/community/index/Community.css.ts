@@ -41,5 +41,5 @@ export const btnContainer = style({
 });
 
 export const categoryContainer = style({
-  padding: "1.2rem 0rem 1.2rem 0rem",
+  padding: "2rem 0rem 2rem 0rem",
 });
