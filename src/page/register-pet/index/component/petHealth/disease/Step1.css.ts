@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color } from "@style/styles.css";
+import { color, font } from "@style/styles.css.ts";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
 export const title = style({
@@ -49,5 +49,15 @@ export const btnWrapper = style({
   whiteSpace: "nowrap",
   padding: "1.2rem 2rem 3.2rem 2rem",
 });
+
+export const spanFont = style([
+  font.label01,
+  {
+    color: color.gray.gray900,
+
+    fontWeight: 600,
+    letterSpacing: "-0.024rem",
+  },
+]);
 
 export type ItemType = RecipeVariants<typeof contentItem>;
