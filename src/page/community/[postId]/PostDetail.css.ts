@@ -85,7 +85,9 @@ export const styles = {
   item: style([
     font.label01,
     {
-      width: "6.2rem",
+      marginTop: "0.4rem",
+
+      width: "100%",
       display: "flex",
       alignItems: "center",
       gap: "0.4rem",
@@ -127,6 +129,14 @@ export const styles = {
       flexShrink: 0,
       padding: "1rem 1.2rem",
       borderRadius: "1rem",
+    },
+  ]),
+  categoryName: style([
+    font.label01,
+    {
+      color: color.gray.gray600,
+      fontWeight: "600",
+      fontSize: "1.4rem",
     },
   ]),
 };

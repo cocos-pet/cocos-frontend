@@ -2,6 +2,9 @@ import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import {
   IcBaseProfileImage,
+  IcCurious,
+  IcCuriousActive,
+  IcCuriousUnactive,
   IcLeftarrow,
   IcLikeActive,
   IcLikeDisabled,
@@ -30,6 +33,8 @@ import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
+import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
+import Spacing from "@common/component/Spacing/Spacing.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -246,18 +251,44 @@ const PostDetail = () => {
             />
           ))}
         </div>
+        <Divider size={"small"} />
         <div className={styles.subContents}>
           <div className={styles.item}>
-            {isLiked ? (
-              <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
-            ) : (
-              <IcLikeDisabled
-                width={24}
-                height={24}
-                onClick={onLikeDeleteClick}
-              />
-            )}
-            <span>{likeCount}</span>
+            {getCategoryResponse(postData.category) === "curious" ? (
+              isLiked ? (
+                <IcCuriousActive
+                  width={24}
+                  height={24}
+                  onClick={onLikePostClick}
+                />
+              ) : (
+                <IcCuriousUnactive
+                  width={24}
+                  height={24}
+                  onClick={onLikeDeleteClick}
+                />
+              )
+            ) : getCategoryResponse(postData.category) === "support" ? (
+              isLiked ? (
+                <IcLikeActive
+                  width={24}
+                  height={24}
+                  onClick={onLikePostClick}
+                />
+              ) : (
+                <IcLikeDisabled
+                  width={24}
+                  height={24}
+                  onClick={onLikeDeleteClick}
+                />
+              )
+            ) : null}
+            <span className={styles.categoryName}>
+              {getCategoryResponse(postData.category) === "curious"
+                ? "궁금해요 "
+                : "응원해요 "}
+              {likeCount}
+            </span>
           </div>
         </div>
       </div>

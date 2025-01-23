@@ -26,6 +26,7 @@ export const postList = style({
   flexDirection: "column",
   gap: "1.6rem",
 });
+
 // 탭 버튼 스타일
 export const tabButton = recipe({
   base: {
