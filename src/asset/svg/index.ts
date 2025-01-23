@@ -1,5 +1,7 @@
 export { default as Icfilteron } from "./Icfilteron";
 export { default as Check } from "./Check";
+export { default as IcGroup } from "./IcGroup";
+export { default as IcCocosLogin } from "./IcCocosLogin";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
 export { default as IcIcons } from "./IcIcons";
@@ -17,6 +19,8 @@ export { default as IcCocosM } from "./IcCocosM";
 export { default as IcCommunity } from "./IcCommunity";
 export { default as IcCommunityon } from "./IcCommunityon";
 export { default as IcCurious } from "./IcCurious";
+export { default as IcCuriousActive } from "./IcCuriousActive";
+export { default as IcCuriousUnactive } from "./IcCuriousUnactive";
 export { default as IcDelete } from "./IcDelete";
 export { default as IcDeleteBlack } from "./IcDeleteBlack";
 export { default as IcDeleteWhite } from "./IcDeleteWhite";

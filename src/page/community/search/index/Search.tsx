@@ -87,7 +87,7 @@ const Search = () => {
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
           onKeyDown={(e) => handleKeyDown(e)}
-          icon={<IcSearch />}
+          icon={<IcSearch width={20} height={20} />}
           onClearClick={() => setSearchText("")}
         />
       </div>

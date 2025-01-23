@@ -22,9 +22,9 @@ const Complete = () => {
         <div className={styles.titleWrapper}>
           <div>
             <Title text={`${nickname?.nickname}님`} />
-            <Title text={"등록이 완료되었습니다"} />
+            <Title text={"등록이 완료되었어요"} />
           </div>
-          <Docs text={"반려동물과 함께하는 긴 시간, 더 잘 돌봐드릴게요"} />
+          <Docs text={"더 건강한 반려동물을 위해 코코스가 함께할게요"} />
         </div>
         <img src={img} alt="onboarding-character" width={296} height={325} />
       </div>

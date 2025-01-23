@@ -31,7 +31,7 @@ export const selector = recipe({
         backgroundColor: color.gray.gray000,
       },
       selected: {
-        color: color.primary.blue600,
+        color: color.gray.gray900,
         backgroundColor: " rgba(67, 214, 255, 0.16)",
       },
     },

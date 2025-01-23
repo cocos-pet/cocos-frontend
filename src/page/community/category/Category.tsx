@@ -11,6 +11,9 @@ import { formatTime } from "@shared/util/formatTime";
 import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { useCallback, useEffect, useState } from "react";
 import { components } from "@type/schema";
+import { postPostFiltersRequest } from "@api/domain/community/search";
+import nocategory from "@asset/image/nocategory.png";
+import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook";
 
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
@@ -25,30 +28,78 @@ const Category = () => {
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
-
   const { mutate: fetchPosts } = usePostPostFilters();
+  const navigate = useNavigate();
+
+  // 필터 관련 상태와 hooks
+  const { isOpen, setOpen, category, setCategory, setCategoryData, selectedChips, toggleChips, categoryData } =
+    useFilterStore();
+
+  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
+  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
+  const { data: diseaseBodies } = useGetBodies("DISEASE");
+  const { data: symptomBodies } = useGetBodies("SYMPTOM");
+  const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
+  const { data: disease } = useGetDisease(bodyDiseaseIds);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (symptoms?.bodies) {
+      setCategoryData("symptoms", symptoms.bodies);
+    }
+    if (disease?.bodies) {
+      setCategoryData("disease", disease.bodies);
+    }
+  }, [symptoms, disease, setCategoryData]);
+
+  useEffect(() => {
+    if (diseaseBodies?.bodies && symptomBodies?.bodies) {
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      if (diseaseIdArr.length && symptomIdArr.length) {
+        setBodyDiseaseIds(diseaseIdArr);
+        setBodySymptomsIds(symptomIdArr);
+      }
+    }
+  }, [diseaseBodies, symptomBodies]);
+  
+  useEffect(() => {
+    fetchPostData();
+  }, [selectedChips]);
+
+  const isFilterOn =
+    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
 
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
-    fetchPosts(
-      { categoryId: Number(typeId), sortBy: "RECENT" },
-      {
-        onSuccess: (data) => {
-          setPosts(data);
-        },
+
+    const filterPayload: postPostFiltersRequest = {
+      categoryId: Number(typeId),
+      sortBy: "RECENT",
+      animalIds: selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
+      symptomIds: selectedChips.symptomIds.length > 0 ? selectedChips.symptomIds : undefined,
+      diseaseIds: selectedChips.diseaseIds.length > 0 ? selectedChips.diseaseIds : undefined,
+    };
+
+    fetchPosts(filterPayload, {
+      onSuccess: (data) => {
+        setPosts(data);
       },
-    );
-  }, [fetchPosts, typeId]);
-
-  useEffect(() => {
-    fetchPostData();
-  }, [fetchPostData]);
-
-  const navigate = useNavigate();
-
-  const { toggleOpen, selectedChips } = useFilterStore();
-  const isFilterOn =
-    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
+      onError: (error) => {
+        console.error("필터링된 게시글 조회 실패:", error);
+      },
+    });
+  }, [fetchPosts, typeId, selectedChips]);
 
   const handleGoBack = () => {
     navigate(PATH.COMMUNITY.ROOT);
@@ -58,69 +109,104 @@ const Category = () => {
     navigate(PATH.COMMUNITY.SEARCH);
   };
 
-  // 유효하지 않은 타입 처리
   if (!type || !validTypes.includes(type)) {
     return (
-      <div>
-        <h1>해당 카테고리는 존재하지 않습니다.</h1>
-      </div>
+      <>
+        <div className={styles.emptyContainer}>
+          <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+          <h1>아직 등록된 게시글이 없어요</h1>
+          <div className={styles.floatingBtnContainer}>
+            <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
+          </div>
+        </div>
+        <FilterBottomSheet />
+      </>
     );
   }
 
-  // 게시글이 없는 경우 처리
   if (posts.length === 0) {
     return (
-      <div>
-        <h1>게시글이 없습니다.</h1>
-      </div>
+      <>
+        <div className={styles.categoryContainer}>
+          <HeaderNav
+            leftIcon={<IcLeftarrow />}
+            centerContent={categoryMapping[type]}
+            rightBtn={<IcSearch />}
+            onLeftClick={handleGoBack}
+            onRightClick={handleGoSearch}
+          />
+          {type !== "magazine" && (
+            <div className={styles.filterContainer}>
+              {isFilterOn ? (
+                <Icfilteron onClick={() => setOpen(true)} width={24} />
+              ) : (
+                <Icfilter onClick={() => setOpen(true)} width={24} />
+              )}
+            </div>
+          )}
+          <div className={styles.emptyContainer}>
+            <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+            <h1>아직 등록된 게시글이 없어요</h1>
+            <div className={styles.floatingBtnContainer}>
+              <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
+            </div>
+          </div>
+        </div>
+        <FilterBottomSheet />
+      </>
     );
   }
 
   const categoryName = categoryMapping[type] || "알 수 없는 카테고리";
+
   return (
-    <div className={styles.categoryContainer}>
-      <HeaderNav
-        leftIcon={<IcLeftarrow />}
-        centerContent={categoryName}
-        rightBtn={<IcSearch />}
-        onLeftClick={handleGoBack}
-        onRightClick={handleGoSearch}
-      />
+    <>
+      <div className={styles.categoryContainer}>
+        <HeaderNav
+          leftIcon={<IcLeftarrow />}
+          centerContent={categoryName}
+          rightBtn={<IcSearch />}
+          onLeftClick={handleGoBack}
+          onRightClick={handleGoSearch}
+        />
 
-      {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}
-      {type !== "magazine" && (
-        <div className={styles.filterContainer}>
-          {isFilterOn ? <Icfilteron onClick={toggleOpen} width={24} /> : <Icfilter onClick={toggleOpen} width={24} />}
-          <FilterBottomSheet />
+        {type !== "magazine" && (
+          <div className={styles.filterContainer}>
+            {isFilterOn ? (
+              <Icfilteron onClick={() => setOpen(true)} width={24} />
+            ) : (
+              <Icfilter onClick={() => setOpen(true)} width={24} />
+            )}
+          </div>
+        )}
+
+        <div className={styles.postsContainer}>
+          {posts.map((post) => (
+            <Content
+              key={post.id}
+              breed={type === "magazine" ? "코코스" : post.breed}
+              petAge={type === "magazine" ? undefined : post.petAge}
+              postTitle={post.title}
+              postContent={post.content}
+              likeCnt={post.likeCount}
+              commentCnt={post.commentCount}
+              postImage={post.image}
+              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
+              timeAgo={formatTime(post.updatedAt as string)}
+              category={post.category}
+              likeIconType="curious"
+            />
+          ))}
         </div>
-      )}
 
-      {/* 게시글 목록 */}
-      <div className={styles.postsContainer}>
-        {posts.map((post) => (
-          <Content
-            key={post.id}
-            breed={post.breed}
-            petAge={post.petAge}
-            postTitle={post.title}
-            postContent={post.content}
-            likeCnt={post.likeCount}
-            commentCnt={post.commentCount}
-            postImage={post.image}
-            onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
-            timeAgo={formatTime(post.updatedAt as string)}
-            category={post.category}
-          />
-        ))}
+        {type !== "magazine" && (
+          <div className={styles.floatingBtnContainer}>
+            <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
+          </div>
+        )}
       </div>
-
-      {/* 코코스매거진이 아닐 때만 플로팅 버튼 표시 */}
-      {type !== "magazine" && (
-        <div className={styles.floatingBtnContainer}>
-          <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
-        </div>
-      )}
-    </div>
+      <FilterBottomSheet />
+    </>
   );
 };
 
