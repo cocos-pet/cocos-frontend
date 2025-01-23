@@ -39,8 +39,8 @@ const SearchDone = () => {
   const { setCategoryData, selectedChips, clearAllChips, setOpen } = useFilterStore();
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
-  const { data: symptoms } = useGetSymptoms(bodyDiseaseIds);
-  const { data: disease } = useGetDisease(bodySymptomsIds);
+  const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
+  const { data: disease } = useGetDisease(bodyDiseaseIds);
   const { data: animal } = useGetAnimal();
 
   useEffect(() => {
