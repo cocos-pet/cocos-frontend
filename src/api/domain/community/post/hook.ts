@@ -1,6 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-  deleteComment,
   getComments,
   deleteLike,
   getPost,
@@ -8,10 +6,12 @@ import {
   postComment,
   postSubComment,
   deleteSubComment,
+  deleteComment,
   deletePost,
 } from "@api/domain/community/post";
-import { useNavigate, useParams } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { PATH } from "@route/path.ts";
+import { useNavigate, useParams } from "react-router-dom";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
@@ -22,6 +22,7 @@ export const POST_QUERY_KEY = {
   ],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
+  ARTICLE_POST_QUERY_KEY: () => ["articlePost"],
 };
 
 export const COMMENT_QUERY_KEY = {

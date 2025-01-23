@@ -3,8 +3,8 @@ import React from "react";
 
 type DropDownType = {
   isOpen: boolean;
-  items: Array<{ icon: React.ReactNode; label: string }>;
-  onClickItem: (target: string, value: string) => void;
+  items: Array<{ icon: React.ReactNode; label: string; value: number }>;
+  onClickItem: (target: string, value: number) => void;
   toggleDropDown: () => void;
 };
 
@@ -17,8 +17,8 @@ const DropDown = ({
   if (!isOpen) {
     return;
   }
-  const onClick = (label: string) => {
-    onClickItem("category", label);
+  const onClick = (value: number) => {
+    onClickItem("categoryId", value);
     toggleDropDown();
   };
 
@@ -28,7 +28,7 @@ const DropDown = ({
         <div
           key={index}
           className={itemStyle}
-          onClick={() => onClick(item.label)}
+          onClick={() => onClick(item.value)}
         >
           {item.icon}
           <span>{item.label}</span>
