@@ -1,11 +1,13 @@
 import {
   getSearch,
   postPostFilters,
+  postPostFiltersRequest,
   postSearch,
   searchPostType,
 } from "@api/domain/community/search/index.ts";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { paths } from "@type/schema";
 
 const SEARCH_QUERY_KEY = {
   SEARCH_QUERY_KEY: () => ["search"],
@@ -28,21 +30,23 @@ export const useSearchGet = () => {
 /**
  * @description 게시물 필터 조회 API
  */
+//
+// {
+//   keyword?: string;
+//   animalIds?: number[];
+//   symptomIds?: number[];
+//   diseaseIds?: number[];
+//   sortBy?: "RECENT" | "POPULAR";
+//   cursorId?: number;
+//   categoryId?: number;
+//   likeCount?: number;
+//   createAt?: string;
+// }
 
 export const usePostPostFilters = () => {
   return useMutation({
     mutationKey: SEARCH_QUERY_KEY.SEARCH_POST_FILTERS_QUERY_KEY(),
-    mutationFn: (params: {
-      keyword?: string;
-      animalIds?: number[];
-      symptomIds?: number[];
-      diseaseIds?: number[];
-      sortBy?: "RECENT" | "POPULAR";
-      cursorId?: number;
-      categoryId?: number;
-      likeCount?: number;
-      createAt?: string;
-    }) => {
+    mutationFn: (params: postPostFiltersRequest) => {
       return postPostFilters(params);
     },
   });

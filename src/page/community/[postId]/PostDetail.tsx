@@ -10,8 +10,15 @@ import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
-import { useCommentsGet, useDeleteLike, useLikePost, usePostDelete, usePostGet } from "@api/domain/community/post/hook";
-
+import {
+  useCommentsGet,
+  usePostDelete,
+  useCommentPost,
+  useDeleteLike,
+  useLikePost,
+  usePostGet,
+  useSubCommentPost,
+} from "@api/domain/community/post/hook";
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
@@ -26,29 +33,87 @@ const PostDetail = () => {
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
   const { data: commentsData } = useCommentsGet(Number(postId));
-
-  const user = {
-    accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0ODQwNDAsImV4cCI6MTczODA4ODg0MCwibWVtYmVySWQiOjF9.NLB2jdV8n1pUCBoFxtLrTUKw8Lqi0CLyduNt5w4JEyJ0UL6tBuyahredqvfuB31D5E_saVb9OOVqe6WtClwufw",
-  };
-  localStorage.setItem("user", JSON.stringify(user));
-
-  const [isOpen, setOpen] = useState(false);
+  const { mutate: commentPost } = useCommentPost(Number(postId));
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
-  const [comment, setComment] = useState("");
+  const [commentId, setCommentId] = useState<number>();
+  const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
+  const { mutate: subCommentPost } = useSubCommentPost(
+    Number(commentId),
+    Number(postId)
+  );
+  const [parsedComment, setParsedComment] = useState<{
+    mention: string;
+    text: string;
+  }>({
+    mention: "",
+    text: "",
+  });
 
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setComment(e.target.value);
+  // TODO : 삭제 해라.
+  const user = {
+    accessToken:
+      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0OTQ1MDksImV4cCI6MTczODA5OTMwOSwibWVtYmVySWQiOjJ9.JhS3oRdiCmYpsa3VCrsxEdDP4DBt8hf5rGdzetF9LFNQltZd1yEQ1ARIskYkt_WDfKbcC-EYmH_J3q1iT6A9Lg",
   };
 
+  localStorage.setItem("user", JSON.stringify(user));
+
   const onClearClick = () => {
-    setComment("");
+    setParsedComment({ mention: "", text: "" });
   };
 
   const onSubmitComment = () => {
-    // TODO : 댓글 등록 API 호출
+    if (parsedComment.mention) {
+      // 대댓글 등록
+      subCommentPost(
+        {
+          commentId: commentId,
+          nickname: parsedComment.mention,
+          content: parsedComment.text,
+        },
+        {
+          onSuccess: (data) => {
+            onClearClick();
+          },
+          onError: (error) => {},
+        }
+      );
+      onClearClick();
+    } else {
+      // 댓글 등록
+      commentPost(
+        {
+          content: parsedComment.text,
+        },
+        {
+          onSuccess: (data) => {
+            onClearClick();
+          },
+          onError: (error) => {},
+        }
+      );
+      onClearClick();
+    }
+  };
+
+  const onCommentReplyClick = (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => {
+    if (nickname) {
+      setParsedComment({ mention: nickname, text: "" });
+    }
+    setCommentId(commentId);
+  };
+
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    const mentionMatch = value.match(/^@(\S+)\s/);
+    setParsedComment({
+      mention: parsedComment.mention,
+      text: mentionMatch ? value.replace(mentionMatch[0], "") : value,
+    });
   };
 
   const onBackClick = () => {
@@ -62,7 +127,6 @@ const PostDetail = () => {
   };
 
   useEffect(() => {
-    // 초기 데이터 세팅
     if (postData) {
       setIsLiked(postData.isLiked);
       setLikeCount(postData.likeCounts);
@@ -80,10 +144,12 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
+          setLikeCount((prevState) =>
+            Number(prevState !== undefined ? prevState - 1 : 0)
+          );
         },
         onError: (error) => {},
-      },
+      }
     );
   };
 
@@ -98,10 +164,12 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
+          setLikeCount((prevState) =>
+            prevState !== undefined ? prevState + 1 : 0
+          );
         },
         onError: (error) => {},
-      },
+      }
     );
   };
 
@@ -133,11 +201,18 @@ const PostDetail = () => {
           disabled={true}
         />
         <div className={styles.top}>
-          {<img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />}
+          {
+            <img
+              src={postData.profileImage}
+              alt="userProfile"
+              className={styles.profileImage}
+            />
+          }
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 ·{" "}
+              {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -146,11 +221,21 @@ const PostDetail = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <img key={`postImage-${index}`} src={image} alt="postImage" className={styles.image} />
+          <img
+            key={`postImage-${index}`}
+            src={image}
+            alt="postImage"
+            className={styles.image}
+          />
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
-            <Chip key={`postTag-${index}`} label={tag} color={"blue"} disabled={true} />
+            <Chip
+              key={`postTag-${index}`}
+              label={tag}
+              color={"blue"}
+              disabled={true}
+            />
           ))}
         </div>
         <div className={styles.subContents}>
@@ -158,31 +243,45 @@ const PostDetail = () => {
             {isLiked ? (
               <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
             ) : (
-              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
+              <IcLikeDisabled
+                width={24}
+                height={24}
+                onClick={onLikeDeleteClick}
+              />
             )}
             <span>{likeCount}</span>
           </div>
         </div>
       </div>
       <Divider size={"large"} />
-      <div className={styles.container}>
+      <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
+          댓글{" "}
+          <span className={styles.commentCount}>
+            {postData.totalCommentCounts}
+          </span>
         </div>
-        <CommentList comments={{ comments: commentsData }} />
-        <div className={styles.commentContainer}>
-          <TextField
-            onChange={onChange}
-            value={comment}
-            onClearClick={onClearClick}
-            placeholder={"댓글을 입력해주세요."}
-          />
-          {comment && (
-            <button className={styles.upload} onClick={onSubmitComment}>
-              올리기
-            </button>
-          )}
-        </div>
+        <CommentList
+          comments={{ comments: commentsData }}
+          onCommentReplyClick={onCommentReplyClick}
+        />
+      </div>
+
+      <div className={styles.textContainer}>
+        <TextField
+          mentionedNickname={
+            parsedComment.mention ? `@${parsedComment.mention} ` : ``
+          }
+          onChange={onChange}
+          value={parsedComment.text}
+          onClearClick={onClearClick}
+          placeholder={"댓글을 입력해주세요."}
+        />
+        {parsedComment.text && (
+          <button className={styles.upload} onClick={onSubmitComment}>
+            올리기
+          </button>
+        )}
       </div>
       <SimpleBottomSheet
         isOpen={isOpen}

@@ -5,7 +5,7 @@ import {
   styles,
   WrapVariants,
 } from "@common/component/TextField/styles.css.ts";
-import { IcClear, IcCocosM } from "@asset/svg";
+import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
   icon?: React.ReactNode;
@@ -19,6 +19,7 @@ interface TextFieldProps {
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: () => void;
   maxLength?: number; // input 입력 가능길이
+  mentionedNickname?: string; // 언급된 닉네임
 }
 
 type propsType = WrapVariants & TextFieldProps & InputVariants;
@@ -54,13 +55,15 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       onKeyDown,
       onClearClick,
       maxLength,
+      mentionedNickname,
     },
     ref
   ) => {
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
         <div className={styles.leftWrap()}>
-          <p className={iconstyle}>{leftIcon && leftIcon}</p>
+          {leftIcon && <p className={iconstyle}>leftIcon</p>}
+          <span className={styles.mention}>{mentionedNickname}</span>
           <input
             ref={ref}
             type="text"

@@ -110,6 +110,15 @@ export const styles = {
       alignContent: "center",
     },
   }),
+
+  mention: style([
+    font.body01,
+    {
+      color: semanticColor.primary.heavy,
+      fontWeight: 500,
+      flexShrink: 0,
+    },
+  ]),
 };
 
 export const iconstyle = style({
