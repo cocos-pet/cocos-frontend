@@ -17,6 +17,7 @@ export const PATH = {
     SEARCH: "/community/search",
     SEARCH_DONE: "/community/search/done",
     WRITE: "/community/write",
+    DETAIL:"/community/detail"
   },
   MYPAGE: {
     ROOT: "/mypage",

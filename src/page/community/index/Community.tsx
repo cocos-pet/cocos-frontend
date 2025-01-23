@@ -20,6 +20,7 @@ const Community = () => {
     navigate(PATH.COMMUNITY.SEARCH);
   };
 
+
   const extractTypeFromName = (name: string) => {
     if (name === "증상·질병") {
       return "symptom";

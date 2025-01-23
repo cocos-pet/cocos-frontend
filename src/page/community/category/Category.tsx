@@ -25,7 +25,6 @@ const Category = () => {
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
-
   const { mutate: fetchPosts } = usePostPostFilters();
 
   const fetchPostData = useCallback(() => {
