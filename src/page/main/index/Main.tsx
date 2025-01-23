@@ -13,10 +13,15 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 
 import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
+import { useEffect } from "react";
 
 const Main = () => {
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
+
+  useEffect(() => {
+    sessionStorage.setItem("searchBackUrl", PATH.MAIN);
+  }, []);
 
   const navigate = useNavigate();
 
