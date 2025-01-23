@@ -26,11 +26,7 @@ const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) =
   };
 
   const handleToggle = (id: number) => {
-    if (selectedChips.diseaseIds.length < 7 && category === "disease") {
-      toggleChips({ category: parentKey, id });
-    } else if (selectedChips.symptomIds.length < 7 && category === "symptoms") {
-      toggleChips({ category: parentKey, id });
-    }
+    toggleChips({ category: parentKey, id });
   };
 
   const renderDropDownData = () => {
