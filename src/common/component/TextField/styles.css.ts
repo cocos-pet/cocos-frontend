@@ -1,5 +1,6 @@
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { color, font, semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 
 export const styles = {
   wrapper: recipe({
@@ -109,6 +110,15 @@ export const styles = {
       alignContent: "center",
     },
   }),
+
+  mention: style([
+    font.body01,
+    {
+      color: semanticColor.primary.heavy,
+      fontWeight: 500,
+      flexShrink: 0,
+    },
+  ]),
 };
 
 export type WrapVariants = RecipeVariants<typeof styles.wrapper>;

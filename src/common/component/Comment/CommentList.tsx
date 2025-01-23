@@ -3,11 +3,15 @@ import { commentGetResponse } from "@api/domain/community/post";
 
 interface CommentListProps {
   comments?: commentGetResponse["data"];
+  onCommentReplyClick?: (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => void;
 }
 
-const CommentList = ({ comments }: CommentListProps) => {
-  const onReplyClick = (id?: number) => {
-    // TODO : 대댓글 작성
+const CommentList = ({ comments, onCommentReplyClick }: CommentListProps) => {
+  const onDelete = (id?: number) => {
+    // TODO :  댓글 삭제
   };
 
   return (
@@ -16,7 +20,8 @@ const CommentList = ({ comments }: CommentListProps) => {
         <Comment
           key={comment.id}
           comment={comment}
-          onReplyClick={() => onReplyClick(comment.id)}
+          onDelete={() => onDelete(comment.id)}
+          onCommentReplyClick={onCommentReplyClick}
         />
       ))}
     </div>
