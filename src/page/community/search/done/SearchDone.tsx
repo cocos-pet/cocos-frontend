@@ -109,7 +109,7 @@ const SearchDone = () => {
     navigate(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
   };
 
-  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
     clearAllChips();
