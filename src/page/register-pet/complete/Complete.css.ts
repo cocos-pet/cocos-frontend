@@ -9,7 +9,7 @@ export const layout = style({
   display: "flex",
   flexDirection: "column",
   alignItems: "center",
-  gap: "2rem",
+  gap: "1.3rem",
   padding: "7.2rem 2rem 0 2rem",
 });
 export const titleWrapper = style({
