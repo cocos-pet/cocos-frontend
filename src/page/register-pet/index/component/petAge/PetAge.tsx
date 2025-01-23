@@ -42,7 +42,7 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
     <>
       {/* 상단 영역 */}
       <div className={styles.layout}>
-        <div>
+        <div className={styles.gap}>
           <Title text={ONBOARDING_GUIDE.petAge.title} />
           <Docs text={ONBOARDING_GUIDE.petAge.docs} />
         </div>
