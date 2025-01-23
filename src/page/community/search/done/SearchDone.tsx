@@ -45,7 +45,8 @@ const SearchDone = () => {
   const { mutate } = usePostPostFilters();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
-  const { setCategoryData, selectedChips, isOpen, setOpen } = useFilterStore();
+  const { setCategoryData, selectedChips, clearAllChips, setOpen } =
+    useFilterStore();
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodyDiseaseIds);
@@ -115,10 +116,12 @@ const SearchDone = () => {
   };
 
   const onTextFieldClick = () => {
+    clearAllChips();
     navigate(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
   };
 
   const onBackClick = () => {
+    clearAllChips();
     navigate(-1);
   };
 
