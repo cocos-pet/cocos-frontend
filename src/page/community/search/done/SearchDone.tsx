@@ -1,9 +1,4 @@
-import {
-  IcLeftarrow,
-  IcSearch,
-  IcSearchFillter,
-  IcSearchFillterBlue,
-} from "@asset/svg";
+import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import { ChangeEvent, useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -13,11 +8,8 @@ import Content from "@common/component/Content/Content.tsx";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import {
-  useGetBodies,
-  useGetDisease,
-  useGetSymptoms,
-} from "@api/domain/mypage/edit-pet/hook.ts";
+import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
+import { formatTime } from "@shared/util/formatTime";
 
 interface SearchDonePropTypes {
   id?: number;
@@ -37,16 +29,13 @@ const SearchDone = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [isFilterActive, setIsFilterActive] = useState(false);
-  const [searchDoneData, setSearchDoneData] = useState<
-    Array<SearchDonePropTypes>
-  >([]);
+  const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
   const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
   const { mutate } = usePostPostFilters();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
-  const { setCategoryData, selectedChips, clearAllChips, setOpen } =
-    useFilterStore();
+  const { setCategoryData, selectedChips, clearAllChips, setOpen } = useFilterStore();
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodyDiseaseIds);
@@ -63,12 +52,8 @@ const SearchDone = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -99,16 +84,14 @@ const SearchDone = () => {
         onError: (error) => {
           console.error("Search Error:", error);
         },
-      }
+      },
     );
   }, [searchText, selectedChips, mutate]);
 
   // 필터 활성화 여부 계산
   useEffect(() => {
     setIsFilterActive(
-      selectedChips.breedId.length > 0 ||
-        selectedChips.symptomIds.length > 0 ||
-        selectedChips.diseaseIds.length > 0
+      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0,
     );
   }, [selectedChips]);
 
@@ -178,14 +161,14 @@ const SearchDone = () => {
         )}
         {searchDoneData?.map((data, index) => (
           <Content
-            key={index}
+            key={`search-done-${data.id}`}
             breed={data?.breed}
             petAge={data?.petAge}
             postTitle={data?.title}
             postContent={data.content}
             likeCnt={data.likeCount}
             commentCnt={data.commentCount}
-            timeAgo={data.createdAt}
+            timeAgo={formatTime(data.createdAt as string)}
             onClick={() => onClickPost(data?.id)} //TODO: postId 로 변경
           />
         ))}

@@ -19,7 +19,6 @@ export const styles = {
     padding: "1.6rem 2rem 0 2rem",
     display: "flex",
     flexDirection: "column",
-    gap: "1.6rem",
   }),
   filterwrap: style({}),
   noSearchData: style({
