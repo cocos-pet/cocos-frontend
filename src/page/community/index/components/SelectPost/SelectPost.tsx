@@ -88,7 +88,7 @@ const PostList = () => {
               commentCnt={post.commentCount}
               postImage={post.image}
               likeIconType={
-                post.category == ("증상·질병" || "병원고민")
+                post.category === "증상·질병" || post.category === "병원고민"
                   ? "curious"
                   : "support"
               }
