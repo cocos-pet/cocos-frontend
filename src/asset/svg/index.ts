@@ -1,5 +1,7 @@
 export { default as Icfilteron } from "./Icfilteron";
 export { default as Check } from "./Check";
+export { default as IcGroup } from "./IcGroup";
+export { default as IcCocosLogin } from "./IcCocosLogin";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
 export { default as IcEllipse57 } from "./IcEllipse57";
 export { default as IcIcons } from "./IcIcons";
