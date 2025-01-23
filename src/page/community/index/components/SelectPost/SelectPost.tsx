@@ -88,7 +88,9 @@ const PostList = () => {
               commentCnt={post.commentCount}
               postImage={post.image}
               likeIconType={
-                post.category == "증상·질병" ? "support" : "curious"
+                post.category == ("증상·질병" || "병원고민")
+                  ? "curious"
+                  : "support"
               }
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
               timeAgo={formatTime(post.updatedAt as string)}
