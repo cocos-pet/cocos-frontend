@@ -40,7 +40,11 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
   const { data: profilePosts } = useGetMyPost(query);
   const { data: profileComments } = useGetMyComment(query);
 
-  if ((tab === "post" && !profilePosts) || (tab === "comment" && !profileComments)) return;
+  if (
+    (tab === "post" && !profilePosts) ||
+    (tab === "comment" && !profileComments)
+  )
+    return;
 
   const renderNothingContent = (tab: ActiveTabType) => {
     let content = "";
@@ -63,7 +67,11 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
+        return (
+          <div className={styles.nothingContent}>
+            {"아직 작성한 후기가 없어요."}
+          </div>
+        );
       case "post":
         return profilePosts?.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
@@ -81,13 +89,21 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
         ));
       //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return renderAllComments(profileComments?.comments, profileComments?.subComments).map((data) => (
-          <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
+        return renderAllComments(
+          profileComments?.comments,
+          profileComments?.subComments
+        ).map((data) => (
+          <div
+            className={styles.mypagecontent}
+            key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}
+          >
             <MyPageComment
               postTitle={data.postTitle as string}
               content={data.content as string}
               timeAgo={data.createdAt as string}
-              mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
+              mentionedNickname={
+                isSubComment(data) ? data.mentionedNickname : undefined
+              }
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>

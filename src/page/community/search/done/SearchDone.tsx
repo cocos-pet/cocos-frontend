@@ -18,6 +18,7 @@ import {
   useGetDisease,
   useGetSymptoms,
 } from "@api/domain/mypage/edit-pet/hook.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
 
 interface SearchDonePropTypes {
   id?: number;
@@ -185,7 +186,7 @@ const SearchDone = () => {
             postContent={data.content}
             likeCnt={data.likeCount}
             commentCnt={data.commentCount}
-            timeAgo={data.createdAt}
+            timeAgo={formatTime(data.createdAt)}
             onClick={() => onClickPost(data?.id)} //TODO: postId 로 변경
           />
         ))}

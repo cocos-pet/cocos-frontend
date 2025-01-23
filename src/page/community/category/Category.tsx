@@ -24,7 +24,9 @@ const Category = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
+    []
+  );
 
   const { mutate: fetchPosts } = usePostPostFilters();
 
@@ -36,7 +38,7 @@ const Category = () => {
         onSuccess: (data) => {
           setPosts(data);
         },
-      },
+      }
     );
   }, [fetchPosts, typeId]);
 
@@ -48,7 +50,9 @@ const Category = () => {
 
   const { toggleOpen, selectedChips } = useFilterStore();
   const isFilterOn =
-    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
+    !!selectedChips.breedId.length ||
+    !!selectedChips.diseaseIds.length ||
+    !!selectedChips.symptomIds.length;
 
   // const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
 
@@ -92,7 +96,11 @@ const Category = () => {
       {/* 코코스매거진이 아닐 때만 필터 아이콘 표시 */}
       {type !== "magazine" && (
         <div className={styles.filterContainer}>
-          {isFilterOn ? <Icfilteron onClick={toggleOpen} width={24} /> : <Icfilter onClick={toggleOpen} width={24} />}
+          {isFilterOn ? (
+            <Icfilteron onClick={toggleOpen} width={24} />
+          ) : (
+            <Icfilter onClick={toggleOpen} width={24} />
+          )}
           <FilterBottomSheet />
         </div>
       )}
@@ -119,7 +127,9 @@ const Category = () => {
       {/* 코코스매거진이 아닐 때만 플로팅 버튼 표시 */}
       {type !== "magazine" && (
         <div className={styles.floatingBtnContainer}>
-          <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
+          <FloatingBtn
+            onClick={() => navigate(`/community/write?category=${type}`)}
+          />
         </div>
       )}
     </div>

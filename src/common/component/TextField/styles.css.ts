@@ -67,7 +67,7 @@ export const styles = {
         maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",
-        width: "100%",
+        // width: "100%",
         "::placeholder": {
           color: color.gray.gray600,
         },
@@ -122,6 +122,7 @@ export const styles = {
 
 export const iconstyle = style({
   height: "2rem",
+  width: "2rem",
   display: "flex",
   alignContent: "center",
   marginRight: "1rem",
