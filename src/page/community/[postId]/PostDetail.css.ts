@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, font } from "@style/styles.css.ts";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   container: style({
@@ -137,6 +137,12 @@ export const styles = {
       color: color.gray.gray600,
       fontWeight: "600",
       fontSize: "1.4rem",
+    },
+  ]),
+  blue: style([
+    font.label01,
+    {
+      color: semanticColor.text.heavy,
     },
   ]),
 };

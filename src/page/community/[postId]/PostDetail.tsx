@@ -197,6 +197,7 @@ const PostDetail = () => {
         onLeftClick={onBackClick}
         type={"noTitle"}
         rightBtn={
+          // postData.isWriter && (
           <MoreModal
             onDelete={() => {
               setOpen(true);
@@ -205,6 +206,7 @@ const PostDetail = () => {
             isOpen={openModalId === `post-${postId}`}
             onToggleModal={() => setOpenModalId(`post-${postId}`)}
           />
+          // )
         }
       />
       <div className={styles.container} onClick={onModalClose}>
