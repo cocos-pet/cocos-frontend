@@ -43,7 +43,19 @@ export type postPostFiltersResponse =
 export type postPostFiltersRequest =
   paths["/api/dev/posts/filters"]["post"]["requestBody"]["content"]["application/json"];
 
-export const postPostFilters = async (payload: postPostFiltersRequest) => {
+export interface postPostFiltersRequestType {
+  keyword?: string;
+  animalIds?: number[];
+  symptomIds?: number[];
+  diseaseIds?: number[];
+  sortBy?: "RECENT" | "POPULAR";
+  cursorId?: number | null;
+  categoryId?: number | null;
+  likeCount?: number | null;
+  createdAt?: string | null;
+}
+
+export const postPostFilters = async (payload: postPostFiltersRequestType) => {
   const { data } = await post<postPostFiltersResponse>(
     API_PATH.POST_FILTERS,
     payload
