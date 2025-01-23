@@ -12,7 +12,7 @@ interface DropDownTextPropTypes {
 
 //참고) content는 depth가 깊은 symptoms나 disease에 대응하기 위해 만들어둠
 const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) => {
-  const { toggleChips, selectedChips } = useFilterStore();
+  const { toggleChips, selectedChips, category } = useFilterStore();
   const [isOpen, setIsOpen] = useState(false);
 
   const isSelected = (id: number): boolean => {
@@ -27,6 +27,13 @@ const DropDownText = ({ children, content, parentKey }: DropDownTextPropTypes) =
           label={data.name}
           onClick={() => toggleChips({ category: parentKey, id: data.id })}
           isSelected={isSelected(data.id)}
+          disabled={
+            isSelected(data.id as number)
+              ? false
+              : category === "disease"
+                ? selectedChips.diseaseIds.length >= 7
+                : selectedChips.symptomIds.length >= 7
+          }
         />
       ));
     }
