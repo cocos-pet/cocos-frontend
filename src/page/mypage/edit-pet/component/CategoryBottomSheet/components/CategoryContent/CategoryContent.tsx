@@ -1,15 +1,10 @@
 import { styles } from "./CategoryContent.css";
-import { useEffect } from "react";
 import { DiseaseItem, SymptomItem, useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter";
 import DropDownText from "../DropDownText/DropDownText";
 
 // 선택한 카테고리에 맞게 보여줄 내용들
 const CategoryContent = () => {
   const { category, categoryData, selectedChips } = useCategoryFilterStore();
-
-  useEffect(() => {
-    console.log(selectedChips); //todo: 나중에 지울 것 ! (데모데이 직전에)
-  }, [selectedChips]);
 
   const dropDownData = categoryData[category];
 
