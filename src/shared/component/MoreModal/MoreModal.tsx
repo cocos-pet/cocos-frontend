@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { IcEllipses } from "@asset/svg";
 import {
   container,
@@ -43,7 +43,10 @@ const MoreModal = ({
       <IcEllipses
         className={moreIcon}
         style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
-        onClick={onToggleModal}
+        onClick={(e) => {
+          e.stopPropagation(); // 모달 토글을 막는 이벤트 버블링 방지
+          onToggleModal();
+        }}
       />
       {isOpen && (
         <div className={moreModal({ onEdit: !!onEdit })}>

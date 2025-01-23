@@ -13,7 +13,7 @@ export const tabContainer = style({
   padding: "1rem 0",
   justifyContent: "space-between",
   position: "sticky",
-  backgroundColor: "#fff", 
+  backgroundColor: "#fff",
   top: "6.4rem",
   width: "100%",
   zIndex: 10,
@@ -22,8 +22,11 @@ export const tabContainer = style({
 export const postList = style({
   width: "100%",
   padding: "1.6rem 2rem 0rem 2rem",
-  position: "sticky",
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.6rem",
 });
+
 // 탭 버튼 스타일
 export const tabButton = recipe({
   base: {
@@ -83,7 +86,12 @@ export const postText = style([
 
 // 게시글 제목 스타일
 export const postTitle = style([
-  { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "25.3rem" },
+  {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    width: "25.3rem",
+  },
   font.heading02,
   {
     color: semanticColor.text.normal,
@@ -93,7 +101,12 @@ export const postTitle = style([
 ]);
 
 export const postContent = style([
-  { whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", width: "25.3rem" },
+  {
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    width: "25.3rem",
+  },
   font.body01,
   {
     color: semanticColor.text.assistive,

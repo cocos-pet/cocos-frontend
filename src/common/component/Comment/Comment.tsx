@@ -8,7 +8,7 @@ import { formatTime } from "@shared/util/formatTime.ts";
 import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -18,9 +18,15 @@ interface CommentProps {
   ) => void;
 
   onDelete: () => void;
+  onModalClose: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
+const Comment = ({
+  comment,
+  onCommentReplyClick,
+  onDelete,
+  onModalClose,
+}: CommentProps) => {
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname, comment.id);
@@ -39,7 +45,7 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
   };
 
   return (
-    <div className={styles.commentItem}>
+    <div className={styles.commentItem} onClick={onModalClose}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
           <img
@@ -48,7 +54,10 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
             alt="프로필 이미지"
           />
           <div className={styles.headerInfo}>
-            <span className={styles.nickname}>{comment.nickname}</span>
+            <span className={styles.nickname}>
+              {comment.nickname}
+              <p className={styles.blue}>{comment.isWriter && "작성자"}</p>
+            </span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
               {comment.createdAt
@@ -56,15 +65,17 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
                 : ""}
             </span>
           </div>
-          <MoreModal
-            onDelete={() => {
-              setOpen(true);
-              setContentsType("comment");
-            }}
-            iconSize={24}
-            isOpen={openModalId === `comment-${comment.id}`}
-            onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
-          />
+          {comment.isWriter && (
+            <MoreModal
+              onDelete={() => {
+                setOpen(true);
+                setContentsType("comment");
+              }}
+              iconSize={24}
+              isOpen={openModalId === `comment-${comment.id}`}
+              onToggleModal={() => setOpenModalId(`comment-${comment.id}`)}
+            />
+          )}
         </div>
 
         <p className={styles.text}>{comment.content}</p>
@@ -84,6 +95,7 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
             subComments={comment.subComments}
             onCommentDelete={onDeleteClick}
             onSubCommentReplyClick={onCommentReplyClick}
+            onModalClose={onModalClose}
           />
         </div>
       )}

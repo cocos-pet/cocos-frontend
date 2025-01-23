@@ -2,7 +2,7 @@ import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const textareaContainer = style([
-  font.body01,
+  font.heading03,
   {
     fontWeight: 500,
     color: color.gray.gray900,
@@ -12,6 +12,7 @@ export const textareaContainer = style([
     borderRadius: "0.8rem",
     border: `0.1rem solid ${color.gray.gray200}`,
     background: color.gray.gray000,
+    resize: "none",
     "::placeholder": {
       color: color.gray.gray600,
     },
