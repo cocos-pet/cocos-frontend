@@ -10,11 +10,9 @@ import { TextField } from "@common/component/TextField";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
 import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
-interface NicknamePros {
-  setStep: React.Dispatch<React.SetStateAction<number>>;
-}
+import { PATH } from "@route/path";
 
-const Nickname = ({ setStep }: NicknamePros) => {
+const Nickname = () => {
   // 상태 하나로 관리
   const [nickname, setNickname] = useState("");
 
@@ -49,8 +47,8 @@ const Nickname = ({ setStep }: NicknamePros) => {
 
   // 다음 버튼
   const handleNext = () => {
-    setStep(2);
     patchNickname(nickname);
+    navigate(PATH.ONBOARDING.COMPLETE);
   };
 
   return (
