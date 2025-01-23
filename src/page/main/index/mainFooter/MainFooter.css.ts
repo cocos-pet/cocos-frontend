@@ -26,5 +26,6 @@ export const footerDetail = style([
     color: semanticColor.text.assistive,
     letterSpacing: "-0.024rem",
     fontWeight: "600",
+    textDecoration: "none",
   },
 ]);

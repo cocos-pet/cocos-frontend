@@ -7,10 +7,12 @@ export const container = style([
   {
     display: "flex",
     justifyContent: "space-between",
+    gap: "1.6rem",
+    paddingLeft: "2rem",
+    paddingRight: "2rem",
     width: "100%",
     maxWidth: "76.8rem",
     height: "8rem",
-    padding: "1.2rem 3.2rem 0 3.2rem",
   },
 ]);
 

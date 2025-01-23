@@ -165,6 +165,8 @@ export const animalSubText = style([
   {
     alignSelf: "stretch",
     color: semanticColor.text.assistive,
+    wordBreak: "break-word",
+    whiteSpace: "normal",
   },
 ]);
 
@@ -175,4 +177,13 @@ export const settingWrapper = recipe({
       false: { opacity: "0.3" },
     },
   },
+});
+
+export const textDivider = style({
+  color: color.gray.gray600,
+});
+
+export const spanNoWrap = style({
+  display: "inline-block",
+  whiteSpace: "nowrap",
 });

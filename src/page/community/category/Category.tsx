@@ -33,7 +33,7 @@ const Category = () => {
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
     fetchPosts(
-      { categoryId: Number(typeId) },
+      { categoryId: Number(typeId), sortBy: "RECENT" },
       {
         onSuccess: (data) => {
           setPosts(data);
@@ -53,8 +53,6 @@ const Category = () => {
     !!selectedChips.breedId.length ||
     !!selectedChips.diseaseIds.length ||
     !!selectedChips.symptomIds.length;
-
-  // const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
 
   const handleGoBack = () => {
     navigate(PATH.COMMUNITY.ROOT);

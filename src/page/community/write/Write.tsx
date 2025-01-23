@@ -338,7 +338,7 @@ const Write = () => {
             {TagLabel.map((tag, index) => (
               <>
                 <Tag
-                  key={index}
+                  key={`tag-${index}`}
                   placeholder={tag.label}
                   value={tag.value}
                   isActive={tag.value.length > 0}

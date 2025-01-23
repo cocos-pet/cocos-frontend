@@ -19,6 +19,10 @@ const CategoryBottomSheet = ({ petId }: { petId: number }) => {
 
   const handleClickButton = () => {
     if (selectedChips.diseaseIds && selectedChips.symptomIds) {
+      if (!selectedChips.symptomIds.length) {
+        alert("증상은 최소 1개 이상 존재해야합니다.");
+        return;
+      }
       patchPetInfo({ petId, reqBody: { diseaseIds: selectedChips.diseaseIds, symptomIds: selectedChips.symptomIds } });
       setOpen(false);
     } else {

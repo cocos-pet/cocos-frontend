@@ -1,7 +1,6 @@
 import Content from "@common/component/Content/Content";
 import { ActiveTabType } from "../../Mypage";
 import * as styles from "./MyPageContent.css";
-import { dummyData } from "./costant"; //todo: 더미데이터 렌더링
 import MyPageComment from "../MyPageComment/MyPageComment";
 import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
 import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
@@ -29,14 +28,12 @@ export interface ApiItemTypes {
   age: number;
 }
 
-//todo: 여기서 탭 별로 api 요청 보내서 데이터 받아와 렌더링하기
 const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const navigate = useNavigate();
   const { data: myPosts } = useGetMyPost();
   const { data: myComments } = useGetMyComment();
 
-  if ((tab === "post" && !myPosts) || (tab === "comment" && !myComments))
-    return;
+  if ((tab === "post" && !myPosts) || (tab === "comment" && !myComments)) return;
 
   const renderNothingContent = (tab: ActiveTabType) => {
     let content = "";
@@ -59,12 +56,11 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return (
-          <div className={styles.nothingContent}>
-            {"아직 작성한 후기가 없어요."}
-          </div>
-        );
+        return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
       case "post":
+        if (!myPosts?.length) {
+          return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;
+        }
         return myPosts?.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
@@ -79,23 +75,17 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
             />
           </div>
         ));
-      //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
-        return renderAllComments(
-          myComments?.comments,
-          myComments?.subComments
-        ).map((data) => (
-          <div
-            className={styles.mypagecontent}
-            key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}
-          >
+        if (!myComments?.comments?.length && !myComments?.subComments?.length) {
+          return <div className={styles.nothingContent}>{"아직 작성한 댓글이 없어요."}</div>;
+        }
+        return renderAllComments(myComments?.comments, myComments?.subComments).map((data) => (
+          <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
             <MyPageComment
               postTitle={data.postTitle as string}
               content={data.content as string}
               timeAgo={data.createdAt as string}
-              mentionedNickname={
-                isSubComment(data) ? data.mentionedNickname : undefined
-              }
+              mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>
@@ -105,11 +95,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
     }
   };
 
-  return (
-    <div className={styles.contentWrapper}>
-      {dummyData.length === 0 ? renderNothingContent(tab) : renderContent(tab)}
-    </div>
-  );
+  return <div className={styles.contentWrapper}>{renderContent(tab)}</div>;
 };
 
 export default MyPageContent;

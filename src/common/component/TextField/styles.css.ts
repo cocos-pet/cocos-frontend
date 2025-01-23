@@ -32,6 +32,10 @@ export const styles = {
           backgroundColor: semanticColor.neutral.normal,
           boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
         },
+
+        main: {
+          boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
+        },
       },
       active: {
         true: {},
@@ -94,6 +98,7 @@ export const styles = {
         },
         error: {},
         search: {},
+        main: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
       },
     },
