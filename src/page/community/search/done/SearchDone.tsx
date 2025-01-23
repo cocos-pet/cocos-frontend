@@ -109,6 +109,13 @@ const SearchDone = () => {
     navigate(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
   };
 
+  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    setSearchText("");
+    clearAllChips();
+    navigate(`${PATH.COMMUNITY.SEARCH}`);
+  };
+
   const onBackClick = () => {
     clearAllChips();
     navigate(-2);
@@ -127,7 +134,7 @@ const SearchDone = () => {
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
           icon={<IcSearch />}
-          onClearClick={() => setSearchText("")}
+          onClearClick={onTextFieldClear}
           onClick={onTextFieldClick}
         />
       </div>
