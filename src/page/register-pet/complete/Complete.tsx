@@ -3,10 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import { Button } from "@common/component/Button";
-import img from "@asset/image/beforeRegisterGraphic.png";
 import { PATH } from "@route/path";
 import { useGetNickname } from "@api/domain/complete/hook";
-
+import { Player } from "@lottiefiles/react-lottie-player"; // lottie-react 대신 Player 사용
+import onboarding from "@asset/lottie/onboarding.json";
 const Complete = () => {
   const navigate = useNavigate();
   const handleSkip = () => {
@@ -26,7 +26,7 @@ const Complete = () => {
           </div>
           <Docs text={"더 건강한 반려동물을 위해 코코스가 함께할게요"} />
         </div>
-        <img src={img} alt="onboarding-character" width={296} height={325} />
+        <Player autoplay loop={false} src={onboarding} style={{ width: 296, height: 325 }} />
       </div>
 
       <div className={styles.btnWrapper}>
