@@ -10,6 +10,7 @@ import { useFilterStore } from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
 import { formatTime } from "@shared/util/formatTime";
+import noSearchResult from "@asset/image/noSearchResult.png";
 
 interface SearchDonePropTypes {
   id?: number;
@@ -113,7 +114,7 @@ const SearchDone = () => {
     navigate(`${PATH.COMMUNITY.ROOT}/${postId}}`);
   };
 
-  if (searchDoneData.length == 0)
+  if (searchDoneData.length === 0)
     return (
       <div className={styles.container}>
         <div className={styles.searchHeader}>
@@ -127,7 +128,15 @@ const SearchDone = () => {
             onClick={onTextFieldClick}
           />
         </div>
-        <div className={styles.noSearchData}> 검색 결과가 없습니다. </div>
+        <div className={styles.noSearchData}>
+          <img className={styles.noSearchResultImage} src={noSearchResult} alt="검색 결과 없음" />
+          <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
+          <span className={styles.noSearchRecommendText}>
+            {"검색어를 확인하거나"}
+            <br />
+            {"다른 키워드로 검색해 보세요."}
+          </span>
+        </div>
       </div>
     );
 
