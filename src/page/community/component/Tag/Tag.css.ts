@@ -60,6 +60,7 @@ export const tagContainer = recipe({
 export const tagValue = style([
   font.heading03,
   {
+    fontWeight: "500",
     whiteSpace: "nowrap",
     overflow: "hidden",
     textOverflow: "ellipsis",

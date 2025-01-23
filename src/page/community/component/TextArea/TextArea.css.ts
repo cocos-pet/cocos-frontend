@@ -2,7 +2,7 @@ import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const textareaContainer = style([
-  font.body01,
+  font.heading03,
   {
     fontWeight: 500,
     color: color.gray.gray900,

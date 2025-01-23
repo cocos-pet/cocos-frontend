@@ -86,6 +86,8 @@ export const styles = {
       state: {
         default: {},
         write: {
+          fontSize: "1.6rem",
+
           "::placeholder": {
             color: color.gray.gray600,
           },
