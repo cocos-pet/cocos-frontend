@@ -1,22 +1,10 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
-import {
-  IcDeleteBlack,
-  IcImagePlus,
-  IcRightArror,
-  IcTest,
-  IcUp,
-} from "@asset/svg";
+import { IcDeleteBlack, IcImagePlus, IcRightArror, IcTest, IcUp } from "@asset/svg";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import {
-  bottomButton,
-  fileInput,
-  imageContainer,
-  plusImage,
-  writeWrap,
-} from "@page/community/write/Write.css.ts";
+import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "@page/community/write/Write.css.ts";
 import WriteInputSection from "@page/community/component/WriteInputSection/WriteInputSection.tsx";
 
 import Tag from "@page/community/component/Tag/Tag.tsx";
@@ -27,14 +15,8 @@ import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
 import { useNavigate, useParams } from "react-router-dom";
-import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
-import {
-  useGetBodies,
-  useGetDisease,
-  useGetSymptoms,
-} from "@api/domain/mypage/edit-pet/hook.ts";
-import axios from "axios";
+import {} from "@api/domain/mypage/edit-pet/hook.ts";
 import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import axios from "axios";
 
@@ -115,10 +97,7 @@ const Write = () => {
     toggleDropDown();
   };
 
-  const onChangeValue = (
-    target: string,
-    value: string | number | React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onChangeValue = (target: string, value: string | number | React.ChangeEvent<HTMLInputElement>) => {
     setParams({
       ...params,
       [target]: value,
@@ -190,17 +169,20 @@ const Write = () => {
     if (isAllParamsFilled) {
       mutate(
         {
-          categoryId: params.categoryId || undefined,
+          categoryId: Number(params.categoryId) || undefined,
           title: params.title || undefined,
           content: params.content || undefined,
           images: imageNames || undefined,
-          animalIds: params.selectedChips.breedId[0] || undefined,
+          animalId: params.selectedChips.breedId[0] || undefined,
           symptomIds: params.selectedChips.symptomIds || undefined,
           diseaseIds: params.selectedChips.diseaseIds || undefined,
         },
         {
           onSuccess: async (data) => {
             console.log(data);
+            if (!data.data?.images) {
+              return;
+            }
             try {
               // presigned URL과 FormData를 매칭하여 순차적으로 업로드
               await Promise.all(
@@ -217,7 +199,7 @@ const Write = () => {
                       "Content-Type": (file as File).type, // 파일의 MIME 타입 설정
                     },
                   });
-                })
+                }),
               );
 
               console.log("모든 이미지가 성공적으로 업로드되었습니다.");
@@ -230,7 +212,7 @@ const Write = () => {
           onError: (error) => {
             alert("글 작성에 실패했습니다.");
           },
-        }
+        },
       );
     }
   };
@@ -240,19 +222,12 @@ const Write = () => {
   }, [params]);
 
   const isAllParamsFilled =
-    params.categoryId &&
-    params.title &&
-    params.content &&
-    params.selectedChips.breedId.length > 0;
+    params.categoryId && params.title && params.content && params.selectedChips.breedId.length > 0;
 
   return (
     <>
       <div>
-        <HeaderNav
-          leftIcon={<IcDeleteBlack width={24} />}
-          onLeftClick={onBackClick}
-          centerContent={"글쓰기"}
-        />
+        <HeaderNav leftIcon={<IcDeleteBlack width={24} />} onLeftClick={onBackClick} centerContent={"글쓰기"} />
         <div className={writeWrap}>
           {/* 제목 영역 */}
           <WriteInputSection title={"제목"}>
@@ -291,24 +266,11 @@ const Write = () => {
               onChange={(e) => onChangeValue("content", e.target.value)}
             />
             <Spacing marginBottom={"1.2"} />
-            <input
-              type="file"
-              onChange={handleAddImage}
-              accept="image/*"
-              ref={fileInputRef}
-              className={fileInput}
-            />
+            <input type="file" onChange={handleAddImage} accept="image/*" ref={fileInputRef} className={fileInput} />
             <div className={imageContainer}>
-              <IcImagePlus
-                className={plusImage}
-                onClick={handleFileUploadClick}
-              />
+              <IcImagePlus className={plusImage} onClick={handleFileUploadClick} />
               {params.images.map((imageSrc, index) => (
-                <ImageCover
-                  key={index}
-                  imageSrc={imageSrc}
-                  onDeleteClick={() => handleDeleteImage(index)}
-                />
+                <ImageCover key={index} imageSrc={imageSrc} onDeleteClick={() => handleDeleteImage(index)} />
               ))}
             </div>
           </WriteInputSection>
@@ -323,7 +285,7 @@ const Write = () => {
                   isActive={tag.value.length > 0}
                   onClick={() => setOpen(true)}
                 />
-                <Spacing marginBottom={"0.8"} />
+                <Spacing key={`spacing-write-${index}`} marginBottom={"0.8"} />
               </>
             ))}
           </WriteInputSection>
