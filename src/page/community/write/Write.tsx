@@ -265,6 +265,7 @@ const Write = () => {
                   });
                 })
               );
+              clearAllChips();
               navigate(PATH.COMMUNITY.ROOT);
             } catch (error) {
               alert("이미지 업로드에 실패했습니다.");
