@@ -72,7 +72,9 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
           />
         </div>
         {value && isDelete ? (
-          <IcClear onClick={onClearClick} height={20} width={20} />
+          <button onClick={onClearClick}>
+            <IcClear height={20} width={20} />
+          </button>
         ) : (
           icon
         )}
