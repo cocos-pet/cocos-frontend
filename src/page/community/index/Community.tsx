@@ -1,4 +1,4 @@
-import { IcCocos, IcSearch } from "@asset/svg";
+import { IcSearch } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -53,11 +53,7 @@ const Community = () => {
   return (
     <div className={styles.communityContainer}>
       <div className={styles.communityHeader}>
-        <HeaderNav
-          leftIcon={<IcCocos />}
-          centerContent="커뮤니티"
-          rightBtn={<IcSearch onClick={handleSearchClick} />}
-        />
+        <HeaderNav centerContent="커뮤니티" rightBtn={<IcSearch onClick={handleSearchClick} />} />
       </div>
       <div className={styles.bannerContainer}>
         <Banner />
