@@ -51,7 +51,6 @@ const Main = () => {
       <Symptom />
       <Divider />
       <HotPost />
-      <Divider />
       <MainFooter />
       <Spacing marginBottom="8" />
       <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
