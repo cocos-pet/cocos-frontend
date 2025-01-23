@@ -107,16 +107,14 @@ export const styles = {
     },
   ]),
   commentContainer: style({
-    padding: "1.6rem 2rem",
+    padding: "1.6rem 2rem 0 2rem",
     display: "flex",
     flexDirection: "column",
-    gap: "1.2rem",
-    marginBottom: "7.2rem",
   }),
   textContainer: style({
     display: "flex",
     flexDirection: "row",
-    position: "fixed",
+    position: "sticky",
     bottom: 0,
     width: "100%",
     padding: "1.2rem 2rem 4rem 2rem",
