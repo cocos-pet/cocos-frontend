@@ -47,7 +47,7 @@ const Content = ({
       <div className={styles.left}>
         <div className={styles.category}>
           {breed}
-          {petAge && <span className={styles.petAge}> · {petAge}살</span>}
+          {petAge && <span> · {petAge}살</span>}
         </div>
         <div className={styles.title}>{postTitle}</div>
         <div className={styles.contents}>{postContent}</div>

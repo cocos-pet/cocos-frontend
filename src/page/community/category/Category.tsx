@@ -72,14 +72,13 @@ const Category = () => {
       }
     }
   }, [diseaseBodies, symptomBodies]);
+  
   useEffect(() => {
     fetchPostData();
   }, [selectedChips]);
 
   const isFilterOn =
-    !!selectedChips.breedId.length ||
-    !!selectedChips.diseaseIds.length ||
-    !!selectedChips.symptomIds.length;
+    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
 
   const fetchPostData = useCallback(() => {
     if (!typeId) return;

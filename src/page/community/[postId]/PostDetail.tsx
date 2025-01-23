@@ -2,15 +2,12 @@ import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import {
   IcBaseProfileImage,
-  IcCurious,
   IcCuriousActive,
   IcCuriousUnactive,
   IcLeftarrow,
   IcLikeActive,
   IcLikeDisabled,
-  IcTest,
 } from "@asset/svg";
-import { IcBaseProfileImage, IcLeftarrow, IcLikeActive, IcLikeDisabled } from "@asset/svg";
 import { styles } from "@page/community/[postId]/PostDetail.css";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
@@ -35,7 +32,6 @@ import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
-import Spacing from "@common/component/Spacing/Spacing.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -239,11 +235,27 @@ const PostDetail = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <img key={`postImage-${index}`} src={image} alt="postImage" className={styles.image} />
+          <img
+            key={`postImage-${
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              index
+            }`}
+            src={image}
+            alt="postImage"
+            className={styles.image}
+          />
         ))}
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
-            <Chip key={`postTag-${index}`} label={tag} color={"blue"} disabled={true} />
+            <Chip
+              key={`postTag-${
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                index
+              }`}
+              label={tag}
+              color={"blue"}
+              disabled={true}
+            />
           ))}
         </div>
         <Divider size={"small"} />
@@ -251,37 +263,19 @@ const PostDetail = () => {
           <div className={styles.item}>
             {getCategoryResponse(postData.category) === "curious" ? (
               isLiked ? (
-                <IcCuriousActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcCuriousUnactive
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : getCategoryResponse(postData.category) === "support" ? (
               isLiked ? (
-                <IcLikeActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcLikeDisabled
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData.category) === "curious"
-                ? "궁금해요 "
-                : "응원해요 "}
+              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
               {likeCount}
             </span>
             {isLiked ? (
