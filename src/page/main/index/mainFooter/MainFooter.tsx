@@ -1,10 +1,11 @@
 import { Link } from "react-router-dom";
 import * as styles from "./MainFooter.css";
+import { IcCocos } from "@asset/svg";
 
 const MainFooter = () => {
   return (
     <div className={styles.footerContainer}>
-      <p className={styles.footerName}>코코스</p>
+      <IcCocos />
       <div className={styles.footerDetail}>
         <div>
           <Link

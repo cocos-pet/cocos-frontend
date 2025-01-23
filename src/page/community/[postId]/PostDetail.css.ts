@@ -68,6 +68,10 @@ export const styles = {
     display: "flex",
     flexDirection: "row",
     gap: "0.4rem",
+    overflow: "auto",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
   }),
   countWrap: style({
     padding: "0.8rem 0",
@@ -101,9 +105,20 @@ export const styles = {
     },
   ]),
   commentContainer: style({
+    padding: "1.6rem 2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.2rem",
+    marginBottom: "7.2rem",
+  }),
+  textContainer: style({
     display: "flex",
     flexDirection: "row",
-    alignItems: "center",
+    position: "fixed",
+    bottom: 0,
+    width: "100%",
+    padding: "1.2rem 2rem 4rem 2rem",
+    background: color.gray.gray000,
   }),
   upload: style([
     font.body01,

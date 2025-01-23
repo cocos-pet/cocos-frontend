@@ -5,6 +5,8 @@ import {
   deleteLike,
   getPost,
   postLike,
+  postComment,
+  postSubComment,
   deleteSubComment,
   deletePost,
 } from "@api/domain/community/post";
@@ -13,6 +15,11 @@ import { PATH } from "@route/path.ts";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
+  COMMENTS_POST_QUERY_KEY: (postId: number) => ["commentPost", postId],
+  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => [
+    "subCommentPost",
+    commentId,
+  ],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
 };
@@ -79,6 +86,49 @@ export const useCommentsGet = (postId: number) => {
     queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
     queryFn: () => {
       return getComments(postId);
+    },
+  });
+};
+
+/**
+ * @description 댓글 작성 API
+ */
+
+export const useCommentPost = (postId: number) => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: POST_QUERY_KEY.COMMENTS_POST_QUERY_KEY(postId),
+    mutationFn: (content: { content: string }) => {
+      return postComment(postId, content.content);
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
+    },
+  });
+};
+
+/**
+ * @description 대댓글 작성 API
+ */
+
+export const useSubCommentPost = (commentId: number, postId: number) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: POST_QUERY_KEY.SUB_COMMENTS_POST_QUERY_KEY(commentId),
+    mutationFn: (content: {
+      commentId: number | undefined;
+      nickname: string;
+      content: string;
+    }) => {
+      return postSubComment(content);
+    },
+    onSuccess: (data, variables) => {
+      queryClient.invalidateQueries({
+        queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
     },
   });
 };
