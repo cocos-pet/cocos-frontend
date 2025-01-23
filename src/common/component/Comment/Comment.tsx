@@ -8,7 +8,7 @@ import { formatTime } from "@shared/util/formatTime.ts";
 import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -18,9 +18,15 @@ interface CommentProps {
   ) => void;
 
   onDelete: () => void;
+  onModalClose: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
+const Comment = ({
+  comment,
+  onCommentReplyClick,
+  onDelete,
+  onModalClose,
+}: CommentProps) => {
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname, comment.id);
@@ -39,7 +45,7 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
   };
 
   return (
-    <div className={styles.commentItem}>
+    <div className={styles.commentItem} onClick={onModalClose}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
           <img
@@ -84,6 +90,7 @@ const Comment = ({ comment, onCommentReplyClick, onDelete }: CommentProps) => {
             subComments={comment.subComments}
             onCommentDelete={onDeleteClick}
             onSubCommentReplyClick={onCommentReplyClick}
+            onModalClose={onModalClose}
           />
         </div>
       )}

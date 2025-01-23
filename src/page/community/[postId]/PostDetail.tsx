@@ -184,6 +184,10 @@ const PostDetail = () => {
     );
   };
 
+  const onModalClose = () => {
+    setOpenModalId(undefined);
+  };
+
   if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
 
   return (
@@ -203,13 +207,16 @@ const PostDetail = () => {
           />
         }
       />
-      <div className={styles.container}>
+      <div className={styles.container} onClick={onModalClose}>
         <Button
           leftIcon={getDropdownValuetoIcon(postData.category)}
           label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
           disabled={true}
+          onClick={() => {
+            console.log("category");
+          }}
         />
         <div className={styles.top}>
           {postData.profileImage ? (
@@ -303,6 +310,7 @@ const PostDetail = () => {
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
+          onModalClose={onModalClose}
         />
       </div>
 

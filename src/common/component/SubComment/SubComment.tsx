@@ -18,6 +18,7 @@ interface SubCommentProps {
   ) => void;
   onReplyClick?: (id: number | undefined) => void;
   onCommentDelete: () => void;
+  onModalClose: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const SubComment = ({
@@ -25,6 +26,7 @@ const SubComment = ({
   subComment,
   onSubCommentReplyClick,
   onCommentDelete,
+  onModalClose,
 }: SubCommentProps) => {
   const handleReplyClick = () => {
     if (onSubCommentReplyClick) {
