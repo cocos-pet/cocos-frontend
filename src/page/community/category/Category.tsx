@@ -22,6 +22,7 @@ const categoryMapping: { [key: string]: string } = {
 
 const Category = () => {
   const [searchParams] = useSearchParams();
+  const [isRecentPost] = useState(true);
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
@@ -29,16 +30,17 @@ const Category = () => {
   const { mutate: fetchPosts } = usePostPostFilters();
 
   const fetchPostData = useCallback(() => {
+    const sortBy = isRecentPost ? "RECENT" : "POPULAR";
     if (!typeId) return;
     fetchPosts(
-      { categoryId: Number(typeId) },
+      { categoryId: Number(typeId), sortBy },
       {
         onSuccess: (data) => {
           setPosts(data);
         },
       },
     );
-  }, [fetchPosts, typeId]);
+  }, [fetchPosts, typeId, isRecentPost]);
 
   useEffect(() => {
     fetchPostData();
@@ -49,8 +51,6 @@ const Category = () => {
   const { toggleOpen, selectedChips } = useFilterStore();
   const isFilterOn =
     !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
-
-  // const filteredPosts = postData.filter((post) => post.category.toLowerCase() === type);
 
   const handleGoBack = () => {
     navigate(PATH.COMMUNITY.ROOT);
