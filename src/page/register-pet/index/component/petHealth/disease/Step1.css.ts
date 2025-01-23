@@ -28,7 +28,7 @@ export const contentItem = recipe({
   },
   variants: {
     isClicked: {
-      true: { backgroundColor: "rgba(67, 214, 255, 0.16)" },
+      true: { backgroundColor: "rgba(67, 214, 255, 0.16)", borderRadius: "4px" },
       false: { backgroundColor: "transparent" },
     },
   },
