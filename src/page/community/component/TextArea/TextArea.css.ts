@@ -12,6 +12,7 @@ export const textareaContainer = style([
     borderRadius: "0.8rem",
     border: `0.1rem solid ${color.gray.gray200}`,
     background: color.gray.gray000,
+    resize: "none",
     "::placeholder": {
       color: color.gray.gray600,
     },
