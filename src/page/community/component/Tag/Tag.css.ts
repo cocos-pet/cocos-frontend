@@ -1,9 +1,6 @@
 import { createVar, style } from "@vanilla-extract/css";
 import { color, font, semanticColor } from "@style/styles.css.ts";
 import { recipe } from "@vanilla-extract/recipes";
-type ExtendedCSSProperties = React.CSSProperties & {
-  "-webkit-tap-highlight-color"?: string;
-};
 
 export const tagContainer = recipe({
   base: [
@@ -31,7 +28,7 @@ export const tagContainer = recipe({
       selectors: {
         "&": {
           "-webkit-tap-highlight-color": "transparent",
-        },
+        } as any,
       },
       ":active": {
         backgroundColor: "transparent",
@@ -70,11 +67,3 @@ export const tagValue = style([
     width: "calc(100% - 2.4rem)",
   },
 ]);
-
-export const webkitTapHighlight = style({
-  selectors: {
-    "&": {
-      "-webkit-tap-highlight-color": "transparent", // 하이라이트 제거
-    },
-  },
-});
