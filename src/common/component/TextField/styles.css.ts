@@ -10,7 +10,7 @@ export const styles = {
       justifyContent: "space-between",
       gap: "1rem",
       alignItems: "center",
-      padding: "1rem 2rem",
+      padding: "1rem 1.8rem",
       border: `0.1rem solid ${color.gray.gray200}`,
       borderRadius: "8px",
       background: color.gray.gray000,

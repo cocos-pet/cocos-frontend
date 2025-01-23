@@ -76,7 +76,11 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
             maxLength={maxLength}
           />
         </div>
-        {value && isDelete ? <IcClear onClick={onClearClick} /> : icon}
+        {value && isDelete ? (
+          <IcClear onClick={onClearClick} height={20} width={20} />
+        ) : (
+          icon
+        )}
       </div>
     );
   }
