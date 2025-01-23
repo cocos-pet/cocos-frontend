@@ -32,6 +32,10 @@ import {
   useGetDisease,
   useGetSymptoms,
 } from "@api/domain/mypage/edit-pet/hook.ts";
+import {
+  getDropdownIdtoIcon,
+  getDropdownIdtoValue,
+} from "@page/community/utills/handleCategoryItem.tsx";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -199,26 +203,6 @@ const Write = () => {
     fileInputRef.current?.click();
   };
 
-  const getDropdownIcon = (categoryId: number | undefined) => {
-    if (!categoryId) {
-      return <IcDeleteBlack width={24} />;
-    }
-
-    const selectedItem = DropDownItems.find(
-      (item) => categoryId === item.value
-    );
-    if (!selectedItem) return <IcDeleteBlack width={24} />;
-
-    return selectedItem.icon;
-  };
-
-  const getDropdownValue = (categoryId: number | undefined) => {
-    const selectedItem = DropDownItems.find(
-      (item) => categoryId === item.value
-    );
-    return selectedItem ? selectedItem.label : "";
-  };
-
   useEffect(() => {
     setParams((prevParams) => ({
       ...prevParams,
@@ -297,13 +281,13 @@ const Write = () => {
           {/* 제목 영역 */}
           <WriteInputSection title={"제목"}>
             <TextField
-              leftIcon={getDropdownIcon(params.categoryId)}
+              leftIcon={getDropdownIdtoIcon(params.categoryId)}
               icon={<IcRightArror width={20} />}
               placeholder={"게시물 선택하기"}
               onChange={onTextFieldChange}
               onClick={onTextFieldClick}
               isDelete={false}
-              value={getDropdownValue(params.categoryId)}
+              value={getDropdownIdtoValue(params.categoryId)}
             />
             <DropDown
               isOpen={isDropDownOpen}

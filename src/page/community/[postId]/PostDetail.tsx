@@ -23,6 +23,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -193,7 +194,7 @@ const PostDetail = () => {
       />
       <div className={styles.container}>
         <Button
-          leftIcon={<IcTest width={20} />}
+          leftIcon={getDropdownValuetoIcon(postData.category)}
           label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
