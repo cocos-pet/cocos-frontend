@@ -54,7 +54,14 @@ const Main = () => {
       <Divider />
       <MainFooter />
       <Spacing marginBottom="8" />
-      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
+      <span
+        style={{
+          position: "fixed",
+          bottom: "0",
+          backgroundColor: "white",
+          width: "100%",
+        }}
+      >
         <Nav content={NAV_CONTENT} type={"nav"} />
       </span>
     </div>
