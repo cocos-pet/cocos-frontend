@@ -22,4 +22,10 @@ export const styles = {
     gap: "1.6rem",
   }),
   filterwrap: style({}),
+  noSearchData: style({
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    height: "calc(100vh - 8rem)",
+  }),
 };

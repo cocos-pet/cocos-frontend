@@ -3,6 +3,8 @@ import {
   CATEGORY_KIND,
   CATEGORY_BREED,
   CATEGORY_GENDER,
+  CATEGORY_SYMPTOM,
+  CATEGORY_DISEASE,
 } from "@shared/component/FilterBottomSheet/CategoryContent/constant";
 
 export interface AnimalItem {
@@ -51,12 +53,18 @@ interface AnimalFilterState {
 
   // 적용된 필터
   selectedChips: SelectedChips;
-  toggleChips: (chip: { id: number | "M" | "F" | null; category: keyof SelectedChips }) => void;
+  toggleChips: (chip: {
+    id: number | "M" | "F" | null;
+    category: keyof SelectedChips;
+  }) => void;
   //animalId, breedId, gender
 
   // 각 category에 해당하는 데이터 배열
   categoryData: CategoryData;
-  setCategoryData: (category: CategoryType, data: CategoryAnimal | CategoryBreed | CategoryGender) => void;
+  setCategoryData: (
+    category: CategoryType,
+    data: CategoryAnimal | CategoryBreed | CategoryGender
+  ) => void;
 }
 
 export const useAnimalFilterStore = create<AnimalFilterState>((set) => ({
