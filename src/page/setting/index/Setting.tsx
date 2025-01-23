@@ -6,11 +6,12 @@ import { useNavigate } from "react-router-dom";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
+import { useLogout } from "@api/domain/setting/hook";
 
-//todo: 로그아웃 api 연결 필요
 const Setting = () => {
   const navigate = useNavigate();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
+  const { mutate: logout } = useLogout();
 
   return (
     <>
@@ -52,7 +53,7 @@ const Setting = () => {
         leftText="취소"
         rightText="로그아웃"
         leftOnClick={() => closeBottomSheet()}
-        rightOnClick={() => alert("로그아웃 구현 예정")}
+        rightOnClick={() => logout()}
       />
     </>
   );
