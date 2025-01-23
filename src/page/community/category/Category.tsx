@@ -22,7 +22,6 @@ const categoryMapping: { [key: string]: string } = {
 
 const Category = () => {
   const [searchParams] = useSearchParams();
-  const [isRecentPost] = useState(true);
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
@@ -30,7 +29,8 @@ const Category = () => {
   const { mutate: fetchPosts } = usePostPostFilters();
 
   const fetchPostData = useCallback(() => {
-    const sortBy = isRecentPost ? "RECENT" : "POPULAR";
+    // default 값은 최신순 고정
+    const sortBy = "RECENT";
     if (!typeId) return;
     fetchPosts(
       { categoryId: Number(typeId), sortBy },
@@ -40,7 +40,7 @@ const Category = () => {
         },
       },
     );
-  }, [fetchPosts, typeId, isRecentPost]);
+  }, [fetchPosts, typeId]);
 
   useEffect(() => {
     fetchPostData();
