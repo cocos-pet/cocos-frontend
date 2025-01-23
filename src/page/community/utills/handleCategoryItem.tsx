@@ -22,3 +22,13 @@ export const getDropdownValuetoIcon = (category: string | undefined) => {
   const selectedItem = DropDownItems.find((item) => category === item.label);
   return selectedItem ? selectedItem.icon : <IcDeleteBlack width={24} />;
 };
+
+export const getCategorytoEnglish = (category: string | undefined) => {
+  const selectedItem = DropDownItems.find((item) => category === item.label);
+  return selectedItem ? selectedItem.english : "";
+};
+
+export const getCategorytoId = (category: string | undefined) => {
+  const selectedItem = DropDownItems.find((item) => category === item.label);
+  return selectedItem ? selectedItem.value : 0;
+};
