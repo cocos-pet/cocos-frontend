@@ -115,6 +115,7 @@ export const styles = {
       color: semanticColor.primary.heavy,
       fontWeight: 500,
       flexShrink: 0,
+      marginRight: "0.4rem",
     },
   ]),
 };

@@ -128,6 +128,16 @@ const PostDetail = () => {
     });
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 조건: 텍스트가 비어있고 Backspace 키를 누를 때 -> 멘션 제거
+    if (e.key === "Backspace" && !parsedComment.text) {
+      setParsedComment((prevState) => ({
+        ...prevState,
+        mention: "",
+      }));
+    }
+  };
+
   const onBackClick = () => {
     navigate(-1);
   };
@@ -325,6 +335,7 @@ const PostDetail = () => {
           value={parsedComment.text}
           onClearClick={onClearClick}
           placeholder={"댓글을 입력해주세요."}
+          onKeyDown={onKeyDown}
         />
         {parsedComment.text && (
           <button className={styles.upload} onClick={onSubmitComment}>
