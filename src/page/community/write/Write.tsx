@@ -27,12 +27,15 @@ import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
 import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import {
   useGetBodies,
   useGetDisease,
   useGetSymptoms,
 } from "@api/domain/mypage/edit-pet/hook.ts";
+import axios from "axios";
+import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import axios from "axios";
 
 interface writeProps {

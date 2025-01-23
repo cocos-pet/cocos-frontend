@@ -3,6 +3,8 @@ import {
   deleteLike,
   getPost,
   postLike,
+  postArticle,
+  articlePostRequest,
   postComment,
   postSubComment,
   deleteSubComment,
@@ -22,6 +24,7 @@ export const POST_QUERY_KEY = {
   ],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
+  ARTICLE_POST_QUERY_KEY: () => ["articlePost"],
   ARTICLE_POST_QUERY_KEY: () => ["articlePost"],
 };
 
@@ -87,6 +90,19 @@ export const useCommentsGet = (postId: number) => {
     queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
     queryFn: () => {
       return getComments(postId);
+    },
+  });
+};
+
+/**
+ *
+ */
+
+export const useArticlePost = () => {
+  return useMutation({
+    mutationKey: POST_QUERY_KEY.ARTICLE_POST_QUERY_KEY(),
+    mutationFn: (params: articlePostRequest) => {
+      return postArticle(params);
     },
   });
 };
