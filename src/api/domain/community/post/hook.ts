@@ -5,10 +5,10 @@ import {
   deleteLike,
   getPost,
   postLike,
-  postComment,
-  postSubComment,
   deleteSubComment,
   deletePost,
+  postSubComment,
+  postComment,
 } from "@api/domain/community/post";
 import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
@@ -106,6 +106,9 @@ export const useCommentPost = (postId: number) => {
       queryClient.invalidateQueries({
         queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
       });
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
+      });
     },
   });
 };
@@ -128,6 +131,9 @@ export const useSubCommentPost = (commentId: number, postId: number) => {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({
         queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
       });
     },
   });

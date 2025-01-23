@@ -8,14 +8,22 @@ import { CategoryType, SelectedChips, useFilterStore } from "@store/filter";
 import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById";
 
 const categories: { id: CategoryType; label: string }[] = [
-  { id: "kind", label: "종류" },
+  { id: "breeds", label: "종류" },
   { id: "symptoms", label: "증상" },
   { id: "disease", label: "질병" },
 ];
 
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
 const FilterBottomSheet = () => {
-  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips, categoryData } = useFilterStore();
+  const {
+    category,
+    selectedChips,
+    setCategory,
+    isOpen,
+    setOpen,
+    toggleChips,
+    categoryData,
+  } = useFilterStore();
 
   const isSelectedCategory = (cate: CategoryType): boolean => {
     return cate === category;
@@ -37,23 +45,29 @@ const FilterBottomSheet = () => {
             {Object.entries(selectedChips).map(([key, ids]) =>
               (ids as number[]).map((id) => {
                 const keyMap: Record<keyof SelectedChips, CategoryType> = {
-                  breedId: "kind",
+                  breedId: "breeds",
                   diseaseIds: "disease",
                   symptomIds: "symptoms",
                 } as const;
 
                 const category = keyMap[key as keyof SelectedChips];
-                const name = getSelectedChipNamesById(id, category, categoryData);
+                const name = getSelectedChipNamesById(
+                  id,
+                  category,
+                  categoryData
+                );
 
                 return (
                   <Chip
                     key={`filter-${key}-${id}`}
                     label={name || "Unknown"}
                     icon={true}
-                    onClick={() => toggleChips({ id, category: key as keyof SelectedChips })}
+                    onClick={() =>
+                      toggleChips({ id, category: key as keyof SelectedChips })
+                    }
                   />
                 );
-              }),
+              })
             )}
           </div>
         ) : (
@@ -62,7 +76,11 @@ const FilterBottomSheet = () => {
 
         <div className={styles.categoryZone}>
           {categories.map(({ id, label }) => (
-            <Tab key={id} active={isSelectedCategory(id)} onClick={() => handleClickCategory(id)}>
+            <Tab
+              key={id}
+              active={isSelectedCategory(id)}
+              onClick={() => handleClickCategory(id)}
+            >
               {label}
             </Tab>
           ))}
@@ -73,7 +91,12 @@ const FilterBottomSheet = () => {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="확인하기" size="large" width="100%" onClick={() => setOpen(false)} />
+          <Button
+            label="확인하기"
+            size="large"
+            width="100%"
+            onClick={() => setOpen(false)}
+          />
         </div>
       </>
     </BottomSheet>

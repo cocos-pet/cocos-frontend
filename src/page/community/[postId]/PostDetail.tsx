@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow, IcLikeActive, IcLikeDisabled, IcTest } from "@asset/svg";
+import {
+  IcBaseProfileImage,
+  IcLeftarrow,
+  IcLikeActive,
+  IcLikeDisabled,
+  IcTest,
+} from "@asset/svg";
 import { styles } from "@page/community/[postId]/PostDetail.css";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
@@ -23,6 +29,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -117,7 +124,6 @@ const PostDetail = () => {
   };
 
   const onBackClick = () => {
-    //navigate(PATH.COMMUNITY.ROOT);
     navigate(-1);
   };
 
@@ -194,20 +200,22 @@ const PostDetail = () => {
       />
       <div className={styles.container}>
         <Button
-          leftIcon={<IcTest width={20} />}
+          leftIcon={getDropdownValuetoIcon(postData.category)}
           label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
           disabled={true}
         />
         <div className={styles.top}>
-          {
+          {postData.profileImage ? (
             <img
               src={postData.profileImage}
               alt="userProfile"
               className={styles.profileImage}
             />
-          }
+          ) : (
+            <IcBaseProfileImage width={32} height={32} />
+          )}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>

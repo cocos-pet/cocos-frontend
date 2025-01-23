@@ -7,6 +7,7 @@ globalStyle("html", {
   alignItems: "center",
 
   fontSize: "10px", //default
+
   "@media": {
     "(min-width: 450px) and (max-width: 600px)": { fontSize: "10px" },
     "(max-width: 450px)": { fontSize: "10px" }, //62.5%
@@ -20,4 +21,6 @@ globalStyle("body", {
   maxWidth: "768px",
   minHeight: "calc(var(--vh, 1vh) * 100)",
   fontFamily: "Pretendard, sans-serif",
+  scrollbarWidth: "none",
+  msOverflowStyle: "none",
 });
