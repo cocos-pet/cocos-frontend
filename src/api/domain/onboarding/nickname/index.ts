@@ -6,8 +6,6 @@ export type patchNicknameResponse = {
 };
 
 export const patchNickname = async (nickname: string): Promise<patchNicknameResponse> => {
-  const response = await patch<{ data: patchNicknameResponse }>(`${API_PATH.MEMBERS}`, {
-    params: { nickname }, // 현재 누락된다고 나옴;
-  });
+  const response = await patch<{ data: patchNicknameResponse }>(`${API_PATH.MEMBERS}?nickname=${nickname}`);
   return response.data.data;
 };
