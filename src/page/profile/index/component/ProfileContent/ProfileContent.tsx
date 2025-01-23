@@ -1,7 +1,6 @@
 import Content from "@common/component/Content/Content";
 import { ActiveTabType } from "../../Profile";
 import * as styles from "./ProfileContent.css";
-import { dummyData } from "./costant"; //todo: 더미데이터 렌더링
 import MyPageComment from "../ProfileComment/ProfileComment";
 import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -65,6 +64,9 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
       case "review":
         return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
       case "post":
+        if (!profilePosts?.length) {
+          return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;
+        }
         return profilePosts?.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
             <Content
@@ -79,8 +81,10 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
             />
           </div>
         ));
-      //todo: 코멘트에서 렌더링하는 형식 달라짐
       case "comment":
+        if (!profileComments?.comments?.length && !profileComments?.subComments?.length) {
+          return <div className={styles.nothingContent}>{"아직 작성한 댓글이 없어요."}</div>;
+        }
         return renderAllComments(profileComments?.comments, profileComments?.subComments).map((data) => (
           <div className={styles.mypagecontent} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
             <MyPageComment
@@ -97,11 +101,7 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
     }
   };
 
-  return (
-    <div className={styles.contentWrapper}>
-      {dummyData.length === 0 ? renderNothingContent(tab) : renderContent(tab)}
-    </div>
-  );
+  return <div className={styles.contentWrapper}>{renderContent(tab)}</div>;
 };
 
 export default ProfileContent;
