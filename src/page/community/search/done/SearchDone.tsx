@@ -118,7 +118,8 @@ const SearchDone = () => {
 
   const onBackClick = () => {
     clearAllChips();
-    navigate(-2);
+    const backPath = sessionStorage.getItem("searchBackUrl");
+    navigate(`${backPath}`);
   };
 
   const onClickPost = (postId: number | undefined) => {
