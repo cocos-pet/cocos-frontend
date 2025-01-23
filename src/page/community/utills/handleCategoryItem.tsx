@@ -18,7 +18,7 @@ export const getDropdownIdtoValue = (categoryId: number | undefined) => {
   return selectedItem ? selectedItem.label : "";
 };
 
-export const getDropdownValuetoIcon = (category: string) => {
+export const getDropdownValuetoIcon = (category: string | undefined) => {
   const selectedItem = DropDownItems.find((item) => category === item.label);
   return selectedItem ? selectedItem.icon : <IcDeleteBlack width={24} />;
 };
