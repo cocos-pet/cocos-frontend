@@ -31,7 +31,7 @@ const Category = () => {
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
     fetchPosts(
-      { categoryId: Number(typeId) },
+      { categoryId: Number(typeId), sortBy: "RECENT" },
       {
         onSuccess: (data) => {
           setPosts(data);
