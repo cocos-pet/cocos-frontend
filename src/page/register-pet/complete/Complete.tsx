@@ -6,7 +6,7 @@ import { Button } from "@common/component/Button";
 import { PATH } from "@route/path";
 import { useGetNickname } from "@api/domain/complete/hook";
 import { Player } from "@lottiefiles/react-lottie-player"; // lottie-react 대신 Player 사용
-import registerPet from "@asset/lottie/registerPet.json";
+import onboarding from "@asset/lottie/onboarding.json";
 const Complete = () => {
   const navigate = useNavigate();
   const handleSkip = () => {
@@ -26,7 +26,7 @@ const Complete = () => {
           </div>
           <Docs text={"반려동물과 함께하는 긴 시간, 더 잘 돌봐드릴게요"} />
         </div>
-        <Player autoplay loop={false} src={registerPet} />
+        <Player autoplay loop={false} src={onboarding} style={{ width: 296, height: 325 }} />
       </div>
 
       <div className={styles.btnWrapper}>
