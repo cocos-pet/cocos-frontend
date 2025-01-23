@@ -8,6 +8,12 @@ export const layout = style({
   gap: "7.2rem",
 });
 
+export const gap = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.8rem",
+});
+
 export const centerLayout = style({
   display: "flex",
   alignItems: "center",

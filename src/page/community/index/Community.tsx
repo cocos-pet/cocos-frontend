@@ -10,8 +10,13 @@ import * as styles from "./Community.css";
 import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { useQueryGetCategory } from "@api/domain/community/category/hook";
+import { useEffect } from "react";
 
 const Community = () => {
+  useEffect(() => {
+    sessionStorage.setItem("searchBackUrl", PATH.COMMUNITY.ROOT);
+  }, []);
+
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");

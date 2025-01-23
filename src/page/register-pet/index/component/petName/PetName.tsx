@@ -42,7 +42,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
     <>
       {/* 상단 영역 */}
       <div className={styles.layout}>
-        <div>
+        <div className={styles.gap}>
           <img src={petNameBori} alt="onboarding-character" className={styles.imgStyle} />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />

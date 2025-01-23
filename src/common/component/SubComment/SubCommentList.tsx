@@ -4,11 +4,9 @@ import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 interface SubCommentListProps {
   commentId: number | undefined;
   subComments: commentGetRequestSubCommentType[];
-  onSubCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onSubCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
   onCommentDelete: (id: number) => void;
+  onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const SubCommentList = ({
@@ -16,19 +14,20 @@ const SubCommentList = ({
   subComments,
   onSubCommentReplyClick,
   onCommentDelete,
+  onModalClose,
 }: SubCommentListProps) => {
   return (
-    <div>
+    <div onClick={onModalClose}>
       {subComments?.map((subComment) => (
         <SubComment
           key={subComment.id}
           subComment={subComment}
           commentId={commentId}
           onCommentDelete={() => {
-            alert(subComment.id);
             onCommentDelete(subComment.id as number);
           }}
           onSubCommentReplyClick={onSubCommentReplyClick}
+          onModalClose={onModalClose}
         />
       ))}
     </div>

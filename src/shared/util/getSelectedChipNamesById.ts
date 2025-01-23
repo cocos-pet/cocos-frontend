@@ -5,16 +5,20 @@ import { CategoryType } from "@store/filter";
 export const getSelectedChipNamesById = (
   id: number,
   category: CategoryType,
-  categoryData: CategoryData,
+  categoryData: CategoryData
 ): string | undefined => {
-  if (category === "kind") {
-    return categoryData.kind.find((item) => item.id === id)?.name;
+  if (category === "breeds") {
+    return categoryData.breeds.find((item) => item.id === id)?.name;
   }
   if (category === "disease") {
-    return categoryData.disease.flatMap((group) => group.diseases).find((item) => item.id === id)?.name;
+    return categoryData.disease
+      .flatMap((group) => group.diseases)
+      .find((item) => item.id === id)?.name;
   }
   if (category === "symptoms") {
-    return categoryData.symptoms.flatMap((group) => group.symptoms).find((item) => item.id === id)?.name;
+    return categoryData.symptoms
+      .flatMap((group) => group.symptoms)
+      .find((item) => item.id === id)?.name;
   }
   return undefined;
 };

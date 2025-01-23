@@ -10,7 +10,7 @@ export const styles = {
       justifyContent: "space-between",
       gap: "1rem",
       alignItems: "center",
-      padding: "1rem 2rem",
+      padding: "1rem 1.8rem",
       border: `0.1rem solid ${color.gray.gray200}`,
       borderRadius: "8px",
       background: color.gray.gray000,
@@ -56,8 +56,7 @@ export const styles = {
     base: {
       display: "flex",
       alignItems: "center",
-      gap: "1rem",
-      width: "inherit",
+      width: "calc(100% - 20px)",
     },
   }),
   input: recipe({
@@ -68,13 +67,12 @@ export const styles = {
         fontWeight: 500,
         height: "auto",
         minWidth: "100%",
-
         maxWidth: "100%",
         color: color.gray.gray900,
         border: "none",
-        width: "100%",
+        // width: "100%",
         "::placeholder": {
-          color: color.gray.gray700,
+          color: color.gray.gray600,
         },
         ":focus": {
           outline: "none",
@@ -92,6 +90,8 @@ export const styles = {
       state: {
         default: {},
         write: {
+          fontSize: "1.6rem",
+
           "::placeholder": {
             color: color.gray.gray600,
           },
@@ -122,9 +122,18 @@ export const styles = {
       color: semanticColor.primary.heavy,
       fontWeight: 500,
       flexShrink: 0,
+      marginRight: "0.4rem",
     },
   ]),
 };
+
+export const iconstyle = style({
+  height: "2rem",
+  width: "2rem",
+  display: "flex",
+  alignContent: "center",
+  marginRight: "1rem",
+});
 
 export type WrapVariants = RecipeVariants<typeof styles.wrapper>;
 export type InputVariants = RecipeVariants<typeof styles.input>;

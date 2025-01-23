@@ -1,4 +1,6 @@
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
+  deleteComment,
   getComments,
   deleteLike,
   getPost,
@@ -8,10 +10,8 @@ import {
   postComment,
   postSubComment,
   deleteSubComment,
-  deleteComment,
   deletePost,
 } from "@api/domain/community/post";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useNavigate, useParams } from "react-router-dom";
 
 export const POST_QUERY_KEY = {
@@ -25,8 +25,14 @@ export const POST_QUERY_KEY = {
 
 export const COMMENT_QUERY_KEY = {
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
-  DELETE_COMMENT: (commentId: number | undefined) => ["deleteComment", commentId],
-  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => ["deleteSubComment", subCommentId],
+  DELETE_COMMENT: (commentId: number | undefined) => [
+    "deleteComment",
+    commentId,
+  ],
+  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => [
+    "deleteSubComment",
+    subCommentId,
+  ],
 };
 
 /**
@@ -112,6 +118,9 @@ export const useCommentPost = (postId: number) => {
       queryClient.invalidateQueries({
         queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
       });
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
+      });
     },
   });
 };
@@ -134,6 +143,9 @@ export const useSubCommentPost = (commentId: number, postId: number) => {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({
         queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
       });
     },
   });

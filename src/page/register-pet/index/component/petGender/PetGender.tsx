@@ -40,7 +40,7 @@ const PetGender = ({ setStep, updatePetData }: PetGenderProps) => {
     <>
       {/* 상단 영역 */}
       <div className={styles.layout}>
-        <div>
+        <div className={styles.gap}>
           <Title text={ONBOARDING_GUIDE.petGender.title} />
           <Docs text={ONBOARDING_GUIDE.petGender.docs} />
         </div>

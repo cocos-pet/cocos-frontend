@@ -9,7 +9,7 @@ export function validatePetName(petName: string): string[] {
   }
 
   // 펫이름 길이
-  if (petName.length < 2 || petName.length > 8) {
+  if (petName.length > 8) {
     errors.push(ERROR_MSG.petName.length);
   }
 

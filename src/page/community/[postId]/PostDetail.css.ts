@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color, font } from "@style/styles.css.ts";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   container: style({
@@ -85,7 +85,9 @@ export const styles = {
   item: style([
     font.label01,
     {
-      width: "6.2rem",
+      marginTop: "0.4rem",
+
+      width: "100%",
       display: "flex",
       alignItems: "center",
       gap: "0.4rem",
@@ -105,16 +107,14 @@ export const styles = {
     },
   ]),
   commentContainer: style({
-    padding: "1.6rem 2rem",
+    padding: "1.6rem 2rem 0 2rem",
     display: "flex",
     flexDirection: "column",
-    gap: "1.2rem",
-    marginBottom: "7.2rem",
   }),
   textContainer: style({
     display: "flex",
     flexDirection: "row",
-    position: "fixed",
+    position: "sticky",
     bottom: 0,
     width: "100%",
     padding: "1.2rem 2rem 4rem 2rem",
@@ -127,6 +127,20 @@ export const styles = {
       flexShrink: 0,
       padding: "1rem 1.2rem",
       borderRadius: "1rem",
+    },
+  ]),
+  categoryName: style([
+    font.label01,
+    {
+      color: color.gray.gray600,
+      fontWeight: "600",
+      fontSize: "1.4rem",
+    },
+  ]),
+  blue: style([
+    font.label01,
+    {
+      color: semanticColor.text.heavy,
     },
   ]),
 };

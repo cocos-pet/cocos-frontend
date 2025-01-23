@@ -4,10 +4,7 @@ import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
-import {
-  useSearchGet,
-  useSearchPost,
-} from "@api/domain/community/search/hook.ts";
+import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 
 const Search = () => {
@@ -23,22 +20,26 @@ const Search = () => {
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
   const { mutate } = useSearchPost();
-  const {} = useFilterStore();
+  const { clearAllChips } = useFilterStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (searchText: string) => {
+    if (searchText.trim() === "") {
+      return;
+    }
     mutate(
       { keyword: searchText },
       {
         onSuccess: () => {
           handleNavigate(searchText);
+          clearAllChips();
         },
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      }
+      },
     );
   };
 
@@ -46,6 +47,7 @@ const Search = () => {
     if (e.key === "Enter" && !isSubmitting) {
       setIsSubmitting(true);
       onSubmit(searchText);
+      clearAllChips();
 
       setTimeout(() => {
         setIsSubmitting(false);
@@ -63,7 +65,8 @@ const Search = () => {
   };
 
   const onBackClick = () => {
-    navigate(-1);
+    navigate(-2);
+    clearAllChips();
   };
 
   useEffect(() => {
@@ -84,7 +87,7 @@ const Search = () => {
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
           onKeyDown={(e) => handleKeyDown(e)}
-          icon={<IcSearch />}
+          icon={<IcSearch width={20} height={20} />}
           onClearClick={() => setSearchText("")}
         />
       </div>

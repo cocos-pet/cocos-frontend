@@ -1,6 +1,13 @@
 import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow, IcLikeActive, IcLikeDisabled, IcTest } from "@asset/svg";
+import {
+  IcBaseProfileImage,
+  IcCuriousActive,
+  IcCuriousUnactive,
+  IcLeftarrow,
+  IcLikeActive,
+  IcLikeDisabled,
+} from "@asset/svg";
 import { styles } from "@page/community/[postId]/PostDetail.css";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
@@ -23,6 +30,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
+import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -39,10 +48,7 @@ const PostDetail = () => {
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
-  const { mutate: subCommentPost } = useSubCommentPost(
-    Number(commentId),
-    Number(postId)
-  );
+  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId), Number(postId));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -77,7 +83,7 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     } else {
@@ -91,16 +97,13 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     }
   };
 
-  const onCommentReplyClick = (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => {
+  const onCommentReplyClick = (nickname: string | undefined, commentId: number | undefined) => {
     if (nickname) {
       setParsedComment({ mention: nickname, text: "" });
     }
@@ -116,8 +119,17 @@ const PostDetail = () => {
     });
   };
 
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    // 조건: 텍스트가 비어있고 Backspace 키를 누를 때 -> 멘션 제거
+    if (e.key === "Backspace" && !parsedComment.text) {
+      setParsedComment((prevState) => ({
+        ...prevState,
+        mention: "",
+      }));
+    }
+  };
+
   const onBackClick = () => {
-    //navigate(PATH.COMMUNITY.ROOT);
     navigate(-1);
   };
 
@@ -144,12 +156,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) =>
-            Number(prevState !== undefined ? prevState - 1 : 0)
-          );
+          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -164,13 +174,15 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) =>
-            prevState !== undefined ? prevState + 1 : 0
-          );
+          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
+  };
+
+  const onModalClose = () => {
+    setOpenModalId(undefined);
   };
 
   if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
@@ -182,6 +194,7 @@ const PostDetail = () => {
         onLeftClick={onBackClick}
         type={"noTitle"}
         rightBtn={
+          // postData.isWriter && (
           <MoreModal
             onDelete={() => {
               setOpen(true);
@@ -190,29 +203,30 @@ const PostDetail = () => {
             isOpen={openModalId === `post-${postId}`}
             onToggleModal={() => setOpenModalId(`post-${postId}`)}
           />
+          // )
         }
       />
-      <div className={styles.container}>
+      <div className={styles.container} onClick={onModalClose}>
         <Button
-          leftIcon={<IcTest width={20} />}
+          leftIcon={getDropdownValuetoIcon(postData.category)}
           label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
           disabled={true}
+          onClick={() => {
+            console.log("category");
+          }}
         />
         <div className={styles.top}>
-          {
-            <img
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-            />
-          }
+          {postData.profileImage ? (
+            <img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
+          ) : (
+            <IcBaseProfileImage width={32} height={32} />
+          )}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 ·{" "}
-              {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -222,7 +236,10 @@ const PostDetail = () => {
         </div>
         {postData.images?.map((image, index) => (
           <img
-            key={`postImage-${index}`}
+            key={`postImage-${
+              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+              index
+            }`}
             src={image}
             alt="postImage"
             className={styles.image}
@@ -231,23 +248,40 @@ const PostDetail = () => {
         <div className={styles.labelWrap}>
           {postData.tags?.map((tag, index) => (
             <Chip
-              key={`postTag-${index}`}
+              key={`postTag-${
+                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
+                index
+              }`}
               label={tag}
               color={"blue"}
               disabled={true}
             />
           ))}
         </div>
+        <Divider size={"small"} />
         <div className={styles.subContents}>
           <div className={styles.item}>
+            {getCategoryResponse(postData.category) === "curious" ? (
+              isLiked ? (
+                <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
+              ) : (
+                <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
+              )
+            ) : getCategoryResponse(postData.category) === "support" ? (
+              isLiked ? (
+                <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
+              ) : (
+                <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
+              )
+            ) : null}
+            <span className={styles.categoryName}>
+              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
+              {likeCount}
+            </span>
             {isLiked ? (
               <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
             ) : (
-              <IcLikeDisabled
-                width={24}
-                height={24}
-                onClick={onLikeDeleteClick}
-              />
+              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
             )}
             <span>{likeCount}</span>
           </div>
@@ -256,26 +290,24 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글{" "}
-          <span className={styles.commentCount}>
-            {postData.totalCommentCounts}
-          </span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
+          onModalClose={onModalClose}
         />
+        <CommentList comments={{ comments: commentsData }} onCommentReplyClick={onCommentReplyClick} />
       </div>
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={
-            parsedComment.mention ? `@${parsedComment.mention} ` : ``
-          }
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ``}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
           placeholder={"댓글을 입력해주세요."}
+          onKeyDown={onKeyDown}
         />
         {parsedComment.text && (
           <button className={styles.upload} onClick={onSubmitComment}>
@@ -285,7 +317,7 @@ const PostDetail = () => {
       </div>
       <SimpleBottomSheet
         isOpen={isOpen}
-        content={"댓글을 정말 삭제할까요?"}
+        content={"게시글을 정말 삭제할까요?"}
         handleClose={() => setOpen(false)}
         leftOnClick={() => setOpen(false)}
         leftText={"취소"}

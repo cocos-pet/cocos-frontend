@@ -3,8 +3,13 @@ import React from "react";
 
 type DropDownType = {
   isOpen: boolean;
-  items: Array<{ icon: React.ReactNode; label: string; value: number }>;
-  onClickItem: (target: string, value: number) => void;
+  items: Array<{
+    icon: React.ReactNode;
+    value: number;
+    label: string;
+    english: string;
+  }>;
+  onClickItem: (target: string, value: string | number) => void;
   toggleDropDown: () => void;
 };
 
