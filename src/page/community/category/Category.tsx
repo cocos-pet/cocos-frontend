@@ -183,8 +183,8 @@ const Category = () => {
           {posts.map((post) => (
             <Content
               key={post.id}
-              breed={post.breed}
-              petAge={post.petAge}
+              breed={type === "magazine" ? "코코스" : post.breed}
+              petAge={type === "magazine" ? undefined : post.petAge}
               postTitle={post.title}
               postContent={post.content}
               likeCnt={post.likeCount}
@@ -193,7 +193,7 @@ const Category = () => {
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
               timeAgo={formatTime(post.updatedAt as string)}
               category={post.category}
-              likeIconType={"curious"}
+              likeIconType="curious"
             />
           ))}
         </div>
