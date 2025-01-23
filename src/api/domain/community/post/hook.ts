@@ -106,6 +106,9 @@ export const useCommentPost = (postId: number) => {
       queryClient.invalidateQueries({
         queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
       });
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
+      });
     },
   });
 };
@@ -128,6 +131,9 @@ export const useSubCommentPost = (commentId: number, postId: number) => {
     onSuccess: (data, variables) => {
       queryClient.invalidateQueries({
         queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
+      });
+      queryClient.invalidateQueries({
+        queryKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
       });
     },
   });
