@@ -112,6 +112,7 @@ const Category = () => {
             onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
             timeAgo={formatTime(post.updatedAt as string)}
             category={post.category}
+            likeIconType={"curious"}
           />
         ))}
       </div>
