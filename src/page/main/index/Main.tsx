@@ -48,7 +48,6 @@ const Main = () => {
         />
       </div>
       <MainHeader />
-      <Divider />
       <Symptom />
       <Divider />
       <HotPost />
