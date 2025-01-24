@@ -134,6 +134,7 @@ export const styles = {
     position: "fixed",
     bottom: 0,
     width: "100%",
+    maxWidth: "76.8rem",
     padding: "1.2rem 2rem 4rem 2rem",
     background: color.gray.gray000,
   }),

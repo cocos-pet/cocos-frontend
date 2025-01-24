@@ -56,10 +56,7 @@ const PostDetail = () => {
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
-  const { mutate: subCommentPost } = useSubCommentPost(
-    Number(commentId),
-    Number(postId)
-  );
+  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId), Number(postId));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -81,7 +78,7 @@ const PostDetail = () => {
         <img
           src={nocategory}
           alt="게시글 없음."
-          style={{ width: "27.6074rem", height: "15.4977rem" }}
+          style={{ width: "27.6074rem", height: "15.4977rem", objectFit: "cover" }}
         />
         <h1>아직 등록된 게시글이 없어요</h1>
       </div>
@@ -106,7 +103,7 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     } else {
@@ -120,16 +117,13 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     }
   };
 
-  const onCommentReplyClick = (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => {
+  const onCommentReplyClick = (nickname: string | undefined, commentId: number | undefined) => {
     if (nickname) {
       setParsedComment({ mention: nickname, text: "" });
     }
@@ -175,12 +169,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) =>
-            Number(prevState !== undefined ? prevState - 1 : 0)
-          );
+          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -195,12 +187,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) =>
-            prevState !== undefined ? prevState + 1 : 0
-          );
+          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -242,26 +232,21 @@ const PostDetail = () => {
           onClick={() => {
             navigate(
               `${PATH.COMMUNITY.CATEGORY}?type=${getCategorytoEnglish(
-                postData.category
-              )}&id=${getCategorytoId(postData.category)}`
+                postData.category,
+              )}&id=${getCategorytoId(postData.category)}`,
             );
           }}
         />
         <div className={styles.top} onClick={handleProfileClick}>
           {postData.profileImage ? (
-            <img
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-            />
+            <img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
           ) : (
             <IcBaseProfileImage width={32} height={32} />
           )}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 ·{" "}
-              {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -298,37 +283,19 @@ const PostDetail = () => {
           <div className={styles.item}>
             {getCategoryResponse(postData.category) === "curious" ? (
               isLiked ? (
-                <IcCuriousActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcCuriousUnactive
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : getCategoryResponse(postData.category) === "support" ? (
               isLiked ? (
-                <IcLikeActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcLikeDisabled
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData.category) === "curious"
-                ? "궁금해요 "
-                : "응원해요 "}
+              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
               {likeCount}
             </span>
           </div>
@@ -337,10 +304,7 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글{" "}
-          <span className={styles.commentCount}>
-            {postData.totalCommentCounts}
-          </span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
@@ -351,9 +315,7 @@ const PostDetail = () => {
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={
-            parsedComment.mention ? `@${parsedComment.mention} ` : ""
-          }
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ""}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
