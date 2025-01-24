@@ -5,10 +5,16 @@ interface BottomSheetPropTypes {
   isOpen: boolean;
   handleOpen: (isOpen: boolean) => void;
   children: JSX.Element; //ReactNode는 범위가 너무 넓음
+  handleDimmedClose?: () => void;
 }
 
 //화면 전체를 차지하는 바텀시트 틀 (children 필요)
-const BottomSheet = ({ isOpen, children, handleOpen }: BottomSheetPropTypes) => {
+const BottomSheet = ({
+  isOpen,
+  children,
+  handleOpen,
+  handleDimmedClose,
+}: BottomSheetPropTypes) => {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -24,6 +30,7 @@ const BottomSheet = ({ isOpen, children, handleOpen }: BottomSheetPropTypes) => 
 
   const handleClose = () => {
     handleOpen(false);
+    handleDimmedClose && handleDimmedClose();
   };
 
   const handleBottomSheetClick = (event: React.MouseEvent<HTMLDivElement>) => {

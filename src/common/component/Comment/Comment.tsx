@@ -13,13 +13,21 @@ import { useNavigate } from "react-router-dom";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
+  onCommentReplyClick?: (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => void;
 
   onDelete?: () => void;
   onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
+const Comment = ({
+  comment,
+  onCommentReplyClick,
+  onDelete,
+  onModalClose,
+}: CommentProps) => {
   const navigate = useNavigate();
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
@@ -55,11 +63,13 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {comment.nickname}
-              <p className={styles.blue}>{comment.isWriter && "작성자"}</p>
+              <p className={styles.blue}>{comment.isPostWriter && "작성자"}</p>
             </span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt ? formatTime(comment.createdAt).toLocaleString() : ""}
+              {comment.createdAt
+                ? formatTime(comment.createdAt).toLocaleString()
+                : ""}
             </span>
           </div>
           {comment.isWriter && (

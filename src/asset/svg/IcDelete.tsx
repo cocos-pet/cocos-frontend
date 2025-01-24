@@ -1,14 +1,20 @@
 import * as React from "react";
 import type { SVGProps } from "react";
-const SvgIcDelete = (props: SVGProps<SVGSVGElement>) => (
+
+type Props = {
+  stroke?: string;
+} & SVGProps<SVGSVGElement>;
+
+const SvgIcDelete = ({ stroke, ...props }: Props) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     fill="none"
     viewBox="0 0 24 24"
-    {...props}
+    width={20}
+    height={20}
   >
     <path
-      stroke="#14B5F0"
+      stroke={stroke}
       strokeLinecap="round"
       strokeLinejoin="round"
       strokeWidth={1.5}
