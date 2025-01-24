@@ -30,10 +30,10 @@ const PostList = () => {
           if (data) {
             const sortedPosts = [...data].sort((a, b) => {
               if (isRecentPost) {
-                return new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+                return new Date(b.createdAt as string).getTime() - new Date(a.createdAt as string).getTime();
               }
               if (b.likeCount === a.likeCount) {
-                return new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+                return new Date(b.createdAt as string).getTime() - new Date(a.createdAt as string).getTime();
               }
               return (b.likeCount ?? 0) - (a.likeCount ?? 0);
             });
@@ -93,7 +93,7 @@ const PostList = () => {
               postImage={post.image}
               likeIconType={post.category === "증상·질병" || post.category === "병원고민" ? "curious" : "support"}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
-              timeAgo={formatTime(post.updatedAt as string)}
+              timeAgo={formatTime(post.createdAt as string)}
               category={post.category}
             />
           ))

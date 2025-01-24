@@ -1,13 +1,6 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
-import {
-  IcAddphoto,
-  IcDeleteBlack,
-  IcImagePlus,
-  IcRightArror,
-  IcTest,
-  IcUp,
-} from "@asset/svg";
+import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -40,9 +33,11 @@ import {
   getDropdownIdtoIcon,
   getDropdownIdtoValue,
 } from "@page/community/utills/handleCategoryItem.tsx";
-import {} from "@api/domain/mypage/edit-pet/hook.ts";
 import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
+import { CustomAxiosError } from "@type/global";
+import WorningToastWrap from "@common/component/WornningToastWrap/WorningToastWrap.tsx";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -57,16 +52,25 @@ interface writeProps {
 }
 
 const Write = () => {
+  //빌테용
+  useProtectedRoute();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const navigate = useNavigate();
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { selectedChips, isOpen, setOpen, clearAllChips, setCategoryData } =
-    useFilterStore();
+  const {
+    selectedChips,
+    isOpen,
+    setOpen,
+    clearAllChips,
+    setCategoryData,
+    setCategory,
+  } = useFilterStore();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { mutate } = useArticlePost();
@@ -92,14 +96,17 @@ const Write = () => {
   const TagLabel = [
     {
       label: "반려동물 종류 추가하기",
+      category: "breeds",
       value: FillterToName(selectedChips.breedId, "breeds"),
     },
     {
       label: "증상 추가하기",
+      category: "symptoms",
       value: FillterToName(selectedChips.symptomIds, "symptoms"),
     },
     {
       label: "질병 추가하기",
+      category: "disease",
       value: FillterToName(selectedChips.diseaseIds, "disease"),
     },
   ];
@@ -262,8 +269,13 @@ const Write = () => {
               alert("이미지 업로드에 실패했습니다.");
             }
           },
-          onError: (error) => {
-            alert("글 작성에 실패했습니다.");
+          // @ts-ignore
+          onError: (error: CustomAxiosError) => {
+            if (error.response?.data?.code === 40415) {
+              setErrorMessage(error.response.data.message);
+            } else {
+              alert("게시글 작성에 실패했습니다.");
+            }
           },
         }
       );
@@ -278,6 +290,10 @@ const Write = () => {
 
   return (
     <>
+      <WorningToastWrap
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
       <div>
         <HeaderNav
           leftIcon={<IcDeleteBlack width={24} />}
@@ -349,7 +365,11 @@ const Write = () => {
                   placeholder={tag.label}
                   value={tag.value}
                   isActive={tag.value.length > 0}
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    setOpen(true);
+                    // @ts-ignore
+                    setCategory(tag.category || "breeds");
+                  }}
                 />
                 <Spacing key={`spacing-write-${index}`} marginBottom={"0.8"} />
               </>

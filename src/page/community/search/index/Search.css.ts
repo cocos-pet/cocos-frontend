@@ -5,6 +5,8 @@ export const styles = {
   container: style({}),
   icon: style({
     width: "2.4rem",
+    height: "2.4rem",
+    flexShrink: 0,
   }),
   searchHeader: style({
     display: "flex",

@@ -1,13 +1,14 @@
 import { isLoggedIn } from "@api/index";
 import { useLocation, useNavigate } from "react-router-dom";
 import { PATH } from "./path";
-import { useGetMemberInfo } from "@api/domain/mypage/hook";
+import { useGetMemberInfo, useGetPetInfoWithError } from "@api/domain/mypage/hook";
 import { useEffect } from "react";
 
 export const useProtectedRoute = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { data } = useGetMemberInfo();
+  const { isError: isNoPet } = useGetPetInfoWithError();
 
   useEffect(() => {
     const isLogin = isLoggedIn();
@@ -31,5 +32,12 @@ export const useProtectedRoute = () => {
         navigate(PATH.ONBOARDING.ROOT, { replace: true });
       }
     }
-  }, [data]);
+
+    if (isNoPet && location.pathname === "/community/write") {
+      alert("반려동물을 등록하지 않으면 접근할 수 없습니다.");
+      navigate(PATH.MYPAGE.ROOT);
+    }
+  }, [data, isNoPet]);
+
+  return { isNoPet };
 };

@@ -13,7 +13,11 @@ import { useCallback, useEffect, useState } from "react";
 import { components } from "@type/schema";
 import { postPostFiltersRequest } from "@api/domain/community/search";
 import nocategory from "@asset/image/nocategory.png";
-import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook";
+import {
+  useGetBodies,
+  useGetDisease,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook";
 import Loading from "@common/component/Loading/Loading.tsx";
 
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
@@ -28,13 +32,24 @@ const Category = () => {
   const [searchParams] = useSearchParams();
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
+    []
+  );
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const navigate = useNavigate();
 
   // 필터 관련 상태와 hooks
-  const { isOpen, setOpen, category, setCategory, setCategoryData, selectedChips, toggleChips, categoryData } =
-    useFilterStore();
+  const {
+    isOpen,
+    setOpen,
+    category,
+    setCategory,
+    setCategoryData,
+    selectedChips,
+    toggleChips,
+    categoryData,
+  } = useFilterStore();
+  const { clearAllChips } = useFilterStore();
 
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
@@ -65,8 +80,12 @@ const Category = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
-      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      const diseaseIdArr = diseaseBodies.bodies.map(
+        (item) => item.id as number
+      );
+      const symptomIdArr = symptomBodies.bodies.map(
+        (item) => item.id as number
+      );
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -74,12 +93,10 @@ const Category = () => {
     }
   }, [diseaseBodies, symptomBodies]);
 
-  useEffect(() => {
-    fetchPostData();
-  }, [selectedChips]);
-
   const isFilterOn =
-    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
+    !!selectedChips.breedId.length ||
+    !!selectedChips.diseaseIds.length ||
+    !!selectedChips.symptomIds.length;
 
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
@@ -87,9 +104,16 @@ const Category = () => {
     const filterPayload: postPostFiltersRequest = {
       categoryId: Number(typeId),
       sortBy: "RECENT",
-      animalIds: selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
-      symptomIds: selectedChips.symptomIds.length > 0 ? selectedChips.symptomIds : undefined,
-      diseaseIds: selectedChips.diseaseIds.length > 0 ? selectedChips.diseaseIds : undefined,
+      animalIds:
+        selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
+      symptomIds:
+        selectedChips.symptomIds.length > 0
+          ? selectedChips.symptomIds
+          : undefined,
+      diseaseIds:
+        selectedChips.diseaseIds.length > 0
+          ? selectedChips.diseaseIds
+          : undefined,
     };
 
     fetchPosts(filterPayload, {
@@ -103,12 +127,25 @@ const Category = () => {
   }, [fetchPosts, typeId, selectedChips]);
 
   const handleGoBack = () => {
+    clearAllChips();
+
     navigate(PATH.COMMUNITY.ROOT);
   };
 
   const handleGoSearch = () => {
     navigate(PATH.COMMUNITY.SEARCH);
   };
+  const handleDimmedClose = () => {
+    clearAllChips();
+  };
+
+  const onSubmitClick = () => {
+    fetchPostData();
+  };
+
+  useEffect(() => {
+    fetchPostData();
+  }, []);
 
   if (!type || !validTypes.includes(type)) {
     return (
@@ -117,14 +154,23 @@ const Category = () => {
           <img
             src={nocategory}
             alt="게시글 없음."
-            style={{ width: "27.6074rem", height: "15.4977rem", objectFit: "cover" }}
+            style={{
+              width: "27.6074rem",
+              height: "15.4977rem",
+              objectFit: "cover",
+            }}
           />
           <h1>아직 등록된 게시글이 없어요</h1>
           <div className={styles.floatingBtnContainer}>
-            <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
+            <FloatingBtn
+              onClick={() => navigate(`/community/write?category=${type}`)}
+            />
           </div>
         </div>
-        <FilterBottomSheet />
+        <FilterBottomSheet
+          handleDimmedClose={handleDimmedClose}
+          onSubmitClick={onSubmitClick}
+        />
       </>
     );
   }
@@ -157,15 +203,24 @@ const Category = () => {
             <img
               src={nocategory}
               alt="게시글 없음."
-              style={{ width: "27.6074rem", height: "15.4977rem", objectFit: "cover" }}
+              style={{
+                width: "27.6074rem",
+                height: "15.4977rem",
+                objectFit: "cover",
+              }}
             />
             <h1>아직 등록된 게시글이 없어요</h1>
             <div className={styles.floatingBtnContainer}>
-              <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
+              <FloatingBtn
+                onClick={() => navigate(`/community/write?category=${type}`)}
+              />
             </div>
           </div>
         </div>
-        <FilterBottomSheet />
+        <FilterBottomSheet
+          handleDimmedClose={handleDimmedClose}
+          onSubmitClick={onSubmitClick}
+        />
       </>
     );
   }
@@ -214,11 +269,16 @@ const Category = () => {
 
         {type !== "magazine" && (
           <div className={styles.floatingBtnContainer}>
-            <FloatingBtn onClick={() => navigate(`/community/write?category=${type}`)} />
+            <FloatingBtn
+              onClick={() => navigate(`/community/write?category=${type}`)}
+            />
           </div>
         )}
       </div>
-      <FilterBottomSheet />
+      <FilterBottomSheet
+        handleDimmedClose={handleDimmedClose}
+        onSubmitClick={onSubmitClick}
+      />
     </>
   );
 };

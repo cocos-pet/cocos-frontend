@@ -83,7 +83,7 @@ export const button = recipe({
         color: color.gray.gray900,
         ":hover": {
           color: "rgba(33, 41, 44, 1)",
-          backgroundColor: "rgba(67, 214, 255, 0.05)",
+          backgroundColor: "rgba(67, 214, 255, 0.16)",
           border: `0.1rem solid ${color.primary.blue500}`,
         },
         ":active": {

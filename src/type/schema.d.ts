@@ -1429,6 +1429,11 @@ export interface components {
              * @example true
              */
             isWriter?: boolean;
+            /**
+             * @description 게시글 작성자 여부
+             * @example false
+             */
+            isPostWriter?: boolean;
             /** @description 대댓글 리스트 */
             subComments?: components["schemas"]["SubCommentResponse"][];
         };
@@ -1484,6 +1489,11 @@ export interface components {
              * @example 빵빵이
              */
             mentionedNickname?: string;
+            /**
+             * @description 게시글 작성자 여부
+             * @example false
+             */
+            isPostWriter?: boolean;
         };
         BaseResponseMyAllCommentsResponse: {
             /** Format: int32 */

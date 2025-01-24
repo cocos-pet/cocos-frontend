@@ -14,12 +14,15 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
 import { useEffect } from "react";
+import { useGetMemberInfo } from "@api/domain/mypage/hook";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 const Main = () => {
-  //useProtectedRoute();
+  useProtectedRoute();
 
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
+  const { data: nickName } = useGetMemberInfo();
 
   useEffect(() => {
     sessionStorage.setItem("searchBackUrl", PATH.MAIN);
@@ -34,7 +37,6 @@ const Main = () => {
   const handleTextFieldChange = () => {};
 
   if (!postsData || !getBodyParts) return null;
-
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
@@ -50,7 +52,7 @@ const Main = () => {
       <MainHeader />
       <Symptom />
       <Divider />
-      <HotPost />
+      <HotPost nickname={nickName?.nickname} />
       <MainFooter />
       <Spacing marginBottom="8" />
       <span
