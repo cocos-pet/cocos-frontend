@@ -38,6 +38,7 @@ interface writeProps {
 }
 
 const Write = () => {
+  //빌테용
   useProtectedRoute();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
