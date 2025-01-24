@@ -159,7 +159,7 @@ const Category = () => {
   }
 
   if (isPending) {
-    return <Loading />;
+    return <Loading height={80} />;
   }
 
   if (posts.length === 0) {
