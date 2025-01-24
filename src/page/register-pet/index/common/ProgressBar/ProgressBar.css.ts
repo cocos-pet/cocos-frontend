@@ -8,7 +8,7 @@ export const progressSizeVar = createVar();
 export const barStyle = style({
   maxWidth: "72.8rem",
   overflow: "hidden",
-  position: "fixed",
+  position: "relative",
   top: "4rem",
 
   width: "calc(100vw - 4rem)",
