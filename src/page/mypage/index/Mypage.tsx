@@ -12,10 +12,13 @@ import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { isLoggedIn } from "@api/index";
 import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
 const Mypage = () => {
+  useProtectedRoute();
+
   const preSavedActiveTab = sessionStorage.getItem("activeTab");
 
   const navigate = useNavigate();
@@ -31,6 +34,11 @@ const Mypage = () => {
   }, []);
 
   useEffect(() => {
+    if (!petInfo) setIsRegister(false);
+    else setIsRegister(true);
+  }, [petInfo]);
+
+  useEffect(() => {
     sessionStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
 
@@ -42,7 +50,7 @@ const Mypage = () => {
     setActiveTab(tab);
   };
 
-  if (isLoading || !member || !petInfo) return;
+  if (isLoading || !member) return;
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
@@ -71,17 +79,17 @@ const Mypage = () => {
 
             {isRegister ? (
               <div className={styles.animalProfileWrapper}>
-                <img className={styles.animalImage} alt="프로필이미지" src={petInfo.petImage} />
+                <img className={styles.animalImage} alt="프로필이미지" src={petInfo?.petImage} />
                 <div className={styles.animalProfileTextWrapper}>
                   <span className={styles.animalMainText}>
-                    {`${petInfo.breed} `}
+                    {`${petInfo?.breed} `}
                     <span className={styles.textDivider}>|</span>
-                    {` ${petInfo.petAge} `}
+                    {` ${petInfo?.petAge} `}
                     <span className={styles.textDivider}>|</span>
                   </span>
                   <span className={styles.animalSubText}>
-                    {`앓고있는 병 `}
-                    {petInfo.diseases?.map((disease) => (
+                    {"앓고있는 병 "}
+                    {petInfo?.diseases?.map((disease) => (
                       <span className={styles.spanNoWrap} key={`hash-disease-${disease.id}`}>
                         {`#${disease.name}`}&nbsp;
                       </span>
