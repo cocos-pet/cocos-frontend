@@ -75,7 +75,6 @@ const PostDetail = () => {
     }
   }, [postData]);
 
-  if (isLoading) return <div>로딩중...</div>;
   if (!postData) {
     return (
       <div className={styles.emptyContainer}>
@@ -209,8 +208,7 @@ const PostDetail = () => {
     setOpenModalId(undefined);
   };
 
-  if (isLoading || !postData || !postId || !commentsData)
-    return <Loading height={60} />;
+  if (isLoading || !postId || !commentsData) return <Loading height={60} />;
 
   const handleProfileClick = () => {
     if (postData.nickname) {
