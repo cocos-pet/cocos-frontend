@@ -9,6 +9,7 @@ import { postPostFiltersResponse } from "@api/domain/community/search";
 import { PATH } from "@route/path";
 import { formatTime } from "@shared/util/formatTime";
 import Loading from "@common/component/Loading/Loading.tsx";
+import nocategory from "@asset/image/nocategory.png";
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
@@ -29,7 +30,6 @@ const PostList = () => {
           if (data) {
             const sortedPosts = [...data].sort((a, b) => {
               if (isRecentPost) {
-
                 return new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
               }
               if (b.likeCount === a.likeCount) {
@@ -98,7 +98,14 @@ const PostList = () => {
             />
           ))
         ) : (
-          <p>게시물 없다~</p>
+          <div className={styles.emptyContainer}>
+            <img
+              src={nocategory}
+              alt="게시글 없음."
+              style={{ width: "27.6074rem", height: "15.4977rem", objectFit: "cover" }}
+            />
+            <h1> 아직 등록된 게시글이 없어요 </h1>
+          </div>
         )}
       </div>
     </div>
