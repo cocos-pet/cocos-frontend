@@ -6,18 +6,17 @@ import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
-import { useState } from "react";
+import React, { useState } from "react";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import { useNavigate } from "react-router-dom";
 
 interface SubCommentProps {
   commentId: number | undefined;
   subComment: commentGetRequestSubCommentType;
-  onSubCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onSubCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
   onReplyClick?: (id: number | undefined) => void;
   onCommentDelete: () => void;
+  onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
 const SubComment = ({
@@ -25,7 +24,13 @@ const SubComment = ({
   subComment,
   onSubCommentReplyClick,
   onCommentDelete,
+  onModalClose,
 }: SubCommentProps) => {
+  const navigate = useNavigate();
+  const handleProfileClick = (nickname: string) => {
+    navigate(`/profile?nickname=${nickname}`);
+  };
+
   const handleReplyClick = () => {
     if (onSubCommentReplyClick) {
       onSubCommentReplyClick(subComment.nickname, commentId);
@@ -53,6 +58,7 @@ const SubComment = ({
       </>
     );
   };
+  console.log(subComment.nickname);
 
   return (
     <div className={styles.commentItem}>
@@ -62,25 +68,29 @@ const SubComment = ({
             src={subComment.profileImage}
             className={styles.profileImage}
             alt="프로필 이미지"
+            onClick={() => handleProfileClick(subComment.nickname as string)}
           />
           <div className={styles.headerInfo}>
-            <span className={styles.nickname}>{subComment.nickname}</span>
+            <span className={styles.nickname}>
+              {subComment.nickname}
+              <p className={styles.blue}>{subComment.isWriter && "작성자"}</p>
+            </span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt
-                ? formatTime(subComment.createdAt).toLocaleString()
-                : ""}
+              {subComment.createdAt ? formatTime(subComment.createdAt).toLocaleString() : ""}
             </span>
           </div>
-          <MoreModal
-            iconSize={24}
-            onDelete={() => {
-              setContentsType("subComment");
-              setIsOpen(true);
-            }}
-            isOpen={openModalId === `subComment-${subComment.id}`}
-            onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
-          />
+          {subComment.isWriter && (
+            <MoreModal
+              iconSize={24}
+              onDelete={() => {
+                setContentsType("subComment");
+                setIsOpen(true);
+              }}
+              isOpen={openModalId === `subComment-${subComment.id}`}
+              onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
+            />
+          )}
         </div>
         <p className={styles.text}>{renderContent()}</p>
 

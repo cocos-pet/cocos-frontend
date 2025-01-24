@@ -11,6 +11,7 @@ import nicknameCoco from "@asset/image/nicknameCoco.png";
 import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
 import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
 import { PATH } from "@route/path";
+import Loading from "@common/component/Loading/Loading.tsx";
 
 const Nickname = () => {
   // 상태 하나로 관리
@@ -19,7 +20,7 @@ const Nickname = () => {
   // api 참 거짓을 반환
   const { data: isExistNickname } = useCheckNicknameGet(nickname);
 
-  const { mutate: patchNickname } = usePatchNickname();
+  const { mutate: patchNickname, mutateAsync, isPending } = usePatchNickname();
 
   // 닉네임 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -31,13 +32,14 @@ const Nickname = () => {
 
   // 중복 검사 메시지 추가
   if (isExistNickname?.isExistNickname) {
-    validationMessages.push("이 닉네임은 누군가 사용 중이에요.");
+    validationMessages.push("이 닉네임은 이미 사용 중이에요.");
   }
 
   const isValid = nickname && validationMessages.length === 0;
 
   // TextField 상태
-  const textFieldState = nickname === "" || validationMessages.length === 0 ? "default" : "error";
+  const textFieldState =
+    nickname === "" || validationMessages.length === 0 ? "default" : "error";
 
   // 뒤로 가기
   const navigate = useNavigate();
@@ -46,9 +48,18 @@ const Nickname = () => {
   };
 
   // 다음 버튼
-  const handleNext = () => {
-    patchNickname(nickname);
+
+  const patchingNickname = async () => {
+    await mutateAsync(nickname);
     navigate(PATH.ONBOARDING.COMPLETE);
+  };
+
+  if (isPending) return <Loading height={40} />;
+
+  const handleNext = () => {
+    // patchNickname(nickname);
+    // navigate(PATH.ONBOARDING.COMPLETE);
+    patchingNickname();
   };
 
   return (

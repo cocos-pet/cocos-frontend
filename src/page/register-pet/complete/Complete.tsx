@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import { Button } from "@common/component/Button";
-import img from "@asset/image/beforeRegisterGraphic.png";
 import { PATH } from "@route/path";
 import { useGetNickname } from "@api/domain/complete/hook";
+import onboarding from "@asset/lottie/onboarding.json";
+import Lottie from "lottie-react";
 
 const Complete = () => {
   const navigate = useNavigate();
@@ -22,11 +23,17 @@ const Complete = () => {
         <div className={styles.titleWrapper}>
           <div>
             <Title text={`${nickname?.nickname}님`} />
-            <Title text={"등록이 완료되었습니다"} />
+            <Title text={"등록이 완료되었어요"} />
           </div>
-          <Docs text={"반려동물과 함께하는 긴 시간, 더 잘 돌봐드릴게요"} />
+          <Docs text={"더 건강한 반려동물을 위해 코코스가 함께할게요"} />
         </div>
-        <img src={img} alt="onboarding-character" width={296} height={325} />
+        {/* Lottie 애니메이션 */}
+        <Lottie
+          animationData={onboarding} // 애니메이션 JSON
+          loop={false} // 반복 여부
+          autoplay={true} // 자동 재생
+          style={{ width: 296, height: 325 }}
+        />
       </div>
 
       <div className={styles.btnWrapper}>

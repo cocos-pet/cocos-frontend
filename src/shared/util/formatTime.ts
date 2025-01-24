@@ -1,5 +1,6 @@
-export const formatTime = (createdAt: string): string => {
+export const formatTime = (createdAt: string | undefined): string => {
   const now = new Date(); // 현재 시간
+  if (!createdAt) return "";
   const createdDate = new Date(createdAt);
 
   const diffMs = now.getTime() - createdDate.getTime(); // 현재 시간에서 작성 시간 차이 계산

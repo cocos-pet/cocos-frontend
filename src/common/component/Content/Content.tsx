@@ -1,4 +1,4 @@
-import { IcoMessage, IcTest } from "@asset/svg";
+import { IcCurious, IcLikeDisabled, IcoMessage } from "@asset/svg";
 import { styles } from "@common/component/Content/Content.css.ts";
 
 interface ContentPropTypes {
@@ -46,18 +46,23 @@ const Content = ({
     <div className={styles.container} onClick={onClick}>
       <div className={styles.left}>
         <div className={styles.category}>
-          {breed} · {petAge}살
+          {breed}
+          {petAge && <span> · {petAge}살</span>}
         </div>
         <div className={styles.title}>{postTitle}</div>
         <div className={styles.contents}>{postContent}</div>
         <div className={styles.subContents}>
           <div className={styles.item}>
             {/* 궁금해요/응원해요 아아콘 결정되면 수정 */}
-            {likeIconType === "curious" ? <IcTest /> : <IcTest />}
+            {likeIconType === "curious" ? (
+              <IcCurious width={20} height={20} />
+            ) : (
+              <IcLikeDisabled width={20} height={20} />
+            )}
             <span>{likeCnt}</span>
           </div>
           <div className={styles.item}>
-            <IcoMessage />
+            <IcoMessage width={20} height={20} />
             <span>{commentCnt}</span>
           </div>
           <div className={styles.item}>·</div>

@@ -8,6 +8,9 @@ import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/P
 import PetHealth from "@page/register-pet/index/component/petHealth/PetHealth";
 import ProgressBar from "@page/register-pet/index/common/ProgressBar/ProgressBar";
 import { useMyPetPost } from "@api/domain/register-pet/pets/hook";
+import { PATH } from "@route/path.ts";
+import { useNavigate } from "react-router-dom";
+import Loading from "@common/component/Loading/Loading.tsx";
 export interface PetData {
   breedId: number | null;
   name: string;
@@ -27,7 +30,7 @@ const RegisterPet = () => {
   const [currentStep, setCurrentStep] = useState<number | null>(null);
 
   // api
-  const { mutate: myPet } = useMyPetPost();
+  const { mutate: myPet, isPending } = useMyPetPost();
 
   const [petData, setPetData] = useState<PetData>({
     breedId: null,
@@ -41,7 +44,7 @@ const RegisterPet = () => {
   const updatePetData = <K extends keyof PetData>(
     field: K,
     value: PetData[K],
-    callback?: (updatedData: PetData) => void,
+    callback?: (updatedData: PetData) => void
   ) => {
     setPetData((prev) => {
       const updatedData = { ...prev, [field]: value };
@@ -67,6 +70,8 @@ const RegisterPet = () => {
     });
   };
 
+  if (isPending) return <Loading height={50} />;
+
   const getComponent = () => {
     switch (step) {
       case 0:
@@ -76,7 +81,13 @@ const RegisterPet = () => {
       case 2:
         return <PetGender setStep={setStep} updatePetData={updatePetData} />;
       case 3:
-        return <PetId setStep={setStep} updatePetData={updatePetData} petData={petData} />;
+        return (
+          <PetId
+            setStep={setStep}
+            updatePetData={updatePetData}
+            petData={petData}
+          />
+        );
       case 4:
         return <PetAge setStep={setStep} updatePetData={updatePetData} />;
       case 5:

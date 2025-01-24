@@ -12,14 +12,19 @@ import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { isLoggedIn } from "@api/index";
 import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
 const Mypage = () => {
+  useProtectedRoute();
+
+  const preSavedActiveTab = sessionStorage.getItem("activeTab");
+
   const navigate = useNavigate();
   const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(true); //todo: 서버로부터 받아와서 하기
-  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
+  const [isRegister, setIsRegister] = useState(true);
+  const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
 
   const { isLoading, data: member } = useGetMemberInfo();
   const { data: petInfo } = useGetPetInfo();
@@ -27,6 +32,15 @@ const Mypage = () => {
   useEffect(() => {
     setIsLogin(isLoggedIn());
   }, []);
+
+  useEffect(() => {
+    if (!petInfo) setIsRegister(false);
+    else setIsRegister(true);
+  }, [petInfo]);
+
+  useEffect(() => {
+    sessionStorage.setItem("activeTab", activeTab);
+  }, [activeTab]);
 
   const isActiveTab = (tab: ActiveTabType) => {
     return activeTab === tab;
@@ -36,7 +50,7 @@ const Mypage = () => {
     setActiveTab(tab);
   };
 
-  if (isLoading || !member || !petInfo) return;
+  if (isLoading || !member) return;
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
@@ -65,11 +79,21 @@ const Mypage = () => {
 
             {isRegister ? (
               <div className={styles.animalProfileWrapper}>
-                <img className={styles.animalImage} alt="프로필이미지" src={petInfo.petImage} />
+                <img className={styles.animalImage} alt="프로필이미지" src={petInfo?.petImage} />
                 <div className={styles.animalProfileTextWrapper}>
-                  <span className={styles.animalMainText}>{`${petInfo.breed} | ${petInfo.petAge} |`}</span>
+                  <span className={styles.animalMainText}>
+                    {`${petInfo?.breed} `}
+                    <span className={styles.textDivider}>|</span>
+                    {` ${petInfo?.petAge} `}
+                    <span className={styles.textDivider}>|</span>
+                  </span>
                   <span className={styles.animalSubText}>
-                    {`앓고있는 병 ${petInfo.diseases?.map((disease) => `#${disease.name}`).join(" ")}`}
+                    {"앓고있는 병 "}
+                    {petInfo?.diseases?.map((disease) => (
+                      <span className={styles.spanNoWrap} key={`hash-disease-${disease.id}`}>
+                        {`#${disease.name}`}&nbsp;
+                      </span>
+                    ))}
                   </span>
                 </div>
                 <IcChevronRight

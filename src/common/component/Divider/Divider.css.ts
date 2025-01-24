@@ -9,9 +9,21 @@ export const divider = recipe({
 
   variants: {
     size: {
-      large: { height: "1.6rem" },
-      small: { height: "0.1rem" },
+      large: {
+        height: "1.6rem",
+      },
+      small: {
+        height: "0.1rem",
+        backgroundColor: semanticColor.line.heavy,
+      },
+      popular: {
+        height: "0.1rem",
+        backgroundColor: semanticColor.line.normal,
+      },
     },
+  },
+  defaultVariants: {
+    size: "large",
   },
 });
 

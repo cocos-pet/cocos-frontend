@@ -17,7 +17,7 @@ interface PetHealthPropTypes {
   updatePetData: (
     field: keyof PetData,
     value: PetData[keyof PetData],
-    callback?: (updatedData: PetData) => void,
+    callback?: (updatedData: PetData) => void
   ) => void;
   currentStep: number | null;
   setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
@@ -75,8 +75,10 @@ const PetHealth = ({
     setCurrentStep(2);
   };
 
+  // 비우기
   // 질병 2단계에서 질병 1단계로
   const handleBackDisease1 = () => {
+    selectedDiseases.length = 0;
     setCurrentStep(1);
   };
 
@@ -124,8 +126,10 @@ const PetHealth = ({
     setCurrentStep(4);
   };
 
+  // 비우기
   // 증상 2단계에서 1단계로
   const handleBackSymptom1 = () => {
+    selectedSymptom.length = 0;
     setCurrentStep(3);
   };
 
@@ -135,7 +139,6 @@ const PetHealth = ({
     if (selectedSymptom.length > 0) {
       updatePetData("symptomIds", selectedSymptom, () => {
         handleSubmit();
-        navigate(PATH.REGISTER_PET.COMPLETE);
       });
     } else {
       return;
@@ -158,7 +161,13 @@ const PetHealth = ({
             onBodyPartSelection={handleBodyPartSelection}
           />
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBackDual} />
+            <Button
+              label="이전으로"
+              size="large"
+              variant="solidNeutral"
+              disabled={false}
+              onClick={handleBackDual}
+            />
 
             <Button
               label="다음"
@@ -203,7 +212,13 @@ const PetHealth = ({
             onBodyPartSelection={handleBodyPartSymSelection}
           />
           <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBack} />
+            <Button
+              label="이전으로"
+              size="large"
+              variant="solidNeutral"
+              disabled={false}
+              onClick={handleBack}
+            />
             <Button
               label="다음"
               size="large"

@@ -5,6 +5,7 @@ import { paths } from "@type/schema";
 //todo : try-catch문 작성하기
 export const getMemberInfo = async (nickname?: string) => {
   //type getMemberInfoRequest = paths["/api/dev/members"]["get"]["requestBody"];
+
   type MemberInfoResponse = paths["/api/dev/members"]["get"]["responses"]["200"]["content"]["*/*"];
   const { data } = await get<MemberInfoResponse>(API_PATH.MEMBERS, {
     params: {
@@ -18,6 +19,7 @@ export const getMemberInfo = async (nickname?: string) => {
 //nickname을 안주고 accessToken만 주면 나의 반려동물 정보
 export const getPetInfo = async (nickname?: string) => {
   type MyPetInfo = paths["/api/dev/pets"]["get"]["responses"]["200"]["content"]["*/*"];
+
   const { data } = await get<MyPetInfo>(`${API_PATH.PETS}`, {
     params: {
       nickname,

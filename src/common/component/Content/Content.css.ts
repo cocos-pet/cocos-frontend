@@ -7,7 +7,6 @@ export const styles = {
     alignItems: "flex-end",
     justifyContent: "space-between",
     gap: "1.2rem",
-    marginTop: "1.6rem",
     paddingBottom: "1.6rem",
     borderBottom: `1px solid ${color.gray.gray200}`,
   }),
@@ -65,5 +64,9 @@ export const styles = {
   ]),
   postImage: style({
     flexShrink: 0,
+    width: "7.6rem",
+    height: "7.6rem",
+    objectFit: "cover",
+    borderRadius: "0.8rem",
   }),
 };

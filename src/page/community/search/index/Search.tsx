@@ -9,31 +9,30 @@ import {
   useSearchPost,
 } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
+import Loading from "@common/component/Loading/Loading.tsx";
 
 const Search = () => {
-  const user = {
-    // TODO : 나중에 지워야함.
-    accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMTAxMzgsImV4cCI6MTczNzgxNDkzOCwibWVtYmVySWQiOjF9.f6sCaL3PFg7yMb6J4PM1h30ADsiq_fbON31IXPguJ_Pb4otyJ_Qh-Z_JYRxC8a2SMzaa6jr68uLc6w0_tuag3A",
-  };
-  localStorage.setItem("user", JSON.stringify(user));
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
-  const { mutate } = useSearchPost();
-  const {} = useFilterStore();
+  const { mutate, isPending } = useSearchPost();
+  const { clearAllChips } = useFilterStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const onSubmit = (searchText: string) => {
+    if (searchText.trim() === "") {
+      return;
+    }
     mutate(
       { keyword: searchText },
       {
         onSuccess: () => {
           handleNavigate(searchText);
+          clearAllChips();
         },
         onError: () => {
           alert("검색에 실패했습니다.");
@@ -46,6 +45,7 @@ const Search = () => {
     if (e.key === "Enter" && !isSubmitting) {
       setIsSubmitting(true);
       onSubmit(searchText);
+      clearAllChips();
 
       setTimeout(() => {
         setIsSubmitting(false);
@@ -63,7 +63,8 @@ const Search = () => {
   };
 
   const onBackClick = () => {
-    navigate(-1);
+    navigate(-2);
+    clearAllChips();
   };
 
   useEffect(() => {
@@ -72,7 +73,8 @@ const Search = () => {
     }
   }, []);
 
-  if (!recentSearchData || !recentSearchData.keywords || isLoading) return null;
+  if (!recentSearchData || !recentSearchData.keywords || isLoading)
+    return <Loading height={45} />;
 
   return (
     <div className={styles.container}>
@@ -84,7 +86,7 @@ const Search = () => {
           placeholder={"검색어를 입력해주세요"}
           onChange={onChange}
           onKeyDown={(e) => handleKeyDown(e)}
-          icon={<IcSearch />}
+          icon={<IcSearch width={20} height={20} />}
           onClearClick={() => setSearchText("")}
         />
       </div>

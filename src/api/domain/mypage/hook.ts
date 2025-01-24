@@ -32,7 +32,7 @@ export const useGetPetInfo = (nickname?: string) => {
 
 export const useGetMemberInfo = (nickname?: string) => {
   return useQuery({
-    queryKey: MEMBER_QUERY_KEY.MEMBER_INFO(),
+    queryKey: MEMBER_QUERY_KEY.MEMBER_INFO(nickname),
     queryFn: () => {
       return getMemberInfo(nickname);
     },

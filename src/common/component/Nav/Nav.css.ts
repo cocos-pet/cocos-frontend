@@ -30,6 +30,8 @@ export const navItem = recipe({
     state: {
       true: {
         color: color.gray.gray900,
+        font: font.body01,
+        
       },
       false: {
         color: color.gray.gray500,
@@ -38,6 +40,7 @@ export const navItem = recipe({
     type: {
       community: {
         width: "7.2rem",
+        color: color.gray.gray900,
       },
       nav: {
         width: "5.6rem",

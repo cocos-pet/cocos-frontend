@@ -8,6 +8,7 @@ import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { postPostFiltersResponse } from "@api/domain/community/search";
 import { PATH } from "@route/path";
 import { formatTime } from "@shared/util/formatTime";
+import Loading from "@common/component/Loading/Loading.tsx";
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
@@ -20,15 +21,23 @@ const PostList = () => {
   const fetchPostData = useCallback(() => {
     setIsLoading(true);
     const sortBy = isRecentPost ? "RECENT" : "POPULAR";
+
     fetchPosts(
       { sortBy },
       {
         onSuccess: (data) => {
-          const fetchedPosts = data;
-          if (fetchedPosts) {
-            setPosts(fetchedPosts);
-          } else {
-            console.error("API 응답에서 posts 데이터를 찾을 수 없습니다.");
+          if (data) {
+            const sortedPosts = [...data].sort((a, b) => {
+              if (isRecentPost) {
+
+                return new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+              }
+              if (b.likeCount === a.likeCount) {
+                return new Date(b.updatedAt as string).getTime() - new Date(a.updatedAt as string).getTime();
+              }
+              return (b.likeCount ?? 0) - (a.likeCount ?? 0);
+            });
+            setPosts(sortedPosts);
           }
         },
         onError: (error) => {
@@ -70,7 +79,7 @@ const PostList = () => {
       {/* 게시물 리스트 */}
       <div className={styles.postList}>
         {isLoading ? (
-          <p>게시물을 불러오는 중입니다...</p>
+          <Loading height={40} />
         ) : posts && posts.length > 0 ? (
           posts.map((post) => (
             <Content
@@ -82,6 +91,7 @@ const PostList = () => {
               likeCnt={post.likeCount}
               commentCnt={post.commentCount}
               postImage={post.image}
+              likeIconType={post.category === "증상·질병" || post.category === "병원고민" ? "curious" : "support"}
               onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
               timeAgo={formatTime(post.updatedAt as string)}
               category={post.category}

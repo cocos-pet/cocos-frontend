@@ -1,6 +1,7 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
 import {
+  IcAddphoto,
   IcDeleteBlack,
   IcImagePlus,
   IcRightArror,
@@ -26,19 +27,28 @@ import ImageCover from "@page/community/component/ImageCover/ImageCover.tsx";
 import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
+import axios from "axios";
+import { FillterToName } from "@page/community/utills/getFillterNamebyid.ts";
 import {
   useGetBodies,
   useGetDisease,
   useGetSymptoms,
 } from "@api/domain/mypage/edit-pet/hook.ts";
+import {
+  getDropdownIdtoIcon,
+  getDropdownIdtoValue,
+} from "@page/community/utills/handleCategoryItem.tsx";
+import {} from "@api/domain/mypage/edit-pet/hook.ts";
+import { useArticlePost } from "@api/domain/community/post/hook.ts";
+import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
 
 interface writeProps {
-  category: string;
+  categoryId: number | undefined;
   title: string;
   content: string;
-  image: string[];
+  images: string[];
   selectedChips: {
     breedId: number[];
     diseaseIds: number[];
@@ -46,45 +56,51 @@ interface writeProps {
   };
 }
 
-const DropDownItems = [
-  { icon: <IcUp width={20} />, label: "증상·질병" },
-  { icon: <IcTest width={20} />, label: "병원고민" },
-  { icon: <IcRightArror width={20} />, label: "일상·치유" },
-];
-
 const Write = () => {
+  const [searchParams] = useSearchParams();
+  const category = searchParams.get("category");
   const navigate = useNavigate();
-  const onBackClick = () => {
-    navigate(PATH.COMMUNITY.ROOT);
-  };
+  const [imageNames, setImageNames] = useState<string[]>([]);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
+  const { selectedChips, isOpen, setOpen, clearAllChips, setCategoryData } =
+    useFilterStore();
+  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
+  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
+  const { data: diseaseBodies } = useGetBodies("DISEASE");
+  const { data: symptomBodies } = useGetBodies("SYMPTOM");
+  const { mutate } = useArticlePost();
+  const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
+  const { data: disease } = useGetDisease(bodyDiseaseIds);
   const [params, setParams] = useState<writeProps>({
-    category: "",
+    categoryId: 1,
     title: "",
     content: "",
-    image: [],
+    images: [],
     selectedChips: {
       breedId: [],
       diseaseIds: [],
       symptomIds: [],
     },
   });
-  const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { selectedChips, isOpen, setOpen } = useFilterStore();
+  const onBackClick = () => {
+    navigate(PATH.COMMUNITY.ROOT);
+    clearAllChips();
+  };
 
   const TagLabel = [
     {
       label: "반려동물 종류 추가하기",
-      value: selectedChips.breedId,
+      value: FillterToName(selectedChips.breedId, "breeds"),
     },
     {
       label: "증상 추가하기",
-      value: selectedChips.symptomIds,
+      value: FillterToName(selectedChips.symptomIds, "symptoms"),
     },
     {
       label: "질병 추가하기",
-      value: selectedChips.diseaseIds,
+      value: FillterToName(selectedChips.diseaseIds, "disease"),
     },
   ];
 
@@ -99,8 +115,50 @@ const Write = () => {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    if (category) {
+      const matchedItem = DropDownItems.find(
+        (item) => item.english === category
+      );
+      if (matchedItem) {
+        setParams((prevParams) => ({
+          ...prevParams,
+          categoryId: matchedItem ? matchedItem.value : undefined,
+        }));
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    if (symptoms?.bodies) {
+      setCategoryData("symptoms", symptoms.bodies);
+    }
+    if (disease?.bodies) {
+      setCategoryData("disease", disease.bodies);
+    }
+  }, [symptoms, disease]);
+
+  useEffect(() => {
+    if (diseaseBodies?.bodies && symptomBodies?.bodies) {
+      const diseaseIdArr = diseaseBodies.bodies.map(
+        (item) => item.id as number
+      );
+      const symptomIdArr = symptomBodies.bodies.map(
+        (item) => item.id as number
+      );
+      if (diseaseIdArr.length && symptomIdArr.length) {
+        setBodyDiseaseIds(diseaseIdArr);
+        setBodySymptomsIds(symptomIdArr);
+      }
+    }
+  }, [diseaseBodies, symptomBodies]);
+
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    onChangeValue("category", e.target.value);
+    const selectedValue = DropDownItems.find(
+      (item) => item.label === e.target.value
+    );
+    if (!selectedValue) return;
+    onChangeValue("categoryId", selectedValue.value);
     if (!isDropDownOpen) closeDropDown();
   };
 
@@ -110,21 +168,31 @@ const Write = () => {
 
   const onChangeValue = (
     target: string,
-    value: string | React.ChangeEvent<HTMLInputElement>
+    value: string | number | React.ChangeEvent<HTMLInputElement>
   ) => {
     setParams({
       ...params,
       [target]: value,
     });
   };
+  const [uploadedImageForms, setUploadedImageForms] = useState<FormData[]>([]);
 
   // 이미지 추가
   const handleAddImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
-      const newImage = URL.createObjectURL(event.target.files[0]);
-      setParams((prevParams) => ({
-        ...prevParams,
-        image: [...prevParams.image, newImage],
+      const file = event.target.files[0];
+
+      const fileName = file.name;
+      setImageNames((prev) => [...prev, fileName]);
+
+      const formData = new FormData();
+      formData.append("file", file);
+      setUploadedImageForms((prev) => [...prev, formData]);
+
+      const previewUrl = URL.createObjectURL(file);
+      setParams((prev) => ({
+        ...prev,
+        images: [...prev.images, previewUrl],
       }));
     }
   };
@@ -133,7 +201,7 @@ const Write = () => {
   const handleDeleteImage = (index: number) => {
     setParams((prevParams) => ({
       ...prevParams,
-      image: prevParams.image.filter((_, i) => i !== index), // 선택한 이미지 제거
+      image: prevParams.images.filter((_, i) => i !== index), // 선택한 이미지 제거
     }));
   };
 
@@ -142,13 +210,7 @@ const Write = () => {
     fileInputRef.current?.click();
   };
 
-  const getDropdownIcon = (category: string) => {
-    const selectedItem = DropDownItems.find((item) => item.label === category);
-    return selectedItem ? selectedItem.icon : null;
-  };
-
   useEffect(() => {
-    // selectedChips의 값을 params에 반영
     setParams((prevParams) => ({
       ...prevParams,
       selectedChips: {
@@ -160,8 +222,56 @@ const Write = () => {
     }));
   }, [selectedChips]);
 
+  const handleArticlePost = () => {
+    if (isAllParamsFilled) {
+      mutate(
+        {
+          categoryId: params.categoryId || undefined,
+          title: params.title || undefined,
+          content: params.content || undefined,
+          images: imageNames || undefined,
+          animalId: params.selectedChips.breedId[0] || undefined,
+          symptomIds: params.selectedChips.symptomIds || undefined,
+          diseaseIds: params.selectedChips.diseaseIds || undefined,
+        },
+        {
+          onSuccess: async (data) => {
+            if (!data || !data?.data || !data?.data.images) {
+              alert("이미지 업로드 URL이 없습니다.");
+              return;
+            }
+            try {
+              await Promise.all(
+                data.data.images.map((url: string, index: number) => {
+                  const formData = uploadedImageForms[index];
+                  const file = formData.get("file");
+
+                  if (!file) {
+                    throw new Error("FormData에 파일이 없습니다.");
+                  }
+                  return axios.put(url, file, {
+                    headers: {
+                      "Content-Type": (file as File).type,
+                    },
+                  });
+                })
+              );
+              clearAllChips();
+              navigate(PATH.COMMUNITY.ROOT);
+            } catch (error) {
+              alert("이미지 업로드에 실패했습니다.");
+            }
+          },
+          onError: (error) => {
+            alert("글 작성에 실패했습니다.");
+          },
+        }
+      );
+    }
+  };
+
   const isAllParamsFilled =
-    params.category &&
+    params.categoryId &&
     params.title &&
     params.content &&
     params.selectedChips.breedId.length > 0;
@@ -176,15 +286,15 @@ const Write = () => {
         />
         <div className={writeWrap}>
           {/* 제목 영역 */}
-          <WriteInputSection title={"제목"}>
+          <WriteInputSection title={"게시판 선택"}>
             <TextField
-              leftIcon={getDropdownIcon(params.category)}
+              leftIcon={getDropdownIdtoIcon(params.categoryId)}
               icon={<IcRightArror width={20} />}
               placeholder={"게시물 선택하기"}
               onChange={onTextFieldChange}
               onClick={onTextFieldClick}
               isDelete={false}
-              value={params.category}
+              value={getDropdownIdtoValue(params.categoryId)}
             />
             <DropDown
               isOpen={isDropDownOpen}
@@ -197,9 +307,6 @@ const Write = () => {
           <WriteInputSection title={"글 작성"}>
             <TextField
               placeholder={"제목을 입력해주세요"}
-              onClick={() => {
-                console.log("click");
-              }}
               state={"write"}
               value={params.title}
               onClearClick={() => onChangeValue("title", "")}
@@ -208,7 +315,7 @@ const Write = () => {
             <Spacing marginBottom={"1.2"} />
             <TextArea
               value={params.content}
-              placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n\n(예시: ~한 증상은 어디로 가야 하나요?)`}
+              placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n(예시: ~한 증상은 어디로 가야 하나요?)`}
               onChange={(e) => onChangeValue("content", e.target.value)}
             />
             <Spacing marginBottom={"1.2"} />
@@ -220,11 +327,11 @@ const Write = () => {
               className={fileInput}
             />
             <div className={imageContainer}>
-              <IcImagePlus
+              <IcAddphoto
                 className={plusImage}
                 onClick={handleFileUploadClick}
               />
-              {params.image.map((imageSrc, index) => (
+              {params.images.map((imageSrc, index) => (
                 <ImageCover
                   key={index}
                   imageSrc={imageSrc}
@@ -238,13 +345,13 @@ const Write = () => {
             {TagLabel.map((tag, index) => (
               <>
                 <Tag
-                  key={index}
+                  key={`tag-${index}`}
                   placeholder={tag.label}
-                  value={tag.value.length > 0 ? tag.value.join(", ") : ""}
+                  value={tag.value}
                   isActive={tag.value.length > 0}
                   onClick={() => setOpen(true)}
                 />
-                <Spacing marginBottom={"0.8"} />
+                <Spacing key={`spacing-write-${index}`} marginBottom={"0.8"} />
               </>
             ))}
           </WriteInputSection>
@@ -256,6 +363,7 @@ const Write = () => {
             variant={isAllParamsFilled ? "solidPrimary" : "solidNeutral"}
             label={"글 작성 마치기"}
             size={"large"}
+            onClick={handleArticlePost}
           />
         </div>
       </div>

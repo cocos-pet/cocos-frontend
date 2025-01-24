@@ -50,7 +50,7 @@ const SymStep1 = ({ data, selectedIds, onBodyPartSelection }: CombinedSymStepPro
             >
               <img src={body.image} height={56} alt="body-img" />
             </button>
-            <p>{body.name}</p>
+            <span className={styles.spanFont}>{body.name}</span>
           </div>
         ))}
       </div>
