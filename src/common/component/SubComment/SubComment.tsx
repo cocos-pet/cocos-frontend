@@ -8,6 +8,7 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
 import React, { useState } from "react";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import { useNavigate } from "react-router-dom";
 
 interface SubCommentProps {
   commentId: number | undefined;
@@ -25,6 +26,11 @@ const SubComment = ({
   onCommentDelete,
   onModalClose,
 }: SubCommentProps) => {
+  const navigate = useNavigate();
+  const handleProfileClick = (nickname: string) => {
+    navigate(`/profile?nickname=${nickname}`);
+  };
+
   const handleReplyClick = () => {
     if (onSubCommentReplyClick) {
       onSubCommentReplyClick(subComment.nickname, commentId);
@@ -57,7 +63,12 @@ const SubComment = ({
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={subComment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
+          <img
+            src={subComment.profileImage}
+            className={styles.profileImage}
+            alt="프로필 이미지"
+            onClick={() => handleProfileClick(subComment.nickname as string)}
+          />
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {subComment.nickname}
