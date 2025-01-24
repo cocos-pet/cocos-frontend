@@ -3,11 +3,31 @@ import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   container: style({
-    padding: "1.6rem 2rem",
-    display: "flex",
-    flexDirection: "column",
-    gap: "1.2rem",
+    padding: "0 2rem",
   }),
+
+  emptyContainer: style([
+    font.heading03,
+    {
+      color: color.gray.gray600,
+      textAlign: "center",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      width: "100%",
+      maxWidth: "76.8rem",
+      marginTop: "27.821rem",
+    },
+  ]),
+
+  top: style({
+    display: "flex",
+    gap: "0.8rem",
+    marginTop: "1.6rem",
+    marginBottom: "2.4rem",
+  }),
+
   icon: style({
     width: "2.4rem",
   }),
@@ -15,11 +35,6 @@ export const styles = {
     width: "3.2rem",
     height: "3.2rem",
     borderRadius: "50%",
-  }),
-  top: style({
-    display: "flex",
-    flexDirection: "row",
-    gap: "0.8rem",
   }),
   userProfile: style({
     width: "3.2rem",
@@ -113,11 +128,11 @@ export const styles = {
   }),
   textContainer: style({
     display: "flex",
-    flexDirection: "row",
-    position: "sticky",
+    position: "fixed",
     bottom: 0,
     width: "100%",
-    padding: "1.2rem 2rem 4rem 2rem",
+    maxWidth: "76.8rem",
+    padding: "1.2rem 2rem",
     background: color.gray.gray000,
   }),
   upload: style([
