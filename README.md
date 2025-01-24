@@ -1,8 +1,8 @@
-# 🐱 COCOS   
+# 🐱 코코스
 ![image](https://github.com/user-attachments/assets/76f2b521-c05c-44e9-9072-b903e3de8236)
+![image](https://github.com/user-attachments/assets/522b8f7f-7e09-4b7e-b4df-ab57cccfc22a)
 반려동물 증상을 겪는 반려인들이 커뮤니티를 통해 고민을 공유하고 병원 정보를 확인할 수 있는 서비스!
 
-![image](https://github.com/user-attachments/assets/522b8f7f-7e09-4b7e-b4df-ab57cccfc22a)
 
 
 </br>
@@ -123,8 +123,9 @@ Commit Message 👉 기능 키워드: 커밋 내용</br>
 <br/><br/><br/>
 
 
-<h2>📷 구현 스크린샷</h2>
-![코코스_판넬2@2x](https://github.com/user-attachments/assets/b93a3969-a892-4232-9e7f-a74be80ae732)
+<h2>📷 구현 뷰</h2>
+![image](https://github.com/user-attachments/assets/f5e00d9d-254f-49fb-92ec-df21a0e26806)
+
 
 <br/><br/>
 
