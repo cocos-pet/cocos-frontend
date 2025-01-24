@@ -30,21 +30,35 @@ import { useNavigate, useParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
-import { getDropdownValuetoIcon } from "@page/community/utills/handleCategoryItem.tsx";
+import {
+  getCategorytoEnglish,
+  getCategorytoId,
+  getDropdownValuetoIcon,
+} from "@page/community/utills/handleCategoryItem.tsx";
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
-
+import nocategory from "@asset/images/nocategory.png";
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postId));
-  if (!postId) return <>loading</>;
+  const { data: commentsData } = useCommentsGet(Number(postId));
+
+  if (!postId) return null;
+  if (isLoading) return <div>로딩중...</div>;
+  if (!postData) {
+    return (
+      <div className={styles.emptyContainer}>
+        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+        <h1>아직 등록된 게시글이 없어요</h1>
+      </div>
+    );
+  }
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
-  const { data: commentsData } = useCommentsGet(Number(postId));
   const { mutate: commentPost } = useCommentPost(Number(postId));
-  const [isLiked, setIsLiked] = useState(postData?.isLiked);
-  const [likeCount, setLikeCount] = useState(postData?.likeCounts);
+  const [isLiked, setIsLiked] = useState(postData.isLiked);
+  const [likeCount, setLikeCount] = useState(postData.likeCounts);
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
@@ -186,7 +200,7 @@ const PostDetail = () => {
   };
 
   const handleProfileClick = () => {
-    if (postData?.nickname) {
+    if (postData.nickname) {
       navigate(`/profile?nickname=${postData.nickname}`);
     }
   };
@@ -198,47 +212,48 @@ const PostDetail = () => {
         onLeftClick={onBackClick}
         type={"noTitle"}
         rightBtn={
-          // postData.isWriter && (
-          <MoreModal
-            onDelete={() => {
-              setOpen(true);
-            }}
-            iconSize={24}
-            isOpen={openModalId === `post-${postId}`}
-            onToggleModal={() => setOpenModalId(`post-${postId}`)}
-          />
-          // )
+          postData.isWriter && (
+            <MoreModal
+              onDelete={() => setOpen(true)}
+              iconSize={24}
+              isOpen={openModalId === `post-${postId}`}
+              onToggleModal={() => setOpenModalId(`post-${postId}`)}
+            />
+          )
         }
       />
       <div className={styles.container} onClick={onModalClose}>
         <Button
-          leftIcon={getDropdownValuetoIcon(postData?.category)}
-          label={postData?.category}
+          leftIcon={getDropdownValuetoIcon(postData.category)}
+          label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
-          disabled={true}
           onClick={() => {
-            console.log("category");
+            navigate(
+              `${PATH.COMMUNITY.CATEGORY}?type=${getCategorytoEnglish(
+                postData.category,
+              )}&id=${getCategorytoId(postData.category)}`,
+            );
           }}
         />
         <div className={styles.top} onClick={handleProfileClick}>
-          {postData?.profileImage ? (
+          {postData.profileImage ? (
             <img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
           ) : (
             <IcBaseProfileImage width={32} height={32} />
           )}
           <div className={styles.info}>
-            <div className={styles.infoName}>{postData?.nickname}</div>
+            <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData?.breed}·{postData?.petAge}살 · {formatTime(postData?.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
         <div>
-          <div className={styles.title}>{postData?.title}</div>
-          <div className={styles.content}>{postData?.content}</div>
+          <div className={styles.title}>{postData.title}</div>
+          <div className={styles.content}>{postData.content}</div>
         </div>
-        {postData?.images?.map((image, index) => (
+        {postData.images?.map((image, index) => (
           <img
             key={`postImage-${
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
@@ -250,7 +265,7 @@ const PostDetail = () => {
           />
         ))}
         <div className={styles.labelWrap}>
-          {postData?.tags?.map((tag, index) => (
+          {postData.tags?.map((tag, index) => (
             <Chip
               key={`postTag-${
                 // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
@@ -265,13 +280,13 @@ const PostDetail = () => {
         <Divider size={"small"} />
         <div className={styles.subContents}>
           <div className={styles.item}>
-            {getCategoryResponse(postData?.category) === "curious" ? (
+            {getCategoryResponse(postData.category) === "curious" ? (
               isLiked ? (
                 <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
                 <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
               )
-            ) : getCategoryResponse(postData?.category) === "support" ? (
+            ) : getCategoryResponse(postData.category) === "support" ? (
               isLiked ? (
                 <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
@@ -279,34 +294,27 @@ const PostDetail = () => {
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData?.category) === "curious" ? "궁금해요 " : "응원해요 "}
+              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
               {likeCount}
             </span>
-            {isLiked ? (
-              <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
-            ) : (
-              <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
-            )}
-            <span>{likeCount}</span>
           </div>
         </div>
       </div>
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글 <span className={styles.commentCount}>{postData?.totalCommentCounts}</span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
           onModalClose={onModalClose}
         />
-        <CommentList comments={{ comments: commentsData }} onCommentReplyClick={onCommentReplyClick} />
       </div>
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ``}
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ""}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
