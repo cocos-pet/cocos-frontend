@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@lottiefiles/react-lottie-player':
-        specifier: ^3.6.0
-        version: 3.6.0(react@18.3.1)
       '@tanstack/react-query':
         specifier: ^5.62.11
         version: 5.62.11(react@18.3.1)
@@ -676,11 +673,6 @@ packages:
 
   '@jridgewell/trace-mapping@0.3.25':
     resolution: {integrity: sha512-vNk6aEwybGtawWmy/PzwnGDOjCkLWSD2wqvjGGAgOAwCGWySYXfYoxt00IJkTF+8Lb57DwOb3Aa0o9CApepiYQ==}
-
-  '@lottiefiles/react-lottie-player@3.6.0':
-    resolution: {integrity: sha512-WK5TriLJT93VF3w4IjSVyveiedraZCnDhKzCPhpbeLgQeMi6zufxa3dXNc4HmAFRXq+LULPAy+Idv1rAfkReMA==}
-    peerDependencies:
-      react: 16 - 19
 
   '@redocly/ajv@8.11.2':
     resolution: {integrity: sha512-io1JpnwtIcvojV7QKDUSIuMN/ikdOUd1ReEnUnMKGfDVridQZ31J0MmIuqwuRjWDZfmvr+Q0MqCcfHM2gTivOg==}
@@ -2118,11 +2110,6 @@ snapshots:
     dependencies:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.5.0
-
-  '@lottiefiles/react-lottie-player@3.6.0(react@18.3.1)':
-    dependencies:
-      lottie-web: 5.12.2
-      react: 18.3.1
 
   '@redocly/ajv@8.11.2':
     dependencies:
