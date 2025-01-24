@@ -14,12 +14,12 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
 import { useEffect } from "react";
+import { useGetMemberInfo } from "@api/domain/mypage/hook";
 
 const Main = () => {
-  //useProtectedRoute();
-
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
+  const { data: nickName } = useGetMemberInfo();
 
   useEffect(() => {
     sessionStorage.setItem("searchBackUrl", PATH.MAIN);
@@ -50,7 +50,7 @@ const Main = () => {
       <MainHeader />
       <Symptom />
       <Divider />
-      <HotPost />
+      <HotPost nickname={nickName?.nickname} />
       <MainFooter />
       <Spacing marginBottom="8" />
       <span
