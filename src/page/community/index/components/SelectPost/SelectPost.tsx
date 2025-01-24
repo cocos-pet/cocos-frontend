@@ -76,7 +76,7 @@ const PostList = () => {
       {/* 게시물 리스트 */}
       <div className={styles.postList}>
         {isLoading ? (
-          <Loading />
+          <Loading height={40} />
         ) : posts && posts.length > 0 ? (
           posts.map((post) => (
             <Content
