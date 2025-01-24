@@ -39,7 +39,9 @@ import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.
 import Loading from "@common/component/Loading/Loading.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 const PostDetail = () => {
+  useProtectedRoute();
   const navigate = useNavigate();
   const { postId } = useParams();
   const { openModalId, setOpenModalId } = useModalStore();

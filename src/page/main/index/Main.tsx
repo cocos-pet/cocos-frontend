@@ -14,9 +14,10 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
 import { useEffect } from "react";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 const Main = () => {
-  //useProtectedRoute();
+  useProtectedRoute();
 
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");

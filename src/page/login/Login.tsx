@@ -7,8 +7,10 @@ import { isLoggedIn } from "@api/index";
 import { useNavigate } from "react-router-dom";
 import { PATH } from "@route/path";
 import { useEffect } from "react";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 const Login = () => {
+  useProtectedRoute();
   const navigate = useNavigate();
 
   useEffect(() => {
