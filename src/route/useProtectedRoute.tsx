@@ -38,4 +38,6 @@ export const useProtectedRoute = () => {
       navigate(PATH.MYPAGE.ROOT);
     }
   }, [data, isNoPet]);
+
+  return { isNoPet };
 };
