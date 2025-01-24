@@ -4,8 +4,12 @@ import { TextField } from "@common/component/TextField";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
-import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
+import {
+  useSearchGet,
+  useSearchPost,
+} from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
+import Loading from "@common/component/Loading/Loading.tsx";
 
 const Search = () => {
   const user = {
@@ -19,7 +23,7 @@ const Search = () => {
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
-  const { mutate } = useSearchPost();
+  const { mutate, isPending } = useSearchPost();
   const { clearAllChips } = useFilterStore();
 
   const inputRef = useRef<HTMLInputElement>(null);
@@ -39,7 +43,7 @@ const Search = () => {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      },
+      }
     );
   };
 
@@ -75,7 +79,8 @@ const Search = () => {
     }
   }, []);
 
-  if (!recentSearchData || !recentSearchData.keywords || isLoading) return null;
+  if (!recentSearchData || !recentSearchData.keywords || isLoading)
+    return <Loading height={45} />;
 
   return (
     <div className={styles.container}>
