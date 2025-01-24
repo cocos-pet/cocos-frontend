@@ -1,4 +1,4 @@
-# 🐱 코코스
+# <img src="https://github.com/user-attachments/assets/04394243-2a2d-4620-a555-1c08c2324d45" width="200" height="250" alt="프로필사진"> 코코스
 ![image](https://github.com/user-attachments/assets/76f2b521-c05c-44e9-9072-b903e3de8236)
 ![image](https://github.com/user-attachments/assets/522b8f7f-7e09-4b7e-b4df-ab57cccfc22a)
 반려동물 증상을 겪는 반려인들이 커뮤니티를 통해 고민을 공유하고 병원 정보를 확인할 수 있는 서비스!
