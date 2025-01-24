@@ -30,6 +30,15 @@ export const useGetPetInfo = (nickname?: string) => {
   });
 };
 
+export const useGetPetInfoWithError = (nickname?: string) => {
+  return useQuery({
+    queryKey: PETINFO_QUERY_KEY.PET_INFO(nickname),
+    queryFn: () => getPetInfo(nickname),
+    staleTime: 1000 * 60 * 10,
+    retry: false,
+  });
+};
+
 export const useGetMemberInfo = (nickname?: string) => {
   return useQuery({
     queryKey: MEMBER_QUERY_KEY.MEMBER_INFO(nickname),

@@ -15,8 +15,11 @@ import { PATH } from "@route/path";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook";
 import { useEffect } from "react";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 const Main = () => {
+  useProtectedRoute();
+
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
   const { data: nickName } = useGetMemberInfo();

@@ -39,7 +39,9 @@ import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.
 import Loading from "@common/component/Loading/Loading.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 const PostDetail = () => {
+  const { isNoPet } = useProtectedRoute();
   const navigate = useNavigate();
   const { postId } = useParams();
   const { openModalId, setOpenModalId } = useModalStore();
@@ -97,6 +99,10 @@ const PostDetail = () => {
   };
 
   const onSubmitComment = () => {
+    if (isNoPet) {
+      alert("반려동물을 등록한 사람만 댓글을 작성할 수 있습니다.");
+      return;
+    }
     if (parsedComment.mention) {
       // 대댓글 등록
       subCommentPost(
@@ -157,6 +163,11 @@ const PostDetail = () => {
         mention: "",
       }));
     }
+
+    // 두 번 입력됨. 일단 적용 x
+    // if (e.key === "Enter" && parsedComment.text.trim()) {
+    //   onSubmitComment();
+    // }
   };
 
   const onBackClick = () => {
