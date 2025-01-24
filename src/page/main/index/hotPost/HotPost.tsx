@@ -10,10 +10,10 @@ import { PATH } from "@route/path";
 // }
 
 interface HotPostProps {
-  petName?: string;
+  nickname?: string;
 }
 
-const HotPost = ({ petName }: HotPostProps) => {
+const HotPost = ({ nickname }: HotPostProps) => {
   const navigate = useNavigate();
 
   const { data: postsData, isLoading, isError } = useQueryGetPopular();
@@ -38,9 +38,9 @@ const HotPost = ({ petName }: HotPostProps) => {
       <p className={styles.p}>인기 게시물을 확인해보세요</p>
 
       <div className={styles.title}>
-        {petName ? (
+        {nickname ? (
           <>
-            <span className={styles.petName}>{petName}</span>를 위한 인기 게시글을 확인해보세요
+            <span className={styles.nickname}>{nickname}</span>를 위한 인기 게시글을 확인해보세요
           </>
         ) : (
           "반려인들이 주목하는 글 TOP 5"
