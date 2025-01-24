@@ -36,7 +36,7 @@ import {
   getDropdownValuetoIcon,
 } from "@page/community/utills/handleCategoryItem.tsx";
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
-import nocategory from "@asset/images/nocategory.png";
+import nocategory from "@asset/image/nocategory.png";
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
