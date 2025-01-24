@@ -8,6 +8,7 @@ import { formatTime } from "@shared/util/formatTime";
 import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { useEffect, useState, useCallback } from "react";
 import { components } from "@type/schema";
+import nocategory from "@asset/image/nocategory.png";
 
 const symptomMapping: { [key: string]: string } = {
   1: "피부/털",
@@ -57,16 +58,18 @@ const SymptomDetail = () => {
 
   if (!typeId) {
     return (
-      <div>
-        <h1>해당 카테고리는 존재하지 않습니다</h1>
+      <div className={styles.emptyContainer}>
+        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+        <h1> 아직 등록된 게시글이 없어요 </h1>
       </div>
     );
   }
 
   if (posts.length === 0) {
     return (
-      <div>
-        <h1>게시글이 없습니다.</h1>
+      <div className={styles.emptyContainer}>
+        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+        <h1> 아직 등록된 게시글이 없어요 </h1>
       </div>
     );
   }
@@ -75,7 +78,9 @@ const SymptomDetail = () => {
 
   return (
     <div className={styles.categoryContainer}>
-      <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => navigate(PATH.MAIN)} />
+      <div className={styles.headerContainer}>
+        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => navigate(PATH.MAIN)} />
+      </div>
       <div className={styles.tabContainer}>
         <button
           type="button"
@@ -87,7 +92,6 @@ const SymptomDetail = () => {
         </button>
       </div>
 
-      {/* 게시글 목록 */}
       <div className={styles.postsContainer}>
         {posts.map((post) => (
           <Content
