@@ -1,6 +1,7 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
 import {
+  IcAddphoto,
   IcDeleteBlack,
   IcImagePlus,
   IcRightArror,
@@ -326,7 +327,7 @@ const Write = () => {
               className={fileInput}
             />
             <div className={imageContainer}>
-              <IcImagePlus
+              <IcAddphoto
                 className={plusImage}
                 onClick={handleFileUploadClick}
               />
