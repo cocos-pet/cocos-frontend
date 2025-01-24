@@ -9,7 +9,7 @@ import { Button } from "@common/component/Button";
 import { PetData } from "@page/register-pet/index/RegisterPet";
 import { validatePetName } from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
-
+import { PATH } from "@route/path";
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: string) => void; // PetData의 key와 string 값
@@ -28,13 +28,13 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
   // 뒤로 가기
   const navigate = useNavigate();
   const handleGoBack = () => {
-    navigate(-1);
+    navigate(PATH.LOGIN);
   };
 
   const handleNext = () => {
     if (isValid) {
-      updatePetData("name", petName); // `name` 필드 업데이트
-      setStep((prev) => prev + 1); // 다음 단계로 이동
+      updatePetData("name", petName);
+      setStep((prev) => prev + 1);
     }
   };
 
