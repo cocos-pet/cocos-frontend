@@ -1,13 +1,6 @@
 import DropDown from "@page/community/component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
-import {
-  IcAddphoto,
-  IcDeleteBlack,
-  IcImagePlus,
-  IcRightArror,
-  IcTest,
-  IcUp,
-} from "@asset/svg";
+import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -40,9 +33,10 @@ import {
   getDropdownIdtoIcon,
   getDropdownIdtoValue,
 } from "@page/community/utills/handleCategoryItem.tsx";
-import {} from "@api/domain/mypage/edit-pet/hook.ts";
 import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
+import { CustomAxiosError } from "@type/global";
+import WorningToastWrap from "@common/component/WornningToastWrap/WorningToastWrap.tsx";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -67,6 +61,7 @@ const Write = () => {
     useFilterStore();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
+  const [errorMessage, setErrorMessage] = useState<string>("");
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { mutate } = useArticlePost();
@@ -224,6 +219,8 @@ const Write = () => {
 
   const handleArticlePost = () => {
     if (isAllParamsFilled) {
+      // @ts-ignore
+      // @ts-ignore
       mutate(
         {
           categoryId: params.categoryId || undefined,
@@ -262,8 +259,13 @@ const Write = () => {
               alert("이미지 업로드에 실패했습니다.");
             }
           },
-          onError: (error) => {
-            alert("글 작성에 실패했습니다.");
+          // @ts-ignore
+          onError: (error: CustomAxiosError) => {
+            if (error.response?.data?.code === 40415) {
+              setErrorMessage(error.response.data.message);
+            } else {
+              alert("게시글 작성에 실패했습니다.");
+            }
           },
         }
       );
@@ -278,6 +280,10 @@ const Write = () => {
 
   return (
     <>
+      <WorningToastWrap
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
       <div>
         <HeaderNav
           leftIcon={<IcDeleteBlack width={24} />}

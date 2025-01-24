@@ -28,7 +28,7 @@ export const Toast = ({
   iconColor,
   onClick,
 }: CombinedButtonProps) => {
-  const [isVisible, setIsVisible] = useState(true);
+  const [isVisible, setIsVisible] = useState(message !== "");
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -52,8 +52,10 @@ export const Toast = ({
       {message}
       <IcDelete
         className={icon({ iconColor })}
-        color={iconColor}
+        stroke={iconColor === "black" ? "black" : "white"}
         onClick={handleDelete}
+        width={21}
+        height={21}
       />
     </div>
   );
