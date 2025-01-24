@@ -58,6 +58,7 @@ const SubComment = ({
       </>
     );
   };
+  console.log(subComment.nickname);
 
   return (
     <div className={styles.commentItem}>

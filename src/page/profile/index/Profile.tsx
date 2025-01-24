@@ -24,6 +24,7 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
 
   const query = searchParams.get("nickname");
+  console.log(query);
   if (!query) return;
 
   const { data: memeberInfo } = useGetMemberInfo(query);
@@ -59,7 +60,7 @@ const Profile = () => {
           <Divider size="small" />
 
           <div className={styles.animalProfileWrapper}>
-            <img className={styles.animalImage} alt="프로필이미지" src={petInfo.petImage} />
+            <img className={styles.animalImage} alt="펫이미지" src={petInfo.petImage} />
             <div className={styles.animalProfileTextWrapper}>
               <span className={styles.animalMainText}>
                 {`${petInfo.breed} `}
