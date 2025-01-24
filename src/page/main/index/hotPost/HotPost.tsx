@@ -49,12 +49,12 @@ const HotPost = ({ petName }: HotPostProps) => {
 
       <div className={styles.hotPostListContainer}>
         {posts.slice(0, 5).map((post, index) => (
-          <div key={post.id}>
+          <div key={post.id} className={styles.postlist}>
             <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
               <div className={styles.contentId}>{index + 1}</div>
               <div className={styles.contentTitle}>{post.title}</div>
             </div>
-            {post.id !== posts.slice(0, 5)[posts.slice(0, 5).length - 1]?.id && <Divider size="small" />}
+            {post.id !== posts.slice(0, 5)[posts.slice(0, 5).length - 1]?.id && <Divider size="popular" />}
           </div>
         ))}
       </div>
