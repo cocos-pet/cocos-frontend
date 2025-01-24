@@ -139,6 +139,7 @@ const PetHealth = ({
     if (selectedSymptom.length > 0) {
       updatePetData("symptomIds", selectedSymptom, () => {
         handleSubmit();
+        navigate(PATH.REGISTER_PET.COMPLETE);
       });
     } else {
       return;
