@@ -1,9 +1,11 @@
-import { divider, DividerVariants } from "./Divider.css";
+import { divider } from "./Divider.css";
 
-type DividerPropTypes = Exclude<DividerVariants, undefined>;
+interface DividerProps {
+  size?: "large" | "small" | "popular";
+}
 
-const Divider = ({ size = "large" }: DividerPropTypes) => {
-  return <div className={divider({ size: size })} />;
+const Divider = ({ size = "large" }: DividerProps) => {
+  return <div className={divider({ size })} />;
 };
 
 export default Divider;
