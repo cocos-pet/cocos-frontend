@@ -36,6 +36,7 @@ import {
   getDropdownValuetoIcon,
 } from "@page/community/utills/handleCategoryItem.tsx";
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
+import Loading from "@common/component/Loading/Loading.tsx";
 
 const PostDetail = () => {
   const navigate = useNavigate();
@@ -199,7 +200,9 @@ const PostDetail = () => {
     setOpenModalId(undefined);
   };
 
-  if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
+  if (isLoading || !postData || !postId || !commentsData) {
+    return <Loading height={80} />;
+  }
 
   return (
     <>
@@ -339,7 +342,9 @@ const PostDetail = () => {
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ``}
+          mentionedNickname={
+            parsedComment.mention ? `@${parsedComment.mention} ` : ``
+          }
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
