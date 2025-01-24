@@ -4,6 +4,16 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
+  position: "relative",
+});
+
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
 });
 
 export const postsContainer = style({
@@ -71,3 +81,21 @@ export const underline = style({
   transform: "translateX(-50%)",
   width: "2.4rem",
 });
+
+export const emptyContainer = style([
+  font.heading03,
+  {
+    color: color.gray.gray600,
+    textAlign: "center",
+  },
+  {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    width: "100%",
+    maxWidth: "76.8rem",
+    marginTop: "12rem",
+    objectFit: "cover",
+  },
+]);

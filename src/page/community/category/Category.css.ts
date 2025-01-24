@@ -41,6 +41,7 @@ export const emptyContainer = style([
     justifyContent: "center",
     width: "100%",
     maxWidth: "76.8rem",
-    marginTop: "27.821rem",
+    marginTop: "15rem",
+    objectFit: "cover",
   },
 ]);

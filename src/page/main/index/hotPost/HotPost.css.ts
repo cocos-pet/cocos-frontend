@@ -9,6 +9,11 @@ export const hotPostContainer = style({
   marginTop: "3.2rem 2rem 3.2rem 2rem",
 });
 
+export const postlist = style({
+  width: "100%",
+  color: semanticColor.text.normal,
+});
+
 export const p = style([
   font.label01,
   {
@@ -43,12 +48,15 @@ export const hotPostListContainer = style({
   borderRadius: "16px",
   border: `0.1rem solid ${semanticColor.text.normal}`,
   borderColor: semanticColor.line.strong,
+  width: "100%",
 });
 
 export const postContent = style({
   display: "flex",
   gap: "0.4rem",
   marginBottom: "1.2rem",
+  width: "calc(100% - 3.2em)",
+  whiteSpace: "nowrap",
 });
 
 export const contentId = style([
@@ -63,5 +71,7 @@ export const contentTitle = style([
   font.body01,
   {
     color: semanticColor.text.normal,
+    flex: 1,
   },
+  { width: "calc(100% - 3.2rem)" },
 ]);
