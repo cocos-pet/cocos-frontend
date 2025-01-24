@@ -145,6 +145,7 @@ const PetHealth = ({
       return;
     }
   };
+
   const { data: diseaseData } = useBodiesGet("disease");
   const { data: symptomData } = useBodiesGet("symptom");
   const { data: diseaseBodyData } = useDiseaseGet(selectedDiseaseBody);
