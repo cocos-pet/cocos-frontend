@@ -45,20 +45,12 @@ const PostDetail = () => {
   const { data: commentsData } = useCommentsGet(Number(postId));
 
   if (!postId) return null;
-  if (isLoading) return <div>로딩중...</div>;
-  if (!postData) {
-    return (
-      <div className={styles.emptyContainer}>
-        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
-        <h1>아직 등록된 게시글이 없어요</h1>
-      </div>
-    );
-  }
+
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
   const { mutate: commentPost } = useCommentPost(Number(postId));
-  const [isLiked, setIsLiked] = useState(postData.isLiked);
-  const [likeCount, setLikeCount] = useState(postData.likeCounts);
+  const [isLiked, setIsLiked] = useState(postData?.isLiked);
+  const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
@@ -70,6 +62,23 @@ const PostDetail = () => {
     mention: "",
     text: "",
   });
+
+  useEffect(() => {
+    if (postData) {
+      setIsLiked(postData.isLiked);
+      setLikeCount(postData.likeCounts);
+    }
+  }, [postData]);
+
+  if (isLoading) return <div>로딩중...</div>;
+  if (!postData) {
+    return (
+      <div className={styles.emptyContainer}>
+        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+        <h1>아직 등록된 게시글이 없어요</h1>
+      </div>
+    );
+  }
 
   const onClearClick = () => {
     setParsedComment({ mention: "", text: "" });
@@ -143,13 +152,6 @@ const PostDetail = () => {
     deletePost(Number(postId));
     setOpen(false);
   };
-
-  useEffect(() => {
-    if (postData) {
-      setIsLiked(postData.isLiked);
-      setLikeCount(postData.likeCounts);
-    }
-  }, [postData]);
 
   const onLikePostClick = () => {
     if (getAccessToken() === null) {
