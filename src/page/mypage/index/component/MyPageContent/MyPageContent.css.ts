@@ -18,12 +18,17 @@ export const nothingContent = style([
 
 export const mypagecontent = style({
   width: "100%",
+  marginTop: "1.6rem",
 });
 
 export const contentWrapper = style({
-  marginBottom: "8rem",
+  margin: "0 0 8rem 0",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
+});
+
+export const commentcontentWrap = style({
+  width: "100%",
 });
