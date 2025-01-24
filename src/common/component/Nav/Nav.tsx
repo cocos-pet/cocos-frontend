@@ -67,6 +67,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
 
         const navItem = item as (typeof NAV_CONTENT)[number];
         const SvgComponent = activeItem === navItem.id ? navItem.activeSvg : navItem.svg;
+
         return (
           <button
             key={navItem.id}
@@ -77,7 +78,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
               type,
             })}
           >
-            <SvgComponent />
+            <SvgComponent style={{ width: "2.8rem", height: "2.8rem" }} />
             {navItem.label}
           </button>
         );

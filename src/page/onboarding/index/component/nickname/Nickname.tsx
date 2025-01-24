@@ -19,7 +19,7 @@ const Nickname = () => {
   // api 참 거짓을 반환
   const { data: isExistNickname } = useCheckNicknameGet(nickname);
 
-  const { mutate: patchNickname } = usePatchNickname();
+  const { mutate: patchNickname, mutateAsync } = usePatchNickname();
 
   // 닉네임 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -46,9 +46,16 @@ const Nickname = () => {
   };
 
   // 다음 버튼
-  const handleNext = () => {
-    patchNickname(nickname);
+
+  const patchingNickname = async () => {
+    await mutateAsync(nickname);
     navigate(PATH.ONBOARDING.COMPLETE);
+  };
+
+  const handleNext = () => {
+    // patchNickname(nickname);
+    // navigate(PATH.ONBOARDING.COMPLETE);
+    patchingNickname();
   };
 
   return (

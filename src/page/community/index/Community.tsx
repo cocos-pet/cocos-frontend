@@ -11,8 +11,11 @@ import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { useQueryGetCategory } from "@api/domain/community/category/hook";
 import { useEffect } from "react";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 const Community = () => {
+  useProtectedRoute();
+
   useEffect(() => {
     sessionStorage.setItem("searchBackUrl", PATH.COMMUNITY.ROOT);
   }, []);

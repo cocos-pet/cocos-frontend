@@ -36,26 +36,25 @@ import {
   getDropdownValuetoIcon,
 } from "@page/community/utills/handleCategoryItem.tsx";
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
-
+import nocategory from "@asset/image/nocategory.png";
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postId));
-  if (!postId) return <>loading</>;
+  const { data: commentsData } = useCommentsGet(Number(postId));
+
+  if (!postId) return null;
+
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
-  const { data: commentsData } = useCommentsGet(Number(postId));
   const { mutate: commentPost } = useCommentPost(Number(postId));
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
-  const { mutate: subCommentPost } = useSubCommentPost(
-    Number(commentId),
-    Number(postId)
-  );
+  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId), Number(postId));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -64,13 +63,22 @@ const PostDetail = () => {
     text: "",
   });
 
-  // TODO : 삭제 해라.
-  const user = {
-    accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3Mzc0OTQ1MDksImV4cCI6MTczODA5OTMwOSwibWVtYmVySWQiOjJ9.JhS3oRdiCmYpsa3VCrsxEdDP4DBt8hf5rGdzetF9LFNQltZd1yEQ1ARIskYkt_WDfKbcC-EYmH_J3q1iT6A9Lg",
-  };
+  useEffect(() => {
+    if (postData) {
+      setIsLiked(postData.isLiked);
+      setLikeCount(postData.likeCounts);
+    }
+  }, [postData]);
 
-  localStorage.setItem("user", JSON.stringify(user));
+  if (isLoading) return <div>로딩중...</div>;
+  if (!postData) {
+    return (
+      <div className={styles.emptyContainer}>
+        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+        <h1>아직 등록된 게시글이 없어요</h1>
+      </div>
+    );
+  }
 
   const onClearClick = () => {
     setParsedComment({ mention: "", text: "" });
@@ -90,7 +98,7 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     } else {
@@ -104,16 +112,13 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     }
   };
 
-  const onCommentReplyClick = (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => {
+  const onCommentReplyClick = (nickname: string | undefined, commentId: number | undefined) => {
     if (nickname) {
       setParsedComment({ mention: nickname, text: "" });
     }
@@ -148,13 +153,6 @@ const PostDetail = () => {
     setOpen(false);
   };
 
-  useEffect(() => {
-    if (postData) {
-      setIsLiked(postData.isLiked);
-      setLikeCount(postData.likeCounts);
-    }
-  }, [postData]);
-
   const onLikePostClick = () => {
     if (getAccessToken() === null) {
       navigate(PATH.ONBOARDING.ROOT);
@@ -166,12 +164,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) =>
-            Number(prevState !== undefined ? prevState - 1 : 0)
-          );
+          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -186,12 +182,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) =>
-            prevState !== undefined ? prevState + 1 : 0
-          );
+          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -199,7 +193,11 @@ const PostDetail = () => {
     setOpenModalId(undefined);
   };
 
-  if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
+  const handleProfileClick = () => {
+    if (postData.nickname) {
+      navigate(`/profile?nickname=${postData.nickname}`);
+    }
+  };
 
   return (
     <>
@@ -210,9 +208,7 @@ const PostDetail = () => {
         rightBtn={
           postData.isWriter && (
             <MoreModal
-              onDelete={() => {
-                setOpen(true);
-              }}
+              onDelete={() => setOpen(true)}
               iconSize={24}
               isOpen={openModalId === `post-${postId}`}
               onToggleModal={() => setOpenModalId(`post-${postId}`)}
@@ -226,30 +222,24 @@ const PostDetail = () => {
           label={postData.category}
           variant={"outlineNeutral"}
           size={"tag"}
-          // disabled={true}
           onClick={() => {
             navigate(
               `${PATH.COMMUNITY.CATEGORY}?type=${getCategorytoEnglish(
-                postData.category
-              )}&id=${getCategorytoId(postData.category)}`
+                postData.category,
+              )}&id=${getCategorytoId(postData.category)}`,
             );
           }}
         />
-        <div className={styles.top}>
+        <div className={styles.top} onClick={handleProfileClick}>
           {postData.profileImage ? (
-            <img
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-            />
+            <img src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
           ) : (
             <IcBaseProfileImage width={32} height={32} />
           )}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 ·{" "}
-              {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -286,37 +276,19 @@ const PostDetail = () => {
           <div className={styles.item}>
             {getCategoryResponse(postData.category) === "curious" ? (
               isLiked ? (
-                <IcCuriousActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcCuriousUnactive
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : getCategoryResponse(postData.category) === "support" ? (
               isLiked ? (
-                <IcLikeActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcLikeDisabled
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData.category) === "curious"
-                ? "궁금해요 "
-                : "응원해요 "}
+              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
               {likeCount}
             </span>
           </div>
@@ -325,10 +297,7 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글{" "}
-          <span className={styles.commentCount}>
-            {postData.totalCommentCounts}
-          </span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
@@ -339,18 +308,18 @@ const PostDetail = () => {
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ``}
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ""}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
           placeholder={"댓글을 입력해주세요."}
           onKeyDown={onKeyDown}
         />
-        {parsedComment.text && (
-          <button className={styles.upload} onClick={onSubmitComment}>
-            올리기
-          </button>
-        )}
+        parsedComment.text && (
+        <button className={styles.upload} onClick={onSubmitComment}>
+          올리기
+        </button>
+        )
       </div>
       <SimpleBottomSheet
         isOpen={isOpen}

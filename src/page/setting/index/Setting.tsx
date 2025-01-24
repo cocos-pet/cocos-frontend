@@ -7,8 +7,10 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
 import { useLogout } from "@api/domain/setting/hook";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 const Setting = () => {
+  useProtectedRoute();
   const navigate = useNavigate();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();

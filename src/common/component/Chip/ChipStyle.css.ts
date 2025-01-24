@@ -8,10 +8,8 @@ export const chipItem = recipe({
       display: "flex",
       padding: "0.8rem 1.2rem",
       justifyContent: "space-between",
-      alignItems: "center",
 
       borderRadius: "9.9rem",
-      // background: color.gray.gray000,
       color: color.primary.blue700,
       border: `0.1rem solid ${color.primary.blue500}`,
       flexShrink: "0",
@@ -21,11 +19,9 @@ export const chipItem = recipe({
   variants: {
     size: {
       small: {
-        //minWidth: "5.8rem",
         height: "3.6rem",
       },
       large: {
-        //minWidth: "8.2rem",
         height: "4rem",
       },
     },
