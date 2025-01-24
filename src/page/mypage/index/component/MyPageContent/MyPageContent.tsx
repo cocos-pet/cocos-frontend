@@ -12,7 +12,6 @@ interface MyPageContentPropTypes {
   tab: ActiveTabType;
 }
 
-//todo: 민정이가 유틸 만들어주기로 함 (~ 시간전)
 export interface ApiItemTypes {
   id: number;
   nickname: string;
@@ -32,26 +31,6 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const navigate = useNavigate();
   const { data: myPosts } = useGetMyPost();
   const { data: myComments } = useGetMyComment();
-
-  if ((tab === "post" && !myPosts) || (tab === "comment" && !myComments)) return;
-
-  const renderNothingContent = (tab: ActiveTabType) => {
-    let content = "";
-    switch (tab) {
-      case "review":
-        content = "아직 작성한 후기가 없어요.";
-        break;
-      case "post":
-        content = "아직 작성한 게시글이 없어요.";
-        break;
-      case "comment":
-        content = "아직 작성한 댓글이 없어요.";
-        break;
-      default:
-        break;
-    }
-    return <div className={styles.nothingContent}>{content}</div>;
-  };
 
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {

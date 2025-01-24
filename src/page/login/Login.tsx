@@ -3,8 +3,21 @@ import { IcLeftIcon } from "@asset/svg";
 import { KAKAO_AUTH_URI } from "@auth/OAuth";
 import { IcGroup } from "@asset/svg";
 import { IcCocosLogin } from "@asset/svg";
+import { isLoggedIn } from "@api/index";
+import { useNavigate } from "react-router-dom";
+import { PATH } from "@route/path";
+import { useEffect } from "react";
 
 const Login = () => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      //navigate는 부수효과이기 때문에 반드시 동기적 처리 x
+      navigate(PATH.MAIN);
+    }
+  }, []);
+
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URI; // 상수화
   };

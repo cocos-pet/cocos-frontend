@@ -11,6 +11,7 @@ const Complete = () => {
   const navigate = useNavigate();
   const handleSkip = () => {
     navigate(PATH.MAIN);
+    window.location.reload();
   };
 
   const handleNext = () => {
