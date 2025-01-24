@@ -24,7 +24,6 @@ const Profile = () => {
   const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
 
   const query = searchParams.get("nickname");
-  console.log(query);
   if (!query) return;
 
   const { data: memeberInfo } = useGetMemberInfo(query);
@@ -43,6 +42,7 @@ const Profile = () => {
   };
 
   if (!memeberInfo || !petInfo) return;
+  console.log(memeberInfo);
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
