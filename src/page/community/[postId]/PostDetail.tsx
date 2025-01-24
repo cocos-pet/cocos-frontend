@@ -154,9 +154,10 @@ const PostDetail = () => {
       }));
     }
 
-    if (e.key === "Enter" && parsedComment.text.trim()) {
-      onSubmitComment();
-    }
+    // 두 번 입력됨. 일단 적용 x
+    // if (e.key === "Enter" && parsedComment.text.trim()) {
+    //   onSubmitComment();
+    // }
   };
 
   const onBackClick = () => {
