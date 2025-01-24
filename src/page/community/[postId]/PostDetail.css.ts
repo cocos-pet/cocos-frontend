@@ -126,6 +126,7 @@ export const styles = {
     padding: "1.6rem 2rem",
     display: "flex",
     flexDirection: "column",
+    marginBottom: "9.2rem",
   }),
   textContainer: style({
     display: "flex",

@@ -56,20 +56,24 @@ const SymptomDetail = () => {
 
   const navigate = useNavigate();
 
-  if (!typeId) {
+  if (!typeId || posts.length === 0) {
     return (
-      <div className={styles.emptyContainer}>
-        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
-        <h1> 아직 등록된 게시글이 없어요 </h1>
-      </div>
-    );
-  }
-
-  if (posts.length === 0) {
-    return (
-      <div className={styles.emptyContainer}>
-        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
-        <h1> 아직 등록된 게시글이 없어요 </h1>
+      <div className={styles.categoryContainer}>
+        <div className={styles.headerContainer}>
+          <HeaderNav
+            leftIcon={<IcLeftarrow />}
+            centerContent={symptomMapping[typeId as string] || "증상"}
+            onLeftClick={() => navigate(PATH.MAIN)}
+          />
+        </div>
+        <div className={styles.emptyContainer}>
+          <img
+            src={nocategory}
+            alt="게시글 없음."
+            style={{ width: "27.6074rem", height: "15.4977rem", objectFit: "cover" }}
+          />
+          <h1> 아직 등록된 게시글이 없어요 </h1>
+        </div>
       </div>
     );
   }

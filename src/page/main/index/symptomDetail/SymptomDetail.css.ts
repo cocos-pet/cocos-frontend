@@ -94,9 +94,7 @@ export const emptyContainer = style([
     flexDirection: "column",
     alignItems: "center",
     justifyContent: "center",
-    width: "100%",
-    maxWidth: "76.8rem",
-    marginTop: "12rem",
-    objectFit: "cover",
+    height: "calc(100vh - 6.4rem)",
+    padding: "0 2rem",
   },
 ]);
