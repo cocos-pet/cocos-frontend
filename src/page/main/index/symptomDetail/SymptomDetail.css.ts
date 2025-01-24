@@ -21,6 +21,7 @@ export const postsContainer = style({
   display: "flex",
   flexDirection: "column",
   gap: "1.6rem",
+  marginTop: "6.4rem",
 });
 
 export const filterContainer = style({
