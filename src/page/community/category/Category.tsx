@@ -93,10 +93,6 @@ const Category = () => {
     }
   }, [diseaseBodies, symptomBodies]);
 
-  useEffect(() => {
-    fetchPostData();
-  }, [selectedChips]);
-
   const isFilterOn =
     !!selectedChips.breedId.length ||
     !!selectedChips.diseaseIds.length ||
@@ -139,6 +135,17 @@ const Category = () => {
   const handleGoSearch = () => {
     navigate(PATH.COMMUNITY.SEARCH);
   };
+  const handleDimmedClose = () => {
+    clearAllChips();
+  };
+
+  const onSubmitClick = () => {
+    fetchPostData();
+  };
+
+  useEffect(() => {
+    fetchPostData();
+  }, []);
 
   if (!type || !validTypes.includes(type)) {
     return (
@@ -160,7 +167,10 @@ const Category = () => {
             />
           </div>
         </div>
-        <FilterBottomSheet />
+        <FilterBottomSheet
+          handleDimmedClose={handleDimmedClose}
+          onSubmitClick={onSubmitClick}
+        />
       </>
     );
   }
@@ -207,7 +217,10 @@ const Category = () => {
             </div>
           </div>
         </div>
-        <FilterBottomSheet />
+        <FilterBottomSheet
+          handleDimmedClose={handleDimmedClose}
+          onSubmitClick={onSubmitClick}
+        />
       </>
     );
   }
@@ -262,7 +275,10 @@ const Category = () => {
           </div>
         )}
       </div>
-      <FilterBottomSheet />
+      <FilterBottomSheet
+        handleDimmedClose={handleDimmedClose}
+        onSubmitClick={onSubmitClick}
+      />
     </>
   );
 };

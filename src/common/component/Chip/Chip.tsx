@@ -36,13 +36,16 @@ const Chip = ({
   const size = icon ? "large" : "small";
 
   return (
-    <div className={chipItem({ size, color, active: isActive })} onClick={handleClick}>
+    <div
+      className={chipItem({ size, color, active: isActive })}
+      onClick={handleClick}
+    >
       {label}
       {icon && (
         <IcDelete
           width={24}
           height={24}
-          color={color === "gray" ? "#717171" : "#14B5F0"}
+          stroke={color === "gray" ? "#717171" : "#14B5F0"}
           style={{
             position: "relative",
             bottom: "1.3px",

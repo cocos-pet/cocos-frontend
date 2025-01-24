@@ -13,8 +13,13 @@ const categories: { id: CategoryType; label: string }[] = [
   { id: "disease", label: "질병" },
 ];
 
+interface props {
+  handleDimmedClose?: () => void;
+  onSubmitClick?: () => void;
+}
+
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
-const FilterBottomSheet = () => {
+const FilterBottomSheet = ({ handleDimmedClose, onSubmitClick }: props) => {
   const {
     category,
     selectedChips,
@@ -38,7 +43,11 @@ const FilterBottomSheet = () => {
   });
 
   return (
-    <BottomSheet isOpen={isOpen} handleOpen={setOpen}>
+    <BottomSheet
+      isOpen={isOpen}
+      handleOpen={setOpen}
+      handleDimmedClose={handleDimmedClose}
+    >
       <>
         {isAnyChipSelected ? (
           <div className={styles.selectedZone}>
@@ -95,7 +104,12 @@ const FilterBottomSheet = () => {
             label="확인하기"
             size="large"
             width="100%"
-            onClick={() => setOpen(false)}
+            onClick={() => {
+              setOpen(false);
+              if (onSubmitClick) {
+                onSubmitClick();
+              }
+            }}
           />
         </div>
       </>
