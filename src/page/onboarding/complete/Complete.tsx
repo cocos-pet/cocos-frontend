@@ -3,11 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
 import { Button } from "@common/component/Button";
-// import img from "@asset/image/beforeRegisterGraphic.png";
 import { PATH } from "@route/path";
 import { useGetNickname } from "@api/domain/complete/hook";
-import { Player } from "@lottiefiles/react-lottie-player"; // lottie-react 대신 Player 사용
 import registerPet from "@asset/lottie/registerPet.json";
+import Lottie from "lottie-react";
 
 const Complete = () => {
   const navigate = useNavigate();
@@ -34,7 +33,13 @@ const Complete = () => {
           </div>
           <Docs text={"작은 정보가 우리 아이의 건강을 지켜요"} />
         </div>
-        <Player autoplay loop={false} src={registerPet} style={{ width: 296, height: 325 }} />
+        {/* Lottie 애니메이션 */}
+        <Lottie
+          animationData={registerPet} // 애니메이션 JSON
+          loop={false} // 반복 여부
+          autoplay={true} // 자동 재생
+          style={{ width: 296, height: 325 }}
+        />
       </div>
       <div className={styles.btnWrapper}>
         <Button label="건너뛰기" size="large" variant="solidNeutral" onClick={handleSkip} />
