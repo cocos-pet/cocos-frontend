@@ -22,7 +22,7 @@ export const p = style([
   },
 ]);
 
-export const petName = style([
+export const nickname = style([
   font.heading02,
   {
     fontWeight: "600",
