@@ -9,6 +9,7 @@ import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -19,6 +20,7 @@ interface CommentProps {
 }
 
 const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
+  const navigate = useNavigate();
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname, comment.id);
@@ -36,11 +38,20 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
     setOpen(false);
   };
 
+  const handleProfileClick = (nickname: string) => {
+    navigate(`/profile?nickname=${nickname}`);
+  };
+
   return (
     <div className={styles.commentItem} onClick={onModalClose}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img src={comment.profileImage} className={styles.profileImage} alt="프로필 이미지" />
+          <img
+            src={comment.profileImage}
+            className={styles.profileImage}
+            alt="프로필 이미지"
+            onClick={() => handleProfileClick(comment.nickname as string)}
+          />
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {comment.nickname}
