@@ -3,7 +3,10 @@ import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   container: style({
-    padding: "0 2rem",
+    padding: "1.6rem 2rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.2rem",
   }),
 
   emptyContainer: style([
@@ -24,8 +27,6 @@ export const styles = {
   top: style({
     display: "flex",
     gap: "0.8rem",
-    marginTop: "1.6rem",
-    marginBottom: "2.4rem",
   }),
 
   icon: style({
@@ -122,17 +123,17 @@ export const styles = {
     },
   ]),
   commentContainer: style({
-    padding: "1.6rem 2rem 0 2rem",
+    padding: "1.6rem 2rem",
     display: "flex",
     flexDirection: "column",
   }),
   textContainer: style({
     display: "flex",
+    flexDirection: "row",
     position: "fixed",
     bottom: 0,
     width: "100%",
-    maxWidth: "76.8rem",
-    padding: "1.2rem 2rem",
+    padding: "1.2rem 2rem 4rem 2rem",
     background: color.gray.gray000,
   }),
   upload: style([

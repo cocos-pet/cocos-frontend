@@ -20,6 +20,12 @@ export const styles = {
     display: "flex",
     flexDirection: "column",
   }),
+  searchWrap: style({
+    marginTop: "1.6rem",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.6rem",
+  }),
   filterwrap: style({}),
 
   noSearchData: style({

@@ -8,6 +8,7 @@ import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { postPostFiltersResponse } from "@api/domain/community/search";
 import { PATH } from "@route/path";
 import { formatTime } from "@shared/util/formatTime";
+import Loading from "@common/component/Loading/Loading.tsx";
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
@@ -78,7 +79,7 @@ const PostList = () => {
       {/* 게시물 리스트 */}
       <div className={styles.postList}>
         {isLoading ? (
-          <p>게시물을 불러오는 중입니다...</p>
+          <Loading height={40} />
         ) : posts && posts.length > 0 ? (
           posts.map((post) => (
             <Content

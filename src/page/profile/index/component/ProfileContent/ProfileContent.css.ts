@@ -18,6 +18,11 @@ export const nothingContent = style([
 
 export const mypagecontent = style({
   width: "100%",
+  marginTop: "1.6rem",
+});
+
+export const mypageCommentcontent = style({
+  width: "100%",
 });
 
 export const contentWrapper = style({
