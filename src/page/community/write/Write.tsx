@@ -60,8 +60,14 @@ const Write = () => {
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { selectedChips, isOpen, setOpen, clearAllChips, setCategoryData } =
-    useFilterStore();
+  const {
+    selectedChips,
+    isOpen,
+    setOpen,
+    clearAllChips,
+    setCategoryData,
+    setCategory,
+  } = useFilterStore();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -90,14 +96,17 @@ const Write = () => {
   const TagLabel = [
     {
       label: "반려동물 종류 추가하기",
+      category: "breeds",
       value: FillterToName(selectedChips.breedId, "breeds"),
     },
     {
       label: "증상 추가하기",
+      category: "symptoms",
       value: FillterToName(selectedChips.symptomIds, "symptoms"),
     },
     {
       label: "질병 추가하기",
+      category: "disease",
       value: FillterToName(selectedChips.diseaseIds, "disease"),
     },
   ];
@@ -356,7 +365,11 @@ const Write = () => {
                   placeholder={tag.label}
                   value={tag.value}
                   isActive={tag.value.length > 0}
-                  onClick={() => setOpen(true)}
+                  onClick={() => {
+                    setOpen(true);
+                    // @ts-ignore
+                    setCategory(tag.category || "breeds");
+                  }}
                 />
                 <Spacing key={`spacing-write-${index}`} marginBottom={"0.8"} />
               </>
