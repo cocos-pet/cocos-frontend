@@ -34,7 +34,6 @@ const Main = () => {
   const handleTextFieldChange = () => {};
 
   if (!postsData || !getBodyParts) return null;
-
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
