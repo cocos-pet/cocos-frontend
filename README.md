@@ -124,8 +124,7 @@ Commit Message 👉 기능 키워드: 커밋 내용</br>
 
 
 <h2>📷 구현 뷰</h2>
-![image](https://github.com/user-attachments/assets/f5e00d9d-254f-49fb-92ec-df21a0e26806)
-
+<img src="https://github.com/user-attachments/assets/f5e00d9d-254f-49fb-92ec-df21a0e26806" width="1240" height="1754" alt="파비콘">
 
 <br/><br/>
 
