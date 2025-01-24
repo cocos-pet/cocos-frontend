@@ -41,7 +41,7 @@ const Symptom = () => {
     <div className={styles.symptomContainer}>
       <p className={styles.symptomTitle}>증상이 나타나는 부위가 어딘가요?</p>
       <div className={styles.symptomGrid}>
-        {body.map((bodyPart) => (
+        {body.slice(0, -2).map((bodyPart) => (
           <button
             key={bodyPart.id}
             className={styles.symptomItem}
