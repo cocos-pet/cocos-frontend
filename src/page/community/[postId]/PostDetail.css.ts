@@ -71,6 +71,7 @@ export const styles = {
     font.heading03,
     {
       color: color.gray.gray800,
+      whiteSpace: "pre-line",
     },
   ]),
 
