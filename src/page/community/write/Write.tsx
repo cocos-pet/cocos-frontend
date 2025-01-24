@@ -286,7 +286,7 @@ const Write = () => {
         />
         <div className={writeWrap}>
           {/* 제목 영역 */}
-          <WriteInputSection title={"제목"}>
+          <WriteInputSection title={"게시판 선택"}>
             <TextField
               leftIcon={getDropdownIdtoIcon(params.categoryId)}
               icon={<IcRightArror width={20} />}
