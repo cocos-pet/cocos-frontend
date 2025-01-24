@@ -1,4 +1,6 @@
 # <img src="https://github.com/user-attachments/assets/76f2b521-c05c-44e9-9072-b903e3de8236" width="128" height="150" alt="파비콘"> 코코스
+![image](https://github.com/user-attachments/assets/231222fd-fbb1-4252-a6bc-a9b3382aa0ec)
+
 ![image](https://github.com/user-attachments/assets/522b8f7f-7e09-4b7e-b4df-ab57cccfc22a)
 반려동물 증상을 겪는 반려인들이 커뮤니티를 통해 고민을 공유하고 병원 정보를 확인할 수 있는 서비스!
 
