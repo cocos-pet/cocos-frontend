@@ -12,12 +12,6 @@ import { useFilterStore } from "@store/filter.ts";
 import Loading from "@common/component/Loading/Loading.tsx";
 
 const Search = () => {
-  const user = {
-    // TODO : 나중에 지워야함.
-    accessToken:
-      "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3MzcyMTAxMzgsImV4cCI6MTczNzgxNDkzOCwibWVtYmVySWQiOjF9.f6sCaL3PFg7yMb6J4PM1h30ADsiq_fbON31IXPguJ_Pb4otyJ_Qh-Z_JYRxC8a2SMzaa6jr68uLc6w0_tuag3A",
-  };
-  localStorage.setItem("user", JSON.stringify(user));
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");

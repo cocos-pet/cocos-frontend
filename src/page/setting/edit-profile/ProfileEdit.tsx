@@ -6,9 +6,11 @@ import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 import { PATH } from "@route/path";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
-//todo : 사용자 조회 api로 데이터 렌더링
 const ProfileEdit = () => {
+  useProtectedRoute();
+
   const navigate = useNavigate();
   const { data: member } = useGetMemberInfo();
 

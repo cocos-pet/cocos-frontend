@@ -38,15 +38,26 @@ import {
 import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
 import Loading from "@common/component/Loading/Loading.tsx";
 
+import nocategory from "@asset/image/nocategory.png";
 const PostDetail = () => {
   const navigate = useNavigate();
   const { postId } = useParams();
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postId));
-  if (!postId) return <>loading</>;
+  const { data: commentsData } = useCommentsGet(Number(postId));
+
+  if (!postId) return null;
+  if (isLoading) return <div>로딩중...</div>;
+  if (!postData) {
+    return (
+      <div className={styles.emptyContainer}>
+        <img src={nocategory} alt="게시글 없음." style={{ width: "27.6074rem", height: "15.4977rem" }} />
+        <h1>아직 등록된 게시글이 없어요</h1>
+      </div>
+    );
+  }
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);
-  const { data: commentsData } = useCommentsGet(Number(postId));
   const { mutate: commentPost } = useCommentPost(Number(postId));
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
@@ -91,7 +102,7 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     } else {
@@ -200,9 +211,7 @@ const PostDetail = () => {
     setOpenModalId(undefined);
   };
 
-  if (isLoading || !postData || !postId || !commentsData) {
-    return <Loading height={80} />;
-  }
+  if (isLoading || !postData || !postId || !commentsData) return <>loading</>;
 
   return (
     <>
@@ -342,9 +351,7 @@ const PostDetail = () => {
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={
-            parsedComment.mention ? `@${parsedComment.mention} ` : ``
-          }
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ``}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
