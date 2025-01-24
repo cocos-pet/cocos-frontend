@@ -142,3 +142,19 @@ export const underline = style({
   transform: "translateX(-50%)",
   width: "2.4rem",
 });
+
+export const emptyContainer = style([
+  font.heading03,
+  {
+    color: color.gray.gray600,
+    textAlign: "center",
+  },
+  {
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: "7rem",
+    padding: "0 2rem",
+  },
+]);
