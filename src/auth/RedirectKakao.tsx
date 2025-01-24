@@ -1,6 +1,7 @@
 import { API_PATH } from "@api/constants/apiPath";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@type/schema";
+import Loading from "@common/component/Loading/Loading";
 
 const RedirectKakao = () => {
   const navigate = useNavigate();
@@ -46,7 +47,7 @@ const RedirectKakao = () => {
 
   getAccessToken();
 
-  return <div>loading...</div>;
+  return <Loading />;
 };
 
 export default RedirectKakao;
