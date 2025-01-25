@@ -9,6 +9,8 @@ import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { useEffect, useState, useCallback } from "react";
 import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
+import { useFilterStore } from "@store/filter";
+import { postPostFiltersRequest } from "@api/domain/community/search";
 
 const symptomMapping: { [key: string]: string } = {
   1: "피부/털",
@@ -31,30 +33,31 @@ const SymptomDetail = () => {
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts } = usePostPostFilters();
+  const navigate = useNavigate();
+
+  const { selectedChips } = useFilterStore();
 
   const fetchPostData = useCallback(() => {
-    const sortBy = "RECENT";
     if (!typeId) return;
 
-    fetchPosts(
-      { categoryId: Number(typeId), sortBy },
-      {
-        onSuccess: (data) => {
-          console.log("응답 데이터:", data);
-          setPosts(data);
-        },
-        onError: (error) => {
-          console.error("데이터 가져오기 실패:", error);
-        },
+    const filterPayload: postPostFiltersRequest = {
+      sortBy: "RECENT",
+      bodyId: Number(typeId),
+    };
+
+    fetchPosts(filterPayload, {
+      onSuccess: (data) => {
+        setPosts(data);
       },
-    );
-  }, [fetchPosts, typeId]);
+      onError: (error) => {
+        console.error("데이터 가져오기 실패:", error);
+      },
+    });
+  }, [fetchPosts, typeId, selectedChips]);
 
   useEffect(() => {
     fetchPostData();
   }, [fetchPostData]);
-
-  const navigate = useNavigate();
 
   if (!typeId || posts.length === 0) {
     return (
