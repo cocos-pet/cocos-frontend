@@ -10,7 +10,7 @@ import { useEffect, useState, useCallback } from "react";
 import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
 import { useFilterStore } from "@store/filter";
-import { postPostFiltersRequest } from "@api/domain/community/search";
+import { postPostFiltersRequestType } from "@api/domain/community/search";
 
 const symptomMapping: { [key: string]: string } = {
   1: "피부/털",
@@ -40,7 +40,7 @@ const SymptomDetail = () => {
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
 
-    const filterPayload: postPostFiltersRequest = {
+    const filterPayload: postPostFiltersRequestType = {
       sortBy: "RECENT",
       bodyId: Number(typeId),
     };
