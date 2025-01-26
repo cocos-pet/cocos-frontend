@@ -45,7 +45,7 @@ export const useGetMemberInfo = (nickname?: string) => {
     queryFn: () => {
       return getMemberInfo(nickname);
     },
-    staleTime: 1000 * 60 * 5,
+    //staleTime: 1000 * 60 * 5,
   });
 };
 
