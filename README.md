@@ -15,8 +15,9 @@
             <a href="https://github.com/ocahs9">
               <img src="https://github.com/user-attachments/assets/e95ea9f0-4df6-4422-a652-ef5c6f8d3c81" width="200" height="250" alt="프로필사진">
               <br />
-              <b>`Lead`🎧공준혁</b>
+              <b>🎧공준혁</b>
             </a>
+          `Lead`
         </td>
       <td style="min-width: 150px;">
             <a href="https://github.com/minjeoong">
