@@ -42,7 +42,7 @@
     </tr>
     <tr align="center">
        <td>
-            마이페이지 뷰 <br/>
+            <b>Lead</b>, 마이페이지 뷰 <br/>
       </td>
        <td>
             검색, 게시물 뷰 <br/>
