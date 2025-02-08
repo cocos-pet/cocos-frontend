@@ -20,7 +20,7 @@ jobs:
 
       - name: Add remote-url
         run: |
-          git remote add forked-repo https://ocahs9:${{ secrets.FORKED_REPO_TOKEN }}@github.com/ocahs9/35-APPJAM-WEB-COCOS
+          git remote add forked-repo https://ocahs9:${{ secrets.FORKED_REPO_TOKEN }}@github.com/ocahs9/cocos-frontend
           git config user.name ocahs9
           git config user.email ${{ secrets.EMAIL }}
 
