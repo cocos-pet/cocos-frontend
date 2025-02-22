@@ -38,6 +38,18 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
+// todo: 추후 토큰 만료 상태 코드 오면, 그에 알맞은 로직 작성하기.
+api.interceptors.response.use(
+  (response) => response, 
+  (error) => {
+    if (error.response?.status === 401) {
+      localStorage.removeItem("user");
+    }
+    return Promise.reject(error); 
+  }
+);
+
+
 //더욱 빠르게 api 요청을 할 수 있도록 작성된 유틸 함수
 export const get = <T>(...args: Parameters<typeof api.get>) => {
   return api.get<T>(...args);
