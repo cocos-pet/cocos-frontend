@@ -19,7 +19,7 @@ export const useProtectedRoute = () => {
 
     if (data) {
       const hasNickName = data?.nickname;
-      console.log(hasNickName);
+      //console.log(hasNickName);
 
       if (location.pathname === "/onboarding") {
         if (hasNickName) {
