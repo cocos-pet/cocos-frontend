@@ -4,8 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "preview": "vite preview",
     "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript --no-dimensions -- public/svgs",
     "lint": "biome lint --write",
