@@ -4,15 +4,15 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc -b && vite build",
-    "preview": "vite preview",
-    "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript --no-dimensions -- public/svgs",
+    "dev": "next dev -p 5173",
+    "build": "next build",
+    "start": "next start",
     "lint": "biome lint --write",
     "format": "biome format --write",
     "check": "biome check --write",
     "reporter": "biome check --reporter=summary",
-    "generate-types": "openapi-typescript https://www.cocos.r-e.kr/v3/api-docs  -o ./src/type/schema.d.ts"
+    "generate-types": "openapi-typescript https://www.cocos.r-e.kr/v3/api-docs  -o ./src/type/schema.d.ts",
+    "svgr": "npx @svgr/cli --out-dir src/asset/svg --ignore-existing --typescript --no-dimensions -- public/svgs"
   },
   "dependencies": {
     "@tanstack/react-query": "^5.62.11",
@@ -23,25 +23,25 @@
     "clsx": "^2.1.1",
     "embla-carousel-react": "^8.5.2",
     "lottie-react": "^2.4.1",
+    "next": "^14.2.6",
     "openapi-typescript": "^7.5.2",
     "prop-types": "^15.8.1",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^7.1.1",
     "uuid": "^11.0.5",
     "zustand": "^5.0.2"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
     "@svgr/cli": "^8.1.0",
+    "@svgr/webpack": "^8.1.0",
     "@tanstack/react-query-devtools": "^5.62.11",
+    "@types/node": "^20.11.30",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",
-    "@vanilla-extract/vite-plugin": "^4.0.20",
-    "@vitejs/plugin-react-swc": "^3.5.0",
+    "@vanilla-extract/next-plugin": "^2.3.7",
     "globals": "^15.14.0",
-    "typescript": "~5.6.2",
-    "vite": "^5.4.14"
+    "typescript": "~5.6.2"
   },
   "packageManager": "pnpm@9.12.3"
 }
