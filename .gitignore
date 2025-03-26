@@ -7,9 +7,21 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+# Node.js dependencies
 node_modules
+
+# Build outputs
 dist
 dist-ssr
+.next
+out
+
+# Local env files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 *.local
 
 # Editor directories and files
@@ -23,4 +35,8 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
+# Next.js specific
+.next/
+.vercel
+next-env.d.ts
+.cache
