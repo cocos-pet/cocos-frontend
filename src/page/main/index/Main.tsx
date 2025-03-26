@@ -1,6 +1,8 @@
+'use client';
+
 import Symptom from "./symptom/Symptom";
 import * as styles from "./Main.css";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import { TextField } from "@common/component/TextField";
 import { IcSearch } from "@asset/svg";
 import MainFooter from "./mainFooter/MainFooter";
@@ -25,13 +27,15 @@ const Main = () => {
   const { data: nickName } = useGetMemberInfo();
 
   useEffect(() => {
-    sessionStorage.setItem("searchBackUrl", PATH.MAIN);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem("searchBackUrl", "/main");
+    }
   }, []);
 
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const handleSearchClick = () => {
-    navigate(PATH.COMMUNITY.SEARCH);
+    router.push("/community/search");
   };
 
   const handleTextFieldChange = () => {};

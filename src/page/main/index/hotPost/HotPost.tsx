@@ -1,8 +1,9 @@
-import { useNavigate } from "react-router-dom";
+'use client';
+
+import { useRouter } from "next/navigation";
 import * as styles from "./HotPost.css";
 import Divider from "@common/component/Divider/Divider";
 import { useQueryGetPopular } from "@api/domain/main/hook";
-import { PATH } from "@route/path";
 
 // interface Post {
 //   id?: number;
@@ -14,7 +15,7 @@ interface HotPostProps {
 }
 
 const HotPost = ({ nickname }: HotPostProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const { data: postsData, isLoading, isError } = useQueryGetPopular();
 
@@ -29,7 +30,7 @@ const HotPost = ({ nickname }: HotPostProps) => {
   const posts = postsData.data.posts || [];
   const handlePostClick = (postId?: number) => {
     if (postId !== undefined) {
-      navigate(`${PATH.COMMUNITY.ROOT}/${postId}`);
+      router.push(`/community/${postId}`);
     }
   };
 
@@ -61,5 +62,5 @@ const HotPost = ({ nickname }: HotPostProps) => {
     </div>
   );
 };
-0;
+
 export default HotPost;

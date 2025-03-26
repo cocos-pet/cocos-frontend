@@ -1,6 +1,12 @@
+'use client';
+
 import axios from "axios";
 
 export const getAccessToken = (): string | null => {
+  if (typeof window === 'undefined') {
+    return '';
+  }
+
   const user = localStorage.getItem("user");
   if (user) {
     try {
@@ -14,6 +20,10 @@ export const getAccessToken = (): string | null => {
 };
 
 export const isLoggedIn = (): boolean => {
+  if (typeof window === 'undefined') {
+    return false;
+  }
+
   const user = localStorage.getItem("user");
   if (user) {
     try {
@@ -27,7 +37,7 @@ export const isLoggedIn = (): boolean => {
 };
 
 export const api = axios.create({
-  baseURL: import.meta.env.VITE_BASE_URL,
+  baseURL: process.env.NEXT_PUBLIC_BASE_URL,
   withCredentials: true,
 });
 
@@ -42,7 +52,7 @@ api.interceptors.request.use((config) => {
 api.interceptors.response.use(
   (response) => response, 
   (error) => {
-    if (error.response?.status === 401) {
+    if (typeof window !== 'undefined' && error.response?.status === 401) {
       localStorage.removeItem("user");
     }
     return Promise.reject(error); 

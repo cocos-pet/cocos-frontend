@@ -1,12 +1,13 @@
+'use client';
+
 import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import * as styles from "./SelectPost.css";
 import Divider from "@common/component/Divider/Divider";
 import { IcUnderline } from "@asset/svg";
 import Content from "@common/component/Content/Content";
 import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { postPostFiltersResponse } from "@api/domain/community/search";
-import { PATH } from "@route/path";
 import { formatTime } from "@shared/util/formatTime";
 import Loading from "@common/component/Loading/Loading.tsx";
 import nocategory from "@asset/image/nocategory.png";
@@ -15,7 +16,7 @@ const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
   const [posts, setPosts] = useState<NonNullable<postPostFiltersResponse["data"]>["posts"]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // 페이지 이동
+  const router = useRouter(); // 페이지 이동
 
   const { mutate: fetchPosts } = usePostPostFilters();
 
@@ -92,7 +93,7 @@ const PostList = () => {
               commentCnt={post.commentCount}
               postImage={post.image}
               likeIconType={post.category === "증상·질병" || post.category === "병원고민" ? "curious" : "support"}
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
+              onClick={() => router.push(`/community/${post.id}`)}
               timeAgo={formatTime(post.createdAt as string)}
               category={post.category}
             />

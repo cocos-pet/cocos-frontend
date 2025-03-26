@@ -1,18 +1,20 @@
-import { useNavigate, useSearchParams } from "react-router-dom";
+'use client';
+
+import { useSearchParams as useNextSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useGetBodyParts } from "@api/domain/main/hook";
 import * as styles from "./Symptom.css";
-import { PATH } from "@route/path";
 import { components } from "@type/schema";
 import { useCallback, useEffect, useState } from "react";
 import { usePostPostFilters } from "@api/domain/community/search/hook";
 
 const Symptom = () => {
-  const [searchParams] = useSearchParams();
+  const searchParams = useNextSearchParams();
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { data: bodyParts } = useGetBodyParts("SYMPTOM");
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const { mutate: fetchPosts } = usePostPostFilters();
 
@@ -45,7 +47,7 @@ const Symptom = () => {
           <button
             key={bodyPart.id}
             className={styles.symptomItem}
-            onClick={() => navigate(`${PATH.COMMUNITY.DETAIL}?type=symptom&id=${bodyPart.id}`)} // 수정된 경로
+            onClick={() => router.push(`/community/detail?type=symptom&id=${bodyPart.id}`)}
             aria-label={`증상 부위: ${bodyPart.name}`}
             type="button"
           >

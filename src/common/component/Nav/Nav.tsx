@@ -1,5 +1,7 @@
-import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+'use client';
+
+import { useState, useEffect, useCallback } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
 import { PATH } from "@route/path";
@@ -17,24 +19,28 @@ type Props = {
 };
 
 const Nav = ({ content, type = "nav" }: Props) => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
-  const extractFirstPath = (): string => {
-    const pathName = location.pathname;
-    const parts = pathName.split("/");
+  const extractFirstPath = useCallback(() => {
+    const parts = pathname.split("/");
     const basePath = `/${parts[1]}`;
     return basePath;
-  };
+  }, [pathname]);
 
-  const [activeItem, setActiveItem] = useState<string>(extractFirstPath());
+  const [activeItem, setActiveItem] = useState<string>("");
+
+  useEffect(() => {
+    setActiveItem(extractFirstPath());
+  }, [extractFirstPath]);
 
   const handleClick = (itemId: string, path: string) => {
     if (itemId === "/review") {
       alert("추후 구현 예정입니다.");
     } else {
       setActiveItem(itemId);
-      navigate(path);
+      router.push(path);
     }
   };
 
@@ -43,7 +49,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
       {content.map((item) => {
         if (type === "community") {
           const communityItem = item as CommunityContent;
-          const communityPath = `${PATH.COMMUNITY.CATEGORY}?type=${communityItem.type}&id=${communityItem.id}`;
+          const communityPath = `/community/category?type=${communityItem.type}&id=${communityItem.id}`;
 
           return (
             <button
