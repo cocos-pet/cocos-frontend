@@ -1,6 +1,7 @@
+"use client";
+
 import Symptom from "./symptom/Symptom";
 import * as styles from "./Main.css";
-import {useNavigate} from "react-router-dom";
 import {TextField} from "@common/component/TextField";
 import {IcSearch} from "@asset/svg";
 import MainFooter from "./mainFooter/MainFooter";
@@ -16,6 +17,7 @@ import {useGetBodyParts, useQueryGetPopular} from "@api/domain/main/hook";
 import {useEffect} from "react";
 import {useGetMemberInfo} from "@api/domain/mypage/hook";
 import {useProtectedRoute} from "@route/useProtectedRoute";
+import { useRouter } from "next/navigation";
 
 const Main = () => {
   useProtectedRoute();
@@ -23,15 +25,14 @@ const Main = () => {
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
   const { data: nickName } = useGetMemberInfo();
+  const router = useRouter();
 
   useEffect(() => {
     sessionStorage.setItem("searchBackUrl", PATH.MAIN);
   }, []);
 
-  const navigate = useNavigate();
-
   const handleSearchClick = () => {
-    navigate(PATH.COMMUNITY.SEARCH);
+    router.push(PATH.COMMUNITY.SEARCH);
   };
 
   const handleTextFieldChange = () => {};
