@@ -1,6 +1,7 @@
 import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 import type { NextConfig } from "next";
 import * as path from "node:path";
+
 const withVanillaExtract = createVanillaExtractPlugin();
 
 const nextConfig: NextConfig = {
@@ -21,7 +22,7 @@ const nextConfig: NextConfig = {
     };
     return config;
   },
-  output: "export",
+  // output: "export",
   distDir: "./dist",
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
 };

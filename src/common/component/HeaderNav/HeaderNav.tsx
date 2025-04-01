@@ -1,4 +1,6 @@
-import { HeaderItemVariant, headerItem, btnItem, noWrap } from "./HeaderNav.css";
+"use client";
+
+import {btnItem, headerItem, HeaderItemVariant, noWrap} from "./HeaderNav.css";
 import React from "react";
 
 interface HeaderNavProps {

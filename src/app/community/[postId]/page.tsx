@@ -1,4 +1,6 @@
-import React, {useEffect, useState} from "react";
+"use client";
+
+import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import {
   IcBaseProfileImage,
@@ -8,14 +10,14 @@ import {
   IcLikeActive,
   IcLikeDisabled,
 } from "@asset/svg";
-import {styles} from "@page/community/[postId]/PostDetail.css";
-import {Button} from "@common/component/Button";
+import { styles } from "@page/community/[postId]/PostDetail.css";
+import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
-import {TextField} from "@common/component/TextField";
+import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
-import {formatTime} from "@shared/util/formatTime.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
 import {
   useCommentPost,
@@ -26,25 +28,35 @@ import {
   usePostGet,
   useSubCommentPost,
 } from "@api/domain/community/post/hook";
-import {useNavigate, useParams} from "react-router-dom";
-import {PATH} from "@route/path.ts";
-import {getAccessToken} from "@api/index.ts";
+import { PATH } from "@route/path.ts";
+import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import {
   getCategorytoEnglish,
   getCategorytoId,
   getDropdownValuetoIcon,
 } from "@page/community/utills/handleCategoryItem.tsx";
-import {getCategoryResponse} from "@page/community/utills/getPostCategoryLike.ts";
+import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
 import Loading from "@common/component/Loading/Loading.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
-import {useProtectedRoute} from "@route/useProtectedRoute";
+import { useProtectedRoute } from "@route/useProtectedRoute";
+import { useParams, useRouter } from "next/navigation";
+import Image from "next/image";
 
-const PostDetail = () => {
+export async function generateStaticParams() {
+  const posts = await fetch("https://api.example.com/posts").then((res) => res.json());
+
+  return posts.map((post) => ({
+    postId: post.id.toString(),
+  }));
+}
+
+const Page = ({ params }) => {
   const { isNoPet } = useProtectedRoute();
-  const navigate = useNavigate();
-  const { postId } = useParams();
+  const router = useRouter();
+  const params = useParams();
+  const { postId } = params;
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postId));
   const { data: commentsData } = useCommentsGet(Number(postId));
@@ -59,10 +71,7 @@ const PostDetail = () => {
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postId));
-  const { mutate: subCommentPost } = useSubCommentPost(
-    Number(commentId),
-    Number(postId)
-  );
+  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId), Number(postId));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -81,7 +90,7 @@ const PostDetail = () => {
   if (!postData) {
     return (
       <div className={styles.emptyContainer}>
-        <img
+        <Image
           src={nocategory}
           alt="게시글 없음."
           style={{
@@ -117,7 +126,7 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     } else {
@@ -131,16 +140,13 @@ const PostDetail = () => {
             onClearClick();
           },
           onError: (error) => {},
-        }
+        },
       );
       onClearClick();
     }
   };
 
-  const onCommentReplyClick = (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => {
+  const onCommentReplyClick = (nickname: string | undefined, commentId: number | undefined) => {
     if (nickname) {
       setParsedComment({ mention: nickname, text: "" });
     }
@@ -172,7 +178,7 @@ const PostDetail = () => {
   };
 
   const onBackClick = () => {
-    navigate(-1);
+    router.push(-1);
   };
 
   const onDelete = () => {
@@ -182,7 +188,7 @@ const PostDetail = () => {
 
   const onLikePostClick = () => {
     if (getAccessToken() === null) {
-      navigate(PATH.ONBOARDING.ROOT);
+      router.push(PATH.ONBOARDING.ROOT);
       return;
     }
 
@@ -191,18 +197,16 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) =>
-            Number(prevState !== undefined ? prevState - 1 : 0)
-          );
+          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
   const onLikeDeleteClick = () => {
     if (getAccessToken() === null) {
-      navigate(PATH.ONBOARDING.ROOT);
+      router.push(PATH.ONBOARDING.ROOT);
       return;
     }
 
@@ -211,12 +215,10 @@ const PostDetail = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) =>
-            prevState !== undefined ? prevState + 1 : 0
-          );
+          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
         },
         onError: (error) => {},
-      }
+      },
     );
   };
 
@@ -228,7 +230,7 @@ const PostDetail = () => {
 
   const handleProfileClick = () => {
     if (postData.nickname) {
-      navigate(`/profile?nickname=${postData.nickname}`);
+      router.push(`/profile?nickname=${postData.nickname}`);
     }
   };
 
@@ -256,28 +258,23 @@ const PostDetail = () => {
           variant={"outlineNeutral"}
           size={"tag"}
           onClick={() => {
-            navigate(
+            router.push(
               `${PATH.COMMUNITY.CATEGORY}?type=${getCategorytoEnglish(
-                postData.category
-              )}&id=${getCategorytoId(postData.category)}`
+                postData.category,
+              )}&id=${getCategorytoId(postData.category)}`,
             );
           }}
         />
         <div className={styles.top} onClick={handleProfileClick}>
           {postData.profileImage ? (
-            <img
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-            />
+            <Image src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
           ) : (
             <IcBaseProfileImage width={32} height={32} />
           )}
           <div className={styles.info}>
             <div className={styles.infoName}>{postData.nickname}</div>
             <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 ·{" "}
-              {formatTime(postData.createdAt ?? "")}
+              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
             </div>
           </div>
         </div>
@@ -286,7 +283,7 @@ const PostDetail = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <img
+          <Image
             key={`postImage-${
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               index
@@ -314,37 +311,19 @@ const PostDetail = () => {
           <div className={styles.item}>
             {getCategoryResponse(postData.category) === "curious" ? (
               isLiked ? (
-                <IcCuriousActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcCuriousUnactive
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : getCategoryResponse(postData.category) === "support" ? (
               isLiked ? (
-                <IcLikeActive
-                  width={24}
-                  height={24}
-                  onClick={onLikePostClick}
-                />
+                <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
               ) : (
-                <IcLikeDisabled
-                  width={24}
-                  height={24}
-                  onClick={onLikeDeleteClick}
-                />
+                <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData.category) === "curious"
-                ? "궁금해요 "
-                : "응원해요 "}
+              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
               {likeCount}
             </span>
           </div>
@@ -353,10 +332,7 @@ const PostDetail = () => {
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글{" "}
-          <span className={styles.commentCount}>
-            {postData.totalCommentCounts}
-          </span>
+          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
@@ -367,9 +343,7 @@ const PostDetail = () => {
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={
-            parsedComment.mention ? `@${parsedComment.mention} ` : ""
-          }
+          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ""}
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
@@ -397,4 +371,4 @@ const PostDetail = () => {
   );
 };
 
-export default PostDetail;
+export default Page;

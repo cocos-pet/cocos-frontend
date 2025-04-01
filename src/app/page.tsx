@@ -1,5 +1,5 @@
 "use client";
-import "../style/global.css.ts";
+
 import {PATH} from "@route/path";
 import {useEffect} from "react";
 import {useRouter} from "next/navigation";

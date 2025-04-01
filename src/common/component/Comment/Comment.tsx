@@ -1,3 +1,5 @@
+"use client";
+
 import * as styles from "./Comment.css";
 import { IcMessage } from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
@@ -13,21 +15,13 @@ import { useNavigate } from "react-router-dom";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
 
   onDelete?: () => void;
   onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Comment = ({
-  comment,
-  onCommentReplyClick,
-  onDelete,
-  onModalClose,
-}: CommentProps) => {
+const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
   const navigate = useNavigate();
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
@@ -67,9 +61,7 @@ const Comment = ({
             </span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt
-                ? formatTime(comment.createdAt).toLocaleString()
-                : ""}
+              {comment.createdAt ? formatTime(comment.createdAt).toLocaleString() : ""}
             </span>
           </div>
           {comment.isWriter && (

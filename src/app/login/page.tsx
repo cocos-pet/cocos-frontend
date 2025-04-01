@@ -1,19 +1,22 @@
 "use client";
 
 import * as styles from "./Login.css";
-import {IcCocosLogin, IcGroup, IcLeftIcon} from "@asset/svg";
-import {KAKAO_AUTH_URI} from "@auth/OAuth";
-import {useRouter} from "next/navigation";
+import { IcCocosLogin, IcGroup, IcLeftIcon } from "@asset/svg";
+import { KAKAO_AUTH_URI } from "@auth/OAuth";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { isLoggedIn } from "@api/index.ts";
+import { PATH } from "@route/path.ts";
 
 const Login = () => {
   // useProtectedRoute();
   const router = useRouter();
 
-  // useEffect(() => {
-  //   if (isLoggedIn()) {
-  //     router.push(PATH.MAIN);
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (isLoggedIn()) {
+      router.push(PATH.MAIN);
+    }
+  }, []);
 
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URI; // 상수화
