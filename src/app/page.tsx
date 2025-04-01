@@ -6,12 +6,12 @@ import {useRouter} from "next/navigation";
 
 const Index = () => {
   const router = useRouter();
-  const user = localStorage.getItem("user");
 
   useEffect(() => {
+    const user = localStorage.getItem("user");
     if (user) router.push(PATH.MAIN);
     else router.push(PATH.LOGIN);
-  }, [router.push, user]);
+  }, [router]);
 
   return <></>;
 };
