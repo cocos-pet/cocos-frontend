@@ -1,4 +1,6 @@
-import {Link} from "react-router-dom";
+"use client";
+
+import Link from "next/link";
 import * as styles from "./MainFooter.css";
 import {IcCocos} from "@asset/svg";
 
@@ -9,7 +11,7 @@ const MainFooter = () => {
       <div className={styles.footerDetail}>
         <div>
           <Link
-            to="https://luminous-chard-386.notion.site/1839107603148050823fd83bb65c82fe"
+            href="https://luminous-chard-386.notion.site/1839107603148050823fd83bb65c82fe"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.footerDetail}
@@ -19,7 +21,7 @@ const MainFooter = () => {
         </div>
         <div>
           <Link
-            to="https://luminous-chard-386.notion.site/1839107603148003bf7cdc788b50285e"
+            href="https://luminous-chard-386.notion.site/1839107603148003bf7cdc788b50285e"
             target="_blank"
             rel="noopener noreferrer"
             className={styles.footerDetail}
