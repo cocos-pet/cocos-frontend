@@ -52,12 +52,14 @@ const Symptom = () => {
             aria-label={`증상 부위: ${bodyPart.name}`}
             type="button"
           >
-            <Image 
-              src={bodyPart.image} 
-              alt={`${bodyPart.name} 아이콘`}
-              width={56}
-              height={56}
-            />
+            {bodyPart.image && (
+              <Image 
+                src={bodyPart.image} 
+                alt={`${bodyPart.name} 아이콘`}
+                width={56}
+                height={56}
+              />
+            )}
             <p className={styles.symptomName}>{bodyPart.name}</p>
           </button>
         ))}
