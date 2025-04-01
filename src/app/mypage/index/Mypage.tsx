@@ -1,3 +1,5 @@
+"use client";
+
 import {Button} from "@common/component/Button";
 import * as styles from "./Mypage.css";
 import Divider from "@common/component/Divider/Divider";
@@ -5,7 +7,6 @@ import Tab from "@common/component/Tab/Tab";
 import {useEffect, useState} from "react";
 import MyPageContent from "./component/MyPageContent/MyPageContent";
 import {IcChevronRight, IcPlus, IcSettings} from "@asset/svg";
-import {useNavigate} from "react-router-dom";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import {PATH} from "@route/path";
@@ -13,6 +14,8 @@ import {NAV_CONTENT} from "@common/component/Nav/constant";
 import {isLoggedIn} from "@api/index";
 import {useGetMemberInfo, useGetPetInfo} from "@api/domain/mypage/hook";
 import {useProtectedRoute} from "@route/useProtectedRoute";
+import { useRouter } from "next/navigation";
+import Image from "next/image";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -21,7 +24,7 @@ const Mypage = () => {
 
   const preSavedActiveTab = sessionStorage.getItem("activeTab");
 
-  const navigate = useNavigate();
+  const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(true);
   const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
@@ -50,7 +53,7 @@ const Mypage = () => {
     setActiveTab(tab);
   };
 
-  if (isLoading || !member) return;
+  if (isLoading || !member) return null;
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
@@ -62,7 +65,7 @@ const Mypage = () => {
               className={styles.settingWrapper({
                 isLogin: isLogin,
               })}
-              onClick={() => isLogin && navigate(PATH.SETTING.ROOT)}
+              onClick={() => isLogin && router.push(PATH.SETTING.ROOT)}
             >
               <IcSettings width={24} height={24} />
             </span>
@@ -73,13 +76,29 @@ const Mypage = () => {
       <article className={styles.myProfileWrapper}>
         {isLogin ? (
           <div className={styles.loginProfile}>
-            <img className={styles.profileImage} alt="프로필 이미지" src={member.profileImage} />
+            {member.profileImage && (
+              <Image 
+                className={styles.profileImage} 
+                alt="프로필 이미지" 
+                src={member.profileImage}
+                width={68}
+                height={68} 
+              />
+            )}
             <span className={styles.userProfileText}>{member.nickname}</span>
             <Divider size="small" />
 
             {isRegister ? (
               <div className={styles.animalProfileWrapper}>
-                <img className={styles.animalImage} alt="프로필이미지" src={petInfo?.petImage} />
+                {petInfo?.petImage && (
+                  <Image 
+                    className={styles.animalImage} 
+                    alt="프로필이미지" 
+                    src={petInfo.petImage}
+                    width={52}
+                    height={52} 
+                  />
+                )}
                 <div className={styles.animalProfileTextWrapper}>
                   <span className={styles.animalMainText}>
                     {`${petInfo?.breed} `}
@@ -100,7 +119,7 @@ const Mypage = () => {
                   width={28}
                   height={28}
                   style={{ cursor: "pointer" }}
-                  onClick={() => navigate(PATH.MYPAGE.EDIT_PET)}
+                  onClick={() => router.push(PATH.MYPAGE.EDIT_PET)}
                 />
               </div>
             ) : (
@@ -110,7 +129,7 @@ const Mypage = () => {
                   rightIcon={<IcPlus width={20} height={20} />}
                   size={"small"}
                   label="반려동물 추가하기"
-                  onClick={() => navigate(PATH.REGISTER_PET.ROOT)}
+                  onClick={() => router.push(PATH.REGISTER_PET.ROOT)}
                 />
               </span>
             )}

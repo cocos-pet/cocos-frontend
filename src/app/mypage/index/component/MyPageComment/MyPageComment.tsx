@@ -1,3 +1,5 @@
+"use client";
+
 import {formatTime} from "@shared/util/formatTime";
 import * as styles from "./MyPageComment.css";
 

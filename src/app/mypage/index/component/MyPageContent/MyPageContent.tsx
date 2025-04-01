@@ -1,3 +1,5 @@
+"use client";
+
 import Content from "@common/component/Content/Content";
 import {ActiveTabType} from "../../Mypage";
 import * as styles from "./MyPageContent.css";
@@ -6,7 +8,7 @@ import {isSubComment, renderAllComments} from "@shared/util/renderAllComents";
 import {useGetMyComment, useGetMyPost} from "@api/domain/mypage/hook";
 import {formatTime} from "@shared/util/formatTime";
 import {PATH} from "@route/path";
-import {useNavigate} from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -28,7 +30,7 @@ export interface ApiItemTypes {
 }
 
 const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const { data: myPosts } = useGetMyPost();
   const { data: myComments } = useGetMyComment();
 
@@ -58,7 +60,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
               timeAgo={formatTime(data.createdAt as string)}
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
+              onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
             />
           </div>
         ));
@@ -85,7 +87,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
               mentionedNickname={
                 isSubComment(data) ? data.mentionedNickname : undefined
               }
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
+              onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>
         ));
