@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {color, font} from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { color, font } from "@style/styles.css.ts";
 
 export const titleStyle = style([
   font.title03,

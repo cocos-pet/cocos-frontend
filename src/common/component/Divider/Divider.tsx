@@ -1,6 +1,6 @@
 "use client";
 
-import {divider} from "./Divider.css";
+import { divider } from "./Divider.css";
 
 interface DividerProps {
   size?: "large" | "small" | "popular";

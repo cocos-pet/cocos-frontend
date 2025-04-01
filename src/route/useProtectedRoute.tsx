@@ -1,8 +1,8 @@
-import {isLoggedIn} from "@api/index";
-import {usePathname, useRouter} from "next/navigation";
-import {PATH} from "./path";
-import {useGetMemberInfo, useGetPetInfoWithError} from "@api/domain/mypage/hook";
-import {useEffect} from "react";
+import { isLoggedIn } from "@api/index";
+import { usePathname, useRouter } from "next/navigation";
+import { PATH } from "./path";
+import { useGetMemberInfo, useGetPetInfoWithError } from "@api/domain/mypage/hook";
+import { useEffect } from "react";
 
 export const useProtectedRoute = () => {
   const router = useRouter();

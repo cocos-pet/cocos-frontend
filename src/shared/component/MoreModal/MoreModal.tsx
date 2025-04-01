@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import {IcEllipses} from "@asset/svg";
+import { IcEllipses } from "@asset/svg";
 import {
   container,
   iconSizeVar,
@@ -10,7 +10,7 @@ import {
   moreModalDivider,
   moreModalItem,
 } from "@shared/component/MoreModal/MoreModal.css.ts";
-import {assignInlineVars} from "@vanilla-extract/dynamic";
+import { assignInlineVars } from "@vanilla-extract/dynamic";
 
 interface MoreModalParams {
   isOpen?: boolean;

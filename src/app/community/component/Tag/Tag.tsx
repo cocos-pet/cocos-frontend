@@ -1,6 +1,6 @@
-import {tagContainer, tagValue} from "@page/community/component/Tag/Tag.css.ts";
-import {color} from "@style/styles.css.ts";
-import {React} from "@asset/svg";
+import { tagContainer, tagValue } from "@page/community/component/Tag/Tag.css.ts";
+import { color } from "@style/styles.css.ts";
+import { React } from "@asset/svg";
 import IcRight from "@asset/svg/IcRight.tsx";
 
 interface tagType {

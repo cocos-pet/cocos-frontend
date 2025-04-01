@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {color} from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { color } from "@style/styles.css.ts";
 
 export const writeWrap = style({
   backgroundColor: color.gray.gray100,

@@ -1,6 +1,6 @@
-import {style} from "@vanilla-extract/css";
-import {color, font, semanticColor} from "@style/styles.css.ts";
-import {recipe} from "@vanilla-extract/recipes";
+import { style } from "@vanilla-extract/css";
+import { color, font, semanticColor } from "@style/styles.css.ts";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const tagContainer = recipe({
   base: [

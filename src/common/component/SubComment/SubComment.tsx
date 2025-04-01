@@ -1,15 +1,15 @@
 "use client";
 import * as styles from "./SubComment.css";
-import {IcMessage} from "@asset/svg";
+import { IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
-import {commentGetRequestSubCommentType} from "@api/domain/community/post";
-import {formatTime} from "@shared/util/formatTime.ts";
+import { commentGetRequestSubCommentType } from "@api/domain/community/post";
+import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
-import {useDeleteSubComment} from "@api/domain/community/post/hook.ts";
-import React, {useState} from "react";
-import {useCategoryFilterStore} from "@page/mypage/edit-pet/store/categoryFilter.ts";
-import {useNavigate} from "react-router-dom";
+import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
+import React, { useState } from "react";
+import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import { useNavigate } from "react-router-dom";
 
 interface SubCommentProps {
   commentId: number | undefined;

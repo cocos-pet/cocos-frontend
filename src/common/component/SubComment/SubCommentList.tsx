@@ -1,6 +1,6 @@
 "use client";
 import SubComment from "./SubComment";
-import {commentGetRequestSubCommentType} from "@api/domain/community/post";
+import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 
 interface SubCommentListProps {
   commentId: number | undefined;
