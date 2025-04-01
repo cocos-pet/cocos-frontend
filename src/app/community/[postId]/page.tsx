@@ -44,34 +44,30 @@ import { useProtectedRoute } from "@route/useProtectedRoute";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 
-export async function generateStaticParams() {
-  const posts = await fetch("https://api.example.com/posts").then((res) => res.json());
-
-  return posts.map((post) => ({
-    postId: post.id.toString(),
-  }));
-}
-
-const Page = ({ params }) => {
+const Page = () => {
   const { isNoPet } = useProtectedRoute();
   const router = useRouter();
   const params = useParams();
   const { postId } = params;
+  const postIdString = typeof postId === 'string' ? postId : Array.isArray(postId) ? postId[0] : '';
   const { openModalId, setOpenModalId } = useModalStore();
-  const { data: postData, isLoading } = usePostGet(Number(postId));
-  const { data: commentsData } = useCommentsGet(Number(postId));
+  const { data: postData, isLoading } = usePostGet(Number(postIdString));
+  const { data: commentsData } = useCommentsGet(Number(postIdString));
 
-  if (!postId) return null;
+  if (!postIdString) return null;
 
-  const { mutate: likePost } = useLikePost(postId);
-  const { mutate: likeDelete } = useDeleteLike(postId);
-  const { mutate: commentPost } = useCommentPost(Number(postId));
+  const { mutate: likePost } = useLikePost(postIdString);
+  const { mutate: likeDelete } = useDeleteLike(postIdString);
+  const { mutate: commentPost } = useCommentPost(Number(postIdString));
   const [isLiked, setIsLiked] = useState(postData?.isLiked);
   const [likeCount, setLikeCount] = useState(postData?.likeCounts);
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
-  const { mutate: deletePost } = usePostDelete(Number(postId));
-  const { mutate: subCommentPost } = useSubCommentPost(Number(commentId), Number(postId));
+  const { mutate: deletePost } = usePostDelete(Number(postIdString));
+  const { mutate: subCommentPost } = useSubCommentPost(
+    commentId !== undefined ? commentId : 0, 
+    Number(postIdString)
+  );
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -178,11 +174,11 @@ const Page = ({ params }) => {
   };
 
   const onBackClick = () => {
-    router.push(-1);
+    router.back();
   };
 
   const onDelete = () => {
-    deletePost(Number(postId));
+    deletePost(Number(postIdString));
     setOpen(false);
   };
 
@@ -193,7 +189,7 @@ const Page = ({ params }) => {
     }
 
     likeDelete(
-      { postId },
+      { postId: postIdString },
       {
         onSuccess: (data) => {
           setIsLiked(false);
@@ -211,7 +207,7 @@ const Page = ({ params }) => {
     }
 
     likePost(
-      { postId },
+      { postId: postIdString },
       {
         onSuccess: (data) => {
           setIsLiked(true);
@@ -226,7 +222,7 @@ const Page = ({ params }) => {
     setOpenModalId(undefined);
   };
 
-  if (isLoading || !postId || !commentsData) return <Loading height={60} />;
+  if (isLoading || !postIdString || !commentsData) return <Loading height={60} />;
 
   const handleProfileClick = () => {
     if (postData.nickname) {
@@ -245,8 +241,8 @@ const Page = ({ params }) => {
             <MoreModal
               onDelete={() => setOpen(true)}
               iconSize={24}
-              isOpen={openModalId === `post-${postId}`}
-              onToggleModal={() => setOpenModalId(`post-${postId}`)}
+              isOpen={openModalId === `post-${postIdString}`}
+              onToggleModal={() => setOpenModalId(`post-${postIdString}`)}
             />
           )
         }
