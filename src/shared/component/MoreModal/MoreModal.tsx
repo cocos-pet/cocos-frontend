@@ -1,4 +1,6 @@
-import React, { useEffect, useRef, useState } from "react";
+"use client";
+
+import React from "react";
 import { IcEllipses } from "@asset/svg";
 import {
   container,
@@ -18,13 +20,7 @@ interface MoreModalParams {
   onEdit?: () => void;
 }
 
-const MoreModal = ({
-  isOpen = false,
-  onToggleModal,
-  onDelete,
-  iconSize,
-  onEdit,
-}: MoreModalParams) => {
+const MoreModal = ({ isOpen = false, onToggleModal, onDelete, iconSize, onEdit }: MoreModalParams) => {
   const onItemClick = () => {
     onDelete();
     onToggleModal();
@@ -36,10 +32,7 @@ const MoreModal = ({
   };
 
   return (
-    <div
-      className={container}
-      style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
-    >
+    <div className={container} style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}>
       <IcEllipses
         className={moreIcon}
         style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}

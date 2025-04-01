@@ -1,3 +1,5 @@
+"use client";
+
 import { divider } from "./Divider.css";
 
 interface DividerProps {
