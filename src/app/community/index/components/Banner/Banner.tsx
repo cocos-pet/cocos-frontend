@@ -1,10 +1,11 @@
 import * as styles from "./Banner.css";
 import banner from "@asset/image/banner.png";
+import Image from "next/image";
 
 const Banner = () => {
   return (
     <div className={styles.bannerContainer}>
-      <img src={banner} alt="배너 이미지" className={styles.bannerImage} />
+      <Image src={banner} alt="배너 이미지" className={styles.bannerImage} />
     </div>
   );
 };

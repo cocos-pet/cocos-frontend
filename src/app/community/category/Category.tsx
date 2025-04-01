@@ -15,6 +15,7 @@ import {postPostFiltersRequest} from "@api/domain/community/search";
 import nocategory from "@asset/image/nocategory.png";
 import {useGetBodies, useGetDisease, useGetSymptoms,} from "@api/domain/mypage/edit-pet/hook";
 import Loading from "@common/component/Loading/Loading.tsx";
+import Image from "next/image";
 
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
@@ -147,12 +148,12 @@ const Category = () => {
     return (
       <>
         <div className={styles.emptyContainer}>
-          <img
+          <Image
             src={nocategory}
             alt="게시글 없음."
+            width={276}
+            height={155}
             style={{
-              width: "27.6074rem",
-              height: "15.4977rem",
               objectFit: "cover",
             }}
           />
@@ -196,12 +197,12 @@ const Category = () => {
             </div>
           )}
           <div className={styles.emptyContainer}>
-            <img
+            <Image
               src={nocategory}
               alt="게시글 없음."
+              width={276}
+              height={155}
               style={{
-                width: "27.6074rem",
-                height: "15.4977rem",
                 objectFit: "cover",
               }}
             />

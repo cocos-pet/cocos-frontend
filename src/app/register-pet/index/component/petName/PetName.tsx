@@ -10,6 +10,7 @@ import {PetData} from "@page/register-pet/index/RegisterPet";
 import {validatePetName} from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
 import {PATH} from "@route/path";
+import Image from "next/image";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -44,7 +45,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div className={styles.gap}>
-          <img src={petNameBori} alt="onboarding-character" className={styles.imgStyle} />
+          <Image src={petNameBori} alt="onboarding-character" className={styles.imgStyle} width={276} height={155} />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />
         </div>

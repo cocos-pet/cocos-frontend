@@ -12,6 +12,7 @@ import {useCheckNicknameGet} from "@api/domain/onboarding/nicknameDuplicate/hook
 import {usePatchNickname} from "@api/domain/onboarding/nickname/hook";
 import {PATH} from "@route/path";
 import Loading from "@common/component/Loading/Loading.tsx";
+import Image from "next/image";
 
 const Nickname = () => {
   // 상태 하나로 관리
@@ -67,7 +68,7 @@ const Nickname = () => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div>
-          <img src={nicknameCoco} alt="onboarding-character" className={styles.imgStyle} />
+          <Image src={nicknameCoco} alt="onboarding-character" className={styles.imgStyle} width={276} height={155} />
           <Title text={ONBOARDING_GUIDE.nickname.title} />
           <Docs text={ONBOARDING_GUIDE.nickname.docs} />
         </div>

@@ -12,6 +12,7 @@ import {useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms,} from "@api/d
 import {formatTime} from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import Loading from "@common/component/Loading/Loading.tsx";
+import Image from "next/image";
 
 interface SearchDonePropTypes {
   id?: number;
@@ -173,10 +174,12 @@ const SearchDone = () => {
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>
-            <img
+            <Image
               className={styles.noSearchResultImage}
               src={noSearchResult}
               alt="검색 결과 없음"
+              width={276}
+              height={155}
             />
             <span className={styles.noSearchText}>
               검색 결과를 찾지 못했어요.

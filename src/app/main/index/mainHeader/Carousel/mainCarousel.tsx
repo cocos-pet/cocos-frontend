@@ -1,9 +1,10 @@
 import useEmblaCarousel from "embla-carousel-react";
 import {useEffect, useState} from "react";
 import * as styles from "./mainCarousel.css";
+import Image, { StaticImageData } from "next/image";
 
 interface MainCarouselProps {
-  images: { id: string; src: string }[];
+  images: { id: string; src: StaticImageData | string }[];
 }
 
 const MainCarousel = ({ images }: MainCarouselProps) => {
@@ -39,7 +40,7 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
       <div className={styles.carouselSlides}>
         {images.map((image) => (
           <div key={image.id} className={styles.carouselSlide}>
-            <img src={image.src} alt={`Slide ${image.id}`} className={styles.image} />
+            <Image src={image.src} alt={`Slide ${image.id}`} className={styles.image} width={390} height={156} />
           </div>
         ))}
       </div>

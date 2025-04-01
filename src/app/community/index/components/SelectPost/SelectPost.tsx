@@ -10,6 +10,7 @@ import {PATH} from "@route/path";
 import {formatTime} from "@shared/util/formatTime";
 import Loading from "@common/component/Loading/Loading.tsx";
 import nocategory from "@asset/image/nocategory.png";
+import Image from "next/image";
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
@@ -99,10 +100,12 @@ const PostList = () => {
           ))
         ) : (
           <div className={styles.emptyContainer}>
-            <img
+            <Image
               src={nocategory}
               alt="게시글 없음."
-              style={{ width: "27.6074rem", height: "15.4977rem", objectFit: "cover" }}
+              width={276}
+              height={155}
+              style={{ objectFit: "cover" }}
             />
             <h1> 아직 등록된 게시글이 없어요 </h1>
           </div>
