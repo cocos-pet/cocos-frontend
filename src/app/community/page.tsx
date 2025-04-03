@@ -1,7 +1,12 @@
 "use client";
 
 import Community from "./index/Community";
+import SuspenseWrapper from "../SuspenseWrapper";
 
 export default function CommunityPage() {
-  return <Community />;
+  return (
+    <SuspenseWrapper>
+      <Community />
+    </SuspenseWrapper>
+  );
 } 
