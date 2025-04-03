@@ -1,6 +1,7 @@
 import * as styles from "./DualOptionSelector.css";
 import { useState } from "react";
 import { animalGetResponse } from "@api/domain/register-pet/animal/index";
+import Image from "next/image";
 
 interface DualOptionSelectorProps {
   data: animalGetResponse["data"];
@@ -31,7 +32,14 @@ const DualOptionSelector = ({ data, onSelect }: DualOptionSelectorProps) => {
           onClick={() => handleOptionClick(item.id, item.name)}
         >
           {item.name}
-          <img src={item.image} alt={item.name} width={104} height={59} />
+          {item.image && (
+            <Image 
+              src={item.image} 
+              alt={item.name || "동물 이미지"} 
+              width={104} 
+              height={59} 
+            />
+          )}
         </div>
       ))}
     </div>
