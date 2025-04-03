@@ -1,7 +1,7 @@
 import {IcChevronLeft, IcChevronRight, IcEditPen} from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import {PATH} from "@route/path";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 import * as styles from "./PetEdit.css";
 import Divider from "@common/component/Divider/Divider";
 import {Button} from "@common/component/Button";
@@ -36,7 +36,7 @@ const DEFAULT_TYPE = [
 ] as const;
 
 const PetEdit = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const ref = useRef<HTMLInputElement>(null);
 
   //todo: reducer 혹은 하나의 객체로 상태 관리하기
@@ -242,7 +242,7 @@ const PetEdit = () => {
       <HeaderNav
         leftIcon={<IcChevronLeft width={24} height={24} />}
         centerContent={"반려동물 정보 수정"}
-        onLeftClick={() => navigate(PATH.MYPAGE.ROOT)}
+        onLeftClick={() => router.push(PATH.MYPAGE.ROOT)}
       />
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>

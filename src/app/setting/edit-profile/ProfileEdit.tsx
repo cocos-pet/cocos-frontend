@@ -1,6 +1,6 @@
 import {IcChevronLeft} from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 import * as styles from "./ProfileEdit.css";
 import Divider from "@common/component/Divider/Divider";
 import {Button} from "@common/component/Button";
@@ -11,7 +11,7 @@ import {useProtectedRoute} from "@route/useProtectedRoute";
 const ProfileEdit = () => {
   useProtectedRoute();
 
-  const navigate = useNavigate();
+  const router = useRouter();
   const { data: member } = useGetMemberInfo();
 
   if (!member) return;
@@ -21,7 +21,7 @@ const ProfileEdit = () => {
       <HeaderNav
         leftIcon={<IcChevronLeft width={20} height={20} />}
         centerContent={"내 정보 수정"}
-        onLeftClick={() => navigate(PATH.SETTING.ROOT)}
+        onLeftClick={() => router.push(PATH.SETTING.ROOT)}
       />
       <section className={styles.profileEditWrapper}>
         <img className={styles.profile} src={member.profileImage} alt="프로필 이미지" />

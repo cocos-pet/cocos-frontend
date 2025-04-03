@@ -1,4 +1,4 @@
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useRouter, useSearchParams} from "next/navigation";
 import * as styles from "./Category.css";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -26,14 +26,14 @@ const categoryMapping: { [key: string]: string } = {
 };
 
 const Category = () => {
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
     []
   );
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // 필터 관련 상태와 hooks
   const {
@@ -126,11 +126,11 @@ const Category = () => {
   const handleGoBack = () => {
     clearAllChips();
 
-    navigate(PATH.COMMUNITY.ROOT);
+    router.push(PATH.COMMUNITY.ROOT);
   };
 
   const handleGoSearch = () => {
-    navigate(PATH.COMMUNITY.SEARCH);
+    router.push(PATH.COMMUNITY.SEARCH);
   };
   const handleDimmedClose = () => {
     clearAllChips();
@@ -160,7 +160,7 @@ const Category = () => {
           <h1>아직 등록된 게시글이 없어요</h1>
           <div className={styles.floatingBtnContainer}>
             <FloatingBtn
-              onClick={() => navigate(`/community/write?category=${type}`)}
+              onClick={() => router.push(`/community/write?category=${type}`)}
             />
           </div>
         </div>
@@ -209,7 +209,7 @@ const Category = () => {
             <h1>아직 등록된 게시글이 없어요</h1>
             <div className={styles.floatingBtnContainer}>
               <FloatingBtn
-                onClick={() => navigate(`/community/write?category=${type}`)}
+                onClick={() => router.push(`/community/write?category=${type}`)}
               />
             </div>
           </div>
@@ -256,7 +256,7 @@ const Category = () => {
               likeCnt={post.likeCount}
               commentCnt={post.commentCount}
               postImage={post.image}
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
+              onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
               timeAgo={formatTime(post.updatedAt as string)}
               category={post.category}
               likeIconType="curious"
@@ -267,7 +267,7 @@ const Category = () => {
         {type !== "magazine" && (
           <div className={styles.floatingBtnContainer}>
             <FloatingBtn
-              onClick={() => navigate(`/community/write?category=${type}`)}
+              onClick={() => router.push(`/community/write?category=${type}`)}
             />
           </div>
         )}

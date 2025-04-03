@@ -3,7 +3,7 @@ import {ActiveTabType} from "../../Profile";
 import * as styles from "./ProfileContent.css";
 import MyPageComment from "../ProfileComment/ProfileComment";
 import {isSubComment, renderAllComments} from "@shared/util/renderAllComents";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useRouter, useSearchParams} from "next/navigation";
 import {useGetMyComment, useGetMyPost} from "@api/domain/mypage/hook";
 import {PATH} from "@route/path";
 import {formatTime} from "@shared/util/formatTime";
@@ -30,11 +30,11 @@ export interface ApiItemTypes {
 
 //todo: 여기서 탭 별로 api 요청 보내서 데이터 받아와 렌더링하기
 const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const query = searchParams.get("nickname");
   if (!query) return;
 
-  const navigate = useNavigate();
+  const router = useRouter();
   console.log(query);
   const { data: profilePosts } = useGetMyPost(query);
   const { data: profileComments } = useGetMyComment(query);
@@ -89,7 +89,7 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
               likeCnt={data.likeCount}
               commentCnt={data.commentCount}
               timeAgo={formatTime(data.createdAt as string)}
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
+              onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
             />
           </div>
         ));
@@ -119,7 +119,7 @@ const ProfileContent = ({ tab }: MyPageContentPropTypes) => {
               mentionedNickname={
                 isSubComment(data) ? data.mentionedNickname : undefined
               }
-              onClick={() => navigate(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
+              onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>
         ));

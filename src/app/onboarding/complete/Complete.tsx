@@ -1,5 +1,5 @@
 import * as styles from "./Complete.css";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
 import {Button} from "@common/component/Button";
@@ -9,14 +9,14 @@ import registerPet from "@asset/lottie/registerPet.json";
 import Lottie from "lottie-react";
 
 const Complete = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleSkip = () => {
-    navigate(PATH.MAIN);
+    router.push(PATH.MAIN);
     window.location.reload();
   };
 
   const handleNext = () => {
-    navigate(PATH.REGISTER_PET.ROOT);
+    router.push(PATH.REGISTER_PET.ROOT);
   };
 
   // api

@@ -160,14 +160,14 @@ export const useSubCommentPost = (commentId: number, postId: number) => {
  * @description 게시글 삭제 API
  */
 export const usePostDelete = (postId: number) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   return useMutation({
     mutationKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
     mutationFn: (postId: number) => {
       return deletePost(postId);
     },
     onSuccess: () => {
-      navigate(-1);
+      router.push(-1);
     },
   });
 };

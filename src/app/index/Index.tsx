@@ -1,15 +1,15 @@
 import {PATH} from "@route/path";
 import {useEffect} from "react";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 
 const Index = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const user = localStorage.getItem("user");
 
   useEffect(() => {
-    if (user) navigate(PATH.MAIN);
-    else navigate(PATH.LOGIN);
+    if (user) router.push(PATH.MAIN);
+    else router.push(PATH.LOGIN);
   }, [navigate, user]);
 
   return <></>;

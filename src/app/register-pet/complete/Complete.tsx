@@ -1,5 +1,5 @@
 import * as styles from "./Complete.css";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 import Docs from "@page/onboarding/index/common/docs/Docs";
 import Title from "@page/onboarding/index/common/title/Title";
 import {Button} from "@common/component/Button";
@@ -9,9 +9,9 @@ import onboarding from "@asset/lottie/onboarding.json";
 import Lottie from "lottie-react";
 
 const Complete = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleSkip = () => {
-    navigate(PATH.MAIN);
+    router.push(PATH.MAIN);
   };
 
   // api

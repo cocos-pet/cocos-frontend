@@ -14,7 +14,7 @@ import ImageCover from "@page/community/component/ImageCover/ImageCover.tsx";
 import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useRouter, useSearchParams } from "next/navigation";
 import { PATH } from "@route/path.ts";
 import axios from "axios";
 import { FillterToName } from "@page/community/utills/getFillterNamebyid.ts";
@@ -41,9 +41,9 @@ interface writeProps {
 const Write = () => {
   //빌테용
   useProtectedRoute();
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const category = searchParams.get("category");
-  const navigate = useNavigate();
+  const router = useRouter();
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
@@ -69,7 +69,7 @@ const Write = () => {
   });
 
   const onBackClick = () => {
-    navigate(PATH.COMMUNITY.ROOT);
+    router.push(PATH.COMMUNITY.ROOT);
     clearAllChips();
   };
 
@@ -233,7 +233,7 @@ const Write = () => {
                 }),
               );
               clearAllChips();
-              navigate(PATH.COMMUNITY.ROOT);
+              router.push(PATH.COMMUNITY.ROOT);
             } catch (error) {
               alert("이미지 업로드에 실패했습니다.");
             }
