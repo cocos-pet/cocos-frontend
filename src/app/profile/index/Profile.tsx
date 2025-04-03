@@ -3,7 +3,7 @@ import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
 import {useEffect, useState} from "react";
 import {IcChevronLeft} from "@asset/svg";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {useRouter, useSearchParams} from "next/navigation";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import {NAV_CONTENT} from "@common/component/Nav/constant";
@@ -17,11 +17,19 @@ export type ActiveTabType = "review" | "post" | "comment";
 const Profile = () => {
   useProtectedRoute();
 
-  const preSavedActiveTab = sessionStorage.getItem("activeTab");
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
-  const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
+  // 초기화 시 sessionStorage에서 활성 탭 가져오기
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const preSavedActiveTab = sessionStorage.getItem("activeTab");
+      if (preSavedActiveTab) {
+        setActiveTab(preSavedActiveTab as ActiveTabType);
+      }
+    }
+  }, []);
 
   const query = searchParams.get("nickname");
   if (!query) return;
@@ -29,8 +37,11 @@ const Profile = () => {
   const { data: memeberInfo } = useGetMemberInfo(query);
   const { data: petInfo } = useGetPetInfo(query);
 
+  // activeTab 변경 시 sessionStorage에 저장
   useEffect(() => {
-    sessionStorage.setItem("activeTab", activeTab);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem("activeTab", activeTab);
+    }
   }, [activeTab]);
 
   const isActiveTab = (tab: ActiveTabType) => {
@@ -48,7 +59,7 @@ const Profile = () => {
     <div style={{ position: "relative", height: "auto" }}>
       <span style={{ position: "fixed", top: 0, width: "100%" }}>
         <HeaderNav
-          leftIcon={<IcChevronLeft width={24} height={24} onClick={() => navigate(-1)} />}
+          leftIcon={<IcChevronLeft width={24} height={24} onClick={() => router.back()} />}
           centerContent={"프로필"}
         />
       </span>

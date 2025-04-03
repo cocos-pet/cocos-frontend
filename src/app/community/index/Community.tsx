@@ -19,7 +19,9 @@ const Community = () => {
   useProtectedRoute();
 
   useEffect(() => {
-    sessionStorage.setItem("searchBackUrl", PATH.COMMUNITY.ROOT);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem("searchBackUrl", PATH.COMMUNITY.ROOT);
+    }
   }, []);
 
   const router = useRouter();

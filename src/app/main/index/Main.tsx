@@ -28,7 +28,9 @@ const Main = () => {
   const router = useRouter();
 
   useEffect(() => {
-    sessionStorage.setItem("searchBackUrl", PATH.MAIN);
+    if (typeof window !== 'undefined') {
+      sessionStorage.setItem("searchBackUrl", PATH.MAIN);
+    }
   }, []);
 
   const handleSearchClick = () => {

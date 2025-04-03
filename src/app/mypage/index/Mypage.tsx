@@ -21,16 +21,21 @@ export type ActiveTabType = "review" | "post" | "comment";
 
 const Mypage = () => {
   useProtectedRoute();
-
-  const preSavedActiveTab = sessionStorage.getItem("activeTab");
-
   const router = useRouter();
   const [isLogin, setIsLogin] = useState(false);
   const [isRegister, setIsRegister] = useState(true);
-  const [activeTab, setActiveTab] = useState<ActiveTabType>((preSavedActiveTab as ActiveTabType) || "review");
+  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
   const { isLoading, data: member } = useGetMemberInfo();
   const { data: petInfo } = useGetPetInfo();
+
+  // 초기화 시 sessionStorage에서 활성 탭 가져오기
+  useEffect(() => {
+    const preSavedActiveTab = sessionStorage.getItem("activeTab");
+    if (preSavedActiveTab) {
+      setActiveTab(preSavedActiveTab as ActiveTabType);
+    }
+  }, []);
 
   useEffect(() => {
     setIsLogin(isLoggedIn());
@@ -41,6 +46,7 @@ const Mypage = () => {
     else setIsRegister(true);
   }, [petInfo]);
 
+  // activeTab 변경 시 sessionStorage에 저장
   useEffect(() => {
     sessionStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
