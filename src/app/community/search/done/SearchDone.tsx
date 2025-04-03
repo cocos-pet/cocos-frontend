@@ -1,7 +1,7 @@
 import {IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue,} from "@asset/svg";
 import {TextField} from "@common/component/TextField";
-import {ChangeEvent, useEffect, useState} from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import {ChangeEvent, useEffect, useState, Suspense} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
 import {styles} from "@page/community/search/done/SearchDone.css.ts";
 import {PATH} from "@route/path.ts";
 import Content from "@common/component/Content/Content.tsx";
@@ -28,15 +28,15 @@ interface SearchDonePropTypes {
   category?: string;
 }
 
-const SearchDone = () => {
-  const [searchParams] = useSearchParams();
+function SearchDoneContent() {
+  const searchParams = useSearchParams();
   const query = searchParams.get("searchText");
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [searchDoneData, setSearchDoneData] = useState<
     Array<SearchDonePropTypes>
   >([]);
   const [searchText, setSearchText] = useState(query || "");
-  const navigate = useNavigate();
+  const router = useRouter();
   const { mutate, isPending } = usePostPostFilters();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
@@ -117,7 +117,7 @@ const SearchDone = () => {
 
   const onTextFieldClick = () => {
     clearAllChips();
-    navigate(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
+    router.push(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
   };
 
   const onTextFieldClear = (
@@ -126,17 +126,16 @@ const SearchDone = () => {
     e.stopPropagation();
     setSearchText("");
     clearAllChips();
-    navigate(`${PATH.COMMUNITY.SEARCH}`);
+    router.push(`${PATH.COMMUNITY.SEARCH}`);
   };
 
   const onBackClick = () => {
     clearAllChips();
-    const backPath = sessionStorage.getItem("searchBackUrl");
-    navigate(`${backPath}`);
+    router.back();
   };
 
   const onClickPost = (postId: number | undefined) => {
-    navigate(`${PATH.COMMUNITY.ROOT}/${postId}`);
+    router.push(`${PATH.COMMUNITY.ROOT}/${postId}`);
   };
 
   if (isPending) {
@@ -211,6 +210,14 @@ const SearchDone = () => {
 
       <FilterBottomSheet />
     </div>
+  );
+}
+
+const SearchDone = () => {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <SearchDoneContent />
+    </Suspense>
   );
 };
 

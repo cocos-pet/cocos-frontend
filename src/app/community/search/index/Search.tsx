@@ -1,16 +1,16 @@
 import {styles} from "@page/community/search/index/Search.css.ts";
 import {IcLeftarrow, IcSearch} from "@asset/svg";
 import {TextField} from "@common/component/TextField";
-import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
+import React, {ChangeEvent, useEffect, useRef, useState, Suspense} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
 import {PATH} from "@route/path.ts";
 import {useSearchGet, useSearchPost,} from "@api/domain/community/search/hook.ts";
 import {useFilterStore} from "@store/filter.ts";
 import Loading from "@common/component/Loading/Loading.tsx";
 
-const Search = () => {
-  const navigate = useNavigate();
-  const [searchParams] = useSearchParams();
+function SearchContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const query = searchParams.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
   const { data: recentSearchData, isLoading } = useSearchGet();
@@ -51,8 +51,7 @@ const Search = () => {
   };
 
   const handleNavigate = (searchText: string) => {
-    searchParams.set("searchText", searchText);
-    navigate(`${PATH.COMMUNITY.SEARCH_DONE}?searchText=${searchText}`);
+    router.push(`${PATH.COMMUNITY.SEARCH_DONE}?searchText=${searchText}`);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -60,7 +59,7 @@ const Search = () => {
   };
 
   const onBackClick = () => {
-    navigate(-1);
+    router.back();
     clearAllChips();
   };
 
@@ -104,6 +103,14 @@ const Search = () => {
         </ul>
       </div>
     </div>
+  );
+}
+
+const Search = () => {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <SearchContent />
+    </Suspense>
   );
 };
 

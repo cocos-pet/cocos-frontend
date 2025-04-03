@@ -1,4 +1,4 @@
-import { useSearchParams, useNavigate } from "react-router-dom";
+import { useSearchParams, useRouter } from "next/navigation";
 import * as styles from "./SymptomDetail.css";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -6,7 +6,7 @@ import { IcLeftarrow, IcUnderline } from "@asset/svg";
 import { PATH } from "@route/path";
 import { formatTime } from "@shared/util/formatTime";
 import { usePostPostFilters } from "@api/domain/community/search/hook";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, Suspense } from "react";
 import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
 import { useFilterStore } from "@store/filter";
@@ -28,13 +28,13 @@ const symptomMapping: { [key: string]: string } = {
   12: "행동/소리",
 };
 
-const SymptomDetail = () => {
+function SymptomDetailContent() {
   const [isRecentPost, setIsRecentPost] = useState(true);
-  const [searchParams] = useSearchParams();
+  const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts } = usePostPostFilters();
-  const navigate = useNavigate();
+  const router = useRouter();
 
   const { selectedChips } = useFilterStore();
 
@@ -54,7 +54,7 @@ const SymptomDetail = () => {
         console.error("데이터 가져오기 실패:", error);
       },
     });
-  }, [fetchPosts, typeId, selectedChips]);
+  }, [fetchPosts, typeId]);
 
   useEffect(() => {
     fetchPostData();
@@ -67,7 +67,7 @@ const SymptomDetail = () => {
           <HeaderNav
             leftIcon={<IcLeftarrow />}
             centerContent={symptomMapping[typeId as string] || "증상"}
-            onLeftClick={() => navigate(PATH.MAIN)}
+            onLeftClick={() => router.push(PATH.MAIN)}
           />
         </div>
         <div className={styles.emptyContainer}>
@@ -89,7 +89,7 @@ const SymptomDetail = () => {
   return (
     <div className={styles.categoryContainer}>
       <div className={styles.headerContainer}>
-        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => navigate(PATH.MAIN)} />
+        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => router.push(PATH.MAIN)} />
       </div>
       <div className={styles.tabContainer}>
         <button
@@ -114,7 +114,7 @@ const SymptomDetail = () => {
             commentCnt={post.commentCount}
             postImage={post.image}
             onClick={() => {
-              navigate(`${PATH.COMMUNITY.ROOT}/${post.id}`);
+              router.push(`${PATH.COMMUNITY.ROOT}/${post.id}`);
             }}
             timeAgo={formatTime(post.updatedAt as string)}
             category={post.category}
@@ -122,6 +122,14 @@ const SymptomDetail = () => {
         ))}
       </div>
     </div>
+  );
+}
+
+const SymptomDetail = () => {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <SymptomDetailContent />
+    </Suspense>
   );
 };
 
