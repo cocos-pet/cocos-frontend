@@ -1,6 +1,6 @@
 import * as styles from "./Nickname.css";
 import {ChangeEvent, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
@@ -43,23 +43,22 @@ const Nickname = () => {
     nickname === "" || validationMessages.length === 0 ? "default" : "error";
 
   // 뒤로 가기
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleGoBack = () => {
-    navigate(-1);
+    router.back();
   };
 
   // 다음 버튼
-
   const patchingNickname = async () => {
     await mutateAsync(nickname);
-    navigate(PATH.ONBOARDING.COMPLETE);
+    router.push(PATH.ONBOARDING.COMPLETE);
   };
 
   if (isPending) return <Loading height={40} />;
 
   const handleNext = () => {
     // patchNickname(nickname);
-    // navigate(PATH.ONBOARDING.COMPLETE);
+    // router.push(PATH.ONBOARDING.COMPLETE);
     patchingNickname();
   };
 

@@ -1,5 +1,5 @@
 import { useState, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import * as styles from "./PetName.css";
 import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
@@ -10,6 +10,7 @@ import { PetData } from "@page/register-pet/index/RegisterPet";
 import { validatePetName } from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
 import { PATH } from "@route/path";
+import Image from "next/image";
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: string) => void; // PetData의 key와 string 값
@@ -26,9 +27,9 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
   const isValid = petName && validationMessages.length === 0;
 
   // 뒤로 가기
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleGoBack = () => {
-    navigate(PATH.LOGIN);
+    router.push(PATH.LOGIN);
   };
 
   const handleNext = () => {
@@ -43,7 +44,7 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div className={styles.gap}>
-          <img src={petNameBori} alt="onboarding-character" className={styles.imgStyle} />
+          <Image src={petNameBori} alt="onboarding-character" className={styles.imgStyle} width={276} height={155} />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />
         </div>

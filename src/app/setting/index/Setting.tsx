@@ -2,7 +2,7 @@ import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import * as styles from "./Setting.css";
 import Divider from "@common/component/Divider/Divider";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
@@ -11,7 +11,7 @@ import { useProtectedRoute } from "@route/useProtectedRoute";
 
 const Setting = () => {
   useProtectedRoute();
-  const navigate = useNavigate();
+  const router = useRouter();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();
 
@@ -20,7 +20,7 @@ const Setting = () => {
       <HeaderNav
         leftIcon={<IcChevronLeft width={20} height={20} />}
         centerContent={"설정"}
-        onLeftClick={() => navigate("/mypage")}
+        onLeftClick={() => router.push("/mypage")}
       />
 
       <div className={styles.settingWrapper}>
@@ -28,7 +28,7 @@ const Setting = () => {
           <span className={styles.myprofileText}>마이 프로필</span>
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
-            <span className={styles.myProfileSpan} onClick={() => navigate(PATH.SETTING.EDIT_PROFILE)}>
+            <span className={styles.myProfileSpan} onClick={() => router.push(PATH.SETTING.EDIT_PROFILE)}>
               <IcEditPen width={20} height={20} />
               <span className={styles.myProfileSpanText}>내 정보수정</span>
             </span>

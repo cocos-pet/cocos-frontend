@@ -1,5 +1,5 @@
 import {ChangeEvent, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 import * as styles from "./PetName.css";
 import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
@@ -28,9 +28,9 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
   const isValid = petName && validationMessages.length === 0;
 
   // 뒤로 가기
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleGoBack = () => {
-    navigate(PATH.LOGIN);
+    router.push(PATH.LOGIN);
   };
 
   const handleNext = () => {

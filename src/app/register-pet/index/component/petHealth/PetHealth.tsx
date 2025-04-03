@@ -1,6 +1,6 @@
 import * as styles from "./PetHealth.css";
 import {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useRouter} from "next/navigation";
 import {PATH} from "@route/path";
 import {PetData} from "@page/register-pet/index/RegisterPet";
 import {Button} from "@common/component/Button";
@@ -134,12 +134,12 @@ const PetHealth = ({
   };
 
   // 최종 폼 제출
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleGoComplete = () => {
     if (selectedSymptom.length > 0) {
       updatePetData("symptomIds", selectedSymptom, () => {
         handleSubmit();
-        navigate(PATH.REGISTER_PET.COMPLETE);
+        router.push(PATH.REGISTER_PET.COMPLETE);
       });
     } else {
       return;
