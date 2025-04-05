@@ -8,7 +8,7 @@ import {useGetNickname} from "@api/domain/complete/hook";
 import registerPet from "@asset/lottie/registerPet.json";
 import Lottie from "lottie-react";
 
-const Complete = () => {
+const Page = () => {
   const router = useRouter();
   const handleSkip = () => {
     router.push(PATH.MAIN);
@@ -49,4 +49,4 @@ const Complete = () => {
   );
 };
 
-export default Complete;
+export default Page;

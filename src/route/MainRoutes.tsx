@@ -1,5 +1,5 @@
-import Main from "@page/main/index/Main";
-import { PATH } from "@route/path.ts";
+import {PATH} from "@route/path.ts";
+import Main from "../app/main/index/Main.tsx";
 
 const MAIN_ROUTES = [{ path: PATH.MAIN, element: <Main /> }];
 

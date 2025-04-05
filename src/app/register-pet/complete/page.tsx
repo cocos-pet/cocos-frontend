@@ -1,14 +1,19 @@
-import * as styles from "./Complete.css";
-import {useRouter} from "next/navigation";
-import Docs from "@page/onboarding/index/common/docs/Docs";
-import Title from "@page/onboarding/index/common/title/Title";
-import {Button} from "@common/component/Button";
-import {PATH} from "@route/path";
-import {useGetNickname} from "@api/domain/complete/hook";
-import onboarding from "@asset/lottie/onboarding.json";
-import Lottie from "lottie-react";
+"use client";
 
-const Complete = () => {
+import * as styles from "./Complete.css";
+import { useRouter } from "next/navigation";
+
+import { Button } from "@common/component/Button";
+import { PATH } from "@route/path";
+import { useGetNickname } from "@api/domain/complete/hook";
+import onboarding from "@asset/lottie/onboarding.json";
+import Title from "../../onboarding/index/common/title/Title.tsx";
+import Docs from "../../onboarding/index/common/docs/Docs.tsx";
+import dynamic from "next/dynamic";
+
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
+
+const Page = () => {
   const router = useRouter();
   const handleSkip = () => {
     router.push(PATH.MAIN);
@@ -43,4 +48,4 @@ const Complete = () => {
   );
 };
 
-export default Complete;
+export default Page;

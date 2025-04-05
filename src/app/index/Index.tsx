@@ -10,7 +10,7 @@ const Index = () => {
   useEffect(() => {
     if (user) router.push(PATH.MAIN);
     else router.push(PATH.LOGIN);
-  }, [navigate, user]);
+  }, [router, user]);
 
   return <></>;
 };

@@ -1,4 +1,4 @@
-import PetEdit from "@page/mypage/edit-pet/PetEdit";
+import PetEdit from "@page/mypage/edit-pet/Page";
 import Mypage from "@page/mypage/index/Mypage";
 import { PATH } from "@route/path.ts";
 

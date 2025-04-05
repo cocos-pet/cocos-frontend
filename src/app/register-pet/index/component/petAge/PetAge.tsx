@@ -1,12 +1,12 @@
 import * as styles from "./PetAge.css";
 import {ChangeEvent, useState} from "react";
 
-import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
-import Title from "@page/onboarding/index/common/title/Title";
-import Docs from "@page/onboarding/index/common/docs/Docs";
 import {TextField} from "@common/component/TextField";
 import {Button} from "@common/component/Button";
-import {PetData} from "@page/register-pet/index/RegisterPet";
+import {PetData} from "../../RegisterPet.tsx";
+import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import Title from "../../../../onboarding/index/common/title/Title.tsx";
+import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 
 interface PetAgeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;

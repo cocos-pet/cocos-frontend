@@ -10,7 +10,6 @@ import {
   IcLikeActive,
   IcLikeDisabled,
 } from "@asset/svg";
-import {styles} from "@page/community/[postId]/PostDetail.css";
 import {Button} from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
@@ -31,17 +30,15 @@ import {
 import {PATH} from "@route/path.ts";
 import {getAccessToken} from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
-import {
-  getCategorytoEnglish,
-  getCategorytoId,
-  getDropdownValuetoIcon,
-} from "@page/community/utills/handleCategoryItem.tsx";
-import {getCategoryResponse} from "@page/community/utills/getPostCategoryLike.ts";
+
 import nocategory from "@asset/image/nocategory.png";
 import {useProtectedRoute} from "@route/useProtectedRoute";
 import {useParams, useRouter} from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import {styles} from "./PostDetail.css.ts";
+import {getCategoryResponse} from "../_utills/getPostCategoryLike.ts";
+import {getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon} from "../_utills/handleCategoryItem.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 

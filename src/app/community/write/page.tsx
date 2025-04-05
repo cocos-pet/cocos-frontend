@@ -1,32 +1,32 @@
 "use client";
 
-import DropDown from "@page/community/_component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
 import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../_component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "@page/community/write/Write.css.ts";
-import WriteInputSection from "@page/community/_component/WriteInputSection/WriteInputSection.tsx";
 
-import Tag from "@page/community/_component/Tag/Tag.tsx";
-import TextArea from "@page/community/_component/TextArea/TextArea.tsx";
 import Spacing from "@common/component/Spacing/Spacing.tsx";
-import ImageCover from "@page/community/_component/ImageCover/ImageCover.tsx";
 import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
 import { useRouter, useSearchParams } from "next/navigation";
 import { PATH } from "@route/path.ts";
 import axios from "axios";
-import { FillterToName } from "@page/community/utills/getFillterNamebyid.ts";
 import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
-import { getDropdownIdtoIcon, getDropdownIdtoValue } from "@page/community/utills/handleCategoryItem.tsx";
 import { useArticlePost } from "@api/domain/community/post/hook.ts";
-import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
 import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WornningToastWrap/WorningToastWrap.tsx";
 import { useProtectedRoute } from "@route/useProtectedRoute";
+import { FillterToName } from "../_utills/getFillterNamebyid.ts";
+import { DropDownItems } from "../_constant/writeConfig.tsx";
+import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "./Write.css.ts";
+import WriteInputSection from "../_component/WriteInputSection/WriteInputSection.tsx";
+import { getDropdownIdtoIcon, getDropdownIdtoValue } from "../_utills/handleCategoryItem.tsx";
+import DropDown from "../_component/DropDown/DropDown.tsx";
+import TextArea from "../_component/TextArea/TextArea.tsx";
+import ImageCover from "../_component/ImageCover/ImageCover.tsx";
+import Tag from "../_component/Tag/Tag.tsx";
 
 interface writeProps {
   categoryId: number | undefined;

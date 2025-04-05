@@ -1,14 +1,14 @@
 import CheckBoxText from "@common/component/CheckBoxText/CheckBoxText";
-import {styles} from "./CategoryContent.css";
-import {useEffect, useRef, useState} from "react";
+import { styles } from "./CategoryContent.css";
+import { useEffect, useRef, useState } from "react";
+import { TextField } from "@common/component/TextField";
 import {
   CategoryAnimal,
   CategoryBreed,
   CategoryGender,
   SelectedChips,
   useAnimalFilterStore,
-} from "@page/mypage/edit-pet/store/animalFilter";
-import {TextField} from "@common/component/TextField";
+} from "../../../../store/animalFilter.ts";
 
 const CategoryContent = () => {
   const { category, categoryData, selectedChips, toggleChips } = useAnimalFilterStore();

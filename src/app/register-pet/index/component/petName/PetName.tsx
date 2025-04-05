@@ -1,16 +1,17 @@
-import {ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {useRouter} from "next/navigation";
 import * as styles from "./PetName.css";
-import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
-import Title from "@page/onboarding/index/common/title/Title";
-import Docs from "@page/onboarding/index/common/docs/Docs";
+
 import {TextField} from "@common/component/TextField";
 import {Button} from "@common/component/Button";
-import {PetData} from "@page/register-pet/index/RegisterPet";
 import {validatePetName} from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
 import {PATH} from "@route/path";
 import Image from "next/image";
+import {PetData} from "../../RegisterPet.tsx";
+import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import Title from "../../../../onboarding/index/common/title/Title.tsx";
+import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;

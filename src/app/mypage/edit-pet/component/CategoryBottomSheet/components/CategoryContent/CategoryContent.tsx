@@ -1,6 +1,7 @@
-import {styles} from "./CategoryContent.css";
-import {DiseaseItem, SymptomItem, useCategoryFilterStore} from "@page/mypage/edit-pet/store/categoryFilter";
+import { styles } from "./CategoryContent.css";
 import DropDownText from "../DropDownText/DropDownText";
+import { useCategoryFilterStore } from "../../../../store/categoryFilter.ts";
+import { DiseaseItem, SymptomItem } from "@store/filter.ts";
 
 // 선택한 카테고리에 맞게 보여줄 내용들
 const CategoryContent = () => {

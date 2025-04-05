@@ -1,6 +1,5 @@
-import {IcDeleteBlack} from "@asset/svg";
-import {DropDownItems} from "@page/community/constant/writeConfig.tsx";
-import React from "react";
+import { IcDeleteBlack } from "@asset/svg";
+import { DropDownItems } from "../_constant/writeConfig.tsx";
 
 export const getDropdownIdtoIcon = (categoryId: number | undefined) => {
   if (!categoryId) {

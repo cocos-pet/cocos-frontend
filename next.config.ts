@@ -1,5 +1,5 @@
-import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
-import type { NextConfig } from "next";
+import {createVanillaExtractPlugin} from "@vanilla-extract/next-plugin";
+import type {NextConfig} from "next";
 import * as path from "node:path";
 
 const withVanillaExtract = createVanillaExtractPlugin();
@@ -13,9 +13,9 @@ const nextConfig: NextConfig = {
     ignoreBuildErrors: true,
   },
   // 정적 내보내기 대신 정적 대체 사용
-  staticPageGenerationTimeout: 120,  // 타임아웃을 2분으로 설정
+  staticPageGenerationTimeout: 120, // 타임아웃을 2분으로 설정
   images: {
-    unoptimized: true
+    unoptimized: true,
   },
   webpack: (config) => {
     config.resolve.alias = {
@@ -23,7 +23,8 @@ const nextConfig: NextConfig = {
       "@api": path.resolve(__dirname, "src/api"),
       "@asset": path.resolve(__dirname, "src/asset"),
       "@common": path.resolve(__dirname, "src/common"),
-      "@page": path.resolve(__dirname, "src/page"),
+      "@page": path.resolve(__dirname, "src/app"),
+      "@app": path.resolve(__dirname, "src/app"),
       "@route": path.resolve(__dirname, "src/route"),
       "@shared": path.resolve(__dirname, "src/shared"),
       "@style": path.resolve(__dirname, "src/style"),

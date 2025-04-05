@@ -8,8 +8,8 @@ import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
 import React, { useState } from "react";
-import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import { useRouter } from "next/navigation";
+import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/store/categoryFilter.ts";
 
 interface SubCommentProps {
   commentId: number | undefined;

@@ -122,7 +122,7 @@ const SymptomDetailContent = () => {
 };
 
 // 메인 컴포넌트
-const SymptomDetail = () => {
+const PostDetail = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
   const router = useRouter();
@@ -143,4 +143,4 @@ const SymptomDetail = () => {
   );
 };
 
-export default SymptomDetail;
+export default PostDetail;

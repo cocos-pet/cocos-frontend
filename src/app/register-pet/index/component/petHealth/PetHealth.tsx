@@ -2,22 +2,23 @@ import * as styles from "./PetHealth.css";
 import {useState} from "react";
 import {useRouter} from "next/navigation";
 import {PATH} from "@route/path";
-import {PetData} from "@page/register-pet/index/RegisterPet";
 import {Button} from "@common/component/Button";
-import Step1 from "@page/register-pet/index/component/petHealth/disease/Step1";
-import Step2 from "@page/register-pet/index/component/petHealth/disease/Step2";
-import SymStep1 from "@page/register-pet/index/component/petHealth/symptom/SymStep1";
-import SymStep2 from "@page/register-pet/index/component/petHealth/symptom/SymStep2";
+
 import {useBodiesGet} from "@api/domain/register-pet/bodies/hook";
 import {useDiseaseGet} from "@api/domain/register-pet/disease/hook";
 import {useSymptomGet} from "@api/domain/register-pet/symptom/hook";
+import {PetData} from "../../RegisterPet.tsx";
+import Step1 from "./disease/Step1.tsx";
+import Step2 from "./disease/Step2.tsx";
+import SymStep1 from "./symptom/SymStep1.tsx";
+import SymStep2 from "./symptom/SymStep2.tsx";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (
     field: keyof PetData,
     value: PetData[keyof PetData],
-    callback?: (updatedData: PetData) => void
+    callback?: (updatedData: PetData) => void,
   ) => void;
   currentStep: number | null;
   setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
@@ -163,13 +164,7 @@ const PetHealth = ({
             onBodyPartSelection={handleBodyPartSelection}
           />
           <div className={styles.btnWrapper}>
-            <Button
-              label="이전으로"
-              size="large"
-              variant="solidNeutral"
-              disabled={false}
-              onClick={handleBackDual}
-            />
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBackDual} />
 
             <Button
               label="다음"
@@ -214,13 +209,7 @@ const PetHealth = ({
             onBodyPartSelection={handleBodyPartSymSelection}
           />
           <div className={styles.btnWrapper}>
-            <Button
-              label="이전으로"
-              size="large"
-              variant="solidNeutral"
-              disabled={false}
-              onClick={handleBack}
-            />
+            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBack} />
             <Button
               label="다음"
               size="large"

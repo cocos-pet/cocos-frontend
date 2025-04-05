@@ -1,14 +1,16 @@
 import { useState } from "react";
-import PetName from "@page/register-pet/index/component/petName/PetName";
-import PetType from "@page/register-pet/index/component/petType/PetType";
-import PetGender from "@page/register-pet/index/component/petGender/PetGender";
-import PetId from "@page/register-pet/index/component/petId/PetId";
-import PetAge from "@page/register-pet/index/component/petAge/PetAge";
+
 import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
-import PetHealth from "@page/register-pet/index/component/petHealth/PetHealth";
-import ProgressBar from "@page/register-pet/index/common/ProgressBar/ProgressBar";
+
 import { useMyPetPost } from "@api/domain/register-pet/pets/hook";
 import dynamic from "next/dynamic";
+import PetName from "./component/petName/PetName.tsx";
+import PetType from "./component/petType/PetType.tsx";
+import PetGender from "./component/petGender/PetGender.tsx";
+import PetAge from "./component/petAge/PetAge.tsx";
+import PetId from "./component/petId/PetId.tsx";
+import PetHealth from "./component/petHealth/PetHealth.tsx";
+import ProgressBar from "./common/ProgressBar/ProgressBar.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 

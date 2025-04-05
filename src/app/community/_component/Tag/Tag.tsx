@@ -1,6 +1,6 @@
-import { tagContainer, tagValue } from "@page/community/_component/Tag/Tag.css.ts";
 import { color } from "@style/styles.css.ts";
 import IcRight from "@asset/svg/IcRight.tsx";
+import { tagContainer, tagValue } from "./Tag.css.ts";
 
 interface tagType {
   placeholder: string;

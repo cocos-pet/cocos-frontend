@@ -1,13 +1,14 @@
 import * as styles from "./PetId.css";
-import {ChangeEvent, useState} from "react";
-import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
-import Title from "@page/onboarding/index/common/title/Title";
+import { ChangeEvent, useState } from "react";
 import Docs from "../../../../onboarding/index/common/docs/Docs";
-import {TextField} from "@common/component/TextField";
-import {Button} from "@common/component/Button";
-import DropDown from "@page/register-pet/index/common/dropDown/DropDown";
-import {PetData} from "@page/register-pet/index/RegisterPet";
-import {usePetIdGet} from "@api/domain/register-pet/petId/hook";
+import { TextField } from "@common/component/TextField";
+import { Button } from "@common/component/Button";
+
+import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
+import { PetData } from "../../RegisterPet.tsx";
+import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import Title from "../../../../onboarding/index/common/title/Title.tsx";
+import DropDown from "../../common/dropDown/DropDown.tsx";
 
 // breedItem 타입 정의
 interface BreedItem {

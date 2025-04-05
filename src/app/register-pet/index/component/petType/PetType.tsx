@@ -1,12 +1,13 @@
 import * as styles from "./PetType.css";
 import {useState} from "react";
-import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
-import Title from "@page/onboarding/index/common/title/Title";
-import Docs from "@page/onboarding/index/common/docs/Docs";
-import DualOptionSelector from "@page/register-pet/index/common/dualOptionSelector/DualOptionSelector";
+
 import {Button} from "@common/component/Button";
-import {PetData} from "@page/register-pet/index/RegisterPet";
 import {useAnimalGet} from "@api/domain/register-pet/animal/hook";
+import {PetData} from "../../RegisterPet.tsx";
+import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import Title from "../../../../onboarding/index/common/title/Title.tsx";
+import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
+import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelector.tsx";
 
 interface PetTypeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
