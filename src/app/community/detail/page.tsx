@@ -3,20 +3,22 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow, IcUnderline } from "@asset/svg";
-import { PATH } from "@route/path.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { Suspense, useCallback, useEffect, useState } from "react";
-import { components } from "@type/schema";
+import {IcLeftarrow, IcUnderline} from "@asset/svg";
+import {PATH} from "@route/path.ts";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {Suspense, useCallback, useEffect, useState} from "react";
+import {components} from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { useFilterStore } from "@store/filter.ts";
-import { postPostFiltersRequestType } from "@api/domain/community/search";
+import {useFilterStore} from "@store/filter.ts";
+import {postPostFiltersRequestType} from "@api/domain/community/search";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 const symptomMapping: { [key: string]: string } = {
   1: "피부/털",
@@ -39,17 +41,24 @@ const LoadingFallback = () => <Loading height={80} />;
 // 빈 상태 컴포넌트
 const EmptyState = () => (
   <div className={styles.emptyContainer}>
-    <Image src={nocategory} alt="게시글 없음." style={{ objectFit: "cover" }} width={276} height={155} />
+    <Image
+      src={nocategory}
+      alt="게시글 없음."
+      style={{ objectFit: "cover" }}
+      width={276}
+      height={155}
+    />
     <h1> 아직 등록된 게시글이 없어요 </h1>
   </div>
 );
 
-// 메인 컨텐츠 컴포넌트
 const SymptomDetailContent = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
+    []
+  );
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
   const { selectedChips } = useFilterStore();
@@ -76,7 +85,6 @@ const SymptomDetailContent = () => {
     fetchPostData();
   }, [fetchPostData]);
 
-  // 데이터가 없거나 로딩 중이면 빈 상태 표시
   if (!typeId) {
     return <EmptyState />;
   }
@@ -121,7 +129,6 @@ const SymptomDetailContent = () => {
   );
 };
 
-// 메인 컴포넌트
 const PostDetail = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
@@ -133,14 +140,23 @@ const PostDetail = () => {
   return (
     <div className={styles.categoryContainer}>
       <div className={styles.headerContainer}>
-        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => router.push(PATH.MAIN)} />
+        <HeaderNav
+          leftIcon={<IcLeftarrow />}
+          centerContent={symptomName}
+          onLeftClick={() => router.push(PATH.MAIN)}
+        />
       </div>
-
-      <Suspense fallback={<LoadingFallback />}>
-        <SymptomDetailContent />
-      </Suspense>
+      <SymptomDetailContent />
     </div>
   );
 };
 
-export default PostDetail;
+const Page = () => {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <PostDetail />
+    </Suspense>
+  );
+};
+
+export default Page;

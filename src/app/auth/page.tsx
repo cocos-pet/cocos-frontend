@@ -1,11 +1,13 @@
 "use client";
 
-import { useEffect } from 'react';
-import { API_PATH } from "@api/constants/apiPath";
-import { useRouter, useSearchParams } from "next/navigation";
-import { paths } from "@type/schema";
-import Loading from "@common/component/Loading/Loading";
+import {useEffect} from 'react';
+import {API_PATH} from "@api/constants/apiPath";
+import {useRouter, useSearchParams} from "next/navigation";
+import {paths} from "@type/schema";
 import SuspenseWrapper from "../SuspenseWrapper";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading"), { ssr: false });
 
 function AuthRedirectContent() {
   const router = useRouter();

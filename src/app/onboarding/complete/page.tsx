@@ -1,3 +1,5 @@
+"use client";
+
 import * as styles from "./Complete.css";
 import {useRouter} from "next/navigation";
 import Docs from "../index/common/docs/Docs";
@@ -6,13 +8,24 @@ import {Button} from "@common/component/Button";
 import {PATH} from "@route/path";
 import {useGetNickname} from "@api/domain/complete/hook";
 import registerPet from "@asset/lottie/registerPet.json";
-import Lottie from "lottie-react";
+import {useEffect, useState} from "react";
+import dynamic from "next/dynamic";
+
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const Page = () => {
   const router = useRouter();
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
   const handleSkip = () => {
     router.push(PATH.MAIN);
-    window.location.reload();
+    if (typeof window !== "undefined") {
+      window.location.reload();
+    }
   };
 
   const handleNext = () => {
@@ -21,14 +34,13 @@ const Page = () => {
 
   // api
   const { data: nickname } = useGetNickname();
-  if (!nickname) return;
-
+  if (!isClient || !nickname) return null;
   return (
     <div className={styles.backGround}>
       <div className={styles.layout}>
         <div className={styles.titleWrapper}>
           <div>
-            <Title text={`${nickname.nickname}님`} />
+            <Title text={`${nickname?.nickname}님`} />
             <Title text={"반려동물을 등록해 주세요"} />
           </div>
           <Docs text={"작은 정보가 우리 아이의 건강을 지켜요"} />
@@ -42,8 +54,18 @@ const Page = () => {
         />
       </div>
       <div className={styles.btnWrapper}>
-        <Button label="건너뛰기" size="large" variant="solidNeutral" onClick={handleSkip} />
-        <Button label="등록하기" size="large" variant="solidPrimary" onClick={handleNext} />
+        <Button
+          label="건너뛰기"
+          size="large"
+          variant="solidNeutral"
+          onClick={handleSkip}
+        />
+        <Button
+          label="등록하기"
+          size="large"
+          variant="solidPrimary"
+          onClick={handleNext}
+        />
       </div>
     </div>
   );
