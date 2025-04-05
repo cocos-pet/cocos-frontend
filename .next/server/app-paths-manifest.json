@@ -1,0 +1,11 @@
+{
+  "/_not-found/page": "app/_not-found/page.js",
+  "/favicon.ico/route": "app/favicon.ico/route.js",
+  "/icon.svg/route": "app/icon.svg/route.js",
+  "/community/[postId]/page": "app/community/[postId]/page.js",
+  "/community/page": "app/community/page.js",
+  "/login/page": "app/login/page.js",
+  "/main/page": "app/main/page.js",
+  "/mypage/page": "app/mypage/page.js",
+  "/page": "app/page.js"
+}
