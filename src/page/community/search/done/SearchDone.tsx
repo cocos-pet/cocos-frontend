@@ -1,17 +1,18 @@
-import {IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue} from "@asset/svg";
-import {TextField} from "@common/component/TextField";
-import {ChangeEvent, useEffect, useState} from "react";
-import {useNavigate, useSearchParams} from "react-router-dom";
-import {styles} from "@page/community/search/done/SearchDone.css.ts";
-import {PATH} from "@route/path.ts";
+import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@asset/svg";
+import { TextField } from "@common/component/TextField";
+import { ChangeEvent, useEffect, useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { styles } from "@page/community/search/done/SearchDone.css.ts";
+import { PATH } from "@route/path.ts";
 import Content from "@common/component/Content/Content.tsx";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {useFilterStore} from "@store/filter.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { useFilterStore } from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import {useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook.ts";
-import {formatTime} from "@shared/util/formatTime";
+import { useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
+import { formatTime } from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import dynamic from "next/dynamic";
+import Image from "next/image";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -164,7 +165,7 @@ const SearchDone = () => {
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>
-            <img className={styles.noSearchResultImage} src={noSearchResult} alt="검색 결과 없음" />
+            <Image className={styles.noSearchResultImage} src={noSearchResult} alt="검색 결과 없음" />
             <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
             <span className={styles.noSearchRecommendText}>
               {"검색어를 확인하거나"}

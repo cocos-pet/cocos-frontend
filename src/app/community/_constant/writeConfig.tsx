@@ -1,4 +1,4 @@
-import { IcCocosM, IcHealing, IcHospital, IcSymptom } from "@asset/svg";
+import {IcCocosM, IcHealing, IcHospital, IcSymptom} from "@asset/svg";
 
 export const DropDownItems = [
   {

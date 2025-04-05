@@ -298,7 +298,7 @@ const Write = () => {
             <div className={imageContainer}>
               <IcAddphoto className={plusImage} onClick={handleFileUploadClick} />
               {params.images.map((imageSrc, index) => (
-                <ImageCover key={index} imageSrc={imageSrc} onDeleteClick={() => handleDeleteImage(index)} />
+                <ImageCover imageId={index} imageSrc={imageSrc} onDeleteClick={() => handleDeleteImage(index)} />
               ))}
             </div>
           </WriteInputSection>

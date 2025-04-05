@@ -1,30 +1,32 @@
+"use client";
+
 import DropDown from "@page/community/_component/DropDown/DropDown.tsx";
-import {TextField} from "@common/component/TextField";
-import {IcAddphoto, IcDeleteBlack, IcRightArror} from "@asset/svg";
-import React, {ChangeEvent, useEffect, useRef, useState} from "react";
-import {useDropDown} from "../_component/DropDown/useDropDown";
+import { TextField } from "@common/component/TextField";
+import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useDropDown } from "../_component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import {bottomButton, fileInput, imageContainer, plusImage, writeWrap} from "@page/community/write/Write.css.ts";
+import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "@page/community/write/Write.css.ts";
 import WriteInputSection from "@page/community/_component/WriteInputSection/WriteInputSection.tsx";
 
 import Tag from "@page/community/_component/Tag/Tag.tsx";
 import TextArea from "@page/community/_component/TextArea/TextArea.tsx";
 import Spacing from "@common/component/Spacing/Spacing.tsx";
 import ImageCover from "@page/community/_component/ImageCover/ImageCover.tsx";
-import {Button} from "@common/component/Button";
+import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import {useFilterStore} from "@store/filter.ts";
-import {useRouter, useSearchParams} from "next/navigation";
-import {PATH} from "@route/path.ts";
+import { useFilterStore } from "@store/filter.ts";
+import { useRouter, useSearchParams } from "next/navigation";
+import { PATH } from "@route/path.ts";
 import axios from "axios";
-import {FillterToName} from "@page/community/utills/getFillterNamebyid.ts";
-import {useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook.ts";
-import {getDropdownIdtoIcon, getDropdownIdtoValue} from "@page/community/utills/handleCategoryItem.tsx";
-import {useArticlePost} from "@api/domain/community/post/hook.ts";
-import {DropDownItems} from "@page/community/constant/writeConfig.tsx";
-import {CustomAxiosError} from "@type/global";
+import { FillterToName } from "@page/community/utills/getFillterNamebyid.ts";
+import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
+import { getDropdownIdtoIcon, getDropdownIdtoValue } from "@page/community/utills/handleCategoryItem.tsx";
+import { useArticlePost } from "@api/domain/community/post/hook.ts";
+import { DropDownItems } from "@page/community/constant/writeConfig.tsx";
+import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WornningToastWrap/WorningToastWrap.tsx";
-import {useProtectedRoute} from "@route/useProtectedRoute";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -298,14 +300,16 @@ const Write = () => {
             <div className={imageContainer}>
               <IcAddphoto className={plusImage} onClick={handleFileUploadClick} />
               {params.images.map((imageSrc, index) => (
-                <ImageCover key={index} imageSrc={imageSrc} onDeleteClick={() => handleDeleteImage(index)} />
+                <div key={index}>
+                  <ImageCover imageId={index} imageSrc={imageSrc} onDeleteClick={() => handleDeleteImage(index)} />
+                </div>
               ))}
             </div>
           </WriteInputSection>
           {/* 태그 선택 영역 */}
           <WriteInputSection title={"태그 선택"}>
             {TagLabel.map((tag, index) => (
-              <>
+              <React.Fragment key={`tag-section-${index}`}>
                 <Tag
                   key={`tag-${index}`}
                   placeholder={tag.label}
@@ -317,8 +321,8 @@ const Write = () => {
                     setCategory(tag.category || "breeds");
                   }}
                 />
-                <Spacing key={`spacing-write-${index}`} marginBottom={"0.8"} />
-              </>
+                <Spacing key={`spacing-${index}`} marginBottom={"0.8"} />
+              </React.Fragment>
             ))}
           </WriteInputSection>
           <Spacing marginBottom={"13.5"} />
