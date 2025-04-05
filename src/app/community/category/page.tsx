@@ -1,21 +1,25 @@
-import { useRouter, useSearchParams } from "next/navigation";
+"use client";
+
+import {useRouter, useSearchParams} from "next/navigation";
 import * as styles from "./Category.css";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { Icfilter, Icfilteron, IcLeftarrow, IcSearch } from "@asset/svg";
+import {Icfilter, Icfilteron, IcLeftarrow, IcSearch} from "@asset/svg";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
-import { useFilterStore } from "@store/filter";
-import { PATH } from "@route/path";
-import { formatTime } from "@shared/util/formatTime";
-import { usePostPostFilters } from "@api/domain/community/search/hook";
-import { useCallback, useEffect, useState } from "react";
-import { components } from "@type/schema";
-import { postPostFiltersRequest } from "@api/domain/community/search";
+import {useFilterStore} from "@store/filter";
+import {PATH} from "@route/path";
+import {formatTime} from "@shared/util/formatTime";
+import {usePostPostFilters} from "@api/domain/community/search/hook";
+import {useCallback, useEffect, useState} from "react";
+import {components} from "@type/schema";
+import {postPostFiltersRequest} from "@api/domain/community/search";
 import nocategory from "@asset/image/nocategory.png";
-import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook";
-import Loading from "@common/component/Loading/Loading.tsx";
+import {useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("../../../common/component/Loading/Loading.tsx"), { ssr: false });
 
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
@@ -25,7 +29,7 @@ const categoryMapping: { [key: string]: string } = {
   magazine: "코코스매거진",
 };
 
-const Page = () => {
+const Category = () => {
   const searchParams = useSearchParams();
   const type = searchParams.get("type");
   const typeId = searchParams.get("id");
@@ -242,4 +246,4 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Category;

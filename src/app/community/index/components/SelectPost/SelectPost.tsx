@@ -1,7 +1,7 @@
 "use client";
 
 import {useCallback, useEffect, useState} from "react";
-import { useRouter } from "next/navigation";
+import {useRouter} from "next/navigation";
 import * as styles from "./SelectPost.css";
 import Divider from "@common/component/Divider/Divider";
 import {IcUnderline} from "@asset/svg";
@@ -10,9 +10,11 @@ import {usePostPostFilters} from "@api/domain/community/search/hook";
 import {postPostFiltersResponse} from "@api/domain/community/search";
 import {PATH} from "@route/path";
 import {formatTime} from "@shared/util/formatTime";
-import Loading from "@common/component/Loading/Loading.tsx";
 import nocategory from "@asset/image/nocategory.png";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
@@ -102,13 +104,7 @@ const PostList = () => {
           ))
         ) : (
           <div className={styles.emptyContainer}>
-            <Image
-              src={nocategory}
-              alt="게시글 없음."
-              width={276}
-              height={155}
-              style={{ objectFit: "cover" }}
-            />
+            <Image src={nocategory} alt="게시글 없음." width={276} height={155} style={{ objectFit: "cover" }} />
             <h1> 아직 등록된 게시글이 없어요 </h1>
           </div>
         )}

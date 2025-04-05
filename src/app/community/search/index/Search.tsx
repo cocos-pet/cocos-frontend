@@ -1,12 +1,14 @@
 import {styles} from "@page/community/search/index/Search.css.ts";
 import {IcLeftarrow, IcSearch} from "@asset/svg";
 import {TextField} from "@common/component/TextField";
-import React, {ChangeEvent, useEffect, useRef, useState, Suspense} from "react";
+import React, {ChangeEvent, Suspense, useEffect, useRef, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import {PATH} from "@route/path.ts";
-import {useSearchGet, useSearchPost,} from "@api/domain/community/search/hook.ts";
+import {useSearchGet, useSearchPost} from "@api/domain/community/search/hook.ts";
 import {useFilterStore} from "@store/filter.ts";
-import Loading from "@common/component/Loading/Loading.tsx";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 function SearchContent() {
   const router = useRouter();
@@ -34,7 +36,7 @@ function SearchContent() {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      }
+      },
     );
   };
 
@@ -69,8 +71,7 @@ function SearchContent() {
     }
   }, []);
 
-  if (!recentSearchData || !recentSearchData.keywords || isLoading)
-    return <Loading height={45} />;
+  if (!recentSearchData || !recentSearchData.keywords || isLoading) return <Loading height={45} />;
 
   return (
     <div className={styles.container}>

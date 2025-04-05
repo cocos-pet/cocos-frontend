@@ -1,17 +1,19 @@
 import * as styles from "./Nickname.css";
-import { useState, ChangeEvent } from "react";
-import { useNavigate } from "react-router-dom";
-import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
+import {ChangeEvent, useState} from "react";
+import {useNavigate} from "react-router-dom";
+import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import { validateNickname } from "@shared/util/validateNickname";
-import { Button } from "@common/component/Button";
-import { TextField } from "@common/component/TextField";
+import {validateNickname} from "@shared/util/validateNickname";
+import {Button} from "@common/component/Button";
+import {TextField} from "@common/component/TextField";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
-import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
-import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
-import { PATH } from "@route/path";
-import Loading from "@common/component/Loading/Loading.tsx";
+import {useCheckNicknameGet} from "@api/domain/onboarding/nicknameDuplicate/hook";
+import {usePatchNickname} from "@api/domain/onboarding/nickname/hook";
+import {PATH} from "@route/path";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const Nickname = () => {
   // 상태 하나로 관리
@@ -38,8 +40,7 @@ const Nickname = () => {
   const isValid = nickname && validationMessages.length === 0;
 
   // TextField 상태
-  const textFieldState =
-    nickname === "" || validationMessages.length === 0 ? "default" : "error";
+  const textFieldState = nickname === "" || validationMessages.length === 0 ? "default" : "error";
 
   // 뒤로 가기
   const navigate = useNavigate();

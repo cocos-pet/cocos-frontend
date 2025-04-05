@@ -1,15 +1,14 @@
-import { styles } from "@page/community/search/index/Search.css.ts";
-import { IcLeftarrow, IcSearch } from "@asset/svg";
-import { TextField } from "@common/component/TextField";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { PATH } from "@route/path.ts";
-import {
-  useSearchGet,
-  useSearchPost,
-} from "@api/domain/community/search/hook.ts";
-import { useFilterStore } from "@store/filter.ts";
-import Loading from "@common/component/Loading/Loading.tsx";
+import {styles} from "@page/community/search/index/Search.css.ts";
+import {IcLeftarrow, IcSearch} from "@asset/svg";
+import {TextField} from "@common/component/TextField";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {PATH} from "@route/path.ts";
+import {useSearchGet, useSearchPost} from "@api/domain/community/search/hook.ts";
+import {useFilterStore} from "@store/filter.ts";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const Search = () => {
   const navigate = useNavigate();
@@ -37,7 +36,7 @@ const Search = () => {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      }
+      },
     );
   };
 
@@ -73,8 +72,7 @@ const Search = () => {
     }
   }, []);
 
-  if (!recentSearchData || !recentSearchData.keywords || isLoading)
-    return <Loading height={45} />;
+  if (!recentSearchData || !recentSearchData.keywords || isLoading) return <Loading height={45} />;
 
   return (
     <div className={styles.container}>

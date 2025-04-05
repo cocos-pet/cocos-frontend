@@ -8,7 +8,9 @@ import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/P
 import PetHealth from "@page/register-pet/index/component/petHealth/PetHealth";
 import ProgressBar from "@page/register-pet/index/common/ProgressBar/ProgressBar";
 import {useMyPetPost} from "@api/domain/register-pet/pets/hook";
-import Loading from "@common/component/Loading/Loading.tsx";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 export interface PetData {
   breedId: number | null;
@@ -43,7 +45,7 @@ const RegisterPet = () => {
   const updatePetData = <K extends keyof PetData>(
     field: K,
     value: PetData[K],
-    callback?: (updatedData: PetData) => void
+    callback?: (updatedData: PetData) => void,
   ) => {
     setPetData((prev) => {
       const updatedData = { ...prev, [field]: value };
@@ -80,13 +82,7 @@ const RegisterPet = () => {
       case 2:
         return <PetGender setStep={setStep} updatePetData={updatePetData} />;
       case 3:
-        return (
-          <PetId
-            setStep={setStep}
-            updatePetData={updatePetData}
-            petData={petData}
-          />
-        );
+        return <PetId setStep={setStep} updatePetData={updatePetData} petData={petData} />;
       case 4:
         return <PetAge setStep={setStep} updatePetData={updatePetData} />;
       case 5:

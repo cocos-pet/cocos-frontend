@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import {
   IcBaseProfileImage,
@@ -10,14 +10,14 @@ import {
   IcLikeActive,
   IcLikeDisabled,
 } from "@asset/svg";
-import { styles } from "@page/community/[postId]/PostDetail.css";
-import { Button } from "@common/component/Button";
+import {styles} from "@page/community/[postId]/PostDetail.css";
+import {Button} from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
-import { TextField } from "@common/component/TextField";
+import {TextField} from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
-import { formatTime } from "@shared/util/formatTime.ts";
+import {formatTime} from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
 import {
   useCommentPost,
@@ -28,28 +28,29 @@ import {
   usePostGet,
   useSubCommentPost,
 } from "@api/domain/community/post/hook";
-import { PATH } from "@route/path.ts";
-import { getAccessToken } from "@api/index.ts";
+import {PATH} from "@route/path.ts";
+import {getAccessToken} from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import {
   getCategorytoEnglish,
   getCategorytoId,
   getDropdownValuetoIcon,
 } from "@page/community/utills/handleCategoryItem.tsx";
-import { getCategoryResponse } from "@page/community/utills/getPostCategoryLike.ts";
-import Loading from "@common/component/Loading/Loading.tsx";
-
+import {getCategoryResponse} from "@page/community/utills/getPostCategoryLike.ts";
 import nocategory from "@asset/image/nocategory.png";
-import { useProtectedRoute } from "@route/useProtectedRoute";
-import { useParams, useRouter } from "next/navigation";
+import {useProtectedRoute} from "@route/useProtectedRoute";
+import {useParams, useRouter} from "next/navigation";
 import Image from "next/image";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const Page = () => {
   const { isNoPet } = useProtectedRoute();
   const router = useRouter();
   const params = useParams();
   const { postId } = params;
-  const postIdString = typeof postId === 'string' ? postId : Array.isArray(postId) ? postId[0] : '';
+  const postIdString = typeof postId === "string" ? postId : Array.isArray(postId) ? postId[0] : "";
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postIdString));
   const { data: commentsData } = useCommentsGet(Number(postIdString));
@@ -64,10 +65,7 @@ const Page = () => {
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postIdString));
-  const { mutate: subCommentPost } = useSubCommentPost(
-    commentId !== undefined ? commentId : 0, 
-    Number(postIdString)
-  );
+  const { mutate: subCommentPost } = useSubCommentPost(commentId !== undefined ? commentId : 0, Number(postIdString));
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -263,7 +261,13 @@ const Page = () => {
         />
         <div className={styles.top} onClick={handleProfileClick}>
           {postData.profileImage ? (
-            <Image src={postData.profileImage} alt="userProfile" className={styles.profileImage} />
+            <Image
+              src={postData.profileImage}
+              alt="userProfile"
+              className={styles.profileImage}
+              width={32}
+              height={32}
+            />
           ) : (
             <IcBaseProfileImage width={32} height={32} />
           )}
@@ -287,6 +291,8 @@ const Page = () => {
             src={image}
             alt="postImage"
             className={styles.image}
+            width={100}
+            height={262}
           />
         ))}
         <div className={styles.labelWrap}>

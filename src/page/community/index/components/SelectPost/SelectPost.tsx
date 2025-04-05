@@ -1,15 +1,17 @@
-import { useState, useEffect, useCallback } from "react";
-import { useNavigate } from "react-router-dom";
+import {useCallback, useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 import * as styles from "./SelectPost.css";
 import Divider from "@common/component/Divider/Divider";
-import { IcUnderline } from "@asset/svg";
+import {IcUnderline} from "@asset/svg";
 import Content from "@common/component/Content/Content";
-import { usePostPostFilters } from "@api/domain/community/search/hook";
-import { postPostFiltersResponse } from "@api/domain/community/search";
-import { PATH } from "@route/path";
-import { formatTime } from "@shared/util/formatTime";
-import Loading from "@common/component/Loading/Loading.tsx";
+import {usePostPostFilters} from "@api/domain/community/search/hook";
+import {postPostFiltersResponse} from "@api/domain/community/search";
+import {PATH} from "@route/path";
+import {formatTime} from "@shared/util/formatTime";
 import nocategory from "@asset/image/nocategory.png";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);

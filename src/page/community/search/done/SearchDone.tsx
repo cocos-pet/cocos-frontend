@@ -1,27 +1,19 @@
-import {
-  IcLeftarrow,
-  IcSearch,
-  IcSearchFillter,
-  IcSearchFillterBlue,
-} from "@asset/svg";
-import { TextField } from "@common/component/TextField";
-import { ChangeEvent, useEffect, useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { styles } from "@page/community/search/done/SearchDone.css.ts";
-import { PATH } from "@route/path.ts";
+import {IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue} from "@asset/svg";
+import {TextField} from "@common/component/TextField";
+import {ChangeEvent, useEffect, useState} from "react";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {styles} from "@page/community/search/done/SearchDone.css.ts";
+import {PATH} from "@route/path.ts";
 import Content from "@common/component/Content/Content.tsx";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { useFilterStore } from "@store/filter.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {useFilterStore} from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import {
-  useGetAnimal,
-  useGetBodies,
-  useGetDisease,
-  useGetSymptoms,
-} from "@api/domain/mypage/edit-pet/hook.ts";
-import { formatTime } from "@shared/util/formatTime";
+import {useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook.ts";
+import {formatTime} from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
-import Loading from "@common/component/Loading/Loading.tsx";
+import dynamic from "next/dynamic";
+
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 interface SearchDonePropTypes {
   id?: number;
@@ -41,16 +33,13 @@ const SearchDone = () => {
   const [searchParams] = useSearchParams();
   const query = searchParams.get("searchText");
   const [isFilterActive, setIsFilterActive] = useState(false);
-  const [searchDoneData, setSearchDoneData] = useState<
-    Array<SearchDonePropTypes>
-  >([]);
+  const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
   const [searchText, setSearchText] = useState(query || "");
   const navigate = useNavigate();
   const { mutate, isPending } = usePostPostFilters();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
-  const { setCategoryData, selectedChips, clearAllChips, setOpen } =
-    useFilterStore();
+  const { setCategoryData, selectedChips, clearAllChips, setOpen } = useFilterStore();
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
@@ -71,12 +60,8 @@ const SearchDone = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -107,16 +92,14 @@ const SearchDone = () => {
         onError: (error) => {
           console.error("Search Error:", error);
         },
-      }
+      },
     );
   }, [searchText, selectedChips, mutate]);
 
   // 필터 활성화 여부 계산
   useEffect(() => {
     setIsFilterActive(
-      selectedChips.breedId.length > 0 ||
-        selectedChips.symptomIds.length > 0 ||
-        selectedChips.diseaseIds.length > 0
+      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0,
     );
   }, [selectedChips]);
 
@@ -129,9 +112,7 @@ const SearchDone = () => {
     navigate(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
   };
 
-  const onTextFieldClear = (
-    e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>
-  ) => {
+  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
     clearAllChips();
@@ -183,14 +164,8 @@ const SearchDone = () => {
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>
-            <img
-              className={styles.noSearchResultImage}
-              src={noSearchResult}
-              alt="검색 결과 없음"
-            />
-            <span className={styles.noSearchText}>
-              검색 결과를 찾지 못했어요.
-            </span>
+            <img className={styles.noSearchResultImage} src={noSearchResult} alt="검색 결과 없음" />
+            <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
             <span className={styles.noSearchRecommendText}>
               {"검색어를 확인하거나"}
               <br />
