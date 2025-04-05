@@ -1,3 +1,5 @@
+"use client";
+
 import loading from "@asset/lottie/loading.json";
 import { layout } from "./Loading.css";
 import Lottie from "lottie-react";

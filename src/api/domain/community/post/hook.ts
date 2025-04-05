@@ -1,28 +1,23 @@
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {useMutation, useQuery, useQueryClient} from "@tanstack/react-query";
 import {
-  deleteComment,
-  getComments,
-  deleteLike,
-  getPost,
-  postLike,
-  postArticle,
   articlePostRequest,
-  postComment,
-  postSubComment,
-  deleteSubComment,
+  deleteComment,
+  deleteLike,
   deletePost,
+  deleteSubComment,
+  getComments,
+  getPost,
+  postArticle,
+  postComment,
+  postLike,
+  postSubComment,
 } from "@api/domain/community/post";
-import { useNavigate, useParams } from "react-router-dom";
-import { paths } from "@type/schema";
-import { CustomAxiosError } from "@type/global";
+import {useParams, useRouter} from "next/navigation";
 
 export const POST_QUERY_KEY = {
   POST_QUERY_KEY: (postId: number) => ["post", postId],
   COMMENTS_POST_QUERY_KEY: (postId: number) => ["commentPost", postId],
-  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => [
-    "subCommentPost",
-    commentId,
-  ],
+  SUB_COMMENTS_POST_QUERY_KEY: (commentId: number) => ["subCommentPost", commentId],
   LIKE_POST_QUERY_KEY: (postId: string) => ["like", postId],
   LIKE_DELETE_QUERY_KEY: (postId: string) => ["likeDelete", postId],
   ARTICLE_POST_QUERY_KEY: () => ["articlePost"],
@@ -30,14 +25,8 @@ export const POST_QUERY_KEY = {
 
 export const COMMENT_QUERY_KEY = {
   COMMENTS_QUERY_KEY: (postId: number) => ["comments", postId],
-  DELETE_COMMENT: (commentId: number | undefined) => [
-    "deleteComment",
-    commentId,
-  ],
-  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => [
-    "deleteSubComment",
-    subCommentId,
-  ],
+  DELETE_COMMENT: (commentId: number | undefined) => ["deleteComment", commentId],
+  DELETE_SUB_COMMENT: (subCommentId: number | undefined) => ["deleteSubComment", subCommentId],
 };
 
 /**
@@ -167,7 +156,7 @@ export const usePostDelete = (postId: number) => {
       return deletePost(postId);
     },
     onSuccess: () => {
-      router.push(-1);
+      router.back();
     },
   });
 };
