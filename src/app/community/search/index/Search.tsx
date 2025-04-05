@@ -1,11 +1,11 @@
-import {styles} from "@page/community/search/index/Search.css.ts";
-import {IcLeftarrow, IcSearch} from "@asset/svg";
-import {TextField} from "@common/component/TextField";
-import React, {ChangeEvent, Suspense, useEffect, useRef, useState} from "react";
-import {useRouter, useSearchParams} from "next/navigation";
-import {PATH} from "@route/path.ts";
-import {useSearchGet, useSearchPost} from "@api/domain/community/search/hook.ts";
-import {useFilterStore} from "@store/filter.ts";
+import { styles } from "@page/community/search/index/Search.css.ts";
+import { IcLeftarrow, IcSearch } from "@asset/svg";
+import { TextField } from "@common/component/TextField";
+import React, { ChangeEvent, Suspense, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { PATH } from "@route/path.ts";
+import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
+import { useFilterStore } from "@store/filter.ts";
 import dynamic from "next/dynamic";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
