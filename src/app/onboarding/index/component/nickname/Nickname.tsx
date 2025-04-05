@@ -1,16 +1,16 @@
 import * as styles from "./Nickname.css";
-import {ChangeEvent, useState} from "react";
-import {useRouter} from "next/navigation";
-import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
+import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { ONBOARDING_GUIDE } from "@page/onboarding/index/constant/onboardingGuide";
 import Title from "@page/onboarding/index/common/title/Title";
 import Docs from "@page/onboarding/index/common/docs/Docs";
-import {validateNickname} from "@shared/util/validateNickname";
-import {Button} from "@common/component/Button";
-import {TextField} from "@common/component/TextField";
+import { validateNickname } from "@shared/util/validateNickname";
+import { Button } from "@common/component/Button";
+import { TextField } from "@common/component/TextField";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
-import {useCheckNicknameGet} from "@api/domain/onboarding/nicknameDuplicate/hook";
-import {usePatchNickname} from "@api/domain/onboarding/nickname/hook";
-import {PATH} from "@route/path";
+import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
+import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
+import { PATH } from "@route/path";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 

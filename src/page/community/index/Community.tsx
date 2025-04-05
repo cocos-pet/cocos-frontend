@@ -1,17 +1,17 @@
-import { IcSearch } from "@asset/svg";
+import {IcSearch} from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import {useNavigate, useSearchParams} from "react-router-dom";
 import Divider from "@common/component/Divider/Divider";
-import Banner from "./components/Banner/Banner";
-import SelectPost from "./components/SelectPost/SelectPost";
+import Banner from "@page/community/_component/Banner/Banner";
+import SelectPost from "@page/community/_component/SelectPost/SelectPost";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import * as styles from "./Community.css";
-import { PATH } from "@route/path";
-import { NAV_CONTENT } from "@common/component/Nav/constant";
-import { useQueryGetCategory } from "@api/domain/community/category/hook";
-import { useEffect } from "react";
-import { useProtectedRoute } from "@route/useProtectedRoute";
+import {PATH} from "@route/path";
+import {NAV_CONTENT} from "@common/component/Nav/constant";
+import {useQueryGetCategory} from "@api/domain/community/category/hook";
+import {useEffect} from "react";
+import {useProtectedRoute} from "@route/useProtectedRoute";
 
 const Community = () => {
   useProtectedRoute();
@@ -27,7 +27,6 @@ const Community = () => {
   const handleSearchClick = () => {
     navigate(PATH.COMMUNITY.SEARCH);
   };
-
 
   const extractTypeFromName = (name: string) => {
     if (name === "증상·질병") {

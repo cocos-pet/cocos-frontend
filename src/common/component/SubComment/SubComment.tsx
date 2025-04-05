@@ -9,7 +9,7 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
 import React, { useState } from "react";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface SubCommentProps {
   commentId: number | undefined;
@@ -27,9 +27,9 @@ const SubComment = ({
   onCommentDelete,
   onModalClose,
 }: SubCommentProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleProfileClick = (nickname: string) => {
-    navigate(`/profile?nickname=${nickname}`);
+    router.push(`/profile?nickname=${nickname}`);
   };
 
   const handleReplyClick = () => {

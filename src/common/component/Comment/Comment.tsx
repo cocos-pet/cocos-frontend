@@ -11,7 +11,7 @@ import { useDeleteComment } from "@api/domain/community/post/hook.ts";
 import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -22,7 +22,7 @@ interface CommentProps {
 }
 
 const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname, comment.id);
@@ -41,7 +41,7 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
   };
 
   const handleProfileClick = (nickname: string) => {
-    navigate(`/profile?nickname=${nickname}`);
+    router.push(`/profile?nickname=${nickname}`);
   };
 
   return (

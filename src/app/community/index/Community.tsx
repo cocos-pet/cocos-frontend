@@ -1,25 +1,25 @@
 "use client";
 
-import {IcSearch} from "@asset/svg";
+import { IcSearch } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import Divider from "@common/component/Divider/Divider";
-import Banner from "./components/Banner/Banner";
-import SelectPost from "./components/SelectPost/SelectPost";
+import Banner from "../_component/Banner/Banner";
+import SelectPost from "../_component/SelectPost/SelectPost";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import * as styles from "./Community.css";
-import {PATH} from "@route/path";
-import {NAV_CONTENT} from "@common/component/Nav/constant";
-import {useQueryGetCategory} from "@api/domain/community/category/hook";
-import {useEffect} from "react";
-import {useProtectedRoute} from "@route/useProtectedRoute";
+import { PATH } from "@route/path";
+import { NAV_CONTENT } from "@common/component/Nav/constant";
+import { useQueryGetCategory } from "@api/domain/community/category/hook";
+import { useEffect } from "react";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const Community = () => {
   useProtectedRoute();
 
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       sessionStorage.setItem("searchBackUrl", PATH.COMMUNITY.ROOT);
     }
   }, []);
@@ -31,7 +31,6 @@ const Community = () => {
   const handleSearchClick = () => {
     router.push(PATH.COMMUNITY.SEARCH);
   };
-
 
   const extractTypeFromName = (name: string) => {
     if (name === "증상·질병") {
