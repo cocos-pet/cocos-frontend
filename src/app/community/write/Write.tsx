@@ -26,6 +26,12 @@ import {CustomAxiosError} from "@type/global";
 import WorningToastWrap from "@common/component/WornningToastWrap/WorningToastWrap.tsx";
 import {useProtectedRoute} from "@route/useProtectedRoute";
 
+interface DropDownItem {
+  english: string;
+  label: string;
+  value: number;
+}
+
 interface writeProps {
   categoryId: number | undefined;
   title: string;
@@ -112,7 +118,7 @@ const Write = () => {
   useEffect(() => {
     if (category) {
       const matchedItem = DropDownItems.find(
-        (item: any) => item.english === category
+        (item: DropDownItem) => item.english === category
       );
       if (matchedItem) {
         setParams((prevParams) => ({

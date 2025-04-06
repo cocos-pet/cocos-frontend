@@ -3,7 +3,7 @@ import React from "react";
 import { IcDeleteWhite } from "@asset/svg";
 
 interface ImageSlideType {
-  key?: number;
+  key?: string;
   imageId: number;
   imageSrc: string;
   onDeleteClick: (id: number) => void;
