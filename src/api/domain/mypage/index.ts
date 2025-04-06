@@ -13,7 +13,7 @@ export const getMemberInfo = async (nickname?: string) => {
     },
   });
 
-  return data.data;
+  return data.data || {};
 };
 
 //nickname을 안주고 accessToken만 주면 나의 반려동물 정보
@@ -24,7 +24,7 @@ export const getPetInfo = async (nickname?: string) => {
       nickname,
     },
   });
-  return data.data;
+  return data.data || {};
 };
 
 export const getMyPost = async (nickname?: string) => {
@@ -35,7 +35,7 @@ export const getMyPost = async (nickname?: string) => {
     },
   });
 
-  if (!data.data?.posts?.length) return;
+  if (!data.data?.posts?.length) return [];
   return data.data.posts;
 };
 
@@ -46,5 +46,7 @@ export const getMyComment = async (nickname?: string) => {
       nickname,
     },
   });
-  return data.data;
+
+  if (!data.data?.comments?.length) return [];
+  return data.data.comments;
 };

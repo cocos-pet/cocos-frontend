@@ -1,3 +1,4 @@
+"use client";
 import SubComment from "./SubComment";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 

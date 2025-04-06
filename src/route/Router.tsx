@@ -5,12 +5,12 @@ import MYPAGE_ROUTES from "./MyPageRoutes";
 import ONBOARDING_ROUTES from "./OnboardingRoutes";
 import REGISTER_PET_ROUTES from "./RegisterPetRoutes";
 import PROFILE_ROUTES from "./ProfileRoutes";
-import Test from "@page/test/Test";
+import Test from "@app/test/Test";
 import SETTING_ROUTES from "./Setting";
 import RedirectKakao from "@auth/RedirectKakao";
-import Login from "@page/login/Login";
-import NotFound from "@page/notFound/NotFound";
-import Index from "@page/index/Index";
+import Login from "@app/login/Login";
+import NotFound from "@app/notFound/NotFound";
+import Index from "@app/index/Index";
 
 //children은 Outlet에서 사용하는 방식 (레이아웃 지정해야할 때)
 const router = createBrowserRouter([

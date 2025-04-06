@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { iconstyle, InputVariants, styles, WrapVariants } from "@common/component/TextField/styles.css.ts";
 import { IcClear } from "@asset/svg";
@@ -80,5 +82,5 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
         )}
       </div>
     );
-  }
+  },
 );

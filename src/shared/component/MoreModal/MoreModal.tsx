@@ -1,5 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
-import { IcEllipses } from "@asset/svg";
+"use client";
+
+import React from "react";
+import {IcEllipses} from "@asset/svg";
 import {
   container,
   iconSizeVar,
@@ -8,7 +10,7 @@ import {
   moreModalDivider,
   moreModalItem,
 } from "@shared/component/MoreModal/MoreModal.css.ts";
-import { assignInlineVars } from "@vanilla-extract/dynamic";
+import {assignInlineVars} from "@vanilla-extract/dynamic";
 
 interface MoreModalParams {
   isOpen?: boolean;
@@ -44,7 +46,7 @@ const MoreModal = ({
         className={moreIcon}
         style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
         onClick={(e) => {
-          e.stopPropagation(); // 모달 토글을 막는 이벤트 버블링 방지
+          e.stopPropagation();
           onToggleModal();
         }}
       />

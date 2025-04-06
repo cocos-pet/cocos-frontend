@@ -1,3 +1,4 @@
+"use client";
 import * as styles from "./SubComment.css";
 import { IcMessage } from "@asset/svg";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
@@ -7,16 +8,13 @@ import { formatTime } from "@shared/util/formatTime.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
 import React, { useState } from "react";
-import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
+import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/store/categoryFilter.ts";
 
 interface SubCommentProps {
   commentId: number | undefined;
   subComment: commentGetRequestSubCommentType;
-  onSubCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onSubCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
   onReplyClick?: (id: number | undefined) => void;
   onCommentDelete: () => void;
   onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -29,9 +27,9 @@ const SubComment = ({
   onCommentDelete,
   onModalClose,
 }: SubCommentProps) => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const handleProfileClick = (nickname: string) => {
-    navigate(`/profile?nickname=${nickname}`);
+    router.push(`/profile?nickname=${nickname}`);
   };
 
   const handleReplyClick = () => {
@@ -75,15 +73,11 @@ const SubComment = ({
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {subComment.nickname}
-              <p className={styles.blue}>
-                {subComment.isPostWriter && "작성자"}
-              </p>
+              <p className={styles.blue}>{subComment.isPostWriter && "작성자"}</p>
             </span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt
-                ? formatTime(subComment.createdAt).toLocaleString()
-                : ""}
+              {subComment.createdAt ? formatTime(subComment.createdAt).toLocaleString() : ""}
             </span>
           </div>
           {subComment.isWriter && (
@@ -94,9 +88,7 @@ const SubComment = ({
                 setIsOpen(true);
               }}
               isOpen={openModalId === `subComment-${subComment.id}`}
-              onToggleModal={() =>
-                setOpenModalId(`subComment-${subComment.id}`)
-              }
+              onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
             />
           )}
         </div>

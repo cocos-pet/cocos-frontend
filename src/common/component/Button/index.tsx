@@ -1,3 +1,5 @@
+"use client";
+
 import React from "react";
 import { button, ButtonVariants, icon } from "@common/component/Button/styles.css.ts";
 
