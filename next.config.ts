@@ -18,8 +18,12 @@ const nextConfig: NextConfig = {
     unoptimized: true,
   },
   webpack: (config) => {
+    // 기존 alias 설정을 유지하면서 확장
+    const existingAlias = config.resolve.alias || {};
+    
+    // 절대 경로에 기반한 alias 설정
     config.resolve.alias = {
-      ...config.resolve.alias,
+      ...existingAlias,
       "@api": path.resolve(__dirname, "src/api"),
       "@asset": path.resolve(__dirname, "src/asset"),
       "@common": path.resolve(__dirname, "src/common"),
