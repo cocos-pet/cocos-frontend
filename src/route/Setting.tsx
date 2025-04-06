@@ -1,6 +1,6 @@
-import Setting from "@page/setting/index/Setting";
-import { PATH } from "./path";
-import ProfileEdit from "@page/setting/edit-profile/ProfileEdit";
+import Setting from "@app/setting/index/Setting";
+import { PATH } from "@route/path.ts";
+import ProfileEdit from "@app/setting/edit-profile/ProfileEdit";
 
 const SETTING_ROUTES = [
   { path: PATH.SETTING.ROOT, element: <Setting /> },

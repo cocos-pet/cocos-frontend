@@ -1,6 +1,6 @@
 import * as styles from "./Step1.css";
-import Title from "@page/onboarding/index/common/title/Title";
-import Docs from "@page/onboarding/index/common/docs/Docs";
+import Title from "@app/onboarding/index/common/title/Title";
+import Docs from "@app/onboarding/index/common/docs/Docs";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
 import { ItemType, contentItem } from "./Step1.css";
 

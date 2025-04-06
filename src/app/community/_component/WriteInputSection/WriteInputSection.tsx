@@ -1,4 +1,4 @@
-import { child, container, label } from "@page/community/_component/WriteInputSection/WriteInputSection.css.ts";
+import { child, container, label } from "@app/community/_component/WriteInputSection/WriteInputSection.css.ts";
 import React from "react";
 
 interface WriteInputProps {

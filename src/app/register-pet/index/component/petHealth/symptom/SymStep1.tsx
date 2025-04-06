@@ -1,8 +1,8 @@
-import * as styles from "@page/register-pet/index/component/petHealth/disease/Step1.css";
-import Title from "@page/onboarding/index/common/title/Title";
-import Docs from "@page/onboarding/index/common/docs/Docs";
+import * as styles from "@app/register-pet/index/component/petHealth/disease/Step1.css";
+import Title from "@app/onboarding/index/common/title/Title";
+import Docs from "@app/onboarding/index/common/docs/Docs";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
-import { ItemType, contentItem } from "@page/register-pet/index/component/petHealth/disease/Step1.css";
+import { ItemType, contentItem } from "@app/register-pet/index/component/petHealth/disease/Step1.css";
 
 interface SymStepProps {
   selectedIds: number[];

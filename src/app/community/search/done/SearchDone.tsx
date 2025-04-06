@@ -2,7 +2,7 @@ import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@as
 import { TextField } from "@common/component/TextField";
 import { ChangeEvent, Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { styles } from "@page/community/search/done/SearchDone.css.ts";
+import { styles } from "@app/community/search/done/SearchDone.css.ts";
 import { PATH } from "@route/path.ts";
 import Content from "@common/component/Content/Content.tsx";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";

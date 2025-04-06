@@ -1,10 +1,12 @@
 import * as styles from "./PetHealthDualSelector.css";
 import {Dispatch, SetStateAction, useState} from "react";
-import {ONBOARDING_GUIDE} from "@page/onboarding/index/constant/onboardingGuide";
+import {ONBOARDING_GUIDE} from "@app/onboarding/index/constant/onboardingGuide";
+import {useGetBodies} from "@api/domain/mypage/edit-pet/hook.ts";
 
-import Title from "@page/onboarding/index/common/title/Title";
-import Docs from "@page/onboarding/index/common/docs/Docs";
+import Title from "@app/onboarding/index/common/title/Title";
+import Docs from "@app/onboarding/index/common/docs/Docs";
 import {Button} from "@common/component/Button";
+import {dualSelectorContainer, dualSelectorItem, dualSelectorPlaceHolder, labelContainer, labelStyling,} from "./selector.css";
 
 interface PetHealthDualSelectorProps {
   setStep: Dispatch<SetStateAction<number>>;
