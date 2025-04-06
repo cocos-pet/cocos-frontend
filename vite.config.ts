@@ -10,7 +10,7 @@ export default defineConfig({
       { find: "@api", replacement: "/src/api" },
       { find: "@asset", replacement: "/src/asset" },
       { find: "@common", replacement: "/src/common" },
-      { find: "@page", replacement: "/src/app" },
+      { find: "@page", replacement: "/src/page" },
       { find: "@route", replacement: "/src/route" },
       { find: "@shared", replacement: "/src/shared" },
       { find: "@style", replacement: "/src/style" },

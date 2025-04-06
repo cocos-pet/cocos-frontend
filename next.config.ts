@@ -27,7 +27,7 @@ const nextConfig: NextConfig = {
       "@api": path.resolve(__dirname, "src/api"),
       "@asset": path.resolve(__dirname, "src/asset"),
       "@common": path.resolve(__dirname, "src/common"),
-      "@page": path.resolve(__dirname, "src/app"),
+      "@page": path.resolve(__dirname, "src/page"),
       "@app": path.resolve(__dirname, "src/app"),
       "@route": path.resolve(__dirname, "src/route"),
       "@shared": path.resolve(__dirname, "src/shared"),

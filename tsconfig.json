@@ -43,7 +43,7 @@
         "src/common/*"
       ],
       "@page/*": [
-        "src/app/*"
+        "src/page/*"
       ],
       "@app/*": [
         "src/app/*"
