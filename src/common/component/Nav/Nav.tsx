@@ -1,8 +1,11 @@
+"use client";
+
 import { useState } from "react";
-import { useLocation, useNavigate } from "react-router-dom";
+import { usePathname, useRouter } from "next/navigation";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
 import { PATH } from "@route/path";
+import Image from "next/image";
 
 type CommunityContent = {
   id: string;
@@ -17,12 +20,11 @@ type Props = {
 };
 
 const Nav = ({ content, type = "nav" }: Props) => {
-  const location = useLocation();
-  const navigate = useNavigate();
+  const pathname = usePathname();
+  const router = useRouter();
 
   const extractFirstPath = (): string => {
-    const pathName = location.pathname;
-    const parts = pathName.split("/");
+    const parts = pathname.split("/");
     const basePath = `/${parts[1]}`;
     return basePath;
   };
@@ -34,7 +36,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
       alert("추후 구현 예정입니다.");
     } else {
       setActiveItem(itemId);
-      navigate(path);
+      router.push(path);
     }
   };
 
@@ -55,11 +57,15 @@ const Nav = ({ content, type = "nav" }: Props) => {
                 type,
               })}
             >
-              <img
-                src={communityItem.image || "default-image-url"}
-                alt={communityItem.name || "Unnamed"}
-                style={{ width: "7.2rem" }}
-              />
+              {communityItem.image && (
+                <Image
+                  src={communityItem.image}
+                  alt={communityItem.name || "Unnamed"}
+                  width={72}
+                  height={72}
+                  style={{ width: "7.2rem" }}
+                />
+              )}
               <span>{communityItem.name || "Unnamed"}</span>
             </button>
           );

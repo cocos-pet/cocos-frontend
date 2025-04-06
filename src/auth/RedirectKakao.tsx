@@ -11,7 +11,7 @@ const RedirectKakao = () => {
 
   const getAccessToken = async () => {
     try {
-      const response = await fetch(`${import.meta.env.VITE_BASE_URL}${API_PATH.MEMBERS_LOGIN}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${API_PATH.MEMBERS_LOGIN}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

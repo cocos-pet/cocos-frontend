@@ -19,12 +19,14 @@
     "attributePosition": "auto"
   },
   "organizeImports": { "enabled": false },
+
   "linter": {
     "enabled": true,
     "rules": {
       "recommended": true,
       "suspicious": {
-        "noRedundantUseStrict": "off"
+        "noRedundantUseStrict": "off",
+        "noArrayIndexKey": "off"
       },
       "correctness": {
         "noUnusedVariables": {

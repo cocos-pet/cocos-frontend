@@ -1,34 +1,28 @@
+"use client";
+
 import * as styles from "./Comment.css";
-import { IcMessage } from "@asset/svg";
+import {IcMessage} from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
-import { commentGetResponseCommentType } from "@api/domain/community/post";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { useDeleteComment } from "@api/domain/community/post/hook.ts";
-import { useCategoryFilterStore } from "@page/mypage/edit-pet/store/categoryFilter.ts";
+import {commentGetResponseCommentType} from "@api/domain/community/post";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {useDeleteComment} from "@api/domain/community/post/hook.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, {useState} from "react";
+import {useRouter} from "next/navigation";
+import {useCategoryFilterStore} from "../../../app/mypage/edit-pet/store/categoryFilter.ts";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
 
   onDelete?: () => void;
   onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Comment = ({
-  comment,
-  onCommentReplyClick,
-  onDelete,
-  onModalClose,
-}: CommentProps) => {
-  const navigate = useNavigate();
+const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
+  const router = useRouter();
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname, comment.id);
@@ -47,7 +41,7 @@ const Comment = ({
   };
 
   const handleProfileClick = (nickname: string) => {
-    navigate(`/profile?nickname=${nickname}`);
+    router.push(`/profile?nickname=${nickname}`);
   };
 
   return (
@@ -67,9 +61,7 @@ const Comment = ({
             </span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt
-                ? formatTime(comment.createdAt).toLocaleString()
-                : ""}
+              {comment.createdAt ? formatTime(comment.createdAt).toLocaleString() : ""}
             </span>
           </div>
           {comment.isWriter && (

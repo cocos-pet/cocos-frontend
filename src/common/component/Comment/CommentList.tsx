@@ -1,3 +1,5 @@
+"use client";
+
 import Comment from "./Comment";
 import { commentGetResponse } from "@api/domain/community/post";
 import React from "react";
