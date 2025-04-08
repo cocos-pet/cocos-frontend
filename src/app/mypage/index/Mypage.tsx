@@ -16,6 +16,7 @@ import {useGetMemberInfo, useGetPetInfo} from "@api/domain/mypage/hook";
 import {useProtectedRoute} from "@route/useProtectedRoute";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
+import AddFavoriteHospital from "./component/AddFavoriteHospital";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -126,7 +127,7 @@ const Mypage = () => {
                   height={28}
                   style={{ cursor: "pointer" }}
                   onClick={() => router.push(PATH.MYPAGE.EDIT_PET)}
-                />
+                />  
               </div>
             ) : (
               <span style={{ width: "15.3rem" }}>
@@ -139,6 +140,8 @@ const Mypage = () => {
                 />
               </span>
             )}
+            <Divider size="small" />
+            <AddFavoriteHospital isAdded={false}/>
           </div>
         ) : (
           <div className={styles.unloginProfile}>
@@ -151,6 +154,9 @@ const Mypage = () => {
           </div>
         )}
       </article>
+
+      
+
 
       <Divider />
 
