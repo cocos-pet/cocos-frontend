@@ -24,7 +24,8 @@ const SearchHospital = () => {
         <IcBottomSheetLine />
       </div>
       {/* 상단 검색창 영역 */}
-      <div className={styles.textFieldContainer}>
+      <div className={styles.headerContainer}>
+        <span className={styles.titleStyle}>병원 검색하기</span>
         <TextField value="hospitalName" />
       </div>
 

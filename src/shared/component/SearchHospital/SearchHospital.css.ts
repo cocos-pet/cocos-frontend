@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color } from "@style/styles.css";
+import { color, font } from "@style/styles.css";
 
 export const Wrapper = style({
   position: "relative",
@@ -25,12 +25,25 @@ export const bottomSheetHandleBar = style({
   width: "8rem",
 });
 
-export const textFieldContainer = style({
+export const headerContainer = style({
   position: "absolute",
   top: "2.4rem",
+
+  display: "flex",
+  flexDirection: "column",
+  gap: "1rem",
+
   width: "100%",
   padding: "1.2rem 2rem",
 });
+
+export const titleStyle = style([
+  font.body01,
+  {
+    color: color.gray.gray900,
+    textAlign: "center",
+  },
+]);
 
 export const cardContainer = style({
   position: "absolute",

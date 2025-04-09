@@ -36,5 +36,5 @@ export const address = style([
 export const img = style({
   width: "7.6rem",
   height: "7.6rem",
-  borderRadius: "0.8rem",
+  borderRadius: "8px",
 });
