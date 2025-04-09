@@ -1,35 +1,65 @@
 import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
+import { recipe } from "@vanilla-extract/recipes";
 
-export const dimmed = style({
-  position: "absolute",
-  zIndex: "1",
-  bottom: 0,
+export const dimmed = recipe({
+  base: {
+    position: "absolute",
+    zIndex: "1",
+    bottom: 0,
 
-  width: "100%",
-  height: "100dvh",
+    width: "100%",
+    height: "100dvh",
 
-  opacity: "0.2",
-  backgroundColor: color.gray.gray900,
+    opacity: "0.2",
+    backgroundColor: color.gray.gray900,
+  },
+  variants: {
+    active: {
+      true: {
+        display: "flex",
+      },
+      false: {
+        display: "none",
+      },
+    },
+  },
 });
 
-export const wrapper = style({
-  zIndex: "2",
-  position: "relative",
-  marginTop: "8rem",
+export const wrapper = recipe({
+  base: {
+    zIndex: "2",
+    position: "relative",
+    marginTop: "8rem",
 
-  display: "flex",
-  flexDirection: "column",
-  alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
 
-  width: "100%",
-  height: "calc(100vh - 8rem)",
-  overflow: "hidden",
+    width: "100%",
+    height: "calc(100vh - 8rem)",
+    overflow: "hidden",
 
-  borderRadius: "20px 20px 0px 0px",
-  // 임시색상
-  backgroundColor: "gray",
-  // backgroundColor:color.gray.gray000,
+    borderRadius: "20px 20px 0px 0px",
+    // 임시색상
+    backgroundColor: "gray",
+    // backgroundColor:color.gray.gray000,
+    transition: "transform 300ms ease-in-out, opacity 300ms ease-in-out",
+    transform: "translateY(100%)",
+    opacity: "0",
+  },
+  variants: {
+    active: {
+      true: {
+        transform: "translateY(0)",
+        opacity: "1",
+      },
+      false: {
+        transform: "translateY(100%)",
+        opacity: "0",
+      },
+    },
+  },
 });
 
 export const bottomSheetHandleBar = style({
@@ -61,7 +91,7 @@ export const titleStyle = style([
 export const cardContainer = style({
   position: "absolute",
   top: "12rem",
-  
+
   width: "100%",
   height: "calc(100vh - 33.2rem)",
   overflow: "auto",
