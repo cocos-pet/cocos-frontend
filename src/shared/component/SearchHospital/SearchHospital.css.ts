@@ -51,6 +51,15 @@ export const cardContainer = style({
   width: "100%",
   height: "calc(100vh - 33.2rem)",
   overflow: "auto",
+
+  // 스크롤바 제거
+  scrollbarWidth: "none", // Firefox
+  msOverflowStyle: "none", // IE 10+
+  selectors: {
+    "&::-webkit-scrollbar": {
+      display: "none", // Chrome, Safari
+    },
+  },
 });
 
 // 마지막 li 요소에 밑줄 추가

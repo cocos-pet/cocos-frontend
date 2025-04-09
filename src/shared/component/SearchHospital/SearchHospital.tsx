@@ -26,7 +26,7 @@ const SearchHospital = () => {
       {/* 상단 검색창 영역 */}
       <div className={styles.headerContainer}>
         <span className={styles.titleStyle}>병원 검색하기</span>
-        <TextField value="hospitalName" />
+        <TextField value="hospitalName" placeholder="병원 이름이나 주소를 검색해 보세요" isDelete={false} />
       </div>
 
       {/* 중앙 병원 리스트 영역 */}
