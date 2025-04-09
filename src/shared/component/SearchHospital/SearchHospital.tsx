@@ -16,30 +16,46 @@ const hospitals = [
   { id: 6, name: "춘천병원", address: "서울시강남구" },
 ];
 
+interface Hospital {
+  id: number;
+  name: string;
+  address: string;
+}
+
 interface SearchHospitalProps {
   active: boolean;
   handleCloseBottomSheet: () => void;
+  selectedHospital: Hospital | null;
+  onSelectHospital: (hospital: Hospital | null) => void;
 }
 
-const SearchHospital = ({ active, handleCloseBottomSheet }: SearchHospitalProps) => {
+const SearchHospital = (props: SearchHospitalProps) => {
+  const { active, handleCloseBottomSheet, selectedHospital, onSelectHospital } = props;
+
   // 텍스트 필드에 입력한 검색어
   const [searchWord, setSearchWord] = useState("");
-  // 선택한 병원 id
-  const [selectedHospitalId, setSelectedHospitalId] = useState<number>(0);
+
   // 검색어로 필터링된 병원 리스트
   const debouncedSearchWord = useDebounce(searchWord, 300);
-
-  const filterdHospitals = hospitals.filter((hospital) => {
+  const filteredHospitals = hospitals.filter((hospital) => {
     return hospital.name.includes(debouncedSearchWord) || hospital.address.includes(debouncedSearchWord);
   });
 
+  // 바텀시트 이탈, 이탈 시 초기화
+  const handleCancelSearch = () => {
+    setSearchWord("");
+    onSelectHospital(null);
+    handleCloseBottomSheet();
+  };
+
   return (
     <>
-      <div className={styles.dimmed({ active })} onClick={handleCloseBottomSheet} />
+      <div className={styles.dimmed({ active })} onClick={handleCancelSearch} />
       <div className={styles.wrapper({ active })}>
         <div className={styles.bottomSheetHandleBar}>
           <IcBottomSheetLine />
         </div>
+        
         {/* 상단 검색창 영역 */}
         <div className={styles.headerContainer}>
           <span className={styles.titleStyle}>병원 검색하기</span>
@@ -53,14 +69,14 @@ const SearchHospital = ({ active, handleCloseBottomSheet }: SearchHospitalProps)
 
         {/* 중앙 병원 리스트 영역 */}
         <ul className={styles.cardContainer}>
-          {filterdHospitals.map((hospital) => (
+          {filteredHospitals.map((hospital) => (
             <li key={hospital.id} className={hospital.id === hospitals.length ? styles.lastCard : undefined}>
               <Card
                 id={hospital.id}
                 name={hospital.name}
                 address={hospital.address}
-                selected={hospital.id === selectedHospitalId}
-                onSelect={setSelectedHospitalId}
+                selected={selectedHospital?.id === hospital.id}
+                onSelect={() => onSelectHospital(hospital)}
               />
             </li>
           ))}
@@ -68,14 +84,14 @@ const SearchHospital = ({ active, handleCloseBottomSheet }: SearchHospitalProps)
 
         {/* 하단 버튼 영역 */}
         <div className={styles.buttonContainer}>
-          <Button label="확인하기" size="large" variant="solidPrimary" disabled={true} />
           <Button
-            label="취소하기"
+            label="확인하기"
             size="large"
-            variant="solidNeutral"
-            disabled={false}
+            variant="solidPrimary"
+            disabled={!selectedHospital}
             onClick={handleCloseBottomSheet}
           />
+          <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} onClick={handleCancelSearch} />
         </div>
       </div>
     </>
