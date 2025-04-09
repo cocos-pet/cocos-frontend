@@ -7,7 +7,7 @@ export const wrapper = style({
   alignItems: "center",
   gap: "1.2rem",
 
-  width: "37.7rem",
+  width: "100%",
   padding: "1.6rem 2rem",
   borderTop: `1px solid ${color.gray.gray300}`,
 });
@@ -15,7 +15,6 @@ export const wrapper = style({
 export const infoLayout = style({
   display: "flex",
   flexDirection: "column",
-  alignItems: "flex-start",
   gap: "0.4rem",
   minWidth: "21.3rem",
 });
