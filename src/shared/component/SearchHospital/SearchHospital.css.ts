@@ -1,7 +1,20 @@
 import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
 
-export const Wrapper = style({
+export const dimmed = style({
+  position: "absolute",
+  zIndex: "1",
+  bottom: 0,
+
+  width: "100%",
+  height: "100dvh",
+
+  opacity: "0.2",
+  backgroundColor: color.gray.gray900,
+});
+
+export const wrapper = style({
+  zIndex: "2",
   position: "relative",
   marginTop: "8rem",
 
@@ -48,13 +61,12 @@ export const titleStyle = style([
 export const cardContainer = style({
   position: "absolute",
   top: "12rem",
+  
   width: "100%",
   height: "calc(100vh - 33.2rem)",
   overflow: "auto",
 
   // 스크롤바 제거
-  scrollbarWidth: "none", // Firefox
-  msOverflowStyle: "none", // IE 10+
   selectors: {
     "&::-webkit-scrollbar": {
       display: "none", // Chrome, Safari

@@ -19,37 +19,40 @@ const SearchHospital = () => {
   const [selectedHospitalId, setSelectedHospitalId] = useState<number>(0);
 
   return (
-    <div className={styles.Wrapper}>
-      <div className={styles.bottomSheetHandleBar}>
-        <IcBottomSheetLine />
-      </div>
-      {/* 상단 검색창 영역 */}
-      <div className={styles.headerContainer}>
-        <span className={styles.titleStyle}>병원 검색하기</span>
-        <TextField value="hospitalName" placeholder="병원 이름이나 주소를 검색해 보세요" isDelete={false} />
-      </div>
+    <>
+      <div className={styles.dimmed} />
+      <div className={styles.wrapper}>
+        <div className={styles.bottomSheetHandleBar}>
+          <IcBottomSheetLine />
+        </div>
+        {/* 상단 검색창 영역 */}
+        <div className={styles.headerContainer}>
+          <span className={styles.titleStyle}>병원 검색하기</span>
+          <TextField value="hospitalName" placeholder="병원 이름이나 주소를 검색해 보세요" isDelete={false} />
+        </div>
 
-      {/* 중앙 병원 리스트 영역 */}
-      <ul className={styles.cardContainer}>
-        {hospitals.map((hospital) => (
-          <li key={hospital.id} className={hospital.id === hospitals.length ? styles.lastCard : undefined}>
-            <Card
-              id={hospital.id}
-              name={hospital.name}
-              address={hospital.address}
-              selected={hospital.id === selectedHospitalId}
-              onSelect={setSelectedHospitalId}
-            />
-          </li>
-        ))}
-      </ul>
+        {/* 중앙 병원 리스트 영역 */}
+        <ul className={styles.cardContainer}>
+          {hospitals.map((hospital) => (
+            <li key={hospital.id} className={hospital.id === hospitals.length ? styles.lastCard : undefined}>
+              <Card
+                id={hospital.id}
+                name={hospital.name}
+                address={hospital.address}
+                selected={hospital.id === selectedHospitalId}
+                onSelect={setSelectedHospitalId}
+              />
+            </li>
+          ))}
+        </ul>
 
-      {/* 하단 버튼 영역 */}
-      <div className={styles.buttonContainer}>
-        <Button label="확인하기" size="large" variant="solidPrimary" disabled={false} />
-        <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} />
+        {/* 하단 버튼 영역 */}
+        <div className={styles.buttonContainer}>
+          <Button label="확인하기" size="large" variant="solidPrimary" disabled={false} />
+          <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} />
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 
