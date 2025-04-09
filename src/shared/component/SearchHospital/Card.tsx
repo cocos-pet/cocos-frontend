@@ -15,7 +15,7 @@ type CardProps = {
 
 const Card = ({ id, name, address, selected, onSelect }: CardProps) => {
   return (
-    <div className={styles.wrapper}>
+    <div className={styles.wrapper({ selected })}>
       <Radio value={id} checked={selected} onChange={onSelect} />
       <div className={styles.infoLayout}>
         <span className={styles.name}>{name}</span>

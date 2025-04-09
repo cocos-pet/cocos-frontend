@@ -1,15 +1,28 @@
 import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css";
 
-export const wrapper = style({
-  display: "flex",
-  justifyContent: "space-between",
-  alignItems: "center",
-  gap: "1.2rem",
+export const wrapper = recipe({
+  base: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: "1.2rem",
 
-  width: "100%",
-  padding: "1.6rem 2rem",
-  borderTop: `1px solid ${color.gray.gray300}`,
+    width: "100%",
+    padding: "1.6rem 2rem",
+    borderTop: `1px solid ${color.gray.gray300}`,
+  },
+  variants: {
+    selected: {
+      false: {
+        backgroundColor: color.gray.gray000,
+      },
+      true: {
+        backgroundColor: color.primary.blue100,
+      },
+    },
+  },
 });
 
 export const infoLayout = style({
