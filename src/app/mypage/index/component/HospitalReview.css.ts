@@ -178,3 +178,9 @@ export const nothingContent = style([
     textAlign: "center",
   },
 ]);
+
+export const blurred = style({
+  filter: "blur(6px)",
+  pointerEvents: "none",
+  touchAction: "none",
+});
