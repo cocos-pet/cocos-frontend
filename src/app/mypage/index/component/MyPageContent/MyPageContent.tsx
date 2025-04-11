@@ -1,14 +1,15 @@
 "use client";
 
 import Content from "@common/component/Content/Content";
-import {ActiveTabType} from "../../Mypage";
+import { ActiveTabType } from "../../Mypage";
 import * as styles from "./MyPageContent.css";
 import MyPageComment from "../MyPageComment/MyPageComment";
-import {isSubComment, renderAllComments} from "@shared/util/renderAllComents";
-import {useGetMyComment, useGetMyPost} from "@api/domain/mypage/hook";
-import {formatTime} from "@shared/util/formatTime";
-import {PATH} from "@route/path";
+import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
+import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
+import { formatTime } from "@shared/util/formatTime";
+import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
+import HospitalReview from "../HospitalReview";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -37,18 +38,10 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return (
-          <div className={styles.nothingContent}>
-            {"아직 작성한 후기가 없어요."}
-          </div>
-        );
+        return <HospitalReview />;
       case "post":
         if (!myPosts?.length) {
-          return (
-            <div className={styles.nothingContent}>
-              {"아직 작성한 게시글이 없어요."}
-            </div>
-          );
+          return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;
         }
         return myPosts?.map((data) => (
           <div className={styles.mypagecontent} key={`post-${data.id}`}>
@@ -66,27 +59,15 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
         ));
       case "comment":
         if (!myComments?.comments?.length && !myComments?.subComments?.length) {
-          return (
-            <div className={styles.nothingContent}>
-              {"아직 작성한 댓글이 없어요."}
-            </div>
-          );
+          return <div className={styles.nothingContent}>{"아직 작성한 댓글이 없어요."}</div>;
         }
-        return renderAllComments(
-          myComments?.comments,
-          myComments?.subComments
-        ).map((data) => (
-          <div
-            className={styles.commentcontentWrap}
-            key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}
-          >
+        return renderAllComments(myComments?.comments, myComments?.subComments).map((data) => (
+          <div className={styles.commentcontentWrap} key={`comment-${isSubComment(data) ? "sub" : ""}-${data.id}`}>
             <MyPageComment
               postTitle={data.postTitle as string}
               content={data.content as string}
               timeAgo={data.createdAt as string}
-              mentionedNickname={
-                isSubComment(data) ? data.mentionedNickname : undefined
-              }
+              mentionedNickname={isSubComment(data) ? data.mentionedNickname : undefined}
               onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${data.postId}`)}
             />
           </div>
