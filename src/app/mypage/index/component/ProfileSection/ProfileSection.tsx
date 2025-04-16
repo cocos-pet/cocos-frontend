@@ -17,6 +17,37 @@ interface ProfileSectionProps {
   onNavigateToRegisterPet: () => void;
 }
 
+const ProfileSection = ({
+  isLogin,
+  isRegister,
+  member,
+  petInfo,
+  onLogin,
+  onNavigateToEditPet,
+  onNavigateToRegisterPet,
+}: ProfileSectionProps) => {
+  if (!isLogin) {
+    return <UnloggedProfile onLogin={onLogin} />;
+  }
+
+  if (!member) {
+    return null;
+  }
+
+  return (
+    <LoggedProfile
+      member={member}
+      isRegister={isRegister}
+      petInfo={petInfo}
+      onNavigateToEditPet={onNavigateToEditPet}
+      onNavigateToRegisterPet={onNavigateToRegisterPet}
+    />
+  );
+};
+
+/*
+  아래는 사용되는 ProfileSection에서만 사용되는 컴포넌트들
+*/
 const UnloggedProfile = ({ onLogin }: { onLogin: () => void }) => (
   <div className={styles.unloginProfile}>
     <span className={styles.pleaseLoginText}>
@@ -25,6 +56,38 @@ const UnloggedProfile = ({ onLogin }: { onLogin: () => void }) => (
       {"고민을 공유해보세요!"}
     </span>
     <Button label={"로그인"} onClick={onLogin} />
+  </div>
+);
+
+const LoggedProfile = ({
+  member,
+  isRegister,
+  petInfo,
+  onNavigateToEditPet,
+  onNavigateToRegisterPet,
+}: {
+  member: MemberInfo;
+  isRegister: boolean;
+  petInfo?: PetInfo;
+  onNavigateToEditPet: () => void;
+  onNavigateToRegisterPet: () => void;
+}) => (
+  <div className={styles.loginProfile}>
+    {member.profileImage && (
+      <Image className={styles.profileImage} alt="프로필 이미지" src={member.profileImage} width={68} height={68} />
+    )}
+    <span className={styles.userProfileText}>{member.nickname}</span>
+    <Divider size="small" />
+
+    <PetProfile
+      petInfo={petInfo}
+      isRegister={isRegister}
+      onNavigateToEditPet={onNavigateToEditPet}
+      onNavigateToRegisterPet={onNavigateToRegisterPet}
+    />
+
+    <Divider size="small" />
+    <AddFavoriteHospital isAdded={false} />
   </div>
 );
 
@@ -76,66 +139,6 @@ const PetProfile = ({
         onClick={onNavigateToRegisterPet}
       />
     </span>
-  );
-};
-
-const LoggedProfile = ({
-  member,
-  isRegister,
-  petInfo,
-  onNavigateToEditPet,
-  onNavigateToRegisterPet,
-}: {
-  member: MemberInfo;
-  isRegister: boolean;
-  petInfo?: PetInfo;
-  onNavigateToEditPet: () => void;
-  onNavigateToRegisterPet: () => void;
-}) => (
-  <div className={styles.loginProfile}>
-    {member.profileImage && (
-      <Image className={styles.profileImage} alt="프로필 이미지" src={member.profileImage} width={68} height={68} />
-    )}
-    <span className={styles.userProfileText}>{member.nickname}</span>
-    <Divider size="small" />
-
-    <PetProfile
-      petInfo={petInfo}
-      isRegister={isRegister}
-      onNavigateToEditPet={onNavigateToEditPet}
-      onNavigateToRegisterPet={onNavigateToRegisterPet}
-    />
-
-    <Divider size="small" />
-    <AddFavoriteHospital isAdded={false} />
-  </div>
-);
-
-const ProfileSection = ({
-  isLogin,
-  isRegister,
-  member,
-  petInfo,
-  onLogin,
-  onNavigateToEditPet,
-  onNavigateToRegisterPet,
-}: ProfileSectionProps) => {
-  if (!isLogin) {
-    return <UnloggedProfile onLogin={onLogin} />;
-  }
-
-  if (!member) {
-    return null;
-  }
-
-  return (
-    <LoggedProfile
-      member={member}
-      isRegister={isRegister}
-      petInfo={petInfo}
-      onNavigateToEditPet={onNavigateToEditPet}
-      onNavigateToRegisterPet={onNavigateToRegisterPet}
-    />
   );
 };
 
