@@ -1,8 +1,8 @@
 "use client";
 
 import Content from "@common/component/Content/Content";
-import { ActiveTabType } from "../../Mypage";
-import * as styles from "./MyPageContent.css";
+import { ActiveTabType } from "../../hooks/useMypageState";
+import * as styles from "../../style/mypage.css";
 import MyPageComment from "../MyPageComment/MyPageComment";
 import { isSubComment, renderAllComments } from "@shared/util/renderAllComents";
 import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";

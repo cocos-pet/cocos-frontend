@@ -1,186 +1,72 @@
 "use client";
 
-import {Button} from "@common/component/Button";
-import * as styles from "./Mypage.css";
+import * as styles from "./style/mypage.css";
 import Divider from "@common/component/Divider/Divider";
-import Tab from "@common/component/Tab/Tab";
-import {useEffect, useState} from "react";
-import MyPageContent from "./component/MyPageContent/MyPageContent";
-import {IcChevronRight, IcPlus, IcSettings} from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import Nav from "@common/component/Nav/Nav";
-import {PATH} from "@route/path";
-import {NAV_CONTENT} from "@common/component/Nav/constant";
-import {isLoggedIn} from "@api/index";
-import {useGetMemberInfo, useGetPetInfo} from "@api/domain/mypage/hook";
-import {useProtectedRoute} from "@route/useProtectedRoute";
-import { useRouter } from "next/navigation";
-import Image from "next/image";
-import AddFavoriteHospital from "./component/AddFavoriteHospital";
+import { useProtectedRoute } from "@route/useProtectedRoute";
+import { useMypageState } from "./hooks/useMypageState";
+import ProfileSection from "./component/ProfileSection/ProfileSection";
+import HeaderSection from "./component/HeaderSection/HeaderSection";
+import NavSection from "./component/NavSection/NavSection";
+import TabsSection from "./component/TabsSection/TabsSection";
+import ContentSection from "./component/ContentSection/ContentSection";
 
-export type ActiveTabType = "review" | "post" | "comment";
-
+/**
+ * 마이페이지 컴포넌트
+ *
+ * 컨테이너 역할을 하는 이 컴포넌트는 데이터 로직을 처리하고
+ * 각 하위 컴포넌트에 필요한 데이터와 이벤트 핸들러를 전달
+ */
 const Mypage = () => {
+  // 보호된 라우트 설정
   useProtectedRoute();
-  const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
-  const [isRegister, setIsRegister] = useState(true);
-  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
-  const { isLoading, data: member } = useGetMemberInfo();
-  const { data: petInfo } = useGetPetInfo();
+  // 커스텀 훅을 통한 상태 관리
+  const {
+    isLogin,
+    isRegister,
+    activeTab,
+    isLoading,
+    member,
+    petInfo,
+    isActiveTab,
+    handleTabClick,
+    navigateToSettings,
+    navigateToEditPet,
+    navigateToRegisterPet,
+    setIsLogin,
+  } = useMypageState();
 
-  // 초기화 시 sessionStorage에서 활성 탭 가져오기
-  useEffect(() => {
-    const preSavedActiveTab = sessionStorage.getItem("activeTab");
-    if (preSavedActiveTab) {
-      setActiveTab(preSavedActiveTab as ActiveTabType);
-    }
-  }, []);
-
-  useEffect(() => {
-    setIsLogin(isLoggedIn());
-  }, []);
-
-  useEffect(() => {
-    if (!petInfo) setIsRegister(false);
-    else setIsRegister(true);
-  }, [petInfo]);
-
-  // activeTab 변경 시 sessionStorage에 저장
-  useEffect(() => {
-    sessionStorage.setItem("activeTab", activeTab);
-  }, [activeTab]);
-
-  const isActiveTab = (tab: ActiveTabType) => {
-    return activeTab === tab;
-  };
-
-  const handleTabClick = (tab: ActiveTabType) => {
-    setActiveTab(tab);
-  };
-
+  // 로딩 중이거나 회원 정보가 없는 경우 렌더링하지 않음
   if (isLoading || !member) return null;
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
-      <span style={{ position: "fixed", top: 0, width: "100%" }}>
-        <HeaderNav
-          centerContent={"마이페이지"}
-          rightBtn={
-            <span
-              className={styles.settingWrapper({
-                isLogin: isLogin,
-              })}
-              onClick={() => isLogin && router.push(PATH.SETTING.ROOT)}
-            >
-              <IcSettings width={24} height={24} />
-            </span>
-          }
-        />
-      </span>
+      {/* 헤더 섹션 */}
+      <HeaderSection isLogin={isLogin} onNavigateToSettings={navigateToSettings} />
 
+      {/* 프로필 섹션 */}
       <article className={styles.myProfileWrapper}>
-        {isLogin ? (
-          <div className={styles.loginProfile}>
-            {member.profileImage && (
-              <Image 
-                className={styles.profileImage} 
-                alt="프로필 이미지" 
-                src={member.profileImage}
-                width={68}
-                height={68} 
-              />
-            )}
-            <span className={styles.userProfileText}>{member.nickname}</span>
-            <Divider size="small" />
-
-            {isRegister ? (
-              <div className={styles.animalProfileWrapper}>
-                {petInfo?.petImage && (
-                  <Image 
-                    className={styles.animalImage} 
-                    alt="프로필이미지" 
-                    src={petInfo.petImage}
-                    width={52}
-                    height={52} 
-                  />
-                )}
-                <div className={styles.animalProfileTextWrapper}>
-                  <span className={styles.animalMainText}>
-                    {`${petInfo?.breed} `}
-                    <span className={styles.textDivider}>|</span>
-                    {` ${petInfo?.petAge} `}
-                    <span className={styles.textDivider}>|</span>
-                  </span>
-                  <span className={styles.animalSubText}>
-                    {"앓고있는 병 "}
-                    {petInfo?.diseases?.map((disease) => (
-                      <span className={styles.spanNoWrap} key={`hash-disease-${disease.id}`}>
-                        {`#${disease.name}`}&nbsp;
-                      </span>
-                    ))}
-                  </span>
-                </div>
-                <IcChevronRight
-                  width={28}
-                  height={28}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => router.push(PATH.MYPAGE.EDIT_PET)}
-                />  
-              </div>
-            ) : (
-              <span style={{ width: "15.3rem" }}>
-                <Button
-                  variant={"solidNeutral"}
-                  rightIcon={<IcPlus width={20} height={20} />}
-                  size={"small"}
-                  label="반려동물 추가하기"
-                  onClick={() => router.push(PATH.REGISTER_PET.ROOT)}
-                />
-              </span>
-            )}
-            <Divider size="small" />
-            <AddFavoriteHospital isAdded={false}/>
-          </div>
-        ) : (
-          <div className={styles.unloginProfile}>
-            <span className={styles.pleaseLoginText}>
-              {"로그인 후"}
-              <br />
-              {"고민을 공유해보세요!"}
-            </span>
-            <Button label={"로그인"} onClick={() => setIsLogin(true)} />
-          </div>
-        )}
+        <ProfileSection
+          isLogin={isLogin}
+          isRegister={isRegister}
+          member={member}
+          petInfo={petInfo}
+          onLogin={() => setIsLogin(true)}
+          onNavigateToEditPet={navigateToEditPet}
+          onNavigateToRegisterPet={navigateToRegisterPet}
+        />
       </article>
-
-      
-
 
       <Divider />
 
-      <div className={styles.contentHeaderWrapper}>
-        <Tab active={isActiveTab("review")} width={"100%"} onClick={() => handleTabClick("review")}>
-          나의 병원 후기
-        </Tab>
-        <Tab active={isActiveTab("post")} width={"100%"} onClick={() => handleTabClick("post")}>
-          나의 게시글
-        </Tab>
-        <Tab active={isActiveTab("comment")} width={"100%"} onClick={() => handleTabClick("comment")}>
-          나의 댓글
-        </Tab>
-      </div>
+      {/* 탭 섹션 */}
+      <TabsSection activeTab={activeTab} isActiveTab={isActiveTab} onTabClick={handleTabClick} />
 
-      <article className={styles.myPageContentWrapper}>
-        <div className={styles.contentBody}>
-          {isLogin ? <MyPageContent tab={activeTab} /> : <div className={styles.nothingContent}>로그인 해주세요.</div>}
-        </div>
-      </article>
+      {/* 컨텐츠 섹션 */}
+      <ContentSection isLogin={isLogin} activeTab={activeTab} />
 
-      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
-        <Nav content={NAV_CONTENT} type={"nav"} />
-      </span>
+      {/* 네비게이션 섹션 */}
+      <NavSection />
     </div>
   );
 };

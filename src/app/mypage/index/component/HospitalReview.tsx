@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as styles from "./HospitalReview.css";
+import * as styles from "../style/mypage.css";
 import Chip from "@common/component/Chip/Chip";
 import Divider from "@common/component/Divider/Divider";
 import { IcEllipses } from "@asset/svg";
@@ -8,10 +8,6 @@ import nocategory from "@asset/image/nocategory.png";
 
 const HospitalReview = () => {
   const [isOpen, setIsOpen] = useState(false);
-  //todo: blur 처리 구현 필요
-  //todo: 사진 크게 키우기 기능
-  //todo: 인터랙션 연결, 나중에 데이터 받아와서 넘기기
-  //todo: 후기 존재하지 않을 때 처리
   const [isBlurred, setIsBlurred] = useState(true);
   const btnText = isOpen ? "접기" : "상세보기";
 
@@ -24,7 +20,7 @@ const HospitalReview = () => {
 
   return (
     //{"아직 작성한 후기가 없어요."}
-    <section className={`${styles.container}`}>
+    <section className={styles.reviewContainer}>
       <div className={styles.visitWrapper}>
         <span className={styles.visitDate}>2025.01.01 방문</span>
         <IcEllipses width={20} height={20} onClick={() => alert("Todo")} />
@@ -38,8 +34,8 @@ const HospitalReview = () => {
         <span className={styles.address}>서울시 강남구 테헤란로</span>
       </article>
 
-      <article className={`${styles.ReviewArea} ${isBlurred ? styles.blurred : ""}`}>
-        <span className={styles.content}>
+      <article className={`${styles.reviewArea} ${isBlurred ? styles.blurred : ""}`}>
+        <span className={styles.reviewContent}>
           진료는 꼼꼼하고 만족스러웠어요.진료는 꼼꼼하고 만족스러웠어요.진료는 꼼꼼하고 만족스러웠어요.진료는 꼼꼼하고
           만족스러웠어요.진료는 꼼꼼하고 만족스러웠어요.
         </span>
@@ -98,7 +94,7 @@ const HospitalReview = () => {
         <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
         <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
       </div>
-      <article className={`${styles.ReviewChipBottomArea} ${isBlurred ? styles.blurred : ""}`}>
+      <article className={`${styles.reviewChipBottomArea} ${isBlurred ? styles.blurred : ""}`}>
         <Chip label="시설이 좋아요" />
         <Chip label="시설이 좋아요" />
       </article>
