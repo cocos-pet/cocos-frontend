@@ -38,7 +38,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return <HospitalReview />;
+        return <HospitalReview isMypage={true} />;
       case "post":
         if (!myPosts?.length) {
           return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;

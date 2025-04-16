@@ -1,15 +1,15 @@
 import * as styles from "./Profile.css";
 import Divider from "@common/component/Divider/Divider";
 import Tab from "@common/component/Tab/Tab";
-import {useEffect, useState} from "react";
-import {IcChevronLeft} from "@asset/svg";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useEffect, useState } from "react";
+import { IcChevronLeft } from "@asset/svg";
+import { useRouter, useSearchParams } from "next/navigation";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import {NAV_CONTENT} from "@common/component/Nav/constant";
-import {useGetMemberInfo, useGetPetInfo} from "@api/domain/mypage/hook";
+import { NAV_CONTENT } from "@common/component/Nav/constant";
+import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 import ProfileContent from "./component/ProfileContent/ProfileContent";
-import {useProtectedRoute} from "@route/useProtectedRoute";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -23,7 +23,7 @@ const Profile = () => {
 
   // 초기화 시 sessionStorage에서 활성 탭 가져오기
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       const preSavedActiveTab = sessionStorage.getItem("activeTab");
       if (preSavedActiveTab) {
         setActiveTab(preSavedActiveTab as ActiveTabType);
@@ -31,7 +31,7 @@ const Profile = () => {
     }
   }, []);
 
-  const query = searchParams.get("nickname");
+  const query = searchParams?.get("nickname");
   if (!query) return;
 
   const { data: memeberInfo } = useGetMemberInfo(query);
@@ -39,7 +39,7 @@ const Profile = () => {
 
   // activeTab 변경 시 sessionStorage에 저장
   useEffect(() => {
-    if (typeof window !== 'undefined') {
+    if (typeof window !== "undefined") {
       sessionStorage.setItem("activeTab", activeTab);
     }
   }, [activeTab]);

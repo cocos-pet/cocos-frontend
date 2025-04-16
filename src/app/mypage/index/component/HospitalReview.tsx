@@ -6,7 +6,11 @@ import { IcEllipses } from "@asset/svg";
 import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
 
-const HospitalReview = () => {
+interface HospitalReviewProps {
+  isMypage?: boolean;
+}
+
+const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(true);
   const btnText = isOpen ? "접기" : "상세보기";
@@ -23,7 +27,7 @@ const HospitalReview = () => {
     <section className={styles.reviewContainer}>
       <div className={styles.visitWrapper}>
         <span className={styles.visitDate}>2025.01.01 방문</span>
-        <IcEllipses width={20} height={20} onClick={() => alert("Todo")} />
+        {isMypage && <IcEllipses width={20} height={20} onClick={() => alert("Todo")} />}
       </div>
 
       <article
