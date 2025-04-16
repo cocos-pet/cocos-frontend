@@ -1,118 +1,51 @@
-import * as styles from "./Profile.css";
+"use client";
+
+import * as styles from "./style/profile.css";
 import Divider from "@common/component/Divider/Divider";
-import Tab from "@common/component/Tab/Tab";
-import { useEffect, useState } from "react";
-import { IcChevronLeft } from "@asset/svg";
-import { useRouter, useSearchParams } from "next/navigation";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import Nav from "@common/component/Nav/Nav";
-import { NAV_CONTENT } from "@common/component/Nav/constant";
-import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
-import ProfileContent from "./component/ProfileContent/ProfileContent";
 import { useProtectedRoute } from "@route/useProtectedRoute";
+import { useProfileState } from "./hooks/useProfileState";
+import HeaderSection from "./component/HeaderSection/HeaderSection";
+import ProfileSection from "./component/ProfileSection/ProfileSection";
+import TabsSection from "./component/TabsSection/TabsSection";
+import ContentSection from "./component/ContentSection/ContentSection";
+import NavSection from "./component/NavSection/NavSection";
 
-export type ActiveTabType = "review" | "post" | "comment";
-
-//남이 볼 때 뷰 분리 : /profie?nickname=칠칠이최고 으로 넘어가서 보도록
+/**
+ * 프로필 페이지 컴포넌트
+ *
+ * 컨테이너 역할을 하는 이 컴포넌트는 데이터 로직을 처리하고
+ * 각 하위 컴포넌트에 필요한 데이터와 이벤트 핸들러를 전달합니다.
+ */
 const Profile = () => {
+  // 보호된 라우트 설정
   useProtectedRoute();
 
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
+  // 커스텀 훅을 통한 상태 관리
+  const { query, activeTab, isActiveTab, handleTabClick, navigateBack, member, petInfo, isLoading } = useProfileState();
 
-  // 초기화 시 sessionStorage에서 활성 탭 가져오기
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      const preSavedActiveTab = sessionStorage.getItem("activeTab");
-      if (preSavedActiveTab) {
-        setActiveTab(preSavedActiveTab as ActiveTabType);
-      }
-    }
-  }, []);
-
-  const query = searchParams?.get("nickname");
-  if (!query) return;
-
-  const { data: memeberInfo } = useGetMemberInfo(query);
-  const { data: petInfo } = useGetPetInfo(query);
-
-  // activeTab 변경 시 sessionStorage에 저장
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      sessionStorage.setItem("activeTab", activeTab);
-    }
-  }, [activeTab]);
-
-  const isActiveTab = (tab: ActiveTabType) => {
-    return activeTab === tab;
-  };
-
-  const handleTabClick = (tab: ActiveTabType) => {
-    setActiveTab(tab);
-  };
-
-  if (!memeberInfo || !petInfo) return;
-  console.log(memeberInfo);
+  // 쿼리 파라미터가 없거나 로딩 중이거나 데이터가 없는 경우 렌더링하지 않음
+  if (!query || isLoading || !member || !petInfo) return null;
 
   return (
     <div style={{ position: "relative", height: "auto" }}>
-      <span style={{ position: "fixed", top: 0, width: "100%" }}>
-        <HeaderNav
-          leftIcon={<IcChevronLeft width={24} height={24} onClick={() => router.back()} />}
-          centerContent={"프로필"}
-        />
-      </span>
+      {/* 헤더 섹션 */}
+      <HeaderSection onNavigateBack={navigateBack} />
 
+      {/* 프로필 섹션 */}
       <article className={styles.myProfileWrapper}>
-        <div className={styles.loginProfile}>
-          <img className={styles.profileImage} alt="프로필 이미지" src={memeberInfo.profileImage} />
-          <span className={styles.userProfileText}>{memeberInfo.nickname}</span>
-          <Divider size="small" />
-
-          <div className={styles.animalProfileWrapper}>
-            <img className={styles.animalImage} alt="펫이미지" src={petInfo.petImage} />
-            <div className={styles.animalProfileTextWrapper}>
-              <span className={styles.animalMainText}>
-                {`${petInfo.breed} `}
-                <span className={styles.textDivider}>|</span>
-                {` ${petInfo.petAge} `}
-                <span className={styles.textDivider}>|</span>
-              </span>
-              <span className={styles.animalSubText}>
-                {"앓고있는 병 "}
-                {petInfo.diseases?.map((disease) => (
-                  <span className={styles.spanNoWrap} key={`hash-disease-${disease.id}`}>
-                    {`#${disease.name}`}&nbsp;
-                  </span>
-                ))}{" "}
-              </span>
-            </div>
-          </div>
-        </div>
+        <ProfileSection member={member} petInfo={petInfo} />
       </article>
 
       <Divider />
 
-      <div className={styles.contentHeaderWrapper}>
-        <Tab active={isActiveTab("review")} width={"100%"} onClick={() => handleTabClick("review")}>
-          병원 후기
-        </Tab>
-        <Tab active={isActiveTab("post")} width={"100%"} onClick={() => handleTabClick("post")}>
-          게시글
-        </Tab>
-        <Tab active={isActiveTab("comment")} width={"100%"} onClick={() => handleTabClick("comment")}>
-          댓글
-        </Tab>
-      </div>
+      {/* 탭 섹션 */}
+      <TabsSection activeTab={activeTab} isActiveTab={isActiveTab} onTabClick={handleTabClick} />
 
-      <article className={styles.myPageContentWrapper}>
-        <div className={styles.contentBody}>{<ProfileContent tab={activeTab} />}</div>
-      </article>
+      {/* 컨텐츠 섹션 */}
+      <ContentSection activeTab={activeTab} />
 
-      <span style={{ position: "fixed", bottom: "0", backgroundColor: "white", width: "100%" }}>
-        <Nav content={NAV_CONTENT} type={"nav"} />
-      </span>
+      {/* 네비게이션 섹션 */}
+      <NavSection />
     </div>
   );
 };
