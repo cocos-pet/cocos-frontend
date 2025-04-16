@@ -9,7 +9,7 @@ import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
 import { formatTime } from "@shared/util/formatTime";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
-import HospitalReview from "../HospitalReview";
+import HospitalReview from "../../../../../shared/component/HospitalReview";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;

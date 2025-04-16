@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as styles from "../style/mypage.css";
+import * as styles from "../../app/mypage/index/style/mypage.css";
 import Chip from "@common/component/Chip/Chip";
 import Divider from "@common/component/Divider/Divider";
 import { IcEllipses } from "@asset/svg";
@@ -23,7 +23,6 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
   if (!testDataLength) return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
 
   return (
-    //{"아직 작성한 후기가 없어요."}
     <section className={styles.reviewContainer}>
       <div className={styles.visitWrapper}>
         <span className={styles.visitDate}>2025.01.01 방문</span>

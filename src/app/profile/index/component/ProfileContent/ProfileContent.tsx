@@ -7,6 +7,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
 import { PATH } from "@route/path";
 import { formatTime } from "@shared/util/formatTime";
+import HospitalReview from "@shared/component/HospitalReview";
 
 interface ProfileContentPropTypes {
   tab: ActiveTabType;
@@ -31,7 +32,7 @@ export interface ApiItemTypes {
 //todo: 여기서 탭 별로 api 요청 보내서 데이터 받아와 렌더링하기
 const ProfileContent = ({ tab }: ProfileContentPropTypes) => {
   const searchParams = useSearchParams();
-  const query = searchParams.get("nickname");
+  const query = searchParams?.get("nickname");
   if (!query) return null;
 
   const router = useRouter();
@@ -43,7 +44,7 @@ const ProfileContent = ({ tab }: ProfileContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
+        return <HospitalReview />;
       case "post":
         if (!profilePosts?.length) {
           return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;
