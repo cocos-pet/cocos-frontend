@@ -1,7 +1,7 @@
 "use client";
 
-import {formatTime} from "@shared/util/formatTime";
-import * as styles from "./MyPageComment.css";
+import { formatTime } from "@shared/util/formatTime";
+import * as styles from "../../style/mypage.css";
 
 interface MyPageCommentPropTypes {
   content: string;

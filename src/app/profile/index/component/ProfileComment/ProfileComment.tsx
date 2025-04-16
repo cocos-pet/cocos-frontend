@@ -1,7 +1,7 @@
-import {formatTime} from "@shared/util/formatTime";
-import * as styles from "./ProfileComment.css";
+import { formatTime } from "@shared/util/formatTime";
+import * as styles from "../../style/profile.css";
 
-interface MyPageCommentPropTypes {
+interface ProfileCommentPropTypes {
   content: string;
   timeAgo: string;
   postTitle: string;
@@ -9,7 +9,7 @@ interface MyPageCommentPropTypes {
   mentionedNickname?: string;
 }
 
-const MyPageComment = ({ content, timeAgo, postTitle, onClick, mentionedNickname }: MyPageCommentPropTypes) => {
+const MyPageComment = ({ content, timeAgo, postTitle, onClick, mentionedNickname }: ProfileCommentPropTypes) => {
   return (
     <div className={styles.commentWrapper} onClick={onClick}>
       <span className={styles.timeText}>{formatTime(timeAgo)}</span>

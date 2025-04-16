@@ -47,6 +47,8 @@ export const getMyComment = async (nickname?: string) => {
     },
   });
 
-  if (!data.data?.comments?.length) return [];
-  return data.data.comments;
+  return {
+    comments: data?.data?.comments, 
+    subComments: data?.data?.subComments
+  };
 };
