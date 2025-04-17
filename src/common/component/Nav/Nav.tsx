@@ -24,6 +24,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
   const router = useRouter();
 
   const extractFirstPath = (): string => {
+    if (!pathname) return "/";
     const parts = pathname.split("/");
     const basePath = `/${parts[1]}`;
     return basePath;
@@ -33,7 +34,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
 
   const handleClick = (itemId: string, path: string) => {
     if (itemId === "/review") {
-      alert("추후 구현 예정입니다.");
+      router.push("/review");
     } else {
       setActiveItem(itemId);
       router.push(path);
@@ -72,7 +73,8 @@ const Nav = ({ content, type = "nav" }: Props) => {
         }
 
         const navItem = item as (typeof NAV_CONTENT)[number];
-        const SvgComponent = activeItem === navItem.id ? navItem.activeSvg : navItem.svg;
+        const SvgComponent =
+          activeItem === navItem.id ? navItem.activeSvg : navItem.svg;
 
         return (
           <button
