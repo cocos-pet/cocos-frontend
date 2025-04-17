@@ -2,8 +2,8 @@
 
 import * as styles from "./HotPost.css";
 import Divider from "@common/component/Divider/Divider";
-import {useQueryGetPopular} from "@api/domain/main/hook";
-import {PATH} from "@route/path";
+import { useQueryGetPopular } from "@api/domain/main/hook";
+import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
 
 // interface Post {
@@ -42,7 +42,8 @@ const HotPost = ({ nickname }: HotPostProps) => {
       <div className={styles.title}>
         {nickname ? (
           <>
-            <span className={styles.nickname}>{nickname}</span>를 위한 인기 게시글을 확인해보세요
+            <span className={styles.nickname}>{nickname}</span>를 위한 인기
+            게시글을 확인해보세요
           </>
         ) : (
           "반려인들이 주목하는 글 TOP 5"
@@ -52,11 +53,17 @@ const HotPost = ({ nickname }: HotPostProps) => {
       <div className={styles.hotPostListContainer}>
         {posts.slice(0, 5).map((post, index) => (
           <div key={post.id} className={styles.postlist}>
-            <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
+            <div
+              className={styles.postContent}
+              onClick={() => handlePostClick(post.id)}
+            >
               <div className={styles.contentId}>{index + 1}</div>
               <div className={styles.contentTitle}>{post.title}</div>
             </div>
-            {post.id !== posts.slice(0, 5)[posts.slice(0, 5).length - 1]?.id && <Divider size="popular" />}
+            {post.id !==
+              posts.slice(0, 5)[posts.slice(0, 5).length - 1]?.id && (
+              <Divider size="popular" />
+            )}
           </div>
         ))}
       </div>
