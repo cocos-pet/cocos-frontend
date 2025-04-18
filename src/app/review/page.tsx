@@ -14,6 +14,7 @@ import HospitalList from './hospitalList/hospitalList';
 import { NAV_CONTENT } from '@common/component/Nav/constant';
 import Nav from '@common/component/Nav/Nav';
 import FloatingBtn from '@common/component/FloatingBtn/Floating';
+import LocationHeader from './locationHeader/locationHeader';
 
 interface Review {
   id: string;
@@ -82,6 +83,9 @@ export default function ReviewPage() {
   }
 
   return (
+    <div>
+      <LocationHeader />
+
     <div className={styles.reviewContainer}>
       <div className={styles.reviewList}>
         {reviews.length > 0 ? (
@@ -150,6 +154,7 @@ export default function ReviewPage() {
       <div className={styles.navWrapper}>
         <Nav content={NAV_CONTENT} type={"nav"} />
       </div>
+    </div>
     </div>
   );
 }
