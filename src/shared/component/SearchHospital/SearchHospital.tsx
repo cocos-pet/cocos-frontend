@@ -8,18 +8,19 @@ import { useDebounce } from "@shared/hook/useDebounce";
 
 // ⚠️ 삭제 예정 목데이터
 const hospitals = [
-  { id: 1, name: "서울병원", address: "서울시강남구" },
-  { id: 2, name: "부산병원", address: "서울시강남구" },
-  { id: 3, name: "대구병원", address: "서울시강남구" },
-  { id: 4, name: "광주병원", address: "서울시강남구" },
-  { id: 5, name: "천안병원", address: "서울시강남구" },
-  { id: 6, name: "춘천병원", address: "서울시강남구" },
+  { id: 1, name: "서울병원", address: "서울시강남구", reviewCount: 777 },
+  { id: 2, name: "부산병원", address: "서울시강남구", reviewCount: 777 },
+  { id: 3, name: "대구병원", address: "서울시강남구", reviewCount: 777 },
+  { id: 4, name: "광주병원", address: "서울시강남구", reviewCount: 777 },
+  { id: 5, name: "천안병원", address: "서울시강남구", reviewCount: 777 },
+  { id: 6, name: "춘천병원", address: "서울시강남구", reviewCount: 777 },
 ];
 
 interface Hospital {
   id: number;
   name: string;
   address: string;
+  reviewCount: number;
 }
 
 interface SearchHospitalProps {
@@ -55,7 +56,7 @@ const SearchHospital = (props: SearchHospitalProps) => {
         <div className={styles.bottomSheetHandleBar}>
           <IcBottomSheetLine />
         </div>
-        
+
         {/* 상단 검색창 영역 */}
         <div className={styles.headerContainer}>
           <span className={styles.titleStyle}>병원 검색하기</span>

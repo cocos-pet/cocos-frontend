@@ -5,7 +5,8 @@ import { recipe } from "@vanilla-extract/recipes";
 export const dimmed = recipe({
   base: {
     position: "absolute",
-    zIndex: "1",
+    zIndex: "2",
+
     bottom: 0,
 
     width: "100%",
@@ -28,9 +29,9 @@ export const dimmed = recipe({
 
 export const wrapper = recipe({
   base: {
-    zIndex: "2",
-    position: "relative",
-    marginTop: "8rem",
+    zIndex: "3",
+    position: "fixed",
+    bottom: "0",
 
     display: "flex",
     flexDirection: "column",
@@ -41,12 +42,8 @@ export const wrapper = recipe({
     overflow: "hidden",
 
     borderRadius: "20px 20px 0px 0px",
-    // 임시색상
-    backgroundColor: "gray",
-    // backgroundColor:color.gray.gray000,
+    backgroundColor: color.gray.gray000,
     transition: "transform 300ms ease-in-out, opacity 300ms ease-in-out",
-    transform: "translateY(100%)",
-    opacity: "0",
   },
   variants: {
     active: {
