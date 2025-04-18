@@ -13,19 +13,12 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import LocationHeader from "./_components/locationHeader/locationHeader";
-import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import { PATH } from "@route/path";
 
 export default function ReviewPage() {
   const router = useRouter();
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
-
-  const { data } = useInfiniteHospitalList({
-    locationType: "CITY",
-    size: 10,
-    sortBy: "REVIEW",
-  });
 
   const hospitals = data?.data?.hospitals ?? [];
 

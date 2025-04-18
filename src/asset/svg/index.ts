@@ -1,5 +1,7 @@
 export { default as Icfilteron } from "./Icfilteron";
 export { default as Icon } from "./Icon";
+export { default as Check } from "./Check";
+export { default as ChevronDown } from "./ChevronDown";
 export { default as IcGroup } from "./IcGroup";
 export { default as IcCocosLogin } from "./IcCocosLogin";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";

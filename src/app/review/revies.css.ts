@@ -58,7 +58,7 @@ export const hospitalCard = style({
   gap: "0.8rem",
   cursor: "pointer",
   minWidth: "30rem",
-  height: "7.8remßßßß",
+  height: "7.8rem",
 });
 
 export const hospitalTitleContainer = style({
@@ -104,6 +104,7 @@ export const navWrapper = style({
   left: 0,
   right: 0,
   zIndex: 100,
+  backgroundColor: "white",
 });
 
 export const floatBtnWrapper = style({
