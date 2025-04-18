@@ -1,4 +1,4 @@
-import { TextField } from "../../../src/common/component/TextField/index";
+import { TextField } from "../../../common/component/TextField/index";
 import * as styles from "./DirectMyPetInfo.style.css";
 import React from "react";
 

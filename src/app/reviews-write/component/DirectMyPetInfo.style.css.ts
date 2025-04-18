@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color } from "../../../src/style/styles.css";
+import { color } from "../../../style/styles.css";
 
 export const wrapper = style({
   display: "flex",
