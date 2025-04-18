@@ -1,8 +1,5 @@
-import { text } from "@common/component/Comment/Comment.css";
-import { marginBottomVar } from "@common/component/Spacing/Spacing.css";
 import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
 
 export const searchBarContainer=style({
     margin:"1.6rem 2rem 2rem"
@@ -50,7 +47,7 @@ export const recommendList = style({
     width: "100%",
     "::-webkit-scrollbar": {
         display: "none"
-    }
+    },
 })
 
 export const hospitalCard = style({
@@ -62,7 +59,7 @@ export const hospitalCard = style({
     gap: "0.8rem",
     cursor: "pointer",
     minWidth: "30rem",
-    height:"7.8remßßßß"
+    height:"7.8rem"
 })
 
 export const hospitalTitleContainer = style({
@@ -108,7 +105,8 @@ export const navWrapper = style({
     bottom: 0,
     left: 0,
     right: 0,
-    zIndex: 100
+    zIndex: 100,
+    backgroundColor: "white"
 })
 
 export const floatBtnWrapper = style({
