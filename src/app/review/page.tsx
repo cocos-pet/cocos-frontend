@@ -108,7 +108,7 @@ export default function ReviewPage() {
           <div className={styles.headerContainer}>
             <div className={styles.searchBarContainer}>
               <TextField
-                state="main"
+                state="default"
                 placeholder="심장병, 백내장"
                 onClick={handleSearchClick}
                 onChange={handleTextFieldChange}
