@@ -1,4 +1,5 @@
 import { text } from "@common/component/Comment/Comment.css";
+import { marginBottomVar } from "@common/component/Spacing/Spacing.css";
 import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
@@ -7,12 +8,16 @@ export const searchBarContainer=style({
     margin:"1.6rem 2rem 2rem"
 })
 
-export const reviewContainer = style ({
-    width: "100%"
+export const reviewContainer = style({
+    position: "relative",
+    height: "100vh",
+    overflow: "auto",
+    paddingBottom: "8rem"
 })
 
-export const reviewList = style ({
-    width: "100%"
+export const reviewList = style({
+    height: "100%",
+    overflow: "auto"
 })
 
 export const headerContainer = style ({
@@ -88,4 +93,29 @@ export const hospitalAddress = style([
 export const bannerContainer = style({
     width:"33.5rem",
     height:"10rem"
+})
+
+export const hospitalListText=style([
+    font.label01,{
+        fontWeight:"500",
+        marginLeft:"2rem",
+        marginTop:"2.4rem"
+    },
+])
+
+export const navWrapper = style({
+    position: "fixed",
+    bottom: 0,
+    left: 0,
+    right: 0,
+    zIndex: 100
+})
+
+export const floatBtnWrapper = style({
+    position: "fixed",
+    bottom: "9.6rem",
+    right: "2rem",
+    zIndex: 1000,
+    display: "flex",
+    justifyContent: "flex-end"
 })
