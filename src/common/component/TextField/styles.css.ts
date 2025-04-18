@@ -100,6 +100,7 @@ export const styles = {
         search: {},
         main: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
+        half: { maxWidth: "11.1rem" },
       },
     },
 
