@@ -30,16 +30,11 @@ interface HospitalListProps {
 export default function HospitalList({ title, highlightText }: HospitalListProps) {
   const { ref, inView } = useInView();
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteHospitalList({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalList({
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
-    image: ""
+    image: "",
   });
 
   useEffect(() => {
@@ -63,15 +58,9 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
                   {hospital.address} · 리뷰 {hospital.reviewCount}
                 </p>
               </div>
-              <Image
-                src={hospital.image}
-                alt={hospital.name}
-                width={80}
-                height={80}
-                className={styles.hospitalImage}
-              />
+              <Image src={hospital.image} alt={hospital.name} width={80} height={80} className={styles.hospitalImage} />
             </div>
-          ))
+          )),
         )}
         <div ref={ref} className={styles.loadingTrigger}>
           {isFetchingNextPage && "로딩 중"}
