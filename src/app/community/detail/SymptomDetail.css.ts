@@ -8,10 +8,6 @@ export const categoryContainer = style({
 });
 
 export const headerContainer = style({
-  position: "fixed",
-  top: 0,
-  left: 0,
-  right: 0,
   backgroundColor: "#fff",
   zIndex: 20,
 });
@@ -98,3 +94,35 @@ export const emptyContainer = style([
     padding: "0 2rem",
   },
 ]);
+
+
+export const reviewContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  justifyContent: "center",
+  gap: "1.6rem",
+});
+
+export const reviewContent = style({
+  display: "flex",
+  gap: "0.8rem",
+  alignItems: "center",
+});
+
+export const reviewFilter = style({
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "1.6rem 2rem",
+  gap: "0.8rem",
+  alignItems: "center",
+});
+
+export const reviewButton = style({
+  padding: "0.6rem 1.4rem",
+  border: `1px solid ${color.primary.blue900}`,
+  borderRadius: "0.8rem",
+  fontFamily: font.body01,
+  fontWeight: "600",
+  fontSize: "1.4rem",
+});

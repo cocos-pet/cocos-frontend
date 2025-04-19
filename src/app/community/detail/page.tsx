@@ -3,7 +3,7 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcLeftarrow, IcUnderline} from "@asset/svg";
+import {IcLeftarrow} from "@asset/svg";
 import {PATH} from "@route/path.ts";
 import {formatTime} from "@shared/util/formatTime.ts";
 import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
@@ -15,6 +15,7 @@ import {postPostFiltersRequestType} from "@api/domain/community/search";
 import Image from "next/image";
 import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
+import Tab from "@common/component/Tab/Tab.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -37,28 +38,41 @@ const symptomMapping: { [key: string]: string } = {
 
 // 로딩 컴포넌트
 const LoadingFallback = () => <Loading height={80} />;
+type ActiveTabType = "review" | "community";
 
 // 빈 상태 컴포넌트
 const EmptyState = () => (
   <div className={styles.emptyContainer}>
-    <Image
-      src={nocategory}
-      alt="게시글 없음."
-      style={{ objectFit: "cover" }}
-      width={276}
-      height={155}
-    />
+    <Image src={nocategory} alt="게시글 없음." style={{ objectFit: "cover" }} width={276} height={155} />
     <h1> 아직 등록된 게시글이 없어요 </h1>
   </div>
 );
 
-const SymptomDetailContent = () => {
-  const [isRecentPost, setIsRecentPost] = useState(true);
+const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
-    []
+  const router = useRouter();
+
+  const handleClick = () => {
+    router.push(`${PATH.COMMUNITY.ROOT}/review`);
+  };
+
+  return (
+    <div className={styles.reviewContainer}>
+      <div className={styles.reviewFilter}>
+        <div className={styles.reviewRegion}>서울시 강남구</div>
+        <button className={styles.reviewButton} onClick={handleClick}>
+          필터
+        </button>
+      </div>
+    </div>
   );
+};
+
+const CommunityDetailContent = () => {
+  const searchParams = useSearchParams();
+  const typeId = searchParams.get("id");
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
   const { selectedChips } = useFilterStore();
@@ -95,17 +109,6 @@ const SymptomDetailContent = () => {
 
   return (
     <>
-      <div className={styles.tabContainer}>
-        <button
-          type="button"
-          className={styles.tabButton({ isActive: isRecentPost })}
-          onClick={() => setIsRecentPost(true)}
-        >
-          커뮤니티
-          {isRecentPost && <IcUnderline className={styles.underline} />}
-        </button>
-      </div>
-
       <div className={styles.postsContainer}>
         {posts.map((post) => (
           <Content
@@ -133,20 +136,33 @@ const PostDetail = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
   const router = useRouter();
+  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
   // 항상 헤더를 렌더링하여 hydration 문제 방지
   const symptomName = typeId ? symptomMapping[typeId] || "증상" : "증상";
+  const isActiveTab = (tab: ActiveTabType) => {
+    return activeTab === tab;
+  };
+
+  const handleTabClick = (tab: ActiveTabType) => {
+    setActiveTab(tab);
+  };
 
   return (
     <div className={styles.categoryContainer}>
       <div className={styles.headerContainer}>
-        <HeaderNav
-          leftIcon={<IcLeftarrow />}
-          centerContent={symptomName}
-          onLeftClick={() => router.push(PATH.MAIN)}
-        />
+        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => router.push(PATH.MAIN)} />
       </div>
-      <SymptomDetailContent />
+      <div className={styles.tabContainer}>
+        <Tab active={isActiveTab("community")} width={"100%"} onClick={() => handleTabClick("community")}>
+          커뮤니티
+        </Tab>
+        <Tab active={isActiveTab("review")} width={"100%"} onClick={() => handleTabClick("review")}>
+          병원리뷰
+        </Tab>
+      </div>
+      {activeTab === "review" && <ReviewDetailContent />}
+      {activeTab === "community" && <CommunityDetailContent />}
     </div>
   );
 };
