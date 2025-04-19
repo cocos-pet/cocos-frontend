@@ -1,6 +1,6 @@
-import {color, font} from "@style/styles.css.ts";
-import {style} from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
+import { color, font } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -17,7 +17,6 @@ export const postsContainer = style({
   display: "flex",
   flexDirection: "column",
   gap: "1.6rem",
-  marginTop: "6.4rem",
 });
 
 export const filterContainer = style({
@@ -94,7 +93,6 @@ export const emptyContainer = style([
     padding: "0 2rem",
   },
 ]);
-
 
 export const reviewContainer = style({
   display: "flex",

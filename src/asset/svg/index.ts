@@ -27,6 +27,7 @@ export { default as IcDeleteBlack } from "./IcDeleteBlack";
 export { default as IcDeleteWhite } from "./IcDeleteWhite";
 export { default as IcEditPen } from "./IcEditPen";
 export { default as IcEllipses } from "./IcEllipses";
+export { default as IcFilterBlack } from "./IcFilterBlack";
 export { default as IcHealing } from "./IcHealing";
 export { default as IcHome } from "./IcHome";
 export { default as IcHomeon } from "./IcHomeon";
