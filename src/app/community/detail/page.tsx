@@ -3,17 +3,17 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcLeftarrow} from "@asset/svg";
-import {PATH} from "@route/path.ts";
-import {formatTime} from "@shared/util/formatTime.ts";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {Suspense, useCallback, useEffect, useState} from "react";
-import {components} from "@type/schema";
+import { IcLeftarrow } from "@asset/svg";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import {useFilterStore} from "@store/filter.ts";
-import {postPostFiltersRequestType} from "@api/domain/community/search";
+import { useFilterStore } from "@store/filter.ts";
+import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 
@@ -60,7 +60,7 @@ const ReviewDetailContent = () => {
   return (
     <div className={styles.reviewContainer}>
       <div className={styles.reviewFilter}>
-        <div className={styles.reviewRegion}>서울시 강남구</div>
+        {/*<div className={styles.reviewRegion}>서울시 강남구</div>*/}
         <button className={styles.reviewButton} onClick={handleClick}>
           필터
         </button>
