@@ -3,7 +3,7 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcLeftarrow, IcSearchFillter} from "@asset/svg";
+import {IcFilterBlack, IcFilterBlue, IcLeftarrow} from "@asset/svg";
 import {PATH} from "@route/path.ts";
 import {formatTime} from "@shared/util/formatTime.ts";
 import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
@@ -52,18 +52,20 @@ const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
   const router = useRouter();
+  const [isFilterOpen, setIsFilterOpen] = useState(false);
 
   const handleClick = () => {
+    setIsFilterOpen(!isFilterOpen);
     router.push(`${PATH.COMMUNITY.ROOT}/review`);
   };
 
   return (
     <div className={styles.reviewContainer}>
       <div className={styles.reviewFilter}>
-        {/*<div className={styles.reviewRegion}>서울시 강남구</div>*/}
+        <div className={styles.reviewRegion}>서울시 강남구</div>
         <button className={styles.reviewButton} onClick={handleClick}>
           필터
-          <IcSearchFillter />
+          {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}
         </button>
       </div>
     </div>

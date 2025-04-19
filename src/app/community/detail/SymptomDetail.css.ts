@@ -116,6 +116,13 @@ export const reviewFilter = style({
   alignItems: "center",
 });
 
+export const reviewRegion = style({
+  fontFamily: font.body01,
+  fontSize: "1.4rem",
+  padding: "0.6rem 1.4rem",
+  borderRadius: "0.8rem",
+});
+
 export const reviewButton = style({
   padding: "0.6rem 1.4rem",
   border: `1px solid ${color.primary.blue900}`,
@@ -123,4 +130,7 @@ export const reviewButton = style({
   fontFamily: font.body01,
   fontWeight: "600",
   fontSize: "1.4rem",
+  display: "flex",
+  alignItems: "center",
+  gap: "0.4rem",
 });
