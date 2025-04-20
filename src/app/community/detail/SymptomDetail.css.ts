@@ -102,10 +102,9 @@ export const reviewContainer = style({
   gap: "1.6rem",
 });
 
-export const reviewContent = style({
-  display: "flex",
-  gap: "0.8rem",
-  alignItems: "center",
+export const reviewItemContainer = style({
+  padding: "0 2rem",
+  width: "100%",
 });
 
 export const reviewFilter = style({

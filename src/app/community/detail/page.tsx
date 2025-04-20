@@ -16,6 +16,7 @@ import Image from "next/image";
 import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
+import ReviewItem from "@app/community/_component/ReviewItem/ReviewItem.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -35,6 +36,43 @@ const symptomMapping: { [key: string]: string } = {
   11: "체중/몸",
   12: "행동/소리",
 };
+
+const sampleReviewData = {
+  reviewCount: 1,
+  reviews: [
+    {
+      id: 101,
+      memberId: 2001,
+      nickname: "멍멍이사랑해",
+      breedName: "푸들",
+      petDisease: "심장병",
+      vistitedAt: "2025-04-01",
+      hospitalId: 10,
+      hospitalName: "행복한동물병원",
+      hospitalAddress: "서울특별시 강남구 도곡로 123",
+      content: "친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%",
+      goodReviews: [
+        { id: 1, name: "친절해요" },
+        { id: 2, name: "설명이 자세해요" },
+      ],
+      badReviews: [{ id: 3, name: "기다림이 길어요" }],
+      images: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
+      symptoms: [
+        { id: 101, name: "기침" },
+        { id: 102, name: "호흡곤란" },
+      ],
+      diseases: [{ id: 201, name: "심장병" }],
+      animal: "강아지",
+      gender: "여아",
+      breed: "푸들",
+      weight: 4.2,
+
+      // 이거 api 응답 값 예시에 없음 나중에 요청
+      petAge: 3,
+      profileImage: "https://example.com/profile.jpg",
+    },
+  ],
+} as const;
 
 // 로딩 컴포넌트
 const LoadingFallback = () => <Loading height={80} />;
@@ -58,6 +96,10 @@ const ReviewDetailContent = () => {
     setIsFilterOpen(!isFilterOpen);
   };
 
+  const handleProfileClick = (nickname: string) => {
+    router.push(`/profile?nickname=${nickname}`);
+  };
+
   return (
     <div className={styles.reviewContainer}>
       <div className={styles.reviewFilter}>
@@ -66,6 +108,15 @@ const ReviewDetailContent = () => {
           필터
           {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}
         </button>
+      </div>
+      <div className={styles.reviewItemContainer}>
+        {sampleReviewData.reviews.map((review) => (
+          <ReviewItem
+            key={review.id}
+            handleProfileClick={() => handleProfileClick(review.nickname)}
+            reviewData={review}
+          />
+        ))}
       </div>
     </div>
   );
