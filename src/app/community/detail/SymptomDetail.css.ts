@@ -1,6 +1,6 @@
-import { color, font } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
+import {color, font} from "@style/styles.css.ts";
+import {style} from "@vanilla-extract/css";
+import {recipe} from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -114,6 +114,7 @@ export const reviewFilter = style({
   padding: "1.6rem 2rem",
   gap: "0.8rem",
   alignItems: "center",
+  width: "100%",
 });
 
 export const reviewRegion = style({

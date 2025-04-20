@@ -2,21 +2,13 @@
 
 import React, {useEffect, useState} from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {
-  IcBaseProfileImage,
-  IcCuriousActive,
-  IcCuriousUnactive,
-  IcLeftarrow,
-  IcLikeActive,
-  IcLikeDisabled,
-} from "@asset/svg";
+import {IcCuriousActive, IcCuriousUnactive, IcLeftarrow, IcLikeActive, IcLikeDisabled} from "@asset/svg";
 import {Button} from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
 import {TextField} from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
-import {formatTime} from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
 import {
   useCommentPost,
@@ -39,6 +31,7 @@ import dynamic from "next/dynamic";
 import {styles} from "./PostDetail.css.ts";
 import {getCategoryResponse} from "../_utills/getPostCategoryLike.ts";
 import {getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon} from "../_utills/handleCategoryItem.tsx";
+import Profile from "@app/community/_component/Profile/Profile.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -256,25 +249,15 @@ const Page = () => {
             );
           }}
         />
-        <div className={styles.top} onClick={handleProfileClick}>
-          {postData.profileImage ? (
-            <Image
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-              width={32}
-              height={32}
-            />
-          ) : (
-            <IcBaseProfileImage width={32} height={32} />
-          )}
-          <div className={styles.info}>
-            <div className={styles.infoName}>{postData.nickname}</div>
-            <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
-            </div>
-          </div>
-        </div>
+
+        <Profile
+          handleProfileClick={handleProfileClick}
+          profileImageData={postData.profileImage}
+          nickname={postData.nickname}
+          breed={postData.breed}
+          petAge={postData.petAge}
+          createdAt={postData.createdAt}
+        />
         <div>
           <div className={styles.title}>{postData.title}</div>
           <div className={styles.content}>{postData.content}</div>

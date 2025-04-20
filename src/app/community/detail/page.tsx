@@ -56,7 +56,6 @@ const ReviewDetailContent = () => {
 
   const handleClick = () => {
     setIsFilterOpen(!isFilterOpen);
-    router.push(`${PATH.COMMUNITY.ROOT}/review`);
   };
 
   return (
@@ -139,7 +138,7 @@ const PostDetail = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
+  const [activeTab, setActiveTab] = useState<ActiveTabType>("community");
 
   // 항상 헤더를 렌더링하여 hydration 문제 방지
   const symptomName = typeId ? symptomMapping[typeId] || "증상" : "증상";
