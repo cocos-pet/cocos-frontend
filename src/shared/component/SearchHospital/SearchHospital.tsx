@@ -25,13 +25,13 @@ interface Hospital {
 
 interface SearchHospitalProps {
   active: boolean;
-  handleCloseBottomSheet: () => void;
+  onCloseBottomSheet: () => void;
   selectedHospital: Hospital | null;
   onSelectHospital: (hospital: Hospital | null) => void;
 }
 
 const SearchHospital = (props: SearchHospitalProps) => {
-  const { active, handleCloseBottomSheet, selectedHospital, onSelectHospital } = props;
+  const { active, onCloseBottomSheet, selectedHospital, onSelectHospital } = props;
 
   // 텍스트 필드에 입력한 검색어
   const [searchWord, setSearchWord] = useState("");
@@ -46,7 +46,7 @@ const SearchHospital = (props: SearchHospitalProps) => {
   const handleCancelSearch = () => {
     setSearchWord("");
     onSelectHospital(null);
-    handleCloseBottomSheet();
+    onCloseBottomSheet();
   };
 
   return (
@@ -90,7 +90,7 @@ const SearchHospital = (props: SearchHospitalProps) => {
             size="large"
             variant="solidPrimary"
             disabled={!selectedHospital}
-            onClick={handleCloseBottomSheet}
+            onClick={onCloseBottomSheet}
           />
           <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} onClick={handleCancelSearch} />
         </div>
