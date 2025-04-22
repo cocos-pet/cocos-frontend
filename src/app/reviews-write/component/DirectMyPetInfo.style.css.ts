@@ -19,3 +19,12 @@ export const container = style(
   width: "100%",
   color:color.gray.gray700,
 });
+
+export const halfFocusStyle = style({
+  selectors: {
+    '&:focus': {
+      border: `0.1rem solid ${color.primary.blue600}`,
+      backgroundColor: color.gray.gray000,
+    },
+  },
+});
