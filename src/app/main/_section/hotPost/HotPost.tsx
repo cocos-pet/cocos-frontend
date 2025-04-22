@@ -5,6 +5,7 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import { useQueryGetPopular } from "@api/domain/main/hook.ts";
 import { PATH } from "@route/path.ts";
 import { useRouter } from "next/navigation";
+import { Separated } from "react-simplikit";
 
 // interface Post {
 //   id?: number;
@@ -41,17 +42,17 @@ const HotPost = ({ nickname }: HotPostProps) => {
         <p className={styles.subTitle}>인기 게시물을 확인해보세요</p>
         <div className={styles.title}>반려인들이 주목하는 글 TOP 5</div>
       </div>
-
       <div className={styles.hotPostListContainer}>
-        {posts.slice(0, 5).map((post, index) => (
-          <div key={post.id} className={styles.postlist}>
-            <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
-              <div className={styles.contentId}>{index + 1}</div>
-              <div className={styles.contentTitle}>{post.title}</div>
+        <Separated by={<Divider size="popular" />}>
+          {posts.slice(0, 5).map((post, index) => (
+            <div key={post.id} className={styles.postlist}>
+              <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
+                <div className={styles.contentId}>{index + 1}</div>
+                <div className={styles.contentTitle}>{post.title}</div>
+              </div>
             </div>
-            {post.id !== posts.slice(0, 5)[posts.slice(0, 5).length - 1]?.id && <Divider size="popular" />}
-          </div>
-        ))}
+          ))}
+        </Separated>
       </div>
     </div>
   );
