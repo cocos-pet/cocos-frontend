@@ -29,7 +29,7 @@ export const dimmed = recipe({
 
 export const wrapper = recipe({
   base: {
-    zIndex: "3",
+    zIndex: "4",
     position: "fixed",
     bottom: "0",
 
