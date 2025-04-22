@@ -9,6 +9,7 @@ interface HotHospitalItemProps {
   address: string;
   reviewCount: number;
   imageSrc?: string | StaticImageData;
+  onClick?: () => void;
 }
 
 /**
@@ -18,12 +19,20 @@ interface HotHospitalItemProps {
  * @param address 병원 주소
  * @param reviewCount 리뷰 수
  * @param imageSrc 병원 이미지
+ * @param onClick 아이템 클릭 시 동작
  * @constructor
  */
 
-const HotHospitalItem = ({ id, name, address, reviewCount, imageSrc = notFoundGraphic }: HotHospitalItemProps) => {
+const HotHospitalItem = ({
+  id,
+  name,
+  address,
+  reviewCount,
+  imageSrc = notFoundGraphic,
+  onClick,
+}: HotHospitalItemProps) => {
   return (
-    <div className={styles.hotHospital}>
+    <div className={styles.hotHospital} onClick={onClick}>
       <div className={styles.hotHospitalContent}>
         <div className={styles.hotHospitalContentTop}>
           <div className={styles.hotHospitalId}>{id}</div>
