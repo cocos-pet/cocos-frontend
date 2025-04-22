@@ -18,7 +18,7 @@ import { useEffect } from "react";
 import { useGetMemberInfo } from "@api/domain/mypage/hook.ts";
 import { useProtectedRoute } from "@route/useProtectedRoute.tsx";
 import { useRouter } from "next/navigation";
-import HotHospital from "@app/main/_section/HotHospital/HotHospital.tsx";
+import HotHospital from "@app/main/_section/hotHospital/HotHospital.tsx";
 
 export default function Page() {
   useProtectedRoute();
