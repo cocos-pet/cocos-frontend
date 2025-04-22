@@ -5,13 +5,13 @@ export const hotHospitalContainer = style({
   display: "flex",
   width: "100%",
   flexDirection: "column",
-  padding: "2rem",
-  marginTop: "3.2rem 2rem 3.2rem 2rem",
+  padding: "3.2rem 2rem 3.2rem 2rem",
 });
 
 export const titleContainer = style({
   display: "flex",
   gap: "0.4rem",
+  flexDirection: "column",
 });
 
 export const subTitle = style([
@@ -30,7 +30,7 @@ export const title = style([
   },
 ]);
 
-export const nickname = style([
+export const blue = style([
   font.heading02,
   {
     fontWeight: "600",

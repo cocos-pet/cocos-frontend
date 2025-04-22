@@ -5,8 +5,7 @@ export const hotPostContainer = style({
   display: "flex",
   width: "100%",
   flexDirection: "column",
-  padding: "2rem",
-  marginTop: "3.2rem 2rem 3.2rem 2rem",
+  padding: "3.2rem 2rem 3.2rem 2rem",
 });
 
 export const titleContainer = style({
@@ -18,6 +17,9 @@ export const titleContainer = style({
 export const postlist = style({
   width: "100%",
   color: semanticColor.text.normal,
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.2rem",
 });
 
 export const subTitle = style([
@@ -46,7 +48,7 @@ export const title = style([
 
 export const hotPostListContainer = style({
   display: "flex",
-  padding: "1.6rem 1.6rem 0rem 1.6rem",
+  padding: "1.6rem",
   flexDirection: "column",
   alignItems: "flex-start",
   alignSelf: "stretch",
@@ -60,16 +62,17 @@ export const hotPostListContainer = style({
 export const postContent = style({
   display: "flex",
   gap: "0.4rem",
-  marginBottom: "1.2rem",
   width: "calc(100% - 3.2em)",
   whiteSpace: "nowrap",
 });
 
 export const contentId = style([
-  { gap: "1.2rem" },
   font.body01,
   {
+    width: "1.6rem",
+    gap: "1.2rem",
     color: semanticColor.primary.strong,
+    textAlign: "center",
   },
 ]);
 
@@ -78,6 +81,6 @@ export const contentTitle = style([
   {
     color: semanticColor.text.normal,
     flex: 1,
+    width: "calc(100% - 3.2rem)",
   },
-  { width: "calc(100% - 3.2rem)" },
 ]);

@@ -39,7 +39,7 @@ const HotPost = ({ nickname }: HotPostProps) => {
     <div className={styles.hotPostContainer}>
       <div className={styles.titleContainer}>
         <p className={styles.subTitle}>인기 게시물을 확인해보세요</p>
-        <div className={styles.title}>"반려인들이 주목하는 글 TOP 5"</div>
+        <div className={styles.title}>반려인들이 주목하는 글 TOP 5</div>
       </div>
 
       <div className={styles.hotPostListContainer}>

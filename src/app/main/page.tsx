@@ -58,9 +58,10 @@ export default function Page() {
       <Symptom />
       <Divider />
       <HotPost nickname={nickName?.nickname} />
+      <Divider />
+      <HotHospital />
       <MainFooter />
       <Spacing marginBottom="8" />
-      <HotHospital />
       <span
         style={{
           position: "fixed",

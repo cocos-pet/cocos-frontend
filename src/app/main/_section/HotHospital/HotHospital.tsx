@@ -6,12 +6,14 @@ interface HotPostProps {
   nickname?: string;
 }
 
-const HotHospital = ({ nickname }: HotPostProps) => {
+const HotHospital = () => {
   return (
     <div className={styles.hotHospitalContainer}>
       <div className={styles.titleContainer}>
-        <p className={styles.subTitle}>인기 게시물을 확인해보세요</p>
-        <div className={styles.title}>"반려인들이 주목하는 글 TOP 5"</div>
+        <p className={styles.subTitle}>반려인들의 PICK</p>
+        <div className={styles.title}>
+          가장 많이 찾는 <span className={styles.blue}>병원</span>이에요
+        </div>
       </div>
 
       {/*<div className={styles.hotPostListContainer}>*/}
