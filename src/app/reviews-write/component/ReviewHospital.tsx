@@ -21,7 +21,7 @@ const ReviewHospital = ({ selectedHospital, handleOpenSearchHospital }: ReviewHo
           <span className={styles.star}>*</span>
         </div>
         {selectedHospital ? (
-          <div className={styles.cardLayout}>
+          <div className={styles.cardLayout} onClick={handleOpenSearchHospital}>
             <div className={styles.cardBox}>
               <span className={styles.hospitalName}>{selectedHospital.name}</span>
               <span className={styles.hospitalInfo}>
