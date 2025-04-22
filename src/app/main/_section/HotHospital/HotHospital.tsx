@@ -1,12 +1,31 @@
 "use client";
 
 import * as styles from "./HotHospital.css.ts";
-
-interface HotPostProps {
-  nickname?: string;
-}
+import HotHospitalItem from "../../_component/HotHospitalItem/HotHospitalItem.tsx";
 
 const HotHospital = () => {
+  // Mock data for demonstration
+  const hotHospitals = [
+    {
+      id: 1,
+      name: "병원이름이길면어떡할건데너가어떡할거냐고",
+      address: "병원 주소",
+      reviewCount: 44,
+    },
+    {
+      id: 2,
+      name: "멍멍 동물병원",
+      address: "서울시 강남구",
+      reviewCount: 38,
+    },
+    {
+      id: 3,
+      name: "냥냥 동물병원",
+      address: "서울시 서초구",
+      reviewCount: 27,
+    },
+  ];
+
   return (
     <div className={styles.hotHospitalContainer}>
       <div className={styles.titleContainer}>
@@ -16,14 +35,17 @@ const HotHospital = () => {
         </div>
       </div>
 
-      {/*<div className={styles.hotPostListContainer}>*/}
-      {/*    <div className={styles.postlist}>*/}
-      {/*        <div className={styles.postContent} onClick={() => router.push("/hospital")}>*/}
-      {/*            <div className={styles.contentId}>1</div>*/}
-      {/*            <div className={styles.contentTitle}>서울대학교병원</div>*/}
-      {/*        </div>*/}
-      {/*    </div>*/}
-      {/*</div>*/}
+      <div className={styles.hotHospitalListContainer}>
+        {hotHospitals.map((hospital) => (
+          <HotHospitalItem
+            key={hospital.id}
+            id={hospital.id}
+            name={hospital.name}
+            address={hospital.address}
+            reviewCount={hospital.reviewCount}
+          />
+        ))}
+      </div>
     </div>
   );
 };
