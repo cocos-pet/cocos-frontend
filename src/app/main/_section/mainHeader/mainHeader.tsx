@@ -1,6 +1,6 @@
-import * as styles from "./mainHeader.css";
-import MainCarousel from "./Carousel/mainCarousel";
-import {carouselImages} from "./Carousel/Images";
+import * as styles from "./mainHeader.css.ts";
+import MainCarousel from "./Carousel/mainCarousel.tsx";
+import {carouselImages} from "./Carousel/Images.ts";
 
 const MainHeader = () => {
   return (

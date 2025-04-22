@@ -1,5 +1,5 @@
-import {color, font, semanticColor} from "@style/styles.css";
-import {style} from "@vanilla-extract/css";
+import { color, font, semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 
 export const hotPostContainer = style({
   display: "flex",
@@ -9,12 +9,18 @@ export const hotPostContainer = style({
   marginTop: "3.2rem 2rem 3.2rem 2rem",
 });
 
+export const titleContainer = style({
+  display: "flex",
+  gap: "0.4rem",
+  flexDirection: "column",
+});
+
 export const postlist = style({
   width: "100%",
   color: semanticColor.text.normal,
 });
 
-export const p = style([
+export const subTitle = style([
   font.label01,
   {
     color: semanticColor.text.normal,

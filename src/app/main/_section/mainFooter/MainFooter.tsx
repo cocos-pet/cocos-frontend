@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import * as styles from "./MainFooter.css";
+import * as styles from "./MainFooter.css.ts";
 import {IcCocos} from "@asset/svg";
 
 const MainFooter = () => {

@@ -1,15 +1,15 @@
 import { useSearchParams, useRouter } from "next/navigation";
-import * as styles from "./SymptomDetail.css";
-import Content from "@common/component/Content/Content";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import * as styles from "./SymptomDetail.css.ts";
+import Content from "@common/component/Content/Content.tsx";
+import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import { IcLeftarrow, IcUnderline } from "@asset/svg";
-import { PATH } from "@route/path";
-import { formatTime } from "@shared/util/formatTime";
-import { usePostPostFilters } from "@api/domain/community/search/hook";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { useEffect, useState, useCallback, Suspense } from "react";
 import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { useFilterStore } from "@store/filter";
+import { useFilterStore } from "@store/filter.ts";
 import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
 

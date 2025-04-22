@@ -1,4 +1,4 @@
-import { color, font } from "@style/styles.css";
+import { color, font } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 

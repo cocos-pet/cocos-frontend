@@ -1,4 +1,4 @@
-import { font, semanticColor } from "@style/styles.css";
+import { font, semanticColor } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
 
 export const symptomContainer = style({

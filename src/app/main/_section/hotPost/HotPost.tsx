@@ -1,9 +1,9 @@
 "use client";
 
-import * as styles from "./HotPost.css";
-import Divider from "@common/component/Divider/Divider";
-import {useQueryGetPopular} from "@api/domain/main/hook";
-import {PATH} from "@route/path";
+import * as styles from "./HotPost.css.ts";
+import Divider from "@common/component/Divider/Divider.tsx";
+import { useQueryGetPopular } from "@api/domain/main/hook.ts";
+import { PATH } from "@route/path.ts";
 import { useRouter } from "next/navigation";
 
 // interface Post {
@@ -37,16 +37,9 @@ const HotPost = ({ nickname }: HotPostProps) => {
 
   return (
     <div className={styles.hotPostContainer}>
-      <p className={styles.p}>인기 게시물을 확인해보세요</p>
-
-      <div className={styles.title}>
-        {nickname ? (
-          <>
-            <span className={styles.nickname}>{nickname}</span>를 위한 인기 게시글을 확인해보세요
-          </>
-        ) : (
-          "반려인들이 주목하는 글 TOP 5"
-        )}
+      <div className={styles.titleContainer}>
+        <p className={styles.subTitle}>인기 게시물을 확인해보세요</p>
+        <div className={styles.title}>"반려인들이 주목하는 글 TOP 5"</div>
       </div>
 
       <div className={styles.hotPostListContainer}>
