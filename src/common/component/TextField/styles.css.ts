@@ -25,6 +25,9 @@ export const styles = {
           padding: "1.2rem",
         },
         centerPlaceholder: { maxWidth: "12rem" },
+        half: {
+          maxWidth: "15.1rem",
+        },
         search: {
           width: "100%",
           marginLeft: "2rem",
@@ -45,10 +48,17 @@ export const styles = {
           border: "none",
         },
       },
+      focus: {
+        true: {
+          border: `0.1rem solid ${color.primary.blue600}`,
+        },
+        false: {},
+      },
     },
     defaultVariants: {
       state: "default",
       active: true,
+      focus: false,
     },
   }),
 
@@ -100,7 +110,9 @@ export const styles = {
         search: {},
         main: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
-        half: { maxWidth: "11.1rem" },
+        half: {
+          maxWidth: "11.1rem",
+        },
       },
     },
 
