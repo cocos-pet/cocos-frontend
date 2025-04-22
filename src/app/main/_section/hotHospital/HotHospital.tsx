@@ -9,7 +9,7 @@ const HotHospital = () => {
   const hotHospitals = [
     {
       id: 1,
-      name: "병원이름이길면어떡할건데너가어떡할거냐고",
+      name: "병원이름이길면어떡할건데너가어떡할거냐고응?어떡할건데",
       address: "병원 주소",
       reviewCount: 44,
     },

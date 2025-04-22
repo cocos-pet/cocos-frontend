@@ -1,4 +1,4 @@
-import { color, font, semanticColor } from "@style/styles.css.ts";
+import { font, semanticColor } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
 
 export const hotPostContainer = style({
@@ -27,14 +27,6 @@ export const subTitle = style([
   {
     color: semanticColor.text.normal,
     fontWeight: "500",
-  },
-]);
-
-export const nickname = style([
-  font.heading02,
-  {
-    fontWeight: "600",
-    color: color.primary.blue700,
   },
 ]);
 
