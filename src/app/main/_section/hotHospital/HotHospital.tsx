@@ -2,9 +2,10 @@
 
 import * as styles from "./HotHospital.css.ts";
 import HotHospitalItem from "../../_component/HotHospitalItem/HotHospitalItem.tsx";
+import Divider from "@common/component/Divider/Divider.tsx";
+import { Separated } from "react-simplikit";
 
 const HotHospital = () => {
-  // Mock data for demonstration
   const hotHospitals = [
     {
       id: 1,
@@ -36,15 +37,17 @@ const HotHospital = () => {
       </div>
 
       <div className={styles.hotHospitalListContainer}>
-        {hotHospitals.map((hospital) => (
-          <HotHospitalItem
-            key={hospital.id}
-            id={hospital.id}
-            name={hospital.name}
-            address={hospital.address}
-            reviewCount={hospital.reviewCount}
-          />
-        ))}
+        <Separated by={<Divider size="popular" />}>
+          {hotHospitals.map((hospital) => (
+            <HotHospitalItem
+              key={hospital.id}
+              id={hospital.id}
+              name={hospital.name}
+              address={hospital.address}
+              reviewCount={hospital.reviewCount}
+            />
+          ))}
+        </Separated>
       </div>
     </div>
   );
