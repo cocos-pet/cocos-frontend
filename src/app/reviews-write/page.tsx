@@ -40,8 +40,9 @@ const Page = () => {
 
   // 1-3. petInfo
   const handleSelectPetInfo = (type: "myPet" | "manual") => {
-    setSelectedPetInfo(type);
+    setSelectedPetInfo((prev) => (prev === type ? null : type));
   };
+
   return (
     <div className={styles.preventScroll}>
       {/* 상단 헤더 */}
