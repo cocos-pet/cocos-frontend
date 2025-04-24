@@ -91,7 +91,7 @@ export const cardContainer = style({
   top: "12rem",
 
   width: "100%",
-  height: "calc(100vh - 33.2rem)",
+  height: "100dvh",
   overflow: "auto",
 
   // 스크롤바 제거
