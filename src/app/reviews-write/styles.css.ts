@@ -22,7 +22,7 @@ export const wrapper = style({
 });
 
 export const buttonContainer = style({
-  position: "absolute",
+  position: "sticky",
   bottom: "0rem",
   left: "0",
   width: "100%",

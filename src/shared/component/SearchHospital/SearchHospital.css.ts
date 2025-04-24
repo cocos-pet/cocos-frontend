@@ -4,7 +4,7 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const dimmed = recipe({
   base: {
-    position: "absolute",
+    position: "sticky",
     zIndex: "2",
 
     bottom: 0,
@@ -30,7 +30,7 @@ export const dimmed = recipe({
 export const wrapper = recipe({
   base: {
     zIndex: "4",
-    position: "fixed",
+    position: "sticky",
     bottom: "0",
 
     display: "flex",
@@ -38,6 +38,7 @@ export const wrapper = recipe({
     alignItems: "center",
 
     width: "100%",
+
     height: "calc(100vh - 8rem)",
     overflow: "hidden",
 
