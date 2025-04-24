@@ -10,19 +10,22 @@ export const wrapper = style({
   marginTop: "1.6rem",
 });
 
-export const container = style(
-  {
+export const container = style({
   display: "flex",
   justifyContent: "space-between",
   gap: "0.9rem",
-  
+
   width: "100%",
-  color:color.gray.gray700,
+  color: color.gray.gray700,
+});
+
+export const halfTextField = style({
+  width: "48.5%",
 });
 
 export const halfFocusStyle = style({
   selectors: {
-    '&:focus': {
+    "&:focus": {
       border: `0.1rem solid ${color.primary.blue600}`,
       backgroundColor: color.gray.gray000,
     },

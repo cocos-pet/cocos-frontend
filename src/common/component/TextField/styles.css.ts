@@ -25,9 +25,7 @@ export const styles = {
           padding: "1.2rem",
         },
         centerPlaceholder: { maxWidth: "12rem" },
-        half: {
-          maxWidth: "15.1rem",
-        },
+
         search: {
           width: "100%",
           marginLeft: "2rem",
@@ -110,9 +108,6 @@ export const styles = {
         search: {},
         main: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
-        half: {
-          maxWidth: "11.1rem",
-        },
       },
     },
 

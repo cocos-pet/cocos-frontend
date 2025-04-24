@@ -69,12 +69,11 @@ const DirectMyPetInfo = () => {
     <div className={styles.wrapper}>
       {/* 1-3-1. 종 */}
       <div className={styles.container}>
-        <div>
+        <div className={styles.halfTextField}>
           <span>종</span>
           <TextField
             {...register("petType")}
             placeholder={"종 선택하기"}
-            state="half"
             isDelete={false}
             onClick={() => handleTextFieldClick("petType")}
             focus={petType !== ""}
@@ -90,12 +89,11 @@ const DirectMyPetInfo = () => {
         </div>
 
         {/* 1-3-2. 성별 */}
-        <div>
+        <div className={styles.halfTextField}>
           <span>성별</span>
           <TextField
             {...register("petGender")}
             placeholder={"성별 선택하기"}
-            state="half"
             isDelete={false}
             onClick={() => handleTextFieldClick("petGender")}
             focus={petGender !== ""}
@@ -113,12 +111,11 @@ const DirectMyPetInfo = () => {
 
       {/* 1-3-3. 종류 */}
       <div className={styles.container}>
-        <div>
+        <div className={styles.halfTextField}>
           <span>종류</span>
           <TextField
             {...register("petId")}
             placeholder={"예시: 샴"}
-            state="half"
             isDelete={false}
             focus={petId !== ""}
             maxLength={20}
@@ -126,12 +123,11 @@ const DirectMyPetInfo = () => {
         </div>
 
         {/* 1-3-4. 몸무게 */}
-        <div>
+        <div className={styles.halfTextField}>
           <span>몸무게</span>
           <TextField
             {...register("petWeight")}
             placeholder={"예시: 5.3kg"}
-            state="half"
             isDelete={false}
             focus={petWeight !== ""}
             onChange={handleWeightChange}
