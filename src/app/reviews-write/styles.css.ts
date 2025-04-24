@@ -1,6 +1,11 @@
 import { style } from "@vanilla-extract/css";
 import { color } from "@style/styles.css";
 
+export const preventScroll = style({
+  height: "100vh",
+  overflow: "hidden",
+});
+
 export const wrapper = style({
   display: "flex",
   flexDirection: "column",
