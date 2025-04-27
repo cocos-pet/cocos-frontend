@@ -1,9 +1,11 @@
 "use client";
 
-import {useState} from "react";
+import { useState } from "react";
 import * as styles from "./ReviewItem.css";
 import Chip from "@common/component/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
+import Divider from "@common/component/Divider/Divider.tsx";
+import { Separated } from "react-simplikit";
 
 interface ReviewItem {
   id: number;
@@ -66,7 +68,7 @@ const ReviewItem = (props: propsType) => {
         <div className={styles.detailSection}>
           <div>
             <div className={styles.detailTitle}>사전증상</div>
-            <div className={styles.petInfoContainer}>
+            <div className={styles.detailContent}>
               {reviewData.symptoms?.map((symptom) => (
                 <Chip key={symptom.id} label={symptom.name} color="border" />
               ))}
@@ -85,10 +87,23 @@ const ReviewItem = (props: propsType) => {
           <div>
             <div className={styles.detailTitle}>동물 기본 정보</div>
             <div className={styles.petInfoContainer}>
-              <Chip label={`종: ${reviewData.breed}`} color="border" />
-              <Chip label={`성별: ${reviewData.gender}`} color="border" />
-              <Chip label={`종류: ${reviewData.animal}`} color="border" />
-              <Chip label={`몸무게: ${reviewData.weight}`} color="border" />
+              <Separated by={<Divider />}></Separated>
+              <div className={styles.petInfoCategory}>
+                <p className={styles.petInfoLabel}>종</p>
+                <p className={styles.petInfoValue}>{reviewData.breed}</p>
+              </div>
+              <div className={styles.petInfoCategory}>
+                <p className={styles.petInfoLabel}>성별</p>
+                <p className={styles.petInfoValue}>{reviewData.gender}</p>
+              </div>
+              <div className={styles.petInfoCategory}>
+                <p className={styles.petInfoLabel}>성별</p>
+                <p className={styles.petInfoValue}>{reviewData.animal}</p>
+              </div>
+              <div className={styles.petInfoCategory}>
+                <p className={styles.petInfoLabel}>몸무게</p>
+                <p className={styles.petInfoValue}>{reviewData.weight}</p>
+              </div>
             </div>
           </div>
         </div>

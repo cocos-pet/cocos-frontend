@@ -88,7 +88,33 @@ export const petInfoContainer = style({
   display: "flex",
   flexWrap: "wrap",
   gap: "0.8rem",
+  border: `1px solid ${semanticColor.line.heavy}`,
+  borderRadius: "0.8rem",
+  padding: "1.6rem",
 });
+
+export const petInfoCategory = style({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+  width: "100%",
+});
+
+export const petInfoLabel = style([
+  font.body01,
+  {
+    color: semanticColor.text.assistive,
+    fontWeight: "500",
+  },
+]);
+
+export const petInfoValue = style([
+  font.body01,
+  {
+    color: semanticColor.text.normal,
+    fontWeight: "600",
+  },
+]);
 
 export const reviewChipsContainer = style({
   display: "flex",
