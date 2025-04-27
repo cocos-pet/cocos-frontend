@@ -57,6 +57,7 @@ export const detailButton = style([
   {
     color: semanticColor.text.assistive,
     cursor: "pointer",
+    fontWeight: 500,
   },
 ]);
 

@@ -87,23 +87,24 @@ const ReviewItem = (props: propsType) => {
           <div>
             <div className={styles.detailTitle}>동물 기본 정보</div>
             <div className={styles.petInfoContainer}>
-              <Separated by={<Divider />}></Separated>
-              <div className={styles.petInfoCategory}>
-                <p className={styles.petInfoLabel}>종</p>
-                <p className={styles.petInfoValue}>{reviewData.breed}</p>
-              </div>
-              <div className={styles.petInfoCategory}>
-                <p className={styles.petInfoLabel}>성별</p>
-                <p className={styles.petInfoValue}>{reviewData.gender}</p>
-              </div>
-              <div className={styles.petInfoCategory}>
-                <p className={styles.petInfoLabel}>성별</p>
-                <p className={styles.petInfoValue}>{reviewData.animal}</p>
-              </div>
-              <div className={styles.petInfoCategory}>
-                <p className={styles.petInfoLabel}>몸무게</p>
-                <p className={styles.petInfoValue}>{reviewData.weight}</p>
-              </div>
+              <Separated by={<Divider size={"popular"} />}>
+                <div className={styles.petInfoCategory}>
+                  <p className={styles.petInfoLabel}>종</p>
+                  <p className={styles.petInfoValue}>{reviewData.breed}</p>
+                </div>
+                <div className={styles.petInfoCategory}>
+                  <p className={styles.petInfoLabel}>성별</p>
+                  <p className={styles.petInfoValue}>{reviewData.gender}</p>
+                </div>
+                <div className={styles.petInfoCategory}>
+                  <p className={styles.petInfoLabel}>성별</p>
+                  <p className={styles.petInfoValue}>{reviewData.animal}</p>
+                </div>
+                <div className={styles.petInfoCategory}>
+                  <p className={styles.petInfoLabel}>몸무게</p>
+                  <p className={styles.petInfoValue}>{reviewData.weight}</p>
+                </div>
+              </Separated>
             </div>
           </div>
         </div>
