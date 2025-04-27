@@ -1,4 +1,4 @@
-import { color, font } from "@style/styles.css.ts";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
 export const chipItem = recipe({
@@ -38,6 +38,11 @@ export const chipItem = recipe({
       red: {
         color: color.red.warning_red200,
         border: `0.1rem solid ${color.red.warning_red200}`,
+      },
+      border: {
+        color: semanticColor.text.normal,
+        border: `0.1rem solid ${semanticColor.line.heavy}`,
+        fontWeight: "500",
       },
     },
 

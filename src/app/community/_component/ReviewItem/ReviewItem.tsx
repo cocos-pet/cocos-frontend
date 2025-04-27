@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import {useState} from "react";
 import * as styles from "./ReviewItem.css";
 import Chip from "@common/component/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
@@ -68,7 +68,7 @@ const ReviewItem = (props: propsType) => {
             <div className={styles.detailTitle}>사전증상</div>
             <div className={styles.petInfoContainer}>
               {reviewData.symptoms?.map((symptom) => (
-                <Chip key={symptom.id} label={symptom.name} color="gray" />
+                <Chip key={symptom.id} label={symptom.name} color="border" />
               ))}
             </div>
           </div>
@@ -77,7 +77,7 @@ const ReviewItem = (props: propsType) => {
             <div className={styles.detailTitle}>진단 내용</div>
             <div className={styles.detailContent}>
               {reviewData.petDiseases?.map((disease) => (
-                <Chip key={disease.id} label={disease.name} color="gray" />
+                <Chip key={disease.id} label={disease.name} color="border" />
               ))}
             </div>
           </div>
@@ -85,10 +85,10 @@ const ReviewItem = (props: propsType) => {
           <div>
             <div className={styles.detailTitle}>동물 기본 정보</div>
             <div className={styles.petInfoContainer}>
-              <Chip label={`종: ${reviewData.breed}`} color="gray" />
-              <Chip label={`성별: ${reviewData.gender}`} color="gray" />
-              <Chip label={`종류: ${reviewData.animal}`} color="gray" />
-              <Chip label={`몸무게: ${reviewData.weight}`} color="gray" />
+              <Chip label={`종: ${reviewData.breed}`} color="border" />
+              <Chip label={`성별: ${reviewData.gender}`} color="border" />
+              <Chip label={`종류: ${reviewData.animal}`} color="border" />
+              <Chip label={`몸무게: ${reviewData.weight}`} color="border" />
             </div>
           </div>
         </div>
