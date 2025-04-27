@@ -35,6 +35,10 @@ export const chipItem = recipe({
         color: color.gray.gray700,
         border: `0.1rem solid ${color.gray.gray700}`,
       },
+      red: {
+        color: color.red.warning_red200,
+        border: `0.1rem solid ${color.red.warning_red200}`,
+      },
     },
 
     active: {

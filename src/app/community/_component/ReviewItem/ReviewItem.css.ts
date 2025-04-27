@@ -1,40 +1,47 @@
-import {style} from "@vanilla-extract/css";
-import {color, font} from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const reviewItemContainer = style({
   width: "100%",
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.6rem",
 });
 
 export const hospitalDetail = style({
   display: "flex",
   flexDirection: "column",
   gap: "0.4rem",
+  padding: "1.6rem",
+  borderRadius: "0.8rem",
+  border: `1px solid ${semanticColor.line.strong}`,
+  background: semanticColor.neutral.strong,
 });
 
 export const hospitalName = style([
-  font.body01,
+  font.heading03,
   {
-    color: color.gray.gray900,
+    color: semanticColor.text.normal,
     fontWeight: "600",
   },
 ]);
 
 export const hospitalAddress = style([
-  font.body01,
+  font.label01,
   {
-    color: color.gray.gray600,
+    color: semanticColor.text.assistive,
   },
 ]);
 
 export const reviewContent = style([
   font.body01,
   {
-    color: color.gray.gray800,
-    display: "-webkit-box",
+    color: semanticColor.text.normal,
     WebkitLineClamp: 2,
-    WebkitBoxOrient: "vertical",
     overflow: "hidden",
     textOverflow: "ellipsis",
+    display: "-webkit-box",
+    WebkitBox: "vertical",
   },
 ]);
 
@@ -46,36 +53,34 @@ export const reviewContentExpanded = style([
 ]);
 
 export const detailButton = style([
-  font.body01,
+  font.label01,
   {
-    color: color.primary.blue500,
+    color: semanticColor.text.assistive,
     cursor: "pointer",
-    textDecoration: "underline",
-    marginTop: "0.4rem",
   },
 ]);
 
 export const detailSection = style({
   display: "flex",
   flexDirection: "column",
-  gap: "1.2rem",
-  marginTop: "1.2rem",
-  paddingTop: "1.2rem",
-  borderTop: `1px solid ${color.gray.gray200}`,
+  gap: "1.6rem",
 });
 
 export const detailTitle = style([
   font.body01,
   {
-    color: color.gray.gray900,
+    color: semanticColor.text.assistive,
     fontWeight: "600",
+    marginBottom: "0.8em",
   },
 ]);
 
 export const detailContent = style([
   font.body01,
   {
-    color: color.gray.gray800,
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "0.8rem",
   },
 ]);
 
@@ -89,7 +94,6 @@ export const reviewChipsContainer = style({
   display: "flex",
   flexWrap: "wrap",
   gap: "0.8rem",
-  marginTop: "1.2rem",
 });
 
 export const goodReviewChip = style({

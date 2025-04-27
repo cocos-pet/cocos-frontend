@@ -28,6 +28,8 @@ export const infoName = style([
   font.label01,
   {
     color: color.gray.gray800,
+    lineHeight: "130%",
+    height: "16px",
   },
 ]);
 export const infoDetail = style([

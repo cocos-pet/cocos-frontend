@@ -1,13 +1,13 @@
 "use client";
 
-import {useEffect, useState} from "react";
-import {chipItem, ChipType} from "./ChipStyle.css.ts";
-import {IcDelete} from "@asset/svg/index";
+import { useEffect, useState } from "react";
+import { chipItem, ChipType } from "./ChipStyle.css.ts";
+import { IcDelete } from "@asset/svg/index";
 
 interface ChipProps {
   label: string;
   icon?: boolean;
-  color?: "blue" | "gray";
+  color?: "blue" | "gray" | "red";
   onClick?: () => void;
   isSelected?: boolean;
   disabled?: boolean;

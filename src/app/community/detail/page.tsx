@@ -3,17 +3,17 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcFilterBlack, IcFilterBlue, IcLeftarrow} from "@asset/svg";
-import {PATH} from "@route/path.ts";
-import {formatTime} from "@shared/util/formatTime.ts";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {Suspense, useCallback, useEffect, useState} from "react";
-import {components} from "@type/schema";
+import { IcFilterBlack, IcFilterBlue, IcLeftarrow } from "@asset/svg";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import {useFilterStore} from "@store/filter.ts";
-import {postPostFiltersRequestType} from "@api/domain/community/search";
+import { useFilterStore } from "@store/filter.ts";
+import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@app/community/_component/ReviewItem/ReviewItem.tsx";
@@ -45,12 +45,16 @@ const sampleReviewData = {
       memberId: 2001,
       nickname: "멍멍이사랑해",
       breedName: "푸들",
-      petDisease: "심장병",
+      petDiseases: [
+        { id: 1, name: "피부병" },
+        { id: 2, name: "알레르기" },
+      ],
       vistitedAt: "2025-04-01",
       hospitalId: 10,
       hospitalName: "행복한동물병원",
       hospitalAddress: "서울특별시 강남구 도곡로 123",
-      content: "친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%",
+      content:
+        "친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%",
       goodReviews: [
         { id: 1, name: "친절해요" },
         { id: 2, name: "설명이 자세해요" },

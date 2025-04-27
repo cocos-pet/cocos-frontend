@@ -10,7 +10,7 @@ interface ReviewItem {
   memberId: number;
   nickname: string;
   breedName: string;
-  petDisease: string;
+  petDiseases: { id: number; name: string }[];
   vistitedAt: string;
   hospitalId: number;
   hospitalName: string;
@@ -61,9 +61,6 @@ const ReviewItem = (props: propsType) => {
         <div className={styles.hospitalAddress}>{reviewData.hospitalAddress}</div>
       </div>
       <div className={isExpanded ? styles.reviewContentExpanded : styles.reviewContent}>{reviewData.content}</div>
-      <div className={styles.detailButton} onClick={toggleExpand}>
-        {isExpanded ? "접기" : "상세보기"}
-      </div>
 
       {isExpanded && (
         <div className={styles.detailSection}>
@@ -71,49 +68,43 @@ const ReviewItem = (props: propsType) => {
             <div className={styles.detailTitle}>사전증상</div>
             <div className={styles.petInfoContainer}>
               {reviewData.symptoms?.map((symptom) => (
-                <Chip key={symptom.id} label={symptom.name} color="blue" />
+                <Chip key={symptom.id} label={symptom.name} color="gray" />
               ))}
             </div>
           </div>
 
           <div>
             <div className={styles.detailTitle}>진단 내용</div>
-            <div className={styles.detailContent}>{reviewData.petDisease}</div>
+            <div className={styles.detailContent}>
+              {reviewData.petDiseases?.map((disease) => (
+                <Chip key={disease.id} label={disease.name} color="gray" />
+              ))}
+            </div>
           </div>
 
           <div>
             <div className={styles.detailTitle}>동물 기본 정보</div>
             <div className={styles.petInfoContainer}>
-              <Chip label={`종: ${reviewData.breed}`} color="blue" />
-              <Chip label={`성별: ${reviewData.gender}`} color="blue" />
-              <Chip label={`종류: ${reviewData.animal}`} color="blue" />
-              <Chip label={`몸무게: ${reviewData.weight}`} color="blue" />
-            </div>
-          </div>
-
-          <div>
-            <div className={styles.detailTitle}>좋았던 점</div>
-            <div className={styles.reviewChipsContainer}>
-              {reviewData.goodReviews?.map((review) => (
-                <div key={review.id} className={styles.goodReviewChip}>
-                  {review.name}
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div>
-            <div className={styles.detailTitle}>아쉬웠던 점</div>
-            <div className={styles.reviewChipsContainer}>
-              {reviewData.badReviews?.map((review) => (
-                <div key={review.id} className={styles.badReviewChip}>
-                  {review.name}
-                </div>
-              ))}
+              <Chip label={`종: ${reviewData.breed}`} color="gray" />
+              <Chip label={`성별: ${reviewData.gender}`} color="gray" />
+              <Chip label={`종류: ${reviewData.animal}`} color="gray" />
+              <Chip label={`몸무게: ${reviewData.weight}`} color="gray" />
             </div>
           </div>
         </div>
       )}
+      <div className={styles.detailButton} onClick={toggleExpand}>
+        {isExpanded ? "접기" : "상세보기"}
+      </div>
+
+      <div className={styles.reviewChipsContainer}>
+        {reviewData.goodReviews?.map((review) => (
+          <Chip key={review.id} label={review.name} color="blue" />
+        ))}
+        {reviewData.badReviews?.map((review) => (
+          <Chip key={review.id} label={review.name} color="red" />
+        ))}
+      </div>
     </div>
   );
 };
