@@ -42,7 +42,7 @@ export const reviewContent = style([
     overflow: "hidden",
     textOverflow: "ellipsis",
     display: "-webkit-box",
-    WebkitBox: "vertical",
+    WebkitBoxOrient: "vertical",
   },
 ]);
 
@@ -124,52 +124,10 @@ export const reviewChipsContainer = style({
   gap: "0.8rem",
 });
 
-export const goodReviewChip = style({
-  backgroundColor: color.primary.blue100,
-  color: color.primary.blue500,
-  padding: "0.4rem 0.8rem",
-  borderRadius: "1.6rem",
-  fontSize: "1.2rem",
-});
-
-export const badReviewChip = style({
-  backgroundColor: color.red.red100,
-  color: color.red.red500,
-  padding: "0.4rem 0.8rem",
-  borderRadius: "1.6rem",
-  fontSize: "1.2rem",
-});
-
-export const profileContainer = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "1.2rem",
-  cursor: "pointer",
-});
-
-export const profileImageContainer = style({
-  width: "4rem",
-  height: "4rem",
-  borderRadius: "50%",
-  overflow: "hidden",
-});
-
 export const profileImage = style({
   width: "100%",
   height: "100%",
   objectFit: "cover",
-});
-
-export const profileInfoContainer = style({
-  display: "flex",
-  flexDirection: "column",
-  gap: "0.4rem",
-});
-
-export const profileInfoTop = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "0.8rem",
 });
 
 export const nickname = style([
@@ -186,12 +144,6 @@ export const createdAt = style([
     color: color.gray.gray600,
   },
 ]);
-
-export const profileInfoBottom = style({
-  display: "flex",
-  alignItems: "center",
-  gap: "0.8rem",
-});
 
 export const breed = style([
   font.body01,

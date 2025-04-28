@@ -1,6 +1,6 @@
-import {color, font} from "@style/styles.css.ts";
-import {style} from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
+import { color, font } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -107,32 +107,4 @@ export const reviewItemContainer = style({
   width: "100%",
   display: "flex",
   flexDirection: "column",
-});
-
-export const reviewFilter = style({
-  display: "flex",
-  justifyContent: "space-between",
-  padding: "1.6rem 2rem",
-  gap: "0.8rem",
-  alignItems: "center",
-  width: "100%",
-});
-
-export const reviewRegion = style({
-  fontFamily: font.body01,
-  fontSize: "1.4rem",
-  padding: "0.6rem 1.4rem",
-  borderRadius: "0.8rem",
-});
-
-export const reviewButton = style({
-  padding: "0.6rem 1.4rem",
-  border: `1px solid ${color.primary.blue900}`,
-  borderRadius: "0.8rem",
-  fontFamily: font.body01,
-  fontWeight: "600",
-  fontSize: "1.4rem",
-  display: "flex",
-  alignItems: "center",
-  gap: "0.4rem",
 });
