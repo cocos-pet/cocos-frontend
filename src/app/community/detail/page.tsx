@@ -92,7 +92,7 @@ const EmptyState = () => (
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
-  const typeId = searchParams.get("id");
+  const typeId = searchParams?.get("id");
   const router = useRouter();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
@@ -122,6 +122,13 @@ const ReviewDetailContent = () => {
             reviewData={review}
           />
         ))}
+        {sampleReviewData.reviews.map((review) => (
+          <ReviewItem
+            key={review.id}
+            handleProfileClick={() => handleProfileClick(review.nickname)}
+            reviewData={review}
+          />
+        ))}
       </div>
     </div>
   );
@@ -129,7 +136,7 @@ const ReviewDetailContent = () => {
 
 const CommunityDetailContent = () => {
   const searchParams = useSearchParams();
-  const typeId = searchParams.get("id");
+  const typeId = searchParams?.get("id");
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
@@ -192,7 +199,7 @@ const CommunityDetailContent = () => {
 
 const PostDetail = () => {
   const searchParams = useSearchParams();
-  const typeId = searchParams.get("id");
+  const typeId = searchParams?.get("id");
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<ActiveTabType>("community");
 

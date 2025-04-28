@@ -6,6 +6,7 @@ export const reviewItemContainer = style({
   display: "flex",
   flexDirection: "column",
   gap: "1.6rem",
+  margin: "1.6rem 0",
 });
 
 export const hospitalDetail = style({

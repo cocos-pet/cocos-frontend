@@ -105,6 +105,8 @@ export const reviewContainer = style({
 export const reviewItemContainer = style({
   padding: "0 2rem",
   width: "100%",
+  display: "flex",
+  flexDirection: "column",
 });
 
 export const reviewFilter = style({
