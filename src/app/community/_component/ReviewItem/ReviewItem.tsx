@@ -76,7 +76,7 @@ const ReviewItem = (props: propsType) => {
             <div className={styles.detailTitle}>사전증상</div>
             <div className={styles.detailContent}>
               {reviewData.symptoms?.map((symptom) => (
-                <Chip key={symptom.id} label={symptom.name} color="border" />
+                <Chip key={symptom.id} label={symptom.name} color="border" disabled={true} />
               ))}
             </div>
           </div>
@@ -85,7 +85,7 @@ const ReviewItem = (props: propsType) => {
             <div className={styles.detailTitle}>진단 내용</div>
             <div className={styles.detailContent}>
               {reviewData.petDiseases?.map((disease) => (
-                <Chip key={disease.id} label={disease.name} color="border" />
+                <Chip key={disease.id} label={disease.name} color="border" disabled={true} />
               ))}
             </div>
           </div>
@@ -121,10 +121,10 @@ const ReviewItem = (props: propsType) => {
 
       <div className={styles.reviewChipsContainer}>
         {reviewData.goodReviews?.map((review) => (
-          <Chip key={review.id} label={review.name} color="blue" />
+          <Chip key={review.id} label={review.name} color="blue" disabled={true} />
         ))}
         {reviewData.badReviews?.map((review) => (
-          <Chip key={review.id} label={review.name} color="red" />
+          <Chip key={review.id} label={review.name} color="red" disabled={true} />
         ))}
       </div>
     </div>
