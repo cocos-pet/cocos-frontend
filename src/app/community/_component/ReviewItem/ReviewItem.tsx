@@ -6,6 +6,7 @@ import Chip from "@common/component/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import { Separated } from "react-simplikit";
+import { motion } from "framer-motion";
 
 interface ReviewItem {
   id: number;
@@ -64,7 +65,12 @@ const ReviewItem = (props: propsType) => {
       </div>
       <div className={isExpanded ? styles.reviewContentExpanded : styles.reviewContent}>{reviewData.content}</div>
 
-      {isExpanded && (
+      <motion.div
+        initial={false}
+        animate={{ height: isExpanded ? "auto" : 0, opacity: isExpanded ? 1 : 0 }}
+        style={{ overflow: "hidden" }}
+        transition={{ duration: 0.3 }}
+      >
         <div className={styles.detailSection}>
           <div>
             <div className={styles.detailTitle}>사전증상</div>
@@ -108,7 +114,7 @@ const ReviewItem = (props: propsType) => {
             </div>
           </div>
         </div>
-      )}
+      </motion.div>
       <div className={styles.detailButton} onClick={toggleExpand}>
         {isExpanded ? "접기" : "상세보기"}
       </div>
