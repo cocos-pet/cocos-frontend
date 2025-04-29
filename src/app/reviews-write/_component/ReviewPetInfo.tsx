@@ -39,9 +39,8 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
             selected: selectedPetInfo === "manual",
             petInfoType: "manual",
           })}
-          onClick={() => onSelectPetInfo("manual")}
         >
-          <span className={styles.buttonText}>
+          <span className={styles.buttonText} onClick={() => onSelectPetInfo("manual")}>
             직접 입력하기
             <IcChevronRight2
               className={styles.rotateIcon({ selected: selectedPetInfo === "manual" })}
