@@ -18,13 +18,15 @@ export interface Hospital {
   reviewCount: number;
 }
 
+export type PetInfoType = "myPet" | "manual";
+
 const Page = () => {
   // 병원 검색 바텀시트 열고 닫기
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   // 선택된 병원
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
   // 동물 정보 입력 방법 선택
-  const [selectedPetInfo, setSelectedPetInfo] = useState<"myPet" | "manual" | null>(null);
+  const [selectedPetInfo, setSelectedPetInfo] = useState<PetInfoType | null>(null);
 
   // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
   const handleOpenSearchHospital = () => {
@@ -39,7 +41,7 @@ const Page = () => {
   };
 
   // 1-3. petInfo
-  const handleSelectPetInfo = (type: "myPet" | "manual") => {
+  const handleSelectPetInfo = (type: PetInfoType) => {
     setSelectedPetInfo((prev) => (prev === type ? null : type));
   };
 
@@ -51,7 +53,7 @@ const Page = () => {
       {/* 중앙 컨텐츠 */}
       <div className={styles.wrapper}>
         {/* 1-1. 병원 검색 */}
-        <ReviewHospital selectedHospital={selectedHospital} handleOpenSearchHospital={handleOpenSearchHospital} />{" "}
+        <ReviewHospital selectedHospital={selectedHospital} handleOpenSearchHospital={handleOpenSearchHospital} />
         {/* 1-2. 날짜 선택 */}
         <ReviewDate />
         {/* 1-3. 동물 정보 */}

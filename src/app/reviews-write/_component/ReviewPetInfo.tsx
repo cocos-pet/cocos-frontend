@@ -2,10 +2,11 @@ import { IcRightArror, IcChevronRight2 } from "@asset/svg/index";
 import { color } from "@style/styles.css";
 import * as styles from "./ReviewPetInfo.style.css";
 import DirectMyPetInfo from "./DirectMyPetInfo";
+import { PetInfoType } from "@app/reviews-write/page";
 
 interface ReviewPetInfoProps {
-  selectedPetInfo: "myPet" | "manual" | null;
-  onSelectPetInfo: (type: "myPet" | "manual") => void;
+  selectedPetInfo: PetInfoType | null;
+  onSelectPetInfo: (type: PetInfoType) => void;
 }
 
 const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps) => {
