@@ -51,7 +51,7 @@ const ReviewItem = (props: propsType) => {
   }
 
   return (
-      <section className={`${styles.reviewItemContainer} ${isBlurred && styles.blurEffect}`}>
+      <section className={styles.reviewItemContainer}>
         <Profile
         handleProfileClick={handleProfileClick}
         profileImageData={reviewData.profileImage}
@@ -60,10 +60,12 @@ const ReviewItem = (props: propsType) => {
         breed={reviewData.breed}
         petAge={reviewData.petAge}
       />
+        <article className={`${isBlurred && styles.blurEffect}`}>
       <div className={styles.hospitalDetail}>
         <div className={styles.hospitalName}>{reviewData.hospitalName}</div>
         <div className={styles.hospitalAddress}>{reviewData.hospitalAddress}</div>
       </div>
+
       <div className={isExpanded ? styles.reviewContentExpanded : styles.reviewContent}>{reviewData.content}</div>
 
       <motion.div
@@ -128,6 +130,7 @@ const ReviewItem = (props: propsType) => {
           <Chip key={review.id} label={review.name} color="red" disabled={true} />
         ))}
       </div>
+        </article>
     </section>
   );
 };

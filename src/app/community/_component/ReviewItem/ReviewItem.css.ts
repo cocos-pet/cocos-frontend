@@ -124,41 +124,6 @@ export const reviewChipsContainer = style({
   gap: "0.8rem",
 });
 
-export const profileImage = style({
-  width: "100%",
-  height: "100%",
-  objectFit: "cover",
-});
-
-export const nickname = style([
-  font.body01,
-  {
-    color: color.gray.gray900,
-    fontWeight: "600",
-  },
-]);
-
-export const createdAt = style([
-  font.body01,
-  {
-    color: color.gray.gray600,
-  },
-]);
-
-export const breed = style([
-  font.body01,
-  {
-    color: color.gray.gray700,
-  },
-]);
-
-export const petAge = style([
-  font.body01,
-  {
-    color: color.gray.gray700,
-  },
-]);
-
 
 export const blurEffect = style({
     filter: "blur(4px)",
