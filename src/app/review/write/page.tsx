@@ -5,9 +5,9 @@ import { IcDeleteBlack } from "@asset/svg/index";
 import * as styles from "./styles.css";
 
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import ReviewHospital from "@app/reviews-write/_component/ReviewHospital";
-import ReviewDate from "@app/reviews-write/_component/ReviewDate";
-import ReviewPetInfo from "@app/reviews-write/_component/ReviewPetInfo";
+import ReviewHospital from "@app/review/write/_component/ReviewHospital";
+import ReviewDate from "@app/review/write/_component/ReviewDate";
+import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
 import SearchHospital from "@shared/component/SearchHospital/SearchHospital";
 import { Button } from "@common/component/Button/index";
 
