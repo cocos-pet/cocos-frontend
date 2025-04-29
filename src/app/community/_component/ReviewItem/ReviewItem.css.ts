@@ -158,3 +158,11 @@ export const petAge = style([
     color: color.gray.gray700,
   },
 ]);
+
+
+export const blurEffect = style({
+    filter: "blur(4px)",
+    transition: "filter 0.3s ease-in-out",
+    WebkitFilter: "blur(4px)",
+    msFilter: "blur(4px)",
+});

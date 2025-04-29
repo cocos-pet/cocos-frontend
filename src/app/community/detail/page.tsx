@@ -120,6 +120,7 @@ const ReviewDetailContent = () => {
             key={review.id}
             handleProfileClick={() => handleProfileClick(review.nickname)}
             reviewData={review}
+            isBlurred={true}
           />
         ))}
         {sampleReviewData.reviews.map((review) => (

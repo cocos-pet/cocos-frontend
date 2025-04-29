@@ -35,10 +35,11 @@ interface ReviewItem {
 interface propsType {
   handleProfileClick: () => void;
   reviewData: ReviewItem;
+  isBlurred: boolean;
 }
 
 const ReviewItem = (props: propsType) => {
-  const { handleProfileClick, reviewData } = props;
+  const { handleProfileClick, reviewData, isBlurred = false } = props;
   const [isExpanded, setIsExpanded] = useState(false);
 
   const toggleExpand = () => {
@@ -50,8 +51,8 @@ const ReviewItem = (props: propsType) => {
   }
 
   return (
-    <div className={styles.reviewItemContainer}>
-      <Profile
+      <section className={`${styles.reviewItemContainer} ${isBlurred && styles.blurEffect}`}>
+        <Profile
         handleProfileClick={handleProfileClick}
         profileImageData={reviewData.profileImage}
         createdAt={reviewData.vistitedAt}
@@ -127,7 +128,7 @@ const ReviewItem = (props: propsType) => {
           <Chip key={review.id} label={review.name} color="red" disabled={true} />
         ))}
       </div>
-    </div>
+    </section>
   );
 };
 
