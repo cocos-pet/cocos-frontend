@@ -1,12 +1,12 @@
 import Divider from "@common/component/Divider/Divider";
 import { container, itemStyle, span } from "./DropDown.css";
 
-type DropDownType = {
+interface DropDownType {
   isOpen: boolean;
   items: Array<{ id: number; name: string }>;
   onClickItem: (value: string) => void;
   size?: "full" | "half";
-};
+}
 
 const DropDown = ({ isOpen, items, onClickItem, size }: DropDownType) => {
   if (!isOpen) {

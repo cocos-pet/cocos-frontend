@@ -22,7 +22,7 @@ export const container = recipe({
         width: "calc(100vw - 4rem)",
       },
       half: {
-        width: "15.1rem",
+        width: "100%",
       },
     },
   },

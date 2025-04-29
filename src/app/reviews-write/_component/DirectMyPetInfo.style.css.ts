@@ -20,6 +20,7 @@ export const container = style({
 });
 
 export const halfTextField = style({
+  position: "relative",
   width: "48.5%",
 });
 
