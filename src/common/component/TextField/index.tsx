@@ -10,7 +10,7 @@ interface TextFieldProps {
   active?: boolean;
   isDelete?: boolean;
   placeholder?: string;
-  value?: string;
+  value: string;
   onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
@@ -54,7 +54,6 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       onClearClick,
       maxLength,
       mentionedNickname,
-      ...rest
     },
     ref,
   ) => {
@@ -73,7 +72,6 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
             onKeyDown={onKeyDown}
             disabled={!active}
             maxLength={maxLength}
-            {...rest}
           />
         </div>
         {value && isDelete ? (
