@@ -32,6 +32,10 @@ export const headerItem = recipe({
       noTitle: {
         // gridTemplateColumns: "repeat(2, 1fr)",
       },
+
+      noBackground: {
+        backgroundColor: "transparent",
+      },
     },
   },
 });
