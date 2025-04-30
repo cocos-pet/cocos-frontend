@@ -152,15 +152,17 @@ export default function ReviewPage() {
               </div>
               <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
-            <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            <div className={styles.hospitalWrapper}>
+              <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
+              <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            </div>
+            <div className={styles.navWrapper}>
+              <Nav content={NAV_CONTENT} type={"nav"} />
+            </div>
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn />
-        </div>
-        <div className={styles.navWrapper}>
-          <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
       </div>
     </div>
