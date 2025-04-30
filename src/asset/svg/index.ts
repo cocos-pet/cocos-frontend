@@ -12,6 +12,7 @@ export { default as IcRightIcon } from "./IcRightIcon";
 export { default as IcShape } from "./IcShape";
 export { default as IcAddphoto } from "./IcAddphoto";
 export { default as IcBaseProfileImage } from "./IcBaseProfileImage";
+export { default as IcCheckbox } from "./IcCheckbox";
 export { default as IcChevronLeft } from "./IcChevronLeft";
 export { default as IcChevronRight } from "./IcChevronRight";
 export { default as IcClear } from "./IcClear";
