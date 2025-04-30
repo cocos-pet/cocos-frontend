@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { font, color } from "@style/styles.css.ts";
 
 export const backgroundColor = style({
-    background: 'var(--blue-bg, linear-gradient(180deg, var(--primary-blue100, #DEFEFF) 0%, #FFF 36.13%))',
+  background: "var(--blue-bg, linear-gradient(180deg, var(--primary-blue100, #DEFEFF) 0%, #FFF 36.13%))",
 });
 
 export const wrapper = style({

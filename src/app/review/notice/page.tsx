@@ -1,3 +1,5 @@
+"use client";
+
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
@@ -7,8 +9,33 @@ import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 import * as style from "./style.css";
 import { IcCheckbox } from "@asset/svg";
+import { useState } from "react";
 
 const page = () => {
+  const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(4).fill(false));
+
+  const handleCheckboxToggle = (id: number | "all") => {
+    if (id === "all") {
+      const allChecked = checkedBoxes.every((v, i) => i === 0 || v);
+      const newValue = !allChecked;
+      setCheckedBoxes(Array(4).fill(newValue));
+    } else {
+      const updated = [...checkedBoxes];
+      updated[id] = !updated[id];
+
+      const subChecks = updated.slice(1); // 1~3
+      updated[0] = subChecks.every(Boolean);
+
+      setCheckedBoxes(updated);
+    }
+  };
+
+  const checkboxTexts = [
+    "전체 동의하기",
+    "모든 내용을 이해했어요",
+    "해당 병원에 직접 방문하여 시술을 받았어요",
+    "위 내용을 위반한 후기는 사전공지 없이 블라인드 처리됩니다",
+  ];
   return (
     <div className={style.backgroundColor}>
       <HeaderNav
@@ -28,29 +55,20 @@ const page = () => {
         <Image src={reviewNoticeFrame} alt="리뷰작성 유의사항 이미지" priority className={style.mainImg} />
 
         <section className={style.bottomLayout}>
-          {/* ⚠️ input 커스텀한 svg파일로 바꿀 예정 */}
-          <div className={style.checkbox}>
-            <IcCheckbox className={style.check} />
-            <span className={style.red}>(필수)</span>
-            전체 동의하기
-          </div>
-          <Divider size="small" />
-          <div className={style.checkbox}>
-            <IcCheckbox className={style.check} />
-            <span className={style.red}>(필수)</span>
-            모든 내용을 이해했어요
-          </div>
-          <div className={style.checkbox}>
-            <IcCheckbox className={style.check} />
-            <span className={style.red}>(필수)</span>
-            해당 병원에 직접 방문하여 시술을 받았어요
-          </div>
-          <div className={style.checkbox}>
-            <IcCheckbox className={style.check} />
-            <span>
-              <span className={style.red}>(필수)</span>위 내용을 위반한 후기는 사전공지 없이 블라인드 처리됩니다
-            </span>
-          </div>
+          {checkboxTexts.map((text, idx) => (
+            <div key={idx}>
+              {idx === 1 && <Divider size="small" />}
+              <div
+                className={style.checkbox}
+                onClick={() => (idx === 0 ? handleCheckboxToggle("all") : handleCheckboxToggle(idx))}
+              >
+                <IcCheckbox checked={checkedBoxes[idx]} className={style.check} />
+                <span>
+                  <span className={style.red}>(필수)</span> {text}
+                </span>
+              </div>
+            </div>
+          ))}
         </section>
       </div>
 
