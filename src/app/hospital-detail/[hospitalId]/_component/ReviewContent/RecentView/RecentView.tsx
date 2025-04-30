@@ -1,9 +1,7 @@
-"use client"
+"use client";
 
-import ReviewItem from "@shared/component/ReviewItem/ReviewItem"
-import * as styles from "./RecentView.css"
-import { IcChevronRight } from "@asset/svg"
-import { color } from "@style/index"
+import ReviewItem from "@shared/component/ReviewItem/ReviewItem";
+import * as styles from "./RecentView.css";
 
 // API 응답 스펙에 맞는 목데이터
 const mockData = {
@@ -33,14 +31,14 @@ const mockData = {
         animal: "강아지",
         gender: "M",
         breed: "말티즈",
-        weight: 5.2
-      }
-    ]
-  }
-}
+        weight: 5.2,
+      },
+    ],
+  },
+};
 
 const RecentView = () => {
-  const { reviewCount, reviews } = mockData.data
+  const { reviewCount, reviews } = mockData.data;
 
   return (
     <div className={styles.recentViewContainer}>
@@ -49,8 +47,7 @@ const RecentView = () => {
           <span className={styles.recentViewTitle}>최근 많이 본 리뷰</span>
           <span className={styles.reviewCount}>+{reviewCount}</span>
         </div>
-        <button className={styles.headerMore}>
-          리뷰 더보기 &nbsp; &gt;</button>
+        <button className={styles.headerMore}>리뷰 더보기 &nbsp; &gt;</button>
       </div>
       {reviews.map((review) => (
         <ReviewItem
@@ -62,7 +59,7 @@ const RecentView = () => {
         />
       ))}
     </div>
-  )
-}
+  );
+};
 
-export default RecentView
+export default RecentView;
