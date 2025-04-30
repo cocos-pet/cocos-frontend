@@ -1,10 +1,20 @@
 "use client";
 
+<<<<<<< HEAD
 import { ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
 import { TextField } from "@common/component/TextField";
+=======
+import { useState, useEffect, ChangeEvent } from 'react';
+import { useRouter } from 'next/navigation';
+import Content from "@common/component/Content/Content";
+import {IcSearch} from "@asset/svg";
+import * as styles from "./style.css";
+import { formatTime } from "@shared/util/formatTime";
+import { TextField } from '@common/component/TextField';
+>>>>>>> e0ffbf0b (refact: delete the empty file/ edit file name)
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";
