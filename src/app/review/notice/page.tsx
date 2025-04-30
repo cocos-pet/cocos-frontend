@@ -14,9 +14,10 @@ import { useState } from "react";
 const page = () => {
   const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(4).fill(false));
 
+  const allChecked = checkedBoxes.every((v, i) => i === 0 || v);
+
   const handleCheckboxToggle = (id: number | "all") => {
     if (id === "all") {
-      const allChecked = checkedBoxes.every((v, i) => i === 0 || v);
       const newValue = !allChecked;
       setCheckedBoxes(Array(4).fill(newValue));
     } else {
@@ -73,7 +74,7 @@ const page = () => {
       </div>
 
       <section className={style.buttonLayout}>
-        <Button label="다음으로" disabled={true} />
+        <Button label="다음으로" disabled={!allChecked} />
       </section>
     </div>
   );
