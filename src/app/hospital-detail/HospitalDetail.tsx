@@ -6,8 +6,6 @@ import Info from "./[hospitalId]/_component/Info/Info";
 import Selection from "./[hospitalId]/_component/Selection/Selection";
 
 export default function HospitalDetail() {
-
-
   return (
     <div>
       <HospitalHeader />
@@ -16,4 +14,3 @@ export default function HospitalDetail() {
     </div>
   );
 }
-
