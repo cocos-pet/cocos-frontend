@@ -39,6 +39,7 @@ export const color = createGlobalTheme(":root", {
   red: {
     warning_red100: "#FDE9F4",
     warning_red200: "#F53D3D",
+    point_red: "#FF654A",
   },
 });
 
