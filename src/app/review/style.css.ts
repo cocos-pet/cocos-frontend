@@ -86,8 +86,8 @@ export const hospitalAddress = style([
 ]);
 
 export const bannerContainer = style({
-  width: "33.5rem",
-  height: "10rem",
+  width: "100",
+  padding: "0rem 2rem",
 });
 
 export const hospitalListText = style([
