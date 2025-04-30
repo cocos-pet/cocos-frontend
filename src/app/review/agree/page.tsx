@@ -21,7 +21,6 @@ const page = () => {
   // const router = useRouter();
 
   const handleClickBtn = () => {
-    
     mutation.mutate();
     // mutation.mutate(undefined, {
     //   onSuccess: () => {
@@ -68,7 +67,11 @@ const page = () => {
         <section className={style.bottomLayout}>
           {CHECKBOX_TEXTS.map((text, idx) => (
             <div key={idx}>
-              {idx === 1 && <Divider size="small" />}
+              {idx === 1 && (
+                <div className={style.dividerWrapper}>
+                  <Divider size="small" />
+                </div>
+              )}{" "}
               <div
                 className={style.checkbox}
                 onClick={() => (idx === 0 ? handleCheckboxToggle("all") : handleCheckboxToggle(idx))}

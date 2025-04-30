@@ -71,6 +71,10 @@ export const bottomLayout = style([
   },
 ]);
 
+export const dividerWrapper = style({
+  marginBottom: "1.2rem",
+});
+
 export const buttonLayout = style({
   position: "sticky",
   bottom: "0",

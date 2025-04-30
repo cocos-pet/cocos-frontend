@@ -35,6 +35,7 @@ export const headerItem = recipe({
 
       noBackground: {
         backgroundColor: "transparent",
+        borderBottom: "transparent",
       },
     },
   },
