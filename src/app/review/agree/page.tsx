@@ -1,7 +1,7 @@
 "use client";
 import * as style from "./style.css";
 import { useState } from "react";
-import { TITLE, CHECKBOX_TEXTS } from "@app/review/notice/constant";
+import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
 
 import Image from "next/image";
 import { IcLeftarrow } from "@asset/svg";
