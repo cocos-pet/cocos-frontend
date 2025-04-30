@@ -1,15 +1,17 @@
 "use client";
+import * as style from "./style.css";
+import { useState } from "react";
+import { TITLE, CHECKBOX_TEXTS } from "@app/review/notice/constant";
 
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import Image from "next/image";
 import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";
-import Image from "next/image";
+import { IcCheckbox } from "@asset/svg";
+
+import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
-import * as style from "./style.css";
-import { IcCheckbox } from "@asset/svg";
-import { useState } from "react";
 
 const page = () => {
   const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(4).fill(false));
@@ -24,19 +26,13 @@ const page = () => {
       const updated = [...checkedBoxes];
       updated[id] = !updated[id];
 
-      const subChecks = updated.slice(1); // 1~3
+      const subChecks = updated.slice(1);
       updated[0] = subChecks.every(Boolean);
 
       setCheckedBoxes(updated);
     }
   };
 
-  const checkboxTexts = [
-    "전체 동의하기",
-    "모든 내용을 이해했어요",
-    "해당 병원에 직접 방문하여 시술을 받았어요",
-    "위 내용을 위반한 후기는 사전공지 없이 블라인드 처리됩니다",
-  ];
   return (
     <div className={style.backgroundColor}>
       <HeaderNav
@@ -47,16 +43,16 @@ const page = () => {
       <div className={style.wrapper}>
         <section className={style.topLayout}>
           <Image src={danger} alt="주의 표시" className={style.dangerImg} />
-          <h2>대가성 리뷰는</h2>
-          <h2 className={style.title}>의료법 위반 행위에 해당해요</h2>
-          <p className={style.docs}>후기 권유, 내용 강요 등은 부당한 후기 요구예요.</p>
-          <p className={style.docs}>부당한 후기 요청은 정당하게 거절해 주세요.</p>
+          <h2>{TITLE.main}</h2>
+          <h2 className={style.title}>{TITLE.sub}</h2>
+          <p className={style.docs}>{TITLE.descriptions[0]}</p>
+          <p className={style.docs}>{TITLE.descriptions[1]}</p>
         </section>
 
         <Image src={reviewNoticeFrame} alt="리뷰작성 유의사항 이미지" priority className={style.mainImg} />
 
         <section className={style.bottomLayout}>
-          {checkboxTexts.map((text, idx) => (
+          {CHECKBOX_TEXTS.map((text, idx) => (
             <div key={idx}>
               {idx === 1 && <Divider size="small" />}
               <div
