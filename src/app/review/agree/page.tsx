@@ -1,9 +1,11 @@
 "use client";
+
 import * as style from "./style.css";
 import { useState } from "react";
+import { useAgreeReviewMutation } from "@app/api/review/agree/hook";
 import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
-
 import Image from "next/image";
+
 import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";
@@ -15,6 +17,18 @@ import { Button } from "@common/component/Button";
 
 const page = () => {
   const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(4).fill(false));
+  const mutation = useAgreeReviewMutation();
+  // const router = useRouter();
+
+  const handleClickBtn = () => {
+    
+    mutation.mutate();
+    // mutation.mutate(undefined, {
+    //   onSuccess: () => {
+    //     router.push("/review/write");
+    //   },
+    // });
+  };
 
   const allChecked = checkedBoxes.every((v, i) => i === 0 || v);
 
@@ -70,7 +84,7 @@ const page = () => {
       </div>
 
       <section className={style.buttonLayout}>
-        <Button label="다음으로" disabled={!allChecked} />
+        <Button label="다음으로" disabled={!allChecked} onClick={handleClickBtn} />
       </section>
     </div>
   );
