@@ -10,6 +10,7 @@ import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";
 import { IcCheckbox } from "@asset/svg";
+import { useRouter } from "next/navigation";
 
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Divider from "@common/component/Divider/Divider";
@@ -18,15 +19,17 @@ import { Button } from "@common/component/Button";
 const page = () => {
   const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(4).fill(false));
   const mutation = useAgreeReviewMutation();
-  // const router = useRouter();
+  const router = useRouter();
 
   const handleClickBtn = () => {
-    mutation.mutate();
-    // mutation.mutate(undefined, {
-    //   onSuccess: () => {
-    //     router.push("/review/write");
-    //   },
-    // });
+    // mutation.mutate();
+
+    mutation.mutate(undefined, {
+      // ⚠️ 추후 /review/write 합쳐지면 수정 예정, 현재 확인용으로 /main
+      onSuccess: () => {
+        router.push("/main");
+      },
+    });
   };
 
   const allChecked = checkedBoxes.every((v, i) => i === 0 || v);
