@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
 
@@ -19,21 +19,25 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
   onPrev,
   onNext,
 }) => {
+  // 스크롤 위치를 저장하기 위한 ref
+  const scrollPositionRef = useRef(0);
+
   // 모달이 열릴 때 배경 스크롤 방지
   useEffect(() => {
     if (isOpen) {
       // 현재 스크롤 위치 저장
-      const scrollY = window.scrollY;
+      scrollPositionRef.current = window.scrollY;
       document.body.style.position = "fixed";
-      document.body.style.top = `-${scrollY}px`;
+      document.body.style.top = `-${scrollPositionRef.current}px`;
       document.body.style.width = "100%";
+      document.body.style.overflow = "hidden";
     } else {
       // 모달이 닫힐 때 스크롤 위치 복원
-      const scrollY = document.body.style.top;
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.width = "";
-      window.scrollTo(0, Number.parseInt(scrollY || "0") * -1);
+      document.body.style.overflow = "";
+      window.scrollTo(0, scrollPositionRef.current);
     }
 
     return () => {
@@ -41,8 +45,14 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
       document.body.style.position = "";
       document.body.style.top = "";
       document.body.style.width = "";
+      document.body.style.overflow = "";
     };
   }, [isOpen]);
+
+  // 더블클릭 이벤트 방지
+  const preventDoubleClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+  };
 
   if (!isOpen) return null;
 
@@ -60,6 +70,8 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
         flexDirection: "column",
         justifyContent: "center",
         alignItems: "center",
+        userSelect: "none", // 텍스트 선택 방지
+        touchAction: "none", // 핀치 줌 방지
       }}
       onClick={(e) => {
         // 모달 배경 클릭 시 닫기
@@ -75,9 +87,9 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           top: 0,
           left: 0,
           width: "100%",
-          padding: "16px",
+          padding: "1.6rem",
           display: "flex",
-          justifyContent: "space-between",
+          justifyContent: "center", 
           alignItems: "center",
           color: "white",
         }}
@@ -86,6 +98,8 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
         <button
           onClick={onClose}
           style={{
+            position: "absolute", // 절대 위치로 설정
+            right: "2rem", // 오른쪽에 위치
             background: "none",
             border: "none",
             color: "white",
@@ -137,6 +151,7 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
             justifyContent: "center",
             alignItems: "center",
           }}
+          onDoubleClick={preventDoubleClick}
         >
           <Image
             src={images[currentIndex]}
@@ -145,9 +160,13 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
               maxWidth: "100%",
               maxHeight: "100%",
               objectFit: "contain",
+              pointerEvents: "none", // 이미지 상호작용 비활성화
             }}
             width={500}
             height={500}
+            onClick={(e) => e.stopPropagation()} // 이미지 클릭이 모달 닫기로 이어지지 않도록
+            onDoubleClick={preventDoubleClick} // 더블클릭 비활성화
+            unoptimized // 이미지 최적화 비활성화로 일부 상호작용 방지
           />
         </div>
 
