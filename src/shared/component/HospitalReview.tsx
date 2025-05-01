@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import * as styles from "../../app/mypage/index/style/mypage.css";
+import * as styles from "../../app/mypage/_style/mypage.css";
 import Chip from "@common/component/Chip/Chip";
 import Divider from "@common/component/Divider/Divider";
 import { IcEllipses } from "@asset/svg";
