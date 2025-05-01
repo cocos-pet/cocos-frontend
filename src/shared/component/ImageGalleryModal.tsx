@@ -7,8 +7,6 @@ interface ImageGalleryModalProps {
   images: (StaticImageData | string)[];
   currentIndex: number;
   onClose: () => void;
-  onPrev: () => void;
-  onNext: () => void;
 }
 
 const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
@@ -16,8 +14,6 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
   images,
   currentIndex,
   onClose,
-  onPrev,
-  onNext,
 }) => {
   // 스크롤 위치를 저장하기 위한 ref
   const scrollPositionRef = useRef(0);
@@ -122,26 +118,6 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           alignItems: "center",
         }}
       >
-        {/* 이전 버튼 */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onPrev();
-          }}
-          style={{
-            position: "absolute",
-            left: "20px",
-            background: "none",
-            border: "none",
-            color: "white",
-            fontSize: "24px",
-            cursor: "pointer",
-            zIndex: 1001,
-          }}
-        >
-          &#10094;
-        </button>
-
         {/* 이미지 */}
         <div
           style={{
@@ -170,25 +146,7 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           />
         </div>
 
-        {/* 다음 버튼 */}
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            onNext();
-          }}
-          style={{
-            position: "absolute",
-            right: "20px",
-            background: "none",
-            border: "none",
-            color: "white",
-            fontSize: "24px",
-            cursor: "pointer",
-            zIndex: 1001,
-          }}
-        >
-          &#10095;
-        </button>
+        
       </div>
     </div>
   );

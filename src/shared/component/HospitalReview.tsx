@@ -35,14 +35,6 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
     setIsModalOpen(false);
   };
 
-  const handlePrevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? reviewImages.length - 1 : prev - 1));
-  };
-
-  const handleNextImage = () => {
-    setCurrentImageIndex((prev) => (prev === reviewImages.length - 1 ? 0 : prev + 1));
-  };
-
   const testDataLength = 1;
   if (!testDataLength) return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
 
@@ -136,8 +128,6 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
         images={reviewImages}
         currentIndex={currentImageIndex}
         onClose={closeModal}
-        onPrev={handlePrevImage}
-        onNext={handleNextImage}
       />
     </section>
   );
