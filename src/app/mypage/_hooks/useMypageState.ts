@@ -26,7 +26,7 @@ export interface PetInfo {
 
 export const useMypageState = () => {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
   const [isRegister, setIsRegister] = useState(true);
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 

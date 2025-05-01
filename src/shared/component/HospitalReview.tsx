@@ -5,6 +5,7 @@ import Divider from "@common/component/Divider/Divider";
 import { IcEllipses } from "@asset/svg";
 import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
+import ImageGalleryModal from "./ImageGalleryModal";
 
 interface HospitalReviewProps {
   isMypage?: boolean;
@@ -12,11 +13,34 @@ interface HospitalReviewProps {
 
 const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [isBlurred, setIsBlurred] = useState(true);
+  const [isBlurred, setIsBlurred] = useState(!isMypage);
   const btnText = isOpen ? "접기" : "상세보기";
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  // 리뷰 이미지 배열 (실제 구현에서는 props나 API로 받아올 수 있음)
+  const reviewImages = [nocategory, nocategory, nocategory, nocategory, nocategory, nocategory];
 
   const handleOpenDetail = () => {
     if (!isBlurred) setIsOpen((prev) => !prev);
+  };
+
+  const handleImageClick = (index: number) => {
+    if (isBlurred) return;
+    setCurrentImageIndex(index);
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handlePrevImage = () => {
+    setCurrentImageIndex((prev) => (prev === 0 ? reviewImages.length - 1 : prev - 1));
+  };
+
+  const handleNextImage = () => {
+    setCurrentImageIndex((prev) => (prev === reviewImages.length - 1 ? 0 : prev + 1));
   };
 
   const testDataLength = 1;
@@ -90,17 +114,31 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
         {btnText}
       </span>
       <div className={`${styles.pictureArea} ${isBlurred ? styles.blurred : ""}`}>
-        <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
-        <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
-        <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
-        <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
-        <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
-        <Image src={nocategory} alt="리뷰이미지" className={styles.pic} />
+        {reviewImages.map((image, index) => (
+          <Image
+            key={index}
+            src={image}
+            alt="리뷰이미지"
+            className={styles.pic}
+            onClick={() => handleImageClick(index)}
+            style={{ cursor: !isBlurred ? "pointer" : "default" }}
+          />
+        ))}
       </div>
       <article className={`${styles.reviewChipBottomArea} ${isBlurred ? styles.blurred : ""}`}>
         <Chip label="시설이 좋아요" />
         <Chip label="시설이 좋아요" />
       </article>
+
+      {/* 이미지 갤러리 모달 */}
+      <ImageGalleryModal
+        isOpen={isModalOpen}
+        images={reviewImages}
+        currentIndex={currentImageIndex}
+        onClose={closeModal}
+        onPrev={handlePrevImage}
+        onNext={handleNextImage}
+      />
     </section>
   );
 };
