@@ -10,6 +10,7 @@ import TabsSection from "./_component/TabsSection/TabsSection";
 import ContentSection from "./_component/ContentSection/ContentSection";
 import NavSection from "./_component/NavSection/NavSection";
 import SuspenseWrapper from "@app/SuspenseWrapper";
+import { Suspense } from "react";
 
 /**
  * 프로필 페이지 컴포넌트
@@ -21,6 +22,14 @@ const Profile = () => {
   // 보호된 라우트 설정
   useProtectedRoute();
 
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <ProfileContent />
+    </Suspense>
+  );
+};
+
+const ProfileContent = () => {
   // 커스텀 훅을 통한 상태 관리
   const { query, activeTab, isActiveTab, handleTabClick, navigateBack, member, petInfo, isLoading } = useProfileState();
 
