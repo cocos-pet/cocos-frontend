@@ -121,7 +121,7 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
         {/* 이미지 */}
         <div
           style={{
-            maxWidth: "90%",
+            maxWidth: "100%",
             maxHeight: "90%",
             display: "flex",
             justifyContent: "center",

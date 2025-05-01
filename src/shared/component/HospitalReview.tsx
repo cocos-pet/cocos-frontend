@@ -54,7 +54,7 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
       </article>
 
       <article className={`${styles.reviewArea} ${isBlurred ? styles.blurred : ""}`}>
-        <span className={styles.reviewContent}>
+        <span className={`${isOpen ? styles.reviewContent : styles.reviewEllipsisContent}`}>
           진료는 꼼꼼하고 만족스러웠어요.진료는 꼼꼼하고 만족스러웠어요.진료는 꼼꼼하고 만족스러웠어요.진료는 꼼꼼하고
           만족스러웠어요.진료는 꼼꼼하고 만족스러웠어요.
         </span>

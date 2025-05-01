@@ -298,6 +298,12 @@ export const reviewArea = style([a.flexColumn, a.alignFlexStart, a.gap16, a.alig
 export const reviewContent = style([
   font.body01,
   a.textContent,
+  a.alignSelfStretch
+]);
+
+export const reviewEllipsisContent = style([
+  font.body01,
+  a.textContent,
   a.alignSelfStretch,
   {
     display: "-webkit-box",
