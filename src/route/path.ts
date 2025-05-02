@@ -17,7 +17,7 @@ export const PATH = {
     SEARCH: "/community/search",
     SEARCH_DONE: "/community/search/done",
     WRITE: "/community/write",
-    DETAIL:"/community/detail"
+    DETAIL: "/community/detail",
   },
   MYPAGE: {
     ROOT: "/mypage",
@@ -33,5 +33,6 @@ export const PATH = {
   SETTING: {
     ROOT: "/setting",
     EDIT_PROFILE: "/setting/edit-profile",
+    WITHDRAW: "/setting/withdraw",
   },
 };

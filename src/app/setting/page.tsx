@@ -2,7 +2,7 @@
 
 import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import * as styles from "./index/Setting.css";
+import * as styles from "./page.css";
 import Divider from "@common/component/Divider/Divider";
 import { useRouter } from "next/navigation";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
@@ -11,11 +11,15 @@ import { PATH } from "@route/path";
 import { useLogout } from "@api/domain/setting/hook";
 import { useProtectedRoute } from "@route/useProtectedRoute";
 
-export default function SettingPage() {
+export default function Setting() {
   useProtectedRoute();
   const router = useRouter();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();
+
+  const handleMoveWithdraw = () => {
+    router.push(PATH.SETTING.WITHDRAW);
+  };
 
   return (
     <>
@@ -46,6 +50,13 @@ export default function SettingPage() {
               <span className={styles.myProfileSpanText}>로그아웃</span>
             </span>
           </div>
+
+          <div className={styles.editMyProfile}>
+            <span className={styles.myProfileSpan} onClick={handleMoveWithdraw}>
+              <IcOut width={20} height={20} />
+              <span className={styles.myProfileSpanText}>탈퇴하기</span>
+            </span>
+          </div>
         </div>
       </div>
 
@@ -61,4 +72,4 @@ export default function SettingPage() {
       />
     </>
   );
-} 
+}

@@ -10,6 +10,7 @@ export { default as IcLeftIcon } from "./IcLeftIcon";
 export { default as IcNormal } from "./IcNormal";
 export { default as IcRightIcon } from "./IcRightIcon";
 export { default as IcShape } from "./IcShape";
+export { default as IcX } from "./IcX";
 export { default as IcAddphoto } from "./IcAddphoto";
 export { default as IcBaseProfileImage } from "./IcBaseProfileImage";
 export { default as IcChevronLeft } from "./IcChevronLeft";
