@@ -36,19 +36,19 @@ const page = () => {
   const ALL_CHECKBOX_INDEX = 0;
   const DIVIDER_AFTER_CHECKBOX_INDEX = 1;
 
-  const handleCheckboxToggle = (id: number | "all") => {
-    if (id === "all") {
-      const newValue = !allChecked;
-      setCheckedBoxes(Array(CHECKBOX_COUNT).fill(newValue));
-    } else {
-      const updated = [...checkedBoxes];
-      updated[id] = !updated[id];
+  const handleToggleAll = () => {
+    const newValue = !allChecked;
+    setCheckedBoxes(Array(CHECKBOX_COUNT).fill(newValue));
+  };
 
-      const subChecks = updated.slice(ALL_CHECKBOX_INDEX + 1);
-      updated[0] = subChecks.every(Boolean);
+  const handleToggleItem = (id: number) => {
+    const updated = [...checkedBoxes];
+    updated[id] = !updated[id];
 
-      setCheckedBoxes(updated);
-    }
+    const subChecks = updated.slice(ALL_CHECKBOX_INDEX + 1);
+    updated[0] = subChecks.every(Boolean);
+
+    setCheckedBoxes(updated);
   };
 
   return (
@@ -79,7 +79,7 @@ const page = () => {
               )}
               <div
                 className={style.checkbox}
-                onClick={() => (ALL_CHECKBOX_INDEX ? handleCheckboxToggle("all") : handleCheckboxToggle(idx))}
+                onClick={() => (idx === ALL_CHECKBOX_INDEX ? handleToggleAll() : handleToggleItem(idx))}
               >
                 <IcCheckbox checked={checkedBoxes[idx]} className={style.check} />
                 <span>
