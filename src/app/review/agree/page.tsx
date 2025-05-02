@@ -17,15 +17,15 @@ import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 
 const page = () => {
-  const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(4).fill(false));
+  const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;
+  const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(CHECKBOX_COUNT).fill(false));
+
   const mutation = useAgreeReviewMutation();
   const router = useRouter();
 
   const handleClickBtn = () => {
-    // mutation.mutate();
-
     mutation.mutate(undefined, {
-      // ⚠️ 추후 /review/write 합쳐지면 수정 예정, 현재 확인용으로 /main
+      // ⚠️ 추후 /review/write 합쳐지면 수정 예정, 현재 확인용으로 /main, path 활용하기
       onSuccess: () => {
         router.push("/main");
       },
@@ -33,16 +33,18 @@ const page = () => {
   };
 
   const allChecked = checkedBoxes.every((v, i) => i === 0 || v);
+  const ALL_CHECKBOX_INDEX = 0;
+  const DIVIDER_AFTER_CHECKBOX_INDEX = 1;
 
   const handleCheckboxToggle = (id: number | "all") => {
     if (id === "all") {
       const newValue = !allChecked;
-      setCheckedBoxes(Array(4).fill(newValue));
+      setCheckedBoxes(Array(CHECKBOX_COUNT).fill(newValue));
     } else {
       const updated = [...checkedBoxes];
       updated[id] = !updated[id];
 
-      const subChecks = updated.slice(1);
+      const subChecks = updated.slice(ALL_CHECKBOX_INDEX + 1);
       updated[0] = subChecks.every(Boolean);
 
       setCheckedBoxes(updated);
@@ -70,14 +72,14 @@ const page = () => {
         <section className={style.bottomLayout}>
           {CHECKBOX_TEXTS.map((text, idx) => (
             <div key={idx}>
-              {idx === 1 && (
+              {idx === DIVIDER_AFTER_CHECKBOX_INDEX && (
                 <div className={style.dividerWrapper}>
                   <Divider size="small" />
                 </div>
-              )}{" "}
+              )}
               <div
                 className={style.checkbox}
-                onClick={() => (idx === 0 ? handleCheckboxToggle("all") : handleCheckboxToggle(idx))}
+                onClick={() => (ALL_CHECKBOX_INDEX ? handleCheckboxToggle("all") : handleCheckboxToggle(idx))}
               >
                 <IcCheckbox checked={checkedBoxes[idx]} className={style.check} />
                 <span>
