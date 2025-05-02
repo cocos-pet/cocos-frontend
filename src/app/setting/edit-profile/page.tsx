@@ -1,3 +1,4 @@
+"use client";
 import { IcChevronLeft } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { useRouter } from "next/navigation";
