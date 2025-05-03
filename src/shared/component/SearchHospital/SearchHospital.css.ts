@@ -4,16 +4,15 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const dimmed = recipe({
   base: {
-    position: "sticky",
-    zIndex: "2",
-
-    bottom: 0,
+    position: "fixed",
+    zIndex: "99",
+    top: 0,
+    left: 0,
 
     width: "100%",
-    height: "100dvh",
+    height: "100%",
 
-    opacity: "0.2",
-    backgroundColor: color.gray.gray900,
+    backgroundColor: "rgba(34, 34, 34, 0.2)",
   },
   variants: {
     active: {
@@ -29,8 +28,7 @@ export const dimmed = recipe({
 
 export const wrapper = recipe({
   base: {
-    zIndex: "4",
-    position: "sticky",
+    position: "absolute",
     bottom: "0",
 
     display: "flex",
@@ -89,20 +87,21 @@ export const titleStyle = style([
 export const cardContainer = style({
   position: "absolute",
   top: "12rem",
+  bottom: "12.6rem",
 
   width: "100%",
-  height: "100dvh",
-  overflow: "auto",
+  height: "auto",
+  maxHeight: "calc(100% - 24.6rem)",
+  overflowY: "auto",
+  paddingBottom: "1rem",
 
-  // 스크롤바 제거
   selectors: {
     "&::-webkit-scrollbar": {
-      display: "none", // Chrome, Safari
+      display: "none",
     },
   },
 });
 
-// 마지막 li 요소에 밑줄 추가
 export const lastCard = style({
   borderBottom: `1px solid ${color.gray.gray300}`,
 });
