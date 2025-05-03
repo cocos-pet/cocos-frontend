@@ -8,15 +8,8 @@ import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import ReviewHospital from "@app/review/write/_component/ReviewHospital";
 import ReviewDate from "@app/review/write/_component/ReviewDate";
 import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
-import SearchHospital from "@shared/component/SearchHospital/SearchHospital";
+import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 import { Button } from "@common/component/Button/index";
-
-export interface Hospital {
-  id: number;
-  name: string;
-  address: string;
-  reviewCount: number;
-}
 
 export type PetInfoType = "myPet" | "manual";
 

@@ -16,7 +16,7 @@ const hospitals = [
   { id: 6, name: "춘천병원", address: "서울시강남구", reviewCount: 777 },
 ];
 
-interface Hospital {
+export interface Hospital {
   id: number;
   name: string;
   address: string;
