@@ -1,7 +1,7 @@
 import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
-import * as a from "./atomic.css";
+import * as a from "@shared/style/atomic.css";
 
 /* ------------------- 프로필 섹션 스타일 ------------------- */
 export const myProfileWrapper = style([
@@ -252,134 +252,6 @@ export const whereText = style([
     maxWidth: "26.8rem",
   },
 ]);
-
-/* ------------------- 병원 후기 스타일 ------------------- */
-export const reviewContainer = style([
-  a.fullWidth,
-  a.flexColumn,
-  a.justifyCenter,
-  a.alignFlexStart,
-  a.gap16,
-  a.paddingVertical16,
-]);
-
-export const visitWrapper = style([a.fullWidth, a.justifySpaceBetween, a.flexRow]);
-
-export const visitDate = style([
-  font.label01,
-  a.flexRow,
-  a.alignCenter,
-  a.textAssistive,
-  {
-    gap: "1.6rem",
-    alignSelf: "stretch",
-    flexShrink: 0,
-  },
-]);
-
-export const hospitalNameBox = style([
-  a.flexColumn,
-  a.gap4,
-  a.alignSelfStretch,
-  a.padding16,
-  a.rounded8,
-  a.borderStrong,
-  a.bgNeutralStrong,
-]);
-
-export const hospitalName = style([font.heading03, a.textContent]);
-
-export const address = style([font.label01, a.textAssistive]);
-
-export const openOrClose = style([font.label01, a.textAssistive]);
-
-export const reviewArea = style([a.flexColumn, a.alignFlexStart, a.gap16, a.alignSelfStretch]);
-
-export const reviewContent = style([
-  font.body01,
-  a.textContent,
-  a.alignSelfStretch
-]);
-
-export const reviewEllipsisContent = style([
-  font.body01,
-  a.textContent,
-  a.alignSelfStretch,
-  {
-    display: "-webkit-box",
-    WebkitLineClamp: 2,
-    WebkitBoxOrient: "vertical",
-    overflow: "hidden",
-    textOverflow: "ellipsis",
-  },
-]);
-
-export const reviewCategory = style([font.body01, a.textAssistive]);
-
-export const reviewChipArea = style([
-  a.flexRow,
-  a.alignFlexStart,
-  a.gap8,
-  a.alignSelfStretch,
-  {
-    flexWrap: "wrap",
-    alignContent: "flex-start",
-  },
-]);
-
-export const categoryAndChip = style([a.flexColumn, a.gap8]);
-
-export const animalDefaultInfoBox = style([
-  a.flexColumn,
-  a.alignFlexStart,
-  a.gap8,
-  a.alignSelfStretch,
-  a.padding16,
-  a.rounded8,
-  a.borderHeavy,
-]);
-
-export const infoLineBox = style([a.flexRow, a.justifySpaceBetween, a.alignCenter, a.alignSelfStretch]);
-
-export const infoLineCategory = style([font.body01, a.textAssistive]);
-
-export const infoLineContent = style([font.body01, a.textContent]);
-
-export const reviewChipBottomArea = style([
-  a.flexRow,
-  a.alignFlexStart,
-  a.gap8,
-  a.alignSelfStretch,
-  {
-    flexWrap: "wrap",
-    alignContent: "flex-start",
-  },
-]);
-
-export const pictureArea = style([
-  a.fullWidth,
-  a.flexRow,
-  a.alignCenter,
-  a.gap8,
-  a.hideScrollbar,
-  {
-    overflowX: "scroll",
-  },
-]);
-
-export const pic = style([
-  a.flexRow,
-  a.justifyCenter,
-  a.alignCenter,
-  a.rounded8,
-  a.bgGray200,
-  {
-    width: "7.6rem",
-    height: "7.6rem",
-  },
-]);
-
-export const blurred = style([a.blurEffect]);
 
 /* ------------------- 즐겨찾는 병원 스타일 ------------------- */
 export const favoriteHospitalContainer = style([

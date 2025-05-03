@@ -179,6 +179,10 @@ export const textAssistive = style({
   color: semanticColor.text.assistive,
 });
 
+export const accentWarning = style({
+  color: semanticColor.accent.warning,
+});
+
 export const textAssistiveLight = style({
   color: semanticColor.text.assistiveLight,
 });
