@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import * as styles from "../../app/mypage/_style/mypage.css";
+import * as styles from "./Hospital.css";
 import Chip from "@common/component/Chip/Chip";
 import Divider from "@common/component/Divider/Divider";
 import { IcEllipses } from "@asset/svg";
 import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
 import ImageGalleryModal from "./ImageGalleryModal";
+import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 
 interface HospitalReviewProps {
   isMypage?: boolean;
@@ -15,7 +16,9 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [isBlurred, setIsBlurred] = useState(!isMypage);
   const btnText = isOpen ? "접기" : "상세보기";
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
+  const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // 리뷰 이미지 배열 (실제 구현에서는 props나 API로 받아올 수 있음)
@@ -28,11 +31,24 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
   const handleImageClick = (index: number) => {
     if (isBlurred) return;
     setCurrentImageIndex(index);
-    setIsModalOpen(true);
+    setIsImageGalleryModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
+  const handleDropdownClick = () => {
+    setIsDropdownOpen((prev) => !prev);
+  };
+
+  const closeImageGalleryModal = () => {
+    setIsImageGalleryModalOpen(false);
+  };
+
+  const closeDeleteReviewModal = () => {
+    setIsDeleteReviewModalOpen(false);
+  };
+
+  const openDeleteReviewModal = () => {
+    setIsDeleteReviewModalOpen(true);
+    handleDropdownClick();
   };
 
   const testDataLength = 1;
@@ -42,7 +58,14 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
     <section className={styles.reviewContainer}>
       <div className={styles.visitWrapper}>
         <span className={styles.visitDate}>2025.01.01 방문</span>
-        {isMypage && <IcEllipses width={20} height={20} onClick={() => alert("Todo")} />}
+        {isMypage && <IcEllipses width={20} height={20} onClick={handleDropdownClick} />}
+        {isDropdownOpen && (
+          <div className={styles.dropdownContainer}>
+            <div className={styles.dropdownItem} onClick={openDeleteReviewModal}>
+              삭제하기
+            </div>
+          </div>
+        )}
       </div>
 
       <article
@@ -124,10 +147,20 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
 
       {/* 이미지 갤러리 모달 */}
       <ImageGalleryModal
-        isOpen={isModalOpen}
+        isOpen={isImageGalleryModalOpen}
         images={reviewImages}
         currentIndex={currentImageIndex}
-        onClose={closeModal}
+        onClose={closeImageGalleryModal}
+      />
+
+      <SimpleBottomSheet
+        isOpen={isDeleteReviewModalOpen}
+        handleClose={closeDeleteReviewModal}
+        content="리뷰를 정말 삭제할까요?"
+        leftText="취소"
+        rightText="삭제할게요"
+        leftOnClick={() => closeDeleteReviewModal()}
+        rightOnClick={() => alert("Todo")}
       />
     </section>
   );
