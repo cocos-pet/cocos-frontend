@@ -13,14 +13,17 @@ export const dimmed = recipe({
     height: "100%",
 
     backgroundColor: "rgba(34, 34, 34, 0.2)",
+    transition: "opacity 300ms ease-in-out, visibility 300ms ease-in-out",
   },
   variants: {
     active: {
       true: {
-        display: "flex",
+        opacity: 1,
+        visibility: "visible",
       },
       false: {
-        display: "none",
+        opacity: 0,
+        visibility: "hidden",
       },
     },
   },
