@@ -83,7 +83,11 @@ const SearchHospital = (props: SearchHospitalProps) => {
         {/* 중앙 병원 리스트 영역 */}
         <ul className={styles.cardContainer}>
           {filteredHospitals.map((hospital) => (
-            <li key={hospital.id} className={hospital.id === hospitals.length ? styles.lastCard : undefined}>
+            <li
+              key={hospital.id}
+              className={hospital.id === hospitals.length ? styles.lastCard : undefined}
+              onClick={() => onSelectHospital(hospital)}
+            >
               <Card
                 id={hospital.id}
                 name={hospital.name}
