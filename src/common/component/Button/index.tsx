@@ -37,7 +37,7 @@ export const Button = ({
 }: CombinedButtonProps) => {
   return (
     <button
-      style={width ? { width } : undefined}
+      style={{ width: width }}
       className={button({ size, variant, disabled })}
       disabled={disabled}
       onClick={onClick}

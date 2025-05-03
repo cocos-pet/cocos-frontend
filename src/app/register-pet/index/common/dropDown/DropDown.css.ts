@@ -1,34 +1,17 @@
-import { style } from "@vanilla-extract/css";
-import { font, color } from "@style/styles.css.ts";
-import { recipe } from "@vanilla-extract/recipes";
+import {style} from "@vanilla-extract/css";
+import {font} from "@style/styles.css.ts";
 
-export const container = recipe({
-  base: {
-    position: "absolute",
+export const container = style({
+  position: "absolute",
 
-    display: "flex",
-    flexDirection: "column",
-    maxWidth: "72.8rem",
-    padding: "0 2rem",
+  display: "flex",
+  flexDirection: "column",
+  width: "calc(100vw - 4rem)",
+  maxWidth: "72.8rem",
+  padding: "0 2rem",
 
-    backgroundColor: color.gray.gray000,
-    borderRadius: "1.6rem",
-    boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
-    zIndex: "3",
-  },
-  variants: {
-    size: {
-      full: {
-        width: "calc(100vw - 4rem)",
-      },
-      half: {
-        width: "100%",
-      },
-    },
-  },
-  defaultVariants: {
-    size: "full",
-  },
+  borderRadius: "1.6rem",
+  boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
 });
 
 export const span = style({
@@ -42,6 +25,5 @@ export const itemStyle = style([
     display: "flex",
     flexDirection: "column",
     cursor: "pointer",
-    color: color.gray.gray900,
   },
 ]);
