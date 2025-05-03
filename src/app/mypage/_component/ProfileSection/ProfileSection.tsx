@@ -87,7 +87,7 @@ const LoggedProfile = ({
     />
 
     <Divider size="small" />
-    <AddFavoriteHospital isAdded={false} />
+    <AddFavoriteHospital />
   </div>
 );
 
