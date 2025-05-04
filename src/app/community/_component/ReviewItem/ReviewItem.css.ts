@@ -1,5 +1,5 @@
-import { style } from "@vanilla-extract/css";
-import { color, font, semanticColor } from "@style/styles.css.ts";
+import {style} from "@vanilla-extract/css";
+import {color, font, semanticColor} from "@style/styles.css.ts";
 
 export const reviewItemContainer = style({
   width: "100%",
@@ -43,6 +43,7 @@ export const reviewContent = style([
     textOverflow: "ellipsis",
     display: "-webkit-box",
     WebkitBoxOrient: "vertical",
+    margin: "1.6rem 0",
   },
 ]);
 
@@ -50,6 +51,7 @@ export const reviewContentExpanded = style([
   font.body01,
   {
     color: color.gray.gray800,
+    margin: "1.6rem 0",
   },
 ]);
 
@@ -59,6 +61,7 @@ export const detailButton = style([
     color: semanticColor.text.assistive,
     cursor: "pointer",
     fontWeight: 500,
+    marginBottom: "1.6rem",
   },
 ]);
 
@@ -66,6 +69,7 @@ export const detailSection = style({
   display: "flex",
   flexDirection: "column",
   gap: "1.6rem",
+  marginBottom: "1.6rem",
 });
 
 export const detailTitle = style([
@@ -124,10 +128,15 @@ export const reviewChipsContainer = style({
   gap: "0.8rem",
 });
 
-
 export const blurEffect = style({
-    filter: "blur(4px)",
-    transition: "filter 0.3s ease-in-out",
-    WebkitFilter: "blur(4px)",
-    msFilter: "blur(4px)",
+  filter: "blur(4px)",
+  transition: "filter 0.3s ease-in-out",
+  WebkitFilter: "blur(4px)",
+  msFilter: "blur(4px)",
+});
+
+export const reviewDetailContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.6rem",
 });

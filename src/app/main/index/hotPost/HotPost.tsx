@@ -4,12 +4,7 @@ import * as styles from "./HotPost.css";
 import Divider from "@common/component/Divider/Divider";
 import {useQueryGetPopular} from "@api/domain/main/hook";
 import {PATH} from "@route/path";
-import { useRouter } from "next/navigation";
-
-// interface Post {
-//   id?: number;
-//   title?: string;
-// }
+import {useRouter} from "next/navigation";
 
 interface HotPostProps {
   nickname?: string;

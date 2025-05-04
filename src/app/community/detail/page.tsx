@@ -3,17 +3,17 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow } from "@asset/svg";
-import { PATH } from "@route/path.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { Suspense, useCallback, useEffect, useState } from "react";
-import { components } from "@type/schema";
+import {IcLeftarrow} from "@asset/svg";
+import {PATH} from "@route/path.ts";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {Suspense, useCallback, useEffect, useState} from "react";
+import {components} from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { useFilterStore } from "@store/filter.ts";
-import { postPostFiltersRequestType } from "@api/domain/community/search";
+import {useFilterStore} from "@store/filter.ts";
+import {postPostFiltersRequestType} from "@api/domain/community/search";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@app/community/_component/ReviewItem/ReviewItem.tsx";
@@ -38,23 +38,20 @@ const symptomMapping: { [key: string]: string } = {
 };
 
 const sampleReviewData = {
-  reviewCount: 1,
+  reviewCount: 2,
+  cursorId: 102,
   reviews: [
     {
       id: 101,
       memberId: 2001,
       nickname: "멍멍이사랑해",
       breedName: "푸들",
-      petDiseases: [
-        { id: 1, name: "피부병" },
-        { id: 2, name: "알레르기" },
-      ],
+      petDisease: "피부병",
       vistitedAt: "2025-04-01",
       hospitalId: 10,
       hospitalName: "행복한동물병원",
       hospitalAddress: "서울특별시 강남구 도곡로 123",
-      content:
-        "친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%",
+      content: "친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%",
       goodReviews: [
         { id: 1, name: "친절해요" },
         { id: 2, name: "설명이 자세해요" },
@@ -70,10 +67,33 @@ const sampleReviewData = {
       gender: "여아",
       breed: "푸들",
       weight: 4.2,
-
-      // 이거 api 응답 값 예시에 없음 나중에 요청
-      petAge: 3,
-      profileImage: "https://example.com/profile.jpg",
+    },
+    {
+      id: 102,
+      memberId: 2002,
+      nickname: "고양이집사",
+      breedName: "페르시안",
+      petDisease: "요로결석",
+      vistitedAt: "2025-03-15",
+      hospitalId: 11,
+      hospitalName: "사랑동물병원",
+      hospitalAddress: "서울특별시 서초구 서초대로 456",
+      content: "24시간 운영이라 긴급한 상황에 도움이 되었어요.",
+      goodReviews: [
+        { id: 4, name: "24시간 운영" },
+        { id: 5, name: "응급처치가 빨라요" },
+      ],
+      badReviews: [{ id: 6, name: "비용이 비싸요" }],
+      images: ["https://example.com/image3.jpg"],
+      symptoms: [
+        { id: 103, name: "소변보기 힘들어함" },
+        { id: 104, name: "배가 아파보임" },
+      ],
+      diseases: [{ id: 202, name: "요로결석" }],
+      animal: "고양이",
+      gender: "남아",
+      breed: "페르시안",
+      weight: 3.8,
     },
   ],
 } as const;
