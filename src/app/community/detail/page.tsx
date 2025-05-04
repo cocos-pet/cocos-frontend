@@ -10,7 +10,6 @@ import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { useFilterStore } from "@store/filter.ts";
 import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -47,6 +46,7 @@ const sampleReviewData = {
       nickname: "멍멍이사랑해",
       breedName: "푸들",
       petDisease: "피부병",
+      petAge: 3, // notion 명세에 없음
       vistitedAt: "2025-04-01",
       hospitalId: 10,
       hospitalName: "행복한동물병원",
@@ -58,6 +58,10 @@ const sampleReviewData = {
       ],
       badReviews: [{ id: 3, name: "기다림이 길어요" }],
       images: [
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
         "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
         "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
         "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
@@ -78,6 +82,7 @@ const sampleReviewData = {
       nickname: "고양이집사",
       breedName: "페르시안",
       petDisease: "요로결석",
+      petAge: 3, // notion 명세에 없음
       vistitedAt: "2025-03-15",
       hospitalId: 11,
       hospitalName: "사랑동물병원",
@@ -167,7 +172,6 @@ const CommunityDetailContent = () => {
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
-  const { selectedChips } = useFilterStore();
 
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
@@ -185,7 +189,7 @@ const CommunityDetailContent = () => {
         console.error("데이터 가져오기 실패:", error);
       },
     });
-  }, [fetchPosts, typeId, selectedChips]);
+  }, [fetchPosts, typeId]);
 
   useEffect(() => {
     fetchPostData();

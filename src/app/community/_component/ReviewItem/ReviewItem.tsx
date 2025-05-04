@@ -9,22 +9,23 @@ import { Separated } from "react-simplikit";
 import { motion } from "framer-motion";
 import Image from "next/image";
 
-interface ReviewItem {
+export interface ReviewItemType {
   id: number;
   memberId: number;
   nickname: string;
   breedName: string;
   petDisease: string;
+  petAge: number; // notion 명세에 없음
   vistitedAt: string;
   hospitalId: number;
   hospitalName: string;
   hospitalAddress: string;
   content: string;
-  goodReviews: Array<{ id: number; name: string }>;
-  badReviews: Array<{ id: number; name: string }>;
-  images: string[];
-  symptoms: Array<{ id: number; name: string }>;
-  diseases: Array<{ id: number; name: string }>;
+  goodReviews: ReadonlyArray<{ id: number; name: string }>;
+  badReviews: ReadonlyArray<{ id: number; name: string }>;
+  images: ReadonlyArray<string>;
+  symptoms: ReadonlyArray<{ id: number; name: string }>;
+  diseases: ReadonlyArray<{ id: number; name: string }>;
   animal: string;
   gender: string;
   breed: string;
@@ -33,7 +34,7 @@ interface ReviewItem {
 
 interface propsType {
   handleProfileClick: () => void;
-  reviewData: ReviewItem;
+  reviewData: ReviewItemType;
   isBlurred?: boolean;
 }
 
@@ -56,6 +57,7 @@ const ReviewItem = (props: propsType) => {
         createdAt={reviewData.vistitedAt}
         nickname={reviewData.nickname}
         breed={reviewData.breed}
+        petAge={reviewData.petAge}
       />
       <article className={`${isBlurred && styles.blurEffect} `}>
         <div className={styles.hospitalDetail}>
@@ -87,7 +89,9 @@ const ReviewItem = (props: propsType) => {
             <div>
               <div className={styles.detailTitle}>진단 내용</div>
               <div className={styles.detailContent}>
-                <Chip label={reviewData.petDisease} color="border" disabled={true} />
+                {reviewData.diseases?.map((disease) => (
+                  <Chip key={disease.id} label={disease.name} color="border" disabled={true} />
+                ))}
               </div>
             </div>
 
