@@ -3,7 +3,7 @@ import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
 import { Button } from "@common/component/Button";
 import { TextField } from "@common/component/TextField";
 import Card from "./Card";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@shared/hook/useDebounce";
 
 // ⚠️ 삭제 예정 목데이터
@@ -16,7 +16,7 @@ const hospitals = [
   { id: 6, name: "춘천병원", address: "서울시강남구", reviewCount: 777 },
 ];
 
-interface Hospital {
+export interface Hospital {
   id: number;
   name: string;
   address: string;
@@ -33,6 +33,14 @@ interface SearchHospitalProps {
 const SearchHospital = (props: SearchHospitalProps) => {
   const { active, onCloseBottomSheet, selectedHospital, onSelectHospital } = props;
 
+  //뒤에 스크롤 불가능하도록 막기
+  useEffect(() => {
+    document.body.style.overflow = active ? "hidden" : "auto";
+    return () => {
+      document.body.style.overflow = "auto";
+    };
+  }, [active]);
+
   // 텍스트 필드에 입력한 검색어
   const [searchWord, setSearchWord] = useState("");
 
@@ -43,16 +51,20 @@ const SearchHospital = (props: SearchHospitalProps) => {
   });
 
   // 바텀시트 이탈, 이탈 시 초기화
-  const handleCancelSearch = () => {
+  const handleCancelSearch = (e: React.MouseEvent<HTMLElement>) => {
+    e.stopPropagation();
     setSearchWord("");
     onSelectHospital(null);
     onCloseBottomSheet();
   };
 
+  const handleBottomSheetClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation();
+  };
+
   return (
-    <>
-      <div className={styles.dimmed({ active })} onClick={handleCancelSearch} />
-      <div className={styles.wrapper({ active })}>
+    <div className={styles.dimmed({ active })} onClick={handleCancelSearch}>
+      <div className={styles.wrapper({ active })} onClick={handleBottomSheetClick}>
         <div className={styles.bottomSheetHandleBar}>
           <IcBottomSheetLine />
         </div>
@@ -71,7 +83,11 @@ const SearchHospital = (props: SearchHospitalProps) => {
         {/* 중앙 병원 리스트 영역 */}
         <ul className={styles.cardContainer}>
           {filteredHospitals.map((hospital) => (
-            <li key={hospital.id} className={hospital.id === hospitals.length ? styles.lastCard : undefined}>
+            <li
+              key={hospital.id}
+              className={hospital.id === hospitals.length ? styles.lastCard : undefined}
+              onClick={() => onSelectHospital(hospital)}
+            >
               <Card
                 id={hospital.id}
                 name={hospital.name}
@@ -95,7 +111,7 @@ const SearchHospital = (props: SearchHospitalProps) => {
           <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} onClick={handleCancelSearch} />
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default SearchHospital;
