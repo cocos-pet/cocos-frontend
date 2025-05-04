@@ -1,6 +1,6 @@
 import Image from "next/image";
-import {IcBaseProfileImage} from "@asset/svg";
-import {formatTime} from "@shared/util/formatTime.ts";
+import { IcBaseProfileImage } from "@asset/svg";
+import { formatTime } from "@shared/util/formatTime.ts";
 import {
   info,
   infoDetail,
@@ -19,24 +19,11 @@ interface propsType {
 }
 
 const Profile = (props: propsType) => {
-  const {
-    handleProfileClick,
-    profileImageData,
-    nickname,
-    breed,
-    petAge,
-    createdAt,
-  } = props;
+  const { handleProfileClick, profileImageData, nickname, breed, petAge, createdAt } = props;
   return (
     <div className={profileContainer} onClick={handleProfileClick}>
       {profileImageData ? (
-        <Image
-          src={profileImageData}
-          alt="userProfile"
-          className={profileImage}
-          width={32}
-          height={32}
-        />
+        <Image src={profileImageData} alt="userProfile" className={profileImage} width={32} height={32} />
       ) : (
         <IcBaseProfileImage width={32} height={32} />
       )}
