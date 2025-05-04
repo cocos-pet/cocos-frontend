@@ -17,6 +17,7 @@ import AnimalBottomSheet from "./_component/AnimalBottomSheet/AnimalBottomSheet"
 import { useAnimalFilterStore } from "./_store/animalFilter.ts";
 import { getAnimalChipNamesById } from "./_utils/getAnimalChipNamesById.ts";
 import AgeBottomSheet from "./_component/AgeBottomSheet/AgeBottomSheet";
+import { CategoryData } from "./_store/categoryFilter.ts";
 import {
   useGetAnimal,
   useGetBodies,
@@ -296,50 +297,20 @@ const Page = () => {
             ))}
           </div>
         </article>
-        <article className={styles.knownDisease}>
-          <span className={styles.defaultText}>앓고있는/관심있는 질병</span>
-          <Divider size="small" />
-          <div className={styles.chipContainer}>
-            {selectedChips.diseaseIds.map((id) => (
-              <Chip
-                key={`disease-edit-${id}`}
-                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
-                disabled={true}
-              />
-            ))}
-          </div>
-          <span style={{ width: "10.2rem" }}>
-            <Button
-              variant={"solidNeutral"}
-              leftIcon={<IcEditPen width={20} height={20} />}
-              label={"수정하기"}
-              size="small"
-              onClick={() => openCategoryBottomSheet("disease")}
-            />
-          </span>
-        </article>
-        <article className={styles.knownSymptoms}>
-          <span className={styles.defaultText}>앓고있는/관심있는 증상</span>
-          <Divider size="small" />
-          <div className={styles.chipContainer}>
-            {selectedChips.symptomIds.map((id) => (
-              <Chip
-                key={`symptom-edit-${id}`}
-                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
-                disabled={true}
-              />
-            ))}
-          </div>
-          <span style={{ width: "10.2rem" }}>
-            <Button
-              variant={"solidNeutral"}
-              leftIcon={<IcEditPen width={20} height={20} />}
-              label={"수정하기"}
-              size="small"
-              onClick={() => openCategoryBottomSheet("symptom")}
-            />
-          </span>
-        </article>
+        <EditArticle
+          title="앓고있는/관심있는 질병"
+          type="disease"
+          selectedChips={selectedChips}
+          categoryData={categoryData}
+          onButtonClick={() => openCategoryBottomSheet("disease")}
+        />
+        <EditArticle
+          title="앓고있는/관심있는 증상"
+          type="symptom"
+          selectedChips={selectedChips}
+          categoryData={categoryData}
+          onButtonClick={() => openCategoryBottomSheet("symptom")}
+        />
 
         <AnimalBottomSheet petId={petInfo.petId} />
         <CategoryBottomSheet petId={petInfo.petId} />
@@ -356,3 +327,46 @@ const Page = () => {
 };
 
 export default Page;
+
+interface EditArticleProps {
+  title: string;
+  type: "symptom" | "disease";
+  selectedChips: { symptomIds: number[]; diseaseIds: number[] };
+  categoryData: CategoryData;
+  onButtonClick: () => void;
+}
+
+const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }: EditArticleProps) => {
+  return (
+    <article className={styles.knownSymptomsOrDisease}>
+      <span className={styles.defaultText}>{title}</span>
+      <Divider size="small" />
+      <div className={styles.chipContainer}>
+        {type === "symptom"
+          ? selectedChips.symptomIds.map((id) => (
+              <Chip
+                key={`symptom-edit-${id}`}
+                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
+                disabled={true}
+              />
+            ))
+          : selectedChips.diseaseIds.map((id) => (
+              <Chip
+                key={`disease-edit-${id}`}
+                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
+                disabled={true}
+              />
+            ))}
+      </div>
+      <span style={{ width: "10.2rem" }}>
+        <Button
+          variant={"solidNeutral"}
+          leftIcon={<IcEditPen width={20} height={20} />}
+          label={"수정하기"}
+          size="small"
+          onClick={onButtonClick}
+        />
+      </span>
+    </article>
+  );
+};

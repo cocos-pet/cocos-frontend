@@ -1,5 +1,5 @@
-import {color, font, semanticColor} from "@style/styles.css";
-import {style} from "@vanilla-extract/css";
+import { color, font, semanticColor } from "@style/styles.css";
+import { style } from "@vanilla-extract/css";
 
 export const petEditWrapper = style({
   display: "flex",
@@ -30,16 +30,7 @@ export const defaultInfo = style({
   alignSelf: "stretch",
 });
 
-export const knownSymptoms = style({
-  display: "flex",
-  padding: "0rem 2rem",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  gap: "1.2rem",
-  alignSelf: "stretch",
-});
-
-export const knownDisease = style({
+export const knownSymptomsOrDisease = style({
   display: "flex",
   padding: "0rem 2rem",
   flexDirection: "column",
