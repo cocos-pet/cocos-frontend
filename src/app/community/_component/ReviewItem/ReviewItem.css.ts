@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {color, font, semanticColor} from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { font, semanticColor } from "@style/styles.css.ts";
 
 export const reviewItemContainer = style({
   width: "100%",
@@ -50,7 +50,7 @@ export const reviewContent = style([
 export const reviewContentExpanded = style([
   font.body01,
   {
-    color: color.gray.gray800,
+    color: semanticColor.text.normal,
     margin: "1.6rem 0",
   },
 ]);
@@ -133,10 +133,18 @@ export const blurEffect = style({
   transition: "filter 0.3s ease-in-out",
   WebkitFilter: "blur(4px)",
   msFilter: "blur(4px)",
+  pointerEvents: "none",
 });
 
-export const reviewDetailContainer = style({
+export const imagesContainer = style({
   display: "flex",
-  flexDirection: "column",
-  gap: "1.6rem",
+  gap: "0.8rem",
+  marginBottom: "1.6rem",
+  overflow: "scroll",
+});
+
+export const reviewImage = style({
+  flexShrink: 0,
+  objectFit: "cover",
+  borderRadius: "0.8rem",
 });

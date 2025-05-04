@@ -3,17 +3,17 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcLeftarrow} from "@asset/svg";
-import {PATH} from "@route/path.ts";
-import {formatTime} from "@shared/util/formatTime.ts";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {Suspense, useCallback, useEffect, useState} from "react";
-import {components} from "@type/schema";
+import { IcLeftarrow } from "@asset/svg";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import {useFilterStore} from "@store/filter.ts";
-import {postPostFiltersRequestType} from "@api/domain/community/search";
+import { useFilterStore } from "@store/filter.ts";
+import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@app/community/_component/ReviewItem/ReviewItem.tsx";
@@ -57,7 +57,11 @@ const sampleReviewData = {
         { id: 2, name: "설명이 자세해요" },
       ],
       badReviews: [{ id: 3, name: "기다림이 길어요" }],
-      images: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
+      images: [
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
+      ],
       symptoms: [
         { id: 101, name: "기침" },
         { id: 102, name: "호흡곤란" },
@@ -84,7 +88,9 @@ const sampleReviewData = {
         { id: 5, name: "응급처치가 빨라요" },
       ],
       badReviews: [{ id: 6, name: "비용이 비싸요" }],
-      images: ["https://example.com/image3.jpg"],
+      images: [
+        "https://cocos-member-data.s3.ap-northeast-2.amazonaws.com/135/post/2be4fb07-920f-4d16-a26e-c739a733a5f8IMG_8279.jpeg?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Date=20250504T182039Z&X-Amz-SignedHeaders=host&X-Amz-Expires=300&X-Amz-Credential=AKIASE5KQ5TDIVPOSNP6%2F20250504%2Fap-northeast-2%2Fs3%2Faws4_request&X-Amz-Signature=7070d7fe1231d6a3508003446a80f52641abf7ccafd52feb0ff3aa0571802e76",
+      ],
       symptoms: [
         { id: 103, name: "소변보기 힘들어함" },
         { id: 104, name: "배가 아파보임" },

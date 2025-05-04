@@ -1,4 +1,4 @@
-import { color, font } from "@style/styles.css.ts";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
@@ -8,6 +8,10 @@ export const categoryContainer = style({
 });
 
 export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
   backgroundColor: "#fff",
   zIndex: 20,
 });
@@ -17,6 +21,8 @@ export const postsContainer = style({
   display: "flex",
   flexDirection: "column",
   gap: "1.6rem",
+  position: "relative",
+  top: "6.4rem",
 });
 
 export const filterContainer = style({
@@ -35,7 +41,8 @@ export const floatingBtnContainer = style({
 
 export const tabContainer = style({
   display: "flex",
-  padding: "1rem 2rem",
+  padding: "1.2rem 2rem 0 2rem",
+  borderBottom: `1px solid ${semanticColor.line.strong}`,
   justifyContent: "flex-start",
   position: "sticky",
   backgroundColor: "#fff",
@@ -95,6 +102,8 @@ export const emptyContainer = style([
 ]);
 
 export const reviewContainer = style({
+  top: "6.4rem",
+  position: "relative",
   display: "flex",
   flexDirection: "column",
   alignItems: "center",

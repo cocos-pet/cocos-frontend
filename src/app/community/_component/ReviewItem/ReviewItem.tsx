@@ -7,6 +7,7 @@ import Profile from "@app/community/_component/Profile/Profile.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import { Separated } from "react-simplikit";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 interface ReviewItem {
   id: number;
@@ -118,7 +119,18 @@ const ReviewItem = (props: propsType) => {
         <div className={styles.detailButton} onClick={toggleExpand}>
           {isExpanded ? "접기" : "상세보기"}
         </div>
-
+        <div className={styles.imagesContainer}>
+          {reviewData.images.map((image, index) => (
+            <Image
+              key={`${image}-${index}`}
+              className={styles.reviewImage}
+              src={image}
+              alt="Post image"
+              width={76}
+              height={76}
+            />
+          ))}
+        </div>
         <div className={styles.reviewChipsContainer}>
           {reviewData.goodReviews?.map((review) => (
             <Chip key={review.id} label={review.name} color="blue" disabled={true} />
