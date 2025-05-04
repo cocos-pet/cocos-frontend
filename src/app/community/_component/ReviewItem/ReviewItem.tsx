@@ -59,14 +59,12 @@ const ReviewItem = (props: propsType) => {
         breed={reviewData.breed}
         petAge={reviewData.petAge}
       />
-      <article className={`${isBlurred && styles.blurEffect} `}>
+      <article className={isBlurred ? styles.blurEffect : undefined}>
         <div className={styles.hospitalDetail}>
           <div className={styles.hospitalName}>{reviewData.hospitalName}</div>
           <div className={styles.hospitalAddress}>{reviewData.hospitalAddress}</div>
         </div>
-
         <div className={isExpanded ? styles.reviewContentExpanded : styles.reviewContent}>{reviewData.content}</div>
-
         <motion.div
           initial={false}
           animate={{
@@ -77,47 +75,9 @@ const ReviewItem = (props: propsType) => {
           transition={{ duration: 0.3 }}
         >
           <div className={styles.detailSection}>
-            <div>
-              <div className={styles.detailTitle}>사전증상</div>
-              <div className={styles.detailContent}>
-                {reviewData.symptoms?.map((symptom) => (
-                  <Chip key={symptom.id} label={symptom.name} color="border" disabled={true} />
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <div className={styles.detailTitle}>진단 내용</div>
-              <div className={styles.detailContent}>
-                {reviewData.diseases?.map((disease) => (
-                  <Chip key={disease.id} label={disease.name} color="border" disabled={true} />
-                ))}
-              </div>
-            </div>
-
-            <div>
-              <div className={styles.detailTitle}>동물 기본 정보</div>
-              <div className={styles.petInfoContainer}>
-                <Separated by={<Divider size={"popular"} />}>
-                  <div className={styles.petInfoCategory}>
-                    <p className={styles.petInfoLabel}>종</p>
-                    <p className={styles.petInfoValue}>{reviewData.breed}</p>
-                  </div>
-                  <div className={styles.petInfoCategory}>
-                    <p className={styles.petInfoLabel}>성별</p>
-                    <p className={styles.petInfoValue}>{reviewData.gender}</p>
-                  </div>
-                  <div className={styles.petInfoCategory}>
-                    <p className={styles.petInfoLabel}>성별</p>
-                    <p className={styles.petInfoValue}>{reviewData.animal}</p>
-                  </div>
-                  <div className={styles.petInfoCategory}>
-                    <p className={styles.petInfoLabel}>몸무게</p>
-                    <p className={styles.petInfoValue}>{reviewData.weight}</p>
-                  </div>
-                </Separated>
-              </div>
-            </div>
+            <ChipSection title="사전증상" items={reviewData.symptoms} color="border" />
+            <ChipSection title="진단 내용" items={reviewData.diseases} color="border" />
+            <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
         <div className={styles.detailButton} onClick={toggleExpand}>
@@ -137,15 +97,70 @@ const ReviewItem = (props: propsType) => {
         </div>
         <div className={styles.reviewChipsContainer}>
           {reviewData.goodReviews?.map((review) => (
-            <Chip key={review.id} label={review.name} color="blue" disabled={true} />
+            <Chip key={review.id} label={review.name} color="blue" disabled />
           ))}
           {reviewData.badReviews?.map((review) => (
-            <Chip key={review.id} label={review.name} color="red" disabled={true} />
+            <Chip key={review.id} label={review.name} color="red" disabled />
           ))}
         </div>
       </article>
     </section>
   );
 };
+
+/**
+ * 동물 기본 정보
+ */
+const PetInfo = ({ reviewData }: { reviewData: ReviewItemType }) => (
+  <div>
+    <div className={styles.detailTitle}>동물 기본 정보</div>
+    <div className={styles.petInfoContainer}>
+      <Separated by={<Divider size="popular" />}>
+        <div className={styles.petInfoCategory}>
+          <p className={styles.petInfoLabel}>종</p>
+          <p className={styles.petInfoValue}>{reviewData.breed}</p>
+        </div>
+        <div className={styles.petInfoCategory}>
+          <p className={styles.petInfoLabel}>성별</p>
+          <p className={styles.petInfoValue}>{reviewData.gender}</p>
+        </div>
+        <div className={styles.petInfoCategory}>
+          <p className={styles.petInfoLabel}>동물</p>
+          <p className={styles.petInfoValue}>{reviewData.animal}</p>
+        </div>
+        <div className={styles.petInfoCategory}>
+          <p className={styles.petInfoLabel}>몸무게</p>
+          <p className={styles.petInfoValue}>{reviewData.weight}</p>
+        </div>
+      </Separated>
+    </div>
+  </div>
+);
+
+/**
+ * Chip Section (구조가 공통으로 반복되어 있음)
+ * @param title
+ * @param items
+ * @param color
+ * @constructor
+ */
+const ChipSection = ({
+  title,
+  items,
+  color,
+}: {
+  title: string;
+  items: ReadonlyArray<{ id: number; name: string }>;
+  color: "border" | "blue" | "red";
+}) => (
+  <div>
+    <div className={styles.detailTitle}>{title}</div>
+    <div className={styles.detailContent}>
+      {items.map((item) => (
+        <Chip key={item.id} label={item.name} color={color} disabled />
+      ))}
+    </div>
+  </div>
+);
 
 export default ReviewItem;
