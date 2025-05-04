@@ -1,6 +1,6 @@
 "use client";
 
-import { IcChevronLeft, IcChevronRight, IcEditPen } from "@asset/svg";
+import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
@@ -28,6 +28,7 @@ import {
 } from "@api/domain/mypage/edit-pet/hook";
 import { useGetPetInfo } from "@api/domain/mypage/hook";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";
+import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital.tsx";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -311,7 +312,7 @@ const Page = () => {
           categoryData={categoryData}
           onButtonClick={() => openCategoryBottomSheet("symptom")}
         />
-
+        <EditFavoriteHospital />
         <AnimalBottomSheet petId={petInfo.petId} />
         <CategoryBottomSheet petId={petInfo.petId} />
         <AgeBottomSheet
@@ -338,7 +339,7 @@ interface EditArticleProps {
 
 const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }: EditArticleProps) => {
   return (
-    <article className={styles.knownSymptomsOrDisease}>
+    <article className={styles.editArticle}>
       <span className={styles.defaultText}>{title}</span>
       <Divider size="small" />
       <div className={styles.chipContainer}>
@@ -367,6 +368,59 @@ const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }
           onClick={onButtonClick}
         />
       </span>
+    </article>
+  );
+};
+
+const EditFavoriteHospital = () => {
+  //todo: api로 불러와서 정보 불러오기 + 정보 수정하기 api 연동
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+  const openCategoryBottomSheet = () => {
+    setIsOpen(true);
+  };
+  const handleSelectHospital = (hospital: Hospital | null) => {
+    setSelectedHospital(hospital);
+  };
+
+  return (
+    <article className={styles.editArticle}>
+      <span className={styles.defaultText}>즐겨찾는 병원</span>
+      <Divider size="small" />
+      {selectedHospital ? (
+        <div className={styles.favoriteHospitalWrapper}>
+          <div className={styles.favoriteHospitalInfo}>
+            <span className={styles.favoriteHospitalName}>{selectedHospital.name}</span>
+            <span
+              className={styles.favoriteHospitalSubInfo}
+            >{`${selectedHospital.address} . 리뷰 ${selectedHospital.reviewCount}`}</span>
+          </div>
+          <Button
+            variant={"solidNeutral"}
+            width="10.5rem"
+            leftIcon={<IcEditPen width={20} height={20} />}
+            label={"수정하기"}
+            size="small"
+            onClick={() => setIsOpen(true)}
+          />
+        </div>
+      ) : (
+        <Button
+          variant={"solidNeutral"}
+          rightIcon={<IcPlus width={20} height={20} />}
+          label={"즐겨찾는 동물병원 추가하기"}
+          size="small"
+          width="21.2rem"
+          onClick={openCategoryBottomSheet}
+        />
+      )}
+
+      <SearchHospital
+        active={isOpen}
+        onCloseBottomSheet={() => setIsOpen(false)}
+        selectedHospital={selectedHospital}
+        onSelectHospital={handleSelectHospital}
+      />
     </article>
   );
 };
