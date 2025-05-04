@@ -9,7 +9,7 @@ import nocategory from "@asset/image/nocategory.png";
 import ImageGalleryModal from "./ImageGalleryModal";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import { isLoggedIn } from "@api/index";
-
+import { LoginPopup } from "./LoginPopup/LoginPopup";
 interface HospitalReviewProps {
   isMypage?: boolean;
 }
@@ -170,6 +170,15 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
         leftOnClick={() => closeDeleteReviewModal()}
         rightOnClick={() => alert("Todo")}
       />
+
+      {isBlurred && (
+        <LoginPopup
+          isOpen={true}
+          onClick={() => {
+            alert("로그인 후 이용해주세요.");
+          }}
+        />
+      )}
     </section>
   );
 };
