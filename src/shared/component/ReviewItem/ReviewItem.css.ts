@@ -141,6 +141,10 @@ export const imagesContainer = style({
   gap: "0.8rem",
   marginBottom: "1.6rem",
   overflow: "scroll",
+  scrollbarWidth: "none",
+  // "&::-webkit-scrollbar": {
+  //   display: "none",
+  // },
 });
 
 export const reviewImage = style({
