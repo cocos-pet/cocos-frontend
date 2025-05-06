@@ -1,6 +1,6 @@
-import {color, font, semanticColor} from "@style/styles.css.ts";
-import {style} from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
+import { color, font, semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -147,4 +147,18 @@ export const reviewButton = style({
   fontFamily: font.body01,
   fontSize: "1.4rem",
   color: "#fff",
+});
+
+export const filterButton = style({
+  width: "fit-content",
+  display: "flex",
+  alignItems: "center",
+  backgroundColor: "transparent",
+  color: semanticColor.text.normal,
+  gap: "0.4rem",
+});
+
+export const filterButtonActive = style({
+  backgroundColor: "rgba(67, 214, 255, 0.16)",
+  color: semanticColor.text.heavy,
 });

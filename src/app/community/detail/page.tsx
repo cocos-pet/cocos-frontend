@@ -3,20 +3,21 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcLeftarrow} from "@asset/svg";
-import {PATH} from "@route/path.ts";
-import {formatTime} from "@shared/util/formatTime.ts";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {Suspense, useCallback, useEffect, useState} from "react";
-import {components} from "@type/schema";
+import { IcFilterBlue, IcLeftarrow } from "@asset/svg";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import {postPostFiltersRequestType} from "@api/domain/community/search";
+import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@shared/component/ReviewItem/ReviewItem.tsx";
-import {Button} from "@common/component/Button";
+import { Button } from "@common/component/Button";
+import { semanticColor } from "@style/styles.css.ts";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -141,7 +142,18 @@ const ReviewDetailContent = () => {
     <div className={styles.reviewContainer}>
       <div className={styles.reviewFilter}>
         <div className={styles.reviewRegion}>서울시 강남구</div>
-        <Button variant={"outlinePrimary"} label={"필터"} style={{ backgroundColor: "D9F0F7" }} />
+        <Button
+          variant={"outlinePrimary"}
+          size={"small"}
+          label={
+            <>
+              필터
+              <IcFilterBlue style={{ width: "20px" }} />
+            </>
+          }
+          style={{ backgroundColor: "rgba(67, 214, 255, 0.16)", color: semanticColor.text.heavy, width: "fit-content" }}
+          className={`${styles.filterButton} ${isFilterOpen ? styles.filterButtonActive : ""}`}
+        />
 
         {/*<button className={styles.reviewButton} onClick={handleClick}>*/}
         {/*  필터*/}
