@@ -1,6 +1,6 @@
-import { color, font, semanticColor } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
+import {color, font, semanticColor} from "@style/styles.css.ts";
+import {style} from "@vanilla-extract/css";
+import {recipe} from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -157,4 +157,31 @@ export const filterButton = style({
 export const filterButtonActive = style({
   backgroundColor: "rgba(67, 214, 255, 0.16) !important",
   color: "#14B5F0 !important",
+});
+
+export const filterContent = style({
+  width: "100%",
+});
+export const filterTitle = style([
+  font.body01,
+  {
+    color: color.gray.gray900,
+    textAlign: "center",
+    padding: "1.2rem 1rem",
+  },
+]);
+export const filterContentText = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "1rem",
+  backgroundColor: semanticColor.neutral.strong,
+  margin: "0 2rem",
+  padding: "0.8rem",
+  overflowY: "auto",
+  height: "calc(100vh - 29rem)",
+});
+
+export const filterButtonContainer = style({
+  margin: "1.2rem 2rem 3.2rem 2rem",
 });

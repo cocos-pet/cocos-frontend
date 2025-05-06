@@ -3,21 +3,23 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcDownArrow, IcFilterBlack, IcFilterBlue, IcLeftarrow, IcTarget } from "@asset/svg";
-import { PATH } from "@route/path.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { Suspense, useCallback, useEffect, useState } from "react";
-import { components } from "@type/schema";
+import {IcDownArrow, IcFilterBlack, IcFilterBlue, IcLeftarrow, IcTarget} from "@asset/svg";
+import {PATH} from "@route/path.ts";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {Suspense, useCallback, useEffect, useState} from "react";
+import {components} from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { postPostFiltersRequestType } from "@api/domain/community/search";
+import {postPostFiltersRequestType} from "@api/domain/community/search";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@shared/component/ReviewItem/ReviewItem.tsx";
-import { Button } from "@common/component/Button";
-import { motion } from "framer-motion";
+import {Button} from "@common/component/Button";
+import {motion} from "framer-motion";
+import BottomSheet from "@common/component/BottomSheet/BottomSheet.tsx";
+import Chip from "@common/component/Chip/Chip.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -112,6 +114,39 @@ const sampleReviewData = {
   ],
 } as const;
 
+const reviewFilterConfig = {
+  goodReviews: [
+    { id: 1, name: "상담 시간이 충분해요" },
+    { id: 2, name: "치료과정이 상세히 설명 되요" },
+    { id: 3, name: "진료비가 합리적이에요" },
+    { id: 4, name: "반려동물이 스트레스를 덜 받아요" },
+    { id: 5, name: "대기시간이 짧아요" },
+    { id: 6, name: "의사 선생님이 친절해요" },
+    { id: 7, name: "간호사 선생님이 친절해요" },
+    { id: 8, name: "주차가 편해요" },
+    { id: 9, name: "위치가 좋아요" },
+    { id: 10, name: "진료가 빨라요" },
+    { id: 11, name: "진료비가 저렴해요" },
+    { id: 12, name: "후기가 많아요" },
+    { id: 13, name: "최신 장비와 기술을 갖추고 있어요" },
+  ],
+  badReviews: [
+    { id: 1, name: "상담 시간이 부족해요" },
+    { id: 2, name: "치료과정이 상세히 설명 되지 않아요" },
+    { id: 3, name: "진료비가 비싸요" },
+    { id: 4, name: "반려동물이 스트레스를 많이 받아요" },
+    { id: 5, name: "대기시간이 길어요" },
+    { id: 6, name: "의사 선생님이 불친절해요" },
+    { id: 7, name: "간호사 선생님이 불친절해요" },
+    { id: 8, name: "주차가 불편해요" },
+    { id: 9, name: "위치가 나빠요" },
+    { id: 10, name: "진료가 느려요" },
+    { id: 11, name: "진료비가 비싸요" },
+    { id: 12, name: "후기가 적어요" },
+    { id: 13, name: "최신 장비와 기술을 갖추고 있지 않아요" },
+  ],
+};
+
 // 로딩 컴포넌트
 const LoadingFallback = () => <Loading height={80} />;
 type ActiveTabType = "review" | "community";
@@ -124,12 +159,14 @@ const EmptyState = () => (
   </div>
 );
 
+type ReviewActiveTabType = "good" | "bad";
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams?.get("id");
   const router = useRouter();
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<ReviewActiveTabType>("good");
 
   const handleClick = () => {
     setIsReviewFilterOpen(!isReviewFilterOpen);
@@ -143,6 +180,14 @@ const ReviewDetailContent = () => {
     // @TODO 지역 필터링 모달 연결
     setIsRegionFilterOpen(!isRegionFilterOpen);
     console.log("지역 필터링 클릭");
+  };
+
+  const handleTabClick = (tab: ReviewActiveTabType) => {
+    setActiveTab(tab);
+  };
+
+  const isActiveTab = (tab: ReviewActiveTabType) => {
+    return activeTab === tab;
   };
 
   return (
@@ -194,6 +239,41 @@ const ReviewDetailContent = () => {
           />
         ))}
       </div>
+      <BottomSheet isOpen={isReviewFilterOpen} handleOpen={setIsReviewFilterOpen}>
+        <div className={styles.filterContent}>
+          <div className={styles.filterTitle}>리뷰 필터</div>
+          <div className={styles.tabContainer}>
+            <Tab active={isActiveTab("good")} width={"100%"} onClick={() => handleTabClick("good")}>
+              좋았던 점
+            </Tab>
+            <Tab active={isActiveTab("bad")} width={"100%"} onClick={() => handleTabClick("bad")}>
+              아쉬웠던 점
+            </Tab>
+          </div>
+          <div className={styles.filterContentText}>
+            {activeTab === "good" &&
+              reviewFilterConfig.goodReviews.map((item) => (
+                <Chip key={item.id} size={"small"} label={item.name} color={"blue"} />
+              ))}
+            {activeTab === "bad" &&
+              reviewFilterConfig.badReviews.map((item) => (
+                <Chip key={item.id} size={"small"} label={item.name} color={"red"} />
+              ))}
+          </div>
+          <div className={styles.filterButtonContainer}>
+            <Button
+              variant={"solidPrimary"}
+              size={"large"}
+              label={"확인하기"}
+              style={{ width: "100%" }}
+              onClick={() => {
+                setIsReviewFilterOpen(false);
+                //@TODO 필터링 세팅되도록 구현
+              }}
+            />
+          </div>
+        </div>
+      </BottomSheet>
     </div>
   );
 };
