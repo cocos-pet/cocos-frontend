@@ -3,19 +3,20 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow } from "@asset/svg";
-import { PATH } from "@route/path.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { Suspense, useCallback, useEffect, useState } from "react";
-import { components } from "@type/schema";
+import {IcLeftarrow} from "@asset/svg";
+import {PATH} from "@route/path.ts";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {Suspense, useCallback, useEffect, useState} from "react";
+import {components} from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { postPostFiltersRequestType } from "@api/domain/community/search";
+import {postPostFiltersRequestType} from "@api/domain/community/search";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@shared/component/ReviewItem/ReviewItem.tsx";
+import {Button} from "@common/component/Button";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -138,14 +139,15 @@ const ReviewDetailContent = () => {
 
   return (
     <div className={styles.reviewContainer}>
-      {/* @todo 추후 윤지언니 PR 머지 되면 가져다 쓸 예정 */}
-      {/*<div className={styles.reviewFilter}>*/}
-      {/*  <div className={styles.reviewRegion}>서울시 강남구</div>*/}
-      {/*  <button className={styles.reviewButton} onClick={handleClick}>*/}
-      {/*    필터*/}
-      {/*    {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}*/}
-      {/*  </button>*/}
-      {/*</div>*/}
+      <div className={styles.reviewFilter}>
+        <div className={styles.reviewRegion}>서울시 강남구</div>
+        <Button variant={"outlinePrimary"} label={"필터"} style={{ backgroundColor: "D9F0F7" }} />
+
+        {/*<button className={styles.reviewButton} onClick={handleClick}>*/}
+        {/*  필터*/}
+        {/*  {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}*/}
+        {/*</button>*/}
+      </div>
       <div className={styles.reviewItemContainer}>
         {sampleReviewData.reviews.map((review) => (
           <ReviewItem

@@ -1,6 +1,6 @@
-import { color, font, semanticColor } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
+import {color, font, semanticColor} from "@style/styles.css.ts";
+import {style} from "@vanilla-extract/css";
+import {recipe} from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -115,4 +115,36 @@ export const reviewItemContainer = style({
   width: "100%",
   display: "flex",
   flexDirection: "column",
+});
+
+export const reviewContent = style({
+  display: "flex",
+  gap: "0.8rem",
+  alignItems: "center",
+});
+
+export const reviewFilter = style({
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "1.6rem 2rem",
+  gap: "0.8rem",
+  alignItems: "center",
+  width: "100%",
+});
+
+export const reviewRegion = style({
+  fontFamily: font.body01,
+  fontSize: "1.4rem",
+  padding: "0.6rem 1.4rem",
+  borderRadius: "0.8rem",
+});
+
+export const reviewButton = style({
+  width: "100%",
+  padding: "1.6rem 0",
+  backgroundColor: color.primary.blue900,
+  borderRadius: "0.8rem",
+  fontFamily: font.body01,
+  fontSize: "1.4rem",
+  color: "#fff",
 });

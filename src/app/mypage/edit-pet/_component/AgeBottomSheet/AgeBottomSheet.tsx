@@ -1,9 +1,9 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
-import {Button} from "@common/component/Button";
+import { Button } from "@common/component/Button";
 import * as styles from "./AgeBottomSheet.css";
-import {TextField} from "@common/component/TextField";
-import {ChangeEvent} from "react";
-import {usePatchPetInfo} from "@api/domain/mypage/edit-pet/hook";
+import { TextField } from "@common/component/TextField";
+import { ChangeEvent } from "react";
+import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
 
 interface AgeBottomSheetPropTypes {
   isOpen: boolean;
@@ -52,7 +52,7 @@ const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge, petId }: AgeBott
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="수정하기" size="large" width="100%" onClick={handleClickButton} />
+          <Button label="수정하기" size="large" style={{ width: "100%" }} onClick={handleClickButton} />
         </div>
       </>
     </BottomSheet>

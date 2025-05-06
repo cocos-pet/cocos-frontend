@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { button, ButtonVariants, icon } from "@common/component/Button/styles.css.ts";
+import {button, ButtonVariants, icon} from "@common/component/Button/styles.css.ts";
 
 interface ButtonProps {
-  width?: string;
   label?: string;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  style?: React.CSSProperties;
 }
 
 type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
@@ -22,11 +22,11 @@ type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
  * @param variant 버튼 종류 solidPrimary | solidNeutral | outlinePrimary
  * @param disabled 비활성화 여부
  * @param onClick
+ * @param props
  * @constructor minjeoong
  */
 
 export const Button = ({
-  width = "",
   label = "Button",
   leftIcon,
   rightIcon,
@@ -34,13 +34,16 @@ export const Button = ({
   variant = "solidPrimary",
   disabled,
   onClick,
+  style,
+  ...props
 }: CombinedButtonProps) => {
   return (
     <button
-      style={width ? { width } : undefined}
+      style={style}
       className={button({ size, variant, disabled })}
       disabled={disabled}
       onClick={onClick}
+      {...props}
     >
       {leftIcon && <div className={icon}>{leftIcon}</div>}
       {label}
