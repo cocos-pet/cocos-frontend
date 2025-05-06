@@ -1,7 +1,11 @@
-"use client"
+"use client";
 
-import * as styles from "./hospitalDetail.css";
-
+import * as styles from "./HospitalDetail.css";
+import HospitalHeader from "./_component/HospitalHeader/HospitalHeader";
 export default function HospitalDetail() {
-  return <div className={styles.container}>HospitalDetail</div>;
-}
+  return (
+  <>
+  <HospitalHeader />
+  </>
+)}
+
