@@ -7,7 +7,7 @@ import {IcDelete} from "@asset/svg/index";
 interface ChipProps {
   label: string;
   icon?: boolean;
-  color?: "blue" | "gray";
+  color?: "blue" | "gray" | "red" | "border";
   onClick?: () => void;
   isSelected?: boolean;
   disabled?: boolean;
