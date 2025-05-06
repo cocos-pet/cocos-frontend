@@ -53,6 +53,7 @@ export { default as IcSearchFillter } from "./IcSearchFillter";
 export { default as IcSearchFillterBlue } from "./IcSearchFillterBlue";
 export { default as IcSettings } from "./IcSettings";
 export { default as IcSymptom } from "./IcSymptom";
+export { default as IcTarget } from "./IcTarget";
 export { default as IcTemporary } from "./IcTemporary";
 export { default as IcTest } from "./IcTest";
 export { default as IcToastError } from "./IcToastError";

@@ -3,7 +3,7 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcFilterBlue, IcLeftarrow } from "@asset/svg";
+import { IcFilterBlack, IcFilterBlue, IcLeftarrow } from "@asset/svg";
 import { PATH } from "@route/path.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
@@ -17,7 +17,6 @@ import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@shared/component/ReviewItem/ReviewItem.tsx";
 import { Button } from "@common/component/Button";
-import { semanticColor } from "@style/styles.css.ts";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -148,17 +147,13 @@ const ReviewDetailContent = () => {
           label={
             <>
               필터
-              <IcFilterBlue style={{ width: "20px" }} />
+              {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}
             </>
           }
-          style={{ backgroundColor: "rgba(67, 214, 255, 0.16)", color: semanticColor.text.heavy, width: "fit-content" }}
-          className={`${styles.filterButton} ${isFilterOpen ? styles.filterButtonActive : ""}`}
+          style={{ width: "fit-content" }}
+          className={isFilterOpen ? styles.filterButtonActive : styles.filterButton}
+          onClick={handleClick}
         />
-
-        {/*<button className={styles.reviewButton} onClick={handleClick}>*/}
-        {/*  필터*/}
-        {/*  {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}*/}
-        {/*</button>*/}
       </div>
       <div className={styles.reviewItemContainer}>
         {sampleReviewData.reviews.map((review) => (

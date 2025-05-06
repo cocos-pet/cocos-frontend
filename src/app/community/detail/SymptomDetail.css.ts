@@ -139,26 +139,12 @@ export const reviewRegion = style({
   borderRadius: "0.8rem",
 });
 
-export const reviewButton = style({
-  width: "100%",
-  padding: "1.6rem 0",
-  backgroundColor: color.primary.blue900,
-  borderRadius: "0.8rem",
-  fontFamily: font.body01,
-  fontSize: "1.4rem",
-  color: "#fff",
-});
-
 export const filterButton = style({
-  width: "fit-content",
-  display: "flex",
-  alignItems: "center",
-  backgroundColor: "transparent",
+  backgroundColor: "white !important",
   color: semanticColor.text.normal,
-  gap: "0.4rem",
 });
 
 export const filterButtonActive = style({
-  backgroundColor: "rgba(67, 214, 255, 0.16)",
-  color: semanticColor.text.heavy,
+  backgroundColor: "rgba(67, 214, 255, 0.16) !important",
+  color: "#14B5F0 !important",
 });
