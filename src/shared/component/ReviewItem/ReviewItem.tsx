@@ -35,12 +35,20 @@ export interface ReviewItemType {
 
 interface propsType {
   handleProfileClick: () => void;
+  handleHospitalDetailClick: () => void;
   reviewData: ReviewItemType;
   isBlurred?: boolean;
 }
 
-const ReviewItem = (props: propsType) => {
-  const { handleProfileClick, reviewData, isBlurred = false } = props;
+/**
+ * 병원리뷰 컴포넌트
+ * @param handleProfileClick  유저 프로필 클릭 시
+ * @param handleHospitalDetailClick 병원 상세 클릭 시
+ * @param reviewData 리뷰 데이터
+ * @param isBlurred 리뷰가 블러 처리되어야 하는지 여부
+ */
+const HospitalReview = (props: propsType) => {
+  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -71,7 +79,7 @@ const ReviewItem = (props: propsType) => {
         petAge={reviewData.petAge}
       />
       <article className={isBlurred ? styles.blurEffect : undefined}>
-        <div className={styles.hospitalDetail}>
+        <div className={styles.hospitalDetail} onClick={handleHospitalDetailClick}>
           <div className={styles.hospitalName}>{reviewData.hospitalName}</div>
           <div className={styles.hospitalAddress}>{reviewData.hospitalAddress}</div>
         </div>
@@ -182,4 +190,4 @@ const ChipSection = ({
   </div>
 );
 
-export default ReviewItem;
+export default HospitalReview;
