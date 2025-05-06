@@ -1,11 +1,12 @@
 import { style } from "@vanilla-extract/css";
 
 export const hospitalHeaderContainer = style({
-    width: "100%",
+    display: "flex",
 });
 
 export const hospitalImage = style({
-    display: "flex",
+    width:"37.5rem",
+    height:"23.2rem"
 
 });
 

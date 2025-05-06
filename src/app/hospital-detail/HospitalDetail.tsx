@@ -2,10 +2,16 @@
 
 import * as styles from "./HospitalDetail.css";
 import HospitalHeader from "./_component/HospitalHeader/HospitalHeader";
+import Selection from "./_component/Selection/Selection";
+
 export default function HospitalDetail() {
+
+
   return (
-  <>
-  <HospitalHeader />
-  </>
-)}
+    <div>
+      <HospitalHeader />
+      <Selection />
+    </div>
+  );
+}
 
