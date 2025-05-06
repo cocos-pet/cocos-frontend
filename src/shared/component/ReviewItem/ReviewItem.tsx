@@ -57,10 +57,6 @@ const HospitalReview = (props: propsType) => {
     setIsExpanded(!isExpanded);
   };
 
-  if (!reviewData) {
-    return null;
-  }
-
   const handleImageClick = (index: number) => {
     setCurrentImageIndex(index);
     setIsImageGalleryModalOpen(true);
