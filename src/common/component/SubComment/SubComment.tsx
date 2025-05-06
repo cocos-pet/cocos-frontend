@@ -9,7 +9,7 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/store/categoryFilter.ts";
+import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/categoryFilter.ts";
 
 interface SubCommentProps {
   commentId: number | undefined;

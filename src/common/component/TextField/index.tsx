@@ -44,6 +44,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       leftIcon,
       state = "default",
       active = true,
+      focus = false,
       placeholder = "검색어를 입력해주세요",
       value,
       isDelete = "true",
@@ -57,7 +58,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
     ref,
   ) => {
     return (
-      <div className={styles.wrapper({ state, active })} onClick={onClick}>
+      <div className={styles.wrapper({ state, active, focus })} onClick={onClick}>
         <div className={styles.leftWrap()}>
           {leftIcon && <p className={iconstyle}>{leftIcon}</p>}
           <span className={styles.mention}>{mentionedNickname}</span>

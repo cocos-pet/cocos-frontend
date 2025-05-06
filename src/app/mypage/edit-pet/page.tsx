@@ -1,22 +1,22 @@
 "use client";
 
-import {IcChevronLeft, IcChevronRight, IcEditPen} from "@asset/svg";
+import { IcChevronLeft, IcChevronRight, IcEditPen } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import {PATH} from "@route/path";
-import {useRouter} from "next/navigation";
+import { PATH } from "@route/path";
+import { useRouter } from "next/navigation";
 import * as styles from "./PetEdit.css";
 import Divider from "@common/component/Divider/Divider";
-import {Button} from "@common/component/Button";
-import {ChangeEvent, useEffect, useRef, useState} from "react";
-import {validateNickname} from "@shared/util/validateNickname";
-import CategoryBottomSheet from "./component/CategoryBottomSheet/CategoryBottomSheet";
-import {useCategoryFilterStore} from "./store/categoryFilter";
+import { Button } from "@common/component/Button";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { validateNickname } from "@shared/util/validateNickname";
+import CategoryBottomSheet from "./_component/CategoryBottomSheet/CategoryBottomSheet";
+import { useCategoryFilterStore } from "./_store/categoryFilter.ts";
 import Chip from "@common/component/Chip/Chip";
-import {getSelectedChipNamesById} from "./utils/getSelectedChipNamesById";
-import AnimalBottomSheet from "./component/AnimalBottomSheet/AnimalBottomSheet";
-import {useAnimalFilterStore} from "./store/animalFilter";
-import {getAnimalChipNamesById} from "./utils/getAnimalChipNamesById";
-import AgeBottomSheet from "./component/AgeBottomSheet/AgeBottomSheet";
+import { getSelectedChipNamesById } from "./_utils/getSelectedChipNamesById.ts";
+import AnimalBottomSheet from "./_component/AnimalBottomSheet/AnimalBottomSheet";
+import { useAnimalFilterStore } from "./_store/animalFilter.ts";
+import { getAnimalChipNamesById } from "./_utils/getAnimalChipNamesById.ts";
+import AgeBottomSheet from "./_component/AgeBottomSheet/AgeBottomSheet";
 import {
   useGetAnimal,
   useGetBodies,
@@ -25,7 +25,7 @@ import {
   useGetSymptoms,
   usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
-import {useGetPetInfo} from "@api/domain/mypage/hook";
+import { useGetPetInfo } from "@api/domain/mypage/hook";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,

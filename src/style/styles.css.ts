@@ -72,6 +72,9 @@ export const semanticColor = createGlobalTheme(":root", {
     strong: color.gray.gray200,
     heavy: color.gray.gray300,
   },
+  accent: {
+    warning: color.red.warning_red200,
+  },
 });
 
 //폰트
