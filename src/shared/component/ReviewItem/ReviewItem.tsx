@@ -8,6 +8,7 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import { Separated } from "react-simplikit";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 
 export interface ReviewItemType {
   id: number;
@@ -41,6 +42,8 @@ interface propsType {
 const ReviewItem = (props: propsType) => {
   const { handleProfileClick, reviewData, isBlurred = false } = props;
   const [isExpanded, setIsExpanded] = useState(false);
+  const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -49,6 +52,14 @@ const ReviewItem = (props: propsType) => {
   if (!reviewData) {
     return null;
   }
+
+  const handleImageClick = (index: number) => {
+    setCurrentImageIndex(index);
+    setIsImageGalleryModalOpen(true);
+  };
+  const closeImageGalleryModal = () => {
+    setIsImageGalleryModalOpen(false);
+  };
 
   return (
     <section className={styles.reviewItemContainer}>
@@ -92,6 +103,7 @@ const ReviewItem = (props: propsType) => {
               alt="Post image"
               width={76}
               height={76}
+              onClick={() => handleImageClick(index)}
             />
           ))}
         </div>
@@ -103,6 +115,13 @@ const ReviewItem = (props: propsType) => {
             <Chip key={review.id} label={review.name} color="red" disabled />
           ))}
         </div>
+        {/* 이미지 갤러리 모달 */}
+        <ImageGalleryModal
+          isOpen={isImageGalleryModalOpen}
+          images={reviewData.images as string[]}
+          currentIndex={currentImageIndex}
+          onClose={closeImageGalleryModal}
+        />
       </article>
     </section>
   );
