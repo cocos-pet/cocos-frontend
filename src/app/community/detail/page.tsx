@@ -3,7 +3,7 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcFilterBlack, IcFilterBlue, IcLeftarrow } from "@asset/svg";
+import { IcDownArrow, IcFilterBlack, IcFilterBlue, IcLeftarrow, IcTarget } from "@asset/svg";
 import { PATH } from "@route/path.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
@@ -17,6 +17,7 @@ import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@shared/component/ReviewItem/ReviewItem.tsx";
 import { Button } from "@common/component/Button";
+import { motion } from "framer-motion";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -127,31 +128,52 @@ const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams?.get("id");
   const router = useRouter();
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
+  const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false);
 
   const handleClick = () => {
-    setIsFilterOpen(!isFilterOpen);
+    setIsReviewFilterOpen(!isReviewFilterOpen);
   };
 
   const handleProfileClick = (nickname: string) => {
     router.push(`/profile?nickname=${nickname}`);
   };
 
+  const handleRegionFilter = () => {
+    // @TODO 지역 필터링 모달 연결
+    setIsRegionFilterOpen(!isRegionFilterOpen);
+    console.log("지역 필터링 클릭");
+  };
+
   return (
     <div className={styles.reviewContainer}>
       <div className={styles.reviewFilter}>
-        <div className={styles.reviewRegion}>서울시 강남구</div>
+        <div className={styles.reviewRegion} onClick={handleRegionFilter}>
+          <IcTarget width={20} />
+          <span className={styles.reviewRegionText}> 서울시 강남구</span>
+          <motion.div
+            style={{ height: "20px" }}
+            animate={{ rotate: isRegionFilterOpen ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <IcDownArrow width={20} />
+          </motion.div>
+        </div>
         <Button
           variant={"outlinePrimary"}
           size={"small"}
           label={
             <>
               필터
-              {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}
+              {isReviewFilterOpen ? (
+                <IcFilterBlue style={{ width: "20px" }} />
+              ) : (
+                <IcFilterBlack style={{ width: "20px" }} />
+              )}
             </>
           }
           style={{ width: "fit-content" }}
-          className={isFilterOpen ? styles.filterButtonActive : styles.filterButton}
+          className={isReviewFilterOpen ? styles.filterButtonActive : styles.filterButton}
           onClick={handleClick}
         />
       </div>

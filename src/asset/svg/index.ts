@@ -26,6 +26,7 @@ export { default as IcCuriousUnactive } from "./IcCuriousUnactive";
 export { default as IcDelete } from "./IcDelete";
 export { default as IcDeleteBlack } from "./IcDeleteBlack";
 export { default as IcDeleteWhite } from "./IcDeleteWhite";
+export { default as IcDownArrow } from "./IcDownArrow";
 export { default as IcEditPen } from "./IcEditPen";
 export { default as IcEllipses } from "./IcEllipses";
 export { default as IcFilterBlack } from "./IcFilterBlack";

@@ -107,7 +107,6 @@ export const reviewContainer = style({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  gap: "1.6rem",
 });
 
 export const reviewItemContainer = style({
@@ -133,11 +132,22 @@ export const reviewFilter = style({
 });
 
 export const reviewRegion = style({
+  gap: "0.6rem",
   fontFamily: font.body01,
   fontSize: "1.4rem",
-  padding: "0.6rem 1.4rem",
   borderRadius: "0.8rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "row",
 });
+
+export const reviewRegionText = style([
+  font.body01,
+  {
+    flexShrink: 0,
+  },
+]);
 
 export const filterButton = style({
   backgroundColor: "white !important",
