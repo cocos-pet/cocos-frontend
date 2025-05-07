@@ -1,10 +1,12 @@
 import * as styles from "./ReviewDate.style.css";
-import "react-day-picker/dist/style.css";
-import { DayPicker } from "react-day-picker";
 import { useFormContext } from "react-hook-form";
 import { useState, useMemo } from "react";
 import { ReviewFormData } from "../page";
+
+import "react-day-picker/dist/style.css";
+import { DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
+import CalenderNav from "./CalenderNav";
 
 // 서버 제출용 날짜 데이터 포멧팅
 const formatDate = (date: Date) => {
@@ -51,15 +53,24 @@ const ReviewDate = () => {
         <span className={styles.questionStyle}>방문한 날짜가 언젠가요?</span>
         <span className={styles.starStyle}>*</span>
       </section>
-      <section>
+      <section className={styles.calenderWrapper}>
         <DayPicker
-          formatters={{
-            formatCaption: (month) => `${month.getFullYear()}.${month.getMonth() + 1}`,
+          locale={ko} // 요일 헤더 한글
+          showOutsideDays // 지난 날짜도 보여주기
+          animate // 기본제공 애니메이션
+          mode="single"
+          selected={selectedDate}
+          onSelect={(day) => {
+            if (day) {
+              setValue("date", formatDate(day));
+            }
           }}
+          disabled={{ after: today }}
+          onMonthChange={handleMonthChange}
           classNames={{
+            month_caption: styles.hidden, // 캡션 영역 삭제
             weekday: styles.weekdayHeader, // 일월화수목금토
             day: styles.day, // 모든날짜
-            day_outside: styles.day,
             today: styles.today, // 오늘 날짜
           }}
           modifiers={{
@@ -72,19 +83,10 @@ const ReviewDate = () => {
             pastOutside: styles.pastOutside, // 이번달이 아니면서 지난날짜
             disabled: styles.disabled, // 미래날짜
           }}
-          locale={ko}
-          showOutsideDays
-          animate
-          mode="single"
-          selected={selectedDate}
-          onSelect={(day) => {
-            if (day) {
-              setValue("date", formatDate(day));
-            }
+          components={{
+            Nav: (navProps) => <CalenderNav {...navProps} currentMonth={currentMonth} />,
+            Months: (props) => <div className={styles.calenderLayout}>{props.children}</div>,
           }}
-          disabled={{ after: today }}
-          month={currentMonth}
-          onMonthChange={handleMonthChange}
         />
       </section>
     </div>

@@ -15,12 +15,33 @@ export const starStyle = style([
   },
 ]);
 
+export const calenderWrapper = style({
+  backgroundColor: color.gray.gray000,
+  borderRadius: "9.795px",
+});
+
+export const calenderLayout = style({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  gap: "2.4rem",
+
+  width: "fit-content",
+  height: "auto",
+  margin: "0 auto",
+  padding: "2rem 0.3rem",
+});
+
+export const hidden = style({
+  display: "none",
+});
+
 export const weekdayHeader = style([
   font.body01,
   {
-    color: "#4A4A4A",
     fontSize: "1.17rem",
     fontWeight: "600",
+    color: "#4A4A4A",
     selectors: {
       "&:nth-child(1)": {
         color: "#FF6228",
