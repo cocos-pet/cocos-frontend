@@ -3,8 +3,8 @@
 import { useState } from "react";
 import * as styles from "./Selection.css";
 import { IcUnderline } from "@asset/svg";
-import Info from "../../info/info";
-import Review from "../../review/review";
+import Info from "@app/hospital-detail/[hospitalId]/_component/Info/Info";
+import Review from "../../../review/review";
 
 const Selections = [
   { label: "병원 정보", value: "info" },
@@ -31,8 +31,8 @@ export default function Selection() {
           </button>
         ))}
       </div>
-      {selected === "info" && <Info />}
-      {selected === "review" && <Review />}
+      {selected === "info" }
+      {selected === "review"}
     </div>
   );
 }

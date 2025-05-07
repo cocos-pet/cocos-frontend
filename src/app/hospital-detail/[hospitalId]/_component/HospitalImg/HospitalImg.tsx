@@ -1,7 +1,7 @@
-import * as styles from "./HospitalHeader.css";
+import * as styles from "./HospitalImg.css";
 import hospital_none from "@asset/image/hospital_none.png";
 import Image from "next/image";
-const HospitalHeader = () => {
+const HospitalImg= () => {
   return (
     <div className= {styles.hospitalHeaderContainer}>
         <Image src= {hospital_none} alt= "병원 이미지 없을 때 " className= {styles.hospitalImage} />
@@ -9,4 +9,4 @@ const HospitalHeader = () => {
   )
 }
 
-export default HospitalHeader
+export default HospitalImg
