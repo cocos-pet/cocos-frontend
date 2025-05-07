@@ -4,7 +4,6 @@ import { recipe } from "@vanilla-extract/recipes";
 
 export const tabContainer = style({
   display: "flex",
-  width: "37.5rem",
   padding: "1rem 0",
   justifyContent: "space-between",
   position: "sticky",
