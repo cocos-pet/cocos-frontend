@@ -38,6 +38,7 @@ interface propsType {
   handleHospitalDetailClick: () => void;
   reviewData: ReviewItemType;
   isBlurred?: boolean;
+  isNoProfile?: boolean;
 }
 
 /**
@@ -48,7 +49,7 @@ interface propsType {
  * @param isBlurred 리뷰가 블러 처리되어야 하는지 여부
  */
 const HospitalReview = (props: propsType) => {
-  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false } = props;
+  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false, isNoProfile = false } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -66,14 +67,16 @@ const HospitalReview = (props: propsType) => {
   };
 
   return (
-    <section className={styles.reviewItemContainer}>
-      <Profile
-        handleProfileClick={handleProfileClick}
-        createdAt={reviewData.vistitedAt}
-        nickname={reviewData.nickname}
-        breed={reviewData.breed}
-        petAge={reviewData.petAge}
-      />
+    <section className={styles.reviewItemContainer({ isNoProfile })}>
+      {!isNoProfile && (
+        <Profile
+          handleProfileClick={handleProfileClick}
+          createdAt={reviewData.vistitedAt}
+          nickname={reviewData.nickname}
+          breed={reviewData.breed}
+          petAge={reviewData.petAge}
+        />
+      )}
       <article className={isBlurred ? styles.blurEffect : undefined}>
         <div className={styles.hospitalDetail} onClick={handleHospitalDetailClick}>
           <div className={styles.hospitalName}>{reviewData.hospitalName}</div>
