@@ -1,0 +1,72 @@
+import { style } from "@vanilla-extract/css";
+import { color, font } from "@style/styles.css";
+
+export const container = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.2rem",
+});
+
+
+export const tags = style({
+  display: "flex",
+  gap: "0.4rem",
+  flexWrap: "wrap",
+  padding:"1.2rem 2rem 1.2rem 1.6rem"
+});
+
+export const tag = style([
+  font.body01,{
+    color:color.primary.blue700,
+    fontWeight:500,
+  }
+]);
+
+export const noTag = style({
+  color: color.gray.gray400,
+  fontSize: "1.2rem",
+});
+
+export const introduction = style({
+  backgroundColor:"#FAFAFA",
+  display:"inline-flex",
+      alignItems:"center",
+      gap:"1rem",
+});
+
+export const introductionText = style([
+    font.body01,
+  {
+
+      padding:"0.8rem 2.8rem 0.8rem 2.8rem",
+      color:color.gray.gray700,
+  }
+  ]);
+  
+
+export const addressRow = style({
+  display: "flex",
+  alignItems: "center",
+  padding:"1.2rem 2rem 0rem 2rem",
+  gap: "0.8rem",
+});
+
+export const address = style([
+    font.heading03,{
+        fontWeight:600,
+    }
+]);
+
+export const copyIcon = style({
+  cursor: "pointer",
+  width: "1.6rem",
+  height: "1.6rem",
+});
+
+export const mapWrapper = style({
+  width: "100%",
+  height:"16.1rem",
+  borderRadius: "1rem",
+  overflow: "hidden",
+  background: color.gray.gray100,
+});
