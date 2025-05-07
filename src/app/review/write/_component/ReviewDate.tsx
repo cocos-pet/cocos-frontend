@@ -4,6 +4,7 @@ import { DayPicker } from "react-day-picker";
 import { useFormContext } from "react-hook-form";
 import { useState, useMemo } from "react";
 import { ReviewFormData } from "../page";
+import { ko } from "date-fns/locale";
 
 // 서버 제출용 날짜 데이터 포멧팅
 const formatDate = (date: Date) => {
@@ -45,13 +46,34 @@ const ReviewDate = () => {
   };
 
   return (
-    <>
+    <div>
       <section>
         <span className={styles.questionStyle}>방문한 날짜가 언젠가요?</span>
         <span className={styles.starStyle}>*</span>
       </section>
       <section>
         <DayPicker
+          formatters={{
+            formatCaption: (month) => `${month.getFullYear()}.${month.getMonth() + 1}`,
+          }}
+          classNames={{
+            weekday: styles.weekdayHeader, // 일월화수목금토
+            day: styles.day, // 모든날짜
+            day_outside: styles.day,
+            today: styles.today, // 오늘 날짜
+          }}
+          modifiers={{
+            pastOutside: (date) =>
+              date < today &&
+              (date.getMonth() !== currentMonth.getMonth() || date.getFullYear() !== currentMonth.getFullYear()),
+          }}
+          modifiersClassNames={{
+            selected: styles.daySelected, // 선택된 날짜
+            pastOutside: styles.pastOutside, // 이번달이 아니면서 지난날짜
+            disabled: styles.disabled, // 미래날짜
+          }}
+          locale={ko}
+          showOutsideDays
           animate
           mode="single"
           selected={selectedDate}
@@ -65,7 +87,7 @@ const ReviewDate = () => {
           onMonthChange={handleMonthChange}
         />
       </section>
-    </>
+    </div>
   );
 };
 
