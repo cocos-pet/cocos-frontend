@@ -1,5 +1,4 @@
 import * as styles from "@shared/component/FilterBottomSheet/FilterBottomSheet.css";
-import { useState } from "react";
 import { useFormContext } from "react-hook-form";
 
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
@@ -16,6 +15,8 @@ type CategoryType = "symptom" | "disease";
 interface SearchSymptomDiseaseProps {
   isOpen: boolean;
   onClose: () => void;
+  selectedCategory: CategoryType;
+  onCategoryChange: (category: CategoryType) => void;
 }
 
 const CATEGORIES: { id: CategoryType; label: string }[] = [
@@ -24,14 +25,10 @@ const CATEGORIES: { id: CategoryType; label: string }[] = [
 ];
 
 const getNameById = (id: number): string => {
-  const allItems = [
-    ...dummyData.symptom.flatMap((s) => s.symptoms),
-    ...dummyData.disease.flatMap((d) => d.diseases),
-  ];
+  const allItems = [...dummyData.symptom.flatMap((s) => s.symptoms), ...dummyData.disease.flatMap((d) => d.diseases)];
   return allItems.find((item) => item.id === id)?.name ?? "알 수 없음";
 };
-const SearchSymptomDisease = ({ isOpen, onClose }: SearchSymptomDiseaseProps) => {
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
+const SearchSymptomDisease = ({ isOpen, onClose, selectedCategory, onCategoryChange }: SearchSymptomDiseaseProps) => {
   const { watch, setValue } = useFormContext<ReviewFormData>();
 
   const selectedSymptomIds = watch("symptomIds") ?? [];
@@ -54,12 +51,7 @@ const SearchSymptomDisease = ({ isOpen, onClose }: SearchSymptomDiseaseProps) =>
         {/* 선택된 칩 */}
         <div className={styles.selectedZone}>
           {selectedSymptomIds.map((chipId) => (
-            <Chip
-              icon
-              key={chipId}
-              label={getNameById(chipId)}
-              onClick={() => toggleSymptomChip(chipId)}
-            />
+            <Chip icon key={chipId} label={getNameById(chipId)} onClick={() => toggleSymptomChip(chipId)} />
           ))}
           {selectedDiseaseId !== -1 && (
             <Chip
@@ -74,7 +66,7 @@ const SearchSymptomDisease = ({ isOpen, onClose }: SearchSymptomDiseaseProps) =>
         {/* 탭 */}
         <div className={styles.categoryZone}>
           {CATEGORIES.map(({ id, label }) => (
-            <Tab key={id} active={selectedCategory === id} onClick={() => setSelectedCategory(id)}>
+            <Tab key={id} active={selectedCategory === id} onClick={() => onCategoryChange(id)}>
               {label}
             </Tab>
           ))}

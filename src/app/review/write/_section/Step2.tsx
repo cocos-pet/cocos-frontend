@@ -8,12 +8,16 @@ import { Button } from "@common/component/Button";
 import { useState } from "react";
 import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDisease";
 
+type CategoryType = "symptom" | "disease";
+
 const Step2 = () => {
   // 바텀시트 열고 닫기
   const [open, setOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
 
   // 증상& 바텀시트 열기
-  const handleOpenBottomSheet = () => {
+  const handleOpenBottomSheet = (category: CategoryType) => {
+    setSelectedCategory(category);
     setOpen(true);
   };
 
@@ -31,23 +35,26 @@ const Step2 = () => {
       <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
       <div className={styles.wrapper}>
         {/* 2-1. 증상 */}
-        <ReviewSymptom handleOpenBottomSheet={handleOpenBottomSheet} />
+        <ReviewSymptom onCategoryChange={handleOpenBottomSheet} />
 
         {/* 2-2. 방문 목적 */}
         <ReviewPurpose />
 
         {/* 2-3. 진단 내용 */}
-        <ReviewDisease handleOpenBottomSheet={handleOpenBottomSheet} />
+        <ReviewDisease onCategoryChange={handleOpenBottomSheet} />
       </div>
-
       {/* 하단 버튼 */}
       <div className={styles.btnLayout}>
         <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
         <Button label="다음으로" size="large" variant="solidPrimary" disabled={true} onClick={handleNext} />
       </div>
-
       {/* 증상 진단 바텀시트 */}
-      <SearchSymptomDisease isOpen={open} onClose={() => setOpen(false)} />
+      <SearchSymptomDisease
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+      />
     </>
   );
 };
