@@ -1,32 +1,8 @@
 "use client"
 
-import ReviewItem, { ReviewItemType } from "@shared/component/ReviewItem/ReviewItem"
 import Summary from "./Summary/Summary"
-import Divider from "@common/component/Divider/Divider"
 
-const ReviewContent = () => {
-  const sampleReviewData: ReviewItemType = {
-    id: 1,
-    memberId: 1,
-    nickname: "사용자1",
-    breedName: "말티즈",
-    petDisease: "감기",
-    petAge: 3,
-    vistitedAt: "2024-03-20",
-    hospitalId: 1,
-    hospitalName: "행복한 동물병원",
-    hospitalAddress: "서울시 강남구",
-    content: "친절한 진료와 깔끔한 시설이 좋았습니다.",
-    goodReviews: [{ id: 1, name: "친절함" }],
-    badReviews: [{ id: 2, name: "대기시간" }],
-    images: ["https://example.com/image1.jpg"],
-    symptoms: [{ id: 1, name: "기침" }],
-    diseases: [{ id: 1, name: "감기" }],
-    animal: "강아지",
-    gender: "수컷",
-    breed: "말티즈",
-    weight: 5
-  }
+  const ReviewContent = () => {
 const goodReviews = [
   { id: 1, name: "상담 시간이 충분해요.", count: 132 },
   { id: 2, name: "치료 과정이 상세히 설명돼요.", count: 119 },
