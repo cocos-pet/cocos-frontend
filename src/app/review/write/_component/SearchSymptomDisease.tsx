@@ -24,7 +24,7 @@ const CATEGORIES: { id: CategoryType; label: string }[] = [
   { id: "disease", label: "진단" },
 ];
 
-const getNameById = (id: number): string => {
+export const getNameById = (id: number): string => {
   const allItems = [...dummyData.symptom.flatMap((s) => s.symptoms), ...dummyData.disease.flatMap((d) => d.diseases)];
   return allItems.find((item) => item.id === id)?.name ?? "알 수 없음";
 };
