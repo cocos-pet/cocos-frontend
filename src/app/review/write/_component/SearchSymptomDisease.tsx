@@ -3,6 +3,7 @@ import * as styles from "@shared/component/FilterBottomSheet/FilterBottomSheet.c
 import Tab from "@common/component/Tab/Tab";
 import { Button } from "@common/component/Button";
 import { useState } from "react";
+import CategoryContent from "@app/review/write/_component/CategoryContent";
 
 type CategoryType = "symptom" | "disease";
 
@@ -34,8 +35,7 @@ const SearchSymptomDisease = ({ isOpen, onClose, onSubmit }: SearchSymptomDiseas
 
         {/* 탭별 컨텐츠 */}
         <div className={styles.bodyZone}>
-          {selectedCategory === "symptom" && <p>첫번째 카테고리 내용</p>}
-          {selectedCategory === "disease" && <p>두번째 카테고리 내용</p>}
+          <CategoryContent category={selectedCategory} />
         </div>
 
         {/* 확인 버튼 */}
