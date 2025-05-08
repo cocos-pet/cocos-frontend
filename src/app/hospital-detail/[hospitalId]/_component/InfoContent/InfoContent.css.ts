@@ -4,7 +4,6 @@ import { color, font } from "@style/styles.css";
 export const container = style({
   display: "flex",
   flexDirection: "column",
-  gap: "1.2rem",
 });
 
 
