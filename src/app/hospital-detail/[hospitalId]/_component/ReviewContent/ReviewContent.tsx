@@ -1,7 +1,7 @@
 "use client"
 
 import Summary from "./Summary/Summary"
-
+import RecentView from "./RecentView/RecentView"
   const ReviewContent = () => {
 const goodReviews = [
   { id: 1, name: "상담 시간이 충분해요.", count: 132 },
@@ -25,6 +25,7 @@ const badReviews = [
   return (
     <div>
       <Summary goodReviews={goodReviews} badReviews={badReviews} />
+      <RecentView />
 
     </div>
   )
