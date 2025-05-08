@@ -1,16 +1,33 @@
 "use client";
 
+import { FormProvider, useForm } from "react-hook-form";
+
 // import Step1 from "@app/review/write/_section/Step1";
 import Step2 from "@app/review/write/_section/Step2";
-import { FormProvider, useForm } from "react-hook-form";
+
+// 제출할 리뷰 데이터
 export interface ReviewFormData {
-  hospital: string;
-  date: string;
+  hospital: string; // ⚠️ 이거 필요없음
+  date: string; // ⚠️ 키 visitedAt으로 바꿔야함
+  symptomIds: number[];
+  diseaseId: number; 
+  // breedId:number;
+  // gender: string;
+  // weight: number;
+  // visitedAt: string
+  // content: string;
+  // purposeId: number;
+  // diseaseId: number;
+  // goodReviewIds: number[];
+  // badReviewIds: number[];
+  // images: string[];
 }
 
 const defaultValues: ReviewFormData = {
   hospital: "",
   date: "",
+  symptomIds: [],
+  diseaseId: -1,
 };
 
 const page = () => {

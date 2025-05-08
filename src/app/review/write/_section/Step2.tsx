@@ -9,10 +9,11 @@ import { useState } from "react";
 import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDisease";
 
 const Step2 = () => {
+  // 바텀시트 열고 닫기
   const [open, setOpen] = useState(false);
 
   // 증상& 바텀시트 열기
-  const handleOpenSearchSymptom = () => {
+  const handleOpenBottomSheet = () => {
     setOpen(true);
   };
 
@@ -30,13 +31,13 @@ const Step2 = () => {
       <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
       <div className={styles.wrapper}>
         {/* 2-1. 증상 */}
-        <ReviewSymptom handleOpenSearchSymptom={handleOpenSearchSymptom} />
+        <ReviewSymptom handleOpenBottomSheet={handleOpenBottomSheet} />
 
         {/* 2-2. 방문 목적 */}
         <ReviewPurpose />
 
         {/* 2-3. 진단 내용 */}
-        <ReviewDisease />
+        <ReviewDisease handleOpenBottomSheet={handleOpenBottomSheet} />
       </div>
 
       {/* 하단 버튼 */}
@@ -46,13 +47,7 @@ const Step2 = () => {
       </div>
 
       {/* 증상 진단 바텀시트 */}
-      <SearchSymptomDisease
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        onSubmit={() => {
-          console.log("필터 적용됨!");
-        }}
-      />
+      <SearchSymptomDisease isOpen={open} onClose={() => setOpen(false)} />
     </>
   );
 };

@@ -3,14 +3,14 @@ import * as styles from "./ReviewSymptom.style.css";
 import BtnToChip from "@app/review/write/_component/BtnToChip";
 
 interface ReviewSymptomProps {
-  handleOpenSearchSymptom: () => void;
+  handleOpenBottomSheet: () => void;
 }
 
-const ReviewSymptom = ({ handleOpenSearchSymptom }: ReviewSymptomProps) => {
+const ReviewSymptom = ({ handleOpenBottomSheet }: ReviewSymptomProps) => {
   return (
-    <div className={styles.wrapper} onClick={handleOpenSearchSymptom}>
+    <div className={styles.wrapper}>
       <span className={styles.questionStyle}>어떤 증상으로 방문했나요?</span>
-      <BtnToChip label="증상 없음" rightIcon={<IcRightArror />} />
+      <BtnToChip label="증상 없음" rightIcon={<IcRightArror />} onClick={handleOpenBottomSheet} />
     </div>
   );
 };

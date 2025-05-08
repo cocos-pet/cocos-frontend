@@ -1,10 +1,10 @@
 import { styles } from "@shared/component/FilterBottomSheet/CategoryContent/CategoryContent.css";
-import DropDownText from "@common/component/DropDownText/DropDownText";
+import DropDownText from "@app/review/write/_component/DropDownText";
+import { useFormContext } from "react-hook-form";
+import type { ReviewFormData } from "@app/review/write/page";
 
-interface CategoryContentProps {
-  category: "symptom" | "disease";
-}
-const dummyData = {
+// ⚠️ 삭제 예정 목데이터
+export const dummyData = {
   symptom: [
     {
       id: 1,
@@ -34,13 +34,27 @@ const dummyData = {
     },
   ],
 };
+interface CategoryContentProps {
+  category: "symptom" | "disease";
+  onSymptomChipSelect: (chipId: number) => void;
+  onDiseaseChipSelect: (chipId: number) => void;
+}
 
-const CategoryContent = ({ category }: CategoryContentProps) => {
+const CategoryContent = ({ category, onSymptomChipSelect, onDiseaseChipSelect }: CategoryContentProps) => {
+  const { watch } = useFormContext<ReviewFormData>();
+  const selectedSymptomIds = watch("symptomIds") ?? [];
+  const selectedDiseaseId = watch("diseaseId") ?? -1;
+
   if (category === "symptom") {
     return (
       <div className={styles.symptomsWrapper}>
         {dummyData.symptom.map((symptom) => (
-          <DropDownText key={symptom.id} content={symptom.symptoms} parentKey="symptomIds">
+          <DropDownText
+            key={symptom.id}
+            content={symptom.symptoms}
+            selectedChipIds={selectedSymptomIds}
+            onChipToggle={(chip) => onSymptomChipSelect(chip.id)}
+          >
             {symptom.name}
           </DropDownText>
         ))}
@@ -52,7 +66,12 @@ const CategoryContent = ({ category }: CategoryContentProps) => {
     return (
       <div className={styles.symptomsWrapper}>
         {dummyData.disease.map((disease) => (
-          <DropDownText key={disease.id} content={disease.diseases} parentKey="diseaseIds">
+          <DropDownText
+            key={disease.id}
+            content={disease.diseases}
+            selectedChipIds={selectedDiseaseId === -1 ? [] : [selectedDiseaseId]}
+            onChipToggle={(chip) => onDiseaseChipSelect(chip.id)}
+          >
             {disease.name}
           </DropDownText>
         ))}
