@@ -5,13 +5,18 @@ interface BtnToChipProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   rightIcon?: React.ReactNode;
   selected?: boolean;
+  onRightIconClick?: React.MouseEventHandler<HTMLDivElement>;
 }
-
-const BtnToChip = ({ label = "BtnToChip", onClick, rightIcon, selected = false }: BtnToChipProps) => {
+const BtnToChip = ({ label = "BtnToChip", onClick, rightIcon, onRightIconClick, selected = false }: BtnToChipProps) => {
   return (
     <button onClick={onClick} className={styles.wrapper({ selected })}>
       <span className={styles.buttonText}>
-        {label} {rightIcon && <div className={styles.icon}>{rightIcon}</div>}
+        {label}
+        {rightIcon && (
+          <div className={styles.icon} onClick={onRightIconClick}>
+            {rightIcon}
+          </div>
+        )}
       </span>
     </button>
   );
