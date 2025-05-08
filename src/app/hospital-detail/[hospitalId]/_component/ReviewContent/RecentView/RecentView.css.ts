@@ -50,6 +50,8 @@ export const headerMore = style([
         alignItems:"center",
         gap:"0.3rem",
         display:"flex",
-        textDecoration:"underline"
+        borderBottom:"1px solid",
+        borderColor:color.gray.gray600,
+        paddingBottom:"0.05rem"
     }
 ])
