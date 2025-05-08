@@ -58,7 +58,7 @@ const RecentView = () => {
           handleProfileClick={() => {}}
           handleHospitalDetailClick={() => {}}
           reviewData={review}
-          isBlurred={false}
+          isBlurred={true}
         />
       ))}
     </div>
