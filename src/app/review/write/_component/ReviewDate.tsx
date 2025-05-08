@@ -48,16 +48,16 @@ const ReviewDate = () => {
   };
 
   return (
-    <div>
+    <div className={styles.wrapper}>
       <section>
         <span className={styles.questionStyle}>방문한 날짜가 언젠가요?</span>
         <span className={styles.starStyle}>*</span>
       </section>
       <section className={styles.calenderWrapper}>
         <DayPicker
-          locale={ko} 
-          showOutsideDays 
-          animate 
+          locale={ko}
+          showOutsideDays
+          animate
           mode="single"
           selected={selectedDate}
           onSelect={(day) => {
@@ -68,10 +68,10 @@ const ReviewDate = () => {
           disabled={{ after: today }}
           onMonthChange={handleMonthChange}
           classNames={{
-            month_caption: styles.hidden, 
-            weekday: styles.weekdayHeader, 
-            day: styles.day, 
-            today: styles.today, 
+            month_caption: styles.hidden,
+            weekday: styles.weekdayHeader,
+            day: styles.day,
+            today: styles.today,
           }}
           modifiers={{
             pastOutside: (date) =>
@@ -79,9 +79,9 @@ const ReviewDate = () => {
               (date.getMonth() !== currentMonth.getMonth() || date.getFullYear() !== currentMonth.getFullYear()),
           }}
           modifiersClassNames={{
-            selected: styles.daySelected, 
-            pastOutside: styles.pastOutside, 
-            disabled: styles.disabled, 
+            selected: styles.daySelected,
+            pastOutside: styles.pastOutside,
+            disabled: styles.disabled,
           }}
           components={{
             Nav: (navProps) => <CalenderNav {...navProps} currentMonth={currentMonth} />,
