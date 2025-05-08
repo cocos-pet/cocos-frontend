@@ -77,8 +77,21 @@ export const daySelected = style([
   {
     fontWeight: "500",
     color: color.gray.gray000,
+    position: "relative",
+    zIndex: 1,
 
-    borderRadius: "100%",
-    backgroundColor: color.primary.blue500,
+    "::after": {
+      content: '""',
+      position: "absolute",
+      top: "50%",
+      left: "50%",
+      transform: "translate(-50%, -53%)",
+
+      width: "2rem",
+      height: "2rem",
+      borderRadius: "100%",
+      backgroundColor: color.primary.blue500,
+      zIndex: -1,
+    },
   },
 ]);
