@@ -55,9 +55,9 @@ const ReviewDate = () => {
       </section>
       <section className={styles.calenderWrapper}>
         <DayPicker
-          locale={ko} // 요일 헤더 한글
-          showOutsideDays // 지난 날짜도 보여주기
-          animate // 기본제공 애니메이션
+          locale={ko} 
+          showOutsideDays 
+          animate 
           mode="single"
           selected={selectedDate}
           onSelect={(day) => {
@@ -68,10 +68,10 @@ const ReviewDate = () => {
           disabled={{ after: today }}
           onMonthChange={handleMonthChange}
           classNames={{
-            month_caption: styles.hidden, // 캡션 영역 삭제
-            weekday: styles.weekdayHeader, // 일월화수목금토
-            day: styles.day, // 모든날짜
-            today: styles.today, // 오늘 날짜
+            month_caption: styles.hidden, 
+            weekday: styles.weekdayHeader, 
+            day: styles.day, 
+            today: styles.today, 
           }}
           modifiers={{
             pastOutside: (date) =>
@@ -79,9 +79,9 @@ const ReviewDate = () => {
               (date.getMonth() !== currentMonth.getMonth() || date.getFullYear() !== currentMonth.getFullYear()),
           }}
           modifiersClassNames={{
-            selected: styles.daySelected, // 선택된 날짜
-            pastOutside: styles.pastOutside, // 이번달이 아니면서 지난날짜
-            disabled: styles.disabled, // 미래날짜
+            selected: styles.daySelected, 
+            pastOutside: styles.pastOutside, 
+            disabled: styles.disabled, 
           }}
           components={{
             Nav: (navProps) => <CalenderNav {...navProps} currentMonth={currentMonth} />,
