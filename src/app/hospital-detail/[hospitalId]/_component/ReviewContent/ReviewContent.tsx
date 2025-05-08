@@ -27,7 +27,6 @@ const ReviewContent = () => {
     breed: "말티즈",
     weight: 5
   }
-  // 예시 목데이터
 const goodReviews = [
   { id: 1, name: "상담 시간이 충분해요.", count: 132 },
   { id: 2, name: "치료 과정이 상세히 설명돼요.", count: 119 },
@@ -50,13 +49,7 @@ const badReviews = [
   return (
     <div>
       <Summary goodReviews={goodReviews} badReviews={badReviews} />
-      <ReviewItem 
-        handleProfileClick={() => {}} 
-        handleHospitalDetailClick={() => {}} 
-        reviewData={sampleReviewData}
-        isBlurred={false}
-      />
-      <Divider size="large" />
+
     </div>
   )
 }
