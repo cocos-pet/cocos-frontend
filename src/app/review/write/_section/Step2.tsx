@@ -38,9 +38,9 @@ const Step2 = () => {
   const handleNext = () => console.log("다음 구현 예정");
 
   return (
-    <>
+    <div className={styles.backgroundColor}>
       <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack />} />
-      <div className={styles.wrapper}>
+      <section className={styles.wrapper}>
         <ReviewSymptom
           onCategoryChange={handleOpenBottomSheet}
           symptomBodyData={symptomBodyData}
@@ -48,11 +48,11 @@ const Step2 = () => {
         />
         <ReviewPurpose />
         <ReviewDisease onCategoryChange={handleOpenBottomSheet} diseaseBodyData={diseaseBodyData} />
-      </div>
-      <div className={styles.btnLayout}>
+      </section>
+      <section className={styles.btnLayout}>
         <Button label="이전으로" size="large" variant="solidNeutral" onClick={handleGoBack} />
         <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} />
-      </div>
+      </section>
       <SearchSymptomDisease
         isOpen={open}
         onClose={() => setOpen(false)}
@@ -61,7 +61,7 @@ const Step2 = () => {
         symptomBodyData={symptomBodyData}
         diseaseBodyData={diseaseBodyData}
       />
-    </>
+    </div>
   );
 };
 
