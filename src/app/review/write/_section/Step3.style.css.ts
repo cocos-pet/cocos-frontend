@@ -1,8 +1,15 @@
 import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
 
+export const backgroundColor = style({
+  width: "100%",
+  height: "100dvh",
+  backgroundColor: color.gray.gray100,
+});
+
 export const TopLayout = style({
   padding: "1.6rem 2rem 0",
+  backgroundColor: color.gray.gray000,
 });
 
 export const img = style({
@@ -44,12 +51,7 @@ export const TapBox = style({
   whiteSpace: "nowrap",
 
   borderBottom: `1px solid ${color.gray.gray200}`,
-});
-
-export const backgroundColor = style({
-  width: "100%",
-  height: "100dvh",
-  backgroundColor: color.gray.gray100,
+  backgroundColor: color.gray.gray000,
 });
 
 export const btnLayout = style({
