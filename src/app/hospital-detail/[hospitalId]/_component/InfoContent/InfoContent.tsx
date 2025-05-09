@@ -1,6 +1,6 @@
 "use client";
 
-import MapComponent from "../MapComponent/MapComponent";
+import KakaoMap from "../KakaoMap/KakaoMap";
 import * as styles from "./InfoContent.css";
 import { IcCopy } from "@asset/svg";
 
@@ -41,10 +41,8 @@ export default function InfoContent() {
         <IcCopy className={styles.copyIcon} onClick={handleCopy} />
       </div>
 
-      <div className={styles.mapWrapper}>
-       <MapComponent />
+       <KakaoMap />
         
       </div>
-    </div>
   );
 }
