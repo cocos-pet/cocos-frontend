@@ -12,14 +12,14 @@ export interface ReviewFormData {
   symptomIds: number[];
   diseaseId: number;
   purposeId: number;
+  goodReviewIds: number[];
+  badReviewIds: number[];
   // breedId:number;
   // gender: string;
   // weight: number;
   // visitedAt: string
   // content: string;
   // diseaseId: number;
-  // goodReviewIds: number[];
-  // badReviewIds: number[];
   // images: string[];
 }
 
@@ -29,6 +29,8 @@ const defaultValues: ReviewFormData = {
   symptomIds: [],
   diseaseId: -1,
   purposeId: -1,
+  goodReviewIds: [],
+  badReviewIds: [],
 };
 
 const page = () => {
