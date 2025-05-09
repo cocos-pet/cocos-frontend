@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import * as styles from "./ReviewDisease.style.css";
 import { IcRightArror } from "@asset/svg/index";
 import BtnToChip from "@app/review/write/_component/BtnToChip";
-import { getNameById } from "@app/review/write/_component/SearchSymptomDisease"; // 이미 있는 util 함수 사용
+import { getNameById } from "@app/review/write/_utils/getNameById";
 import { ReviewFormData } from "@app/review/write/page";
 
 interface ReviewDiseaseProps {

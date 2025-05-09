@@ -2,7 +2,7 @@ import { useFormContext } from "react-hook-form";
 import { IcRightArror, IcReviewRightIcon } from "@asset/svg/index";
 import * as styles from "./ReviewSymptom.style.css";
 import BtnToChip from "@app/review/write/_component/BtnToChip";
-import { getNameById } from "@app/review/write/_component/SearchSymptomDisease"; // 이미 있는 util 함수 사용
+import { getNameById } from "@app/review/write/_utils/getNameById";
 import { ReviewFormData } from "@app/review/write/page";
 interface ReviewSymptomProps {
   onCategoryChange: (category: "symptom" | "disease") => void;

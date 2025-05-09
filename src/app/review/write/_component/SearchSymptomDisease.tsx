@@ -5,10 +5,9 @@ import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import Tab from "@common/component/Tab/Tab";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip";
-
 import CategoryContent from "@app/review/write/_component/CategoryContent";
 import { ReviewFormData } from "@app/review/write/page";
-import { dummyData } from "@app/review/write/_component/CategoryContent";
+import { getNameById } from "@app/review/write/_utils/getNameById";
 
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
@@ -28,10 +27,6 @@ const CATEGORIES: { id: CategoryType; label: string }[] = [
   { id: "disease", label: "진단" },
 ];
 
-export const getNameById = (id: number): string => {
-  const allItems = [...dummyData.symptom.flatMap((s) => s.symptoms), ...dummyData.disease.flatMap((d) => d.diseases)];
-  return allItems.find((item) => item.id === id)?.name ?? "알 수 없음";
-};
 const SearchSymptomDisease = ({ isOpen, onClose, selectedCategory, onCategoryChange }: SearchSymptomDiseaseProps) => {
   const { watch, setValue } = useFormContext<ReviewFormData>();
 
