@@ -14,9 +14,10 @@ export const address = style([
         backgroundColor:"white",
         marginTop:"9.1rem",
         padding:"1.2rem 1.2rem",
-        borderRadius:"1rem",
-        borderRight: "1px solid #E4E4E4",
         borderBottom: "1px solid #E4E4E4",
+        borderBottomLeftRadius: "1rem",
+        borderBottomRightRadius: "1rem",
         borderLeft: "1px solid #E4E4E4",
+        borderRight: "1px solid #E4E4E4",
     }
 ]);
