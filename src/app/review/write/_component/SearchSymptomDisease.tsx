@@ -7,11 +7,13 @@ import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip";
 import CategoryContent from "@app/review/write/_component/CategoryContent";
 import { ReviewFormData } from "@app/review/write/page";
-import { getNameById } from "@app/review/write/_utils/getNameById";
+import { getSymptomNameById, getDiseaseNameById } from "@app/review/write/_utils/getNameById";
 
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { symptomGetResponse } from "@api/domain/register-pet/symptom";
+import { diseaseGetResponse } from "@api/domain/register-pet/disease";
 
 type CategoryType = "symptom" | "disease";
 
@@ -20,6 +22,8 @@ interface SearchSymptomDiseaseProps {
   onClose: () => void;
   selectedCategory: CategoryType;
   onCategoryChange: (category: CategoryType) => void;
+  symptomBodyData?: symptomGetResponse["data"];
+  diseaseBodyData?: diseaseGetResponse["data"];
 }
 
 const CATEGORIES: { id: CategoryType; label: string }[] = [
@@ -64,13 +68,18 @@ const SearchSymptomDisease = ({ isOpen, onClose, selectedCategory, onCategoryCha
         {/* 선택된 칩 */}
         <div className={styles.selectedZone}>
           {selectedSymptomIds.map((chipId) => (
-            <Chip icon key={chipId} label={getNameById(chipId)} onClick={() => toggleSymptomChip(chipId)} />
+            <Chip
+              icon
+              key={chipId}
+              label={getSymptomNameById(chipId, symptomBodyData)}
+              onClick={() => toggleSymptomChip(chipId)}
+            />
           ))}
           {selectedDiseaseId !== -1 && (
             <Chip
               icon
               key={selectedDiseaseId}
-              label={getNameById(selectedDiseaseId)}
+              label={getDiseaseNameById(selectedDiseaseId, diseaseBodyData)}
               onClick={() => toggleDiseaseChip(selectedDiseaseId)}
             />
           )}

@@ -2,12 +2,18 @@ import { useFormContext } from "react-hook-form";
 import { IcRightArror, IcReviewRightIcon } from "@asset/svg/index";
 import * as styles from "./ReviewSymptom.style.css";
 import BtnToChip from "@app/review/write/_component/BtnToChip";
-import { getNameById } from "@app/review/write/_utils/getNameById";
+import { getSymptomNameById } from "@app/review/write/_utils/getNameById";
 import { ReviewFormData } from "@app/review/write/page";
+import { symptomGetResponse } from "@api/domain/register-pet/symptom";
+import { diseaseGetResponse } from "@api/domain/register-pet/disease";
+
 interface ReviewSymptomProps {
   onCategoryChange: (category: "symptom" | "disease") => void;
+  symptomBodyData?: symptomGetResponse["data"];
+  diseaseBodyData?: diseaseGetResponse["data"];
 }
-const ReviewSymptom = ({ onCategoryChange }: ReviewSymptomProps) => {
+
+const ReviewSymptom = ({ onCategoryChange, symptomBodyData }: ReviewSymptomProps) => {
   const { watch, setValue } = useFormContext<ReviewFormData>();
   const selectedSymptomIds = watch("symptomIds");
 
@@ -22,8 +28,8 @@ const ReviewSymptom = ({ onCategoryChange }: ReviewSymptomProps) => {
       {selectedSymptomIds.map((id) => (
         <BtnToChip
           key={id}
-          label={getNameById(id)}
-          selected={true}
+          label={getSymptomNameById(id, symptomBodyData)}
+          selected
           rightIcon={<IcReviewRightIcon />}
           onRightIconClick={() => handleRemoveSymptom(id)}
         />

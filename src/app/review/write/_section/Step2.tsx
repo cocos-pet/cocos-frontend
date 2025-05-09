@@ -8,52 +8,58 @@ import { Button } from "@common/component/Button";
 import { useState } from "react";
 import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDisease";
 
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+
 type CategoryType = "symptom" | "disease";
 
 const Step2 = () => {
-  // 바텀시트 열고 닫기
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
 
-  // 증상& 바텀시트 열기
+  const { data: diseaseData } = useBodiesGet("disease");
+  const { data: symptomData } = useBodiesGet("symptom");
+
+  const allDiseaseBodyIds =
+    diseaseData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+  const allSymptomBodyIds =
+    symptomData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+
+  const { data: symptomBodyData } = useSymptomGet(allSymptomBodyIds);
+  const { data: diseaseBodyData } = useDiseaseGet(allDiseaseBodyIds);
+
   const handleOpenBottomSheet = (category: CategoryType) => {
     setSelectedCategory(category);
     setOpen(true);
   };
 
-  const handleGoBack = () => {
-    console.log("뒤로가기 구현 예정");
-  };
-
-  const handleNext = () => {
-    console.log("다음 구현 예정, 활성화도!");
-  };
+  const handleGoBack = () => console.log("뒤로가기 구현 예정");
+  const handleNext = () => console.log("다음 구현 예정");
 
   return (
     <>
-      {/* 상단 헤더 */}
-      <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
+      <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack />} />
       <div className={styles.wrapper}>
-        {/* 2-1. 증상 */}
-        <ReviewSymptom onCategoryChange={handleOpenBottomSheet} />
-
-        {/* 2-2. 방문 목적 */}
+        <ReviewSymptom
+          onCategoryChange={handleOpenBottomSheet}
+          symptomBodyData={symptomBodyData}
+          diseaseBodyData={diseaseBodyData}
+        />
         <ReviewPurpose />
-
-        {/* 2-3. 진단 내용 */}
-        <ReviewDisease onCategoryChange={handleOpenBottomSheet} />
+        <ReviewDisease onCategoryChange={handleOpenBottomSheet} diseaseBodyData={diseaseBodyData} />
       </div>
-      {/* 하단 버튼 */}
       <div className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button label="다음으로" size="large" variant="solidPrimary" disabled={true} onClick={handleNext} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handleGoBack} />
+        <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} />
       </div>
-      {/* 증상 진단 바텀시트 */}
       <SearchSymptomDisease
         isOpen={open}
         onClose={() => setOpen(false)}
         selectedCategory={selectedCategory}
         onCategoryChange={setSelectedCategory}
+        symptomBodyData={symptomBodyData}
+        diseaseBodyData={diseaseBodyData}
       />
     </>
   );

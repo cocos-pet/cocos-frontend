@@ -2,18 +2,21 @@ import { useFormContext } from "react-hook-form";
 import * as styles from "./ReviewDisease.style.css";
 import { IcRightArror } from "@asset/svg/index";
 import BtnToChip from "@app/review/write/_component/BtnToChip";
-import { getNameById } from "@app/review/write/_utils/getNameById";
+import { getDiseaseNameById } from "@app/review/write/_utils/getNameById";
 import { ReviewFormData } from "@app/review/write/page";
+import { diseaseGetResponse } from "@api/domain/register-pet/disease";
 
 interface ReviewDiseaseProps {
   onCategoryChange: (category: "symptom" | "disease") => void;
+  diseaseBodyData?: diseaseGetResponse["data"];
 }
 
-const ReviewDisease = ({ onCategoryChange }: ReviewDiseaseProps) => {
+const ReviewDisease = ({ onCategoryChange, diseaseBodyData }: ReviewDiseaseProps) => {
   const { watch } = useFormContext<ReviewFormData>();
   const selectedDiseaseId = watch("diseaseId");
 
-  const diseaseName = selectedDiseaseId !== -1 ? getNameById(selectedDiseaseId) : "진단 내용 추가하기";
+  const diseaseName =
+    selectedDiseaseId !== -1 ? getDiseaseNameById(selectedDiseaseId, diseaseBodyData) : "진단 내용 추가하기";
 
   return (
     <div className={styles.wrapper}>
