@@ -36,7 +36,12 @@ const Step3 = () => {
       {/* 탭 */}
       <div className={styles.TapBox}>
         {CATEGORIES.map(({ id, label }) => (
-          <Tab key={id} active={selectedCategory === id} onClick={() => setSelectedCategory(id as CategoryType)}>
+          <Tab
+            key={id}
+            active={selectedCategory === id}
+            variant={selectedCategory}
+            onClick={() => setSelectedCategory(id as CategoryType)}
+          >
             {label}
           </Tab>
         ))}
