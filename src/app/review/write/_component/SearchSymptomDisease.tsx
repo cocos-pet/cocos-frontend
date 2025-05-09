@@ -12,6 +12,7 @@ import { getSymptomNameById, getDiseaseNameById } from "@app/review/write/_utils
 import { symptomGetResponse } from "@api/domain/register-pet/symptom";
 import { diseaseGetResponse } from "@api/domain/register-pet/disease";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
+
 type CategoryType = "symptom" | "disease";
 
 interface SearchSymptomDiseaseProps {

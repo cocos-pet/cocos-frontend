@@ -39,30 +39,40 @@ const Step2 = () => {
 
   return (
     <div className={styles.backgroundColor}>
+      {/* 상단 헤더 영역 */}
       <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack />} />
+
       <section className={styles.wrapper}>
+        {/* 2-1. 증상 선택 */}
         <ReviewSymptom
           onCategoryChange={handleOpenBottomSheet}
           symptomBodyData={symptomBodyData}
           diseaseBodyData={diseaseBodyData}
         />
+        {/* 2-2. 방문 목적 */}
         <ReviewPurpose />
+
+        {/* 2-3. 질병 선택 */}
         <ReviewDisease onCategoryChange={handleOpenBottomSheet} diseaseBodyData={diseaseBodyData} />
       </section>
+
+      {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
         <Button label="이전으로" size="large" variant="solidNeutral" onClick={handleGoBack} />
         <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} />
       </section>
+
+      {/* 증상&질병 바텀시트 */}
       <SearchSymptomDisease
-  isOpen={open}
-  onClose={() => setOpen(false)}
-  selectedCategory={selectedCategory}
-  onCategoryChange={setSelectedCategory}
-  symptomData={symptomData?.data}
-  symptomBodyData={symptomBodyData}
-  diseaseData={diseaseData?.data}
-  diseaseBodyData={diseaseBodyData}
-/>
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        symptomData={symptomData?.data}
+        symptomBodyData={symptomBodyData}
+        diseaseData={diseaseData?.data}
+        diseaseBodyData={diseaseBodyData}
+      />
     </div>
   );
 };
