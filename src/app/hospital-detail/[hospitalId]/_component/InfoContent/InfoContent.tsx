@@ -41,8 +41,10 @@ export default function InfoContent() {
         <IcCopy className={styles.copyIcon} onClick={handleCopy} />
       </div>
 
-       <KakaoMap />
-        
+      <div className={styles.mapWrapper}>
+        <KakaoMap />
+      </div>
+
       </div>
   );
 }
