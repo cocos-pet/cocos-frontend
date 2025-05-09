@@ -1,8 +1,10 @@
 import Chip from "@common/component/Chip/Chip";
 import * as styles from "./ReviewPurpose.style.css";
-import { PURPOSE_LABELS } from "@app/review/write/constant";
+import { usePurposeGet } from "@app/api/review/write/hook";
 
 const ReviewPurpose = () => {
+  const { data } = usePurposeGet();
+
   return (
     <div>
       <section className={styles.wrapper}>
@@ -11,8 +13,8 @@ const ReviewPurpose = () => {
           <span className={styles.starStyle}>*</span>
         </div>
         <div className={styles.chipLayout}>
-          {PURPOSE_LABELS.map((label) => (
-            <Chip key={label} label={label} />
+          {data?.purposes?.map((purpose) => (
+            <Chip key={purpose.id} label={purpose.label ?? ""} />
           ))}
         </div>
       </section>
