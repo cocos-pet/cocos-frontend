@@ -1,6 +1,6 @@
 import * as styles from "./locationHeader.css";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown, Icon } from "@asset/svg";
+import { IcChevronDown, Icon } from "@asset/svg";
 
 interface LocationResponse {
   code: number;
@@ -46,7 +46,7 @@ export default function LocationHeader() {
         <span className={styles.locationText}>
           {locationData?.data.townName}
         </span>
-        <ChevronDown style={{ width: "2rem", height: "2rem" }} />
+        <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
       </div>
     </div>
   );
