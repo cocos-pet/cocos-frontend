@@ -36,6 +36,7 @@
     "react-hook-form": "^7.56.0",
     "react-intersection-observer": "^9.16.0",
     "react-kakao-maps-sdk": "^1.1.27",
+
     "react-router-dom": "^7.1.1",
     "react-simplikit": "^0.0.35",
     "uuid": "^11.0.5",
