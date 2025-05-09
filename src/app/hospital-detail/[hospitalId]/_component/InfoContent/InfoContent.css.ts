@@ -65,3 +65,21 @@ export const copyIcon = style({
 export const mapWrapper = style({
   padding:"1.6rem 2rem 10.445rem 2rem ",
 });
+
+export const toast = style([
+  font.label01,
+  {
+      color: color.gray.gray000,
+      display: "flex",
+      alignItems: "center",
+      height: "4rem",
+      backgroundColor: color.primary.blue500,
+      padding: "0.8rem 1.6rem",
+      borderRadius: "0.8rem",
+      position: "fixed",
+      left: "2rem",
+      right: "2rem",
+      bottom: "2.4rem",
+      zIndex: 9999,
+  }
+])
