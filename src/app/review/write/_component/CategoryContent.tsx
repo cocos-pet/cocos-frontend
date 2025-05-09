@@ -2,6 +2,9 @@ import { styles } from "@shared/component/FilterBottomSheet/CategoryContent/Cate
 import DropDownText from "@app/review/write/_component/DropDownText";
 import { useFormContext } from "react-hook-form";
 import type { ReviewFormData } from "@app/review/write/page";
+import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
+import { symptomGetResponse } from "@api/domain/register-pet/symptom";
+import { diseaseGetResponse } from "@api/domain/register-pet/disease";
 
 // ⚠️ 삭제 예정 목데이터
 export const dummyData = {
@@ -38,9 +41,20 @@ interface CategoryContentProps {
   category: "symptom" | "disease";
   onSymptomChipSelect: (chipId: number) => void;
   onDiseaseChipSelect: (chipId: number) => void;
+  symptomData?: bodiesGetResponse["data"];
+  diseaseData?: bodiesGetResponse["data"];
+  symptomBodyData?: symptomGetResponse["data"];
+  diseaseBodyData?: diseaseGetResponse["data"];
 }
-
-const CategoryContent = ({ category, onSymptomChipSelect, onDiseaseChipSelect }: CategoryContentProps) => {
+const CategoryContent = ({
+  category,
+  onSymptomChipSelect,
+  onDiseaseChipSelect,
+  symptomData,
+  diseaseData,
+  symptomBodyData,
+  diseaseBodyData,
+}: CategoryContentProps) => {
   const { watch } = useFormContext<ReviewFormData>();
   const selectedSymptomIds = watch("symptomIds") ?? [];
   const selectedDiseaseId = watch("diseaseId") ?? -1;
@@ -48,14 +62,19 @@ const CategoryContent = ({ category, onSymptomChipSelect, onDiseaseChipSelect }:
   if (category === "symptom") {
     return (
       <div className={styles.symptomsWrapper}>
-        {dummyData.symptom.map((symptom) => (
+        {symptomData?.bodies?.map((symptom) => (
           <DropDownText
             key={symptom.id}
-            content={symptom.symptoms}
+            content={
+              (symptomBodyData?.bodies?.find((body) => body.id === symptom.id)?.symptoms ?? []) as {
+                id: number;
+                name: string;
+              }[]
+            }
             selectedChipIds={selectedSymptomIds}
             onChipToggle={(chip) => onSymptomChipSelect(chip.id)}
           >
-            {symptom.name}
+            {symptom.name ?? ""}
           </DropDownText>
         ))}
       </div>
@@ -65,14 +84,19 @@ const CategoryContent = ({ category, onSymptomChipSelect, onDiseaseChipSelect }:
   if (category === "disease") {
     return (
       <div className={styles.symptomsWrapper}>
-        {dummyData.disease.map((disease) => (
+        {diseaseData?.bodies?.map((disease) => (
           <DropDownText
             key={disease.id}
-            content={disease.diseases}
+            content={
+              (diseaseBodyData?.bodies?.find((body) => body.id === disease.id)?.diseases ?? []) as {
+                id: number;
+                name: string;
+              }[]
+            }
             selectedChipIds={selectedDiseaseId === -1 ? [] : [selectedDiseaseId]}
             onChipToggle={(chip) => onDiseaseChipSelect(chip.id)}
           >
-            {disease.name}
+            {disease.name ?? ""}
           </DropDownText>
         ))}
       </div>
@@ -81,5 +105,4 @@ const CategoryContent = ({ category, onSymptomChipSelect, onDiseaseChipSelect }:
 
   return <div>Nothing</div>;
 };
-
 export default CategoryContent;

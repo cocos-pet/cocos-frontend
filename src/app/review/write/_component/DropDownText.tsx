@@ -26,7 +26,7 @@ const DropDownText = ({ children, content, selectedChipIds, onChipToggle }: Drop
       {/* 소분류 칩 */}
       {isOpen && (
         <div className={styles.dropdownContent}>
-          {content.map((data) => (
+          {content?.map((data) => (
             <Chip key={data.id} label={data.name} isSelected={isSelected(data.id)} onClick={() => onChipToggle(data)} />
           ))}
         </div>

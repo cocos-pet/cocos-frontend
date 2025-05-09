@@ -10,6 +10,10 @@ import CategoryContent from "@app/review/write/_component/CategoryContent";
 import { ReviewFormData } from "@app/review/write/page";
 import { dummyData } from "@app/review/write/_component/CategoryContent";
 
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+
 type CategoryType = "symptom" | "disease";
 
 interface SearchSymptomDiseaseProps {
@@ -45,6 +49,20 @@ const SearchSymptomDisease = ({ isOpen, onClose, selectedCategory, onCategoryCha
     setValue("diseaseId", selectedDiseaseId === chipId ? -1 : chipId);
   };
 
+  // api - 신체 조회
+  const { data: diseaseData } = useBodiesGet("disease");
+  const { data: symptomData } = useBodiesGet("symptom");
+
+  // 모든 bodyId 추출
+  const allDiseaseBodyIds =
+    diseaseData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+  const allSymptomBodyIds =
+    symptomData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+
+  // api - 세부 이름 조회
+  const { data: symptomBodyData } = useSymptomGet(allSymptomBodyIds);
+  const { data: diseaseBodyData } = useDiseaseGet(allDiseaseBodyIds);
+
   return (
     <BottomSheet isOpen={isOpen} handleOpen={() => {}} handleDimmedClose={onClose}>
       <>
@@ -75,6 +93,10 @@ const SearchSymptomDisease = ({ isOpen, onClose, selectedCategory, onCategoryCha
         {/* 탭 내용 */}
         <div className={styles.bodyZone}>
           <CategoryContent
+            diseaseData={diseaseData?.data}
+            diseaseBodyData={diseaseBodyData}
+            symptomData={symptomData?.data}
+            symptomBodyData={symptomBodyData}
             category={selectedCategory}
             onSymptomChipSelect={toggleSymptomChip}
             onDiseaseChipSelect={toggleDiseaseChip}
