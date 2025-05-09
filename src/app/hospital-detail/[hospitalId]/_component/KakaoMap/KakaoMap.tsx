@@ -3,9 +3,9 @@
 import { useEffect } from "react";
 import * as styles from "./KakaoMap.css";
 interface KakaoMapProps {
-    address: string;
-    latitude: number;
-    longitude: number;
+  address: string;
+  latitude: number;
+  longitude: number;
 }
 declare global {
   interface Window {
@@ -37,14 +37,13 @@ const KakaoMap = ({ address, latitude, longitude }: KakaoMapProps) => {
             center: new window.kakao.maps.LatLng(latitude, longitude),
             level: 3,
           };
-          const map=new window.kakao.maps.Map(container, options);
-          const markerPosition=new window.kakao.maps.LatLng(latitude, longitude);
-          const marker=new window.kakao.maps.Marker({
-            position:markerPosition,
+          const map = new window.kakao.maps.Map(container, options);
+          const markerPosition = new window.kakao.maps.LatLng(latitude, longitude);
+          const marker = new window.kakao.maps.Marker({
+            position: markerPosition,
           });
           marker.setMap(map);
         });
-
       }
     };
 
@@ -53,9 +52,7 @@ const KakaoMap = ({ address, latitude, longitude }: KakaoMapProps) => {
 
   return (
     <div style={{ position: "relative", width: "100%", height: "16.1rem" }}>
-      <div className={styles.address}>
-        {address}
-      </div>
+      <div className={styles.address}>{address}</div>
       <div
         id="map"
         style={{
