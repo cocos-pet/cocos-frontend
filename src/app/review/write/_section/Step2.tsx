@@ -54,13 +54,15 @@ const Step2 = () => {
         <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} />
       </section>
       <SearchSymptomDisease
-        isOpen={open}
-        onClose={() => setOpen(false)}
-        selectedCategory={selectedCategory}
-        onCategoryChange={setSelectedCategory}
-        symptomBodyData={symptomBodyData}
-        diseaseBodyData={diseaseBodyData}
-      />
+  isOpen={open}
+  onClose={() => setOpen(false)}
+  selectedCategory={selectedCategory}
+  onCategoryChange={setSelectedCategory}
+  symptomData={symptomData?.data}
+  symptomBodyData={symptomBodyData}
+  diseaseData={diseaseData?.data}
+  diseaseBodyData={diseaseBodyData}
+/>
     </div>
   );
 };
