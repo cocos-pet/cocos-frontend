@@ -1,10 +1,17 @@
 "use client";
 
+import { useState } from "react";
 import KakaoMap from "../KakaoMap/KakaoMap";
 import * as styles from "./InfoContent.css";
 import { IcCopy } from "@asset/svg";
 
 export default function InfoContent() {
+  const [showToast, setShowToast] = useState(false);
+  const handleCopy = () => {
+    navigator.clipboard.writeText(data.address)
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 5000);
+  };
 //목데이터
   const data = {
     name: "일곡동물병원",
@@ -16,9 +23,6 @@ export default function InfoContent() {
     longitude: 126.8531,
   };
 
-  const handleCopy = () => {
-    navigator.clipboard.writeText(data.address);
-  };
 
   return (
     <div className={styles.container}>
@@ -42,6 +46,11 @@ export default function InfoContent() {
         <span className={styles.address}>주소</span>
         <IcCopy className={styles.copyIcon} onClick={handleCopy} />
       </div>
+      {showToast && (
+        <div className={styles.toast}>
+          주소가 복사되었습니다
+        </div>
+      )}
 
       <div className={styles.mapWrapper}>
         <KakaoMap address={data.address} latitude={data.latitude} longitude={data.longitude} />
