@@ -7,16 +7,16 @@ import Step2 from "@app/review/write/_section/Step2";
 
 // 제출할 리뷰 데이터
 export interface ReviewFormData {
-  hospital: string; // ⚠️ 이거 필요없음
+  hospital: string; // ⚠️ 이거 필요없음 다른 pr 머지되면 수정 예정
   date: string; // ⚠️ 키 visitedAt으로 바꿔야함
   symptomIds: number[];
-  diseaseId: number; 
+  diseaseId: number;
+  purposeId: number;
   // breedId:number;
   // gender: string;
   // weight: number;
   // visitedAt: string
   // content: string;
-  // purposeId: number;
   // diseaseId: number;
   // goodReviewIds: number[];
   // badReviewIds: number[];
@@ -28,6 +28,7 @@ const defaultValues: ReviewFormData = {
   date: "",
   symptomIds: [],
   diseaseId: -1,
+  purposeId: -1,
 };
 
 const page = () => {
