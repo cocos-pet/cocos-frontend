@@ -63,9 +63,5 @@ export const copyIcon = style({
 });
 
 export const mapWrapper = style({
-  width: "100%",
-  height:"16.1rem",
-  borderRadius: "1rem",
-  overflow: "hidden",
-  background: color.gray.gray100,
+  padding:"1.6rem 2rem 10.445rem 2rem ",
 });

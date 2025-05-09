@@ -30,7 +30,7 @@ const KakaoMap = () => {
           }
 
           const options = {
-            center: new window.kakao.maps.LatLng(33.5563, 126.79581), // 제주도 예시
+            center: new window.kakao.maps.LatLng(33.450701, 126.570667),
             level: 3,
           };
 
@@ -49,6 +49,9 @@ const KakaoMap = () => {
       style={{
         width: "100%",
         height: "16.1rem",
+        borderRadius: "1rem",
+        border: "1px solid #E4E4E4",
+
       }}
     />
   );
