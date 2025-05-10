@@ -10,7 +10,7 @@ import Step4 from "@app/review/write/_section/Step4";
 // 제출할 리뷰 데이터
 export interface ReviewFormData {
   hospital: string; // ⚠️ 이거 필요없음 다른 pr 머지되면 수정 예정
-  date: string; // ⚠️ 키 visitedAt으로 바꿔야함
+  visitedAt: string;
   symptomIds: number[];
   diseaseId: number;
   purposeId: number;
@@ -19,15 +19,14 @@ export interface ReviewFormData {
   content: string;
   images: string[];
 
-  // breedId:number;
-  // gender: string;
-  // weight: number;
-  // visitedAt: string
+  breedId: number;
+  gender: string;
+  weight: number;
 }
 
 const defaultValues: ReviewFormData = {
   hospital: "",
-  date: "",
+  visitedAt: "",
   symptomIds: [],
   diseaseId: -1,
   purposeId: -1,
@@ -35,6 +34,10 @@ const defaultValues: ReviewFormData = {
   badReviewIds: [],
   content: "",
   images: [],
+
+  breedId: -1,
+  gender: "",
+  weight: -1,
 };
 
 const page = () => {
