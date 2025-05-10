@@ -18,17 +18,19 @@ const ReviewImg = () => {
     <div className={styles.wrapper}>
       <h2 className={styles.title}>사진 첨부</h2>
       <div className={styles.imgLayout}>
-        <IcAddphoto style={{ width: 104, height: 104 }} onClick={handleAddImage} />
-        {images.map((src, index) => (
-          <Image
-            key={index}
-            src={src}
-            alt={`uploaded-img-${index}`}
-            width={104}
-            height={104}
-            style={{ backgroundColor: "blue" }}
-          />
-        ))}
+        <div className={styles.imgBox}>
+          <IcAddphoto style={{ width: 104, height: 104 }} onClick={handleAddImage} />
+          {images.map((src, id) => (
+            <Image
+              key={id}
+              src={src}
+              alt={`uploaded-img-${id}`}
+              width={104}
+              height={104}
+              style={{ backgroundColor: "blue" }}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );
