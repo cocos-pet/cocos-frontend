@@ -25,7 +25,7 @@ const parseDateString = (dateString: string): Date | undefined => {
 
 const ReviewDate = () => {
   const { watch, setValue } = useFormContext<ReviewFormData>();
-  const selectedDateString = watch("date");
+  const selectedDateString = watch("visitedAt");
 
   const today = new Date();
   const [currentMonth, setCurrentMonth] = useState(today);
@@ -33,7 +33,7 @@ const ReviewDate = () => {
   const selectedDate = useMemo(() => parseDateString(selectedDateString), [selectedDateString]);
 
   if (!selectedDateString) {
-    setValue("date", formatDate(today));
+    setValue("visitedAt", formatDate(today));
   }
 
   // 가장 최근 달인 경우, 다음달 버튼 비활성화
@@ -62,7 +62,7 @@ const ReviewDate = () => {
           selected={selectedDate}
           onSelect={(day) => {
             if (day) {
-              setValue("date", formatDate(day));
+              setValue("visitedAt", formatDate(day));
             }
           }}
           disabled={{ after: today }}
