@@ -15,7 +15,6 @@ export const TopLayout = style({
 export const img = style({
   width: "8rem",
   height: "6rem",
-  backgroundColor: "blue",
 });
 
 export const titleBox = style({

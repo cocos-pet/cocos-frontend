@@ -5,6 +5,8 @@ import { Button } from "@common/component/Button";
 import * as styles from "./Step3.style.css";
 import { useState } from "react";
 import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCategoryContent";
+import Image from "next/image";
+import feedbackImg from "@asset/image/reviewFeedback.png";
 
 type CategoryType = "good" | "bad";
 
@@ -25,7 +27,7 @@ const Step3 = () => {
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
         <section className={styles.TopLayout}>
-          <div className={styles.img} />
+          <Image src={feedbackImg} alt="review-feedback img" className={styles.img} />
           <div className={styles.titleBox}>
             <h1 className={styles.title}>진료 경험은 어땠나요?</h1>
             <div>
