@@ -1,5 +1,5 @@
 import { style } from "@vanilla-extract/css";
-import { color } from "@style/styles.css";
+import { color, font } from "@style/styles.css";
 
 export const wrapper = style({
   width: "100%",
@@ -11,8 +11,16 @@ export const contentLayout = style({
   display: "flex",
   flexDirection: "column",
   gap: "3.2rem",
-  padding: "2rem 2rem 8.8rem",
+  padding: "2rem 2rem 10.8rem",
 });
+
+export const docs = style([
+  font.body01,
+  {
+    fontWeight: 500,
+    color: color.gray.gray600,
+  },
+]);
 
 export const btnLayout = style({
   maxWidth: "76.8rem",
