@@ -4,6 +4,7 @@ import { Button } from "@common/component/Button";
 
 import * as styles from "./Step4.style.css";
 import ReviewContent from "@app/review/write/_component/ReviewContent";
+import ReviewImg from "@app/review/write/_component/ReviewImg";
 
 const Step4 = () => {
   const handleGoBack = () => console.log("뒤로가기 구현 예정");
@@ -13,12 +14,13 @@ const Step4 = () => {
     <div className={styles.wrapper}>
       {/* 상단 리뷰 영역 */}
       <HeaderNav centerContent="리뷰작성(3/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
+      {/* 중앙 컨텐츠 영역 */}
       <section className={styles.contentLayout}>
         {/* 4-1. 후기 작성 */}
         <ReviewContent />
 
         {/* 4-2. 사진 첨부 */}
-        <h2>사진 첨부</h2>
+        <ReviewImg />
       </section>
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>

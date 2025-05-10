@@ -17,12 +17,12 @@ export interface ReviewFormData {
   goodReviewIds: number[];
   badReviewIds: number[];
   content: string;
+  images: string[];
 
   // breedId:number;
   // gender: string;
   // weight: number;
   // visitedAt: string
-  // images: string[];
 }
 
 const defaultValues: ReviewFormData = {
@@ -34,6 +34,7 @@ const defaultValues: ReviewFormData = {
   goodReviewIds: [],
   badReviewIds: [],
   content: "",
+  images: [],
 };
 
 const page = () => {
