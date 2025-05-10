@@ -21,7 +21,7 @@ const Step3 = () => {
   return (
     <>
       {/* 상단 리뷰 영역 */}
-      <HeaderNav centerContent="리뷰작성(3/4)" leftIcon={<IcDeleteBlack />} />
+      <HeaderNav centerContent="리뷰작성(3/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
         <section className={styles.TopLayout}>
