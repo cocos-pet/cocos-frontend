@@ -1,6 +1,9 @@
+import { question } from "./../../../../app/review/write/_component/ReviewHospital.style.css";
+import { nickname } from "./../../../../common/component/SubComment/SubComment.css";
 import { API_PATH } from "@api/constants/apiPath";
-import { get, patch } from "@api/index";
+import { del, get, patch } from "@api/index";
 import { paths } from "@type/schema";
+import { AxiosError } from "axios";
 
 export const getAnimal = async () => {
   type AnimalResponse = paths["/api/dev/animals"]["get"]["responses"]["200"]["content"]["*/*"];
@@ -46,5 +49,39 @@ export const patchPetInfo = async (petId: number, reqBody: PatchPetInfoRequestTy
   console.log(petId);
   type PatchPetInfoResponseType = paths["/api/dev/pets/{petId}"]["patch"]["responses"]["200"]["content"]["*/*"];
   const response = await patch<PatchPetInfoResponseType>(`${API_PATH.PETS}/${petId}`, reqBody);
+  return response;
+};
+
+//tanstack query를 사용하는 경우, try-catch 문을 사용해서는 안됨.
+export const getMemeberFavoriteHospitals = async ({ queryKey }: { queryKey: [string, string] }) => {
+  const [, nickname] = queryKey;
+  type ResponseType = paths["/api/dev/members/hospitals"]["get"]["responses"]["200"]["content"]["*/*"];
+  const response = await get<ResponseType>(`${API_PATH.MEMBERS_HOSPITALS}`, {
+    params: nickname,
+  });
+  return response;
+};
+
+export const patchMemberFavoriteHospitals = async (hospitalId: number) => {
+  type ResponseType = paths["/api/dev/members/hospitals/{hospitalId}"]["patch"]["responses"]["200"]["content"]["*/*"];
+  const response = await patch<ResponseType>(`${API_PATH.MEMBERS_HOSPITALS}/${hospitalId}`, {});
+  return response;
+};
+
+export const getMemeberHospitalReviews = async (nickname: string, cursorId: number | undefined, size: number) => {
+  type ResponseType = paths["/api/dev/hospitals/reviews/members"]["get"]["responses"]["200"]["content"]["*/*"];
+  const response = await get<ResponseType>(`${API_PATH.MEMBERS_HOSPITAL_REVIEWS}/members`, {
+    params: {
+      nickname,
+      cursorId : cursorId,
+      size,
+    },
+  });
+  return response;
+};
+
+export const deleteReview = async (reviewId: string | number) => {
+  type ResponseType = paths["/api/dev/hospitals/reviews/{reviewId}"]["delete"]["responses"]["200"]["content"]["*/*"];
+  const response = await del<ResponseType>(`${API_PATH.MEMBERS_HOSPITAL_REVIEWS}/${reviewId}`);
   return response;
 };

@@ -5,6 +5,11 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import ReviewItem from "./ReviewItem/ReviewItem";
 import { mockReviews } from "@shared/constant/HospitalReviewConstant";
 import { isLoggedIn } from "@api/index";
+import {
+  useGetFavoriteHospital,
+  useGetMemberHospitalReviews,
+  usePatchFavoriteHospital,
+} from "@api/domain/mypage/edit-pet/hook";
 interface HospitalReviewProps {
   isMypage?: boolean;
 }
@@ -13,6 +18,13 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const isBlurred = !isLoggedIn();
+
+  // 위치 조정 필요
+  // const { data } = useGetFavoriteHospital("준혁");
+  // console.log(data);
+
+  // const { data } = useGetMemberHospitalReviews("준혁", undefined, 10);
+  // console.log(data);
 
   const handleDropdownClick = () => {
     setIsDropdownOpen((prev) => !prev);

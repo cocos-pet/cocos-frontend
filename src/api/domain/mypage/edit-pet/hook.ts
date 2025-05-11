@@ -1,4 +1,15 @@
-import { getBodys, getBreed, getDisease, getSymptoms, patchPetInfo, PatchPetInfoRequestType } from "./index";
+import {
+  deleteReview,
+  getBodys,
+  getBreed,
+  getDisease,
+  getMemeberFavoriteHospitals,
+  getMemeberHospitalReviews,
+  getSymptoms,
+  patchMemberFavoriteHospitals,
+  patchPetInfo,
+  PatchPetInfoRequestType,
+} from "./index";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { getAnimal } from ".";
 import { PET_EDIT_USER_QUERY_COMMON_KEY } from "../hook";
@@ -82,5 +93,39 @@ export const usePatchPetInfo = () => {
         queryKey: [PET_EDIT_USER_QUERY_COMMON_KEY],
       });
     },
+  });
+};
+
+export const useGetFavoriteHospital = (nickname: string) => {
+  return useQuery({
+    queryKey: ["getFavoriteHosipital", nickname],
+    queryFn: getMemeberFavoriteHospitals,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+  });
+};
+
+export const usePatchFavoriteHospital = (hospitalId: number) => {
+  return useMutation({
+    mutationKey: ["patchFavoriteHospital", hospitalId],
+    mutationFn: async () => patchMemberFavoriteHospitals(hospitalId),
+  });
+};
+
+//todo: 무한 스크롤
+export const useGetMemberHospitalReviews = (nickname: string, cursorId: number | undefined, size: number) => {
+  return useQuery({
+    queryKey: ["memberHospitalReview", nickname, cursorId, size],
+    queryFn: () => {
+      getMemeberHospitalReviews(nickname, cursorId, size);
+    },
+    staleTime: 1000 * 60 * 3,
+  });
+};
+
+export const useDeleteHospitalReview = (reviewId: string | number) => {
+  return useMutation({
+    mutationKey: ["deleteHospitalReview", reviewId],
+    mutationFn: () => deleteReview(reviewId),
   });
 };
