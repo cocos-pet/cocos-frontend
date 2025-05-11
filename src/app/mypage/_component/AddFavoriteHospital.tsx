@@ -1,7 +1,7 @@
 import { IcPlus } from "@asset/svg";
 import * as styles from "../_style/mypage.css";
 import React, { useState } from "react";
-import nocategory from "@asset/image/nocategory.png";
+import nicknameCoco from "@asset/image/nicknameCoco.png";
 import Image from "next/image";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 
@@ -31,10 +31,11 @@ const AddFavoriteHospital = () => {
             <span className={styles.leftTopText}>즐겨찾는 병원</span>
             <span className={styles.leftMiddleText}>{selectedHospital?.name}</span>
             <span className={styles.leftBottomText}>
-              {selectedHospital?.address} · 리뷰 {selectedHospital?.reviewCount}
+              {selectedHospital?.address}
+              {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
           </div>
-          <Image src={nocategory} alt="병원이미지" className={styles.rightContentBox} />
+          <Image src={selectedHospital.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
         </div>
       ) : (
         <div className={styles.addBox}>
