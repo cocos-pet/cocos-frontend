@@ -14,16 +14,15 @@ export interface ReviewItemType {
   id: number;
   memberId: number;
   nickname: string;
-  breedName: string;
-  petDisease: string;
-  petAge: number; // notion 명세에 없음
-  vistitedAt: string;
+  memberBreed: string;
+  disease: string;
+  age: number;
   hospitalId: number;
   hospitalName: string;
+  vistitedAt: string;
   hospitalAddress: string;
   content: string;
-  goodReviews: ReadonlyArray<{ id: number; name: string }>;
-  badReviews: ReadonlyArray<{ id: number; name: string }>;
+  reviewSummary: string;
   images: ReadonlyArray<string>;
   symptoms: ReadonlyArray<{ id: number; name: string }>;
   diseases: ReadonlyArray<{ id: number; name: string }>;
@@ -31,11 +30,14 @@ export interface ReviewItemType {
   gender: string;
   breed: string;
   weight: number;
+  visitPurpose: string;
+  goodReviews: ReadonlyArray<{ id: number; name: string }>;
+  badReviews: ReadonlyArray<{ id: number; name: string }>;
 }
 
 interface propsType {
-  handleProfileClick: () => void;
-  handleHospitalDetailClick: () => void;
+  handleProfileClick?: () => void;
+  handleHospitalDetailClick?: () => void;
   reviewData: ReviewItemType;
   isBlurred?: boolean;
 }
@@ -71,8 +73,8 @@ const HospitalReview = (props: propsType) => {
         handleProfileClick={handleProfileClick}
         createdAt={reviewData.vistitedAt}
         nickname={reviewData.nickname}
-        breed={reviewData.breed}
-        petAge={reviewData.petAge}
+        breed={reviewData.memberBreed}
+        petAge={reviewData.age}
       />
       <article className={isBlurred ? styles.blurEffect : undefined}>
         <div className={styles.hospitalDetail} onClick={handleHospitalDetailClick}>
@@ -90,6 +92,7 @@ const HospitalReview = (props: propsType) => {
           transition={{ duration: 0.3 }}
         >
           <div className={styles.detailSection}>
+            <ChipSection title="방문목적" items={reviewData.visitPurpose} color="border" />
             <ChipSection title="사전증상" items={reviewData.symptoms} color="border" />
             <ChipSection title="진단 내용" items={reviewData.diseases} color="border" />
             <PetInfo reviewData={reviewData} />
@@ -173,15 +176,17 @@ const ChipSection = ({
   color,
 }: {
   title: string;
-  items: ReadonlyArray<{ id: number; name: string }>;
+  items: ReadonlyArray<{ id: number; name: string }> | string;
   color: "border" | "blue" | "red";
 }) => (
   <div>
     <div className={styles.detailTitle}>{title}</div>
     <div className={styles.detailContent}>
-      {items.map((item) => (
-        <Chip key={item.id} label={item.name} color={color} disabled />
-      ))}
+      {typeof items === "string" ? (
+        <Chip label={items} color={color} disabled />
+      ) : (
+        items?.map((item) => <Chip key={item.id} label={item.name} color={color} disabled />)
+      )}
     </div>
   </div>
 );
