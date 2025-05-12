@@ -1,6 +1,10 @@
 import { IcPlus } from "@asset/svg";
 import * as styles from "../_style/mypage.css";
+<<<<<<< HEAD
 import React, { useRef, useState } from "react";
+=======
+import React, { useState } from "react";
+>>>>>>> 37b44d2 ([Feat/#294] 병원 검색 바텀 시트 API 연결 및 무한 스크롤 구현 (#295))
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import Image from "next/image";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
@@ -45,11 +49,19 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
             <span className={styles.leftTopText}>즐겨찾는 병원</span>
             <span className={styles.leftMiddleText}>{data.name}</span>
             <span className={styles.leftBottomText}>
+<<<<<<< HEAD
               {data.address}
               {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
           </div>
           {/* <Image src={data.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} /> */}
+=======
+              {selectedHospital?.address}
+              {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
+            </span>
+          </div>
+          <Image src={selectedHospital.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
+>>>>>>> 37b44d2 ([Feat/#294] 병원 검색 바텀 시트 API 연결 및 무한 스크롤 구현 (#295))
         </div>
       ) : (
         <div className={styles.addBox}>
