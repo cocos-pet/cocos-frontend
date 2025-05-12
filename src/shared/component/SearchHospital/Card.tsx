@@ -10,10 +10,11 @@ type CardProps = {
   name: string;
   address: string;
   selected: boolean;
+  imgSrc?: string;
   onSelect: (id: number) => void;
 };
 
-const Card = ({ id, name, address, selected, onSelect }: CardProps) => {
+const Card = ({ id, name, address, selected, imgSrc, onSelect }: CardProps) => {
   return (
     <div className={styles.wrapper({ selected })}>
       <Radio value={id} checked={selected} onChange={onSelect} />
@@ -21,8 +22,7 @@ const Card = ({ id, name, address, selected, onSelect }: CardProps) => {
         <span className={styles.name}>{name}</span>
         <span className={styles.address}>{address}</span>
       </div>
-      {/* ⚠️ api 연동시 이미지도 받아와야 함 */}
-      <Image src={nicknameCoco} alt="hospital-exterior" className={styles.img} />
+      <Image src={imgSrc ?? nicknameCoco} alt="hospital-exterior" className={styles.img} />
     </div>
   );
 };
