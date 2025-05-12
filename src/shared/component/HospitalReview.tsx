@@ -5,11 +5,6 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import ReviewItem from "./ReviewItem/ReviewItem";
 import { mockReviews } from "@shared/constant/HospitalReviewConstant";
 import { isLoggedIn } from "@api/index";
-import {
-  useGetFavoriteHospital,
-  useGetMemberHospitalReviews,
-  usePatchFavoriteHospital,
-} from "@api/domain/mypage/edit-pet/hook";
 interface HospitalReviewProps {
   isMypage?: boolean;
 }
