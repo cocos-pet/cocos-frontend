@@ -1,5 +1,5 @@
-import { useMutation, useInfiniteQuery } from "@tanstack/react-query";
-import { getHospitalList, RequestBody } from "./index";
+import { useMutation, useInfiniteQuery, useQueryClient, useQuery } from "@tanstack/react-query";
+import { deleteReview, getHospitalList, getMemeberFavoriteHospitals, getMemeberHospitalReviews, patchMemberFavoriteHospitals, RequestBody } from "./index";
 
 export const useGetHospitalList = (body: RequestBody) => {
   return useMutation({
@@ -52,5 +52,48 @@ export const useInfiniteHospitalList = (initialParams: Omit<RequestBody, "cursor
 
       return { cursorId };
     },
+  });
+};
+
+/************************************
+  mypage & profile
+************************************/
+export const useGetFavoriteHospital = (nickname: string) => {
+  return useQuery({
+    queryKey: ["getFavoriteHosipital", nickname],
+    queryFn: getMemeberFavoriteHospitals,
+    staleTime: 1000 * 60 * 5,
+    gcTime: 1000 * 60 * 10,
+  });
+};
+
+export const usePatchFavoriteHospital = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationKey: ["patchFavoriteHospital"],
+    mutationFn: async (hospitalId: number) => patchMemberFavoriteHospitals(hospitalId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ["getFavoriteHosipital"],
+      });
+    },
+  });
+};
+
+//todo: 무한 스크롤
+export const useGetMemberHospitalReviews = (nickname: string, cursorId: number | undefined, size: number) => {
+  return useQuery({
+    queryKey: ["memberHospitalReview", nickname, cursorId, size],
+    queryFn: () => {
+      getMemeberHospitalReviews(nickname, cursorId, size);
+    },
+    staleTime: 1000 * 60 * 3,
+  });
+};
+
+export const useDeleteHospitalReview = (reviewId: string | number) => {
+  return useMutation({
+    mutationKey: ["deleteHospitalReview", reviewId],
+    mutationFn: () => deleteReview(reviewId),
   });
 };
