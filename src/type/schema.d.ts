@@ -2142,6 +2142,11 @@ export interface components {
              * @example 서울시 강남구 테헤란로
              */
             address?: string;
+            /**
+             * @description 병원 이미지
+             * @example https://~
+             */
+            image?: string;
         };
         BaseResponseLocationResponse: {
             /** Format: int32 */
