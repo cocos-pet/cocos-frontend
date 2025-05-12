@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+"use client";
+import React, { useEffect, useState } from "react";
 import * as styles from "./Hospital.css";
 import Chip from "@common/component/Chip/Chip";
 import Divider from "@common/component/Divider/Divider";
@@ -7,7 +8,8 @@ import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
 import ImageGalleryModal from "./ImageGalleryModal";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
-
+import { isLoggedIn } from "@api/index";
+import { LoginPopup } from "./LoginPopup/LoginPopup";
 interface HospitalReviewProps {
   isMypage?: boolean;
 }
@@ -23,6 +25,12 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
 
   // 리뷰 이미지 배열 (실제 구현에서는 props나 API로 받아올 수 있음)
   const reviewImages = [nocategory, nocategory, nocategory, nocategory, nocategory, nocategory];
+
+  useEffect(() => {
+    if (isLoggedIn()) {
+      setIsBlurred(false);
+    }
+  }, []);
 
   const handleOpenDetail = () => {
     if (!isBlurred) setIsOpen((prev) => !prev);
@@ -162,6 +170,15 @@ const HospitalReview = ({ isMypage = false }: HospitalReviewProps) => {
         leftOnClick={() => closeDeleteReviewModal()}
         rightOnClick={() => alert("Todo")}
       />
+
+      {isBlurred && (
+        <LoginPopup
+          isOpen={true}
+          onClick={() => {
+            alert("로그인 후 이용해주세요.");
+          }}
+        />
+      )}
     </section>
   );
 };

@@ -1,7 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import * as styles from "../../_style/profile.css";
+import * as favoriteHospitalStyles from "./FavoriteHospital.css";
 import Divider from "@common/component/Divider/Divider";
 import { Disease, MemberInfo, PetInfo } from "../../_hooks/useProfileState";
+import nocategory from "@asset/image/nocategory.png";
+import { Hospital } from "@shared/component/SearchHospital/SearchHospital";
+import Image from "next/image";
 
 interface ProfileSectionProps {
   member?: MemberInfo;
@@ -44,8 +48,35 @@ const ProfileSection = ({ member, petInfo }: ProfileSectionProps) => {
       <Divider size="small" />
 
       <PetProfile petInfo={petInfo} />
+
+      <FavoriteHospital />
     </div>
   );
 };
 
 export default ProfileSection;
+
+const FavoriteHospital = () => {
+  //todo : 이 내부에서 api 찔러서 데이터 받아온 뒤 렌더링하기+ 리다이렉팅 url 연결하기
+  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+
+  if (!selectedHospital) return null;
+
+  return (
+    <>
+      <Divider size="small" />
+      <div className={favoriteHospitalStyles.favoriteHospitalContainer}>
+        <div className={favoriteHospitalStyles.redirectBox}>
+          <div className={favoriteHospitalStyles.leftContentBox}>
+            <span className={favoriteHospitalStyles.leftTopText}>즐겨찾는 병원</span>
+            <span className={favoriteHospitalStyles.leftMiddleText}>{selectedHospital?.name}</span>
+            <span className={favoriteHospitalStyles.leftBottomText}>
+              {selectedHospital?.address} · 리뷰 {selectedHospital?.reviewCount}
+            </span>
+          </div>
+          <Image src={nocategory} alt="병원이미지" className={favoriteHospitalStyles.rightContentBox} />
+        </div>
+      </div>
+    </>
+  );
+};
