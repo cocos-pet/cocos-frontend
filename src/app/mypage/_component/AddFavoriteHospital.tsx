@@ -50,7 +50,7 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
               {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
           </div>
-          <Image src={selectedHospital?.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
+          <Image src={data.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
         </div>
       ) : (
         <div className={styles.addBox}>

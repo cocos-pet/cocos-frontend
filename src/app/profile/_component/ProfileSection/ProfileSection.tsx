@@ -1,11 +1,13 @@
+"use client";
 import React, { useState } from "react";
 import * as styles from "../../_style/profile.css";
 import * as favoriteHospitalStyles from "./FavoriteHospital.css";
 import Divider from "@common/component/Divider/Divider";
 import { Disease, MemberInfo, PetInfo } from "../../_hooks/useProfileState";
 import nocategory from "@asset/image/nocategory.png";
-import { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 import Image from "next/image";
+import { useGetFavoriteHospital } from "@api/shared/hook";
+import { useRouter } from "next/navigation";
 
 interface ProfileSectionProps {
   member?: MemberInfo;
@@ -49,32 +51,38 @@ const ProfileSection = ({ member, petInfo }: ProfileSectionProps) => {
 
       <PetProfile petInfo={petInfo} />
 
-      <FavoriteHospital />
+      {member.nickname && <FavoriteHospital nickname={member.nickname} />}
     </div>
   );
 };
 
 export default ProfileSection;
 
-const FavoriteHospital = () => {
-  //todo : 이 내부에서 api 찔러서 데이터 받아온 뒤 렌더링하기+ 리다이렉팅 url 연결하기
-  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+const FavoriteHospital = ({ nickname }: { nickname: string }) => {
+  //리다이렉팅 url 연결하기
+  const { data } = useGetFavoriteHospital(nickname);
+  const router = useRouter();
+  if (!data) return null;
 
-  if (!selectedHospital) return null;
+  //todo: 병원 상세 페이지 URL 확정되면 상수값으로 대체하기 (현재는 임시)
+  const handleClickContainer = () => {
+    router.push(`/hospital-detail/${data.id}`);
+  };
 
   return (
     <>
       <Divider size="small" />
-      <div className={favoriteHospitalStyles.favoriteHospitalContainer}>
+      <div className={favoriteHospitalStyles.favoriteHospitalContainer} onClick={handleClickContainer}>
         <div className={favoriteHospitalStyles.redirectBox}>
           <div className={favoriteHospitalStyles.leftContentBox}>
             <span className={favoriteHospitalStyles.leftTopText}>즐겨찾는 병원</span>
-            <span className={favoriteHospitalStyles.leftMiddleText}>{selectedHospital?.name}</span>
+            <span className={favoriteHospitalStyles.leftMiddleText}>{data.name}</span>
             <span className={favoriteHospitalStyles.leftBottomText}>
-              {selectedHospital?.address} · 리뷰 {selectedHospital?.reviewCount}
+              {data.address}
+              {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
           </div>
-          <Image src={nocategory} alt="병원이미지" className={favoriteHospitalStyles.rightContentBox} />
+          <Image src={data.image ?? nocategory} alt="병원이미지" className={favoriteHospitalStyles.rightContentBox} />
         </div>
       </div>
     </>
