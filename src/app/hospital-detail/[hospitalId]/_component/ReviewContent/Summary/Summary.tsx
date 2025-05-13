@@ -17,10 +17,10 @@ interface SummaryProps {
 }
 
 const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
-  const [isExpanded, setIsExpanded] = useState(false)
+  const [isFolded, setIsFolded] = useState(false)
 
-  const displayedGoodReviews = isExpanded ? goodReviews : goodReviews.slice(0, 3)
-  const displayedBadReviews = isExpanded ? badReviews : badReviews.slice(0, 3)
+  const displayedGoodReviews = isFolded ? goodReviews : goodReviews.slice(0, 3)
+  const displayedBadReviews = isFolded ? badReviews : badReviews.slice(0, 3)
 
   return (
     <div className={styles.summaryContainer}>
@@ -47,12 +47,12 @@ const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
         </div>
       </div>
       {(goodReviews.length > 3 || badReviews.length > 3) && (
-        <div className={styles.expandButtonWrapper}>
+        <div className={styles.folderButtonWrapper}>
           <button
-            className={styles.expandButton}
-            onClick={() => setIsExpanded(!isExpanded)}
+            className={styles.folderButton}
+            onClick={() => setIsFolded(!isFolded)}
           >
-            <IcChevronDown className={isExpanded ? styles.rotateIcon : ''} />
+            <IcChevronDown className={isFolded ? styles.rotateIcon : ''} />
           </button>
         </div>
       )}

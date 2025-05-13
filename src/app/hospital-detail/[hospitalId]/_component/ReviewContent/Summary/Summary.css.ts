@@ -86,7 +86,7 @@ export const badCount = style([
     }
 ]);
 
-export const expandButtonWrapper = style({
+export const folderButtonWrapper = style({
     width: "100%",
     display: "flex",
     justifyContent: "center",
@@ -94,7 +94,7 @@ export const expandButtonWrapper = style({
   });
   
 
-export const expandButton = style({
+export const folderButton = style({
     width: "2.4rem",
     display: "flex",
     justifyContent: "center",
