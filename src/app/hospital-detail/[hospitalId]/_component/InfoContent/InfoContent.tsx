@@ -48,7 +48,7 @@ export default function InfoContent() {
       </div>
       {showToast && (
         <div className={styles.toast}>
-          주소가 복사되었습니다
+          주소가 복사되었습니다.
         </div>
       )}
 

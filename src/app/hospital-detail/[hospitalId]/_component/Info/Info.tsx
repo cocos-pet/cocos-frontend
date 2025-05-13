@@ -31,7 +31,7 @@ export default function Info() {
       </div>
       {showToast && (
         <div className={styles.toast}>
-          번호가 복사되었습니다
+          번호가 복사되었습니다.
         </div>
       )}
     </>
