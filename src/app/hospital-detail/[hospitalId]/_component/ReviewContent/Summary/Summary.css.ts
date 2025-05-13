@@ -27,7 +27,6 @@ export const summarySubTitle = style([
     }
 ]);
 
-
 export const summaryGrid = style({
   display: "grid",
   gridTemplateColumns: "1fr 1fr",
@@ -35,6 +34,18 @@ export const summaryGrid = style({
   padding:"1.2rem 2rem 1.2rem 2rem",
   width: "100%",
   marginTop: "0.8rem",
+});
+
+export const summarySection = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "1.2rem",
+});
+
+export const summaryContent = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.8rem",
 });
 
 export const summarySectionTitle = style([
@@ -61,7 +72,6 @@ export const goodCount = style([
         fontWeight: 600,
         color:color.primary.blue700,
         textAlign: "right",
-        fontSize: "1.4rem",
         lineHeight: "1.96rem",
     }
 ]);
@@ -75,3 +85,26 @@ export const badCount = style([
         lineHeight: "1.96rem",
     }
 ]);
+
+export const expandButtonWrapper = style({
+    width: "100%",
+    display: "flex",
+    justifyContent: "center",
+    marginBottom:"2rem"
+  });
+  
+
+export const expandButton = style({
+    width: "2.4rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+
+});
+
+export const rotateIcon = style({
+    transform: "rotate(180deg)",
+    transition: "transform 0.2s ease"
+});

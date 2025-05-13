@@ -1,7 +1,9 @@
 "use client"
 
+import { useState } from "react"
 import Divider from "@common/component/Divider/Divider"
 import * as styles from "./Summary.css"
+import { IcChevronDown } from "@asset/svg"
 
 export interface ReviewSummaryItem {
   id: number
@@ -15,6 +17,11 @@ interface SummaryProps {
 }
 
 const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
+  const [isExpanded, setIsExpanded] = useState(false)
+
+  const displayedGoodReviews = isExpanded ? goodReviews : goodReviews.slice(0, 3)
+  const displayedBadReviews = isExpanded ? badReviews : badReviews.slice(0, 3)
+
   return (
     <div className={styles.summaryContainer}>
       <p className={styles.summaryTitle}>리뷰 요약</p>
@@ -22,7 +29,7 @@ const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
       <div className={styles.summaryGrid}>
         <div>
           <h3 className={styles.summarySectionTitle}>좋았던 점</h3>
-          {goodReviews.map((item) => (
+          {displayedGoodReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
               <span>{item.name}</span>
               <span className={styles.goodCount}>{item.count}</span>
@@ -31,7 +38,7 @@ const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
         </div>
         <div>
           <h3 className={styles.summarySectionTitle}>아쉬운 점</h3>
-          {badReviews.map((item) => (
+          {displayedBadReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
               <span>{item.name}</span>
               <span className={styles.badCount}>{item.count}</span>
@@ -39,8 +46,17 @@ const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
           ))}
         </div>
       </div>
+      {(goodReviews.length > 3 || badReviews.length > 3) && (
+        <div className={styles.expandButtonWrapper}>
+          <button
+            className={styles.expandButton}
+            onClick={() => setIsExpanded(!isExpanded)}
+          >
+            <IcChevronDown className={isExpanded ? styles.rotateIcon : ''} />
+          </button>
+        </div>
+      )}
       <Divider size="large" />
-
     </div>
   )
 }
