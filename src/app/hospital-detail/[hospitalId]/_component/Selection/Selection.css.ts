@@ -6,7 +6,6 @@ export const tabContainer = style({
   display: "flex",
   padding: "1rem 0",
   justifyContent: "space-between",
-  position: "sticky",
   backgroundColor: "#fff",
   top: "6.4rem",
   zIndex: 10,
