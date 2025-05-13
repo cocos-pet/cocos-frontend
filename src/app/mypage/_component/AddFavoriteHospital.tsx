@@ -1,10 +1,14 @@
 import { IcPlus } from "@asset/svg";
 import * as styles from "../_style/mypage.css";
 <<<<<<< HEAD
+<<<<<<< HEAD
 import React, { useRef, useState } from "react";
 =======
 import React, { useState } from "react";
 >>>>>>> 37b44d2 ([Feat/#294] 병원 검색 바텀 시트 API 연결 및 무한 스크롤 구현 (#295))
+=======
+import React, { useRef, useState } from "react";
+>>>>>>> 7073707 ( HospitalReview 요청에 맞게 수정 (API 일부 붙임 + 무한 스크롤) (#299))
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import Image from "next/image";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
@@ -50,6 +54,7 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
             <span className={styles.leftMiddleText}>{data.name}</span>
             <span className={styles.leftBottomText}>
 <<<<<<< HEAD
+<<<<<<< HEAD
               {data.address}
               {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
@@ -62,6 +67,13 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
           </div>
           <Image src={selectedHospital.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
 >>>>>>> 37b44d2 ([Feat/#294] 병원 검색 바텀 시트 API 연결 및 무한 스크롤 구현 (#295))
+=======
+              {data.address}
+              {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
+            </span>
+          </div>
+          <Image src={data.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
+>>>>>>> 7073707 ( HospitalReview 요청에 맞게 수정 (API 일부 붙임 + 무한 스크롤) (#299))
         </div>
       ) : (
         <div className={styles.addBox}>
