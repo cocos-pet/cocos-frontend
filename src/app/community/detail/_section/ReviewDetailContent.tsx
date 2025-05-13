@@ -5,7 +5,7 @@ import { IcDownArrow, IcFilterBlack, IcFilterBlue, IcTarget } from "@asset/svg";
 import { motion } from "framer-motion";
 import { Button } from "@common/component/Button";
 import { sampleReviewData } from "@app/community/_constant/reviewMockData.ts";
-import ReviewItem from "@shared/component/ReviewItem/ReviewItem.tsx";
+import ReviewItem from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
 
 const ReviewDetailContent = () => {
