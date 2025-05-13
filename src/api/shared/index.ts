@@ -38,7 +38,7 @@ export const getMemeberHospitalReviews = async (nickname: string, cursorId: numb
       size,
     },
   });
-  return response;
+  return response.data.data;
 };
 
 export const deleteReview = async (reviewId: string | number) => {

@@ -11,7 +11,6 @@ interface AddFavoriteHospitalPropTypes {
 }
 
 const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
-  //todo : 이 내부에서 api 찔러서 데이터 받아온 뒤 렌더링하기(isAdded일 때) + 리다이렉팅 url 연결하기
   const [isHospitalSearchBottomSheetOpen, setIsHospitalSearchBottomSheetOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
   const prevSelectedHospital = useRef<Hospital | null>(null);

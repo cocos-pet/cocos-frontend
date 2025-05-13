@@ -1,20 +1,62 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as styles from "./HospitalReviewWrapper.css";
 import { IcEllipses } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import ReviewItem from "./ReviewItem/ReviewItem";
-import { mockReviews } from "@shared/constant/HospitalReviewConstant";
+import { useInfiniteHospitalReview } from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
+
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
+  nickname: string;
 }
 
-const HospitalReviewWrapper = ({ isMypage = false }: HospitalReviewWrapperProps) => {
+const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWrapperProps) => {
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const isBlurred = !isLoggedIn();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const handleDropdownClick = () => {
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteHospitalReview({
+    nickname,
+    cursorId: undefined,
+    size: 5,
+  });
+
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [target] = entries;
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
+  );
+
+  useEffect(() => {
+    const element = loadMoreRef.current;
+
+    if (element) {
+      observerRef.current = new IntersectionObserver(handleObserver, {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      });
+
+      observerRef.current.observe(element);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [handleObserver]);
+
+  const handleDropdownClick = (reviewId: number) => {
+    setSelectedReviewId(reviewId === selectedReviewId ? null : reviewId);
     setIsDropdownOpen((prev) => !prev);
   };
 
@@ -24,7 +66,7 @@ const HospitalReviewWrapper = ({ isMypage = false }: HospitalReviewWrapperProps)
 
   const openDeleteReviewModal = () => {
     setIsDeleteReviewModalOpen(true);
-    handleDropdownClick();
+    setIsDropdownOpen(false);
   };
 
   const handleProfileClick = () => {
@@ -35,16 +77,20 @@ const HospitalReviewWrapper = ({ isMypage = false }: HospitalReviewWrapperProps)
     alert("병원 상세 클릭");
   };
 
-  if (!mockReviews.length) return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
+  if (isLoading) return <div className={styles.nothingContent}>{"리뷰를 불러오는 중..."}</div>;
+
+  const reviews = data?.pages.flatMap((page) => page?.reviews || []) || [];
+
+  if (reviews.length === 0) return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
 
   return (
     <>
-      {mockReviews.map((review) => (
+      {reviews.map((review) => (
         <section key={review.id} className={styles.reviewContainer}>
           <div className={styles.visitWrapper}>
-            <span className={styles.visitDate}>{review.vistitedAt} 방문</span>
-            {isMypage && <IcEllipses width={20} height={20} onClick={handleDropdownClick} />}
-            {isDropdownOpen && (
+            <span className={styles.visitDate}>{review.visitedAt} 방문</span>
+            {isMypage && <IcEllipses width={20} height={20} onClick={() => handleDropdownClick(review.id as number)} />}
+            {isDropdownOpen && selectedReviewId === review.id && (
               <div className={styles.dropdownContainer}>
                 <div className={styles.dropdownItem} onClick={openDeleteReviewModal}>
                   삭제하기
@@ -56,12 +102,23 @@ const HospitalReviewWrapper = ({ isMypage = false }: HospitalReviewWrapperProps)
           <ReviewItem
             handleProfileClick={handleProfileClick}
             handleHospitalDetailClick={handleHospitalDetailClick}
-            reviewData={review}
+            reviewData={{
+              ...review,
+              vistitedAt: review.visitedAt,
+              goodReviews: review.reviewSummary?.goodReviews || [],
+              badReviews: review.reviewSummary?.badReviews || [],
+            }}
             isBlurred={isBlurred}
             isNoProfile={true}
           />
         </section>
       ))}
+
+      {hasNextPage && (
+        <div ref={loadMoreRef} className={styles.loadMoreContainer}>
+          {isFetchingNextPage ? "더 불러오는 중..." : ""}
+        </div>
+      )}
 
       <SimpleBottomSheet
         isOpen={isDeleteReviewModalOpen}

@@ -172,3 +172,13 @@ export const dropdownItem = style([
     boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
   },
 ]);
+
+export const loadMoreContainer = style([
+  a.flexRow,
+  a.justifyCenter,
+  a.alignCenter,
+  a.fullWidth,
+  a.padding16,
+  font.label01,
+  a.textAssistive,
+]);
