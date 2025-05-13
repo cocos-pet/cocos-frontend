@@ -15,7 +15,7 @@ import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
-import ReviewItem from "@shared/component/ReviewItem/ReviewItem.tsx";
+import ReviewItem from "@shared/component/HospitalReview/HospitalReview.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,

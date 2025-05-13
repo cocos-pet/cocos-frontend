@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import * as styles from "./ReviewItem.css";
+import * as styles from "./HospitalReview.css.ts";
 import Chip from "@common/component/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
