@@ -9,7 +9,7 @@ import { useGetMyComment, useGetMyPost } from "@api/domain/mypage/hook";
 import { formatTime } from "@shared/util/formatTime";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
-import HospitalReview from "../../../../shared/component/HospitalReview";
+import HospitalReviewWrapper from "@shared/component/HospitalReviewWrapper";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
@@ -38,7 +38,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return <HospitalReview isMypage={true} />;
+        return <HospitalReviewWrapper isMypage={true} />;
       case "post":
         if (!myPosts?.length) {
           return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;

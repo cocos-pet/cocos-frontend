@@ -20,6 +20,7 @@ export interface Hospital {
 }
 
 interface SearchHospitalProps {
+  initialId?: number;
   active: boolean;
   onCloseBottomSheet: () => void;
   selectedHospital: Hospital | null;
@@ -30,6 +31,7 @@ interface SearchHospitalProps {
 
 const SearchHospital = (props: SearchHospitalProps) => {
   const {
+    initialId,
     active,
     onCloseBottomSheet,
     selectedHospital,
@@ -83,7 +85,14 @@ const SearchHospital = (props: SearchHospitalProps) => {
 
   // 병원 목록 평탄화
   const hospitals = data?.pages.flatMap((page) => page?.hospitals || []).map(mapToHospital) || [];
+  useEffect(() => {
+    const initialHospital = hospitals.find((hospital) => hospital.id === initialId);
+    if (initialId && initialHospital) {
+      onSelectHospital(initialHospital);
+    }
+  }, [initialId]);
 
+  // initialId가 존재할 경우 해당 병원을 찾아 선택 상태로 만듦
   // 교차 관찰자를 사용한 무한 스크롤 구현
   useEffect(() => {
     if (!hasNextPage || isFetchingNextPage) return;
@@ -115,7 +124,6 @@ const SearchHospital = (props: SearchHospitalProps) => {
   const handleCancelSearch = (e: React.MouseEvent<HTMLElement>) => {
     e.stopPropagation();
     setSearchWord("");
-    onSelectHospital(null);
     onCloseBottomSheet();
   };
 
