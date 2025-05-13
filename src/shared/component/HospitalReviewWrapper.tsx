@@ -20,7 +20,7 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteHospitalReview({
-    nickname,
+    nickname: nickname,
     cursorId: undefined,
     size: 5,
   });

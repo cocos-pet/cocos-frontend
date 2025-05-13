@@ -63,7 +63,7 @@ const Mypage = () => {
       <TabsSection activeTab={activeTab} isActiveTab={isActiveTab} onTabClick={handleTabClick} />
 
       {/* 컨텐츠 섹션 */}
-      <ContentSection isLogin={isLogin} activeTab={activeTab} />
+      <ContentSection isLogin={isLogin} activeTab={activeTab} nickname={member.nickname as string} />
 
       {/* 네비게이션 섹션 */}
       <NavSection />

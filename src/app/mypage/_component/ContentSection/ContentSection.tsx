@@ -6,13 +6,18 @@ import { ActiveTabType } from "../../_hooks/useMypageState";
 interface ContentSectionProps {
   isLogin: boolean;
   activeTab: ActiveTabType;
+  nickname: string;
 }
 
-const ContentSection = ({ isLogin, activeTab }: ContentSectionProps) => {
+const ContentSection = ({ isLogin, activeTab, nickname }: ContentSectionProps) => {
   return (
     <article className={styles.myPageContentWrapper}>
       <div className={styles.contentBody}>
-        {isLogin ? <MyPageContent tab={activeTab} /> : <div className={styles.nothingContent}>로그인 해주세요.</div>}
+        {isLogin ? (
+          <MyPageContent tab={activeTab} nickname={nickname} />
+        ) : (
+          <div className={styles.nothingContent}>로그인 해주세요.</div>
+        )}
       </div>
     </article>
   );
