@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import * as styles from "./ReviewItem.css";
+import * as styles from "./HospitalReview.css.ts";
 import Chip from "@common/component/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
@@ -11,35 +11,35 @@ import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 
 export interface ReviewItemType {
-  id?: number;
-  memberId?: number;
-  nickname?: string;
-  breedName?: string;
-  petDisease?: string;
-  petAge?: number; // notion 명세에 없음
-  vistitedAt?: string;
-  hospitalId?: number;
-  hospitalName?: string;
-  hospitalAddress?: string;
-  content?: string;
-  goodReviews?: ReadonlyArray<{ id?: number; label?: string }>;
-  badReviews?: ReadonlyArray<{ id?: number; label?: string }>;
-  images?: ReadonlyArray<string>;
-  symptoms?: ReadonlyArray<string>;
-  diseases?: ReadonlyArray<string>;
-  animal?: string;
-  gender?: string;
-  breed?: string;
-  weight?: number;
-  disease?: string;
+  id: number;
+  memberId: number;
+  nickname: string;
+  memberBreed: string;
+  disease: string;
+  age: number;
+  hospitalId: number;
+  hospitalName: string;
+  vistitedAt: string;
+  hospitalAddress: string;
+  content: string;
+  reviewSummary: string;
+  images: ReadonlyArray<string>;
+  symptoms: ReadonlyArray<{ id: number; name: string }>;
+  diseases: ReadonlyArray<{ id: number; name: string }>;
+  animal: string;
+  gender: string;
+  breed: string;
+  weight: number;
+  visitPurpose: string;
+  goodReviews: ReadonlyArray<{ id: number; name: string }>;
+  badReviews: ReadonlyArray<{ id: number; name: string }>;
 }
 
 interface propsType {
-  handleProfileClick: () => void;
-  handleHospitalDetailClick: () => void;
+  handleProfileClick?: () => void;
+  handleHospitalDetailClick?: () => void;
   reviewData: ReviewItemType;
   isBlurred?: boolean;
-  isNoProfile?: boolean;
 }
 
 /**
@@ -50,7 +50,7 @@ interface propsType {
  * @param isBlurred 리뷰가 블러 처리되어야 하는지 여부
  */
 const HospitalReview = (props: propsType) => {
-  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false, isNoProfile = false } = props;
+  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -68,16 +68,14 @@ const HospitalReview = (props: propsType) => {
   };
 
   return (
-    <section className={styles.reviewItemContainer({ isNoProfile })}>
-      {!isNoProfile && (
-        <Profile
-          handleProfileClick={handleProfileClick}
-          createdAt={reviewData.vistitedAt}
-          nickname={reviewData.nickname}
-          breed={reviewData.breed}
-          petAge={reviewData.petAge}
-        />
-      )}
+    <section className={styles.reviewItemContainer}>
+      <Profile
+        handleProfileClick={handleProfileClick}
+        createdAt={reviewData.vistitedAt}
+        nickname={reviewData.nickname}
+        breed={reviewData.memberBreed}
+        petAge={reviewData.age}
+      />
       <article className={isBlurred ? styles.blurEffect : undefined}>
         <div className={styles.hospitalDetail} onClick={handleHospitalDetailClick}>
           <div className={styles.hospitalName}>{reviewData.hospitalName}</div>
@@ -94,8 +92,9 @@ const HospitalReview = (props: propsType) => {
           transition={{ duration: 0.3 }}
         >
           <div className={styles.detailSection}>
+            <ChipSection title="방문목적" items={reviewData.visitPurpose} color="border" />
             <ChipSection title="사전증상" items={reviewData.symptoms} color="border" />
-            <ChipSection title="진단 내용" items={reviewData.disease ? [reviewData.disease] : []} color="border" />
+            <ChipSection title="진단 내용" items={reviewData.diseases} color="border" />
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
@@ -103,7 +102,7 @@ const HospitalReview = (props: propsType) => {
           {isExpanded ? "접기" : "상세보기"}
         </div>
         <div className={styles.imagesContainer}>
-          {reviewData.images?.map((image, index) => (
+          {reviewData.images.map((image, index) => (
             <Image
               key={`${image}-${index}`}
               className={styles.reviewImage}
@@ -117,16 +116,16 @@ const HospitalReview = (props: propsType) => {
         </div>
         <div className={styles.reviewChipsContainer}>
           {reviewData.goodReviews?.map((review) => (
-            <Chip key={`good-${review.id}`} label={review.label || ""} color="blue" disabled />
+            <Chip key={review.id} label={review.name} color="blue" disabled />
           ))}
           {reviewData.badReviews?.map((review) => (
-            <Chip key={`bad-${review.id}`} label={review.label || ""} color="red" disabled />
+            <Chip key={review.id} label={review.name} color="red" disabled />
           ))}
         </div>
         {/* 이미지 갤러리 모달 */}
         <ImageGalleryModal
           isOpen={isImageGalleryModalOpen}
-          images={(reviewData.images as string[]) || []}
+          images={reviewData.images as string[]}
           currentIndex={currentImageIndex}
           onClose={closeImageGalleryModal}
         />
@@ -166,6 +165,10 @@ const PetInfo = ({ reviewData }: { reviewData: ReviewItemType }) => (
 
 /**
  * Chip Section (구조가 공통으로 반복되어 있음)
+ * @param title
+ * @param items
+ * @param color
+ * @constructor
  */
 const ChipSection = ({
   title,
@@ -173,15 +176,17 @@ const ChipSection = ({
   color,
 }: {
   title: string;
-  items: ReadonlyArray<string> | undefined;
+  items: ReadonlyArray<{ id: number; name: string }> | string;
   color: "border" | "blue" | "red";
 }) => (
   <div>
     <div className={styles.detailTitle}>{title}</div>
     <div className={styles.detailContent}>
-      {items?.map((item, index) => (
-        <Chip key={`${title}-${index}`} label={item} color={color} disabled />
-      ))}
+      {typeof items === "string" ? (
+        <Chip label={items} color={color} disabled />
+      ) : (
+        items?.map((item) => <Chip key={item.id} label={item.name} color={color} disabled />)
+      )}
     </div>
   </div>
 );
