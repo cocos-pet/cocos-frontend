@@ -46,7 +46,7 @@ export const introductionText = style([
 export const addressRow = style({
   display: "flex",
   alignItems: "center",
-  padding:"1.2rem 2rem 0rem 2rem",
+  padding:"2rem 2rem 0rem 2rem",
   gap: "0.8rem",
 });
 
