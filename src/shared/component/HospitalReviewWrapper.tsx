@@ -2,9 +2,9 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as styles from "./HospitalReviewWrapper.css";
 import { IcEllipses } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
-import ReviewItem from "./ReviewItem/ReviewItem";
 import { useInfiniteHospitalReview } from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
+import HospitalReview from "./HospitalReview/HospitalReview";
 
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
@@ -99,15 +99,10 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
             )}
           </div>
 
-          <ReviewItem
+          <HospitalReview
             handleProfileClick={handleProfileClick}
             handleHospitalDetailClick={handleHospitalDetailClick}
-            reviewData={{
-              ...review,
-              vistitedAt: review.visitedAt,
-              goodReviews: review.reviewSummary?.goodReviews || [],
-              badReviews: review.reviewSummary?.badReviews || [],
-            }}
+            reviewData={review}
             isBlurred={isBlurred}
             isNoProfile={true}
           />
