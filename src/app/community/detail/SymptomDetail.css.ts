@@ -142,6 +142,11 @@ export const reviewRegion = style({
   flexDirection: "row",
 });
 
+export const targetImage = style({
+  width: "2rem",
+  height: "2rem",
+});
+
 export const reviewRegionText = style([
   font.body01,
   {
@@ -149,22 +154,11 @@ export const reviewRegionText = style([
   },
 ]);
 
-export const filterButton = style({
-  backgroundColor: "white !important",
-  color: semanticColor.text.normal,
-});
-
 export const filterChip = style({
   display: "flex",
   gap: "0.8rem",
   flexWrap: "wrap",
-  width: "100%",
   justifyContent: "flex-end",
-});
-
-export const filterButtonActive = style({
-  backgroundColor: "rgba(67, 214, 255, 0.16) !important",
-  color: "#14B5F0 !important",
 });
 
 export const filterContent = style({
