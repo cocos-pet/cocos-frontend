@@ -72,8 +72,12 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
               {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
           </div>
+<<<<<<< HEAD
           <Image src={data.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
 >>>>>>> 7073707 ( HospitalReview 요청에 맞게 수정 (API 일부 붙임 + 무한 스크롤) (#299))
+=======
+          {/* <Image src={data.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} /> */}
+>>>>>>> 632e39d ([Feat/#301] 방문 목적 response 추가 (Simple) (#302))
         </div>
       ) : (
         <div className={styles.addBox}>
