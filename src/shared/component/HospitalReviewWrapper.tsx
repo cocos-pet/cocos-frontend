@@ -13,7 +13,6 @@ interface HospitalReviewWrapperProps {
 
 const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWrapperProps) => {
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const isBlurred = !isLoggedIn();
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -56,8 +55,8 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
   }, [handleObserver]);
 
   const handleDropdownClick = (reviewId: number) => {
-    setSelectedReviewId(reviewId === selectedReviewId ? null : reviewId);
-    setIsDropdownOpen((prev) => !prev);
+    const isSameReview = reviewId === selectedReviewId;
+    setSelectedReviewId(isSameReview ? null : reviewId);
   };
 
   const closeDeleteReviewModal = () => {
@@ -66,7 +65,7 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
 
   const openDeleteReviewModal = () => {
     setIsDeleteReviewModalOpen(true);
-    setIsDropdownOpen(false);
+    setSelectedReviewId(null);
   };
 
   const handleProfileClick = () => {
@@ -89,8 +88,17 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
         <section key={review.id} className={styles.reviewContainer}>
           <div className={styles.visitWrapper}>
             <span className={styles.visitDate}>{review.visitedAt} 방문</span>
-            {isMypage && <IcEllipses width={20} height={20} onClick={() => handleDropdownClick(review.id as number)} />}
-            {isDropdownOpen && selectedReviewId === review.id && (
+            {isMypage && (
+              <IcEllipses
+                width={20}
+                height={20}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDropdownClick(review.id as number);
+                }}
+              />
+            )}
+            {selectedReviewId === review.id && (
               <div className={styles.dropdownContainer}>
                 <div className={styles.dropdownItem} onClick={openDeleteReviewModal}>
                   삭제하기

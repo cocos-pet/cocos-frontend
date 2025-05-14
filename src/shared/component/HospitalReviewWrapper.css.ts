@@ -24,7 +24,7 @@ export const reviewContainer = style([
   a.paddingVertical16,
 ]);
 
-export const visitWrapper = style([a.fullWidth, a.justifySpaceBetween, a.flexRow]);
+export const visitWrapper = style([a.fullWidth, a.justifySpaceBetween, a.flexRow, { position: "relative" }]);
 
 export const visitDate = style([
   font.label01,
