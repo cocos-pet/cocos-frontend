@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { chipItem, ChipType } from "./ChipStyle.css.ts";
 import { IcDelete } from "@asset/svg/index";
 
@@ -11,12 +11,14 @@ interface ChipProps {
   onClick?: () => void;
   isSelected?: boolean;
   disabled?: boolean;
+  rightIcon?: React.ReactNode;
 }
 
 type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
 const Chip = ({
   label,
   icon = false,
+  rightIcon,
   color = "blue",
   onClick,
   isSelected = false,
@@ -49,6 +51,15 @@ const Chip = ({
             bottom: "1.3px",
           }}
         />
+      )}
+      {rightIcon && (
+        <div
+          style={{
+            marginLeft: "4px",
+          }}
+        >
+          {rightIcon}
+        </div>
       )}
     </div>
   );
