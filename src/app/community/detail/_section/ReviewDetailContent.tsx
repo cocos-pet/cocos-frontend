@@ -1,12 +1,12 @@
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import {useState} from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcFilterBlack, IcFilterBlue, IcTarget } from "@asset/svg";
-import { motion } from "framer-motion";
-import { Button } from "@common/component/Button";
-import { sampleReviewData } from "@app/community/_constant/reviewMockData.ts";
-import ReviewItem from "@shared/component/HospitalReview/HospitalReview.tsx";
-import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
+import {IcDownArrow, IcTarget} from "@asset/svg";
+import {motion} from "framer-motion";
+import {sampleReviewData} from "@app/community/_constant/reviewMockData.ts";
+import {ReviewFilter} from "@app/community/detail/_section/index.tsx";
+import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
+import Chip from "@common/component/Chip/Chip.tsx";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -32,27 +32,14 @@ const ReviewDetailContent = () => {
             <IcDownArrow width={20} />
           </motion.div>
         </div>
-        <Button
-          variant={"outlinePrimary"}
-          size={"small"}
-          label={
-            <>
-              필터
-              {isReviewFilterOpen ? (
-                <IcFilterBlue style={{ width: "20px" }} />
-              ) : (
-                <IcFilterBlack style={{ width: "20px" }} />
-              )}
-            </>
-          }
-          style={{ width: "fit-content" }}
-          className={isReviewFilterOpen ? styles.filterButtonActive : styles.filterButton}
-          onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-        />
+        <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
+          <Chip label={"좋아요"} color={"gray"} size={"small"} rightIcon={<IcDownArrow width={20} />} />
+          <Chip label={"아쉬워요"} color={"gray"} size={"small"} rightIcon={<IcDownArrow width={20} />} />
+        </div>
       </div>
       <div className={styles.reviewItemContainer}>
         {sampleReviewData.reviews.map((review) => (
-          <ReviewItem
+          <HospitalReview
             key={review.id}
             handleProfileClick={() => handleProfileClick(review.nickname)}
             reviewData={review}
@@ -63,7 +50,7 @@ const ReviewDetailContent = () => {
           />
         ))}
         {sampleReviewData.reviews.map((review) => (
-          <ReviewItem
+          <HospitalReview
             key={review.id}
             handleProfileClick={() => handleProfileClick(review.nickname)}
             reviewData={review}

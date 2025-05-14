@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import {useState} from "react";
 import * as styles from "./HospitalReview.css.ts";
 import Chip from "@common/component/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
-import { Separated } from "react-simplikit";
-import { motion } from "framer-motion";
+import {Separated} from "react-simplikit";
+import {motion} from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 
@@ -183,13 +183,6 @@ const PetInfo = ({ reviewData }: { reviewData: ReviewItemType }) => (
   </div>
 );
 
-/**
- * Chip Section (구조가 공통으로 반복되어 있음)
- * @param title
- * @param items
- * @param color
- * @constructor
- */
 const ChipSection = ({
   title,
   items,

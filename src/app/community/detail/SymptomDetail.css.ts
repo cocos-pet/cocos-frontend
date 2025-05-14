@@ -1,6 +1,6 @@
-import {color, font, semanticColor} from "@style/styles.css.ts";
-import {style} from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
+import { color, font, semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -152,6 +152,14 @@ export const reviewRegionText = style([
 export const filterButton = style({
   backgroundColor: "white !important",
   color: semanticColor.text.normal,
+});
+
+export const filterChip = style({
+  display: "flex",
+  gap: "0.8rem",
+  flexWrap: "wrap",
+  width: "100%",
+  justifyContent: "flex-end",
 });
 
 export const filterButtonActive = style({
