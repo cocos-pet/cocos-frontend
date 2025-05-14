@@ -1536,6 +1536,11 @@ export interface components {
              * @example 2.7
              */
             weight?: number;
+            /**
+             * @description 방문 목적
+             * @example 수술
+             */
+            visitPurpose?: string;
         };
         ReviewSummaryOptionListResponse: {
             /** @description 좋은 리뷰 요약 리스트 */
@@ -2324,6 +2329,11 @@ export interface components {
              * @example 2.7
              */
             weight?: number;
+            /**
+             * @description 방문 목적
+             * @example 수술
+             */
+            visitPurpose?: string;
         };
         BaseResponseHospitalVisitPurposeListResponse: {
             /** Format: int32 */
