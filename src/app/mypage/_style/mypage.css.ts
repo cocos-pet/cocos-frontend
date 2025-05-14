@@ -142,6 +142,7 @@ export const contentHeaderWrapper = style([
     borderBottom: `1px solid ${semanticColor.line.strong}`,
     height: "5.6rem",
     backgroundColor: "white",
+    zIndex: 10,
   },
 ]);
 

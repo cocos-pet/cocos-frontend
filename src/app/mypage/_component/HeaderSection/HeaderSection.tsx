@@ -10,7 +10,7 @@ interface HeaderSectionProps {
 
 const HeaderSection = ({ isLogin, onNavigateToSettings }: HeaderSectionProps) => {
   return (
-    <span style={{ position: "fixed", top: 0, width: "100%" }}>
+    <span style={{ position: "fixed", top: 0, width: "100%", zIndex: 10 }}>
       <HeaderNav
         centerContent={"마이페이지"}
         rightBtn={
