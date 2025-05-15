@@ -21,7 +21,10 @@ const ReviewDetailContent = () => {
   return (
     <div className={styles.reviewContainer}>
       <div className={styles.reviewFilter}>
-        <div className={styles.reviewRegion} onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}>
+        <div
+          className={styles.reviewRegion}
+          onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}
+        >
           <IcTarget width={20} />
           <span className={styles.reviewRegionText}>서울시 강남구</span>
           <motion.div
@@ -32,9 +35,22 @@ const ReviewDetailContent = () => {
             <IcDownArrow width={20} />
           </motion.div>
         </div>
-        <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
-          <Chip label={"좋아요"} color={"gray"} size={"small"} rightIcon={<IcDownArrow width={20} />} />
-          <Chip label={"아쉬워요"} color={"gray"} size={"small"} rightIcon={<IcDownArrow width={20} />} />
+        <div
+          className={styles.filterChip}
+          onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
+        >
+          <Chip
+            label={"좋아요"}
+            color={"gray"}
+            size={"small"}
+            rightIcon={<IcDownArrow width={20} />}
+          />
+          <Chip
+            label={"아쉬워요"}
+            color={"gray"}
+            size={"small"}
+            rightIcon={<IcDownArrow width={20} />}
+          />
         </div>
       </div>
       <div className={styles.reviewItemContainer}>
@@ -60,7 +76,10 @@ const ReviewDetailContent = () => {
           />
         ))}
       </div>
-      <ReviewFilter isOpen={isReviewFilterOpen} onClose={() => setIsReviewFilterOpen(false)} />
+      <ReviewFilter
+        isOpen={isReviewFilterOpen}
+        onClose={() => setIsReviewFilterOpen(false)}
+      />
     </div>
   );
 };
