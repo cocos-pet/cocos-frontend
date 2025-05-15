@@ -1,7 +1,5 @@
 export { default as Icfilteron } from "./Icfilteron";
 export { default as Icon } from "./Icon";
-export { default as Check } from "./Check";
-export { default as ChevronDown } from "./ChevronDown";
 export { default as IcGroup } from "./IcGroup";
 export { default as IcCocosLogin } from "./IcCocosLogin";
 export { default as IcBottomSheetLine } from "./IcBottomSheetLine";
@@ -19,6 +17,8 @@ export { default as IcChevronDown } from "./IcChevronDown";
 export { default as IcCalenderLeft } from "./IcCalenderLeft";
 export { default as IcCalenderRight } from "./IcCalenderRight";
 export { default as IcCheckbox } from "./IcCheckbox";
+export { default as IcCheck } from "./IcCheck";
+export { default as IcChevronDown } from "./IcChevronDown";
 export { default as IcChevronLeft } from "./IcChevronLeft";
 export { default as IcChevronRight } from "./IcChevronRight";
 export { default as IcChevronRight2 } from "./IcChevronRight2";

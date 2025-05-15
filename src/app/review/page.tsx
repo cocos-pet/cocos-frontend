@@ -31,7 +31,6 @@ export default function ReviewPage() {
   return (
     <div>
       <LocationHeader />
-
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
           <div className={styles.headerContainer}>
