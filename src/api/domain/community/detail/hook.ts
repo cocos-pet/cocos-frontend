@@ -6,7 +6,7 @@ const HOSPITAL_REVIEW_KEY = {
 };
 
 /**ø
- * @description 게시물 필터 조회 API
+ * @description 병원리뷰 필터 조회 API
  */
 //
 export const usePostHospitalReviews = () => {
