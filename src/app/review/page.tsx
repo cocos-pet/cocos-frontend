@@ -99,7 +99,7 @@ export default function ReviewPage() {
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
   
-  const { data: reviews = [] } = useQuery({
+  const { data: review = [] } = useQuery({
     queryKey: ["reviews"],
     queryFn: fetchReviews,
     initialData: MOCK_REVIEWS,
@@ -116,7 +116,6 @@ export default function ReviewPage() {
   return (
     <div>
       <LocationHeader />
-
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
           <div className={styles.headerContainer}>
