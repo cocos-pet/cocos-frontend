@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
@@ -13,6 +13,7 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import LocationHeader from "./locationHeader/locationHeader";
+import { useQuery } from "@tanstack/react-query";
 
 interface Review {
   id: string;
@@ -26,7 +27,6 @@ interface Review {
     age: number;
   };
 }
-
 interface Hospital {
   id: number;
   name: string;
@@ -51,22 +51,59 @@ const RECOMMENDED_HOSPITALS: Hospital[] = [
   },
 ];
 
+const MOCK_REVIEWS: Review[] = [
+  {
+    id: "1",
+    title: "매우 친절한 병원이에요",
+    content: "우리 강아지 치료를 정말 잘해주셨어요. 의사선생님이 정말 친절하고 자세히 설명해주셨습니다.",
+    rating: 5,
+    createdAt: "2023-08-15",
+    hospitalName: "코코스동물병원",
+    petInfo: {
+      breed: "말티즈",
+      age: 3
+    }
+  },
+  {
+    id: "2",
+    title: "전문적인 진료가 좋았어요",
+    content: "우리 고양이 피부병 치료를 위해 방문했는데, 정확한 진단과 처방을 해주셨어요.",
+    rating: 4,
+    createdAt: "2023-09-20",
+    hospitalName: "행복한동물병원",
+    petInfo: {
+      breed: "코리안숏헤어",
+      age: 2
+    }
+  },
+  {
+    id: "3",
+    title: "24시간 응급실이 있어 안심돼요",
+    content: "새벽에 급하게 방문했는데도 신속하게 대응해주셨어요. 응급상황에 큰 도움이 됐습니다.",
+    rating: 5,
+    createdAt: "2023-10-05",
+    hospitalName: "우리동물병원",
+    petInfo: {
+      breed: "골든리트리버",
+      age: 5
+    }
+  }
+];
+const fetchReviews = async (): Promise<Review[]> => {
+  // todo: 실제 api 연동 후 삭제
+  return Promise.resolve(MOCK_REVIEWS);
+};
+
 export default function ReviewPage() {
   const router = useRouter();
-  const [isRecentPost, setIsRecentPost] = useState(true);
-  const [reviews, setReviews] = useState<Review[]>([]);
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
-
-  const fetchReviews = async () => {
-    try {
-      const response = await fetch("/api/review");
-      const data = await response.json();
-      setReviews(data);
-    } catch (error) {
-      console.error("리뷰 목록 조회 중 오류 발생:", error);
-    }
-  };
+  
+  const { data: reviews = [] } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: fetchReviews,
+    initialData: MOCK_REVIEWS,
+  });
 
   function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>): void {
     throw new Error("Function not implemented.");
