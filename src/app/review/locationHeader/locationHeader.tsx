@@ -4,12 +4,12 @@ import { IcChevronDown, Icon } from "@asset/svg";
 import { useState } from "react";
 import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
 import { LOCATION_DATA, City, District } from "../locationBottomSheet/Mock";
+
 interface LocationData {
   locationId: number;
   locationName: string;
   locationType: string;
 }
-
 
 const getLocationInfo = async (): Promise<LocationData> => {
   return new Promise((resolve) => {
@@ -21,6 +21,9 @@ const getLocationInfo = async (): Promise<LocationData> => {
 
 export default function LocationHeader() {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [selectedCity, setSelectedCity] = useState<City>(LOCATION_DATA[0]);
+  const [selectedDistrict, setSelectedDistrict] = useState<District>(LOCATION_DATA[0].children[0]);
+
   const { data: locationData, refetch } = useQuery<LocationData>({
     queryKey: ["location"],
     queryFn: getLocationInfo
@@ -35,7 +38,9 @@ export default function LocationHeader() {
   };
 
   const handleLocationSelect = (city: City, district: District) => {
-    refetch();
+    setSelectedCity(city);
+    setSelectedDistrict(district);
+    setIsBottomSheetOpen(false);
   };
 
   return (
@@ -44,7 +49,7 @@ export default function LocationHeader() {
         <div className={styles.locationWrapper} onClick={handleLocationClick}>
           <Icon style={{ width: "2rem", height: "2rem" }} />
           <span className={styles.locationText}>
-            {locationData?.locationName}
+            {selectedCity.locationName} {selectedDistrict.locationName}
           </span>
           <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
         </div>
@@ -53,7 +58,9 @@ export default function LocationHeader() {
       <LocationBottomSheet
         isOpen={isBottomSheetOpen}
         onClose={handleCloseBottomSheet}
-        onLocationSelect={handleLocationSelect} currentLocation={null}      />
+        onLocationSelect={handleLocationSelect}
+        currentLocation={selectedDistrict}
+      />
     </>
   );
 }

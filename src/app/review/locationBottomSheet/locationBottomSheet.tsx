@@ -18,11 +18,9 @@ export default function LocationBottomSheet({
   currentLocation,
   onLocationSelect,
 }: LocationBottomSheetProps) {
-  // 1차(시/도)와 2차(군/구) 선택 상태
   const [selectedCityId, setSelectedCityId] = useState(LOCATION_DATA[0].locationId);
   const [selectedDistrictId, setSelectedDistrictId] = useState(LOCATION_DATA[0].children[0].locationId);
 
-  // 시/도 변경 시, 해당 시/도의 첫 번째 군/구 자동 선택
   useEffect(() => {
     const city = LOCATION_DATA.find((c) => c.locationId === selectedCityId);
     if (city && city.children.length > 0) {
@@ -30,7 +28,6 @@ export default function LocationBottomSheet({
     }
   }, [selectedCityId]);
 
-  // 바텀시트가 열릴 때도 자동 선택
   useEffect(() => {
     if (isOpen) {
       setSelectedCityId(LOCATION_DATA[0].locationId);
@@ -42,7 +39,7 @@ export default function LocationBottomSheet({
   const selectedDistrict = selectedCity.children.find((d) => d.locationId === selectedDistrictId)!;
 
   return (
-    <BottomSheet
+    <BottomSheet 
       isOpen={isOpen}
       handleOpen={(open) => !open && onClose()}
       handleDimmedClose={onClose}
@@ -81,7 +78,16 @@ export default function LocationBottomSheet({
           </div>
         </div>
         <div className={styles.buttonWrapper}>
-        </div>      
+          <Button
+            label="확인하기"
+            size="large"
+            width="100%"
+            onClick={() => {
+              onLocationSelect(selectedCity, selectedDistrict);
+              onClose();
+            }}
+          />
+        </div>
       </>
     </BottomSheet>
   );

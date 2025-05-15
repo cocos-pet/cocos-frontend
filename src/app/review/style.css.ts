@@ -100,11 +100,11 @@ export const hospitalListText = style([
 ]);
 
 export const navWrapper = style({
-  position: "fixed",
+  position: "sticky",
   bottom: 0,
   left: 0,
   right: 0,
-  zIndex: 100,
+  zIndex: 10,
   backgroundColor: "white",
 });
 
@@ -112,7 +112,7 @@ export const floatBtnWrapper = style({
   position: "fixed",
   bottom: "9.6rem",
   right: "2rem",
-  zIndex: 1000,
+  zIndex: 11,
   display: "flex",
   justifyContent: "flex-end",
 });
