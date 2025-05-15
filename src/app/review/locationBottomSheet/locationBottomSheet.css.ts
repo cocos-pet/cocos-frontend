@@ -33,12 +33,17 @@ export const cityList = style([
 export const buttonWrapper = style([
   font.body01,
   {
-    width: "100%",
-    padding: "1.2rem 2rem 3.2rem 2rem",
-    alignItems: "center",
-    position: "absolute",
+    position: "sticky",
     bottom: 0,
-    zIndex: 999,
+    left: 0,
+    width: "100%",
+    background: "#fff",
+    padding: "1.2rem 2rem 2.4rem 2rem",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    zIndex: 10,
+    marginTop: "51.2rem",
   },
 ]);
 
