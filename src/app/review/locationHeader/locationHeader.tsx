@@ -1,53 +1,59 @@
 import * as styles from "./locationHeader.css";
 import { useQuery } from "@tanstack/react-query";
-import { ChevronDown, Icon } from "@asset/svg";
-
-interface LocationResponse {
-  code: number;
-  message: string;
-  data: {
-    townId: number;
-    townName: string;
-  };
+import { IcChevronDown, Icon } from "@asset/svg";
+import { useState } from "react";
+import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
+import { LOCATION_DATA, City, District } from "../locationBottomSheet/Mock";
+interface LocationData {
+  locationId: number;
+  locationName: string;
+  locationType: string;
 }
 
-const mockLocationData: LocationResponse = {
-  code: 1073741824,
-  message: "success",
-  data: {
-    townId: 1,
-    townName: "반포본동"
-  }
-};
 
-const getLocationInfo = async (): Promise<LocationResponse> => {
+const getLocationInfo = async (): Promise<LocationData> => {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve(mockLocationData);
+      resolve(LOCATION_DATA[0].children[0]);
     }, 500);
   });
 };
 
 export default function LocationHeader() {
-  const { data: locationData } = useQuery<LocationResponse>({
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const { data: locationData, refetch } = useQuery<LocationData>({
     queryKey: ["location"],
     queryFn: getLocationInfo
   });
 
   const handleLocationClick = () => {
-    console.log("위치 선택 클릭됨");
-    // todo: bottomSheet 로직짜기
+    setIsBottomSheetOpen(true);
+  };
+
+  const handleCloseBottomSheet = () => {
+    setIsBottomSheetOpen(false);
+  };
+
+  const handleLocationSelect = (city: City, district: District) => {
+    refetch();
   };
 
   return (
-    <div className={styles.locationHeader}>
-      <div className={styles.locationWrapper} onClick={handleLocationClick}>
-        <Icon style={{ width: "2rem", height: "2rem" }} />
-        <span className={styles.locationText}>
-          {locationData?.data.townName}
-        </span>
-        <ChevronDown style={{ width: "2rem", height: "2rem" }} />
+    <>
+      <div className={styles.locationHeader}>
+        <div className={styles.locationWrapper} onClick={handleLocationClick}>
+          <Icon style={{ width: "2rem", height: "2rem" }} />
+          <span className={styles.locationText}>
+            {locationData?.locationName}
+          </span>
+          <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
+        </div>
       </div>
-    </div>
+      
+      <LocationBottomSheet
+        isOpen={isBottomSheetOpen}
+        onClose={handleCloseBottomSheet}
+        onLocationSelect={handleLocationSelect} currentLocation={null}      />
+    </>
   );
 }
