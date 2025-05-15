@@ -1,11 +1,9 @@
 "use client";
 
-import { useState, useEffect, ChangeEvent } from "react";
+import { useState, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
-import Content from "@common/component/Content/Content";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
-import { formatTime } from "@shared/util/formatTime";
 import { TextField } from "@common/component/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
@@ -59,10 +57,6 @@ export default function ReviewPage() {
   const [reviews, setReviews] = useState<Review[]>([]);
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
-
-  useEffect(() => {
-    fetchReviews();
-  }, [isRecentPost]);
 
   const fetchReviews = async () => {
     try {
