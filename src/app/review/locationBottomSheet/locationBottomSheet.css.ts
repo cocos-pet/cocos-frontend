@@ -24,9 +24,10 @@ export const title = style([
 export const cityList = style([
     font.body01,    
     {
-        display: "flex",
-        flexDirection: "column",
-        background: color.gray.gray100,
+      fontWeight: "600",
+      display: "flex",
+      flexDirection: "column",
+      background: color.gray.gray100,
     }
 ]);
 
@@ -56,12 +57,16 @@ export const locationSheetContainer = style({
   background: color.gray.gray000,
 });
 
-export const districtList = style({
-  display: "flex",
-  width:"22.6rem",
-  height:"4.4rem",
-  flexDirection: "column",
-});
+export const districtList = style([
+  font.body01,
+  {
+    fontWeight: "500",
+    display: "flex",
+    width:"22.6rem",
+    height:"4.4rem",
+    flexDirection: "column",
+  }
+]);
 
 export const districtItem = style({
   display: "flex",
@@ -88,4 +93,4 @@ export const selectedDistrict = style([
 export const checkIcon = style({
   width: "2.4rem",
   height: "2.4rem",
-}); 
+});

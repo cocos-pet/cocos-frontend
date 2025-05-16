@@ -4,39 +4,28 @@ import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
 import { LOCATION_DATA, City, District } from "./Mock";
 import { IcCheck } from "@asset/svg";
-
 interface LocationBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  currentLocation: District | null;
   onLocationSelect: (city: City, district: District) => void;
 }
 
 export default function LocationBottomSheet({
   isOpen,
   onClose,
-  currentLocation,
   onLocationSelect,
-}: LocationBottomSheetProps) {
+}: LocationBottomSheetProps){
   const [selectedCityId, setSelectedCityId] = useState(LOCATION_DATA[0].locationId);
-  const [selectedDistrictId, setSelectedDistrictId] = useState(LOCATION_DATA[0].children[0].locationId);
-
-  useEffect(() => {
-    const city = LOCATION_DATA.find((c) => c.locationId === selectedCityId);
-    if (city && city.children.length > 0) {
-      setSelectedDistrictId(city.children[0].locationId);
-    }
-  }, [selectedCityId]);
+  const [selectedDistrictId, setSelectedDistrictId] = useState<number | null>(null);
 
   useEffect(() => {
     if (isOpen) {
       setSelectedCityId(LOCATION_DATA[0].locationId);
-      setSelectedDistrictId(LOCATION_DATA[0].children[0].locationId);
+      setSelectedDistrictId(null);
     }
   }, [isOpen]);
 
   const selectedCity = LOCATION_DATA.find((c) => c.locationId === selectedCityId)!;
-  const selectedDistrict = selectedCity.children.find((d) => d.locationId === selectedDistrictId)!;
 
   return (
     <BottomSheet 
@@ -68,7 +57,7 @@ export default function LocationBottomSheet({
                 onClick={() => setSelectedDistrictId(district.locationId)}
               >
                 <span>{district.locationName}</span>
-                {district.locationId === selectedDistrictId && (
+                {district.locationId === selectedDistrictId && ( 
                   <span className={styles.checkIcon}>
                     <IcCheck />
                   </span>
@@ -76,15 +65,18 @@ export default function LocationBottomSheet({
               </div>
             ))}
           </div>
-        </div>
+        </div> 
         <div className={styles.buttonWrapper}>
           <Button
             label="확인하기"
             size="large"
             width="100%"
+            disabled={selectedDistrictId === null}
             onClick={() => {
-              onLocationSelect(selectedCity, selectedDistrict);
-              onClose();
+              if (selectedDistrictId !== null) {
+                onLocationSelect(selectedCity, selectedCity.children.find(d => d.locationId === selectedDistrictId)!);
+                onClose();
+              }
             }}
           />
         </div>
