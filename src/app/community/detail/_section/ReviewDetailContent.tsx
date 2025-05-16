@@ -24,16 +24,16 @@ const ReviewDetailContent = () => {
     postHospitalReviews(
       {
         size: 10,
-        locationId: 1,
-        locationType: "CITY",
-        hospitalId: 1,
-        bodyId: bodyId,
-        summaryOptionId: 1,
+        // locationId: 1,
+        // locationType: "CITY",
+        // bodyId: Number(bodyId),
+        // summaryOptionId: 1,
+        // cursorId: 1,
       },
       {
         onSuccess: (data) => {
+          console.log(data);
           setReviewList(data);
-          // console.log(data);
         },
       },
     );

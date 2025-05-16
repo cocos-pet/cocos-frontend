@@ -12,6 +12,6 @@ export type postHospitalReviewsRequest =
   paths["/api/dev/hospitals/reviews/filter"]["post"]["requestBody"]["content"]["application/json"];
 
 export const postHospitalReviews = async (payload: postHospitalReviewsRequest) => {
-  const { data } = await post<postHospitalReviewsResponse>(API_PATH.POST_FILTERS, payload);
+  const { data } = await post<postHospitalReviewsResponse>(API_PATH.HOSPITAL_FILTERS, payload);
   return data.data?.reviews || [];
 };
