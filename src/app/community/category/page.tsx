@@ -14,10 +14,9 @@ import {usePostPostFilters} from "@api/domain/community/search/hook";
 import {Suspense, useCallback, useEffect, useState} from "react";
 import {components} from "@type/schema";
 import {postPostFiltersRequest} from "@api/domain/community/search";
-import nocategory from "@asset/image/nocategory.png";
 import {useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook";
-import Image from "next/image";
 import dynamic from "next/dynamic";
+import NoData from "@shared/component/NoData/NoData.tsx";
 
 const Loading = dynamic(() => import("../../../common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -35,34 +34,24 @@ const LoadingFallback = () => <Loading height={80} />;
 // 메인 컨텐츠 컴포넌트
 const CategoryContent = () => {
   const searchParams = useSearchParams();
-  const type = searchParams.get("type");
-  const typeId = searchParams.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
-    []
-  );
+  const type = searchParams?.get("type");
+  const typeId = searchParams?.get("id");
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
-  
+
   // 필터 관련 상태와 hooks
-  const {
-    isOpen,
-    setOpen,
-    category,
-    setCategory,
-    setCategoryData,
-    selectedChips,
-    toggleChips,
-    categoryData,
-  } = useFilterStore();
+  const { isOpen, setOpen, category, setCategory, setCategoryData, selectedChips, toggleChips, categoryData } =
+    useFilterStore();
   const { clearAllChips } = useFilterStore();
-  
+
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
   const { data: disease } = useGetDisease(bodyDiseaseIds);
-  
+
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -73,7 +62,7 @@ const CategoryContent = () => {
       document.body.style.overflow = "";
     };
   }, [isOpen]);
-  
+
   useEffect(() => {
     if (symptoms?.bodies) {
       setCategoryData("symptoms", symptoms.bodies);
@@ -82,45 +71,32 @@ const CategoryContent = () => {
       setCategoryData("disease", disease.bodies);
     }
   }, [symptoms, disease, setCategoryData]);
-  
+
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
       }
     }
   }, [diseaseBodies, symptomBodies]);
-  
+
   const isFilterOn =
-    !!selectedChips.breedId.length ||
-    !!selectedChips.diseaseIds.length ||
-    !!selectedChips.symptomIds.length;
-  
+    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
+
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
-    
+
     const filterPayload: postPostFiltersRequest = {
       categoryId: Number(typeId),
       sortBy: "RECENT",
-      animalIds:
-        selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
-      symptomIds:
-        selectedChips.symptomIds.length > 0
-          ? selectedChips.symptomIds
-          : undefined,
-      diseaseIds:
-        selectedChips.diseaseIds.length > 0
-          ? selectedChips.diseaseIds
-          : undefined,
+      animalIds: selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
+      symptomIds: selectedChips.symptomIds.length > 0 ? selectedChips.symptomIds : undefined,
+      diseaseIds: selectedChips.diseaseIds.length > 0 ? selectedChips.diseaseIds : undefined,
     };
-    
+
     fetchPosts(filterPayload, {
       onSuccess: (data) => {
         setPosts(data);
@@ -130,60 +106,44 @@ const CategoryContent = () => {
       },
     });
   }, [fetchPosts, typeId, selectedChips]);
-  
+
   const handleGoBack = () => {
     clearAllChips();
-    
+
     router.push(PATH.COMMUNITY.ROOT);
   };
-  
+
   const handleGoSearch = () => {
     router.push(PATH.COMMUNITY.SEARCH);
   };
   const handleDimmedClose = () => {
     clearAllChips();
   };
-  
+
   const onSubmitClick = () => {
     fetchPostData();
   };
-  
+
   useEffect(() => {
     fetchPostData();
   }, []);
-  
+
   if (!type || !validTypes.includes(type)) {
     return (
       <>
-        <div className={styles.emptyContainer}>
-          <Image
-            src={nocategory}
-            alt="게시글 없음."
-            width={276}
-            height={155}
-            style={{
-              objectFit: "cover",
-            }}
-          />
-          <h1>아직 등록된 게시글이 없어요</h1>
-          <div className={styles.floatingBtnContainer}>
-            <FloatingBtn
-              onClick={() => router.push(`/community/write?category=${type}`)}
-            />
-          </div>
-        </div>
-        <FilterBottomSheet
-          handleDimmedClose={handleDimmedClose}
-          onSubmitClick={onSubmitClick}
+        <NoData
+          label={"아직 등록된 리뷰가 없어요"}
+          onBtnClick={() => router.push(`/community/write?category=${type}`)}
         />
+        <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
       </>
     );
   }
-  
+
   if (isPending) {
     return <Loading height={80} />;
   }
-  
+
   if (posts.length === 0) {
     return (
       <>
@@ -204,34 +164,18 @@ const CategoryContent = () => {
               )}
             </div>
           )}
-          <div className={styles.emptyContainer}>
-            <Image
-              src={nocategory}
-              alt="게시글 없음."
-              width={276}
-              height={155}
-              style={{
-                objectFit: "cover",
-              }}
-            />
-            <h1>아직 등록된 게시글이 없어요</h1>
-            <div className={styles.floatingBtnContainer}>
-              <FloatingBtn
-                onClick={() => router.push(`/community/write?category=${type}`)}
-              />
-            </div>
-          </div>
+          <NoData
+            label={"아직 등록된 리뷰가 없어요"}
+            onBtnClick={() => router.push(`/community/write?category=${type}`)}
+          />
         </div>
-        <FilterBottomSheet
-          handleDimmedClose={handleDimmedClose}
-          onSubmitClick={onSubmitClick}
-        />
+        <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
       </>
     );
   }
-  
+
   const categoryName = categoryMapping[type] || "알 수 없는 카테고리";
-  
+
   return (
     <>
       <div className={styles.categoryContainer}>
@@ -242,7 +186,7 @@ const CategoryContent = () => {
           onLeftClick={handleGoBack}
           onRightClick={handleGoSearch}
         />
-        
+
         {type !== "magazine" && (
           <div className={styles.filterContainer}>
             {isFilterOn ? (
@@ -252,7 +196,7 @@ const CategoryContent = () => {
             )}
           </div>
         )}
-        
+
         <div className={styles.postsContainer}>
           {posts.map((post) => (
             <Content
@@ -271,19 +215,14 @@ const CategoryContent = () => {
             />
           ))}
         </div>
-        
+
         {type !== "magazine" && (
           <div className={styles.floatingBtnContainer}>
-            <FloatingBtn
-              onClick={() => router.push(`/community/write?category=${type}`)}
-            />
+            <FloatingBtn onClick={() => router.push(`/community/write?category=${type}`)} />
           </div>
         )}
       </div>
-      <FilterBottomSheet
-        handleDimmedClose={handleDimmedClose}
-        onSubmitClick={onSubmitClick}
-      />
+      <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
     </>
   );
 };
