@@ -4,9 +4,10 @@ import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcDownArrow, IcTarget } from "@asset/svg";
 import { motion } from "framer-motion";
 import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
-import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
 import Chip from "@common/component/Chip/Chip.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
+import NoData from "@shared/component/NoData/NoData.tsx";
+import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -24,15 +25,14 @@ const ReviewDetailContent = () => {
     postHospitalReviews(
       {
         size: 10,
-        // locationId: 1,
-        // locationType: "CITY",
-        // bodyId: Number(bodyId),
+        locationId: 1,
+        locationType: "CITY",
+        bodyId: Number(bodyId),
         // summaryOptionId: 1,
         // cursorId: 1,
       },
       {
         onSuccess: (data) => {
-          console.log(data);
           setReviewList(data);
         },
       },
@@ -44,7 +44,7 @@ const ReviewDetailContent = () => {
   }
 
   if (reviewList.length === 0) {
-    return <div>리뷰가 없습니다.</div>;
+    return <NoData />;
   }
 
   return (

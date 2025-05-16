@@ -9,6 +9,7 @@ import {Separated} from "react-simplikit";
 import {motion} from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
+import {components} from "@type/schema";
 
 export interface ReviewItemType {
   id?: number;
@@ -39,7 +40,7 @@ export interface ReviewItemType {
 interface propsType {
   handleProfileClick?: () => void;
   handleHospitalDetailClick?: () => void;
-  reviewData: ReviewItemType;
+  reviewData: components["schemas"]["HospitalReviewResponse"];
   isBlurred?: boolean;
   isNoProfile?: boolean;
 }
@@ -69,14 +70,14 @@ const HospitalReview = (props: propsType) => {
     setIsImageGalleryModalOpen(false);
   };
 
-  const isReviewImage = reviewData.images?.length ? true : false;
+  const isReviewImage = reviewData?.images?.length ? true : false;
 
   return (
     <section className={styles.reviewItemContainer({ isNoProfile: isNoProfile })}>
       {!isNoProfile && (
         <Profile
           handleProfileClick={handleProfileClick}
-          createdAt={reviewData.vistitedAt}
+          createdAt={reviewData.visitedAt}
           nickname={reviewData.nickname}
           breed={reviewData.memberBreed}
           petAge={reviewData.age}
@@ -104,11 +105,11 @@ const HospitalReview = (props: propsType) => {
               items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}
               color="border"
             />
-            <ChipSection
-              title="진단 내용"
-              items={reviewData.diseases?.map((disease, index) => ({ id: index, name: disease })) || []}
-              color="border"
-            />
+            {/*<ChipSection*/}
+            {/*  title="진단 내용"*/}
+            {/*  items={reviewData.disease?.map((disease, index) => ({ id: index, name: disease })) || []}*/}
+            {/*  color="border"*/}
+            {/*/>*/}
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
