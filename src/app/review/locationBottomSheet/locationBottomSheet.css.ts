@@ -2,25 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
 
 
-export const bottomSheet = style({
-  position: "fixed",
-  left: 0,
-  width: "100%",
-  backgroundColor: "white",
-  borderTopLeftRadius: "16px",
-  borderTopRightRadius: "16px",
-  zIndex: 3,
-  maxHeight: "80vh",
-  overflowY: "auto",
-});
-
-export const title = style([
-  font.heading01,
-  {
-    marginBottom: "12px",
-  },
-]);
-
 export const cityList = style([
     font.body01,    
     {
