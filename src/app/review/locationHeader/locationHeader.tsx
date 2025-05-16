@@ -49,7 +49,7 @@ export default function LocationHeader() {
         <div className={styles.locationWrapper} onClick={handleLocationClick}>
           <Icon style={{ width: "2rem", height: "2rem" }} />
           <span className={styles.locationText}>
-            {selectedCity.locationName} {selectedDistrict.locationName}
+            {selectedDistrict.locationName}
           </span>
           <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
         </div>
