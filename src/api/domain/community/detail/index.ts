@@ -1,6 +1,6 @@
-import {post} from "@api/index";
-import {API_PATH} from "@api/constants/apiPath.ts";
-import {components, paths} from "src/type/schema";
+import { post } from "@api/index";
+import { API_PATH } from "@api/constants/apiPath.ts";
+import { components, paths } from "src/type/schema";
 
 /**
  * @description 병원리뷰 리스트 조회

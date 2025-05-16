@@ -11,9 +11,11 @@ type ReviewActiveTabType = "good" | "bad";
 const ReviewFilter = ({
   isOpen,
   onClose,
+  onFilterClick,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  onFilterClick?: (id: number) => void;
 }) => {
   const [activeTab, setActiveTab] = useState<ReviewActiveTabType>("good");
 
@@ -35,11 +37,23 @@ const ReviewFilter = ({
         <div className={styles.filterContentText}>
           {activeTab === "good" &&
             REVIEW_FILTER_CONFIG.goodReviews.map((item) => (
-              <Chip key={item.id} size={"small"} label={item.name} color={"blue"} />
+              <Chip
+                key={item.id}
+                size={"small"}
+                label={item.name}
+                color={"blue"}
+                onClick={() => (onFilterClick ? onFilterClick(item.id) : undefined)}
+              />
             ))}
           {activeTab === "bad" &&
             REVIEW_FILTER_CONFIG.badReviews.map((item) => (
-              <Chip key={item.id} size={"small"} label={item.name} color={"red"} />
+              <Chip
+                key={item.id}
+                size={"small"}
+                label={item.name}
+                color={"red"}
+                onClick={() => (onFilterClick ? onFilterClick(item.id) : undefined)}
+              />
             ))}
         </div>
         <div className={styles.filterButtonContainer}>
