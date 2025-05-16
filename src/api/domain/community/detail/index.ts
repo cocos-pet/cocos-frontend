@@ -1,6 +1,6 @@
-import { post } from "@api/index";
-import { API_PATH } from "@api/constants/apiPath.ts";
-import { paths } from "src/type/schema";
+import {post} from "@api/index";
+import {API_PATH} from "@api/constants/apiPath.ts";
+import {components, paths} from "src/type/schema";
 
 /**
  * @description 병원리뷰 리스트 조회
@@ -8,6 +8,7 @@ import { paths } from "src/type/schema";
 
 export type postHospitalReviewsResponse =
   paths["/api/dev/hospitals/reviews/filter"]["post"]["responses"]["200"]["content"]["*/*"];
+export type postHospitalReviewsResponseData = components["schemas"]["HospitalReviewResponse"];
 export type postHospitalReviewsRequest =
   paths["/api/dev/hospitals/reviews/filter"]["post"]["requestBody"]["content"]["application/json"];
 

@@ -9,7 +9,7 @@ import {Separated} from "react-simplikit";
 import {motion} from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
-import {components} from "@type/schema";
+import {postHospitalReviewsResponseData} from "@api/domain/community/detail";
 
 export interface ReviewItemType {
   id?: number;
@@ -40,7 +40,7 @@ export interface ReviewItemType {
 interface propsType {
   handleProfileClick?: () => void;
   handleHospitalDetailClick?: () => void;
-  reviewData: components["schemas"]["HospitalReviewResponse"];
+  reviewData: postHospitalReviewsResponseData;
   isBlurred?: boolean;
   isNoProfile?: boolean;
 }

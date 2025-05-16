@@ -1,13 +1,14 @@
-import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import {useEffect, useState} from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcTarget } from "@asset/svg";
-import { motion } from "framer-motion";
-import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
+import {IcDownArrow, IcTarget} from "@asset/svg";
+import {motion} from "framer-motion";
+import {LoadingFallback, ReviewFilter} from "@app/community/detail/_section/index.tsx";
 import Chip from "@common/component/Chip/Chip.tsx";
-import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
+import {usePostHospitalReviews} from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
+import {postHospitalReviewsResponseData} from "@api/domain/community/detail";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -16,8 +17,8 @@ const ReviewDetailContent = () => {
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false);
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
-  const [reviewList, setReviewList] = useState([]);
-  const handleProfileClick = (nickname: string) => {
+  const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
+  const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
   };
 
