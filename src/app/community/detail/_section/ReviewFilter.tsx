@@ -2,25 +2,32 @@ import { useState } from "react";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet.tsx";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import Tab from "@common/component/Tab/Tab.tsx";
-import { REVIEW_FILTER_CONFIG } from "@app/community/_constant/reviewFilterConfig.ts";
 import Chip from "@common/component/Chip/Chip.tsx";
 import { Button } from "@common/component/Button";
+import { useGetReviewSummaryOption } from "@api/domain/community/detail/hook.ts";
+import NoData from "@shared/component/NoData/NoData.tsx";
 
 type ReviewActiveTabType = "good" | "bad";
 
 const ReviewFilter = ({
   isOpen,
   onClose,
+  selectedFilterId,
   onFilterClick,
 }: {
   isOpen: boolean;
   onClose: () => void;
-  onFilterClick?: (id: number) => void;
+  selectedFilterId?: number;
+  onFilterClick?: (id: number | undefined, type: "good" | "bad") => void;
 }) => {
   const [activeTab, setActiveTab] = useState<ReviewActiveTabType>("good");
 
   const handleTabClick = (tab: ReviewActiveTabType) => setActiveTab(tab);
   const isActiveTab = (tab: ReviewActiveTabType) => activeTab === tab;
+
+  const { data } = useGetReviewSummaryOption();
+
+  if (!data) return <NoData label={"필터를 불러오는데 실패했어요."} />;
 
   return (
     <BottomSheet isOpen={isOpen} handleOpen={onClose}>
@@ -36,23 +43,25 @@ const ReviewFilter = ({
         </div>
         <div className={styles.filterContentText}>
           {activeTab === "good" &&
-            REVIEW_FILTER_CONFIG.goodReviews.map((item) => (
+            data.goodReviews?.map((item) => (
               <Chip
                 key={item.id}
                 size={"small"}
-                label={item.name}
+                label={item.label}
                 color={"blue"}
-                onClick={() => (onFilterClick ? onFilterClick(item.id) : undefined)}
+                isSelected={item.id === selectedFilterId}
+                onClick={() => onFilterClick?.(item.id, "good")}
               />
             ))}
           {activeTab === "bad" &&
-            REVIEW_FILTER_CONFIG.badReviews.map((item) => (
+            data.badReviews?.map((item) => (
               <Chip
                 key={item.id}
                 size={"small"}
-                label={item.name}
+                label={item.label}
                 color={"red"}
-                onClick={() => (onFilterClick ? onFilterClick(item.id) : undefined)}
+                isSelected={item.id === selectedFilterId}
+                onClick={() => onFilterClick?.(item.id, "bad")}
               />
             ))}
         </div>
@@ -62,10 +71,7 @@ const ReviewFilter = ({
             size={"large"}
             label={"확인하기"}
             style={{ width: "100%" }}
-            onClick={() => {
-              onClose();
-              //@TODO 필터링 세팅되도록 구현
-            }}
+            onClick={onClose}
           />
         </div>
       </div>

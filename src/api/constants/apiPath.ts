@@ -27,6 +27,7 @@ export const API_PATH = {
 
   HOSPITAL: "/api/dev/hospitals",
   HOSPITAL_FILTERS: "/api/dev/hospitals/reviews/filter",
+  HOSPITAL_SUMMARY_OPTION: "/api/dev/hospitals/reviews/summary/option",
 
   MEMBERS_HOSPITALS: "/api/dev/members/hospitals",
   MEMBERS_HOSPITAL_REVIEWS: "/api/dev/hospitals/reviews",

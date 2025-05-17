@@ -1,8 +1,13 @@
-import { useMutation } from "@tanstack/react-query";
-import { postHospitalReviews, postHospitalReviewsRequest } from "@api/domain/community/detail/index.ts";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import {
+  getReviewSummaryOption,
+  postHospitalReviews,
+  postHospitalReviewsRequest,
+} from "@api/domain/community/detail/index.ts";
 
 const HOSPITAL_REVIEW_KEY = {
   HOSPITAL_REVIEW_FILTER: () => ["hospitalReviewFilter"],
+  REVIEW_SUMMARY_OPTION: () => ["reviewSummaryOption"],
 };
 
 /**ø
@@ -15,5 +20,12 @@ export const usePostHospitalReviews = () => {
     mutationFn: (params: postHospitalReviewsRequest) => {
       return postHospitalReviews(params);
     },
+  });
+};
+
+export const useGetReviewSummaryOption = () => {
+  return useQuery({
+    queryKey: HOSPITAL_REVIEW_KEY.REVIEW_SUMMARY_OPTION(),
+    queryFn: getReviewSummaryOption,
   });
 };

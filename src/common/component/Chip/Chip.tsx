@@ -5,7 +5,7 @@ import { chipItem, ChipType } from "./ChipStyle.css.ts";
 import { IcDelete } from "@asset/svg/index";
 
 interface ChipProps {
-  label: string;
+  label?: string;
   icon?: boolean;
   color?: "blue" | "gray" | "red" | "border";
   onClick?: () => void;

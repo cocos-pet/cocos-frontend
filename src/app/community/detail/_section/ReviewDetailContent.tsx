@@ -17,27 +17,28 @@ const ReviewDetailContent = () => {
   const router = useRouter();
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false);
-  const [filterId, setFilterId] = useState<number | null>(null);
-  const isGoodReviewFilter = filterId && filterId < 100;
-  const isBadReviewFilter = filterId && filterId > 100;
+  const [filterId, setFilterId] = useState<number | undefined>(undefined);
+  const [filterType, setFilterType] = useState<"good" | "bad" | null>(null);
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
   };
 
-  const handleFilterClick = (id: number) => {
+  const handleFilterClick = (id: number | undefined, type: "good" | "bad") => {
     setFilterId(id);
+    setFilterType(type);
   };
 
   useEffect(() => {
+    if (!bodyId) return;
     postHospitalReviews(
       {
         size: 10,
         locationId: 1,
         locationType: "CITY",
         bodyId: Number(bodyId),
-        summaryOptionId: filterId || undefined,
+        summaryOptionId: filterId ?? undefined,
         // cursorId: 1,
       },
       {
@@ -73,17 +74,19 @@ const ReviewDetailContent = () => {
         <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
           <Chip
             label={"좋아요"}
-            color={isGoodReviewFilter ? "blue" : "gray"}
+            color={filterType === "good" ? "blue" : "gray"}
             size={"small"}
             rightIcon={
-              <IcDownArrow width={20} fill={isGoodReviewFilter ? color.primary.blue700 : color.gray.gray700} />
+              <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
             }
           />
           <Chip
             label={"아쉬워요"}
-            color={isBadReviewFilter ? "blue" : "gray"}
+            color={filterType === "bad" ? "blue" : "gray"}
             size={"small"}
-            rightIcon={<IcDownArrow width={20} fill={isBadReviewFilter ? color.primary.blue700 : color.gray.gray700} />}
+            rightIcon={
+              <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
+            }
           />
         </div>
       </div>
@@ -102,6 +105,7 @@ const ReviewDetailContent = () => {
       <ReviewFilter
         isOpen={isReviewFilterOpen}
         onClose={() => setIsReviewFilterOpen(false)}
+        selectedFilterId={filterId || undefined}
         onFilterClick={handleFilterClick}
       />
     </div>
