@@ -1,13 +1,12 @@
 "use client";
 
-import Hospitals from "./hospitals/hospitals";
+import Hospitals from "./hospitals/Hospitals";
+import SuspenseWrapper from "../../SuspenseWrapper.tsx";
 
-const page = () => {
+export default function SearchPage() {
   return (
-    <div>
+    <SuspenseWrapper>
       <Hospitals />
-    </div>
-  )
+    </SuspenseWrapper>
+  );
 }
-
-export default page
