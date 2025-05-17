@@ -110,7 +110,7 @@ export default function ReviewPage() {
   }
 
   function handleSearchClick(): void {
-    throw new Error("Function not implemented.");
+    router.push("/review/search");
   }
 
   return (
