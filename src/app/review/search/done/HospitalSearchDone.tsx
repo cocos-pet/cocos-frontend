@@ -15,38 +15,54 @@ const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
 function HospitalSearchDoneContent() {
   const searchParams = useSearchParams();
   const query = searchParams?.get("searchText") || "";
-  const [isFilterActive, setIsFilterActive] = useState(false);
-  const [searchText, setSearchText] = useState(query);
+  const [searchText, setSearchText] = useState<string>("");
+  const [hospitals, setHospitals] = useState(mockHospitalSearchResult.hospitals);
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!searchText) return;
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
-  }, [searchText]);
 
-  // 검색어에 따라 병원 리스트 필터링
-  const filteredHospitals = mockHospitalSearchResult.hospitals.filter(
-    (hospital) =>
-      hospital.name.toLowerCase().includes(searchText.toLowerCase()) ||
-      hospital.address.toLowerCase().includes(searchText.toLowerCase())
-  );
+// 검색어가 바뀔 때마다 로딩 + 결과 갱신 (query 기준)
+useEffect(() => {
+  setIsLoading(true);
+  const timer = setTimeout(() => {
+    if (!query) {
+      setHospitals(mockHospitalSearchResult.hospitals);
+    } else {
+      setHospitals(
+        mockHospitalSearchResult.hospitals.filter(
+          (hospital) =>
+            hospital.name.toLowerCase().includes(query.toLowerCase()) ||
+            hospital.address.toLowerCase().includes(query.toLowerCase())
+        )
+      );
+    }
+    setIsLoading(false);
+  }, 300); // debounce처럼 약간의 딜레이만
+  return () => clearTimeout(timer);
+}, [query]);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setSearchText(e.target.value);
+
+const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  setSearchText(e.target.value);
+};
+
+  // 검색 버튼(돋보기) 클릭 시 router.push만 담당
+  const onTextFieldClick = () => {
+    router.push(`/review/search/done?searchText=${searchText}`);
   };
 
-  const onTextFieldClick = () => {
-    router.push(`/review/search/hospitals?searchText=${searchText}`);
+  // 엔터 입력 시 router.push만 담당
+  const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      router.push(`/review/search/done?searchText=${searchText}`);
+    }
   };
 
   const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
-    router.push("/review/search/hospitals");
+    setHospitals(mockHospitalSearchResult.hospitals);
+    router.push("/review/search/done");
   };
 
   const onBackClick = () => {
@@ -72,48 +88,49 @@ function HospitalSearchDoneContent() {
           icon={<IcSearch />}
           onClearClick={onTextFieldClear}
           onClick={onTextFieldClick}
+          onKeyDown={onKeyDown}
         />
       </div>
       <LocationHeader />
-        {filteredHospitals.length === 0 ? (
-          <div className={styles.noSearchData}>
-            <Image
-              className={styles.noSearchResultImage}
-              src={noSearchResult}
-              alt="검색 결과 없음"
-              width={276}
-              height={155}
-            />
-            <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
-            <span className={styles.noSearchRecommendText}>
-              {"검색어를 확인하거나"}
-              <br />
-              {"다른 키워드로 검색해 보세요."}
-            </span>
-          </div>
-        ) : (
-          <div className={styles.searchWrap}>
-            {filteredHospitals.map((hospital) => (
-              <div
-                key={`hospital-${hospital.id}`}
-                className={styles.hospitalItem}
-                onClick={() => onClickHospital(hospital.id)}
-              >
-                <div className={styles.hospitalInfo}>
-                  <div className={styles.hospitalText}>
-                    <h3 className={styles.hospitalName}>{hospital.name}</h3>
-                    <p className={styles.hospitalAddress}>{hospital.address} · 리뷰 {hospital.reviewCount} </p>
-                  </div>
-                  <div className={styles.hospitalImage}>
-                    <Image src={hospital.imageUrl || ''} alt={hospital.name} width={100} height={100} />
-                  </div>
+      {hospitals.length === 0 ? (
+        <div className={styles.noSearchData}>
+          <Image
+            className={styles.noSearchResultImage}
+            src={noSearchResult}
+            alt="검색 결과 없음"
+            width={276}
+            height={155}
+          />
+          <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
+          <span className={styles.noSearchRecommendText}>
+            {"검색어를 확인하거나"}
+            <br />
+            {"다른 키워드로 검색해 보세요."}
+          </span>
+        </div>
+      ) : (
+        <div className={styles.searchWrap}>
+          {hospitals.map((hospital) => (
+            <div
+              key={`hospital-${hospital.id}`}
+              className={styles.hospitalItem}
+              onClick={() => onClickHospital(hospital.id)}
+            >
+              <div className={styles.hospitalInfo}>
+                <div className={styles.hospitalText}>
+                  <h3 className={styles.hospitalName}>{hospital.name}</h3>
+                  <p className={styles.hospitalAddress}>{hospital.address} · 리뷰 {hospital.reviewCount} </p>
                 </div>
-                <Divider size="small"/>
+                <div className={styles.hospitalImage}>
+                  <Image src={hospital.imageUrl || ''} alt={hospital.name} width={100} height={100} />
+                </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+              <Divider size="small"/>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
   );
 }
 
