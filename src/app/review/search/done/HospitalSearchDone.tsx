@@ -22,12 +22,18 @@ function HospitalSearchDoneContent() {
 
   useEffect(() => {
     if (!searchText) return;
-
     setIsLoading(true);
     setTimeout(() => {
       setIsLoading(false);
     }, 500);
   }, [searchText]);
+
+  // 검색어에 따라 병원 리스트 필터링
+  const filteredHospitals = mockHospitalSearchResult.hospitals.filter(
+    (hospital) =>
+      hospital.name.toLowerCase().includes(searchText.toLowerCase()) ||
+      hospital.address.toLowerCase().includes(searchText.toLowerCase())
+  );
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -69,7 +75,7 @@ function HospitalSearchDoneContent() {
         />
       </div>
       <LocationHeader />
-        {mockHospitalSearchResult.hospitals.length === 0 ? (
+        {filteredHospitals.length === 0 ? (
           <div className={styles.noSearchData}>
             <Image
               className={styles.noSearchResultImage}
@@ -87,7 +93,7 @@ function HospitalSearchDoneContent() {
           </div>
         ) : (
           <div className={styles.searchWrap}>
-            {mockHospitalSearchResult.hospitals.map((hospital) => (
+            {filteredHospitals.map((hospital) => (
               <div
                 key={`hospital-${hospital.id}`}
                 className={styles.hospitalItem}
@@ -104,7 +110,6 @@ function HospitalSearchDoneContent() {
                 </div>
                 <Divider size="small"/>
               </div>
-              
             ))}
           </div>
         )}
