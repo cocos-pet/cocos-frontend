@@ -68,7 +68,7 @@ function SearchContent() {
         <TextField
           ref={inputRef}
           value={searchText}
-          placeholder={"검색어를 입력해주세요"}
+          placeholder={"우리 동네를 알려주세요(예:서초동)"}
           onChange={onChange}
           onKeyDown={handleKeyDown}
           icon={<IcSearch width={20} height={20} onClick={() => onSubmit(searchText)} />}
