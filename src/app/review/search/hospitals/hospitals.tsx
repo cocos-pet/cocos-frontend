@@ -42,7 +42,7 @@ function SearchContent() {
   };
 
   const handleNavigate = (searchText: string) => {
-    router.push(`/review/search/hospitals/done?searchText=${searchText}`);
+    router.push(`/review/search/done?searchText=${searchText}`);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -68,7 +68,7 @@ function SearchContent() {
         <TextField
           ref={inputRef}
           value={searchText}
-          placeholder={"우리 동네를 알려주세요(예:서초동)"}
+          placeholder={"우리 동네를 알려주세요 (예:서초동)"}
           onChange={onChange}
           onKeyDown={handleKeyDown}
           icon={<IcSearch width={20} height={20} onClick={() => onSubmit(searchText)} />}

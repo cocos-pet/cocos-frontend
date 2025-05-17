@@ -1,10 +1,12 @@
 "use client";
-const page = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
 
-export default page
+import HospitalSearchDone from "./HospitalSearchDone";
+import SuspenseWrapper from "../../../SuspenseWrapper";
+
+export default function SearchPage() {
+  return (
+    <SuspenseWrapper>
+      <HospitalSearchDone />
+    </SuspenseWrapper>
+  );
+}
