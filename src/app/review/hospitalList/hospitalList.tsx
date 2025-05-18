@@ -1,9 +1,8 @@
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { useInView } from "react-intersection-observer";
+import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import { useEffect } from "react";
 import * as styles from "./hospitalList.css";
 import Image from "next/image";
-import { getMockHospitalResponse } from "./mockData";
 
 interface Hospital {
   id: number;
@@ -36,16 +35,11 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
     fetchNextPage,
     hasNextPage,
     isFetchingNextPage,
-  } = useInfiniteQuery<HospitalResponse>({
-    queryKey: ["hospitals"] as const,
-    initialPageParam: { page: 1 },
-    queryFn: async ({ pageParam }: { pageParam: { page: number } }) => {
-      return getMockHospitalResponse(pageParam.page);
-    },
-    getNextPageParam: (lastPage, pages) => {
-      if (lastPage.data.hospitals.length === 0) return undefined;
-      return { page: pages.length + 1 };
-    },
+  } = useInfiniteHospitalList({
+    locationType: "CITY",
+    size: 10,
+    sortBy: "REVIEW",
+    image: ""
   });
 
   useEffect(() => {
@@ -61,7 +55,7 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
       </h2>
       <div className={styles.listContainer}>
         {data?.pages.map((page, pageIndex) =>
-          page.data.hospitals.map((hospital: Hospital) => (
+          page.data?.hospitals?.map((hospital: Hospital) => (
             <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
               <div className={styles.hospitalInfo}>
                 <h3 className={styles.hospitalName}>{hospital.name}</h3>

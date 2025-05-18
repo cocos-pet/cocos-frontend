@@ -47,7 +47,7 @@ export const hospitalName = style([
 export const hospitalAddress = style([
   font.body01,
   {
-    color: color.gray.gray500
+    color: color.gray.gray700
   }
 ]);
 
