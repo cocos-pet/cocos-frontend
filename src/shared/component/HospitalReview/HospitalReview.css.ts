@@ -1,12 +1,20 @@
 import { style } from "@vanilla-extract/css";
 import { font, semanticColor } from "@style/styles.css.ts";
+import { recipe } from "@vanilla-extract/recipes";
 
-export const reviewItemContainer = style({
-  width: "100%",
-  display: "flex",
-  flexDirection: "column",
-  gap: "1.6rem",
-  margin: "1.6rem 0",
+export const reviewItemContainer = recipe({
+  base: {
+    width: "100%",
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.6rem",
+  },
+  variants: {
+    isNoProfile: {
+      true: {},
+      false: { margin: "1.6rem 0" },
+    },
+  },
 });
 
 export const hospitalDetail = style({
