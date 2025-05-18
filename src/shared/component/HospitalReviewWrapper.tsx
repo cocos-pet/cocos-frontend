@@ -5,6 +5,8 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import { useDeleteHospitalReview, useInfiniteHospitalReview } from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
+import { useRouter } from "next/navigation";
+import { API_PATH } from "@api/constants/apiPath";
 
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
@@ -15,6 +17,8 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
+
+  const router = useRouter();
 
   const isBlurred = !isLoggedIn();
   const observerRef = useRef<IntersectionObserver | null>(null);
@@ -85,12 +89,8 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
     closeDeleteReviewModal();
   };
 
-  const handleProfileClick = () => {
-    alert("프로필 클릭");
-  };
-
-  const handleHospitalDetailClick = () => {
-    alert("병원 상세 클릭");
+  const handleHospitalDetailClick = (hospitalId: number) => {
+    router.push(`/hospital-detail/${hospitalId}`);
   };
 
   if (isLoading) return <div className={styles.nothingContent}>{"리뷰를 불러오는 중..."}</div>;
@@ -123,10 +123,8 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
               </div>
             )}
           </div>
-
           <HospitalReview
-            handleProfileClick={handleProfileClick}
-            handleHospitalDetailClick={handleHospitalDetailClick}
+            handleHospitalDetailClick={() => handleHospitalDetailClick(review.id as number)}
             reviewData={review}
             isBlurred={isBlurred}
             isNoProfile={true}
