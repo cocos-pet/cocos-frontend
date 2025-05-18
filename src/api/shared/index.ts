@@ -7,7 +7,7 @@ type ResponseType = paths["/api/dev/hospitals"]["post"]["responses"]["200"]["con
 
 export const getHospitalList = async (body: RequestBody) => {
   const response = await post<ResponseType>(`${API_PATH.HOSPITAL}`, body);
-  return response.data;
+  return response.data.data;
 };
 
 /************************************
