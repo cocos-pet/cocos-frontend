@@ -46,15 +46,13 @@ export default function Setting() {
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
             <span className={styles.myProfileSpan} onClick={() => openBottomSheet()}>
-              <IcOut width={20} height={20} />
               <span className={styles.myProfileSpanText}>로그아웃</span>
             </span>
           </div>
 
           <div className={styles.editMyProfile}>
             <span className={styles.myProfileSpan} onClick={handleMoveWithdraw}>
-              <IcOut width={20} height={20} />
-              <span className={styles.myProfileSpanText}>탈퇴하기</span>
+              <span className={styles.myProfileSpanText}>회원탈퇴</span>
             </span>
           </div>
         </div>

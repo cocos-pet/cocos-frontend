@@ -5,19 +5,20 @@ import { useRouter } from "next/navigation";
 import * as styles from "./page.css";
 import { Button } from "@common/component/Button";
 import { PATH } from "@route/path";
+import { useWithdraw } from "@api/domain/setting/hook";
 export default function Withdraw() {
   const router = useRouter();
+  const {mutate: withdraw} = useWithdraw();
 
   const handleWithdraw = () => {
-    alert("탈퇴 처리 중입니다. - 아직 구현 안됐어요.");
-    router.push(PATH.LOGIN);
+    withdraw();
   };
   return (
     <div>
       <HeaderNav
         leftIcon={<IcX width={20} height={20} />}
-        centerContent={"탈퇴하기"}
-        onLeftClick={() => router.back()}
+        centerContent={"회원 탈퇴"}
+        onLeftClick={() => router.push(PATH.SETTING.ROOT)}
       />
       <div className={styles.withdrawBodyWrapper}>
         <div className={styles.withdrawTitleWrapper}>
