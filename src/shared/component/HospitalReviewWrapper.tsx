@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as styles from "./HospitalReviewWrapper.css";
 import { IcEllipses } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
-import { useInfiniteHospitalReview } from "@api/shared/hook";
+import { useDeleteHospitalReview, useInfiniteHospitalReview } from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
 
@@ -14,6 +14,8 @@ interface HospitalReviewWrapperProps {
 const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWrapperProps) => {
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
+  const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
+
   const isBlurred = !isLoggedIn();
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
@@ -23,6 +25,8 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
     cursorId: undefined,
     size: 5,
   });
+
+  const { mutate: deleteReview } = useDeleteHospitalReview();
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -56,16 +60,29 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
 
   const handleDropdownClick = (reviewId: number) => {
     const isSameReview = reviewId === selectedReviewId;
-    setSelectedReviewId(isSameReview ? null : reviewId);
+    if (isSameReview) {
+      setSelectedReviewId(null);
+      setIsDeleteButtonOpen(false);
+    } else {
+      setSelectedReviewId(reviewId);
+      setIsDeleteButtonOpen(true);
+    }
   };
 
   const closeDeleteReviewModal = () => {
     setIsDeleteReviewModalOpen(false);
+    setSelectedReviewId(null);
+    setIsDeleteButtonOpen(false);
   };
 
   const openDeleteReviewModal = () => {
     setIsDeleteReviewModalOpen(true);
-    setSelectedReviewId(null);
+    setIsDeleteButtonOpen(false);
+  };
+
+  const handleDeleteReview = (reviewId: string | number) => {
+    deleteReview(reviewId);
+    closeDeleteReviewModal();
   };
 
   const handleProfileClick = () => {
@@ -98,7 +115,7 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
                 }}
               />
             )}
-            {selectedReviewId === review.id && (
+            {selectedReviewId === review.id && isDeleteButtonOpen && (
               <div className={styles.dropdownContainer}>
                 <div className={styles.dropdownItem} onClick={openDeleteReviewModal}>
                   삭제하기
@@ -123,15 +140,17 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
         </div>
       )}
 
-      <SimpleBottomSheet
-        isOpen={isDeleteReviewModalOpen}
-        handleClose={closeDeleteReviewModal}
-        content="리뷰를 정말 삭제할까요?"
-        leftText="취소"
-        rightText="삭제할게요"
-        leftOnClick={() => closeDeleteReviewModal()}
-        rightOnClick={() => alert("Todo")}
-      />
+      {selectedReviewId && (
+        <SimpleBottomSheet
+          isOpen={isDeleteReviewModalOpen}
+          handleClose={closeDeleteReviewModal}
+          content="리뷰를 정말 삭제할까요?"
+          leftText="취소"
+          rightText="삭제할게요"
+          leftOnClick={() => closeDeleteReviewModal()}
+          rightOnClick={() => handleDeleteReview(selectedReviewId)}
+        />
+      )}
     </>
   );
 };

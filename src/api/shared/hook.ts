@@ -129,9 +129,15 @@ export const useGetMemberHospitalReviews = (nickname: string, cursorId: number |
   });
 };
 
-export const useDeleteHospitalReview = (reviewId: string | number) => {
+export const useDeleteHospitalReview = () => {
+  const query = useQueryClient();
   return useMutation({
-    mutationKey: ["deleteHospitalReview", reviewId],
-    mutationFn: () => deleteReview(reviewId),
+    mutationKey: ["deleteHospitalReview"],
+    mutationFn: (reviewId: string | number) => deleteReview(reviewId),
+    onSuccess: () => {
+      query.invalidateQueries({
+        queryKey: ["memberHospitalReview"],
+      });
+    },
   });
 };
