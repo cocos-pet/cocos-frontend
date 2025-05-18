@@ -54,7 +54,7 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
         {title} <span className={styles.highlight}>{highlightText}</span>이에요
       </h2>
       <div className={styles.listContainer}>
-        {data?.pages.map((page, pageIndex) =>
+        {data?.pages.map((page: { data: { hospitals: Hospital[]; }; }, pageIndex: number) =>
           page.data?.hospitals?.map((hospital: Hospital) => (
             <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
               <div className={styles.hospitalInfo}>
