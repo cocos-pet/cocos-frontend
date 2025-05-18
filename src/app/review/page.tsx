@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
 import { TextField } from "@common/component/TextField";
+
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";
@@ -12,7 +13,8 @@ import HospitalList from "./_components/hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
-import LocationHeader from "./_components/locationHeader/locationHeader";
+import LocationHeader from "./locationHeader/locationHeader";
+import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import { PATH } from "@route/path";
 
 export default function ReviewPage() {
@@ -20,7 +22,15 @@ export default function ReviewPage() {
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
 
-  const hospitals = data?.data?.hospitals ?? [];
+  const { data } = useInfiniteHospitalList({
+    locationType: "CITY",
+    size: 10,
+    sortBy: "REVIEW",
+    image: "",
+  });
+
+  const hospitals =
+    data?.pages?.flatMap((page: { data: { hospitals: [] } }) => page.data?.hospitals ?? []).slice(0, 3) ?? [];
 
   function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>) {}
 
@@ -60,6 +70,7 @@ export default function ReviewPage() {
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
+                      <span className={styles.hospitalRank}>{idx + 1}</span>
                       <span className={styles.hospitalName}>{hospital.name}</span>
                     </div>
                     <span className={styles.hospitalAddress}>{hospital.address}</span>
@@ -68,17 +79,15 @@ export default function ReviewPage() {
               </div>
               <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
-            <div className={styles.hospitalWrapper}>
-              <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-              <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
-            </div>
-            <div className={styles.navWrapper}>
-              <Nav content={NAV_CONTENT} type={"nav"} />
-            </div>
+            <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
+            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn />
+        </div>
+        <div className={styles.navWrapper}>
+          <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
       </div>
     </div>
