@@ -29,7 +29,7 @@ export default function Withdraw() {
           </span>
         </div>
         <div className={styles.withdrawButtonWrapper}>
-          <Button width="9.6rem" variant="solidNeutral" size="large" label="이전으로" onClick={() => router.back()} />
+          <Button width="9.6rem" variant="solidNeutral" size="large" label="이전으로" onClick={() => router.push(PATH.SETTING.ROOT)} />
           <Button width="22.7rem" variant="solidPrimary" size="large" label="탈퇴하기" onClick={handleWithdraw} />
         </div>
       </div>
