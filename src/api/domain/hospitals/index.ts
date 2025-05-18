@@ -38,3 +38,7 @@ export interface HospitalListResponse {
   cursorReviewCount?: number;
   hasNext: boolean;
 }
+
+/**
+ * @description 병원 리뷰 리스트 조회 API
+ */
