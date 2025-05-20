@@ -3,7 +3,7 @@
 import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
 import * as styles from "./SimpleBottomSheet.css";
 import { Button } from "../Button";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 
 interface BottomSheetProps {
   isOpen: boolean;
@@ -26,10 +26,23 @@ const SimpleBottomSheet = ({
   leftOnClick,
   rightOnClick,
 }: BottomSheetProps) => {
-  if (!isOpen) return;
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
+  //반드시 여기에 위치해야함(useEffect가 반드시 실행되도록)
+  if (!isOpen) return null;
 
   const handleBottomSheetClick = (event: React.MouseEvent<HTMLDivElement>) => {
-    event.stopPropagation(); // 이벤트 전파 차단
+    event.stopPropagation();
   };
 
   return (

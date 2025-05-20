@@ -39,7 +39,6 @@ export const color = createGlobalTheme(":root", {
   red: {
     warning_red100: "#FDE9F4",
     warning_red200: "#F53D3D",
-    point_red: "#FF654A",
   },
 });
 
@@ -72,6 +71,9 @@ export const semanticColor = createGlobalTheme(":root", {
     normal: color.gray.gray100,
     strong: color.gray.gray200,
     heavy: color.gray.gray300,
+  },
+  accent: {
+    warning: color.red.warning_red200,
   },
 });
 
