@@ -3,11 +3,14 @@ import { color, font, semanticColor } from "@style/styles.css";
 
 export const overlay = style({
   position: "fixed",
-  top: 0,
-  left: 0,
+  bottom: "0",
+  left: "0",
+  right: "0",
   zIndex: "99",
 
   width: "100%",
+  maxWidth: "76.8rem",
+  margin: "0 auto",
   height: "100%",
   backgroundColor: "rgba(34, 34, 34, 0.2)",
 });
@@ -15,7 +18,11 @@ export const overlay = style({
 export const bottomSheetContainer = style({
   position: "absolute",
   bottom: "0",
+  left: "0",
+  right: "0",
   width: "100%",
+  maxWidth: "76.8rem",
+  margin: "0 auto",
   display: "flex",
   flexDirection: "column",
   justifyContent: "center",

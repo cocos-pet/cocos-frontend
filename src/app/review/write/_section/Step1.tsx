@@ -13,6 +13,7 @@ import { Button } from "@common/component/Button/index";
 
 export type PetInfoType = "myPet" | "manual";
 
+
 const Step1 = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
@@ -66,6 +67,7 @@ const Step1 = () => {
     </div>
   );
 };
+
 
 export default Step1;
 
