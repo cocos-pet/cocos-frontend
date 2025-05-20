@@ -1,6 +1,6 @@
 import * as styles from "./ReviewDate.style.css";
 import { useFormContext } from "react-hook-form";
-import { useState, useMemo } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { ReviewFormData } from "../page";
 
 import "react-day-picker/dist/style.css";
@@ -27,14 +27,16 @@ const ReviewDate = () => {
   const { watch, setValue } = useFormContext<ReviewFormData>();
   const selectedDateString = watch("visitedAt");
 
-  const today = new Date();
+  const today = useMemo(() => new Date(), []);
   const [currentMonth, setCurrentMonth] = useState(today);
 
   const selectedDate = useMemo(() => parseDateString(selectedDateString), [selectedDateString]);
 
-  if (!selectedDateString) {
-    setValue("visitedAt", formatDate(today));
-  }
+  useEffect(() => {
+    if (!selectedDateString) {
+      setValue("visitedAt", formatDate(today));
+    }
+  }, [selectedDateString, setValue, today]);
 
   // 가장 최근 달인 경우, 다음달 버튼 비활성화
   const handleMonthChange = (month: Date) => {
