@@ -10,16 +10,14 @@ interface FeedbackCategoryContentProps {
 
 const FeedbackCategoryContent = ({ category }: FeedbackCategoryContentProps) => {
   const { data } = useFeedbackGet();
-
+  
   const { watch, setValue } = useFormContext<ReviewFormData>();
 
-  const selectedIds = watch(category === "good" ? "goodReviewIds" : "badReviewIds");
+  const fieldName = category === "good" ? "goodReviewIds" : "badReviewIds";
+  const selectedIds = watch(fieldName);
 
   const handleToggle = (id: number) => {
-    const fieldName = category === "good" ? "goodReviewIds" : "badReviewIds";
-    const selectedIds = watch(fieldName);
     const isSelected = selectedIds.includes(id);
-
     let updatedIds: number[];
 
     if (isSelected) {
@@ -30,6 +28,7 @@ const FeedbackCategoryContent = ({ category }: FeedbackCategoryContentProps) => 
       }
       updatedIds = [...selectedIds, id];
     }
+
     setValue(fieldName, updatedIds, { shouldValidate: true });
   };
 
