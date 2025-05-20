@@ -16,6 +16,7 @@ export type PetInfoType = "myPet" | "manual";
 const Step1 = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+
   const [selectedPetInfo, setSelectedPetInfo] = useState<PetInfoType | null>(null);
 
   // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
@@ -67,3 +68,4 @@ const Step1 = () => {
 };
 
 export default Step1;
+

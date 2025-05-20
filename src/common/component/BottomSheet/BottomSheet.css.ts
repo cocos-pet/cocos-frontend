@@ -3,11 +3,14 @@ import { style } from "@vanilla-extract/css";
 
 export const overlay = style({
   position: "fixed",
-  top: 0,
-  left: 0,
+  bottom: "0",
+  left: "0",
+  right: "0",
   zIndex: "99",
 
   width: "100%",
+  maxWidth: "76.8rem",
+  margin: "0 auto",
   height: "100%",
   backgroundColor: "rgba(34, 34, 34, 0.2)",
 });
@@ -15,12 +18,17 @@ export const overlay = style({
 export const bottomSheet = style({
   position: "absolute",
   bottom: "0",
+  left: "0",
+  right: "0",
 
   display: "flex",
   flexDirection: "column",
   zIndex: "99",
 
   width: "100%",
+  maxWidth: "76.8rem",
+  margin: "0 auto",
+
   height: "90vh",
   borderRadius: "20px 20px 0px 0px",
   backgroundColor: "white",
