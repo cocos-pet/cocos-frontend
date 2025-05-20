@@ -16,6 +16,7 @@ export const API_PATH = {
   MEMBERS_LOGIN: "/api/dev/members/login",
   MEMBERS_LOGOUT: "/api/dev/members/logout",
   MEMBRES_REFRESH: "/api/dev/members/refresh",
+  MEMBERS_REVIEWS_AGREE: "/api/dev/members/reviews/agree",
 
   POST: "/api/dev/posts",
   POST_FILTERS: "/api/dev/posts/filters",
@@ -24,9 +25,4 @@ export const API_PATH = {
 
   TEST_HEALTH_CHECK: "/api/dev/test/health-check",
   TEST_TOKEN_CHECK: "/api/dev/test/token-check",
-
-  HOSPITAL: "/api/dev/hospitals",
-
-  MEMBERS_HOSPITALS: "/api/dev/members/hospitals",
-  MEMBERS_HOSPITAL_REVIEWS: "/api/dev/hospitals/reviews",
 };

@@ -1,4 +1,4 @@
-name: Synchronize Page to forked repos
+name: Synchronize Main to forked repos
 on:
   push:
     branches:
