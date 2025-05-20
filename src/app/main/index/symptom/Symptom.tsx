@@ -1,11 +1,11 @@
 "use client";
 
-import { useGetBodyParts } from "@api/domain/main/hook.ts";
-import * as styles from "./Symptom.css.ts";
-import { PATH } from "@route/path.ts";
+import { useGetBodyParts } from "@api/domain/main/hook";
+import * as styles from "./Symptom.css";
+import { PATH } from "@route/path";
 import { components } from "@type/schema";
 import { useCallback, useEffect, useState, Suspense } from "react";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 

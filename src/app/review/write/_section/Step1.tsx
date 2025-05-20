@@ -13,12 +13,10 @@ import { Button } from "@common/component/Button/index";
 
 export type PetInfoType = "myPet" | "manual";
 
-const Page = () => {
-  // 병원 검색 바텀시트 열고 닫기
+const Step1 = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  // 선택된 병원
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
-  // 동물 정보 입력 방법 선택
+
   const [selectedPetInfo, setSelectedPetInfo] = useState<PetInfoType | null>(null);
 
   // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
@@ -69,4 +67,5 @@ const Page = () => {
   );
 };
 
-export default Page;
+export default Step1;
+

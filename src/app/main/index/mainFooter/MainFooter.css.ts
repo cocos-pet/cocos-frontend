@@ -1,4 +1,4 @@
-import {color, font, semanticColor} from "@style/styles.css.ts";
+import {color, font, semanticColor} from "@style/styles.css";
 import {style} from "@vanilla-extract/css";
 
 export const footerContainer = style({

@@ -1,4 +1,4 @@
-import {semanticColor} from "@style/styles.css.ts";
+import {semanticColor} from "@style/styles.css";
 import {style} from "@vanilla-extract/css";
 
 export const carouselContainer = style({

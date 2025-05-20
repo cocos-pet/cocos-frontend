@@ -1,6 +1,6 @@
 import useEmblaCarousel from "embla-carousel-react";
 import {useEffect, useState} from "react";
-import * as styles from "./mainCarousel.css.ts";
+import * as styles from "./mainCarousel.css";
 import Image, { StaticImageData } from "next/image";
 
 interface MainCarouselProps {
