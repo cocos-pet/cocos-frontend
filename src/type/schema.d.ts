@@ -100,14 +100,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * 사용자 애완동물 조회 API
-         * @description 사용자 애완동물 조회 API입니다.
+         * 사용자 반려동물 조회 API
+         * @description 사용자 반려동물 조회 API입니다.
          */
         get: operations["getPet"];
         put?: never;
         /**
-         * 사용자 애완동물 추가 API
-         * @description 사용자 애완동물 추가 API입니다.
+         * 사용자 반려동물 추가 API
+         * @description 사용자 반려동물 추가 API입니다.
          */
         post: operations["addPet"];
         delete?: never;
@@ -220,6 +220,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/hospitals/reviews/filter": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /**
+         * 리뷰 리스트 조회 API
+         * @description 메인페이지 리뷰 리스트 조회 & 병원 리뷰 리스트 조회 API입니다.
+         */
+        post: operations["getHospitalReviewList"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/comments/{postId}": {
         parameters: {
             query?: never;
@@ -278,8 +298,8 @@ export interface paths {
         options?: never;
         head?: never;
         /**
-         * 사용자 애완동물 수정 API
-         * @description 사용자 애완동물 수정 API입니다.
+         * 사용자 반려동물 수정 API
+         * @description 사용자 반려동물 수정 API입니다.
          */
         patch: operations["updatePet"];
         trace?: never;
@@ -672,6 +692,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/hospitals/reviews/members": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 사용자 리뷰 리스트 조회 API
+         * @description 마이페이지 리뷰 리스트 조회 API입니다.
+         */
+        get: operations["getMemberHospitalReviewList"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/hospitals/purposes": {
         parameters: {
             query?: never;
@@ -792,6 +832,42 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/members/deactivate": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete: operations["deactivateMember"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/hospitals/reviews/{reviewId}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /**
+         * 리뷰 삭제 API
+         * @description 리뷰를 삭제하는 API입니다.
+         */
+        delete: operations["deleteReview"];
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/comments/{commentId}": {
         parameters: {
             query?: never;
@@ -866,12 +942,12 @@ export interface components {
             images?: string[];
             /**
              * Format: int64
-             * @description 게시글 카테고리 아이디
+             * @description 게시글 동물 종 아이디
              * @example 1
              */
             animalId?: number;
             /**
-             * @description 게시글 카테고리 아이디
+             * @description 게시글 증상 아이디 리스트
              * @example [
              *       1,
              *       2
@@ -879,7 +955,7 @@ export interface components {
              */
             symptomIds?: number[];
             /**
-             * @description 게시글 카테고리 아이디
+             * @description 게시글 질병 아이디 리스트
              * @example [
              *       2,
              *       4
@@ -1301,6 +1377,189 @@ export interface components {
              * @example [https://~, https://~]
              */
             images?: string[];
+        };
+        ReviewListRequest: {
+            /**
+             * Format: int64
+             * @description 리뷰 요약 아이디
+             * @example 1
+             */
+            summaryOptionId?: number;
+            /**
+             * Format: int64
+             * @description 커서 아이디 (마지막으로 전달받은 리뷰 아이디
+             * @example 1
+             */
+            cursorId?: number;
+            /**
+             * Format: int64
+             * @description 병원 아이디
+             * @example 1
+             */
+            hospitalId?: number;
+            /**
+             * Format: int64
+             * @description 신체 아이디
+             * @example 1
+             */
+            bodyId?: number;
+            /**
+             * Format: int64
+             * @description 지역 아이디
+             * @example 1
+             */
+            locationId?: number;
+            /**
+             * @description 지역 타입
+             * @example DISTRICT
+             * @enum {string}
+             */
+            locationType?: "CITY" | "DISTRICT";
+            /**
+             * Format: int32
+             * @description 페이지네이션 크기
+             * @default 10
+             * @example 10
+             */
+            size: number;
+        };
+        BaseResponseHospitalReviewListResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["HospitalReviewListResponse"];
+        };
+        HospitalReviewListResponse: {
+            /**
+             * Format: int32
+             * @description 리뷰수
+             * @example 111
+             */
+            reviewCount?: number;
+            /**
+             * Format: int64
+             * @description 커서 아이디 (현재 응답 값의 마지막 리뷰 아이디)
+             * @example 12
+             */
+            cursorId?: number;
+            reviews?: components["schemas"]["HospitalReviewResponse"][];
+        };
+        /** @description 리뷰 정보 */
+        HospitalReviewResponse: {
+            /**
+             * Format: int64
+             * @description 리뷰 ID
+             * @example 1
+             */
+            id?: number;
+            /**
+             * Format: int64
+             * @description 작성자 아이디
+             * @example 1
+             */
+            memberId?: number;
+            /**
+             * @description 작성자 닉네임
+             * @example 냥냥
+             */
+            nickname?: string;
+            /**
+             * @description 종 이름
+             * @example 말티즈
+             */
+            memberBreed?: string;
+            /**
+             * Format: int32
+             * @description 펫 나이
+             * @example 1
+             */
+            age?: number;
+            /**
+             * Format: int64
+             * @description 병원 아이디
+             * @example 1
+             */
+            hospitalId?: number;
+            /**
+             * @description 병원 이름
+             * @example 코코병원
+             */
+            hospitalName?: string;
+            /**
+             * @description 방문 일자
+             * @example 2020.02.02
+             */
+            visitedAt?: string;
+            /**
+             * @description 병원 주소
+             * @example 서울시 강남구
+             */
+            hospitalAddress?: string;
+            /**
+             * @description 리뷰 본문
+             * @example 좋았다.
+             */
+            content?: string;
+            /** @description 리뷰 요약 옵션 리스트 */
+            reviewSummary?: components["schemas"]["ReviewSummaryOptionListResponse"];
+            /** @description 리뷰 이미지 리스트 */
+            images?: string[];
+            /**
+             * @description 증상 리스트
+             * @example 배가 아파요
+             */
+            symptoms?: string[];
+            /**
+             * @description 질병 이름
+             * @example 심장병
+             */
+            disease?: string;
+            /**
+             * @description 동물 이름
+             * @example 강아지
+             */
+            animal?: string;
+            /**
+             * @description 성별
+             * @example F
+             * @enum {string}
+             */
+            gender?: "M" | "F";
+            /**
+             * @description 종 이름
+             * @example 말티즈
+             */
+            breed?: string;
+            /**
+             * Format: double
+             * @description 몸무게
+             * @example 2.7
+             */
+            weight?: number;
+            /**
+             * @description 방문 목적
+             * @example 수술
+             */
+            visitPurpose?: string;
+        };
+        ReviewSummaryOptionListResponse: {
+            /** @description 좋은 리뷰 요약 리스트 */
+            goodReviews?: components["schemas"]["ReviewSummaryOptionResponse"][];
+            /** @description 나쁜 리뷰 요약 리스트 */
+            badReviews?: components["schemas"]["ReviewSummaryOptionResponse"][];
+        };
+        ReviewSummaryOptionResponse: {
+            /**
+             * Format: int64
+             * @description 리뷰 요약 아이디
+             * @example 1
+             */
+            id?: number;
+            /**
+             * @description 리뷰 요약 내용
+             * @example ~게 너무 좋았어요!
+             */
+            label?: string;
         };
         CommentContentRequest: {
             /**
@@ -1888,6 +2147,11 @@ export interface components {
              * @example 서울시 강남구 테헤란로
              */
             address?: string;
+            /**
+             * @description 병원 이미지
+             * @example https://~
+             */
+            image?: string;
         };
         BaseResponseLocationResponse: {
             /** Format: int32 */
@@ -1984,24 +2248,92 @@ export interface components {
             message?: string;
             data?: components["schemas"]["ReviewSummaryOptionListResponse"];
         };
-        ReviewSummaryOptionListResponse: {
-            /** @description 좋은 리뷰 요약 리스트 */
-            goodReviews?: components["schemas"]["ReviewSummaryOptionResponse"][];
-            /** @description 나쁜 리뷰 요약 리스트 */
-            badReviews?: components["schemas"]["ReviewSummaryOptionResponse"][];
+        BaseResponseMemberHospitalReviewListResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["MemberHospitalReviewListResponse"];
         };
-        ReviewSummaryOptionResponse: {
+        MemberHospitalReviewListResponse: {
+            /** Format: int64 */
+            cursorId?: number;
+            reviews?: components["schemas"]["MemberHospitalReviewResponse"][];
+        };
+        /** @description 리뷰 정보 */
+        MemberHospitalReviewResponse: {
             /**
              * Format: int64
-             * @description 리뷰 요약 아이디
+             * @description 리뷰 ID
              * @example 1
              */
             id?: number;
             /**
-             * @description 리뷰 요약 내용
-             * @example ~게 너무 좋았어요!
+             * Format: int64
+             * @description 병원 아이디
+             * @example 1
              */
-            label?: string;
+            hospitalId?: number;
+            /**
+             * @description 병원 이름
+             * @example 코코병원
+             */
+            hospitalName?: string;
+            /**
+             * @description 방문 일자
+             * @example 2020.02.02
+             */
+            visitedAt?: string;
+            /**
+             * @description 병원 주소
+             * @example 서울시 강남구
+             */
+            hospitalAddress?: string;
+            /**
+             * @description 리뷰 본문
+             * @example 좋았다.
+             */
+            content?: string;
+            /** @description 리뷰 요약 옵션 리스트 */
+            reviewSummary?: components["schemas"]["ReviewSummaryOptionListResponse"];
+            /** @description 리뷰 이미지 리스트 */
+            images?: string[];
+            /**
+             * @description 증상 리스트
+             * @example 배가 아파요
+             */
+            symptoms?: string[];
+            /**
+             * @description 질병 이름
+             * @example 심장병
+             */
+            disease?: string;
+            /**
+             * @description 동물 이름
+             * @example 강아지
+             */
+            animal?: string;
+            /**
+             * @description 성별
+             * @example F
+             * @enum {string}
+             */
+            gender?: "M" | "F";
+            /**
+             * @description 종 이름
+             * @example 말티즈
+             */
+            breed?: string;
+            /**
+             * Format: double
+             * @description 몸무게
+             * @example 2.7
+             */
+            weight?: number;
+            /**
+             * @description 방문 목적
+             * @example 수술
+             */
+            visitPurpose?: string;
         };
         BaseResponseHospitalVisitPurposeListResponse: {
             /** Format: int32 */
@@ -2336,6 +2668,19 @@ export interface components {
             message?: string;
             data?: components["schemas"]["AnimalsResponse"];
         };
+        BaseResponseReviewImageDeleteListResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["ReviewImageDeleteListResponse"];
+        };
+        ReviewImageDeleteListResponse: {
+            /**
+             * @description 리뷰 삭제 presigned url
+             * @example [https://~, https://~]
+             */
+            images?: string[];
+        };
     };
     responses: never;
     parameters: never;
@@ -2662,6 +3007,30 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["BaseResponseReviewAddResponse"];
+                };
+            };
+        };
+    };
+    getHospitalReviewList: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["ReviewListRequest"];
+            };
+        };
+        responses: {
+            /** @description 요청에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseHospitalReviewListResponse"];
                 };
             };
         };
@@ -3240,6 +3609,33 @@ export interface operations {
             };
         };
     };
+    getMemberHospitalReviewList: {
+        parameters: {
+            query?: {
+                /** @description 사용자 닉네임 */
+                nickname?: string;
+                /** @description 페이징용 마지막 리뷰 ID */
+                cursorId?: number;
+                /** @description 페이지당 조회할 리뷰 개수 (1~20) 비로그인 시 최대 4개 */
+                size?: number;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 요청에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseMemberHospitalReviewListResponse"];
+                };
+            };
+        };
+    };
     getHospitalVisitPurposeList: {
         parameters: {
             query?: never;
@@ -3370,6 +3766,49 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["BaseResponseAnimalsResponse"];
+                };
+            };
+        };
+    };
+    deactivateMember: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description OK */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseVoid"];
+                };
+            };
+        };
+    };
+    deleteReview: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description 리뷰 아이디 */
+                reviewId: unknown;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 요청에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseReviewImageDeleteListResponse"];
                 };
             };
         };
