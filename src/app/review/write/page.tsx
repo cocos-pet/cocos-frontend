@@ -1,7 +1,11 @@
 "use client";
 
-import Step1 from "@app/review/write/_section/Step1";
-import { FormProvider, useForm } from "react-hook-form";
+// import { FormProvider, useForm } from "react-hook-form";
+
+// import Step1 from "@app/review/write/_section/Step1";
+// import Step2 from "@app/review/write/_section/Step2";
+// import Step3 from "@app/review/write/_section/Step3";
+// import Step4 from "@app/review/write/_section/Step4";
 
 // 제출할 리뷰 데이터
 export interface ReviewFormData {
@@ -37,15 +41,17 @@ const defaultValues: ReviewFormData = {
 };
 
 const page = () => {
-  const methods = useForm<ReviewFormData>({
-    defaultValues,
-    mode: "onChange",
-  });
-
-  return (
-    <FormProvider {...methods}>
-      <Step1 />
-    </FormProvider>
-  );
+  // const methods = useForm<ReviewFormData>({
+  //   defaultValues,
+  //   mode: "onChange",
+  // });
+  // return (
+  //   <FormProvider {...methods}>
+  //     <Step1 />
+  //     {/* <Step2 /> */}
+  //     {/* <Step3 /> */}
+  //     {/* <Step4 /> */}
+  //   </FormProvider>
+  // );
 };
 export default page;
