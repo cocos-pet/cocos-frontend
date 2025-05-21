@@ -9,5 +9,4 @@ const useMoreModal = () => {
 
   return { isOpen, openModal, closeModal, toggleModal };
 };
-
 export default useMoreModal;
