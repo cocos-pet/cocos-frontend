@@ -1,6 +1,5 @@
 import { recipe } from "@vanilla-extract/recipes";
 import { style } from "@vanilla-extract/css";
-
 import { color, font } from "@style/styles.css";
 
 export const wrapper = recipe({
