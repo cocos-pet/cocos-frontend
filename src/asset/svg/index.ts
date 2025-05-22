@@ -46,6 +46,7 @@ export { default as IcOut } from "./IcOut";
 export { default as IcPlus } from "./IcPlus";
 export { default as IcPostImageSkeleton } from "./IcPostImageSkeleton";
 export { default as IcReview } from "./IcReview";
+export { default as IcReviewRightIcon } from "./IcReviewRightIcon";
 export { default as IcReviewoff } from "./IcReviewoff";
 export { default as IcReviewon } from "./IcReviewon";
 export { default as IcRightArror } from "./IcRightArror";
