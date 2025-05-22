@@ -121,8 +121,8 @@ const EmptyState = () => (
 );
 
 const ReviewDetailContent = () => {
-  const searchParams = useSearchParams();
-  const typeId = searchParams?.get("id");
+  // const searchParams = useSearchParams();
+  // const typeId = searchParams?.get("id");
   const router = useRouter();
   const [isFilterOpen, setIsFilterOpen] = useState(false);
 
