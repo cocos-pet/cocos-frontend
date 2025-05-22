@@ -1,13 +1,13 @@
 "use client";
 
-import {useEffect, useState} from "react";
-import {chipItem, ChipType} from "./ChipStyle.css.ts";
-import {IcDelete} from "@asset/svg/index";
+import { useEffect, useState } from "react";
+import { chipItem, ChipType } from "./ChipStyle.css.ts";
+import { IcDelete } from "@asset/svg/index";
 
 interface ChipProps {
   label: string;
   icon?: boolean;
-  color?: "blue" | "gray";
+  color?: "blue" | "gray" | "red" | "border";
   onClick?: () => void;
   isSelected?: boolean;
   disabled?: boolean;
@@ -23,6 +23,7 @@ const Chip = ({
   disabled = false,
 }: CombinedChipProps) => {
   const [isActive, setIsActive] = useState(isSelected);
+  const size = icon ? "large" : "small";
 
   useEffect(() => {
     setIsActive(isSelected);
@@ -34,8 +35,7 @@ const Chip = ({
     if (!icon) setIsActive(!isActive);
     onClick?.();
   };
-
-  const size = icon ? "large" : "small";
+  console.log("Chip render", { label, isActive, color, size });
 
   return (
     <div className={chipItem({ size, color, active: isActive })} onClick={handleClick}>

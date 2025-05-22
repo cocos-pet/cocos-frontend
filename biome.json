@@ -36,7 +36,8 @@
         "noUnusedImports": {
           "level": "warn",
           "fix": "safe"
-        }
+        },
+        "useExhaustiveDependencies": "off"
       },
       "a11y": {
         "useKeyWithClickEvents": "off",

@@ -264,7 +264,7 @@ export const favoriteHospitalContainer = style([
   a.borderStrong,
   a.bgGray100,
   {
-    height: "8rem",
+    height: "auto",
   },
 ]);
 
