@@ -1,5 +1,5 @@
 import PetEdit from "@app/mypage/edit-pet/page";
-import Mypage from "@app/mypage/page";
+import Mypage from "@app/mypage/index/Mypage";
 import { PATH } from "@route/path.ts";
 
 const MYPAGE_ROUTES = [

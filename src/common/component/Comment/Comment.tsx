@@ -1,17 +1,17 @@
 "use client";
 
 import * as styles from "./Comment.css";
-import { IcMessage } from "@asset/svg";
+import {IcMessage} from "@asset/svg";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
-import { commentGetResponseCommentType } from "@api/domain/community/post";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { useDeleteComment } from "@api/domain/community/post/hook.ts";
+import {commentGetResponseCommentType} from "@api/domain/community/post";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {useDeleteComment} from "@api/domain/community/post/hook.ts";
 import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/categoryFilter.ts";
+import React, {useState} from "react";
+import {useRouter} from "next/navigation";
+import {useCategoryFilterStore} from "../../../app/mypage/edit-pet/store/categoryFilter.ts";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
