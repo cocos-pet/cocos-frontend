@@ -20,7 +20,15 @@ interface props {
 
 //커뮤니티 게시글 작성, 검색 결과 필터 바텀 시트
 const FilterBottomSheet = ({ handleDimmedClose, onSubmitClick }: props) => {
-  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips, categoryData } = useFilterStore();
+  const {
+    category,
+    selectedChips,
+    setCategory,
+    isOpen,
+    setOpen,
+    toggleChips,
+    categoryData,
+  } = useFilterStore();
 
   const isSelectedCategory = (cate: CategoryType): boolean => {
     return cate === category;
@@ -35,7 +43,11 @@ const FilterBottomSheet = ({ handleDimmedClose, onSubmitClick }: props) => {
   });
 
   return (
-    <BottomSheet isOpen={isOpen} handleOpen={setOpen} handleDimmedClose={handleDimmedClose}>
+    <BottomSheet
+      isOpen={isOpen}
+      handleOpen={setOpen}
+      handleDimmedClose={handleDimmedClose}
+    >
       <>
         {isAnyChipSelected ? (
           <div className={styles.selectedZone}>
@@ -48,17 +60,23 @@ const FilterBottomSheet = ({ handleDimmedClose, onSubmitClick }: props) => {
                 } as const;
 
                 const category = keyMap[key as keyof SelectedChips];
-                const name = getSelectedChipNamesById(id, category, categoryData);
+                const name = getSelectedChipNamesById(
+                  id,
+                  category,
+                  categoryData
+                );
 
                 return (
                   <Chip
                     key={`filter-${key}-${id}`}
                     label={name || "Unknown"}
                     icon={true}
-                    onClick={() => toggleChips({ id, category: key as keyof SelectedChips })}
+                    onClick={() =>
+                      toggleChips({ id, category: key as keyof SelectedChips })
+                    }
                   />
                 );
-              }),
+              })
             )}
           </div>
         ) : (
@@ -67,7 +85,11 @@ const FilterBottomSheet = ({ handleDimmedClose, onSubmitClick }: props) => {
 
         <div className={styles.categoryZone}>
           {categories.map(({ id, label }) => (
-            <Tab key={id} active={isSelectedCategory(id)} onClick={() => handleClickCategory(id)}>
+            <Tab
+              key={id}
+              active={isSelectedCategory(id)}
+              onClick={() => handleClickCategory(id)}
+            >
               {label}
             </Tab>
           ))}
@@ -81,7 +103,7 @@ const FilterBottomSheet = ({ handleDimmedClose, onSubmitClick }: props) => {
           <Button
             label="확인하기"
             size="large"
-            style={{ width: "100%" }}
+            width="100%"
             onClick={() => {
               setOpen(false);
               if (onSubmitClick) {

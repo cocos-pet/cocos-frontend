@@ -262,12 +262,10 @@ const PostDetail = () => {
   );
 };
 
-const Page = () => {
-  return (
-    <Suspense fallback={<LoadingFallback />}>
-      <PostDetail />
-    </Suspense>
-  );
-};
+const Page = () => (
+  <Suspense fallback={<LoadingFallback />}>
+    <PostDetail />
+  </Suspense>
+);
 
 export default Page;
