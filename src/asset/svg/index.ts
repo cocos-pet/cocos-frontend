@@ -14,6 +14,7 @@ export { default as IcAddphoto } from "./IcAddphoto";
 export { default as IcBaseProfileImage } from "./IcBaseProfileImage";
 export { default as IcCalenderLeft } from "./IcCalenderLeft";
 export { default as IcCalenderRight } from "./IcCalenderRight";
+export { default as IcCheckbox } from "./IcCheckbox";
 export { default as IcChevronLeft } from "./IcChevronLeft";
 export { default as IcChevronRight } from "./IcChevronRight";
 export { default as IcChevronRight2 } from "./IcChevronRight2";
