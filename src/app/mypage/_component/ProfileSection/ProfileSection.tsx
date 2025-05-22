@@ -87,7 +87,7 @@ const LoggedProfile = ({
     />
 
     <Divider size="small" />
-    <AddFavoriteHospital />
+    {member.nickname && <AddFavoriteHospital nickname={member.nickname} />}
   </div>
 );
 
