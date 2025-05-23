@@ -13,8 +13,11 @@ import { Button } from "@common/component/Button/index";
 
 export type PetInfoType = "myPet" | "manual";
 
+interface Step1Props {
+  onNext: () => void;
+}
 
-const Step1 = () => {
+const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
 
@@ -52,9 +55,9 @@ const Step1 = () => {
         <ReviewPetInfo selectedPetInfo={selectedPetInfo} onSelectPetInfo={handleSelectPetInfo} />
       </div>
 
-      {/* 하단 버튼 */}
+      {/* 하단 버튼 ⚠️ TODO: 활성화 수정 */}
       <div className={styles.buttonContainer}>
-        <Button label="다음으로" size="large" variant="solidPrimary" disabled={true} />
+        <Button label="다음으로" size="large" variant="solidPrimary" disabled={false} onClick={onNext} />
       </div>
 
       {/* 병원 검색 바텀시트 */}
@@ -68,6 +71,4 @@ const Step1 = () => {
   );
 };
 
-
 export default Step1;
-

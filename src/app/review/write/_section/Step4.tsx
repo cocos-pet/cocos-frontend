@@ -7,11 +7,12 @@ import * as styles from "./Step4.style.css";
 import ReviewContent from "@app/review/write/_component/ReviewContent";
 import ReviewImg from "@app/review/write/_component/ReviewImg";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { PATH } from "@route/path";
 
-const Step4 = () => {
-  const router = useRouter();
+interface Step4Props {
+  onNext: () => void;
+}
+
+const Step4 = ({ onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const handleOpenBottomSheet = () => {
@@ -26,11 +27,6 @@ const Step4 = () => {
 
   const handleNext = () => {
     handleOpenBottomSheet();
-  };
-
-  const handleSubmitReview = () => {
-    // ⚠️ 제출로직 구현 예정
-    router.push(PATH.REVIEW.COMPLETE);
   };
 
   return (
@@ -62,7 +58,7 @@ const Step4 = () => {
         isOpen={isBottomSheetOpen}
         handleClose={handleCloseBottomSheet}
         leftOnClick={handleCloseBottomSheet}
-        rightOnClick={handleSubmitReview}
+        rightOnClick={onNext}
       />
     </div>
   );
