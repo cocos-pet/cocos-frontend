@@ -10,11 +10,13 @@ import CategoryContent from "@app/review/write/_component/CategoryContent";
 import { ReviewFormData } from "@app/review/write/page";
 import { getSymptomNameById, getDiseaseNameById } from "@app/review/write/_utils/getNameById";
 import { Toast } from "@common/component/Toast/Toast";
-import { CategoryType, CATEGORIES } from "../constant";
+import { CATEGORIES } from "../constant";
 
 import { symptomGetResponse } from "@api/domain/register-pet/symptom";
 import { diseaseGetResponse } from "@api/domain/register-pet/disease";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
+
+type CategoryType = "symptom" | "disease";
 
 interface SearchSymptomDiseaseProps {
   isOpen: boolean;

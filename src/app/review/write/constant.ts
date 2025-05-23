@@ -10,9 +10,13 @@ export const PET_TYPES = [
 ];
 
 // Step2. SearchSymptomDisease.tsx
-export type CategoryType = "symptom" | "disease";
-
-export const CATEGORIES: { id: CategoryType; label: string }[] = [
+export const CATEGORIES: { id: "symptom" | "disease"; label: string }[] = [
   { id: "symptom", label: "증상" },
   { id: "disease", label: "진단" },
+];
+
+// Step3.tsx
+export const FEEDBACK_CATEGORIES: { id: string; label: string }[] = [
+  { id: "good", label: "좋아요" },
+  { id: "bad", label: "아쉬워요" },
 ];

@@ -7,6 +7,7 @@ import { useState } from "react";
 import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCategoryContent";
 import Image from "next/image";
 import feedbackImg from "@asset/image/reviewFeedback.png";
+import {FEEDBACK_CATEGORIES} from "../constant"
 
 type CategoryType = "good" | "bad";
 
@@ -15,10 +16,6 @@ interface Step3Props {
   onNext: () => void;
 }
 
-const CATEGORIES: { id: string; label: string }[] = [
-  { id: "good", label: "좋아요" },
-  { id: "bad", label: "아쉬워요" },
-];
 const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
 
@@ -42,7 +39,7 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
         {/* 탭 */}
         <section>
           <div className={styles.TapBox}>
-            {CATEGORIES.map(({ id, label }) => (
+            {FEEDBACK_CATEGORIES.map(({ id, label }) => (
               <Tab
                 key={id}
                 active={selectedCategory === id}
