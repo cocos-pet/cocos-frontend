@@ -40,6 +40,8 @@ const DirectMyPetInfo = () => {
   // 드롭다운 열림, 닫힘 상태 관리
   const [activeDropDown, setActiveDropDown] = useState<string | null>(null);
 
+  const [focusedField, setFocusedField] = useState<PetField | null>(null);
+
   const handleTextFieldClick = (field: string) => {
     setActiveDropDown((prev) => (prev === field ? null : field));
   };
@@ -76,26 +78,31 @@ const DirectMyPetInfo = () => {
           <Controller
             name="petType"
             control={control}
-            render={({ field }) => (
-              <>
-                <TextField
-                  value={field.value}
-                  onChange={(e) => field.onChange(e.target.value)}
-                  placeholder="종 선택하기"
-                  isDelete={false}
-                  onClick={() => handleTextFieldClick("petType")}
-                  focus={field.value !== ""}
-                />
-                {activeDropDown === "petType" && (
-                  <DropDown
-                    isOpen={true}
-                    items={filteredPetTypeItems}
-                    onClickItem={(value) => handleDropDownClick("petType", value)}
-                    size="half"
+            render={({ field }) => {
+              const hasValue = !!field.value.trim();
+              const isFocused = activeDropDown === "petType";
+
+              return (
+                <>
+                  <TextField
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                    placeholder="종 선택하기"
+                    isDelete={false}
+                    onClick={() => handleTextFieldClick("petType")}
+                    state={isFocused ? "focus" : hasValue ? "done" : "default"}
                   />
-                )}
-              </>
-            )}
+                  {activeDropDown === "petType" && (
+                    <DropDown
+                      isOpen={true}
+                      items={filteredPetTypeItems}
+                      onClickItem={(value) => handleDropDownClick("petType", value)}
+                      size="half"
+                    />
+                  )}
+                </>
+              );
+            }}
           />
         </div>
 
@@ -105,26 +112,31 @@ const DirectMyPetInfo = () => {
           <Controller
             name="petGender"
             control={control}
-            render={({ field }) => (
-              <>
-                <TextField
-                  value={field.value}
-                  onChange={(e) => field.onChange(e.target.value)}
-                  placeholder="성별 선택하기"
-                  isDelete={false}
-                  onClick={() => handleTextFieldClick("petGender")}
-                  focus={field.value !== ""}
-                />
-                {activeDropDown === "petGender" && (
-                  <DropDown
-                    isOpen={true}
-                    items={filteredGenderItems}
-                    onClickItem={(value) => handleDropDownClick("petGender", value)}
-                    size="half"
+            render={({ field }) => {
+              const hasValue = !!field.value.trim();
+              const isFocused = activeDropDown === "petGender";
+
+              return (
+                <>
+                  <TextField
+                    value={field.value}
+                    onChange={(e) => field.onChange(e.target.value)}
+                    placeholder="성별 선택하기"
+                    isDelete={false}
+                    onClick={() => handleTextFieldClick("petGender")}
+                    state={isFocused ? "focus" : hasValue ? "done" : "default"}
                   />
-                )}
-              </>
-            )}
+                  {activeDropDown === "petGender" && (
+                    <DropDown
+                      isOpen={true}
+                      items={filteredGenderItems}
+                      onClickItem={(value) => handleDropDownClick("petGender", value)}
+                      size="half"
+                    />
+                  )}
+                </>
+              );
+            }}
           />
         </div>
       </div>
@@ -136,16 +148,23 @@ const DirectMyPetInfo = () => {
           <Controller
             name="petId"
             control={control}
-            render={({ field }) => (
-              <TextField
-                value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
-                placeholder="예시: 샴"
-                isDelete={false}
-                focus={field.value !== ""}
-                maxLength={20}
-              />
-            )}
+            render={({ field }) => {
+              const isFocused = focusedField === "petId";
+              const hasValue = !!field.value.trim();
+
+              return (
+                <TextField
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  onFocus={() => setFocusedField("petId")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="예시: 샴"
+                  isDelete={false}
+                  maxLength={20}
+                  state={isFocused ? "focus" : hasValue ? "done" : "default"}
+                />
+              );
+            }}
           />
         </div>
 
@@ -155,15 +174,22 @@ const DirectMyPetInfo = () => {
           <Controller
             name="petWeight"
             control={control}
-            render={({ field }) => (
-              <TextField
-                value={field.value}
-                onChange={(e) => handleWeightChange(e, field.onChange)}
-                placeholder="예시: 5.3kg"
-                isDelete={false}
-                focus={field.value !== ""}
-              />
-            )}
+            render={({ field }) => {
+              const hasValue = !!field.value.trim();
+              const isFocused = focusedField === "petWeight";
+
+              return (
+                <TextField
+                  value={field.value}
+                  onChange={(e) => handleWeightChange(e, field.onChange)}
+                  onFocus={() => setFocusedField("petWeight")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="예시: 5.3kg"
+                  isDelete={false}
+                  state={isFocused ? "focus" : hasValue ? "done" : "default"}
+                />
+              );
+            }}
           />
         </div>
       </div>
