@@ -10,6 +10,8 @@ import ReviewDate from "@app/review/write/_component/ReviewDate";
 import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 import { Button } from "@common/component/Button/index";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "../page";
 
 export type PetInfoType = "myPet" | "manual";
 
@@ -20,8 +22,16 @@ interface Step1Props {
 const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
-
   const [selectedPetInfo, setSelectedPetInfo] = useState<PetInfoType | null>(null);
+
+  const { watch } = useFormContext<ReviewFormData>();
+
+  const visitedAt = watch("visitedAt");
+  const breedId = watch("breedId");
+  const gender = watch("gender");
+  const weight = watch("weight");
+
+  const isFormValid = selectedHospital !== null && visitedAt !== "" && breedId !== -1 && gender !== "" && weight !== -1;
 
   // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
   const handleOpenSearchHospital = () => {
@@ -64,7 +74,7 @@ const Step1 = ({ onNext }: Step1Props) => {
 
       {/* 하단 버튼 ⚠️ TODO: 활성화 수정 */}
       <div className={styles.buttonContainer}>
-        <Button label="다음으로" size="large" variant="solidPrimary" disabled={false} onClick={onNext} />
+        <Button label="다음으로" size="large" variant="solidPrimary" disabled={!isFormValid} onClick={onNext} />
       </div>
 
       {/* 병원 검색 바텀시트 */}

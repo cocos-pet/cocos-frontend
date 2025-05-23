@@ -8,6 +8,8 @@ import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCatego
 import Image from "next/image";
 import feedbackImg from "@asset/image/reviewFeedback.png";
 import { FEEDBACK_CATEGORIES } from "../constant";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "../page";
 
 type CategoryType = "good" | "bad";
 
@@ -18,6 +20,13 @@ interface Step3Props {
 
 const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
+
+  const { watch } = useFormContext<ReviewFormData>();
+
+  const goodReviewIds = watch("goodReviewIds");
+  const badReviewIds = watch("badReviewIds");
+
+  const isFromValid = goodReviewIds.length > 0 && badReviewIds.length > 0;
 
   const handleGoHospitalDetail = () => {
     console.log("⚠️ 조립시 구현예정");
@@ -65,7 +74,7 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
         {/* 하단 버튼 영역 */}
         <section className={styles.btnLayout}>
           <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
-          <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} />
+          <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFromValid} />
         </section>
       </div>
     </>
