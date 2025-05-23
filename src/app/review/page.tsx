@@ -26,11 +26,9 @@ export default function ReviewPage() {
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
-    image: "",
   });
 
-  const hospitals =
-    data?.pages?.flatMap((page: { data: { hospitals: [] } }) => page.data?.hospitals ?? []).slice(0, 3) ?? [];
+  const hospitals = data?.hospitals ?? [];
 
   function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>) {}
 
