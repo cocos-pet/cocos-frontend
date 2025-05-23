@@ -40,10 +40,17 @@ const Step1 = ({ onNext }: Step1Props) => {
     setSelectedPetInfo((prev) => (prev === type ? null : type));
   };
 
+  const handleGoHospitalDetail = () => {
+    console.log("⚠️ 조립시 구현예정");
+  };
+
   return (
     <div className={styles.preventScroll}>
       {/* 상단 헤더 */}
-      <HeaderNav centerContent="리뷰작성(1/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
+      <HeaderNav
+        centerContent="리뷰작성(1/4)"
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+      />
 
       {/* 중앙 컨텐츠 */}
       <div className={styles.wrapper}>

@@ -39,10 +39,17 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
     setOpen(true);
   };
 
+  const handleGoHospitalDetail = () => {
+    console.log("⚠️ 조립시 구현예정");
+  };
+
   return (
     <div className={styles.backgroundColor}>
       {/* 상단 헤더 영역 */}
-      <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack />} />
+      <HeaderNav
+        centerContent="리뷰작성(2/4)"
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+      />
 
       <section className={styles.wrapper}>
         {/* 2-1. 증상 선택 */}

@@ -7,7 +7,7 @@ import { useState } from "react";
 import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCategoryContent";
 import Image from "next/image";
 import feedbackImg from "@asset/image/reviewFeedback.png";
-import {FEEDBACK_CATEGORIES} from "../constant"
+import { FEEDBACK_CATEGORIES } from "../constant";
 
 type CategoryType = "good" | "bad";
 
@@ -19,10 +19,17 @@ interface Step3Props {
 const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
 
+  const handleGoHospitalDetail = () => {
+    console.log("⚠️ 조립시 구현예정");
+  };
+
   return (
     <>
       {/* 상단 리뷰 영역 */}
-      <HeaderNav centerContent="리뷰작성(3/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
+      <HeaderNav
+        centerContent="리뷰작성(3/4)"
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+      />
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
         <section className={styles.TopLayout}>

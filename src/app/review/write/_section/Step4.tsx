@@ -28,10 +28,17 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
     handleOpenBottomSheet();
   };
 
+  const handleGoHospitalDetail = () => {
+    console.log("⚠️ 조립시 구현예정");
+  };
+
   return (
     <div className={styles.wrapper}>
       {/* 상단 리뷰 영역 */}
-      <HeaderNav centerContent="리뷰작성(3/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
+      <HeaderNav
+        centerContent="리뷰작성(3/4)"
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+      />
       {/* 중앙 컨텐츠 영역 */}
       <section className={styles.contentLayout}>
         {/* 4-1. 후기 작성 */}

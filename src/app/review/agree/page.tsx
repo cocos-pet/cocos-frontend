@@ -13,6 +13,7 @@ import { useState } from "react";
 import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
 import { useAgreeReviewMutation } from "@app/api/review/agree/hook";
 import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
 
 const page = () => {
   const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;
@@ -23,11 +24,14 @@ const page = () => {
 
   const handleClickBtn = () => {
     mutation.mutate(undefined, {
-      // ⚠️ 추후 /review/write 합쳐지면 수정 예정, 현재 확인용으로 /main, path 활용하기
       onSuccess: () => {
-        router.push("/main");
+        router.push(PATH.REVIEW.WRITE);
       },
     });
+  };
+
+  const handleGoHospitalDetail = () => {
+    console.log("⚠️ 조립시 구현예정");
   };
 
   const allChecked = checkedBoxes.every((v, i) => i === 0 || v);
@@ -54,7 +58,7 @@ const page = () => {
       <HeaderNav
         centerContent="후기 작성 유의사항"
         type="noBackground"
-        leftIcon={<IcLeftarrow style={{ width: 24, height: 24 }} />}
+        leftIcon={<IcLeftarrow style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
       />
       <div className={style.wrapper}>
         <section className={style.topLayout}>

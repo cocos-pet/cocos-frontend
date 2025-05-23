@@ -11,8 +11,8 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 const page = () => {
   const router = useRouter();
 
-  const handleGoToReview = () => {
-    // ⚠️ 추후 수정예정 (현재 확정안남, path활용하기)
+  const handleGoHospitalDetail = () => {
+    // ⚠️ 추후 수정예정 (병원 상세 페이지로 이동, path활용하기)
     router.push("/main");
   };
 
@@ -23,7 +23,7 @@ const page = () => {
       <p className={`${styles.docs} ${styles.docsTop}`}>소중한 리뷰 감사해요!</p>
       <p className={`${styles.docs} ${styles.docsBottom}`}>작성한 리뷰는 마이페이지에서 볼 수 있어요.</p>
       <div className={styles.btnContainer}>
-        <Button label="확인하기" onClick={handleGoToReview} />
+        <Button label="확인하기" onClick={handleGoHospitalDetail} />
       </div>
     </div>
   );
