@@ -55,7 +55,7 @@ const Step1 = ({ onNext }: Step1Props) => {
   };
 
   const handleGoHospitalDetail = () => {
-    console.log("⚠️ 조립시 구현예정");
+    window.history.go(-2); //review/agree +1
   };
 
   return (
@@ -76,7 +76,6 @@ const Step1 = ({ onNext }: Step1Props) => {
         <ReviewPetInfo selectedPetInfo={selectedPetInfo} onSelectPetInfo={handleSelectPetInfo} />
       </div>
 
-      {/* 하단 버튼 ⚠️ TODO: 활성화 수정 */}
       <div className={styles.buttonContainer}>
         <Button label="다음으로" size="large" variant="solidPrimary" disabled={!isFormValid} onClick={onNext} />
       </div>

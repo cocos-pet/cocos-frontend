@@ -1,7 +1,6 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import { useRouter } from "next/navigation";
 import * as styles from "./style.css";
 import registerPet from "@asset/lottie/registerPet.json";
 import { Button } from "@common/component/Button";
@@ -9,11 +8,8 @@ import { Button } from "@common/component/Button";
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const page = () => {
-  const router = useRouter();
-
   const handleGoHospitalDetail = () => {
-    // ⚠️ 추후 수정예정 (병원 상세 페이지로 이동, path활용하기)
-    router.push("/main");
+    window.history.go(-2);
   };
 
   return (

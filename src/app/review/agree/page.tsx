@@ -31,7 +31,7 @@ const page = () => {
   };
 
   const handleGoHospitalDetail = () => {
-    console.log("⚠️ 조립시 구현예정");
+    router.back();
   };
 
   const allChecked = checkedBoxes.every((v, i) => i === 0 || v);

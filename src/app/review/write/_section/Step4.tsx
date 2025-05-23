@@ -54,7 +54,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
   };
 
   const handleGoHospitalDetail = () => {
-    console.log("⚠️ 조립시 구현예정");
+    window.history.go(-2);
   };
 
   return (

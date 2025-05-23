@@ -29,7 +29,7 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const isFromValid = goodReviewIds.length > 0 && badReviewIds.length > 0;
 
   const handleGoHospitalDetail = () => {
-    console.log("⚠️ 조립시 구현예정");
+    window.history.go(-2);
   };
 
   return (
