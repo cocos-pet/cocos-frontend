@@ -35,6 +35,8 @@ export const API_PATH = {
   HOSPITALS_REVIEWS_SUMMARY: "/api/dev/hospitals/reviews/summary/option",
   HOSPITALS: "/api/dev/hospitals",
   HOSPITAL_SEARCH: "/api/dev/search/hospital",
+  HOSPITALS_PURPOSE: "/api/dev/hospitals/purposes",
+  HOSPITALS_REVIEWS_SUMMARY: "/api/dev/hospitals/reviews/summary/option",
 
   MEMBERS_HOSPITALS: "/api/dev/members/hospitals",
   MEMBERS_HOSPITAL_REVIEWS: "/api/dev/hospitals/reviews",
