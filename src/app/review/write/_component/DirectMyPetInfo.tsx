@@ -138,7 +138,7 @@ const DirectMyPetInfo = () => {
 
         {/* 1-3-4. 몸무게 */}
         <div className={styles.halfTextField}>
-          <span>몸무게</span>
+          <span>몸무게(kg)</span>
           <Controller
             name="weight"
             control={control}
@@ -150,7 +150,7 @@ const DirectMyPetInfo = () => {
                   onChange={(e) => handleWeightChange(e, field.onChange)}
                   onFocus={() => setFocusedField("weight")}
                   onBlur={() => setFocusedField(null)}
-                  placeholder="예시: 5.3kg"
+                  placeholder="예시: 5.3"
                   isDelete={false}
                   state={getState("weight", stringValue)}
                 />

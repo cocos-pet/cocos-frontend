@@ -37,7 +37,7 @@ const ReviewSymptom = ({ onCategoryChange, symptomBodyData }: ReviewSymptomProps
           onRightIconClick={() => handleRemoveSymptom(id)}
         />
       ))}
-      <BtnToChip label="증상 없음" rightIcon={<IcRightArror />} onClick={() => onCategoryChange("symptom")} />
+      <BtnToChip label="증상 추가하기" rightIcon={<IcRightArror />} onClick={() => onCategoryChange("symptom")} />
     </div>
   );
 };
