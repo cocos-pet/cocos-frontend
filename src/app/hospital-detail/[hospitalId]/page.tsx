@@ -31,7 +31,7 @@ export default function HospitalDetailPage() {
     <div>
       <HospitalHeader image={data.image || ""} />
       <Info name={data.name} phoneNumber={data.phoneNumber} />
-      <Selection />
+      <Selection hospitalId={hospitalIdNumber} />
     </div>
   );
 }
