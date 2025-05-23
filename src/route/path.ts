@@ -42,4 +42,11 @@ export const PATH = {
     ROOT: "/setting",
     EDIT_PROFILE: "/setting/edit-profile",
   },
+
+  REVIEW: {
+    ROOT: "/review",
+    AGREE: "/review/agree",
+    WRITE: "/review/write",
+    COMPLETE: "/review/complete",
+  },
 };
