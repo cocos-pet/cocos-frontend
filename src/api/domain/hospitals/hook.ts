@@ -1,17 +1,21 @@
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { postHospitalList, PostHospitalListRequest, PostHospitalListResponse } from "./index";
+import { postHospitalList, PostHospitalListRequest, HospitalListResponse } from "./index";
 
 type HospitalCursor = { cursorId?: number; cursorReviewCount?: number };
 
+export const HOSPITAL_QUERY_KEY = {
+  INFINITE_LIST: (params: PostHospitalListRequest) => ["hospitals", "infinite", params] as const,
+} as const;
+
 export const useInfiniteHospitalList = (initialRequest: PostHospitalListRequest) => {
   return useInfiniteQuery<
-    PostHospitalListResponse, 
-    Error,                    
-    PostHospitalListResponse, 
-    [string, PostHospitalListRequest], 
-    HospitalCursor            
+    HospitalListResponse,
+    Error,
+    HospitalListResponse,
+    ReturnType<typeof HOSPITAL_QUERY_KEY.INFINITE_LIST>,
+    HospitalCursor
   >({
-    queryKey: ["hospitals", initialRequest],
+    queryKey: HOSPITAL_QUERY_KEY.INFINITE_LIST(initialRequest),
     initialPageParam: { cursorId: undefined, cursorReviewCount: undefined },
     queryFn: async ({ pageParam }) => {
       const req: PostHospitalListRequest = {
@@ -22,15 +26,11 @@ export const useInfiniteHospitalList = (initialRequest: PostHospitalListRequest)
       return postHospitalList(req);
     },
     getNextPageParam: (lastPage) => {
-      if (!lastPage.data?.hospitals?.length) return undefined;
+      if (!lastPage.hospitals?.length || !lastPage.hasNext) return undefined;
       return {
-        cursorId: lastPage.data.cursorId,
-        cursorReviewCount: lastPage.data.cursorReviewCount,
+        cursorId: lastPage.cursorId,
+        cursorReviewCount: lastPage.cursorReviewCount,
       };
     },
   });
-};
-
-export const HOSPITAL_QUERY_KEY = {
-    POST_HOSPITAL_LIST: () => ["postHospitalList"],
 };

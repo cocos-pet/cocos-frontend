@@ -18,7 +18,6 @@ export const styles = {
   searchWrap: style({
     display: "flex",
     flexDirection: "column",
-
   }),
   noSearchData: style({
     display: "flex",

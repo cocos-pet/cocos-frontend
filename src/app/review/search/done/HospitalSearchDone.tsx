@@ -1,57 +1,63 @@
 "use client";
-import { IcLeftarrow, IcSearch, } from "@asset/svg";
+import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
-import { ChangeEvent, Suspense, useEffect, useState } from "react";
+import { ChangeEvent, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { mockHospitalSearchResult } from "@shared/constant/hospitalSearchData";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { styles } from "./HospitalSearchDone.css.ts";
 import LocationHeader from "@app/review/locationHeader/locationHeader.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
+import { useQuery } from "@tanstack/react-query";
+import { post } from "@api/index";
+import { number } from "framer-motion";
+
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+
+interface Hospital {
+  id: number;
+  name: string;
+  address: string;
+  reviewCount: number;
+  image: string;
+}
 
 function HospitalSearchDoneContent() {
   const searchParams = useSearchParams();
   const query = searchParams?.get("searchText") || "";
-  const [searchText, setSearchText] = useState<string>("");
-  const [hospitals, setHospitals] = useState(mockHospitalSearchResult.hospitals);
-  const [isLoading, setIsLoading] = useState(false);
+  const [searchText, setSearchText] = useState<string>(query);
   const router = useRouter();
 
+  const locationId = number;
+  const locationType = "DISTRICT";
 
-// 검색어가 바뀔 때마다 로딩 + 결과 갱신 (query 기준)
-useEffect(() => {
-  setIsLoading(true);
-  const timer = setTimeout(() => {
-    if (!query) {
-      setHospitals(mockHospitalSearchResult.hospitals);
-    } else {
-      setHospitals(
-        mockHospitalSearchResult.hospitals.filter(
-          (hospital) =>
-            hospital.name.toLowerCase().includes(query.toLowerCase()) ||
-            hospital.address.toLowerCase().includes(query.toLowerCase())
-        )
-      );
-    }
-    setIsLoading(false);
-  }, 300); // debounce처럼 약간의 딜레이만
-  return () => clearTimeout(timer);
-}, [query]);
+  const { data, isPending, isError } = useQuery({
+    queryKey: ["hospitalList", query, locationId, locationType],
+    queryFn: async () => {
+      if (!query) return [];
+      const response = await post(`/api/dev/hospitals?keyword=${encodeURIComponent(query)}`, {
+        locationId,
+        locationType,
+        size: 10,
+        sortBy: "REVIEW",
+      });
+      return (response.data ?? []) as Hospital[];
+    },
+    enabled: !!query,
+    initialData: [],
+  });
 
+  const hospitals = data?.pages?.[0]?.hospitals ?? [];
 
-const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-  setSearchText(e.target.value);
-};
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
+  };
 
-  // 검색 버튼(돋보기) 클릭 시 router.push만 담당
   const onTextFieldClick = () => {
     router.push(`/review/search/done?searchText=${searchText}`);
   };
 
-  // 엔터 입력 시 router.push만 담당
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
       router.push(`/review/search/done?searchText=${searchText}`);
@@ -61,7 +67,6 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
   const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
-    setHospitals(mockHospitalSearchResult.hospitals);
     router.push("/review/search/done");
   };
 
@@ -73,8 +78,14 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     router.push(`/review/hospital/${hospitalId}`);
   };
 
-  if (isLoading) {
+  const defaultImage = noSearchResult.src;
+
+  if (isPending) {
     return <Loading height={80} />;
+  }
+
+  if (isError) {
+    return <div className={styles.noSearchData}>에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</div>;
   }
 
   return (
@@ -119,13 +130,15 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
               <div className={styles.hospitalInfo}>
                 <div className={styles.hospitalText}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
-                  <p className={styles.hospitalAddress}>{hospital.address} · 리뷰 {hospital.reviewCount} </p>
+                  <p className={styles.hospitalAddress}>
+                    {hospital.address} · 리뷰 {hospital.reviewCount}{" "}
+                  </p>
                 </div>
                 <div className={styles.hospitalImage}>
-                  <Image src={hospital.imageUrl || ''} alt={hospital.name} width={100} height={100} />
+                  <Image src={hospital.image || defaultImage} alt={hospital.name} width={100} height={100} />
                 </div>
               </div>
-              <Divider size="small"/>
+              <Divider size="small" />
             </div>
           ))}
         </div>

@@ -1,11 +1,18 @@
 "use client";
-import { styles } from "./Hospitals.css";
+import { styles } from "./hospitals.css";
 import {IcLeftarrow, IcSearch} from "@asset/svg";
 import {TextField} from "@common/component/TextField";
 import React, {ChangeEvent, Suspense, useEffect, useRef, useState} from "react";
 import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
-import { hospitalSearchData } from "@shared/constant/hospitalSearchData";
+import {
+  useGetHospitalSearchKeywords,
+  usePostHospitalSearchKeyword,
+} from "@api/domain/hospitals/search/hook";
+import {
+  HospitalSearchKeywordsResponse,
+  Keyword,
+} from "@api/domain/hospitals/search";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -14,21 +21,18 @@ function SearchContent() {
   const searchParams = useSearchParams();
   const query = searchParams?.get("searchText") || "";
   const [searchText, setSearchText] = useState(query);
-  const [isLoading, setIsLoading] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const { data: keywordsData, refetch: refetchKeywords } = useGetHospitalSearchKeywords();
+  const { mutate: saveKeyword } = usePostHospitalSearchKeyword();
 
   const onSubmit = (searchText: string) => {
     if (searchText.trim() === "") {
       return;
     }
-    // 목데이터로 검색 처리
-    setIsLoading(true);
-    setTimeout(() => {
-      handleNavigate(searchText);
-      setIsLoading(false);
-    }, 500);
+    handleSearch(searchText);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -41,8 +45,24 @@ function SearchContent() {
     }
   };
 
-  const handleNavigate = (searchText: string) => {
-    router.push(`/review/search/done?searchText=${searchText}`);
+  const handleSearch = (keyword: string) => {
+    if (!keyword.trim()) {
+      alert("검색어를 입력하세요!");
+      return;
+    }
+    saveKeyword(keyword, {
+      onSuccess: () => {
+        refetchKeywords();
+        router.push(`/review/search/done?searchText=${encodeURIComponent(keyword)}`);
+      },
+      onError: () => {
+        alert("검색어 저장에 실패했습니다.");
+      }
+    });
+  };
+
+  const handleNavigate = (keyword: string) => {
+    router.push(`/review/search/done?searchText=${encodeURIComponent(keyword)}`);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -50,7 +70,7 @@ function SearchContent() {
   };
 
   const onBackClick = () => {
-    router.back();
+    router.push("/review");
   };
 
   useEffect(() => {
@@ -59,7 +79,9 @@ function SearchContent() {
     }
   }, []);
 
-  if (isLoading) return <Loading height={45} />;
+  const keywords = (keywordsData as HospitalSearchKeywordsResponse)?.data?.keywords || [];
+
+  if (isSubmitting) return <Loading height={45} />;
 
   return (
     <div className={styles.container}>
@@ -78,15 +100,15 @@ function SearchContent() {
       <div className={styles.searchContent}>
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
-          {hospitalSearchData.keywords.map((data) => (
+          {keywords.map((keyword: Keyword) => (
             <li
-              key={data.id}
+              key={keyword.id}
               className={styles.listItem}
-              onClick={() => {
-                if (data.content) handleNavigate(data.content);
+              onClick={() => { 
+                if (keyword.content) handleNavigate(keyword.content);
               }}
             >
-              {data.content}
+              {keyword.content}
             </li>
           ))}
         </ul>

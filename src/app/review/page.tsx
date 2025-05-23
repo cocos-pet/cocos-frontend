@@ -27,13 +27,10 @@ export default function ReviewPage() {
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
-    image: "",
   });
 
   const hospitals =
-    data?.pages
-      ?.flatMap((page: { data: { hospitals: []; }; }) => page.data?.hospitals ?? [])
-      .slice(0, 3) ?? [];
+    data?.hospitals ?? [];
 
   function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>): void {
     throw new Error("Function not implemented.");
