@@ -2,7 +2,7 @@ import { IcRightArror, IcChevronRight2 } from "@asset/svg/index";
 import { color } from "@style/styles.css";
 import * as styles from "./ReviewPetInfo.style.css";
 import DirectMyPetInfo from "./DirectMyPetInfo";
-import { PetInfoType } from "@app/reviews-write/page";
+import { PetInfoType } from "@app/review/write/_section/Step1";
 
 interface ReviewPetInfoProps {
   selectedPetInfo: PetInfoType | null;
