@@ -1,5 +1,6 @@
 import * as styles from "@shared/component/FilterBottomSheet/FilterBottomSheet.css";
 import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import Tab from "@common/component/Tab/Tab";
@@ -8,12 +9,12 @@ import Chip from "@common/component/Chip/Chip";
 import CategoryContent from "@app/review/write/_component/CategoryContent";
 import { ReviewFormData } from "@app/review/write/page";
 import { getSymptomNameById, getDiseaseNameById } from "@app/review/write/_utils/getNameById";
+import { Toast } from "@common/component/Toast/Toast";
+import { CategoryType, CATEGORIES } from "../constant";
 
 import { symptomGetResponse } from "@api/domain/register-pet/symptom";
 import { diseaseGetResponse } from "@api/domain/register-pet/disease";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
-
-type CategoryType = "symptom" | "disease";
 
 interface SearchSymptomDiseaseProps {
   isOpen: boolean;
@@ -27,11 +28,6 @@ interface SearchSymptomDiseaseProps {
   diseaseData?: bodiesGetResponse["data"];
 }
 
-const CATEGORIES: { id: CategoryType; label: string }[] = [
-  { id: "symptom", label: "증상" },
-  { id: "disease", label: "진단" },
-];
-
 const SearchSymptomDisease = ({
   isOpen,
   onClose,
@@ -43,6 +39,9 @@ const SearchSymptomDisease = ({
   diseaseData,
 }: SearchSymptomDiseaseProps) => {
   const { watch, setValue } = useFormContext<ReviewFormData>();
+  // 토스트 리렌더링
+  const [toastKey, setToastKey] = useState(0);
+  const [showToast, setShowToast] = useState(false);
 
   const selectedSymptomIds = watch("symptomIds") ?? [];
   const selectedDiseaseId = watch("diseaseId");
@@ -55,9 +54,19 @@ const SearchSymptomDisease = ({
   };
 
   const toggleDiseaseChip = (chipId: number) => {
-    setValue("diseaseId", selectedDiseaseId === chipId ? -1 : chipId);
+    if (selectedDiseaseId === chipId) {
+      // 이미 선택된 칩을 다시 클릭하면 선택 해제
+      setValue("diseaseId", -1);
+    } else if (selectedDiseaseId !== -1) {
+      // 이미 선택된 상태에서 다른 칩을 클릭하면 교체 + 토스트
+      setValue("diseaseId", chipId);
+      setToastKey(Date.now());
+      setShowToast(true);
+    } else {
+      // 아무것도 선택되지 않은 상태는 정상 선택
+      setValue("diseaseId", chipId);
+    }
   };
-
   return (
     <BottomSheet isOpen={isOpen} handleOpen={() => {}} handleDimmedClose={onClose}>
       <>
@@ -103,6 +112,9 @@ const SearchSymptomDisease = ({
           />
         </div>
 
+        {showToast && (
+          <Toast key={toastKey} message="진단은 하나만 선택할 수 있어요" showDeleteIcon={false} variant="blue" />
+        )}
         {/* 하단 버튼 */}
         <div className={styles.buttonWrapper}>
           <Button label="확인하기" size="large" width="100%" onClick={onClose} />
