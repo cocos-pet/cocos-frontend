@@ -2,6 +2,10 @@ import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
 import { Button } from "@common/component/Button";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "../page";
+import { useReviewPost } from "@app/api/review/write/submit/hook";
+import { useParams } from "next/navigation";
 
 import * as styles from "./Step4.style.css";
 import ReviewContent from "@app/review/write/_component/ReviewContent";
@@ -15,6 +19,22 @@ interface Step4Props {
 
 const Step4 = ({ onPrev, onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const params = useParams();
+
+  const hospitalId = Number(params?.hospitalId);
+  const { mutate: submitReview } = useReviewPost(hospitalId);
+  const { handleSubmit } = useFormContext<ReviewFormData>();
+
+  const onValid = (data: ReviewFormData) => {
+    submitReview(data, {
+      onSuccess: () => {
+        onNext();
+      },
+      onError: (error) => {
+        console.error("리뷰 제출 실패", error);
+      },
+    });
+  };
 
   const handleOpenBottomSheet = () => {
     setIsBottomSheetOpen(true);
@@ -64,7 +84,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
         isOpen={isBottomSheetOpen}
         handleClose={handleCloseBottomSheet}
         leftOnClick={handleCloseBottomSheet}
-        rightOnClick={onNext}
+        rightOnClick={handleSubmit(onValid)}
       />
     </div>
   );
