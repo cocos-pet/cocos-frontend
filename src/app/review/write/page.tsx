@@ -1,7 +1,7 @@
 "use client";
 
 import { useForm, FormProvider } from "react-hook-form";
-import { useFunnel } from "@use-funnel/browser";
+import { useReviewFunnel } from "@app/review/write/_hook/useReviewFunnel";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 
@@ -40,18 +40,26 @@ const defaultValues: ReviewFormData = {
   weight: -1,
 };
 
-type StepContextMap = {
-  Step1: Record<string, never>;
-  Step2: Record<string, never>;
-  Step3: Record<string, never>;
-  Step4: Record<string, never>;
-};
+type FunnelStep = "Step1" | "Step2" | "Step3" | "Step4";
+interface FunnelState {
+  step: FunnelStep;
+  context: Record<string, unknown>;
+}
 
 export default function Page() {
-  const { step, history } = useFunnel<StepContextMap>({
-    id: "review-flow",
-    initial: { step: "Step1", context: {} },
-  });
+  const funnel = useReviewFunnel() as unknown as {
+    history: FunnelState[];
+    currentIndex: number;
+    push: (state: FunnelState) => void;
+    pop: () => void;
+    replace: (state: FunnelState) => void;
+    go: (delta: number) => void;
+    cleanup: () => void;
+  };
+
+  const historyArray = funnel.history as unknown as FunnelState[];
+  const current = historyArray[funnel.currentIndex];
+  const step = current.step;
 
   const router = useRouter();
 
@@ -62,10 +70,14 @@ export default function Page() {
 
   return (
     <FormProvider {...methods}>
-      {step === "Step1" && <Step1 onNext={() => history.push("Step2")} />}
-      {step === "Step2" && <Step2 onNext={() => history.push("Step3")} />}
-      {step === "Step3" && <Step3 onNext={() => history.push("Step4")} />}
-      {step === "Step4" && <Step4 onNext={() => router.push(PATH.REVIEW.COMPLETE)} />}
+      {step === "Step1" && <Step1 onNext={() => funnel.push({ step: "Step2", context: {} })} />}
+      {step === "Step2" && (
+        <Step2 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step3", context: {} })} />
+      )}
+      {step === "Step3" && (
+        <Step3 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step4", context: {} })} />
+      )}
+      {step === "Step4" && <Step4 onPrev={() => funnel.pop()} onNext={() => router.push(PATH.REVIEW.COMPLETE)} />}
     </FormProvider>
   );
 }

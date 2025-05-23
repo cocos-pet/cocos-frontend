@@ -9,10 +9,11 @@ import ReviewImg from "@app/review/write/_component/ReviewImg";
 import { useState } from "react";
 
 interface Step4Props {
+  onPrev: () => void;
   onNext: () => void;
 }
 
-const Step4 = ({ onNext }: Step4Props) => {
+const Step4 = ({ onPrev, onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
 
   const handleOpenBottomSheet = () => {
@@ -22,8 +23,6 @@ const Step4 = ({ onNext }: Step4Props) => {
   const handleCloseBottomSheet = () => {
     setIsBottomSheetOpen(false);
   };
-
-  const handleGoBack = () => console.log("뒤로가기 구현 예정");
 
   const handleNext = () => {
     handleOpenBottomSheet();
@@ -47,7 +46,7 @@ const Step4 = ({ onNext }: Step4Props) => {
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handleGoBack} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
         <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} />
       </section>
 

@@ -11,6 +11,7 @@ import feedbackImg from "@asset/image/reviewFeedback.png";
 type CategoryType = "good" | "bad";
 
 interface Step3Props {
+  onPrev: () => void;
   onNext: () => void;
 }
 
@@ -18,10 +19,8 @@ const CATEGORIES: { id: string; label: string }[] = [
   { id: "good", label: "좋아요" },
   { id: "bad", label: "아쉬워요" },
 ];
-const Step3 = ({ onNext }: Step3Props) => {
+const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
-
-  const handleGoBack = () => console.log("뒤로가기 구현 예정");
 
   return (
     <>
@@ -61,7 +60,7 @@ const Step3 = ({ onNext }: Step3Props) => {
 
         {/* 하단 버튼 영역 */}
         <section className={styles.btnLayout}>
-          <Button label="이전으로" size="large" variant="solidNeutral" onClick={handleGoBack} />
+          <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
           <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} />
         </section>
       </div>

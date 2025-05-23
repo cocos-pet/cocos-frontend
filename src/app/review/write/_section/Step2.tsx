@@ -15,10 +15,11 @@ import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 type CategoryType = "symptom" | "disease";
 
 interface Step2Props {
+  onPrev: () => void;
   onNext: () => void;
 }
 
-const Step2 = ({ onNext }: Step2Props) => {
+const Step2 = ({ onPrev, onNext }: Step2Props) => {
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
 
@@ -37,8 +38,6 @@ const Step2 = ({ onNext }: Step2Props) => {
     setSelectedCategory(category);
     setOpen(true);
   };
-
-  const handleGoBack = () => console.log("뒤로가기 구현 예정");
 
   return (
     <div className={styles.backgroundColor}>
@@ -61,7 +60,7 @@ const Step2 = ({ onNext }: Step2Props) => {
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handleGoBack} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
         <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} />
       </section>
 
