@@ -11,7 +11,6 @@ import Step3 from "@app/review/write/_section/Step3";
 import Step4 from "@app/review/write/_section/Step4";
 
 export interface ReviewFormData {
-  hospital: string;
   visitedAt: string;
   symptomIds: number[];
   diseaseId: number;
@@ -26,7 +25,6 @@ export interface ReviewFormData {
 }
 
 const defaultValues: ReviewFormData = {
-  hospital: "",
   visitedAt: "",
   symptomIds: [],
   diseaseId: -1,
