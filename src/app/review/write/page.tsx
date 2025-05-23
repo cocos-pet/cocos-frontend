@@ -24,7 +24,7 @@ export interface ReviewFormData {
   weight: number;
 }
 
-const defaultValues: ReviewFormData = {
+export const defaultValues: ReviewFormData = {
   visitedAt: "",
   symptomIds: [],
   diseaseId: -1,

@@ -12,6 +12,7 @@ import SearchHospital, { Hospital } from "@shared/component/SearchHospital/Searc
 import { Button } from "@common/component/Button/index";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../page";
+import { useRouter } from "next/navigation";
 
 export type PetInfoType = "myPet" | "manual";
 
@@ -33,6 +34,8 @@ const Step1 = ({ onNext }: Step1Props) => {
 
   const isFormValid = selectedHospital !== null && visitedAt !== "" && breedId !== -1 && gender !== "" && weight !== -1;
 
+  const router = useRouter();
+
   // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
   const handleOpenSearchHospital = () => {
     setIsBottomSheetOpen(true);
@@ -43,6 +46,7 @@ const Step1 = ({ onNext }: Step1Props) => {
 
   const handleSelectHospital = (hospital: Hospital | null) => {
     setSelectedHospital(hospital);
+    router.replace(`?hospitalId=${hospital?.id}`);
   };
 
   // 1-3. petInfo

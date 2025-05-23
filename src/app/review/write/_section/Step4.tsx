@@ -5,7 +5,7 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../page";
 import { useReviewPost } from "@app/api/review/write/submit/hook";
-import { useParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 
 import * as styles from "./Step4.style.css";
 import ReviewContent from "@app/review/write/_component/ReviewContent";
@@ -19,9 +19,14 @@ interface Step4Props {
 
 const Step4 = ({ onPrev, onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const params = useParams();
+  const searchParams = useSearchParams();
+  const rawHospitalId = searchParams?.get("hospitalId");
+  const hospitalId = rawHospitalId ? Number(rawHospitalId) : undefined;
 
-  const hospitalId = Number(params?.hospitalId);
+  if (!hospitalId || Number.isNaN(hospitalId)) {
+    throw new Error("유효하지 않은 병원입니다.");
+  }
+
   const { mutate: submitReview } = useReviewPost(hospitalId);
   const { handleSubmit } = useFormContext<ReviewFormData>();
 
