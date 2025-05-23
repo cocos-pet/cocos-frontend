@@ -1,50 +1,24 @@
 import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useFormContext, Controller } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
 
+import { ReviewFormData } from "../page";
 import { TextField } from "@common/component/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
-
-const GENDER = [
-  { id: 1, name: "암컷" },
-  { id: 2, name: "수컷" },
-];
-
-const PET_TYPES = [
-  { id: 1, name: "강아지" },
-  { id: 2, name: "고양이" },
-];
-
-interface PetFormValues {
-  petType: string;
-  petGender: string;
-  petId: string;
-  petWeight: string;
-}
-
-type PetField = keyof PetFormValues;
+import { GENDER, PET_TYPES } from "../constant";
 
 const DirectMyPetInfo = () => {
-  const { control, setValue, watch } = useForm<PetFormValues>({
-    defaultValues: {
-      petType: "",
-      petGender: "",
-      petId: "",
-      petWeight: "",
-    },
-  });
+  const { control, setValue } = useFormContext<ReviewFormData>();
 
-  // 필드 감지
-  const { petType, petGender } = watch();
+  type PetField = keyof ReviewFormData;
+  type FocusableField = keyof ReviewFormData | "petType";
 
-  // 드롭다운 열림, 닫힘 상태 관리
-  const [activeDropDown, setActiveDropDown] = useState<string | null>(null);
-
-  const [focusedField, setFocusedField] = useState<PetField | null>(null);
-
-  const handleTextFieldClick = (field: string) => {
-    setActiveDropDown((prev) => (prev === field ? null : field));
-  };
+  // 종은 리뷰 제출 항목이 아니므로 리액트 훅폼 상태에서 분리
+  const [petType, setPetType] = useState("");
+  // 종, 성별 드롭다운
+  const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
+  // 종류, 몸무게 포커스
+  const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
 
   const handleDropDownClick = (field: PetField, value: string) => {
     const trimmedValue = value.replace(/\s+/g, "");
@@ -52,116 +26,100 @@ const DirectMyPetInfo = () => {
     setActiveDropDown(null);
   };
 
-  const filteredGenderItems = GENDER.filter((item) => item.name.includes(petGender));
-  const filteredPetTypeItems = PET_TYPES.filter((item) => item.name.includes(petType));
-
-  // 몸무게 입력 제한
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>, onChange: (value: string) => void) => {
-    // 숫자와 소수점만 허용
     const input = e.target.value.replace(/[^0-9.]/g, "");
-    // 소수점이 여러 개면 첫 번째만 남기고 제거
     const [intPart = "", ...rest] = input.split(".");
-    const decimal = rest.join("").slice(0, 1); // 소수점 이후 첫 자리만
+    const decimal = rest.join("").slice(0, 1);
     const trimmedInt = intPart.slice(0, 3);
     const formatted =
       trimmedInt === "" && input.startsWith(".") ? `0.${decimal}` : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
-
     onChange(formatted);
+  };
+
+  // 텍스트 필드 분기 결정
+  const getState = (field: PetField, value: string | number) => {
+    const isFocused = focusedField === field || activeDropDown === field;
+    const hasValue = typeof value === "string" ? !!value.trim() : typeof value === "number" && value !== -1;
+    return isFocused ? "focus" : hasValue ? "done" : "default";
   };
 
   return (
     <div className={styles.wrapper}>
-      {/* 1-3-1. 종 */}
       <div className={styles.container}>
+        {/* 1-3-1. 종 */}
         <div className={styles.halfTextField}>
           <span>종</span>
-          <Controller
-            name="petType"
-            control={control}
-            render={({ field }) => {
-              const hasValue = !!field.value.trim();
-              const isFocused = activeDropDown === "petType";
-
-              return (
-                <>
-                  <TextField
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    placeholder="종 선택하기"
-                    isDelete={false}
-                    onClick={() => handleTextFieldClick("petType")}
-                    state={isFocused ? "focus" : hasValue ? "done" : "default"}
-                  />
-                  {activeDropDown === "petType" && (
-                    <DropDown
-                      isOpen={true}
-                      items={filteredPetTypeItems}
-                      onClickItem={(value) => handleDropDownClick("petType", value)}
-                      size="half"
-                    />
-                  )}
-                </>
-              );
-            }}
+          <TextField
+            value={petType}
+            onChange={(e) => setPetType(e.target.value)}
+            onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
+            placeholder="종 선택하기"
+            isDelete={false}
+            state={activeDropDown === "petType" ? "focus" : petType.trim() ? "done" : "default"}
           />
+          {activeDropDown === "petType" && (
+            <DropDown
+              isOpen
+              items={PET_TYPES.filter((item) => item.name.includes(petType))}
+              onClickItem={(value) => {
+                const trimmedValue = value.replace(/\s+/g, "");
+                setPetType(trimmedValue);
+                setActiveDropDown(null);
+              }}
+              size="half"
+            />
+          )}
         </div>
 
         {/* 1-3-2. 성별 */}
         <div className={styles.halfTextField}>
           <span>성별</span>
           <Controller
-            name="petGender"
+            name="gender"
             control={control}
-            render={({ field }) => {
-              const hasValue = !!field.value.trim();
-              const isFocused = activeDropDown === "petGender";
-
-              return (
-                <>
-                  <TextField
-                    value={field.value}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    placeholder="성별 선택하기"
-                    isDelete={false}
-                    onClick={() => handleTextFieldClick("petGender")}
-                    state={isFocused ? "focus" : hasValue ? "done" : "default"}
+            render={({ field }) => (
+              <>
+                <TextField
+                  value={field.value}
+                  onChange={(e) => field.onChange(e.target.value)}
+                  placeholder="성별 선택하기"
+                  isDelete={false}
+                  onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
+                  state={getState("gender", field.value)}
+                />
+                {activeDropDown === "gender" && (
+                  <DropDown
+                    isOpen
+                    items={GENDER.filter((item) => item.name.includes(field.value))}
+                    onClickItem={(value) => handleDropDownClick("gender", value)}
+                    size="half"
                   />
-                  {activeDropDown === "petGender" && (
-                    <DropDown
-                      isOpen={true}
-                      items={filteredGenderItems}
-                      onClickItem={(value) => handleDropDownClick("petGender", value)}
-                      size="half"
-                    />
-                  )}
-                </>
-              );
-            }}
+                )}
+              </>
+            )}
           />
         </div>
       </div>
 
-      {/* 1-3-3. 종류 */}
       <div className={styles.container}>
+        {/* 1-3-3. 종류 */}
         <div className={styles.halfTextField}>
           <span>종류</span>
           <Controller
-            name="petId"
+            name="breedId"
             control={control}
             render={({ field }) => {
-              const isFocused = focusedField === "petId";
-              const hasValue = !!field.value.trim();
-
+              const stringValue = field.value === -1 ? "" : String(field.value);
               return (
                 <TextField
-                  value={field.value}
+                  value={stringValue}
                   onChange={(e) => field.onChange(e.target.value)}
-                  onFocus={() => setFocusedField("petId")}
+                  onFocus={() => setFocusedField("breedId")}
                   onBlur={() => setFocusedField(null)}
                   placeholder="예시: 샴"
                   isDelete={false}
                   maxLength={20}
-                  state={isFocused ? "focus" : hasValue ? "done" : "default"}
+                  state={getState("breedId", stringValue)}
                 />
               );
             }}
@@ -172,21 +130,19 @@ const DirectMyPetInfo = () => {
         <div className={styles.halfTextField}>
           <span>몸무게</span>
           <Controller
-            name="petWeight"
+            name="weight"
             control={control}
             render={({ field }) => {
-              const hasValue = !!field.value.trim();
-              const isFocused = focusedField === "petWeight";
-
+              const stringValue = field.value === -1 ? "" : String(field.value);
               return (
                 <TextField
-                  value={field.value}
+                  value={stringValue}
                   onChange={(e) => handleWeightChange(e, field.onChange)}
-                  onFocus={() => setFocusedField("petWeight")}
+                  onFocus={() => setFocusedField("weight")}
                   onBlur={() => setFocusedField(null)}
                   placeholder="예시: 5.3kg"
                   isDelete={false}
-                  state={isFocused ? "focus" : hasValue ? "done" : "default"}
+                  state={getState("weight", stringValue)}
                 />
               );
             }}
