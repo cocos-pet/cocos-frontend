@@ -24,7 +24,10 @@ const ReviewSymptom = ({ onCategoryChange, symptomBodyData }: ReviewSymptomProps
 
   return (
     <div className={styles.wrapper}>
-      <span className={styles.questionStyle}>어떤 증상으로 방문했나요?</span>
+      <div className={styles.align}>
+        <span className={styles.questionStyle}>어떤 증상으로 방문했나요?</span>
+        <span className={styles.optionalStyle}>(선택)</span>
+      </div>
       {selectedSymptomIds.map((id) => (
         <BtnToChip
           key={id}
