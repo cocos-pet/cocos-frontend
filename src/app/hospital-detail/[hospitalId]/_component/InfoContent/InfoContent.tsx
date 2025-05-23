@@ -13,14 +13,7 @@ export interface InfoContentProps {
 export default function InfoContent({ hospitalId }: InfoContentProps) {
   const [showToast, setShowToast] = useState(false);
 
-  console.log("InfoContent - hospitalId:", hospitalId);
   const { data: hospitalData, isLoading, error } = useGetHospitalDetail(hospitalId);
-
-  console.log("InfoContent - API Response:", {
-    data: hospitalData,
-    isLoading,
-    error,
-  });
 
   const handleCopy = () => {
     if (!hospitalData?.address) return;
@@ -31,7 +24,6 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
 
   if (isLoading) return <div>로딩 중...</div>;
   if (error) {
-    console.error("InfoContent - API Error:", error);
     return <div>에러가 발생했습니다.</div>;
   }
   if (!hospitalData) return null;
