@@ -4,6 +4,7 @@ import React from "react";
 import { button, ButtonVariants, icon } from "@common/component/Button/styles.css.ts";
 
 interface ButtonProps {
+  width?: string;
   label?: string | React.ReactNode;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
@@ -30,6 +31,7 @@ type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
  */
 
 export const Button = ({
+  width = "",
   label = "Button",
   leftIcon,
   rightIcon,
@@ -37,7 +39,7 @@ export const Button = ({
   variant = "solidPrimary",
   disabled,
   onClick,
-  style,
+   style,
   className,
   ...props
 }: CombinedButtonProps) => {

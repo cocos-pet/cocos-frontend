@@ -1,4 +1,4 @@
-import { font, semanticColor } from "@style/styles.css";
+import { font, semanticColor, color } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 
@@ -35,5 +35,23 @@ export const tabBar = recipe({
       true: { backgroundColor: semanticColor.primary.heavy },
       false: { backgroundColor: "transparent" },
     },
+    variant: {
+      good: {},
+      bad: {},
+    },
   },
+  compoundVariants: [
+    {
+      variants: { active: true, variant: "good" },
+      style: {
+        backgroundColor: semanticColor.primary.heavy,
+      },
+    },
+    {
+      variants: { active: true, variant: "bad" },
+      style: {
+        backgroundColor: color.red.point_red,
+      },
+    },
+  ],
 });

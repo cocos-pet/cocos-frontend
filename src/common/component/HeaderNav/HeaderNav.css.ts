@@ -14,7 +14,6 @@ export const headerItem = recipe({
       maxWidth: "76.8rem",
       height: "6.4rem",
       padding: "1.8rem 2.2rem",
-
       borderBottom: `1px solid ${color.gray.gray200}`,
       backgroundColor: color.gray.gray000,
       color: color.gray.gray900,
@@ -27,10 +26,14 @@ export const headerItem = recipe({
         gridTemplateColumns: "auto 1fr",
         gap: "0.8rem",
       },
-
       // 아이콘 + 타이틀없음 + 아이콘
       noTitle: {
         // gridTemplateColumns: "repeat(2, 1fr)",
+      },
+
+      noBackground: {
+        backgroundColor: "transparent",
+        borderBottom: "transparent",
       },
     },
   },
