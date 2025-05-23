@@ -3,6 +3,9 @@ import { color } from "@style/styles.css";
 import * as styles from "./ReviewPetInfo.style.css";
 import DirectMyPetInfo from "./DirectMyPetInfo";
 import { PetInfoType } from "@app/review/write/_section/Step1";
+import { useGetPetInfo } from "@api/domain/mypage/hook";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "@app/review/write/page";
 
 interface ReviewPetInfoProps {
   selectedPetInfo: PetInfoType | null;
@@ -10,6 +13,9 @@ interface ReviewPetInfoProps {
 }
 
 const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps) => {
+  const { setValue, getValues } = useFormContext<ReviewFormData>();
+  const { data: petInfo } = useGetPetInfo();
+
   return (
     <>
       {/* 1-3. 동물 정보 */}
@@ -22,7 +28,17 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
         {/* 버튼1. 내 정보 */}
         <button
           className={styles.myPetInfoBtn({ selected: selectedPetInfo === "myPet" })}
-          onClick={() => onSelectPetInfo("myPet")}
+          onClick={() => {
+            onSelectPetInfo("myPet");
+            if (petInfo) {
+              setValue("breedId", petInfo?.breedId ?? -1);
+              setValue("gender", petInfo?.petGender ?? "");
+              setValue("weight", petInfo?.petAge ?? -1);
+            }
+            // ⚠️ 삭제예정 디버깅용 콘솔
+            const currentValues = getValues();
+            console.log("현재 폼 상태:", currentValues);
+          }}
         >
           <span className={styles.buttonText}>
             내 동물 정보에서 불러오기
