@@ -43,6 +43,13 @@ const DirectMyPetInfo = () => {
     return isFocused ? "focus" : hasValue ? "done" : "default";
   };
 
+  // 내 동물정보 클릭 후 직접 입력하기 클릭시 F/M 렌더링 방지
+  const getGenderLabel = (value: string) => {
+    if (value === "F") return "암컷";
+    if (value === "M") return "수컷";
+    return value;
+  };
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -80,7 +87,7 @@ const DirectMyPetInfo = () => {
             render={({ field }) => (
               <>
                 <TextField
-                  value={field.value}
+                  value={getGenderLabel(field.value)}
                   onChange={(e) => field.onChange(e.target.value)}
                   placeholder="성별 선택하기"
                   isDelete={false}
@@ -91,7 +98,10 @@ const DirectMyPetInfo = () => {
                   <DropDown
                     isOpen
                     items={GENDER.filter((item) => item.name.includes(field.value))}
-                    onClickItem={(value) => handleDropDownClick("gender", value)}
+                    onClickItem={(value) => {
+                      const mapped = value === "암컷" ? "F" : value === "수컷" ? "M" : value;
+                      handleDropDownClick("gender", mapped);
+                    }}
                     size="half"
                   />
                 )}
