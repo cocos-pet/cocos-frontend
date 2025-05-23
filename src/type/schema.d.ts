@@ -100,14 +100,14 @@ export interface paths {
             cookie?: never;
         };
         /**
-         * 사용자 애완동물 조회 API
-         * @description 사용자 애완동물 조회 API입니다.
+         * 사용자 반려동물 조회 API
+         * @description 사용자 반려동물 조회 API입니다.
          */
         get: operations["getPet"];
         put?: never;
         /**
-         * 사용자 애완동물 추가 API
-         * @description 사용자 애완동물 추가 API입니다.
+         * 사용자 반려동물 추가 API
+         * @description 사용자 반려동물 추가 API입니다.
          */
         post: operations["addPet"];
         delete?: never;
@@ -298,8 +298,8 @@ export interface paths {
         options?: never;
         head?: never;
         /**
-         * 사용자 애완동물 수정 API
-         * @description 사용자 애완동물 수정 API입니다.
+         * 사용자 반려동물 수정 API
+         * @description 사용자 반려동물 수정 API입니다.
          */
         patch: operations["updatePet"];
         trace?: never;
@@ -942,12 +942,12 @@ export interface components {
             images?: string[];
             /**
              * Format: int64
-             * @description 게시글 카테고리 아이디
+             * @description 게시글 동물 종 아이디
              * @example 1
              */
             animalId?: number;
             /**
-             * @description 게시글 카테고리 아이디
+             * @description 게시글 증상 아이디 리스트
              * @example [
              *       1,
              *       2
@@ -955,7 +955,7 @@ export interface components {
              */
             symptomIds?: number[];
             /**
-             * @description 게시글 카테고리 아이디
+             * @description 게시글 질병 아이디 리스트
              * @example [
              *       2,
              *       4
@@ -1536,6 +1536,11 @@ export interface components {
              * @example 2.7
              */
             weight?: number;
+            /**
+             * @description 방문 목적
+             * @example 수술
+             */
+            visitPurpose?: string;
         };
         ReviewSummaryOptionListResponse: {
             /** @description 좋은 리뷰 요약 리스트 */
@@ -2324,6 +2329,11 @@ export interface components {
              * @example 2.7
              */
             weight?: number;
+            /**
+             * @description 방문 목적
+             * @example 수술
+             */
+            visitPurpose?: string;
         };
         BaseResponseHospitalVisitPurposeListResponse: {
             /** Format: int32 */

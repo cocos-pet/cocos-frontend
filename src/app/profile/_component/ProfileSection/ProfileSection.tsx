@@ -82,7 +82,7 @@ const FavoriteHospital = ({ nickname }: { nickname: string }) => {
               {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
           </div>
-          <Image src={data.image ?? nocategory} alt="병원이미지" className={favoriteHospitalStyles.rightContentBox} />
+          {/* <Image src={data.image ?? nocategory} alt="병원이미지" className={favoriteHospitalStyles.rightContentBox} /> */}
         </div>
       </div>
     </>
