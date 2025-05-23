@@ -16,7 +16,10 @@ const ReviewImg = () => {
 
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.title}>사진 첨부</h2>
+      <div className={styles.align}>
+        <h2 className={styles.title}>사진 첨부</h2>
+        <span className={styles.optional}>(선택)</span>
+      </div>
       <div className={styles.imgLayout}>
         <div className={styles.imgBox}>
           <IcAddphoto style={{ width: 104, height: 104 }} onClick={handleAddImage} />
