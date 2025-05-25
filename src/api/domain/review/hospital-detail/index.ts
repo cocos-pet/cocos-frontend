@@ -8,6 +8,6 @@ import { paths } from "@type/schema";
 type useGetHospitalDetail = paths["/api/dev/hospitals/{hospitalId}"]["get"]["responses"]["200"]["content"]["*/*"];
 
 export const getHospitalDetail = async (hospitalId: number) => {
-  const { data } = await get<useGetHospitalDetail>(`${API_PATH.HOSPITAL_DETAIL}/${hospitalId}`);
+  const { data } = await get<useGetHospitalDetail>(`${API_PATH.HOSPITALS}/${hospitalId}`);
   return data.data;
 };
