@@ -1,14 +1,19 @@
 import { useState } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
-
 import { ReviewFormData } from "../page";
 import { TextField } from "@common/component/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
 import { GENDER, PET_TYPES } from "../constant";
+import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
 
 const DirectMyPetInfo = () => {
   const { control, setValue } = useFormContext<ReviewFormData>();
+
+  const { watch } = useFormContext<ReviewFormData>();
+  const breedId = Number(watch("breedId"));
+
+  const { data: breedIdData } = usePetIdGet(!Number.isNaN(breedId) ? breedId : -1);
 
   type PetField = keyof ReviewFormData;
   type FocusableField = keyof ReviewFormData | "petType";
@@ -120,17 +125,39 @@ const DirectMyPetInfo = () => {
             control={control}
             render={({ field }) => {
               const stringValue = field.value === -1 ? "" : String(field.value);
+              const filteredBreeds =
+                breedIdData?.data?.breeds?.filter(
+                  (item): item is { id: number; name: string } =>
+                    typeof item.id === "number" && typeof item.name === "string" && item.name.includes(petType),
+                ) ?? [];
+
               return (
-                <TextField
-                  value={stringValue}
-                  onChange={(e) => field.onChange(e.target.value)}
-                  onFocus={() => setFocusedField("breedId")}
-                  onBlur={() => setFocusedField(null)}
-                  placeholder="예시: 샴"
-                  isDelete={false}
-                  maxLength={20}
-                  state={getState("breedId", stringValue)}
-                />
+                <>
+                  <TextField
+                    value={stringValue}
+                    onChange={(e) => field.onChange(e.target.value)}
+                    onFocus={() => setFocusedField("breedId")}
+                    onBlur={() => setFocusedField(null)}
+                    onClick={() => setActiveDropDown((prev) => (prev === "breedId" ? null : "breedId"))} // ⬅️ 드롭다운 토글 추가
+                    placeholder="예시: 샴"
+                    isDelete={false}
+                    maxLength={20}
+                    state={getState("breedId", stringValue)}
+                  />
+                  {activeDropDown === "breedId" && (
+                    <DropDown
+                      isOpen
+                      items={filteredBreeds}
+                      onClickItem={(selectedName) => {
+                        const selected = filteredBreeds.find((b) => b.name === selectedName);
+                        if (selected) {
+                          handleDropDownClick("breedId", String(selected.id));
+                        }
+                      }}
+                      size="half"
+                    />
+                  )}
+                </>
               );
             }}
           />
