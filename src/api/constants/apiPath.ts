@@ -25,7 +25,7 @@ export const API_PATH = {
   TEST_HEALTH_CHECK: "/api/dev/test/health-check",
   TEST_TOKEN_CHECK: "/api/dev/test/token-check",
 
-  HOSPITAL: "/api/dev/hospitals",
+  HOSPITALS: "/api/dev/hospitals",
   HOSPITAL_SEARCH: "/api/dev/search/hospital",
 
   MEMBERS_HOSPITALS: "/api/dev/members/hospitals",

@@ -31,6 +31,6 @@ export interface PostHospitalListRequest {
  */
 
 export const postHospitalList = async (body: PostHospitalListRequest): Promise<HospitalListResponse> => {
-  const { data } = await post<HospitalListResponse>(API_PATH.HOSPITAL, body);
+  const { data } = await post<HospitalListResponse>(API_PATH.HOSPITALS, body);
   return data;
 };

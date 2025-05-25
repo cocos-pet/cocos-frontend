@@ -12,16 +12,6 @@ interface Hospital {
   image: string;
 }
 
-interface HospitalResponse {
-  code: number;
-  message: string;
-  data: {
-    cursorId: number;
-    cursorReviewCount: number;
-    hospitals: Hospital[];
-  };
-}
-
 interface HospitalListProps {
   title: string;
   highlightText: string;
@@ -30,16 +20,10 @@ interface HospitalListProps {
 export default function HospitalList({ title, highlightText }: HospitalListProps) {
   const { ref, inView } = useInView();
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteHospitalList({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalList({
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
-    image: ""
   });
 
   useEffect(() => {
@@ -54,28 +38,18 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
         {title} <span className={styles.highlight}>{highlightText}</span>이에요
       </h2>
       <div className={styles.listContainer}>
-        {data?.pages.map((page: { data: { hospitals: Hospital[]; }; }, pageIndex: number) =>
+        {data?.pages.map((page: { data: { hospitals: Hospital[] } }, pageIndex: number) =>
           page.data?.hospitals?.map((hospital: Hospital) => (
             <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
               <div className={styles.hospitalInfo}>
                 <h3 className={styles.hospitalName}>{hospital.name}</h3>
-                <p className={styles.hospitalAddress}>
-                  {hospital.address} · 리뷰 {hospital.reviewCount}
-                </p>
+                <p className={styles.hospitalAddress}>{hospital.address}</p>
+                <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
               </div>
-              <Image
-                src={hospital.image}
-                alt={hospital.name}
-                width={80}
-                height={80}
-                className={styles.hospitalImage}
-              />
+              <Image src={hospital.image} alt={hospital.name} width={80} height={80} className={styles.hospitalImage} />
             </div>
-          ))
+          )),
         )}
-        <div ref={ref} className={styles.loadingTrigger}>
-          {isFetchingNextPage && "로딩 중"}
-        </div>
       </div>
     </div>
   );
