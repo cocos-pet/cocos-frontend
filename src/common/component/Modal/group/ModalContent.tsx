@@ -1,4 +1,4 @@
-import { forwardRef, HTMLAttributes, ReactNode } from "react";
+import React, { forwardRef, HTMLAttributes, ReactNode } from "react";
 import { ModalBodyStyle, ModalContentStyle } from "@common/component/Modal/style.css.ts";
 import { useModalContext } from "@common/component/Modal/context.ts";
 
@@ -13,8 +13,12 @@ export const ModalContent = forwardRef<HTMLDivElement, ModalContentProps>((props
   const { open } = useModalContext();
   if (!open) return null;
 
+  const handleContentClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+  };
+
   return (
-    <div className={ModalBodyStyle} ref={forwardedRef} {...rest}>
+    <div className={ModalBodyStyle} ref={forwardedRef} onClick={handleContentClick} {...rest}>
       {title}
       <div className={ModalContentStyle}>{children}</div>
       {bottomAffix}

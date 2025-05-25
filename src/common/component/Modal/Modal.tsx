@@ -55,9 +55,18 @@ const ModalRoot = forwardRef<HTMLDivElement, ModalBodyProps>((props, forwardRef)
     }
   };
 
+  const handleBackdropClick = () => {
+    setOpen(false);
+  };
+
   return (
     <ModalContext.Provider value={{ open: internalOpen, setOpen }}>
-      <div ref={forwardRef} className={ModalRootStyle({ isOpen: internalOpen })} {...restProps}>
+      <div
+        ref={forwardRef}
+        className={ModalRootStyle({ isOpen: internalOpen })}
+        onClick={handleBackdropClick}
+        {...restProps}
+      >
         {children}
       </div>
     </ModalContext.Provider>
