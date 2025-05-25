@@ -13,7 +13,7 @@ export const useReviewPost = (hospitalId: number) => {
     mutationFn: (data: ReviewFormData) => postReview(hospitalId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: REVIEW_QUERY_KEY,
+        queryKey: REVIEW_QUERY_KEY.REVIEW_QUERY_KEY,
       });
     },
   });
