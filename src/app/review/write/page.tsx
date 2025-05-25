@@ -38,26 +38,9 @@ export const defaultValues: ReviewFormData = {
   weight: -1,
 };
 
-type FunnelStep = "Step1" | "Step2" | "Step3" | "Step4";
-interface FunnelState {
-  step: FunnelStep;
-  context: Record<string, unknown>;
-}
-
 export default function Page() {
-  const funnel = useReviewFunnel() as unknown as {
-    history: FunnelState[];
-    currentIndex: number;
-    push: (state: FunnelState) => void;
-    pop: () => void;
-    replace: (state: FunnelState) => void;
-    go: (delta: number) => void;
-    cleanup: () => void;
-  };
-
-  const historyArray = funnel.history as unknown as FunnelState[];
-  const current = historyArray[funnel.currentIndex];
-  const step = current.step;
+  const funnel = useReviewFunnel();
+  const step = funnel.step;
 
   const router = useRouter();
 
