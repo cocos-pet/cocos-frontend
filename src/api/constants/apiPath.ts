@@ -25,8 +25,6 @@ export const API_PATH = {
   POST_POPULAR: "/api/dev/posts/popular",
   POST_CATEGORIES: "/api/dev/posts/categories",
 
-  HOSPITALS: "/api/dev/hospitals",
-
   TEST_HEALTH_CHECK: "/api/dev/test/health-check",
   TEST_TOKEN_CHECK: "/api/dev/test/token-check",
 
@@ -35,6 +33,7 @@ export const API_PATH = {
   HOSPITAL_SUMMARY_OPTION: "/api/dev/hospitals/reviews/summary/option",
   HOSPITALS_PURPOSE: "/api/dev/hospitals/purposes",
   HOSPITALS_REVIEWS_SUMMARY: "/api/dev/hospitals/reviews/summary/option",
+  HOSPITALS: "/api/dev/hospitals",
   HOSPITAL_SEARCH: "/api/dev/search/hospital",
 
   MEMBERS_HOSPITALS: "/api/dev/members/hospitals",

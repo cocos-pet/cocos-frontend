@@ -31,8 +31,8 @@ export interface PostHospitalListRequest {
  * @description 병원 리뷰 리스트 조회 API
  */
 
-export const postHospitalList = async (body: PostHospitalListRequest): Promise<PostHospitalListResponse> => {
-  const { data } = await post<PostHospitalListResponse>(API_PATH.HOSPITAL, body);
+export const postHospitalList = async (body: PostHospitalListRequest): Promise<HospitalListResponse> => {
+  const { data } = await post<HospitalListResponse>(API_PATH.HOSPITALS, body);
   return data;
 };
 
