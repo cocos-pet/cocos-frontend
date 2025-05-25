@@ -18,6 +18,7 @@ const ReviewSymptom = ({ onCategoryChange, symptomBodyData }: ReviewSymptomProps
   const selectedSymptomIds = watch("symptomIds");
 
   const handleRemoveSymptom = (removeId: number) => {
+    const selectedSymptomIds = watch("symptomIds") ?? [];
     const updated = selectedSymptomIds.filter((id) => id !== removeId);
     setValue("symptomIds", updated);
   };
@@ -28,7 +29,7 @@ const ReviewSymptom = ({ onCategoryChange, symptomBodyData }: ReviewSymptomProps
         <span className={styles.questionStyle}>어떤 증상으로 방문했나요?</span>
         <span className={styles.optionalStyle}>(선택)</span>
       </div>
-      {selectedSymptomIds.map((id) => (
+      {selectedSymptomIds?.map((id) => (
         <BtnToChip
           key={id}
           label={getSymptomNameById(id, symptomBodyData)}

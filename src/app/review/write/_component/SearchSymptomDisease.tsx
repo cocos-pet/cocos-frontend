@@ -58,8 +58,8 @@ const SearchSymptomDisease = ({
   const toggleDiseaseChip = (chipId: number) => {
     if (selectedDiseaseId === chipId) {
       // 이미 선택된 칩을 다시 클릭하면 선택 해제
-      setValue("diseaseId", -1);
-    } else if (selectedDiseaseId !== -1) {
+      setValue("diseaseId", null);
+    } else if (selectedDiseaseId != null) {
       // 이미 선택된 상태에서 다른 칩을 클릭하면 교체 + 토스트
       setValue("diseaseId", chipId);
       setToastKey(Date.now());
@@ -69,6 +69,7 @@ const SearchSymptomDisease = ({
       setValue("diseaseId", chipId);
     }
   };
+
   return (
     <BottomSheet isOpen={isOpen} handleOpen={() => {}} handleDimmedClose={onClose}>
       <>
@@ -82,7 +83,7 @@ const SearchSymptomDisease = ({
               onClick={() => toggleSymptomChip(chipId)}
             />
           ))}
-          {selectedDiseaseId !== -1 && (
+          {selectedDiseaseId != null && (
             <Chip
               icon
               key={selectedDiseaseId}
@@ -117,6 +118,7 @@ const SearchSymptomDisease = ({
         {showToast && (
           <Toast key={toastKey} message="진단은 하나만 선택할 수 있어요" showDeleteIcon={false} variant="blue" />
         )}
+
         {/* 하단 버튼 */}
         <div className={styles.buttonWrapper}>
           <Button label="확인하기" size="large" width="100%" onClick={onClose} />
@@ -125,4 +127,5 @@ const SearchSymptomDisease = ({
     </BottomSheet>
   );
 };
+
 export default SearchSymptomDisease;

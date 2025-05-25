@@ -12,8 +12,8 @@ import Step4 from "@app/review/write/_section/Step4";
 
 export interface ReviewFormData {
   visitedAt: string;
-  symptomIds: number[];
-  diseaseId: number;
+  symptomIds: number[] | null;
+  diseaseId: number | null;
   purposeId: number;
   goodReviewIds: number[];
   badReviewIds: number[];
@@ -26,8 +26,8 @@ export interface ReviewFormData {
 
 export const defaultValues: ReviewFormData = {
   visitedAt: "",
-  symptomIds: [],
-  diseaseId: -1,
+  symptomIds: null,
+  diseaseId: null,
   purposeId: -1,
   goodReviewIds: [],
   badReviewIds: [],
