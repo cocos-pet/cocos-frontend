@@ -12,6 +12,7 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import { useQuery } from "@tanstack/react-query";
 import { post } from "@api/index";
 import { number } from "framer-motion";
+import { PATH } from "@route/path.ts";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -55,19 +56,19 @@ function HospitalSearchDoneContent() {
   };
 
   const onTextFieldClick = () => {
-    router.push(`/review/search/done?searchText=${searchText}`);
+    router.push(`${PATH.REVIEW.HOSPITALS_DONE}?searchText=${searchText}`);
   };
 
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") {
-      router.push(`/review/search/done?searchText=${searchText}`);
+      router.push(`${PATH.REVIEW.HOSPITALS_DONE}?searchText=${searchText}`);
     }
   };
 
   const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
-    router.push("/review/search/done");
+    router.push(PATH.REVIEW.HOSPITALS_DONE);
   };
 
   const onBackClick = () => {
