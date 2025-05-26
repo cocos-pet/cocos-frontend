@@ -9,7 +9,7 @@ const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const page = () => {
   const handleGoHospitalDetail = () => {
-    window.history.go(-2);
+    window.history.go(-3);
   };
 
   return (
