@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useFormContext, Controller } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
 import { ReviewFormData } from "../page";
@@ -8,11 +8,11 @@ import { GENDER, PET_TYPES } from "../constant";
 import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
 import { useDebounce } from "@shared/hook/useDebounce";
 
+type PetField = keyof ReviewFormData;
+type FocusableField = keyof ReviewFormData | "petType";
+
 const DirectMyPetInfo = () => {
   const { control, watch, setValue } = useFormContext<ReviewFormData>();
-
-  type PetField = keyof ReviewFormData;
-  type FocusableField = keyof ReviewFormData | "petType";
 
   // 종은 리뷰 제출 항목이 아니므로 리액트 훅폼 상태에서 분리
   const [petType, setPetType] = useState("");
@@ -20,6 +20,7 @@ const DirectMyPetInfo = () => {
   const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
   // 종류, 몸무게 포커스
   const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
+  // 드롭다운 필터링용 검색 입력값
   const [breedInput, setBreedInput] = useState("");
 
   const handleDropDownClick = (field: PetField, value: string) => {
@@ -39,9 +40,9 @@ const DirectMyPetInfo = () => {
   };
 
   // 텍스트 필드 분기 결정
-  const getState = (field: PetField, value: string | number) => {
+  const getState = (field: FocusableField, value: string | number) => {
     const isFocused = focusedField === field || activeDropDown === field;
-    const hasValue = typeof value === "string" ? !!value.trim() : typeof value === "number" && value !== -1;
+    const hasValue = typeof value === "string" ? !!value.trim() : value !== -1;
     return isFocused ? "focus" : hasValue ? "done" : "default";
   };
 
@@ -53,12 +54,20 @@ const DirectMyPetInfo = () => {
   };
 
   const breedId = Number(watch("breedId"));
-  const inferredPetId = breedId > 0 ? (breedId < 230 ? 2 : 1) : null;
+  const inferredPetId = useMemo(() => {
+    return breedId > 0 ? (breedId < 230 ? 2 : 1) : -1;
+  }, [breedId]);
+
   // api
-  const { data: breedIdData } = usePetIdGet(inferredPetId ?? 2); 
-  const selectedBreed = breedIdData?.data?.breeds?.find((b) => b.id === breedId);
-  // petType 렌더링용 display 값
-  const displayPetType = selectedBreed ? (inferredPetId === 2 ? "강아지" : "고양이") : petType;
+  const { data: breedIdData } = usePetIdGet(inferredPetId ?? 2);
+
+  const selectedBreed = useMemo(() => {
+    return breedIdData?.data?.breeds?.find((b) => b.id === breedId) ?? -1;
+  }, [breedId, breedIdData]);
+  
+  const displayPetType = useMemo(() => {
+    return selectedBreed ? (inferredPetId === 2 ? "강아지" : "고양이") : petType;
+  }, [selectedBreed, inferredPetId, petType]);
 
   return (
     <div className={styles.wrapper}>
