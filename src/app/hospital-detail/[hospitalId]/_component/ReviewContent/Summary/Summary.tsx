@@ -1,26 +1,56 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import Divider from "@common/component/Divider/Divider"
-import * as styles from "./Summary.css"
-import { IcChevronDown } from "@asset/svg"
+import { useState } from "react";
+import Divider from "@common/component/Divider/Divider";
+import * as styles from "./Summary.css";
+import { IcChevronDown } from "@asset/svg";
+import { useGetHospitalSummary } from "@api/domain/review/summary/hook";
+import { useParams } from "next/navigation";
 
 export interface ReviewSummaryItem {
-  id: number
-  name: string
-  count: number
+  id: number;
+  label: string;
 }
 
-interface SummaryProps {
-  goodReviews: ReviewSummaryItem[]
-  badReviews: ReviewSummaryItem[]
-}
+const Summary = () => {
+  const [isFolded, setIsFolded] = useState(false);
+  const params = useParams();
+  const hospitalId = params?.hospitalId as string;
+  const { data, isLoading } = useGetHospitalSummary(Number(hospitalId));
 
-const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
-  const [isFolded, setIsFolded] = useState(false)
+  if (isLoading) {
+    return (
+      <div className={styles.summaryContainer}>
+        <div className={styles.summaryTitle} style={{ height: "24px", background: "#eee" }} />
+        <div className={styles.summarySubTitle} style={{ height: "16px", background: "#eee", width: "80%" }} />
+        <div className={styles.summaryGrid}>
+          <div>
+            <div className={styles.summarySectionTitle} style={{ height: "20px", background: "#eee", width: "60%" }} />
+            {[1, 2, 3].map((i) => (
+              <div key={i} className={styles.summaryItem}>
+                <div style={{ height: "16px", background: "#eee", width: "70%" }} />
+              </div>
+            ))}
+          </div>
+          <div>
+            <div className={styles.summarySectionTitle} style={{ height: "20px", background: "#eee", width: "60%" }} />
+            {[1, 2, 3].map((i) => (
+              <div key={i} className={styles.summaryItem}>
+                <div style={{ height: "16px", background: "#eee", width: "70%" }} />
+              </div>
+            ))}
+          </div>
+        </div>
+        <Divider size="large" />
+      </div>
+    );
+  }
 
-  const displayedGoodReviews = isFolded ? goodReviews : goodReviews.slice(0, 3)
-  const displayedBadReviews = isFolded ? badReviews : badReviews.slice(0, 3)
+  if (!data?.goodReviews || !data?.badReviews) return null;
+
+  const { goodReviews, badReviews } = data;
+  const displayedGoodReviews = isFolded ? goodReviews : goodReviews.slice(0, 3);
+  const displayedBadReviews = isFolded ? badReviews : badReviews.slice(0, 3);
 
   return (
     <div className={styles.summaryContainer}>
@@ -31,8 +61,7 @@ const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
           <h3 className={styles.summarySectionTitle}>좋았던 점</h3>
           {displayedGoodReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
-              <span>{item.name}</span>
-              <span className={styles.goodCount}>{item.count}</span>
+              <span>{item.label}</span>
             </div>
           ))}
         </div>
@@ -40,25 +69,21 @@ const Summary = ({ goodReviews, badReviews }: SummaryProps) => {
           <h3 className={styles.summarySectionTitle}>아쉬운 점</h3>
           {displayedBadReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
-              <span>{item.name}</span>
-              <span className={styles.badCount}>{item.count}</span>
+              <span>{item.label}</span>
             </div>
           ))}
         </div>
       </div>
       {(goodReviews.length > 3 || badReviews.length > 3) && (
         <div className={styles.folderButtonWrapper}>
-          <button
-            className={styles.folderButton}
-            onClick={() => setIsFolded(!isFolded)}
-          >
-            <IcChevronDown className={isFolded ? styles.rotateIcon : ''} />
+          <button className={styles.folderButton} onClick={() => setIsFolded(!isFolded)}>
+            <IcChevronDown className={isFolded ? styles.rotateIcon : ""} />
           </button>
         </div>
       )}
       <Divider size="large" />
     </div>
-  )
-}
+  );
+};
 
-export default Summary
+export default Summary;
