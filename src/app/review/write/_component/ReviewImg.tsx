@@ -1,16 +1,16 @@
-import Image from "next/image";
 import { IcAddphoto } from "@asset/svg/index";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "@app/review/write/page";
 import * as styles from "./ReviewImg.style.css";
 import { useRef } from "react";
+import ImageCover from "@app/community/_component/ImageCover/ImageCover";
 
 interface ReviewImgProps {
   setImageNames: React.Dispatch<React.SetStateAction<string[]>>;
   setUploadedImageForms: React.Dispatch<React.SetStateAction<FormData[]>>;
 }
 
-const ReviewImg = ({  setImageNames,  setUploadedImageForms }: ReviewImgProps) => {
+const ReviewImg = ({ setImageNames, setUploadedImageForms }: ReviewImgProps) => {
   const { watch, setValue } = useFormContext<ReviewFormData>();
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -66,9 +66,8 @@ const ReviewImg = ({  setImageNames,  setUploadedImageForms }: ReviewImgProps) =
             style={{ display: "none" }}
           />
           {images.map((src, id) => (
-            <div key={id} className={styles.imageWrapper}>
-              <Image src={src} alt={`uploaded-img-${id}`} width={104} height={104} />
-              <button onClick={() => handleDeleteImage(id)}>임시삭제버튼</button>
+            <div key={id}>
+              <ImageCover imageId={id} imageSrc={src} onDeleteClick={() => handleDeleteImage(id)} />
             </div>
           ))}
         </div>
