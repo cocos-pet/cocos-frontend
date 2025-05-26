@@ -18,35 +18,7 @@ const Summary = () => {
   const hospitalId = params?.hospitalId as string;
   const { data, isLoading } = useGetHospitalSummary(Number(hospitalId));
 
-  if (isLoading) {
-    return (
-      <div className={styles.summaryContainer}>
-        <div className={styles.summaryTitle} style={{ height: "24px", background: "#eee" }} />
-        <div className={styles.summarySubTitle} style={{ height: "16px", background: "#eee", width: "80%" }} />
-        <div className={styles.summaryGrid}>
-          <div>
-            <div className={styles.summarySectionTitle} style={{ height: "20px", background: "#eee", width: "60%" }} />
-            {[1, 2, 3].map((i) => (
-              <div key={i} className={styles.summaryItem}>
-                <div style={{ height: "16px", background: "#eee", width: "70%" }} />
-              </div>
-            ))}
-          </div>
-          <div>
-            <div className={styles.summarySectionTitle} style={{ height: "20px", background: "#eee", width: "60%" }} />
-            {[1, 2, 3].map((i) => (
-              <div key={i} className={styles.summaryItem}>
-                <div style={{ height: "16px", background: "#eee", width: "70%" }} />
-              </div>
-            ))}
-          </div>
-        </div>
-        <Divider size="large" />
-      </div>
-    );
-  }
-
-  if (!data?.goodReviews || !data?.badReviews) return null;
+  if (isLoading || !data?.goodReviews || !data?.badReviews) return null;
 
   const { goodReviews, badReviews } = data;
   const displayedGoodReviews = isFolded ? goodReviews : goodReviews.slice(0, 3);
