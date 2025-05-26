@@ -12,29 +12,29 @@ import Step4 from "@app/review/write/_section/Step4";
 
 export interface ReviewFormData {
   visitedAt: string;
-  symptomIds: number[] | null;
-  diseaseId: number | null;
+  symptomIds?: number[];
+  diseaseId?: number;
   purposeId: number;
   goodReviewIds: number[];
   badReviewIds: number[];
   content: string;
   images: string[];
   breedId: number;
-  gender: string;
+  gender: "F" | "M";
   weight: number;
 }
 
 export const defaultValues: ReviewFormData = {
   visitedAt: "",
-  symptomIds: null,
-  diseaseId: null,
+  symptomIds: undefined,
+  diseaseId: undefined,
   purposeId: -1,
   goodReviewIds: [],
   badReviewIds: [],
   content: "",
   images: [],
   breedId: -1,
-  gender: "",
+  gender: "F",
   weight: -1,
 };
 
