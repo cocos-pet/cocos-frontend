@@ -30,7 +30,7 @@ function SearchContent() {
     }
     saveKeyword(keyword, {
       onSettled: () => {
-        router.push(`/review/search/done?searchText=${encodeURIComponent(keyword)}`);
+        router.push(`${PATH.REVIEW.SEARCH}/done?searchText=${encodeURIComponent(keyword)}`);
       },
     });
   };
@@ -45,7 +45,7 @@ function SearchContent() {
   };
 
   const handleNavigate = (keyword: string) => {
-    router.push(`/review/search/done?searchText=${encodeURIComponent(keyword)}`);
+    router.push(`${PATH.REVIEW.SEARCH}/done?searchText=${encodeURIComponent(keyword)}`);
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
