@@ -3,7 +3,7 @@ import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "@app/review/write/page";
 import * as styles from "./ReviewImg.style.css";
 import { useRef } from "react";
-import ImageCover from "@app/community/_component/ImageCover/ImageCover";
+import ImageCover from "@shared/component/ImageCover/ImageCover";
 
 interface ReviewImgProps {
   setImageNames: React.Dispatch<React.SetStateAction<string[]>>;

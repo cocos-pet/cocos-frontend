@@ -25,7 +25,7 @@ import WriteInputSection from "../_component/WriteInputSection/WriteInputSection
 import { getDropdownIdtoIcon, getDropdownIdtoValue } from "../_utills/handleCategoryItem.tsx";
 import DropDown from "../_component/DropDown/DropDown.tsx";
 import TextArea from "../_component/TextArea/TextArea.tsx";
-import ImageCover from "../_component/ImageCover/ImageCover.tsx";
+import ImageCover from "../../../shared/component/ImageCover/ImageCover.tsx";
 import Tag from "../_component/Tag/Tag.tsx";
 import dynamic from "next/dynamic";
 
