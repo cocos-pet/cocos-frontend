@@ -5,7 +5,7 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../page";
 import { useReviewPost } from "@app/api/review/write/submit/hook";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
 
 import * as styles from "./Step4.style.css";
@@ -18,7 +18,6 @@ interface Step4Props {
 }
 
 const Step4 = ({ onPrev, onNext }: Step4Props) => {
-  const router = useRouter();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const searchParams = useSearchParams();
   const rawHospitalId = searchParams?.get("hospitalId");
@@ -34,56 +33,6 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
 
   const { mutate: submitReview } = useReviewPost(hospitalId);
   const { handleSubmit } = useFormContext<ReviewFormData>();
-
-  // const onValid = (data: ReviewFormData) => {
-  //   submitReview(data, {
-  //     onSuccess: () => {
-  //       onNext();
-  //     },
-  //     onError: (error) => {
-  //       console.error("리뷰 제출 실패", error);
-  //     },
-  //   });
-  // };
-
-  //   const onValid = (data: ReviewFormData) => {
-  //   submitReview(data, {
-  //     onSuccess: async (res) => {
-  //       const presignedUrls = res?.images; // 백엔드에서 presigned URL 배열 반환한다고 가정
-  //       if (!presignedUrls || presignedUrls.length === 0) {
-  //         console.error("presigned URL 없음");
-  //         return;
-  //       }
-
-  //       try {
-  //         await Promise.all(
-  //           presignedUrls.map((url: string, index: number) => {
-  //             const formData = uploadedImageForms[index];
-  //             const file = formData.get("file");
-
-  //             if (!file) throw new Error("FormData에 파일 없음");
-
-  //             return fetch(url, {
-  //               method: "PUT",
-  //               headers: {
-  //                 "Content-Type": (file as File).type,
-  //               },
-  //               body: file,
-  //             });
-  //           })
-  //         );
-
-  //         onNext(); // 업로드 완료 후 다음 단계 이동
-  //       } catch (err) {
-  //         console.error("이미지 업로드 실패", err);
-  //         alert("이미지 업로드에 실패했습니다.");
-  //       }
-  //     },
-  //     onError: (error) => {
-  //       console.error("리뷰 제출 실패", error);
-  //     },
-  //   });
-  // };
 
   const onValid = (data: ReviewFormData) => {
     submitReview(
@@ -117,7 +66,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
               }),
             );
 
-            onNext(); // ✅ 리뷰 업로드 완료 시 다음 스텝 이동
+            onNext();
           } catch (uploadErr) {
             console.error("이미지 업로드 실패", uploadErr);
             alert("이미지 업로드에 실패했습니다.");
@@ -125,7 +74,6 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
         },
 
         onError: (error) => {
-          // ✅ 타입을 강제하지 않고 안전하게 처리
           if (axios.isAxiosError(error) && error.response?.data?.code === 40415) {
             console.log("알 수 없는 오류");
           } else {
