@@ -15,7 +15,7 @@ interface ReviewPetInfoProps {
 }
 
 const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps) => {
-  const { setValue, getValues } = useFormContext<ReviewFormData>();
+  const { setValue } = useFormContext<ReviewFormData>();
   const { data: petInfo } = useGetPetInfo();
   // 토스트 리렌더링
   const [toastKey, setToastKey] = useState(0);
@@ -32,20 +32,19 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
 
         {/* 버튼1. 내 정보 */}
         <button
-          className={styles.myPetInfoBtn({ selected: selectedPetInfo === "myPet" })}
+          className={styles.myPetInfoBtn({
+            selected: selectedPetInfo === "myPet" && !!petInfo,
+          })}
           onClick={() => {
             onSelectPetInfo("myPet");
             if (petInfo) {
               setValue("breedId", petInfo?.breedId ?? -1);
-              setValue("gender", petInfo?.petGender ?? "");
+              setValue("gender", petInfo?.petGender ?? "F");
               setValue("weight", petInfo?.petAge ?? -1);
             } else {
               setToastKey(Date.now());
               setShowToast(true);
             }
-            // ⚠️ 삭제예정 디버깅용 콘솔
-            const currentValues = getValues();
-            console.log("현재 폼 상태:", currentValues);
           }}
         >
           <span className={styles.buttonText}>
