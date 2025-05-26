@@ -1,34 +1,61 @@
-import { useQuery, useMutation } from "@tanstack/react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { get, post } from "@api/index";
+import { API_PATH } from "@api/constants/apiPath";
 import {
-  getHospitalSearchKeywords,
-  postHospitalSearchKeyword,
-  postHospitalSearch,
   HospitalSearchRequest,
   HospitalSearchKeywordsResponse,
   postHospitalList,
   PostHospitalListRequest,
-  PostHospitalListResponse
+  PostHospitalListResponse,
 } from "./index";
 
-// 최근 검색어 조회
+export interface Keyword {
+  id: number;
+  content: string;
+}
+
 export const useGetHospitalSearchKeywords = () => {
   return useQuery<HospitalSearchKeywordsResponse>({
-    queryKey: ["hospitalSearchKeywords"],
-    queryFn: getHospitalSearchKeywords,
+    queryKey: ["hospital", "search", "keywords"],
+    queryFn: async () => {
+      const { data } = await get<HospitalSearchKeywordsResponse>(API_PATH.HOSPITAL_SEARCH);
+      return data;
+    },
   });
 };
 
-// 최근 검색어 저장
 export const usePostHospitalSearchKeyword = () => {
+  const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: (keyword: string) => postHospitalSearchKeyword(keyword),
+    mutationFn: async (keyword: string) => {
+      const { data } = await post<{
+        code: number;
+        message: string;
+        data: {
+          keywords: Keyword[];
+        };
+      }>(`${API_PATH.HOSPITAL_SEARCH}?keyword=${keyword}`);
+      return data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["hospital", "search", "keywords"] });
+    },
+    onError: (error) => {
+      console.error("검색어 저장 에러:", error);
+    },
   });
 };
 
 // 병원 검색 실행
-export const usePostHospitalSearch = () => {
-  return useMutation({
-    mutationFn: (body: HospitalSearchRequest) => postHospitalSearch(body),
+export const useGetHospitalSearch = (params: HospitalSearchRequest) => {
+  return useQuery({
+    queryKey: ["hospital", "search", params.keyword],
+    queryFn: async () => {
+      const { data } = await post(API_PATH.HOSPITALS, params);
+      return data;
+    },
+    enabled: !!params.keyword,
   });
 };
 

@@ -3,35 +3,35 @@ import { get, post } from "@api/index";
 import { paths } from "@type/schema";
 
 export interface PostHospitalListRequest {
-    locationId: number;
-    locationType: "CITY" | "DISTRICT";
-    size: number;
-    cursorId?: number;
-    keyword?: string;
-  }
-  
-  export interface Hospital {
-    id: number;
-    name: string;
-    address: string;
-    reviewCount: number;
-    image: string;
-  }
-  
-  export interface PostHospitalListResponse {
-    code: number;
-    message: string;
-    data: {
-      cursorId: number;
-      cursorReviewCount: number | null;
-      hospitals: Hospital[];
-    };
-  }
-  
-  export const postHospitalList = async (body: PostHospitalListRequest): Promise<PostHospitalListResponse> => {
-    const { data } = await post<PostHospitalListResponse>(API_PATH.HOSPITAL, body);
-    return data;
+  locationId: number;
+  locationType: "CITY" | "DISTRICT";
+  size: number;
+  cursorId?: number;
+  keyword?: string;
+}
+
+export interface Hospital {
+  id: number;
+  name: string;
+  address: string;
+  reviewCount: number;
+  image: string;
+}
+
+export interface PostHospitalListResponse {
+  code: number;
+  message: string;
+  data: {
+    cursorId: number;
+    cursorReviewCount: number | null;
+    hospitals: Hospital[];
   };
+}
+
+export const postHospitalList = async (body: PostHospitalListRequest): Promise<PostHospitalListResponse> => {
+  const { data } = await post<PostHospitalListResponse>(API_PATH.HOSPITALS, body);
+  return data;
+};
 
 export const searchHospitalGetResponse = async () => {
   const response = await get(API_PATH.HOSPITAL_SEARCH);
@@ -40,7 +40,8 @@ export const searchHospitalGetResponse = async () => {
 
 export type searchHospitalPostRequest = { keyword: string };
 
-export type searchPostHospitalResponse = paths['/api/dev/search/hospital']['post']['responses']['200']['content']['*/*'];
+export type searchPostHospitalResponse =
+  paths["/api/dev/search/hospital"]["post"]["responses"]["200"]["content"]["*/*"];
 
 export interface Keyword {
   id: number;
@@ -69,9 +70,30 @@ export const postHospitalSearchKeyword = async (keyword: string) => {
   return response.data;
 };
 
-export type HospitalSearchRequest = { keyword: string };
-export const postHospitalSearch = async (body: HospitalSearchRequest) => {
-  const response = await post(API_PATH.HOSPITAL_SEARCH, body);
+export interface HospitalSearchResponse {
+  code: number;
+  message: string;
+  data: {
+    cursorId: number;
+    cursorReviewCount: number;
+    hospitals: Hospital[];
+  };
+}
+
+export interface HospitalSearchRequest {
+  locationType: "CITY";
+  locationId?: number;
+  cursorId?: number;
+  cursorReviewCount?: number;
+  size: number;
+  keyword: string;
+  sortBy: "REVIEW";
+}
+
+export const getHospitalSearch = async (params: HospitalSearchRequest) => {
+  const response = await post<HospitalSearchResponse>(
+    `${API_PATH.HOSPITAL_SEARCH}?keyword=${encodeURIComponent(params.keyword)}`,
+    params,
+  );
   return response.data;
 };
-

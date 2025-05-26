@@ -2,7 +2,6 @@ import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css.ts";
 
 export const styles = {
-  container: style({}),
   icon: style({
     width: "2.4rem",
   }),
@@ -64,8 +63,8 @@ export const styles = {
     flexDirection: "row",
     gap: "1.2rem",
     alignItems: "stretch",
-    width:"33.5rem",
-    padding:"1.6rem 0rem 1.6rem 0rem",
+    width: "33.5rem",
+    padding: "1.6rem 0rem 1.6rem 0rem",
     borderBottom: `0.1rem solid ${color.gray.gray200}`,
   }),
   hospitalName: style([
@@ -90,14 +89,13 @@ export const styles = {
   hospitalImage: style({
     display: "flex",
     width: "10.4rem",
-      height: "10.4rem",
-      borderRadius: "0.8rem",
-    }),
-    hospitalText: style({
-      display:"flex",
-      flexDirection:"column",
-      marginTop:"2.95rem",
-      width:"24.7rem"
-    }),
-
-}; 
+    height: "10.4rem",
+    borderRadius: "0.8rem",
+  }),
+  hospitalText: style({
+    display: "flex",
+    flexDirection: "column",
+    marginTop: "2.95rem",
+    width: "24.7rem",
+  }),
+};

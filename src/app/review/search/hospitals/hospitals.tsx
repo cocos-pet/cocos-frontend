@@ -1,18 +1,13 @@
 "use client";
 import { styles } from "./hospitals.css";
-import {IcLeftarrow, IcSearch} from "@asset/svg";
-import {TextField} from "@common/component/TextField";
-import React, {ChangeEvent, Suspense, useEffect, useRef, useState} from "react";
-import {useRouter, useSearchParams} from "next/navigation";
+import { IcLeftarrow, IcSearch } from "@asset/svg";
+import { TextField } from "@common/component/TextField";
+import React, { ChangeEvent, Suspense, useEffect, useRef, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import {
-  useGetHospitalSearchKeywords,
-  usePostHospitalSearchKeyword,
-} from "@api/domain/hospitals/search/hook";
-import {
-  HospitalSearchKeywordsResponse,
-  Keyword,
-} from "@api/domain/hospitals/search";
+import { useGetHospitalSearchKeywords, usePostHospitalSearchKeyword } from "@api/domain/hospitals/search/hook";
+import { HospitalSearchKeywordsResponse, Keyword } from "@api/domain/hospitals/search";
+import { PATH } from "@route/path";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -25,25 +20,8 @@ function SearchContent() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data: keywordsData, refetch: refetchKeywords } = useGetHospitalSearchKeywords();
+  const { data: keywordsData, isLoading } = useGetHospitalSearchKeywords();
   const { mutate: saveKeyword } = usePostHospitalSearchKeyword();
-
-  const onSubmit = (searchText: string) => {
-    if (searchText.trim() === "") {
-      return;
-    }
-    handleSearch(searchText);
-  };
-
-  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter" && !isSubmitting) {
-      setIsSubmitting(true);
-      onSubmit(searchText);
-      setTimeout(() => {
-        setIsSubmitting(false);
-      }, 500);
-    }
-  };
 
   const handleSearch = (keyword: string) => {
     if (!keyword.trim()) {
@@ -51,14 +29,19 @@ function SearchContent() {
       return;
     }
     saveKeyword(keyword, {
-      onSuccess: () => {
-        refetchKeywords();
+      onSettled: () => {
         router.push(`/review/search/done?searchText=${encodeURIComponent(keyword)}`);
       },
-      onError: () => {
-        alert("검색어 저장에 실패했습니다.");
-      }
     });
+  };
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter" && !isSubmitting) {
+      e.preventDefault();
+      setIsSubmitting(true);
+      handleSearch(searchText);
+      setTimeout(() => setIsSubmitting(false), 500);
+    }
   };
 
   const handleNavigate = (keyword: string) => {
@@ -70,7 +53,7 @@ function SearchContent() {
   };
 
   const onBackClick = () => {
-    router.push("/review");
+    router.push(PATH.REVIEW.ROOT);
   };
 
   useEffect(() => {
@@ -81,7 +64,7 @@ function SearchContent() {
 
   const keywords = (keywordsData as HospitalSearchKeywordsResponse)?.data?.keywords || [];
 
-  if (isSubmitting) return <Loading height={45} />;
+  if (isLoading) return <Loading height={45} />;
 
   return (
     <div className={styles.container}>
@@ -93,7 +76,7 @@ function SearchContent() {
           placeholder={"우리 동네를 알려주세요 (예:서초동)"}
           onChange={onChange}
           onKeyDown={handleKeyDown}
-          icon={<IcSearch width={20} height={20} onClick={() => onSubmit(searchText)} />}
+          icon={<IcSearch width={20} height={20} onClick={() => handleSearch(searchText)} />}
           onClearClick={() => setSearchText("")}
         />
       </div>
@@ -104,7 +87,7 @@ function SearchContent() {
             <li
               key={keyword.id}
               className={styles.listItem}
-              onClick={() => { 
+              onClick={() => {
                 if (keyword.content) handleNavigate(keyword.content);
               }}
             >
