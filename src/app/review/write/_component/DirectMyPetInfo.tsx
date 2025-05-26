@@ -6,14 +6,10 @@ import { TextField } from "@common/component/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
 import { GENDER, PET_TYPES } from "../constant";
 import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
+import { useDebounce } from "@shared/hook/useDebounce";
 
 const DirectMyPetInfo = () => {
-  const { control, setValue } = useFormContext<ReviewFormData>();
-
-  const { watch } = useFormContext<ReviewFormData>();
-  const breedId = Number(watch("breedId"));
-
-  const { data: breedIdData } = usePetIdGet(!Number.isNaN(breedId) ? breedId : -1);
+  const { control, watch, setValue } = useFormContext<ReviewFormData>();
 
   type PetField = keyof ReviewFormData;
   type FocusableField = keyof ReviewFormData | "petType";
@@ -24,6 +20,7 @@ const DirectMyPetInfo = () => {
   const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
   // 종류, 몸무게 포커스
   const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
+  const [breedInput, setBreedInput] = useState("");
 
   const handleDropDownClick = (field: PetField, value: string) => {
     const trimmedValue = value.replace(/\s+/g, "");
@@ -55,6 +52,14 @@ const DirectMyPetInfo = () => {
     return value;
   };
 
+  const breedId = Number(watch("breedId"));
+  const inferredPetId = breedId > 0 ? (breedId < 230 ? 2 : 1) : null;
+  // api
+  const { data: breedIdData } = usePetIdGet(inferredPetId ?? 2); 
+  const selectedBreed = breedIdData?.data?.breeds?.find((b) => b.id === breedId);
+  // petType 렌더링용 display 값
+  const displayPetType = selectedBreed ? (inferredPetId === 2 ? "강아지" : "고양이") : petType;
+
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -62,12 +67,12 @@ const DirectMyPetInfo = () => {
         <div className={styles.halfTextField}>
           <span>종</span>
           <TextField
-            value={petType}
+            value={displayPetType}
             onChange={(e) => setPetType(e.target.value)}
             onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
             placeholder="종 선택하기"
             isDelete={false}
-            state={activeDropDown === "petType" ? "focus" : petType.trim() ? "done" : "default"}
+            state={activeDropDown === "petType" ? "focus" : displayPetType.trim() ? "done" : "default"}
           />
           {activeDropDown === "petType" && (
             <DropDown
@@ -125,20 +130,23 @@ const DirectMyPetInfo = () => {
             control={control}
             render={({ field }) => {
               const stringValue = field.value === -1 ? "" : String(field.value);
+              const debouncedBreedInput = useDebounce(breedInput, 200);
+
               const filteredBreeds =
                 breedIdData?.data?.breeds?.filter(
                   (item): item is { id: number; name: string } =>
-                    typeof item.id === "number" && typeof item.name === "string" && item.name.includes(petType),
+                    typeof item.id === "number" &&
+                    typeof item.name === "string" &&
+                    item.name.replace(/\s+/g, "").includes(debouncedBreedInput.replace(/\s+/g, "")),
                 ) ?? [];
 
+              const selectedBreedName = breedIdData?.data?.breeds?.find((b) => b.id === field.value)?.name ?? "";
               return (
                 <>
                   <TextField
-                    value={stringValue}
-                    onChange={(e) => field.onChange(e.target.value)}
-                    onFocus={() => setFocusedField("breedId")}
-                    onBlur={() => setFocusedField(null)}
-                    onClick={() => setActiveDropDown((prev) => (prev === "breedId" ? null : "breedId"))} // ⬅️ 드롭다운 토글 추가
+                    value={selectedBreedName}
+                    onChange={(e) => setBreedInput(e.target.value)}
+                    onClick={() => setActiveDropDown("breedId")}
                     placeholder="예시: 샴"
                     isDelete={false}
                     maxLength={20}
@@ -151,7 +159,9 @@ const DirectMyPetInfo = () => {
                       onClickItem={(selectedName) => {
                         const selected = filteredBreeds.find((b) => b.name === selectedName);
                         if (selected) {
-                          handleDropDownClick("breedId", String(selected.id));
+                          setBreedInput(selected.name);
+                          setValue("breedId", selected.id);
+                          setActiveDropDown(null);
                         }
                       }}
                       size="half"
