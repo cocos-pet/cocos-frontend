@@ -22,6 +22,8 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
   const [showToast, setShowToast] = useState(false);
   // 종은 리뷰 제출 항목이 아니므로 리액트 훅폼 상태에서 분리
   const [petType, setPetType] = useState("");
+  // 내 동물정보 가져오기 클릭 후 내 정보 해지 후 직접 입력하기 위한 상태
+  const [isBreedInputTouched, setIsBreedInputTouched] = useState(false);
 
   return (
     <>
@@ -49,6 +51,7 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
               } else {
                 setPetType("");
               }
+              setIsBreedInputTouched(false); // 다시 selectedBreedName을 믿어도 되는 상태
             } else {
               setToastKey(Date.now());
               setShowToast(true);
@@ -88,7 +91,14 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
               stroke={selectedPetInfo === "manual" ? color.primary.blue700 : color.gray.gray500}
             />
           </span>
-          {selectedPetInfo === "manual" && <DirectMyPetInfo petType={petType} setPetType={setPetType} />}
+          {selectedPetInfo === "manual" && (
+            <DirectMyPetInfo
+              petType={petType}
+              setPetType={setPetType}
+              isBreedInputTouched={isBreedInputTouched}
+              setIsBreedInputTouched={setIsBreedInputTouched}
+            />
+          )}
         </form>
       </div>
     </>

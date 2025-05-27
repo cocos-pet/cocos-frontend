@@ -1,5 +1,5 @@
 import { useState, useMemo } from "react";
-import { useFormContext, Controller } from "react-hook-form";
+import { useFormContext, Controller, useWatch } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
 import { ReviewFormData } from "../page";
 import { TextField } from "@common/component/TextField/index";
@@ -14,21 +14,29 @@ type FocusableField = keyof ReviewFormData | "petType";
 interface DirectMyPetInfoProps {
   petType: string;
   setPetType: (value: string) => void;
+  isBreedInputTouched: boolean;
+  setIsBreedInputTouched: (value: boolean) => void;
 }
 
-const DirectMyPetInfo = ({ petType, setPetType }: DirectMyPetInfoProps) => {
+const DirectMyPetInfo = ({
+  petType,
+  setPetType,
+  isBreedInputTouched,
+  setIsBreedInputTouched,
+}: DirectMyPetInfoProps) => {
+  // 내 동물정보 가져오고 직접 입력하기로 동물 종류 수정하는 경우
+  const watchedBreedId = useWatch({ name: "breedId" });
   const { control, watch, setValue } = useFormContext<ReviewFormData>();
 
   // 종, 성별 드롭다운
   const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
   // 종류, 몸무게 포커스
   const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
-  // 드롭다운 필터링용 검색 입력값
+  // 드롭다운 필터링용 검색 입력값 (breedId는 리뷰 제출용)
   const [breedInput, setBreedInput] = useState("");
 
-  const handleDropDownClick = (field: PetField, value: string) => {
-    const trimmedValue = value.replace(/\s+/g, "");
-    setValue(field, trimmedValue);
+  const handleDropDownClick = (field: PetField, value: string | number) => {
+    setValue(field, value);
     setActiveDropDown(null);
   };
 
@@ -127,7 +135,6 @@ const DirectMyPetInfo = ({ petType, setPetType }: DirectMyPetInfoProps) => {
             name="breedId"
             control={control}
             render={({ field }) => {
-              const stringValue = field.value === -1 ? "" : String(field.value);
               const debouncedBreedInput = useDebounce(breedInput, 200);
 
               const filteredBreeds =
@@ -142,13 +149,20 @@ const DirectMyPetInfo = ({ petType, setPetType }: DirectMyPetInfoProps) => {
               return (
                 <>
                   <TextField
-                    value={selectedBreedName}
-                    onChange={(e) => setBreedInput(e.target.value)}
-                    onClick={() => setActiveDropDown("breedId")}
+                    value={isBreedInputTouched ? breedInput : selectedBreedName}
+                    onChange={(e) => {
+                      setBreedInput(e.target.value);
+                      setIsBreedInputTouched(true); // 유저가 입력한 시점부터는 selectedBreedName 금지
+                    }}
+                    onClick={() => {
+                      setActiveDropDown("breedId");
+                      setFocusedField("breedId");
+                      setIsBreedInputTouched(true); // 클릭만 해도 이제부터는 breedInput만 보여줌
+                    }}
                     placeholder="예시: 샴"
                     isDelete={false}
                     maxLength={20}
-                    state={getState("breedId", stringValue)}
+                    state={watchedBreedId !== -1 ? "done" : getState("breedId", watchedBreedId)}
                   />
                   {activeDropDown === "breedId" && (
                     <DropDown
@@ -158,8 +172,8 @@ const DirectMyPetInfo = ({ petType, setPetType }: DirectMyPetInfoProps) => {
                         const selected = filteredBreeds.find((b) => b.name === selectedName);
                         if (selected) {
                           setBreedInput(selected.name);
-                          setValue("breedId", selected.id);
-                          setActiveDropDown(null);
+                          setIsBreedInputTouched(true); // 이 시점부터는 breedInput 고정
+                          handleDropDownClick("breedId", selected.id);
                         }
                       }}
                       size="half"

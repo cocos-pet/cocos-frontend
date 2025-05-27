@@ -33,7 +33,7 @@ const Step1 = ({ onNext }: Step1Props) => {
   const weight = watch("weight");
 
   const isFormValid =
-    selectedHospital !== null && visitedAt !== "" && breedId !== -1 && gender !== "F" && weight !== -1;
+    selectedHospital !== null && visitedAt !== "" && breedId !== -1 && gender !== null && weight !== -1;
 
   const router = useRouter();
 
