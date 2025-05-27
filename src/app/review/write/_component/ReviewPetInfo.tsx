@@ -20,6 +20,8 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
   // 토스트 리렌더링
   const [toastKey, setToastKey] = useState(0);
   const [showToast, setShowToast] = useState(false);
+  // 종은 리뷰 제출 항목이 아니므로 리액트 훅폼 상태에서 분리
+  const [petType, setPetType] = useState("");
 
   return (
     <>
@@ -41,6 +43,12 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
               setValue("breedId", petInfo?.breedId ?? -1);
               setValue("gender", petInfo?.petGender ?? "F");
               setValue("weight", petInfo?.petAge ?? -1);
+              // 종은 리뷰 제출 항목이 아님. 직접입력하기의 활성화 상태를 맞추기위해 추가
+              if (typeof petInfo?.breedId === "number") {
+                setPetType(petInfo.breedId > 0 ? (petInfo.breedId < 230 ? "강아지" : "고양이") : "");
+              } else {
+                setPetType("");
+              }
             } else {
               setToastKey(Date.now());
               setShowToast(true);
@@ -80,7 +88,7 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
               stroke={selectedPetInfo === "manual" ? color.primary.blue700 : color.gray.gray500}
             />
           </span>
-          {selectedPetInfo === "manual" && <DirectMyPetInfo />}
+          {selectedPetInfo === "manual" && <DirectMyPetInfo petType={petType} setPetType={setPetType} />}
         </form>
       </div>
     </>

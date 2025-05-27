@@ -11,11 +11,14 @@ import { useDebounce } from "@shared/hook/useDebounce";
 type PetField = keyof ReviewFormData;
 type FocusableField = keyof ReviewFormData | "petType";
 
-const DirectMyPetInfo = () => {
+interface DirectMyPetInfoProps {
+  petType: string;
+  setPetType: (value: string) => void;
+}
+
+const DirectMyPetInfo = ({ petType, setPetType }: DirectMyPetInfoProps) => {
   const { control, watch, setValue } = useFormContext<ReviewFormData>();
 
-  // 종은 리뷰 제출 항목이 아니므로 리액트 훅폼 상태에서 분리
-  const [petType, setPetType] = useState("");
   // 종, 성별 드롭다운
   const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
   // 종류, 몸무게 포커스
@@ -46,13 +49,7 @@ const DirectMyPetInfo = () => {
     return isFocused ? "focus" : hasValue ? "done" : "default";
   };
 
-  // 내 동물정보 클릭 후 직접 입력하기 클릭시 F/M 렌더링 방지
-  const getGenderLabel = (value: string | null) => {
-    if (value === "F") return "암컷";
-    if (value === "M") return "수컷";
-    return "";
-  };
-
+  // 종류 조회 api 연동시 종 정보를 보내야함
   const breedId = Number(watch("breedId"));
   const inferredPetId = useMemo(() => {
     return breedId > 0 ? (breedId < 230 ? 2 : 1) : -1;
@@ -61,16 +58,6 @@ const DirectMyPetInfo = () => {
   // api
   const { data: breedIdData } = usePetIdGet(inferredPetId ?? 2);
 
-  const selectedBreed = useMemo(() => {
-    return breedIdData?.data?.breeds?.find((b) => b.id === breedId) ?? -1;
-  }, [breedId, breedIdData]);
-
-  const displayPetType = useMemo(() => {
-    if (breedId === -1) return "";
-    if (selectedBreed) return inferredPetId === 2 ? "강아지" : "고양이";
-    return petType;
-  }, [breedId, selectedBreed, inferredPetId, petType]);
-
   return (
     <div className={styles.wrapper}>
       <div className={styles.container}>
@@ -78,20 +65,20 @@ const DirectMyPetInfo = () => {
         <div className={styles.halfTextField}>
           <span>종</span>
           <TextField
-            value={displayPetType}
-            onChange={(e) => setPetType(e.target.value)}
+            value={petType}
             onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
             placeholder="종 선택하기"
             isDelete={false}
-            state={activeDropDown === "petType" ? "focus" : displayPetType.trim() ? "done" : "default"}
+            state={getState("petType", petType)}
+            readOnly
           />
           {activeDropDown === "petType" && (
             <DropDown
               isOpen
-              items={PET_TYPES.filter((item) => item.name.includes(petType))}
-              onClickItem={(value) => {
-                const trimmedValue = value.replace(/\s+/g, "");
-                setPetType(trimmedValue);
+              items={PET_TYPES}
+              onClickItem={(name) => {
+                // 리뷰 제출 항목이 아니므로 handleDropDownClick함수 사용 불가
+                setPetType(name);
                 setActiveDropDown(null);
               }}
               size="half"
@@ -108,19 +95,19 @@ const DirectMyPetInfo = () => {
             render={({ field }) => (
               <>
                 <TextField
-                  value={getGenderLabel(field.value)}
-                  onChange={(e) => field.onChange(e.target.value)}
+                  value={field.value === "F" ? "암컷" : field.value === "M" ? "수컷" : ""}
+                  onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
                   placeholder="성별 선택하기"
                   isDelete={false}
-                  onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
                   state={getState("gender", field.value ?? "")}
+                  readOnly
                 />
                 {activeDropDown === "gender" && (
                   <DropDown
                     isOpen
-                    items={GENDER.filter((item) => item.name.includes(field.value ?? ""))}
+                    items={GENDER}
                     onClickItem={(value) => {
-                      const mapped = value === "암컷" ? "F" : value === "수컷" ? "M" : value;
+                      const mapped = value === "암컷" ? "F" : "M";
                       handleDropDownClick("gender", mapped);
                     }}
                     size="half"

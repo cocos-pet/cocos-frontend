@@ -19,6 +19,7 @@ interface TextFieldProps {
   onBlur?: () => void;
   maxLength?: number; // input 입력 가능길이
   mentionedNickname?: string; // 언급된 닉네임
+  readOnly?: boolean;
 }
 
 type propsType = WrapVariants & TextFieldProps & InputVariants;
@@ -57,6 +58,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       onBlur,
       maxLength,
       mentionedNickname,
+      readOnly,
     },
     ref,
   ) => {
@@ -77,6 +79,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
             onBlur={onBlur}
             disabled={!active}
             maxLength={maxLength}
+            readOnly={readOnly}
           />
         </div>
         {value && isDelete ? (
