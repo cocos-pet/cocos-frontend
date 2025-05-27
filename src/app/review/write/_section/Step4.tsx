@@ -38,6 +38,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
     submitReview(
       {
         ...data,
+        gender: data.gender as "F" | "M",
         images: imageNames || undefined,
       },
       {

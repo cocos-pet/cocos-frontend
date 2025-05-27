@@ -47,10 +47,10 @@ const DirectMyPetInfo = () => {
   };
 
   // 내 동물정보 클릭 후 직접 입력하기 클릭시 F/M 렌더링 방지
-  const getGenderLabel = (value: string) => {
+  const getGenderLabel = (value: string | null) => {
     if (value === "F") return "암컷";
     if (value === "M") return "수컷";
-    return value;
+    return "";
   };
 
   const breedId = Number(watch("breedId"));
@@ -64,10 +64,12 @@ const DirectMyPetInfo = () => {
   const selectedBreed = useMemo(() => {
     return breedIdData?.data?.breeds?.find((b) => b.id === breedId) ?? -1;
   }, [breedId, breedIdData]);
-  
+
   const displayPetType = useMemo(() => {
-    return selectedBreed ? (inferredPetId === 2 ? "강아지" : "고양이") : petType;
-  }, [selectedBreed, inferredPetId, petType]);
+    if (breedId === -1) return "";
+    if (selectedBreed) return inferredPetId === 2 ? "강아지" : "고양이";
+    return petType;
+  }, [breedId, selectedBreed, inferredPetId, petType]);
 
   return (
     <div className={styles.wrapper}>
@@ -111,12 +113,12 @@ const DirectMyPetInfo = () => {
                   placeholder="성별 선택하기"
                   isDelete={false}
                   onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
-                  state={getState("gender", field.value)}
+                  state={getState("gender", field.value ?? "")}
                 />
                 {activeDropDown === "gender" && (
                   <DropDown
                     isOpen
-                    items={GENDER.filter((item) => item.name.includes(field.value))}
+                    items={GENDER.filter((item) => item.name.includes(field.value ?? ""))}
                     onClickItem={(value) => {
                       const mapped = value === "암컷" ? "F" : value === "수컷" ? "M" : value;
                       handleDropDownClick("gender", mapped);

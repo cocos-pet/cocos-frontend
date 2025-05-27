@@ -20,7 +20,7 @@ export interface ReviewFormData {
   content: string;
   images: string[];
   breedId: number;
-  gender: "F" | "M";
+  gender: "F" | "M" | null;
   weight: number;
 }
 
@@ -34,7 +34,7 @@ export const defaultValues: ReviewFormData = {
   content: "",
   images: [],
   breedId: -1,
-  gender: "F",
+  gender: null,
   weight: -1,
 };
 
