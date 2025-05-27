@@ -136,14 +136,20 @@ const DirectMyPetInfo = ({
             control={control}
             render={({ field }) => {
               const debouncedBreedInput = useDebounce(breedInput, 200);
-
-              const filteredBreeds =
-                breedIdData?.data?.breeds?.filter(
+              // 필터링된 종류
+              const filteredBreeds = useMemo(() => {
+                const breeds = (breedIdData?.data?.breeds ?? []).filter(
                   (item): item is { id: number; name: string } =>
-                    typeof item.id === "number" &&
-                    typeof item.name === "string" &&
-                    item.name.replace(/\s+/g, "").includes(debouncedBreedInput.replace(/\s+/g, "")),
-                ) ?? [];
+                    typeof item.id === "number" && typeof item.name === "string",
+                );
+                const inputFiltered = breeds.filter((item) =>
+                  item.name.replace(/\s+/g, "").includes(debouncedBreedInput.replace(/\s+/g, "")),
+                );
+                const lastBreed = breeds.at(-1); // 찾는종이 없음 필드
+                const isLastIncluded = inputFiltered.some((b) => b.id === lastBreed?.id);
+
+                return lastBreed && !isLastIncluded ? [...inputFiltered, lastBreed] : inputFiltered;
+              }, [breedIdData, debouncedBreedInput]);
 
               const selectedBreedName = breedIdData?.data?.breeds?.find((b) => b.id === field.value)?.name ?? "";
               return (
