@@ -2,57 +2,55 @@ import { useEffect, useState } from "react";
 import * as styles from "./locationBottomSheet.css";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
+import { LOCATION_DATA, City, District } from "./Mock";
 import { IcCheck } from "@asset/svg";
 import { CityTab } from "./CityTab";
-import { useGetLocation } from "@api/domain/review/location/hook";
 
 interface LocationBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  onLocationSelect: (location: { id: number; name: string }) => void;
+  onLocationSelect: (city: City, district: District) => void;
 }
 
 export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect }: LocationBottomSheetProps) {
-  const [selectedCityId, setSelectedCityId] = useState(1);
+  const [selectedCityId, setSelectedCityId] = useState(LOCATION_DATA[0].locationId);
   const [selectedDistrictId, setSelectedDistrictId] = useState<number | null>(null);
-  const { data: cities, refetch } = useGetLocation();
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedCityId(1);
+      setSelectedCityId(LOCATION_DATA[0].locationId);
       setSelectedDistrictId(null);
-      refetch();
     }
-  }, [isOpen, refetch]);
+  }, [isOpen]);
 
-  if (!cities || cities.length === 0) return null;
-  const selectedCity = cities.find((city) => city.id === selectedCityId) || cities[0];
+  const selectedCity = LOCATION_DATA.find((c) => c.locationId === selectedCityId)!;
 
   return (
     <BottomSheet isOpen={isOpen} handleOpen={(open) => !open && onClose()} handleDimmedClose={onClose}>
       <>
         <div className={styles.locationSheetContainer}>
-          {/* 시/도 리스트 */}
+          {/* 좌측: 시/도 리스트 */}
           <div className={styles.cityList}>
-            {cities.map((city) => (
+            {LOCATION_DATA.map((city) => (
               <CityTab
-                key={city.id}
-                locationName={city.name}
-                isSelected={city.id === selectedCityId}
-                onClick={() => setSelectedCityId(city.id)}
+                key={city.locationId}
+                locationId={city.locationId}
+                locationName={city.locationName}
+                isSelected={city.locationId === selectedCityId}
+                onClick={() => setSelectedCityId(city.locationId)}
               />
             ))}
           </div>
-          {/* 군/구 리스트 */}
+          {/* 우측: 군/구 리스트 */}
           <div className={styles.districtList}>
-            {selectedCity.districts?.map((district) => (
+            {selectedCity.children.map((district) => (
               <div
-                key={district.id}
-                className={`${styles.districtItem} ${district.id === selectedDistrictId ? styles.selectedDistrict : ""}`}
-                onClick={() => setSelectedDistrictId(district.id)}
+                key={district.locationId}
+                className={`${styles.districtItem} ${district.locationId === selectedDistrictId ? styles.selectedDistrict : ""}`}
+                onClick={() => setSelectedDistrictId(district.locationId)}
               >
-                <span>{district.name}</span>
-                {district.id === selectedDistrictId && (
+                <span>{district.locationName}</span>
+                {district.locationId === selectedDistrictId && (
                   <span className={styles.checkIcon}>
                     <IcCheck />
                   </span>
@@ -68,14 +66,10 @@ export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect 
             width="100%"
             disabled={selectedDistrictId === null}
             onClick={() => {
-              const selectedDistrict = selectedCity.districts?.find((d) => d.id === selectedDistrictId);
-              if (selectedDistrict) {
-                onLocationSelect({
-                  id: selectedDistrict.id,
-                  name: selectedDistrict.name,
-                });
+              if (selectedDistrictId !== null) {
+                onLocationSelect(selectedCity, selectedCity.children.find((d) => d.locationId === selectedDistrictId)!);
+                onClose();
               }
-              onClose();
             }}
           />
         </div>

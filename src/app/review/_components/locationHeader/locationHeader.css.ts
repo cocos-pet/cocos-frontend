@@ -11,12 +11,12 @@ export const locationHeader = style({
 export const locationWrapper = style({
   display: "flex",
   alignItems: "center",
-  gap: "0.6rem"
+  gap: "0.6rem",
 });
 
 export const locationText = style([
   font.body01,
   {
     color: color.gray.gray900,
-  }
+  },
 ]);
