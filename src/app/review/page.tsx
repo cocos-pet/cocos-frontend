@@ -13,7 +13,7 @@ import HospitalList from "./_components/hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
-import LocationHeader from "./locationHeader/locationHeader";
+import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import { PATH } from "@route/path";
 
@@ -26,6 +26,11 @@ export default function ReviewPage() {
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
+
+  const { data: review = [] } = useQuery({
+    queryKey: ["reviews"],
+    queryFn: fetchReviews,
+    initialData: MOCK_REVIEWS,
   });
 
   const hospitals = data?.hospitals ?? [];
@@ -57,6 +62,7 @@ export default function ReviewPage() {
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
                 <span className={styles.recommendTitleHighlight}>추천 병원</span>
+                <span className={styles.recommendTitleHighlight}>추천 병원</span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
@@ -70,14 +76,19 @@ export default function ReviewPage() {
                       <span className={styles.hospitalRank}>{idx + 1}</span>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
                       <span className={styles.hospitalName}>{hospital.name}</span>
+                      <span className={styles.hospitalRank}>{hospital.id}</span>
+                      <span className={styles.hospitalName}>{hospital.name}</span>
                     </div>
+                    <span className={styles.hospitalAddress}>{hospital.address}</span>
                     <span className={styles.hospitalAddress}>{hospital.address}</span>
                   </div>
                 ))}
               </div>
               <Image src={banner} alt="banner" className={styles.bannerContainer} />
+              <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
+            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
             <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
           </div>
         </div>
