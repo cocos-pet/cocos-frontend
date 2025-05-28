@@ -13,12 +13,13 @@ interface LocationBottomSheetProps {
 }
 
 export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect }: LocationBottomSheetProps) {
-  const [selectedCityId, setSelectedCityId] = useState(LOCATION_DATA[0].locationId);
+  const [selectedCityId, setSelectedCityId] = useState<number>(LOCATION_DATA[0].locationId);
   const [selectedDistrictId, setSelectedDistrictId] = useState<number | null>(null);
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedCityId(LOCATION_DATA[0].locationId);
+      const defaultCityId = LOCATION_DATA[0].locationId;
+      setSelectedCityId(defaultCityId);
       setSelectedDistrictId(null);
     }
   }, [isOpen]);
