@@ -65,7 +65,6 @@ export const selectedDistrict = style([
     border: `1px solid ${color.primary.blue500}`,
     background: color.primary.blue100,
     color: color.primary.blue600,
-    fontWeight: "bold",
   },
 ]);
 
@@ -79,7 +78,6 @@ export const cityTab = style([
   {
     padding: "1.2rem 2.8rem",
     cursor: "pointer",
-    transition: "all 0.2s ease",
     borderRadius: "0.8rem",
   },
 ]);
