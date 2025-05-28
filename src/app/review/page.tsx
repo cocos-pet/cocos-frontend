@@ -8,11 +8,11 @@ import { TextField } from "@common/component/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";
-import HospitalList from "./hospitalList/hospitalList";
+import HospitalList from "./_components/hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
-import LocationHeader from "./locationHeader/locationHeader";
+import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useQuery } from "@tanstack/react-query";
 
 interface Review {
@@ -61,8 +61,8 @@ const MOCK_REVIEWS: Review[] = [
     hospitalName: "코코스동물병원",
     petInfo: {
       breed: "말티즈",
-      age: 3
-    }
+      age: 3,
+    },
   },
   {
     id: "2",
@@ -73,8 +73,8 @@ const MOCK_REVIEWS: Review[] = [
     hospitalName: "행복한동물병원",
     petInfo: {
       breed: "코리안숏헤어",
-      age: 2
-    }
+      age: 2,
+    },
   },
   {
     id: "3",
@@ -85,9 +85,9 @@ const MOCK_REVIEWS: Review[] = [
     hospitalName: "우리동물병원",
     petInfo: {
       breed: "골든리트리버",
-      age: 5
-    }
-  }
+      age: 5,
+    },
+  },
 ];
 const fetchReviews = async (): Promise<Review[]> => {
   // todo: 실제 api 연동 후 삭제
@@ -98,7 +98,7 @@ export default function ReviewPage() {
   const router = useRouter();
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
-  
+
   const { data: review = [] } = useQuery({
     queryKey: ["reviews"],
     queryFn: fetchReviews,
@@ -132,9 +132,7 @@ export default function ReviewPage() {
             <div className={styles.recommendHospital}>
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
-                <span className={styles.recommendTitleHighlight}>
-                  추천 병원
-                </span>
+                <span className={styles.recommendTitleHighlight}>추천 병원</span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
@@ -146,27 +144,16 @@ export default function ReviewPage() {
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{hospital.id}</span>
-                      <span className={styles.hospitalName}>
-                        {hospital.name}
-                      </span>
+                      <span className={styles.hospitalName}>{hospital.name}</span>
                     </div>
-                    <span className={styles.hospitalAddress}>
-                      {hospital.address}
-                    </span>
+                    <span className={styles.hospitalAddress}>{hospital.address}</span>
                   </div>
                 ))}
               </div>
-              <Image
-                src={banner}
-                alt="banner"
-                className={styles.bannerContainer}
-              />
+              <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList
-              title={"많은 반려인들이"}
-              highlightText={"다녀간 병원"}
-            />
+            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
