@@ -26,7 +26,7 @@ export default function LocationHeader() {
 
   const { data: locationData, refetch } = useQuery<LocationData>({
     queryKey: ["location"],
-    queryFn: getLocationInfo
+    queryFn: getLocationInfo,
   });
 
   const handleLocationClick = () => {
@@ -48,18 +48,15 @@ export default function LocationHeader() {
       <div className={styles.locationHeader}>
         <div className={styles.locationWrapper} onClick={handleLocationClick}>
           <Icon style={{ width: "2rem", height: "2rem" }} />
-          <span className={styles.locationText}>
-            {selectedDistrict.locationName}
-          </span>
+          <span className={styles.locationText}>{selectedDistrict.locationName}</span>
           <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
         </div>
       </div>
-      
+
       <LocationBottomSheet
         isOpen={isBottomSheetOpen}
         onClose={handleCloseBottomSheet}
         onLocationSelect={handleLocationSelect}
-        currentLocation={selectedDistrict}
       />
     </>
   );

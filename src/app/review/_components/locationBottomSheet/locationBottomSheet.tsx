@@ -4,17 +4,15 @@ import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
 import { LOCATION_DATA, City, District } from "./Mock";
 import { IcCheck } from "@asset/svg";
+import { CityTab } from "./CityTab";
+
 interface LocationBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
   onLocationSelect: (city: City, district: District) => void;
 }
 
-export default function LocationBottomSheet({
-  isOpen,
-  onClose,
-  onLocationSelect,
-}: LocationBottomSheetProps){
+export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect }: LocationBottomSheetProps) {
   const [selectedCityId, setSelectedCityId] = useState(LOCATION_DATA[0].locationId);
   const [selectedDistrictId, setSelectedDistrictId] = useState<number | null>(null);
 
@@ -28,22 +26,17 @@ export default function LocationBottomSheet({
   const selectedCity = LOCATION_DATA.find((c) => c.locationId === selectedCityId)!;
 
   return (
-    <BottomSheet 
-      isOpen={isOpen}
-      handleOpen={(open) => !open && onClose()}
-      handleDimmedClose={onClose}
-    >
+    <BottomSheet isOpen={isOpen} handleOpen={(open) => !open && onClose()} handleDimmedClose={onClose}>
       <>
         <div className={styles.locationSheetContainer}>
           {/* 좌측: 시/도 리스트 */}
           <div className={styles.cityList}>
             {LOCATION_DATA.map((city) => (
-              <Button
+              <CityTab
                 key={city.locationId}
-                label={city.locationName}
-                size="large"
-                width="100%"
-                variant={city.locationId === selectedCityId ? "solidNeutral" : "solidNeutral"}
+                locationId={city.locationId}
+                locationName={city.locationName}
+                isSelected={city.locationId === selectedCityId}
                 onClick={() => setSelectedCityId(city.locationId)}
               />
             ))}
@@ -57,7 +50,7 @@ export default function LocationBottomSheet({
                 onClick={() => setSelectedDistrictId(district.locationId)}
               >
                 <span>{district.locationName}</span>
-                {district.locationId === selectedDistrictId && ( 
+                {district.locationId === selectedDistrictId && (
                   <span className={styles.checkIcon}>
                     <IcCheck />
                   </span>
@@ -65,7 +58,7 @@ export default function LocationBottomSheet({
               </div>
             ))}
           </div>
-        </div> 
+        </div>
         <div className={styles.buttonWrapper}>
           <Button
             label="확인하기"
@@ -74,7 +67,7 @@ export default function LocationBottomSheet({
             disabled={selectedDistrictId === null}
             onClick={() => {
               if (selectedDistrictId !== null) {
-                onLocationSelect(selectedCity, selectedCity.children.find(d => d.locationId === selectedDistrictId)!);
+                onLocationSelect(selectedCity, selectedCity.children.find((d) => d.locationId === selectedDistrictId)!);
                 onClose();
               }
             }}
