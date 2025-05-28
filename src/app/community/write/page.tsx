@@ -17,7 +17,6 @@ import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/
 import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
-import { useProtectedRoute } from "@route/useProtectedRoute";
 import { FillterToName } from "../_utills/getFillterNamebyid.ts";
 import { DropDownItems } from "../_constant/writeConfig.tsx";
 import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "./Write.css.ts";
@@ -51,7 +50,6 @@ interface writeProps {
 // 메인 컨텐츠 컴포넌트
 const WriteContent = () => {
   //빌테용
-  useProtectedRoute();
   const searchParams = useSearchParams();
   const category = searchParams.get("category");
   const router = useRouter();

@@ -24,7 +24,6 @@ import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
-import { useProtectedRoute } from "@route/useProtectedRoute";
 import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -36,7 +35,6 @@ import Profile from "@app/community/_component/Profile/Profile.tsx";
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const Page = () => {
-  const { isNoPet } = useProtectedRoute();
   const router = useRouter();
   const params = useParams();
   const { postId } = params as { postId: string | string[] | undefined };
@@ -93,10 +91,7 @@ const Page = () => {
   };
 
   const onSubmitComment = () => {
-    if (isNoPet) {
-      alert("반려동물을 등록한 사람만 댓글을 작성할 수 있습니다.");
-      return;
-    }
+   
     if (parsedComment.mention) {
       // 대댓글 등록
       subCommentPost(
