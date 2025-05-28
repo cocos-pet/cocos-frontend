@@ -92,7 +92,6 @@ export const cityTab = style([
   {
     padding: "1.2rem 2.8rem",
     cursor: "pointer",
-    transition: "all 0.2s ease",
     borderRadius: "0.8rem",
   },
 ]);
