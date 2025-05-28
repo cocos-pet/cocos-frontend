@@ -79,7 +79,11 @@ export const cityTab = style([
   {
     padding: "1.2rem 2.8rem",
     cursor: "pointer",
+    transition: "all 0.2s ease",
+    borderRadius: "0.8rem",
   },
 ]);
 
-export const selectedCityTab = style({});
+export const selectedCityTab = style({
+  backgroundColor: color.gray.gray600,
+});
