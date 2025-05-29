@@ -20,6 +20,8 @@ export const API_PATH = {
 
   LOCATION: "/api/dev/locations",
 
+  LOCATION: "/api/dev/locations",
+
   POST: "/api/dev/posts",
   POST_FILTERS: "/api/dev/posts/filters",
   POST_POPULAR: "/api/dev/posts/popular",
