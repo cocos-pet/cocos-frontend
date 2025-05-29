@@ -8,6 +8,13 @@ export const cityList = style([
     flexDirection: "column",
     background: color.gray.gray100,
     borderRadius: "0.8rem",
+    overflowY: "auto",
+    maxHeight: "calc(100vh - 21rem)",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
   },
 ]);
 
@@ -18,13 +25,12 @@ export const buttonWrapper = style([
     bottom: 0,
     left: 0,
     width: "100%",
-    background: "#fff",
     padding: "1.2rem 2rem 2.4rem 2rem",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    zIndex: 10,
-    marginTop: "51.2rem",
+    zIndex: 999,
+    background: "#fff",
   },
 ]);
 
@@ -33,6 +39,7 @@ export const locationSheetContainer = style({
   display: "flex",
   flexDirection: "row",
   width: "100%",
+  height: "100%",
   padding: "3.3rem 2rem 0rem 2rem",
   background: color.gray.gray000,
 });
@@ -43,8 +50,15 @@ export const districtList = style([
     fontWeight: "500",
     display: "flex",
     width: "22.6rem",
-    height: "4.4rem",
     flexDirection: "column",
+    overflowY: "auto",
+    flex: 1,
+    maxHeight: "calc(100vh - 21rem)",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+    scrollbarWidth: "none",
+    msOverflowStyle: "none",
   },
 ]);
 

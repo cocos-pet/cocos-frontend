@@ -1,33 +1,23 @@
 import * as styles from "./locationHeader.css";
-import { useQuery } from "@tanstack/react-query";
 import { IcChevronDown, Icon } from "@asset/svg";
 import { useState } from "react";
 import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
-import { LOCATION_DATA, City, District } from "../locationBottomSheet/Mock";
+import { useGetLocation } from "@api/domain/review/location/hook";
 
-interface LocationData {
-  locationId: number;
-  locationName: string;
-  locationType: string;
+interface Location {
+  id: number;
+  name: string;
+  districts?: {
+    id: number;
+    name: string;
+  }[];
 }
-
-const getLocationInfo = async (): Promise<LocationData> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(LOCATION_DATA[0].children[0]);
-    }, 500);
-  });
-};
 
 export default function LocationHeader() {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [selectedCity, setSelectedCity] = useState<City>(LOCATION_DATA[0]);
-  const [selectedDistrict, setSelectedDistrict] = useState<District>(LOCATION_DATA[0].children[0]);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
-  const { data: locationData, refetch } = useQuery<LocationData>({
-    queryKey: ["location"],
-    queryFn: getLocationInfo,
-  });
+  const { data: cities } = useGetLocation();
 
   const handleLocationClick = () => {
     setIsBottomSheetOpen(true);
@@ -37,18 +27,21 @@ export default function LocationHeader() {
     setIsBottomSheetOpen(false);
   };
 
-  const handleLocationSelect = (city: City, district: District) => {
-    setSelectedCity(city);
-    setSelectedDistrict(district);
+  const handleLocationSelect = (location: Location) => {
+    setSelectedLocation(location);
     setIsBottomSheetOpen(false);
   };
+
+  if (!cities) return null;
+
+  const defaultCity = cities[0];
 
   return (
     <>
       <div className={styles.locationHeader}>
         <div className={styles.locationWrapper} onClick={handleLocationClick}>
           <Icon style={{ width: "2rem", height: "2rem" }} />
-          <span className={styles.locationText}>{selectedDistrict.locationName}</span>
+          <span className={styles.locationText}>{selectedLocation?.name || defaultCity.name}</span>
           <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
         </div>
       </div>
