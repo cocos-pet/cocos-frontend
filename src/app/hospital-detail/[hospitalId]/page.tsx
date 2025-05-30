@@ -1,37 +1,54 @@
 "use client";
 import { useParams } from "next/navigation";
-import { useEffect, useState } from "react";
 import HospitalHeader from "./_component/HospitalImg/HospitalImg";
 import Info from "./_component/Info/Info";
 import Selection from "./_component/Selection/Selection";
+import { useGetHospitalDetail } from "@api/domain/review/hospital-detail/hook";
+import { Suspense } from "react";
+import Loading from "@common/component/Loading/Loading";
 
-interface HospitalDetail {
-    name: string;
-    phoneNumber: string;
-    tags: string;
-    introduction: string;
-    address: string;
-    image: string;
+const LoadingFallback = () => <Loading height={80} />;
+
+const HospitalContent = () => {
+  const params = useParams();
+  const hospitalId = params?.hospitalId;
+
+  if (!hospitalId || typeof hospitalId !== "string") {
+    return;
   }
-  
 
-export default function HospitalDetailPage() {
-  const { hospitalId } = useParams();
-  const [data, setData] = useState<HospitalDetail | null>(null);
+  const hospitalIdNumber = Number.parseInt(hospitalId, 10);
+  if (Number.isNaN(hospitalIdNumber)) {
+    return <div>잘못된 병원 ID입니다.</div>;
+  }
 
-  useEffect(() => {
-    fetch(`/api/dev/hospitals/${hospitalId}`)
-      .then(res => res.json())
-      .then(res => setData(res.data));
-  }, [hospitalId]);
-
-  if (!data) return <div>로딩중...</div>;
+  const { data } = useGetHospitalDetail(hospitalIdNumber);
 
   return (
-    <div className={styles.container}>
-      <HospitalHeader />
-      <Info name={data.name} phoneNumber={data.phoneNumber} />
-      <Selection />
+    <div>
+      <HospitalHeader image={data?.image || ""} />
+      <Info name={data?.name || ""} phoneNumber={data?.phoneNumber || ""} />
+      <Selection hospitalId={hospitalIdNumber} />
     </div>
+  );
+};
+
+export default function HospitalDetailPage() {
+  const params = useParams();
+  const hospitalId = params?.hospitalId;
+
+  if (!hospitalId || typeof hospitalId !== "string") {
+    return;
+  }
+
+  const hospitalIdNumber = Number.parseInt(hospitalId, 10);
+  if (Number.isNaN(hospitalIdNumber)) {
+    return <div>잘못된 병원 ID입니다.</div>;
+  }
+
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <HospitalContent />
+    </Suspense>
   );
 }

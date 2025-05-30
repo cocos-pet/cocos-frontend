@@ -12,7 +12,11 @@ const Selections = [
   { label: "맞춤형 리뷰", value: "review" },
 ];
 
-export default function Selection() {
+interface SelectionProps {
+  hospitalId: number;
+}
+
+export default function Selection({ hospitalId }: SelectionProps) {
   const [selected, setSelected] = useState("info");
 
   return (
@@ -26,15 +30,12 @@ export default function Selection() {
             onClick={() => setSelected(tab.value)}
           >
             {tab.label}
-            {selected === tab.value && (
-              <IcUnderline className={styles.underline} />
-            )}
+            {selected === tab.value && <IcUnderline className={styles.underline} />}
           </button>
-        
         ))}
       </div>
       <Divider size="small" />
-      {selected === "info" && <InfoContent />}
+      {selected === "info" && <InfoContent hospitalId={hospitalId} />}
       {selected === "review" && <ReviewContent />}
     </div>
   );
