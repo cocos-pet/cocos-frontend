@@ -25,20 +25,13 @@ export default function ReviewPage() {
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
-
-  const { data: review = [] } = useQuery({
-    queryKey: ["reviews"],
-    queryFn: fetchReviews,
-    initialData: MOCK_REVIEWS,
   });
 
-  const hospitals = data?.hospitals ?? [];
+  const hospitals = data?.data?.hospitals ?? [];
 
-  function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>): void {
-    throw new Error("Function not implemented.");
-  }
+  function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>) {}
 
-  function handleSearchClick(): void {
+  function handleSearchClick() {
     router.push(PATH.REVIEW.SEARCH);
   }
 
@@ -62,7 +55,6 @@ export default function ReviewPage() {
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
                 <span className={styles.recommendTitleHighlight}>추천 병원</span>
-                <span className={styles.recommendTitleHighlight}>추천 병원</span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
@@ -75,19 +67,14 @@ export default function ReviewPage() {
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
                       <span className={styles.hospitalName}>{hospital.name}</span>
-                      <span className={styles.hospitalRank}>{hospital.id}</span>
-                      <span className={styles.hospitalName}>{hospital.name}</span>
                     </div>
-                    <span className={styles.hospitalAddress}>{hospital.address}</span>
                     <span className={styles.hospitalAddress}>{hospital.address}</span>
                   </div>
                 ))}
               </div>
               <Image src={banner} alt="banner" className={styles.bannerContainer} />
-              <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
             <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
           </div>
         </div>
