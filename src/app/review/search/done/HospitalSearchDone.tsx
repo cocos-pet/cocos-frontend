@@ -1,68 +1,54 @@
 "use client";
-import { IcLeftarrow, IcSearch, } from "@asset/svg";
+import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
-import { ChangeEvent, Suspense, useEffect, useState } from "react";
+import { ChangeEvent, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { mockHospitalSearchResult } from "@shared/constant/hospitalSearchData";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 import { styles } from "./HospitalSearchDone.css.ts";
-import LocationHeader from "@app/review/locationHeader/locationHeader.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
+import { useGetHospitalSearch } from "@api/domain/hospitals/search/hook";
+import { PATH } from "@route/path.ts";
+import { Hospital } from "@api/domain/hospitals/search";
+
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 function HospitalSearchDoneContent() {
   const searchParams = useSearchParams();
   const query = searchParams?.get("searchText") || "";
-  const [searchText, setSearchText] = useState<string>("");
-  const [hospitals, setHospitals] = useState(mockHospitalSearchResult.hospitals);
-  const [isLoading, setIsLoading] = useState(false);
+  const [searchText, setSearchText] = useState<string>(query);
   const router = useRouter();
 
+  const { data, isPending, isError } = useGetHospitalSearch({
+    locationType: "CITY",
+    size: 10,
+    sortBy: "REVIEW",
+    keyword: query,
+  });
 
-// 검색어가 바뀔 때마다 로딩 + 결과 갱신 (query 기준)
-useEffect(() => {
-  setIsLoading(true);
-  const timer = setTimeout(() => {
-    if (!query) {
-      setHospitals(mockHospitalSearchResult.hospitals);
-    } else {
-      setHospitals(
-        mockHospitalSearchResult.hospitals.filter(
-          (hospital) =>
-            hospital.name.toLowerCase().includes(query.toLowerCase()) ||
-            hospital.address.toLowerCase().includes(query.toLowerCase())
-        )
-      );
-    }
-    setIsLoading(false);
-  }, 300); // debounce처럼 약간의 딜레이만
-  return () => clearTimeout(timer);
-}, [query]);
+  const hospitals = data?.data?.hospitals ?? [];
 
-
-const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-  setSearchText(e.target.value);
-};
-
-  // 검색 버튼(돋보기) 클릭 시 router.push만 담당
-  const onTextFieldClick = () => {
-    router.push(`/review/search/done?searchText=${searchText}`);
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(e.target.value);
   };
 
-  // 엔터 입력 시 router.push만 담당
+  const onTextFieldClick = () => {
+    if (!searchText.trim()) return;
+    router.push(`${PATH.REVIEW.SEARCH}?searchText=${searchText}`);
+  };
+
   const onKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === "Enter") {
-      router.push(`/review/search/done?searchText=${searchText}`);
+    if (e.key === "Enter" && searchText.trim()) {
+      e.preventDefault();
+      router.push(`${PATH.REVIEW.HOSPITALS_DONE}?searchText=${searchText}`);
     }
   };
 
   const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
-    setHospitals(mockHospitalSearchResult.hospitals);
-    router.push("/review/search/done");
+    router.push(PATH.REVIEW.HOSPITALS_DONE);
   };
 
   const onBackClick = () => {
@@ -70,15 +56,21 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
   };
 
   const onClickHospital = (hospitalId: number) => {
-    router.push(`/review/hospital/${hospitalId}`);
+    router.push(`${PATH.REVIEW.ROOT}/${hospitalId}`);
   };
 
-  if (isLoading) {
+  const defaultImage = noSearchResult.src;
+
+  if (isPending) {
     return <Loading height={80} />;
   }
 
+  if (isError) {
+    return <div className={styles.noSearchData}>에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</div>;
+  }
+
   return (
-    <div className={styles.container}>
+    <div>
       <div className={styles.searchHeader}>
         <IcLeftarrow className={styles.icon} onClick={onBackClick} />
         <TextField
@@ -91,7 +83,6 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
           onKeyDown={onKeyDown}
         />
       </div>
-      <LocationHeader />
       {hospitals.length === 0 ? (
         <div className={styles.noSearchData}>
           <Image
@@ -110,7 +101,7 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         </div>
       ) : (
         <div className={styles.searchWrap}>
-          {hospitals.map((hospital) => (
+          {hospitals.map((hospital: Hospital) => (
             <div
               key={`hospital-${hospital.id}`}
               className={styles.hospitalItem}
@@ -119,13 +110,15 @@ const onChange = (e: ChangeEvent<HTMLInputElement>) => {
               <div className={styles.hospitalInfo}>
                 <div className={styles.hospitalText}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
-                  <p className={styles.hospitalAddress}>{hospital.address} · 리뷰 {hospital.reviewCount} </p>
+                  <p className={styles.hospitalAddress}>
+                    {hospital.address} 리뷰 {hospital.reviewCount}{" "}
+                  </p>
                 </div>
                 <div className={styles.hospitalImage}>
-                  <Image src={hospital.imageUrl || ''} alt={hospital.name} width={100} height={100} />
+                  <Image src={hospital.image || defaultImage} alt={hospital.name} width={100} height={100} />
                 </div>
               </div>
-              <Divider size="small"/>
+              <Divider size="small" />
             </div>
           ))}
         </div>

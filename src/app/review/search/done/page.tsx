@@ -1,12 +1,7 @@
 "use client";
 
-import HospitalSearchDone from "./HospitalSearchDone";
-import SuspenseWrapper from "../../../SuspenseWrapper";
+import HospitalSearchDone from "./HospitalSearchDone.tsx";
 
 export default function SearchPage() {
-  return (
-    <SuspenseWrapper>
-      <HospitalSearchDone />
-    </SuspenseWrapper>
-  );
+  return <HospitalSearchDone />;
 }

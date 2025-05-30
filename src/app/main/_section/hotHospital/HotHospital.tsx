@@ -4,6 +4,7 @@ import * as styles from "./HotHospital.css.ts";
 import HotHospitalItem from "../../_component/HotHospitalItem/HotHospitalItem.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import { Separated } from "react-simplikit";
+import { useRouter } from "next/navigation";
 
 const HotHospital = () => {
   const hotHospitals = [
@@ -26,6 +27,11 @@ const HotHospital = () => {
       reviewCount: 27,
     },
   ];
+  const router = useRouter();
+  const handleHospitalClick = (id: number) => {
+    // @TODO 병원 상세 페이지로 이동 - 우선 병원 id로 이동(구현 후 수정 필요)
+    router.push(`/hospital/${id}`);
+  };
 
   return (
     <div className={styles.hotHospitalContainer}>
@@ -45,6 +51,9 @@ const HotHospital = () => {
               name={hospital.name}
               address={hospital.address}
               reviewCount={hospital.reviewCount}
+              onClick={() => {
+                handleHospitalClick(hospital.id);
+              }}
             />
           ))}
         </Separated>
