@@ -2,7 +2,6 @@
 
 import * as styles from "./_style/mypage.css";
 import Divider from "@common/component/Divider/Divider";
-import { useProtectedRoute } from "@route/useProtectedRoute";
 import { useMypageState } from "./_hooks/useMypageState";
 import ProfileSection from "./_component/ProfileSection/ProfileSection";
 import HeaderSection from "./_component/HeaderSection/HeaderSection";
@@ -18,7 +17,6 @@ import ContentSection from "./_component/ContentSection/ContentSection";
  */
 const Mypage = () => {
   // 보호된 라우트 설정
-  useProtectedRoute();
 
   // 커스텀 훅을 통한 상태 관리
   const {

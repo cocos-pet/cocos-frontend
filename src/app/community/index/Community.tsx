@@ -12,11 +12,9 @@ import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { useQueryGetCategory } from "@api/domain/community/category/hook";
 import { useEffect } from "react";
-import { useProtectedRoute } from "@route/useProtectedRoute";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const Community = () => {
-  useProtectedRoute();
 
   useEffect(() => {
     if (typeof window !== "undefined") {

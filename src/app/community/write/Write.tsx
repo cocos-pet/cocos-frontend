@@ -24,7 +24,6 @@ import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import { DropDownItems } from "@app/community/_constant/writeConfig.tsx";
 import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
-import { useProtectedRoute } from "@route/useProtectedRoute";
 
 interface DropDownItem {
   english: string;
@@ -45,8 +44,6 @@ interface writeProps {
 }
 
 const Write = () => {
-  //빌테용
-  useProtectedRoute();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const navigate = useNavigate();
