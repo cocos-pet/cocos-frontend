@@ -373,7 +373,6 @@ const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }
 };
 
 const EditFavoriteHospital = () => {
-  //todo: api로 불러와서 정보 불러오기 + 정보 수정하기 api 연동
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
   const openCategoryBottomSheet = () => {

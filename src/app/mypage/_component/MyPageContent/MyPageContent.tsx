@@ -13,7 +13,6 @@ import HospitalReviewWrapper from "@shared/component/HospitalReviewWrapper";
 
 interface MyPageContentPropTypes {
   tab: ActiveTabType;
-  nickname: string;
 }
 
 export interface ApiItemTypes {
@@ -31,7 +30,7 @@ export interface ApiItemTypes {
   age: number;
 }
 
-const MyPageContent = ({ tab, nickname }: MyPageContentPropTypes) => {
+const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
   const router = useRouter();
   const { data: myPosts } = useGetMyPost();
   const { data: myComments } = useGetMyComment();
@@ -39,7 +38,7 @@ const MyPageContent = ({ tab, nickname }: MyPageContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return <HospitalReviewWrapper isMypage={true} nickname={nickname} />;
+        return <HospitalReviewWrapper isMypage={true} />;
       case "post":
         if (!myPosts?.length) {
           return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;

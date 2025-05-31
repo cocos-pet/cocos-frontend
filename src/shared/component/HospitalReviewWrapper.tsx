@@ -7,16 +7,19 @@ import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
 import { useRouter } from "next/navigation";
 import { API_PATH } from "@api/constants/apiPath";
+import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
 
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
-  nickname: string;
 }
 
-const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWrapperProps) => {
+const HospitalReviewWrapper = ({ isMypage = false }: HospitalReviewWrapperProps) => {
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
+
+  const member = useMypageMemberInfo((s) => s.member);
+  const nickname = member?.nickname;
 
   const router = useRouter();
 
@@ -25,7 +28,7 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteHospitalReview({
-    nickname: nickname,
+    nickname: nickname ?? "",
     cursorId: undefined,
     size: 5,
   });
