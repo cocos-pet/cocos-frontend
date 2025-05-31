@@ -18,6 +18,7 @@ export const button = recipe({
       ":focus": {
         outline: "none",
       },
+      whiteSpace: "nowrap",
     },
   ],
   variants: {
