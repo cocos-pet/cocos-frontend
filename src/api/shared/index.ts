@@ -20,7 +20,7 @@ export const getMemeberFavoriteHospitals = async ({ queryKey }: { queryKey: [str
   const response = await get<ResponseType>(`${API_PATH.MEMBERS_HOSPITALS}`, {
     params: { nickname },
   });
-  return response.data.data;
+  return response.data.data ?? null;
 };
 
 export const patchMemberFavoriteHospitals = async (hospitalId: number) => {

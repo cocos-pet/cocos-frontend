@@ -59,10 +59,11 @@ export const useInfiniteHospitalList = (initialParams: Omit<RequestBody, "cursor
 ************************************/
 export const useGetFavoriteHospital = (nickname: string) => {
   return useQuery({
-    queryKey: ["getFavoriteHosipital", nickname],
+    queryKey: ["getFavoriteHospital", nickname],
     queryFn: getMemeberFavoriteHospitals,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
+    enabled: !!nickname,
   });
 };
 
@@ -73,7 +74,7 @@ export const usePatchFavoriteHospital = () => {
     mutationFn: async (hospitalId: number) => patchMemberFavoriteHospitals(hospitalId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getFavoriteHosipital"],
+        queryKey: ["getFavoriteHospital"],
       });
     },
   });
@@ -108,6 +109,7 @@ export const useInfiniteHospitalReview = (initialParams: UseInfiniteHospitalRevi
       // 다음 페이지를 위해 마지막 리뷰의 ID를 반환
       return cursorId;
     },
+    enabled: !!initialParams.nickname,
   });
 };
 
@@ -118,6 +120,7 @@ export const useGetMemberHospitalReviews = (nickname: string, cursorId: number |
       getMemeberHospitalReviews(nickname, cursorId, size);
     },
     staleTime: 1000 * 60 * 3,
+    enabled: !!nickname,
   });
 };
 
@@ -133,5 +136,3 @@ export const useDeleteHospitalReview = () => {
     },
   });
 };
-
-
