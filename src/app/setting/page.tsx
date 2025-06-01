@@ -9,11 +9,18 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
 import { useLogout } from "@api/domain/setting/hook";
+import { useAuth } from "@providers/AuthProvider";
 
 export default function SettingPage() {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();
+
+  if (!isAuthenticated) {
+    alert("접근할 수 없습니다.");
+    router.push(PATH.MAIN);
+  }
 
   return (
     <>
@@ -59,4 +66,4 @@ export default function SettingPage() {
       />
     </>
   );
-} 
+}
