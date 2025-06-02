@@ -1,3 +1,6 @@
+// Step.1 ReviewPetInfo.tsx
+export const PET_TYPE_STANDARD = 230;
+
 // Step1. DirectPetInfo.tsx
 export const GENDER = [
   { id: 1, name: "암컷", value: "F" },
