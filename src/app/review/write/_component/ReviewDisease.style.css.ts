@@ -7,6 +7,11 @@ export const wrapper = style({
   gap: "1.2rem",
 });
 
+export const align = style({
+  display: "flex",
+  alignItems: "center",
+});
+
 export const questionStyle = style([
   font.body01,
   {
@@ -18,6 +23,13 @@ export const starStyle = style([
   font.body01,
   {
     color: color.red.warning_red200,
+  },
+]);
+
+export const optionalStyle = style([
+  font.caption01,
+  {
+    color: color.gray.gray700,
   },
 ]);
 

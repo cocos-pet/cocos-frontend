@@ -15,8 +15,11 @@ interface TextFieldProps {
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   maxLength?: number; // input 입력 가능길이
   mentionedNickname?: string; // 언급된 닉네임
+  readOnly?: boolean;
 }
 
 type propsType = WrapVariants & TextFieldProps & InputVariants;
@@ -44,7 +47,6 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       leftIcon,
       state = "default",
       active = true,
-      focus = false,
       placeholder = "검색어를 입력해주세요",
       value,
       isDelete = "true",
@@ -52,13 +54,16 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       onClick,
       onKeyDown,
       onClearClick,
+      onFocus,
+      onBlur,
       maxLength,
       mentionedNickname,
+      readOnly,
     },
     ref,
   ) => {
     return (
-      <div className={styles.wrapper({ state, active, focus })} onClick={onClick}>
+      <div className={styles.wrapper({ state, active })} onClick={onClick}>
         <div className={styles.leftWrap()}>
           {leftIcon && <p className={iconstyle}>{leftIcon}</p>}
           <span className={styles.mention}>{mentionedNickname}</span>
@@ -70,8 +75,11 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            onFocus={onFocus}
+            onBlur={onBlur}
             disabled={!active}
             maxLength={maxLength}
+            readOnly={readOnly}
           />
         </div>
         {value && isDelete ? (
