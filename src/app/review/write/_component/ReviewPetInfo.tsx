@@ -44,7 +44,7 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
             if (petInfo) {
               setValue("breedId", petInfo?.breedId ?? -1);
               setValue("gender", petInfo?.petGender ?? "F");
-              setValue("weight", petInfo?.petAge ?? -1);
+              // setValue("weight", petInfo?.petAge ?? -1);
               // 종은 리뷰 제출 항목이 아님. 직접입력하기의 활성화 상태를 맞추기위해 추가
               if (typeof petInfo?.breedId === "number") {
                 setPetType(petInfo.breedId > 0 ? (petInfo.breedId < 230 ? "강아지" : "고양이") : "");
