@@ -13,9 +13,9 @@ import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { useQueryGetCategory } from "@api/domain/community/category/hook";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@providers/AuthProvider";
 
 const Community = () => {
-
   useEffect(() => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("searchBackUrl", PATH.COMMUNITY.ROOT);
@@ -24,7 +24,18 @@ const Community = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const type = searchParams.get("type");
+  const type = searchParams?.get("type");
+
+  const { isAuthenticated } = useAuth();
+
+  const handleWriteClick = () => {
+    if (!isAuthenticated) {
+      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      router.push(PATH.COMMUNITY.ROOT);
+      return;
+    }
+    router.push(`/community/write?category=${type}`);
+  };
 
   const handleSearchClick = () => {
     router.push(PATH.COMMUNITY.SEARCH);
@@ -76,7 +87,7 @@ const Community = () => {
         <SelectPost />
       </div>
       <div className={styles.btnContainer}>
-        <FloatingBtn onClick={() => router.push(`/community/write?category=${type}`)} />
+        <FloatingBtn onClick={handleWriteClick} />
       </div>
       <div className={styles.communityFooter}>
         <Nav content={NAV_CONTENT} />
