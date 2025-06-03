@@ -12,6 +12,7 @@ import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/categoryFilter.ts";
+import { useAuth } from "@providers/AuthProvider";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -23,6 +24,7 @@ interface CommentProps {
 
 const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const handleReplyClick = () => {
     if (onCommentReplyClick) {
       onCommentReplyClick(comment.nickname, comment.id);
@@ -41,6 +43,10 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
   };
 
   const handleProfileClick = (nickname: string) => {
+    if (!isAuthenticated) {
+      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      return;
+    }
     router.push(`/profile?nickname=${nickname}`);
   };
 
