@@ -215,6 +215,14 @@ const Page = () => {
     }
   };
 
+  const handleCheckCommentPermission = () => {
+    if (!isAuthenticated) {
+      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      return false;
+    }
+    return true;
+  };
+
   return (
     <>
       <HeaderNav
@@ -328,6 +336,7 @@ const Page = () => {
           onClearClick={onClearClick}
           placeholder={"댓글을 입력해주세요."}
           onKeyDown={onKeyDown}
+          onClick={handleCheckCommentPermission}
         />
         {parsedComment.text && (
           <button className={styles.upload} onClick={onSubmitComment}>
