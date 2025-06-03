@@ -20,7 +20,6 @@ import {
   useSubCommentPost,
 } from "@api/domain/community/post/hook";
 import { PATH } from "@route/path.ts";
-import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
@@ -31,6 +30,7 @@ import { styles } from "./PostDetail.css.ts";
 import { getCategoryResponse } from "../_utills/getPostCategoryLike.ts";
 import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from "../_utills/handleCategoryItem.tsx";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
+import { useAuth } from "@providers/AuthProvider";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -61,6 +61,7 @@ const Page = () => {
     mention: "",
     text: "",
   });
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
     if (postData) {
@@ -91,7 +92,6 @@ const Page = () => {
   };
 
   const onSubmitComment = () => {
-   
     if (parsedComment.mention) {
       // 대댓글 등록
       subCommentPost(
@@ -166,8 +166,9 @@ const Page = () => {
   };
 
   const onLikePostClick = () => {
-    if (getAccessToken() === null) {
-      router.push(PATH.ONBOARDING.ROOT);
+    if (!isAuthenticated) {
+      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      router.push(PATH.COMMUNITY.ROOT);
       return;
     }
 
@@ -183,9 +184,11 @@ const Page = () => {
     );
   };
 
+  //예림아 여기 작업중이다아~!!~!
   const onLikeDeleteClick = () => {
-    if (getAccessToken() === null) {
-      router.push(PATH.ONBOARDING.ROOT);
+    if (!isAuthenticated) {
+      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      router.push(PATH.COMMUNITY.ROOT);
       return;
     }
 
