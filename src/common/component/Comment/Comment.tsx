@@ -26,9 +26,12 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const handleReplyClick = () => {
-    if (onCommentReplyClick) {
-      onCommentReplyClick(comment.nickname, comment.id);
+    if (!isAuthenticated) {
+      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      return;
     }
+
+    onCommentReplyClick?.(comment.nickname, comment.id);
   };
 
   if (!comment) return;
