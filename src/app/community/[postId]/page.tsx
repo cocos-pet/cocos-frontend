@@ -184,7 +184,6 @@ const Page = () => {
     );
   };
 
-  //예림아 여기 작업중이다아~!!~!
   const onLikeDeleteClick = () => {
     if (!isAuthenticated) {
       alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
