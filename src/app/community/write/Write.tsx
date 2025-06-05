@@ -10,7 +10,7 @@ import WriteInputSection from "@app/community/_component/WriteInputSection/Write
 import Tag from "@app/community/_component/Tag/Tag.tsx";
 import TextArea from "@app/community/_component/TextArea/TextArea.tsx";
 import Spacing from "@common/component/Spacing/Spacing.tsx";
-import ImageCover from "@app/community/_component/ImageCover/ImageCover.tsx";
+import ImageCover from "@shared/component/ImageCover/ImageCover";
 import { Button } from "@common/component/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useFilterStore } from "@store/filter.ts";
@@ -24,7 +24,6 @@ import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import { DropDownItems } from "@app/community/_constant/writeConfig.tsx";
 import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
-import { useProtectedRoute } from "@route/useProtectedRoute";
 
 interface DropDownItem {
   english: string;
@@ -45,8 +44,6 @@ interface writeProps {
 }
 
 const Write = () => {
-  //빌테용
-  useProtectedRoute();
   const [searchParams] = useSearchParams();
   const category = searchParams.get("category");
   const navigate = useNavigate();

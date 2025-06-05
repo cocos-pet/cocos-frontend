@@ -16,16 +16,19 @@ const ReviewDisease = ({ onCategoryChange, diseaseBodyData }: ReviewDiseaseProps
   const selectedDiseaseId = watch("diseaseId");
 
   const diseaseName =
-    selectedDiseaseId !== -1 ? getDiseaseNameById(selectedDiseaseId, diseaseBodyData) : "진단 내용 추가하기";
+    selectedDiseaseId !== undefined ? getDiseaseNameById(selectedDiseaseId, diseaseBodyData) : "진단 내용 추가하기";
 
   return (
     <div className={styles.wrapper}>
-      <span className={styles.questionStyle}>진단받은 내용이 있나요?</span>
+      <div className={styles.align}>
+        <span className={styles.questionStyle}>진단받은 내용이 있나요?</span>
+        <span className={styles.optionalStyle}>(선택)</span>
+      </div>
       <BtnToChip
         label={diseaseName}
-        rightIcon={<IcRightArror stroke={selectedDiseaseId !== -1 ? "#3DC4F5" : undefined} />}
+        rightIcon={<IcRightArror stroke={selectedDiseaseId !== undefined ? "#3DC4F5" : undefined} />}
         onClick={() => onCategoryChange("disease")}
-        selected={selectedDiseaseId !== -1}
+        selected={selectedDiseaseId !== undefined}
       />
     </div>
   );

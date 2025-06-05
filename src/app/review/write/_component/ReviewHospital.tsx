@@ -4,7 +4,7 @@ import * as styles from "./ReviewHospital.style.css";
 import { IcSearch } from "@asset/svg/index";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import Image from "next/image";
-import { Hospital } from "../page";
+import { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 
 interface ReviewHospitalProps {
   selectedHospital: Hospital | null;

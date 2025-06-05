@@ -11,7 +11,10 @@ const ReviewContent = () => {
   };
   return (
     <div className={styles.wrapper}>
-      <h2 className={styles.title}>상세 후기</h2>
+      <div className={styles.align}>
+        <h2 className={styles.title}>상세 후기</h2>
+        <span className={styles.optional}>(선택)</span>
+      </div>
       <TextArea
         value={contentValue}
         onChange={handleChange}

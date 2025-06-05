@@ -2,28 +2,38 @@ import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as styles from "./HospitalReviewWrapper.css";
 import { IcEllipses } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
-import { useInfiniteHospitalReview } from "@api/shared/hook";
+import { useDeleteHospitalReview, useInfiniteHospitalReview } from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
+import { useRouter } from "next/navigation";
+import { API_PATH } from "@api/constants/apiPath";
+import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
 
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
-  nickname: string;
 }
 
-const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWrapperProps) => {
+const HospitalReviewWrapper = ({ isMypage = false }: HospitalReviewWrapperProps) => {
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
+  const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
+
+  const member = useMypageMemberInfo((s) => s.member);
+  const nickname = member?.nickname;
+
+  const router = useRouter();
+
   const isBlurred = !isLoggedIn();
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteHospitalReview({
-    nickname,
+    nickname: nickname ?? "",
     cursorId: undefined,
     size: 5,
   });
+
+  const { mutate: deleteReview } = useDeleteHospitalReview();
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -56,25 +66,34 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
   }, [handleObserver]);
 
   const handleDropdownClick = (reviewId: number) => {
-    setSelectedReviewId(reviewId === selectedReviewId ? null : reviewId);
-    setIsDropdownOpen((prev) => !prev);
+    const isSameReview = reviewId === selectedReviewId;
+    if (isSameReview) {
+      setSelectedReviewId(null);
+      setIsDeleteButtonOpen(false);
+    } else {
+      setSelectedReviewId(reviewId);
+      setIsDeleteButtonOpen(true);
+    }
   };
 
   const closeDeleteReviewModal = () => {
     setIsDeleteReviewModalOpen(false);
+    setSelectedReviewId(null);
+    setIsDeleteButtonOpen(false);
   };
 
   const openDeleteReviewModal = () => {
     setIsDeleteReviewModalOpen(true);
-    setIsDropdownOpen(false);
+    setIsDeleteButtonOpen(false);
   };
 
-  const handleProfileClick = () => {
-    alert("프로필 클릭");
+  const handleDeleteReview = (reviewId: string | number) => {
+    deleteReview(reviewId);
+    closeDeleteReviewModal();
   };
 
-  const handleHospitalDetailClick = () => {
-    alert("병원 상세 클릭");
+  const handleHospitalDetailClick = (hospitalId: number) => {
+    router.push(`/hospital-detail/${hospitalId}`);
   };
 
   if (isLoading) return <div className={styles.nothingContent}>{"리뷰를 불러오는 중..."}</div>;
@@ -89,8 +108,17 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
         <section key={review.id} className={styles.reviewContainer}>
           <div className={styles.visitWrapper}>
             <span className={styles.visitDate}>{review.visitedAt} 방문</span>
-            {isMypage && <IcEllipses width={20} height={20} onClick={() => handleDropdownClick(review.id as number)} />}
-            {isDropdownOpen && selectedReviewId === review.id && (
+            {isMypage && (
+              <IcEllipses
+                width={20}
+                height={20}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDropdownClick(review.id as number);
+                }}
+              />
+            )}
+            {selectedReviewId === review.id && isDeleteButtonOpen && (
               <div className={styles.dropdownContainer}>
                 <div className={styles.dropdownItem} onClick={openDeleteReviewModal}>
                   삭제하기
@@ -98,10 +126,8 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
               </div>
             )}
           </div>
-
           <HospitalReview
-            handleProfileClick={handleProfileClick}
-            handleHospitalDetailClick={handleHospitalDetailClick}
+            handleHospitalDetailClick={() => handleHospitalDetailClick(review.id as number)}
             reviewData={review}
             isBlurred={isBlurred}
             isNoProfile={true}
@@ -115,15 +141,17 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname }: HospitalReviewWra
         </div>
       )}
 
-      <SimpleBottomSheet
-        isOpen={isDeleteReviewModalOpen}
-        handleClose={closeDeleteReviewModal}
-        content="리뷰를 정말 삭제할까요?"
-        leftText="취소"
-        rightText="삭제할게요"
-        leftOnClick={() => closeDeleteReviewModal()}
-        rightOnClick={() => alert("Todo")}
-      />
+      {selectedReviewId && (
+        <SimpleBottomSheet
+          isOpen={isDeleteReviewModalOpen}
+          handleClose={closeDeleteReviewModal}
+          content="리뷰를 정말 삭제할까요?"
+          leftText="취소"
+          rightText="삭제할게요"
+          leftOnClick={() => closeDeleteReviewModal()}
+          rightOnClick={() => handleDeleteReview(selectedReviewId)}
+        />
+      )}
     </>
   );
 };

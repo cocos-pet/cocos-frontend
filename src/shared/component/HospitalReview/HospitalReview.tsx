@@ -69,7 +69,7 @@ const HospitalReview = (props: propsType) => {
     setIsImageGalleryModalOpen(false);
   };
 
-  const isReviewImage = reviewData.images?.length ? true : false;
+  const isReviewImage = !!reviewData.images?.length;
 
   return (
     <section className={styles.reviewItemContainer({ isNoProfile: isNoProfile })}>

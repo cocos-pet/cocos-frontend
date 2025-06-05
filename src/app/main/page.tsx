@@ -16,12 +16,10 @@ import { PATH } from "@route/path.ts";
 import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook.ts";
 import { useEffect } from "react";
 import { useGetMemberInfo } from "@api/domain/mypage/hook.ts";
-import { useProtectedRoute } from "@route/useProtectedRoute.tsx";
 import { useRouter } from "next/navigation";
 import HotHospital from "@app/main/_section/hotHospital/HotHospital.tsx";
 
 export default function Page() {
-  useProtectedRoute();
 
   const { data: postsData } = useQueryGetPopular();
   const { data: getBodyParts } = useGetBodyParts("SYMPTOM");

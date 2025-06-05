@@ -37,6 +37,12 @@ export const styles = {
         main: {
           boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
         },
+
+        focus: { border: `0.1rem solid ${color.primary.blue600}` },
+        done: {
+          border: `0.1rem solid ${color.primary.blue600}`,
+          backgroundColor: "rgba(67, 214, 255, 0.16)",
+        },
       },
       active: {
         true: {},
@@ -46,17 +52,10 @@ export const styles = {
           border: "none",
         },
       },
-      focus: {
-        true: {
-          border: `0.1rem solid ${color.primary.blue600}`,
-        },
-        false: {},
-      },
     },
     defaultVariants: {
       state: "default",
       active: true,
-      focus: false,
     },
   }),
 
@@ -108,6 +107,8 @@ export const styles = {
         search: {},
         main: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
+        focus: {},
+        done: { backgroundColor: "transparent" },
       },
     },
 

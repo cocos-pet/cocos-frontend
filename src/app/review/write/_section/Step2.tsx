@@ -11,12 +11,24 @@ import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDise
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
 import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "../page";
 
 type CategoryType = "symptom" | "disease";
 
-const Step2 = () => {
+interface Step2Props {
+  onPrev: () => void;
+  onNext: () => void;
+}
+
+const Step2 = ({ onPrev, onNext }: Step2Props) => {
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
+
+  const { watch } = useFormContext<ReviewFormData>();
+
+  const purposeId = watch("purposeId");
+  const isFormValid = purposeId !== -1;
 
   const { data: diseaseData } = useBodiesGet("disease");
   const { data: symptomData } = useBodiesGet("symptom");
@@ -34,13 +46,17 @@ const Step2 = () => {
     setOpen(true);
   };
 
-  const handleGoBack = () => console.log("뒤로가기 구현 예정");
-  const handleNext = () => console.log("다음 구현 예정");
+  const handleGoHospitalDetail = () => {
+    window.history.go(-2); 
+  };
 
   return (
     <div className={styles.backgroundColor}>
       {/* 상단 헤더 영역 */}
-      <HeaderNav centerContent="리뷰작성(2/4)" leftIcon={<IcDeleteBlack />} />
+      <HeaderNav
+        centerContent="리뷰작성(2/4)"
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+      />
 
       <section className={styles.wrapper}>
         {/* 2-1. 증상 선택 */}
@@ -58,8 +74,8 @@ const Step2 = () => {
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handleGoBack} />
-        <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
+        <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFormValid} />
       </section>
 
       {/* 증상&질병 바텀시트 */}

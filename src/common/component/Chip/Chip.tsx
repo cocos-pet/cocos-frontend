@@ -35,7 +35,7 @@ const Chip = ({
     if (!icon) setIsActive(!isActive);
     onClick?.();
   };
-  console.log("Chip render", { label, isActive, color, size });
+  // console.log("Chip render", { label, isActive, color, size });
 
   return (
     <div className={chipItem({ size, color, active: isActive })} onClick={handleClick}>
