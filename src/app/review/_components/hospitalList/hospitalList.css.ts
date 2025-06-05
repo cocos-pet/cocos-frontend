@@ -72,3 +72,12 @@ export const hospitalImage = style({
   objectFit: "cover",
   flexShrink: 0,
 });
+
+export const loadingTrigger = style({
+  width: "100%",
+  height: "2rem",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: color.gray.gray700,
+});
