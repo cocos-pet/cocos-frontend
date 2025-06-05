@@ -23,6 +23,7 @@ export const API_PATH = {
   POST_CATEGORIES: "/api/dev/posts/categories",
 
   HOSPITALS: "/api/dev/hospitals",
+  HOSPITAL_SUMMARY_OPTION: "/api/dev/hospitals/reviews/summary/option",
 
   TEST_HEALTH_CHECK: "/api/dev/test/health-check",
   TEST_TOKEN_CHECK: "/api/dev/test/token-check",

@@ -532,6 +532,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/pets/owner/check": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 반려동물 등록 여부 확인 API
+         * @description 사용자가 반려동물을 등록했는지 확인하는 API입니다.
+         */
+        get: operations["checkOwner"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/members/refresh": {
         parameters: {
             query?: never;
@@ -2051,6 +2071,15 @@ export interface components {
              */
             name?: string;
         };
+        BaseResponsePetOwnerCheckResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["PetOwnerCheckResponse"];
+        };
+        PetOwnerCheckResponse: {
+            isPetOwner?: boolean;
+        };
         BaseResponseMemberProfileResponse: {
             /** Format: int32 */
             code?: number;
@@ -2512,19 +2541,19 @@ export interface components {
              */
             isPostWriter?: boolean;
         };
-        BaseResponseMyAllCommentsResponse: {
+        BaseResponseMemberAllCommentsResponse: {
             /** Format: int32 */
             code?: number;
             message?: string;
-            data?: components["schemas"]["MyAllCommentsResponse"];
+            data?: components["schemas"]["MemberAllCommentsResponse"];
         };
-        MyAllCommentsResponse: {
+        MemberAllCommentsResponse: {
             /** @description 댓글 리스트 */
-            comments?: components["schemas"]["MyCommentResponse"][];
+            comments?: components["schemas"]["MemberCommentResponse"][];
             /** @description 대댓글 리스트 */
-            subComments?: components["schemas"]["MySubCommentResponse"][];
+            subComments?: components["schemas"]["MemberSubCommentResponse"][];
         };
-        MyCommentResponse: {
+        MemberCommentResponse: {
             /**
              * Format: int64
              * @description 댓글 아이디
@@ -2554,7 +2583,7 @@ export interface components {
              */
             createdAt?: string;
         };
-        MySubCommentResponse: {
+        MemberSubCommentResponse: {
             /**
              * Format: int64
              * @description 대댓글 아이디
@@ -3439,6 +3468,26 @@ export interface operations {
             };
         };
     };
+    checkOwner: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 요청이 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponsePetOwnerCheckResponse"];
+                };
+            };
+        };
+    };
     reIssueToken: {
         parameters: {
             query?: never;
@@ -3696,7 +3745,7 @@ export interface operations {
                     [name: string]: unknown;
                 };
                 content: {
-                    "*/*": components["schemas"]["BaseResponseMyAllCommentsResponse"];
+                    "*/*": components["schemas"]["BaseResponseMemberAllCommentsResponse"];
                 };
             };
         };
