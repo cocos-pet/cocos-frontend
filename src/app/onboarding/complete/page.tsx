@@ -1,14 +1,14 @@
 "use client";
 
 import * as styles from "./Complete.css";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
-import {Button} from "@common/component/Button";
-import {PATH} from "@route/path";
-import {useGetNickname} from "@api/domain/complete/hook";
+import { Button } from "@common/component/Button";
+import { PATH } from "@route/path";
+import { useGetNickname } from "@api/domain/complete/hook";
 import registerPet from "@asset/lottie/registerPet.json";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
@@ -23,9 +23,6 @@ const Page = () => {
 
   const handleSkip = () => {
     router.push(PATH.MAIN);
-    if (typeof window !== "undefined") {
-      window.location.reload();
-    }
   };
 
   const handleNext = () => {
@@ -54,18 +51,8 @@ const Page = () => {
         />
       </div>
       <div className={styles.btnWrapper}>
-        <Button
-          label="건너뛰기"
-          size="large"
-          variant="solidNeutral"
-          onClick={handleSkip}
-        />
-        <Button
-          label="등록하기"
-          size="large"
-          variant="solidPrimary"
-          onClick={handleNext}
-        />
+        <Button label="건너뛰기" size="large" variant="solidNeutral" onClick={handleSkip} />
+        <Button label="등록하기" size="large" variant="solidPrimary" onClick={handleNext} />
       </div>
     </div>
   );
