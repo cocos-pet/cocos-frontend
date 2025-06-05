@@ -82,3 +82,12 @@ export const loadingTrigger = style({
   alignItems: "center",
   color: color.gray.gray700,
 });
+
+export const loadingTrigger = style({
+  width: "100%",
+  height: "2rem",
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  color: color.gray.gray700,
+});
