@@ -1,6 +1,6 @@
 import * as styles from "./locationHeader.css";
 import { useQuery } from "@tanstack/react-query";
-import { IcChevronDown, Icon } from "@asset/svg";
+import { Icon } from "@asset/svg";
 
 interface LocationResponse {
   code: number;
@@ -16,8 +16,8 @@ const mockLocationData: LocationResponse = {
   message: "success",
   data: {
     townId: 1,
-    townName: "반포본동"
-  }
+    townName: "반포본동",
+  },
 };
 
 const getLocationInfo = async (): Promise<LocationResponse> => {
@@ -31,7 +31,7 @@ const getLocationInfo = async (): Promise<LocationResponse> => {
 export default function LocationHeader() {
   const { data: locationData } = useQuery<LocationResponse>({
     queryKey: ["location"],
-    queryFn: getLocationInfo
+    queryFn: getLocationInfo,
   });
 
   const handleLocationClick = () => {
@@ -43,10 +43,8 @@ export default function LocationHeader() {
     <div className={styles.locationHeader}>
       <div className={styles.locationWrapper} onClick={handleLocationClick}>
         <Icon style={{ width: "2rem", height: "2rem" }} />
-        <span className={styles.locationText}>
-          {locationData?.data.townName}
-        </span>
-          <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
+        <span className={styles.locationText}>{locationData?.data.townName}</span>
+        <ChevronDown style={{ width: "2rem", height: "2rem" }} />
       </div>
     </div>
   );
