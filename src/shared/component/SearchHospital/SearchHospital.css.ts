@@ -123,3 +123,29 @@ export const buttonContainer = style({
 
   backgroundColor: color.gray.gray000,
 });
+
+export const emptyState = style([
+  font.body01,
+  {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    height: "10rem",
+    color: color.gray.gray600,
+    textAlign: "center",
+  },
+]);
+
+export const loadingState = style([
+  font.body01,
+  {
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    width: "100%",
+    padding: "1rem 0",
+    color: color.gray.gray600,
+    textAlign: "center",
+  },
+]);

@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Toast } from "@common/component/Toast/Toast.tsx";
-import {
-  toastAnimation,
-  toastExitAnimation,
-} from "@common/component/WornningToastWrap/WorningToastWrap.css.ts";
+import { toastAnimation, toastExitAnimation } from "@common/component/WarnningToastWrap/WarningToastWrap.css";
 
 type Props = {
   errorMessage: string;
@@ -48,12 +45,7 @@ const WarningToastWrap: React.FC<Props> = (props) => {
     <>
       {errorMessage && showError && (
         <div className={isExiting ? toastExitAnimation : toastAnimation}>
-          <Toast
-            message={errorMessage}
-            iconColor={"black"}
-            variant={"error"}
-            onClick={handleClose}
-          />
+          <Toast message={errorMessage} iconColor={"black"} variant={"error"} onClick={handleClose} />
         </div>
       )}
     </>

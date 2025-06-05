@@ -24,14 +24,7 @@ export const reviewContainer = style([
   a.paddingVertical16,
 ]);
 
-export const visitWrapper = style([
-  a.fullWidth,
-  a.justifySpaceBetween,
-  a.flexRow,
-  {
-    position: "relative",
-  },
-]);
+export const visitWrapper = style([a.fullWidth, a.justifySpaceBetween, a.flexRow, { position: "relative" }]);
 
 export const visitDate = style([
   font.label01,
@@ -171,4 +164,14 @@ export const dropdownItem = style([
     backgroundColor: "white",
     boxShadow: "0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
   },
+]);
+
+export const loadMoreContainer = style([
+  a.flexRow,
+  a.justifyCenter,
+  a.alignCenter,
+  a.fullWidth,
+  a.padding16,
+  font.label01,
+  a.textAssistive,
 ]);
