@@ -4,6 +4,7 @@ import React, { ReactNode, useState } from "react";
 import "@style/global.css.ts";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import Script from "next/script";
 
 // Metadata는 서버 컴포넌트에서만 사용 가능합니다.
 // 이 파일은 이제 클라이언트 컴포넌트이므로 메타데이터 정의를 제거합니다.

@@ -50,15 +50,14 @@ export const recommendList = style({
 });
 
 export const hospitalCard = style({
-  padding: "2rem",
+  padding: "1.6rem",
   border: `1px solid ${color.gray.gray200}`,
   borderRadius: "1.6rem",
   display: "flex",
   flexDirection: "column",
-  gap: "0.8rem",
+  gap: "0.4rem",
   cursor: "pointer",
   minWidth: "30rem",
-  height: "7.8rem",
 });
 
 export const hospitalTitleContainer = style({
@@ -81,13 +80,13 @@ export const hospitalAddress = style([
   {
     color: color.gray.gray500,
     fontSize: "1.4rem",
+    fontWeight: "500",
   },
 ]);
 
 export const bannerContainer = style({
-  width: "100%",
-  height: "10rem",
- padding:"0rem 2rem 0rem 0rem"
+  width: "100",
+  padding: "0rem 2rem",
 });
 
 export const hospitalListText = style([
@@ -99,12 +98,16 @@ export const hospitalListText = style([
   },
 ]);
 
+export const hospitalWrapper = style({
+  padding: "0 2rem",
+});
+
 export const navWrapper = style({
-  position: "sticky",
+  position: "fixed",
   bottom: 0,
   left: 0,
   right: 0,
-  zIndex: 10,
+  zIndex: 100,
   backgroundColor: "white",
 });
 
@@ -112,7 +115,7 @@ export const floatBtnWrapper = style({
   position: "fixed",
   bottom: "9.6rem",
   right: "2rem",
-  zIndex: 11,
+  zIndex: 1000,
   display: "flex",
   justifyContent: "flex-end",
 });

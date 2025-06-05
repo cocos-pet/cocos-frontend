@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { useEffect, ChangeEvent } from "react";
 import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
@@ -8,12 +8,11 @@ import { TextField } from "@common/component/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";
-import HospitalList from "./_components/hospitalList/hospitalList";
+import HospitalList from "./hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
-import LocationHeader from "./_components/locationHeader/locationHeader";
-import { useQuery } from "@tanstack/react-query";
+import LocationHeader from "./locationHeader/locationHeader";
 
 interface Review {
   id: string;
@@ -99,11 +98,19 @@ export default function ReviewPage() {
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
 
-  const { data: review = [] } = useQuery({
-    queryKey: ["reviews"],
-    queryFn: fetchReviews,
-    initialData: MOCK_REVIEWS,
-  });
+  useEffect(() => {
+    fetchReviews();
+  }, [isRecentPost]);
+
+  const fetchReviews = async () => {
+    try {
+      const response = await fetch("/api/review");
+      const data = await response.json();
+      setReviews(data);
+    } catch (error) {
+      console.error("리뷰 목록 조회 중 오류 발생:", error);
+    }
+  };
 
   function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>): void {
     throw new Error("Function not implemented.");
@@ -116,6 +123,7 @@ export default function ReviewPage() {
   return (
     <div>
       <LocationHeader />
+
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
           <div className={styles.headerContainer}>
@@ -152,15 +160,17 @@ export default function ReviewPage() {
               </div>
               <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
-            <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            <div className={styles.hospitalWrapper}>
+              <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
+              <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            </div>
+            <div className={styles.navWrapper}>
+              <Nav content={NAV_CONTENT} type={"nav"} />
+            </div>
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn />
-        </div>
-        <div className={styles.navWrapper}>
-          <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
       </div>
     </div>

@@ -22,6 +22,7 @@ export { default as IcCocos } from "./IcCocos";
 export { default as IcCocosM } from "./IcCocosM";
 export { default as IcCommunity } from "./IcCommunity";
 export { default as IcCommunityon } from "./IcCommunityon";
+export { default as IcCopy } from "./IcCopy";
 export { default as IcCurious } from "./IcCurious";
 export { default as IcCuriousActive } from "./IcCuriousActive";
 export { default as IcCuriousUnactive } from "./IcCuriousUnactive";
