@@ -69,6 +69,7 @@ export const hospitalTitleContainer = style({
 export const hospitalRank = style([
   font.heading03,
   {
+    fontWeight: "600",
     color: color.primary.blue600,
   },
 ]);
@@ -78,9 +79,9 @@ export const hospitalName = style([font.heading03]);
 export const hospitalAddress = style([
   font.body01,
   {
-    color: color.gray.gray500,
+    color: color.gray.gray700,
     fontSize: "1.4rem",
-    fontWeight: "500",
+    whiteSpace: "nowrap",
   },
 ]);
 

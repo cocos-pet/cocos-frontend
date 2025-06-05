@@ -10,7 +10,7 @@ import {
 } from "@app/community/_component/Profile/Profile.css.ts";
 
 interface propsType {
-  handleProfileClick: () => void;
+  handleProfileClick?: () => void;
   profileImageData?: string | undefined;
   nickname?: string;
   breed?: string;

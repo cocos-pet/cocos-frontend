@@ -5,10 +5,12 @@ import { button, ButtonVariants, icon } from "@common/component/Button/styles.cs
 
 interface ButtonProps {
   width?: string;
-  label?: string;
+  label?: string | React.ReactNode;
   leftIcon?: React.ReactNode;
   rightIcon?: React.ReactNode;
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  style?: React.CSSProperties;
+  className?: string;
 }
 
 type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
@@ -21,7 +23,10 @@ type CombinedButtonProps = ButtonProps & Exclude<ButtonVariants, undefined>;
  * @param size 버튼 사이즈 small | medium | large
  * @param variant 버튼 종류 solidPrimary | solidNeutral | outlinePrimary
  * @param disabled 비활성화 여부
+ * @param style 버튼 스타일
+ * @param className 버튼 클래스
  * @param onClick
+ * @param props
  * @constructor minjeoong
  */
 
@@ -34,13 +39,17 @@ export const Button = ({
   variant = "solidPrimary",
   disabled,
   onClick,
+   style,
+  className,
+  ...props
 }: CombinedButtonProps) => {
   return (
     <button
-      style={width ? { width } : undefined}
-      className={button({ size, variant, disabled })}
+      style={style}
+      className={`${button({ size, variant, disabled })} ${className ?? ""}`}
       disabled={disabled}
       onClick={onClick}
+      {...props}
     >
       {leftIcon && <div className={icon}>{leftIcon}</div>}
       {label}

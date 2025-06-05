@@ -44,7 +44,7 @@ const ProfileContent = () => {
 
         {/* 프로필 섹션 */}
         <article className={styles.myProfileWrapper}>
-          <ProfileSection member={member} petInfo={petInfo} />
+          <ProfileSection member={member} petInfo={petInfo}  />
         </article>
 
         <Divider />
