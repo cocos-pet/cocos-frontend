@@ -51,7 +51,7 @@ const AnimalBottomSheet = ({ petId }: { petId: number }) => {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="수정하기" size="large" width="100%" onClick={handleClickButton} />
+          <Button label="수정하기" size="large" style={{ width: "100%" }} onClick={handleClickButton} />
         </div>
       </>
     </BottomSheet>

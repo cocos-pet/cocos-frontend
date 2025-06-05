@@ -1,6 +1,6 @@
 "use client";
 
-import { IcChevronLeft, IcChevronRight, IcEditPen } from "@asset/svg";
+import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
@@ -17,6 +17,7 @@ import AnimalBottomSheet from "./_component/AnimalBottomSheet/AnimalBottomSheet"
 import { useAnimalFilterStore } from "./_store/animalFilter.ts";
 import { getAnimalChipNamesById } from "./_utils/getAnimalChipNamesById.ts";
 import AgeBottomSheet from "./_component/AgeBottomSheet/AgeBottomSheet";
+import { CategoryData } from "./_store/categoryFilter.ts";
 import {
   useGetAnimal,
   useGetBodies,
@@ -27,6 +28,7 @@ import {
 } from "@api/domain/mypage/edit-pet/hook";
 import { useGetPetInfo } from "@api/domain/mypage/hook";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";
+import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital.tsx";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -296,51 +298,21 @@ const Page = () => {
             ))}
           </div>
         </article>
-        <article className={styles.knownDisease}>
-          <span className={styles.defaultText}>앓고있는/관심있는 질병</span>
-          <Divider size="small" />
-          <div className={styles.chipContainer}>
-            {selectedChips.diseaseIds.map((id) => (
-              <Chip
-                key={`disease-edit-${id}`}
-                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
-                disabled={true}
-              />
-            ))}
-          </div>
-          <span style={{ width: "10.2rem" }}>
-            <Button
-              variant={"solidNeutral"}
-              leftIcon={<IcEditPen width={20} height={20} />}
-              label={"수정하기"}
-              size="small"
-              onClick={() => openCategoryBottomSheet("disease")}
-            />
-          </span>
-        </article>
-        <article className={styles.knownSymptoms}>
-          <span className={styles.defaultText}>앓고있는/관심있는 증상</span>
-          <Divider size="small" />
-          <div className={styles.chipContainer}>
-            {selectedChips.symptomIds.map((id) => (
-              <Chip
-                key={`symptom-edit-${id}`}
-                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
-                disabled={true}
-              />
-            ))}
-          </div>
-          <span style={{ width: "10.2rem" }}>
-            <Button
-              variant={"solidNeutral"}
-              leftIcon={<IcEditPen width={20} height={20} />}
-              label={"수정하기"}
-              size="small"
-              onClick={() => openCategoryBottomSheet("symptom")}
-            />
-          </span>
-        </article>
-
+        <EditArticle
+          title="앓고있는/관심있는 질병"
+          type="disease"
+          selectedChips={selectedChips}
+          categoryData={categoryData}
+          onButtonClick={() => openCategoryBottomSheet("disease")}
+        />
+        <EditArticle
+          title="앓고있는/관심있는 증상"
+          type="symptom"
+          selectedChips={selectedChips}
+          categoryData={categoryData}
+          onButtonClick={() => openCategoryBottomSheet("symptom")}
+        />
+        <EditFavoriteHospital />
         <AnimalBottomSheet petId={petInfo.petId} />
         <CategoryBottomSheet petId={petInfo.petId} />
         <AgeBottomSheet
@@ -356,3 +328,99 @@ const Page = () => {
 };
 
 export default Page;
+
+interface EditArticleProps {
+  title: string;
+  type: "symptom" | "disease";
+  selectedChips: { symptomIds: number[]; diseaseIds: number[] };
+  categoryData: CategoryData;
+  onButtonClick: () => void;
+}
+
+const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }: EditArticleProps) => {
+  return (
+    <article className={styles.editArticle}>
+      <span className={styles.defaultText}>{title}</span>
+      <Divider size="small" />
+      <div className={styles.chipContainer}>
+        {type === "symptom"
+          ? selectedChips.symptomIds.map((id) => (
+              <Chip
+                key={`symptom-edit-${id}`}
+                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
+                disabled={true}
+              />
+            ))
+          : selectedChips.diseaseIds.map((id) => (
+              <Chip
+                key={`disease-edit-${id}`}
+                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
+                disabled={true}
+              />
+            ))}
+      </div>
+      <span style={{ width: "10.2rem" }}>
+        <Button
+          variant={"solidNeutral"}
+          leftIcon={<IcEditPen width={20} height={20} />}
+          label={"수정하기"}
+          size="small"
+          onClick={onButtonClick}
+        />
+      </span>
+    </article>
+  );
+};
+
+const EditFavoriteHospital = () => {
+  //todo: api로 불러와서 정보 불러오기 + 정보 수정하기 api 연동
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+  const openCategoryBottomSheet = () => {
+    setIsOpen(true);
+  };
+  const handleSelectHospital = (hospital: Hospital | null) => {
+    setSelectedHospital(hospital);
+  };
+
+  return (
+    <article className={styles.editArticle}>
+      <span className={styles.defaultText}>즐겨찾는 병원</span>
+      <Divider size="small" />
+      {selectedHospital ? (
+        <div className={styles.favoriteHospitalWrapper}>
+          <div className={styles.favoriteHospitalInfo}>
+            <span className={styles.favoriteHospitalName}>{selectedHospital.name}</span>
+            <span
+              className={styles.favoriteHospitalSubInfo}
+            >{`${selectedHospital.address} . 리뷰 ${selectedHospital.reviewCount}`}</span>
+          </div>
+          <Button
+            variant={"solidNeutral"}
+            width="10.5rem"
+            leftIcon={<IcEditPen width={20} height={20} />}
+            label={"수정하기"}
+            size="small"
+            onClick={() => setIsOpen(true)}
+          />
+        </div>
+      ) : (
+        <Button
+          variant={"solidNeutral"}
+          rightIcon={<IcPlus width={20} height={20} />}
+          label={"즐겨찾는 동물병원 추가하기"}
+          size="small"
+          width="21.2rem"
+          onClick={openCategoryBottomSheet}
+        />
+      )}
+
+      <SearchHospital
+        active={isOpen}
+        onCloseBottomSheet={() => setIsOpen(false)}
+        selectedHospital={selectedHospital}
+        onSelectHospital={handleSelectHospital}
+      />
+    </article>
+  );
+};

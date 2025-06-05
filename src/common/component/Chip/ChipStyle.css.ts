@@ -50,11 +50,30 @@ export const chipItem = recipe({
       false: {
         background: color.gray.gray000,
       },
-      true: {
+    },
+  },
+  compoundVariants: [
+    {
+      variants: {
+        color: "blue",
+        active: true,
+      },
+      style: {
         backgroundColor: "rgba(67, 214, 255, 0.16)",
       },
     },
-  },
+
+    {
+      variants: {
+        color: "red",
+        active: true,
+      },
+      style: {
+        backgroundColor: "#F5D8D8",
+      },
+    },
+  ],
+
   defaultVariants: {
     size: "small",
     color: "blue",

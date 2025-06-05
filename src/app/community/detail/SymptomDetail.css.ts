@@ -1,6 +1,6 @@
-import { color, font, semanticColor } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
-import { recipe } from "@vanilla-extract/recipes";
+import {color, font, semanticColor} from "@style/styles.css.ts";
+import {style} from "@vanilla-extract/css";
+import {recipe} from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -107,7 +107,6 @@ export const reviewContainer = style({
   flexDirection: "column",
   alignItems: "center",
   justifyContent: "center",
-  gap: "1.6rem",
 });
 
 export const reviewItemContainer = style({
@@ -115,4 +114,74 @@ export const reviewItemContainer = style({
   width: "100%",
   display: "flex",
   flexDirection: "column",
+});
+
+export const reviewContent = style({
+  display: "flex",
+  gap: "0.8rem",
+  alignItems: "center",
+});
+
+export const reviewFilter = style({
+  display: "flex",
+  justifyContent: "space-between",
+  padding: "1.6rem 2rem",
+  gap: "0.8rem",
+  alignItems: "center",
+  width: "100%",
+});
+
+export const reviewRegion = style({
+  gap: "0.6rem",
+  fontFamily: font.body01,
+  fontSize: "1.4rem",
+  borderRadius: "0.8rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  flexDirection: "row",
+});
+
+export const reviewRegionText = style([
+  font.body01,
+  {
+    flexShrink: 0,
+  },
+]);
+
+export const filterButton = style({
+  backgroundColor: "white !important",
+  color: semanticColor.text.normal,
+});
+
+export const filterButtonActive = style({
+  backgroundColor: "rgba(67, 214, 255, 0.16) !important",
+  color: "#14B5F0 !important",
+});
+
+export const filterContent = style({
+  width: "100%",
+});
+export const filterTitle = style([
+  font.body01,
+  {
+    color: color.gray.gray900,
+    textAlign: "center",
+    padding: "1.2rem 1rem",
+  },
+]);
+export const filterContentText = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "1rem",
+  backgroundColor: semanticColor.neutral.strong,
+  margin: "0 2rem",
+  padding: "0.8rem",
+  overflowY: "auto",
+  height: "calc(100vh - 29rem)",
+});
+
+export const filterButtonContainer = style({
+  margin: "1.2rem 2rem 3.2rem 2rem",
 });

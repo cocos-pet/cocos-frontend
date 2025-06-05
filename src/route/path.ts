@@ -17,7 +17,7 @@ export const PATH = {
     SEARCH: "/community/search",
     SEARCH_DONE: "/community/search/done",
     WRITE: "/community/write",
-    DETAIL:"/community/detail"
+    DETAIL: "/community/detail",
   },
   MYPAGE: {
     ROOT: "/mypage",
@@ -27,11 +27,25 @@ export const PATH = {
     ROOT: "/search",
     DONE: "/search/done",
   },
+
+  HOSPITAL: {
+    ROOT: "/hospital",
+    SEARCH: "/review/search",
+  },
   PROFILE: {
     ROOT: "/profile",
   },
   SETTING: {
     ROOT: "/setting",
     EDIT_PROFILE: "/setting/edit-profile",
+  },
+
+  REVIEW: {
+    ROOT: "/review",
+    AGREE: "/review/agree",
+    WRITE: "/review/write",
+    COMPLETE: "/review/complete",
+    HOSPITALS_DONE: "/review/hospitals/done",
+    SEARCH: "/review/search",
   },
 };

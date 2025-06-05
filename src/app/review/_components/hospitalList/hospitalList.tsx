@@ -31,12 +31,7 @@ interface HospitalListProps {
 export default function HospitalList({ title, highlightText }: HospitalListProps) {
   const { ref, inView } = useInView();
 
-  const {
-    data,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteQuery<HospitalResponse>({
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery<HospitalResponse>({
     queryKey: ["hospitals"] as const,
     initialPageParam: { page: 1 },
     queryFn: async ({ pageParam }: { pageParam: { page: number } }) => {
@@ -69,15 +64,9 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
                   {hospital.address} · 리뷰 {hospital.reviewCount}
                 </p>
               </div>
-              <Image
-                src={hospital.image}
-                alt={hospital.name}
-                width={80}
-                height={80}
-                className={styles.hospitalImage}
-              />
+              <Image src={hospital.image} alt={hospital.name} width={80} height={80} className={styles.hospitalImage} />
             </div>
-          ))
+          )),
         )}
         <div ref={ref} className={styles.loadingTrigger}>
           {isFetchingNextPage && "로딩 중"}
