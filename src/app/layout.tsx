@@ -1,10 +1,9 @@
 "use client";
 
-import React, { ReactNode, useState } from "react";
+import { ReactNode } from "react";
 import "@style/global.css.ts";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Script from "next/script";
 
 // Metadata는 서버 컴포넌트에서만 사용 가능합니다.
 // 이 파일은 이제 클라이언트 컴포넌트이므로 메타데이터 정의를 제거합니다.
@@ -19,19 +18,21 @@ export default function RootLayout({
 }: {
   children: ReactNode;
 }) {
-  const [queryClient] = useState(() => new QueryClient({
+  const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         refetchOnWindowFocus: true,
       },
     },
-  }));
+  });
 
   return (
     <html lang="ko" style={{ scrollbarWidth: "none" }}>
       <body>
         <QueryClientProvider client={queryClient}>
-          <div id="root">{children}</div>
+          <AuthProvider>
+            <div id="root">{children}</div>
+          </AuthProvider>
           <ReactQueryDevtools initialIsOpen={false} />
         </QueryClientProvider>
       </body>

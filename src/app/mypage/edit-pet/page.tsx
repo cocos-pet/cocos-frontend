@@ -26,9 +26,11 @@ import {
   useGetSymptoms,
   usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
-import { useGetPetInfo } from "@api/domain/mypage/hook";
+import { useGetPetInfo, useGetMemberInfo } from "@api/domain/mypage/hook";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital.tsx";
+import { useGetFavoriteHospital, usePatchFavoriteHospital } from "@api/shared/hook.ts";
+import { useMypageMemberInfo } from "../_store/mypageStore.ts";
 
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
@@ -51,6 +53,12 @@ const Page = () => {
   const [petAge, setPetAge] = useState("");
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
+
+  const member = useMypageMemberInfo((s) => s.member);
+  const setMemberInfo = useMypageMemberInfo((s) => s.setMemberInfo);
+
+  // member 정보를 직접 가져와서 스토어에 설정
+  const { data: memberData } = useGetMemberInfo();
 
   const {
     isOpen,
@@ -87,6 +95,13 @@ const Page = () => {
   const { data: disease } = useGetDisease(bodyDiseaseIds);
   const { data: petInfo } = useGetPetInfo();
   const { mutate: patchPetInfo } = usePatchPetInfo();
+
+  // memberData가 있으면 스토어에 설정
+  useEffect(() => {
+    if (memberData) {
+      setMemberInfo(memberData);
+    }
+  }, [memberData, setMemberInfo]);
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
@@ -226,7 +241,7 @@ const Page = () => {
   };
 
   if (!petInfo?.petId) {
-    return <div>petId 미존재</div>;
+    return null;
   }
 
   return (
@@ -312,7 +327,7 @@ const Page = () => {
           categoryData={categoryData}
           onButtonClick={() => openCategoryBottomSheet("symptom")}
         />
-        <EditFavoriteHospital />
+        <EditFavoriteHospital nickname={member?.nickname || memberData?.nickname} />
         <AnimalBottomSheet petId={petInfo.petId} />
         <CategoryBottomSheet petId={petInfo.petId} />
         <AgeBottomSheet
@@ -372,13 +387,32 @@ const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }
   );
 };
 
-const EditFavoriteHospital = () => {
-  //todo: api로 불러와서 정보 불러오기 + 정보 수정하기 api 연동
+const EditFavoriteHospital = ({ nickname }: { nickname: string | undefined }) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
+  const prevSelectedHospital = useRef<Hospital | null>(null);
+
+  const { mutate } = usePatchFavoriteHospital();
+  const { data } = useGetFavoriteHospital(nickname || "");
+
   const openCategoryBottomSheet = () => {
     setIsOpen(true);
   };
+
+  const handleCloseBottomSheet = () => {
+    if (!selectedHospital?.id) {
+      setIsOpen(false);
+      return;
+    }
+
+    if (prevSelectedHospital.current?.id !== selectedHospital?.id) {
+      prevSelectedHospital.current = selectedHospital;
+      mutate(selectedHospital.id);
+    }
+
+    setIsOpen(false);
+  };
+
   const handleSelectHospital = (hospital: Hospital | null) => {
     setSelectedHospital(hospital);
   };
@@ -387,13 +421,14 @@ const EditFavoriteHospital = () => {
     <article className={styles.editArticle}>
       <span className={styles.defaultText}>즐겨찾는 병원</span>
       <Divider size="small" />
-      {selectedHospital ? (
+      {data ? (
         <div className={styles.favoriteHospitalWrapper}>
           <div className={styles.favoriteHospitalInfo}>
-            <span className={styles.favoriteHospitalName}>{selectedHospital.name}</span>
-            <span
-              className={styles.favoriteHospitalSubInfo}
-            >{`${selectedHospital.address} . 리뷰 ${selectedHospital.reviewCount}`}</span>
+            <span className={styles.favoriteHospitalName}>{data.name}</span>
+            <span className={styles.favoriteHospitalSubInfo}>
+              {`${data.address} `}
+              {/* {` . 리뷰 ${data.reviewCount}`} */}
+            </span>
           </div>
           <Button
             variant={"solidNeutral"}
@@ -417,9 +452,10 @@ const EditFavoriteHospital = () => {
 
       <SearchHospital
         active={isOpen}
-        onCloseBottomSheet={() => setIsOpen(false)}
+        onCloseBottomSheet={handleCloseBottomSheet}
         selectedHospital={selectedHospital}
         onSelectHospital={handleSelectHospital}
+        initialId={data?.id}
       />
     </article>
   );

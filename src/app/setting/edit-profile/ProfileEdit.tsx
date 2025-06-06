@@ -6,10 +6,8 @@ import Divider from "@common/component/Divider/Divider";
 import {Button} from "@common/component/Button";
 import {PATH} from "@route/path";
 import {useGetMemberInfo} from "@api/domain/mypage/hook";
-import {useProtectedRoute} from "@route/useProtectedRoute";
 
 const ProfileEdit = () => {
-  useProtectedRoute();
 
   const router = useRouter();
   const { data: member } = useGetMemberInfo();

@@ -1,125 +1,123 @@
-import { useState } from "react";
-import { useForm, Controller } from "react-hook-form";
+import { useState, useMemo } from "react";
+import { useFormContext, Controller, useWatch } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
-
+import { ReviewFormData } from "../page";
 import { TextField } from "@common/component/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
+import { GENDER, PET_TYPES } from "../constant";
+import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
+import { useDebounce } from "@shared/hook/useDebounce";
 
-const GENDER = [
-  { id: 1, name: "암컷" },
-  { id: 2, name: "수컷" },
-];
+type PetField = keyof ReviewFormData;
+type FocusableField = keyof ReviewFormData | "petType";
 
-const PET_TYPES = [
-  { id: 1, name: "강아지" },
-  { id: 2, name: "고양이" },
-];
-
-interface PetFormValues {
+interface DirectMyPetInfoProps {
   petType: string;
-  petGender: string;
-  petId: string;
-  petWeight: string;
+  setPetType: (value: string) => void;
+  isBreedInputTouched: boolean;
+  setIsBreedInputTouched: (value: boolean) => void;
 }
 
-type PetField = keyof PetFormValues;
+const DirectMyPetInfo = ({
+  petType,
+  setPetType,
+  isBreedInputTouched,
+  setIsBreedInputTouched,
+}: DirectMyPetInfoProps) => {
+  // 내 동물정보 가져오고 직접 입력하기로 동물 종류 수정하는 경우
+  const watchedBreedId = useWatch({ name: "breedId" });
+  const { control, watch, setValue } = useFormContext<ReviewFormData>();
 
-const DirectMyPetInfo = () => {
-  const { control, setValue, watch } = useForm<PetFormValues>({
-    defaultValues: {
-      petType: "",
-      petGender: "",
-      petId: "",
-      petWeight: "",
-    },
-  });
+  // 종, 성별 드롭다운
+  const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
+  // 종류, 몸무게 포커스
+  const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
+  // 드롭다운 필터링용 검색 입력값 (breedId는 리뷰 제출용)
+  const [breedInput, setBreedInput] = useState("");
 
-  // 필드 감지
-  const { petType, petGender } = watch();
-
-  // 드롭다운 열림, 닫힘 상태 관리
-  const [activeDropDown, setActiveDropDown] = useState<string | null>(null);
-
-  const handleTextFieldClick = (field: string) => {
-    setActiveDropDown((prev) => (prev === field ? null : field));
-  };
-
-  const handleDropDownClick = (field: PetField, value: string) => {
-    const trimmedValue = value.replace(/\s+/g, "");
-    setValue(field, trimmedValue);
+  const handleDropDownClick = (field: PetField, value: string | number) => {
+    setValue(field, value);
     setActiveDropDown(null);
   };
 
-  const filteredGenderItems = GENDER.filter((item) => item.name.includes(petGender));
-  const filteredPetTypeItems = PET_TYPES.filter((item) => item.name.includes(petType));
-
-  // 몸무게 입력 제한
   const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>, onChange: (value: string) => void) => {
-    // 숫자와 소수점만 허용
     const input = e.target.value.replace(/[^0-9.]/g, "");
-    // 소수점이 여러 개면 첫 번째만 남기고 제거
     const [intPart = "", ...rest] = input.split(".");
-    const decimal = rest.join("").slice(0, 1); // 소수점 이후 첫 자리만
+    const decimal = rest.join("").slice(0, 1);
     const trimmedInt = intPart.slice(0, 3);
     const formatted =
       trimmedInt === "" && input.startsWith(".") ? `0.${decimal}` : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
-
     onChange(formatted);
   };
 
+  // 텍스트 필드 분기 결정
+  const getState = (field: FocusableField, value: string | number) => {
+    const isFocused = focusedField === field || activeDropDown === field;
+    const hasValue = typeof value === "string" ? !!value.trim() : value !== -1;
+    return isFocused ? "focus" : hasValue ? "done" : "default";
+  };
+
+  // 종류 조회 api 연동시 종 정보를 보내야함
+  const breedId = Number(watch("breedId"));
+  const inferredPetId = useMemo(() => {
+    return breedId > 0 ? (breedId < 230 ? 2 : 1) : -1;
+  }, [breedId]);
+
+  // api
+  const { data: breedIdData } = usePetIdGet(inferredPetId ?? 2);
+
   return (
     <div className={styles.wrapper}>
-      {/* 1-3-1. 종 */}
       <div className={styles.container}>
+        {/* 1-3-1. 종 */}
         <div className={styles.halfTextField}>
           <span>종</span>
-          <Controller
-            name="petType"
-            control={control}
-            render={({ field }) => (
-              <>
-                <TextField
-                  value={field.value}
-                  onChange={(e) => field.onChange(e.target.value)}
-                  placeholder="종 선택하기"
-                  isDelete={false}
-                  onClick={() => handleTextFieldClick("petType")}
-                  focus={field.value !== ""}
-                />
-                {activeDropDown === "petType" && (
-                  <DropDown
-                    isOpen={true}
-                    items={filteredPetTypeItems}
-                    onClickItem={(value) => handleDropDownClick("petType", value)}
-                    size="half"
-                  />
-                )}
-              </>
-            )}
+          <TextField
+            value={petType}
+            onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
+            placeholder="종 선택하기"
+            isDelete={false}
+            state={getState("petType", petType)}
+            readOnly
           />
+          {activeDropDown === "petType" && (
+            <DropDown
+              isOpen
+              items={PET_TYPES}
+              onClickItem={(name) => {
+                // 리뷰 제출 항목이 아니므로 handleDropDownClick함수 사용 불가
+                setPetType(name);
+                setActiveDropDown(null);
+              }}
+              size="half"
+            />
+          )}
         </div>
 
         {/* 1-3-2. 성별 */}
         <div className={styles.halfTextField}>
           <span>성별</span>
           <Controller
-            name="petGender"
+            name="gender"
             control={control}
             render={({ field }) => (
               <>
                 <TextField
-                  value={field.value}
-                  onChange={(e) => field.onChange(e.target.value)}
+                  value={field.value === "F" ? "암컷" : field.value === "M" ? "수컷" : ""}
+                  onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
                   placeholder="성별 선택하기"
                   isDelete={false}
-                  onClick={() => handleTextFieldClick("petGender")}
-                  focus={field.value !== ""}
+                  state={getState("gender", field.value ?? "")}
+                  readOnly
                 />
-                {activeDropDown === "petGender" && (
+                {activeDropDown === "gender" && (
                   <DropDown
-                    isOpen={true}
-                    items={filteredGenderItems}
-                    onClickItem={(value) => handleDropDownClick("petGender", value)}
+                    isOpen
+                    items={GENDER}
+                    onClickItem={(value) => {
+                      const mapped = value === "암컷" ? "F" : "M";
+                      handleDropDownClick("gender", mapped);
+                    }}
                     size="half"
                   />
                 )}
@@ -129,41 +127,90 @@ const DirectMyPetInfo = () => {
         </div>
       </div>
 
-      {/* 1-3-3. 종류 */}
       <div className={styles.container}>
+        {/* 1-3-3. 종류 */}
         <div className={styles.halfTextField}>
           <span>종류</span>
           <Controller
-            name="petId"
+            name="breedId"
             control={control}
-            render={({ field }) => (
-              <TextField
-                value={field.value}
-                onChange={(e) => field.onChange(e.target.value)}
-                placeholder="예시: 샴"
-                isDelete={false}
-                focus={field.value !== ""}
-                maxLength={20}
-              />
-            )}
+            render={({ field }) => {
+              const debouncedBreedInput = useDebounce(breedInput, 200);
+              // 필터링된 종류
+              const filteredBreeds = useMemo(() => {
+                const breeds = (breedIdData?.data?.breeds ?? []).filter(
+                  (item): item is { id: number; name: string } =>
+                    typeof item.id === "number" && typeof item.name === "string",
+                );
+                const inputFiltered = breeds.filter((item) =>
+                  item.name.replace(/\s+/g, "").includes(debouncedBreedInput.replace(/\s+/g, "")),
+                );
+                const lastBreed = breeds.at(-1); // 찾는종이 없음 필드
+                const isLastIncluded = inputFiltered.some((b) => b.id === lastBreed?.id);
+
+                return lastBreed && !isLastIncluded ? [...inputFiltered, lastBreed] : inputFiltered;
+              }, [breedIdData, debouncedBreedInput]);
+
+              const selectedBreedName = breedIdData?.data?.breeds?.find((b) => b.id === field.value)?.name ?? "";
+              return (
+                <>
+                  <TextField
+                    value={isBreedInputTouched ? breedInput : selectedBreedName}
+                    onChange={(e) => {
+                      setBreedInput(e.target.value);
+                      setIsBreedInputTouched(true); // 유저가 입력한 시점부터는 selectedBreedName 금지
+                    }}
+                    onClick={() => {
+                      setActiveDropDown("breedId");
+                      setFocusedField("breedId");
+                      setIsBreedInputTouched(true); // 클릭만 해도 이제부터는 breedInput만 보여줌
+                    }}
+                    placeholder="예시: 샴"
+                    isDelete={false}
+                    maxLength={20}
+                    state={watchedBreedId !== -1 ? "done" : getState("breedId", watchedBreedId)}
+                  />
+                  {activeDropDown === "breedId" && (
+                    <DropDown
+                      isOpen
+                      items={filteredBreeds}
+                      onClickItem={(selectedName) => {
+                        const selected = filteredBreeds.find((b) => b.name === selectedName);
+                        if (selected) {
+                          setBreedInput(selected.name);
+                          setIsBreedInputTouched(true); // 이 시점부터는 breedInput 고정
+                          handleDropDownClick("breedId", selected.id);
+                        }
+                      }}
+                      size="half"
+                    />
+                  )}
+                </>
+              );
+            }}
           />
         </div>
 
         {/* 1-3-4. 몸무게 */}
         <div className={styles.halfTextField}>
-          <span>몸무게</span>
+          <span>몸무게(kg)</span>
           <Controller
-            name="petWeight"
+            name="weight"
             control={control}
-            render={({ field }) => (
-              <TextField
-                value={field.value}
-                onChange={(e) => handleWeightChange(e, field.onChange)}
-                placeholder="예시: 5.3kg"
-                isDelete={false}
-                focus={field.value !== ""}
-              />
-            )}
+            render={({ field }) => {
+              const stringValue = field.value === -1 ? "" : String(field.value);
+              return (
+                <TextField
+                  value={stringValue}
+                  onChange={(e) => handleWeightChange(e, field.onChange)}
+                  onFocus={() => setFocusedField("weight")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="예시: 5.3"
+                  isDelete={false}
+                  state={getState("weight", stringValue)}
+                />
+              );
+            }}
           />
         </div>
       </div>

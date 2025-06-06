@@ -25,34 +25,26 @@ export const HOSPITAL_QUERY_KEY = {
   ],
 };
 
-// 무한 스크롤을 위한 병원 목록 조회 훅
 export const useInfiniteHospitalList = (initialParams: Omit<RequestBody, "cursorId" | "cursorReviewCount">) => {
   return useInfiniteQuery({
     queryKey: HOSPITAL_QUERY_KEY.INFINITE_HOSPITALS(initialParams),
-    queryFn: async ({ pageParam = {} }) => {
-      const params: RequestBody = {
-        ...initialParams,
-        ...pageParam,
-      };
-      const response = await getHospitalList(params);
-      return response.data;
+    queryFn: ({ pageParam }) => {
+      const params = { ...initialParams, ...pageParam };
+      return getHospitalList(params);
     },
     initialPageParam: {},
-    // 다음 페이지 파라미터 반환
     getNextPageParam: (lastPage) => {
+      //룰은 https://www.notion.so/API-1c3c12bc8533807ca1dee16f155604d4 참고
       const { cursorId, cursorReviewCount, hospitals } = lastPage || {};
 
       // 더 이상 데이터가 없으면 undefined 반환 -> hasNextPage가 false로 설정됨
       if (!hospitals || hospitals.length === 0) {
         return undefined;
       }
-
       // 검색어가 있는 경우 cursorId만 필요, 리뷰 정렬인 경우 cursorReviewCount도 필요
       if (initialParams.keyword) {
         return { cursorId };
       }
-
-      //https://www.notion.so/API-1c3c12bc8533807ca1dee16f155604d4 참고
       if (initialParams.sortBy === "REVIEW") {
         return { cursorId, cursorReviewCount };
       }
@@ -67,10 +59,11 @@ export const useInfiniteHospitalList = (initialParams: Omit<RequestBody, "cursor
 ************************************/
 export const useGetFavoriteHospital = (nickname: string) => {
   return useQuery({
-    queryKey: ["getFavoriteHosipital", nickname],
+    queryKey: ["getFavoriteHospital", nickname],
     queryFn: getMemeberFavoriteHospitals,
     staleTime: 1000 * 60 * 5,
     gcTime: 1000 * 60 * 10,
+    enabled: !!nickname,
   });
 };
 
@@ -81,7 +74,7 @@ export const usePatchFavoriteHospital = () => {
     mutationFn: async (hospitalId: number) => patchMemberFavoriteHospitals(hospitalId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ["getFavoriteHosipital"],
+        queryKey: ["getFavoriteHospital"],
       });
     },
   });
@@ -116,6 +109,7 @@ export const useInfiniteHospitalReview = (initialParams: UseInfiniteHospitalRevi
       // 다음 페이지를 위해 마지막 리뷰의 ID를 반환
       return cursorId;
     },
+    enabled: !!initialParams.nickname,
   });
 };
 
@@ -126,12 +120,19 @@ export const useGetMemberHospitalReviews = (nickname: string, cursorId: number |
       getMemeberHospitalReviews(nickname, cursorId, size);
     },
     staleTime: 1000 * 60 * 3,
+    enabled: !!nickname,
   });
 };
 
-export const useDeleteHospitalReview = (reviewId: string | number) => {
+export const useDeleteHospitalReview = () => {
+  const query = useQueryClient();
   return useMutation({
-    mutationKey: ["deleteHospitalReview", reviewId],
-    mutationFn: () => deleteReview(reviewId),
+    mutationKey: ["deleteHospitalReview"],
+    mutationFn: (reviewId: string | number) => deleteReview(reviewId),
+    onSuccess: () => {
+      query.invalidateQueries({
+        queryKey: ["memberHospitalReview"],
+      });
+    },
   });
 };

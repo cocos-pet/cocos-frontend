@@ -45,7 +45,5 @@ export const PATH = {
     AGREE: "/review/agree",
     WRITE: "/review/write",
     COMPLETE: "/review/complete",
-    HOSPITALS_DONE: "/review/hospitals/done",
-    SEARCH: "/review/search",
   },
 };

@@ -51,6 +51,7 @@ export const recommendList = style({
 
 export const hospitalCard = style({
   padding: "1.6rem",
+  padding: "1.6rem",
   border: `1px solid ${color.gray.gray200}`,
   borderRadius: "1.6rem",
   display: "flex",

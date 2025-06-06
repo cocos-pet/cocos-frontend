@@ -1,57 +1,64 @@
 "use client";
 
-// import { FormProvider, useForm } from "react-hook-form";
+import { useForm, FormProvider } from "react-hook-form";
+import { useReviewFunnel } from "@app/review/write/_hook/useReviewFunnel";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
 
-// import Step1 from "@app/review/write/_section/Step1";
-// import Step2 from "@app/review/write/_section/Step2";
-// import Step3 from "@app/review/write/_section/Step3";
-// import Step4 from "@app/review/write/_section/Step4";
+import Step1 from "@app/review/write/_section/Step1";
+import Step2 from "@app/review/write/_section/Step2";
+import Step3 from "@app/review/write/_section/Step3";
+import Step4 from "@app/review/write/_section/Step4";
 
-// 제출할 리뷰 데이터
 export interface ReviewFormData {
-  hospital: string; // ⚠️ 이거 필요없음 다른 pr 머지되면 수정 예정
   visitedAt: string;
-  symptomIds: number[];
-  diseaseId: number;
+  symptomIds?: number[];
+  diseaseId?: number;
   purposeId: number;
   goodReviewIds: number[];
   badReviewIds: number[];
   content: string;
   images: string[];
-
   breedId: number;
-  gender: string;
+  gender: "F" | "M" | null;
   weight: number;
 }
 
-const defaultValues: ReviewFormData = {
-  hospital: "",
+export const defaultValues: ReviewFormData = {
   visitedAt: "",
-  symptomIds: [],
-  diseaseId: -1,
+  symptomIds: undefined,
+  diseaseId: undefined,
   purposeId: -1,
   goodReviewIds: [],
   badReviewIds: [],
   content: "",
   images: [],
-
   breedId: -1,
-  gender: "",
+  gender: null,
   weight: -1,
 };
 
-const page = () => {
-  // const methods = useForm<ReviewFormData>({
-  //   defaultValues,
-  //   mode: "onChange",
-  // });
-  // return (
-  //   <FormProvider {...methods}>
-  //     <Step1 />
-  //     {/* <Step2 /> */}
-  //     {/* <Step3 /> */}
-  //     {/* <Step4 /> */}
-  //   </FormProvider>
-  // );
-};
-export default page;
+export default function Page() {
+  const funnel = useReviewFunnel();
+  const step = funnel.step;
+
+  const router = useRouter();
+
+  const methods = useForm<ReviewFormData>({
+    defaultValues,
+    mode: "onChange",
+  });
+
+  return (
+    <FormProvider {...methods}>
+      {step === "Step1" && <Step1 onNext={() => funnel.push({ step: "Step2", context: {} })} />}
+      {step === "Step2" && (
+        <Step2 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step3", context: {} })} />
+      )}
+      {step === "Step3" && (
+        <Step3 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step4", context: {} })} />
+      )}
+      {step === "Step4" && <Step4 onPrev={() => funnel.pop()} onNext={() => router.push(PATH.REVIEW.COMPLETE)} />}
+    </FormProvider>
+  );
+}

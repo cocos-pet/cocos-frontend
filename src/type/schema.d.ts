@@ -2051,6 +2051,15 @@ export interface components {
        */
       name?: string;
     };
+    BaseResponsePetOwnerCheckResponse: {
+      /** Format: int32 */
+      code?: number;
+      message?: string;
+      data?: components["schemas"]["PetOwnerCheckResponse"];
+    };
+    PetOwnerCheckResponse: {
+      isPetOwner?: boolean;
+    };
     BaseResponseMemberProfileResponse: {
       /** Format: int32 */
       code?: number;
@@ -2512,19 +2521,19 @@ export interface components {
        */
       isPostWriter?: boolean;
     };
-    BaseResponseMyAllCommentsResponse: {
+    BaseResponseMemberAllCommentsResponse: {
       /** Format: int32 */
       code?: number;
       message?: string;
-      data?: components["schemas"]["MyAllCommentsResponse"];
+      data?: components["schemas"]["MemberAllCommentsResponse"];
     };
-    MyAllCommentsResponse: {
+    MemberAllCommentsResponse: {
       /** @description 댓글 리스트 */
-      comments?: components["schemas"]["MyCommentResponse"][];
+      comments?: components["schemas"]["MemberCommentResponse"][];
       /** @description 대댓글 리스트 */
-      subComments?: components["schemas"]["MySubCommentResponse"][];
+      subComments?: components["schemas"]["MemberSubCommentResponse"][];
     };
-    MyCommentResponse: {
+    MemberCommentResponse: {
       /**
        * Format: int64
        * @description 댓글 아이디
@@ -2554,7 +2563,7 @@ export interface components {
        */
       createdAt?: string;
     };
-    MySubCommentResponse: {
+    MemberSubCommentResponse: {
       /**
        * Format: int64
        * @description 대댓글 아이디

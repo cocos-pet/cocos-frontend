@@ -1,8 +1,10 @@
 import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 import ColorChip from "@common/component/ColorChip/ColorChip";
 import { ReviewFormData } from "@app/review/write/page";
 import * as styles from "./FeedbackCategoryContent.style.css";
 import { useFeedbackGet } from "@app/api/review/write/feedback/hook";
+import { Toast } from "@common/component/Toast/Toast";
 
 interface FeedbackCategoryContentProps {
   category: "good" | "bad";
@@ -10,8 +12,11 @@ interface FeedbackCategoryContentProps {
 
 const FeedbackCategoryContent = ({ category }: FeedbackCategoryContentProps) => {
   const { data } = useFeedbackGet();
-  
+
   const { watch, setValue } = useFormContext<ReviewFormData>();
+  // 토스트 리렌더링
+  const [toastKey, setToastKey] = useState(0);
+  const [showToast, setShowToast] = useState(false);
 
   const fieldName = category === "good" ? "goodReviewIds" : "badReviewIds";
   const selectedIds = watch(fieldName);
@@ -24,6 +29,8 @@ const FeedbackCategoryContent = ({ category }: FeedbackCategoryContentProps) => 
       updatedIds = selectedIds.filter((item) => item !== id);
     } else {
       if (selectedIds.length >= 3) {
+        setToastKey(Date.now());
+        setShowToast(true);
         return;
       }
       updatedIds = [...selectedIds, id];
@@ -50,6 +57,8 @@ const FeedbackCategoryContent = ({ category }: FeedbackCategoryContentProps) => 
           onClick={() => handleToggle(id)}
         />
       ))}
+
+      {showToast && <Toast key={toastKey} message="3개까지만 선택할 수 있어요" showDeleteIcon={false} variant="blue" />}
     </div>
   );
 };

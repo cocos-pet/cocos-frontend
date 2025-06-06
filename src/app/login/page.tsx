@@ -9,7 +9,6 @@ import { isLoggedIn } from "@api/index.ts";
 import { PATH } from "@route/path.ts";
 
 const Login = () => {
-  // useProtectedRoute();
   const router = useRouter();
 
   useEffect(() => {

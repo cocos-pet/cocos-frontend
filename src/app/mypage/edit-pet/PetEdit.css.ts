@@ -157,6 +157,7 @@ export const favoriteHospitalInfo = style({
   alignItems: "flex-start",
   gap: "0.4rem",
   flex: "1 0 0",
+  minWidth: "18.9rem",
 });
 
 export const favoriteHospitalName = style([

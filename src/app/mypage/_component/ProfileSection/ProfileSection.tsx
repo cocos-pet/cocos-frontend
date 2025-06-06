@@ -5,28 +5,29 @@ import { Button } from "@common/component/Button";
 import { IcChevronRight, IcPlus } from "@asset/svg";
 import Image from "next/image";
 import AddFavoriteHospital from "../AddFavoriteHospital";
-import { Disease, MemberInfo, PetInfo } from "../../_hooks/useMypageState";
+import { Disease, MemberInfo } from "../../_hooks/useMypageState";
+import { PetInfo, useProfileSectionState } from "@app/mypage/_hooks/useProfileSectionState";
+import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { useAuth } from "@providers/AuthProvider";
 
 interface ProfileSectionProps {
-  isLogin: boolean;
-  isRegister: boolean;
-  member?: MemberInfo;
-  petInfo?: PetInfo;
-  onLogin: () => void;
   onNavigateToEditPet: () => void;
   onNavigateToRegisterPet: () => void;
 }
 
-const ProfileSection = ({
-  isLogin,
-  isRegister,
-  member,
-  petInfo,
-  onLogin,
-  onNavigateToEditPet,
-  onNavigateToRegisterPet,
-}: ProfileSectionProps) => {
-  if (!isLogin) {
+const ProfileSection = ({ onNavigateToEditPet, onNavigateToRegisterPet }: ProfileSectionProps) => {
+  const navigate = useRouter();
+  const { isAuthenticated } = useAuth();
+  const member = useMypageMemberInfo((s) => s.member);
+  const { isRegister, petInfo } = useProfileSectionState();
+
+  const onLogin = () => {
+    navigate.push(PATH.LOGIN);
+  };
+
+  if (!isAuthenticated) {
     return <UnloggedProfile onLogin={onLogin} />;
   }
 
