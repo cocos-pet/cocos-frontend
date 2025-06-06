@@ -13,6 +13,8 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/categoryFilter.ts";
 import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { PATH } from "@route/path";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -25,9 +27,15 @@ interface CommentProps {
 const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
+
   const handleReplyClick = () => {
     if (!isAuthenticated) {
       alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
       return;
     }
 
@@ -48,6 +56,10 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
   const handleProfileClick = (nickname: string) => {
     if (!isAuthenticated) {
       alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
       return;
     }
     router.push(`/profile?nickname=${nickname}`);
