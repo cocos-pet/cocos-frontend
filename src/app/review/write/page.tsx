@@ -1,72 +1,64 @@
 "use client";
 
-import { useState } from "react";
-import { IcDeleteBlack } from "@asset/svg/index";
-import * as styles from "./styles.css";
+import { useForm, FormProvider } from "react-hook-form";
+import { useReviewFunnel } from "@app/review/write/_hook/useReviewFunnel";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
 
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import ReviewHospital from "@app/review/write/_component/ReviewHospital";
-import ReviewDate from "@app/review/write/_component/ReviewDate";
-import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
-import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
-import { Button } from "@common/component/Button/index";
+import Step1 from "@app/review/write/_section/Step1";
+import Step2 from "@app/review/write/_section/Step2";
+import Step3 from "@app/review/write/_section/Step3";
+import Step4 from "@app/review/write/_section/Step4";
 
-export type PetInfoType = "myPet" | "manual";
+export interface ReviewFormData {
+  visitedAt: string;
+  symptomIds?: number[];
+  diseaseId?: number;
+  purposeId: number;
+  goodReviewIds: number[];
+  badReviewIds: number[];
+  content: string;
+  images: string[];
+  breedId: number;
+  gender: "F" | "M" | null;
+  weight: number;
+}
 
-const Page = () => {
-  // 병원 검색 바텀시트 열고 닫기
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  // 선택된 병원
-  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
-  // 동물 정보 입력 방법 선택
-  const [selectedPetInfo, setSelectedPetInfo] = useState<PetInfoType | null>(null);
-
-  // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
-  const handleOpenSearchHospital = () => {
-    setIsBottomSheetOpen(true);
-  };
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleSelectHospital = (hospital: Hospital | null) => {
-    setSelectedHospital(hospital);
-  };
-
-  // 1-3. petInfo
-  const handleSelectPetInfo = (type: PetInfoType) => {
-    setSelectedPetInfo((prev) => (prev === type ? null : type));
-  };
-
-  return (
-    <div className={styles.preventScroll}>
-      {/* 상단 헤더 */}
-      <HeaderNav centerContent="리뷰작성(1/4)" leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} />} />
-
-      {/* 중앙 컨텐츠 */}
-      <div className={styles.wrapper}>
-        {/* 1-1. 병원 검색 */}
-        <ReviewHospital selectedHospital={selectedHospital} handleOpenSearchHospital={handleOpenSearchHospital} />
-        {/* 1-2. 날짜 선택 */}
-        <ReviewDate />
-        {/* 1-3. 동물 정보 */}
-        <ReviewPetInfo selectedPetInfo={selectedPetInfo} onSelectPetInfo={handleSelectPetInfo} />
-      </div>
-
-      {/* 하단 버튼 */}
-      <div className={styles.buttonContainer}>
-        <Button label="다음으로" size="large" variant="solidPrimary" disabled={true} />
-      </div>
-
-      {/* 병원 검색 바텀시트 */}
-      <SearchHospital
-        active={isBottomSheetOpen}
-        onCloseBottomSheet={handleCloseBottomSheet}
-        selectedHospital={selectedHospital}
-        onSelectHospital={handleSelectHospital}
-      />
-    </div>
-  );
+export const defaultValues: ReviewFormData = {
+  visitedAt: "",
+  symptomIds: undefined,
+  diseaseId: undefined,
+  purposeId: -1,
+  goodReviewIds: [],
+  badReviewIds: [],
+  content: "",
+  images: [],
+  breedId: -1,
+  gender: null,
+  weight: -1,
 };
 
-export default Page;
+export default function Page() {
+  const funnel = useReviewFunnel();
+  const step = funnel.step;
+
+  const router = useRouter();
+
+  const methods = useForm<ReviewFormData>({
+    defaultValues,
+    mode: "onChange",
+  });
+
+  return (
+    <FormProvider {...methods}>
+      {step === "Step1" && <Step1 onNext={() => funnel.push({ step: "Step2", context: {} })} />}
+      {step === "Step2" && (
+        <Step2 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step3", context: {} })} />
+      )}
+      {step === "Step3" && (
+        <Step3 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step4", context: {} })} />
+      )}
+      {step === "Step4" && <Step4 onPrev={() => funnel.pop()} onNext={() => router.push(PATH.REVIEW.COMPLETE)} />}
+    </FormProvider>
+  );
+}

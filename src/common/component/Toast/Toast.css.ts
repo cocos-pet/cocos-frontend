@@ -1,6 +1,5 @@
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
 
 export const toast = recipe({
   base: [
@@ -33,6 +32,13 @@ export const toast = recipe({
         backgroundImage: `url('/public/svgs/ic_toast_error.svg')`,
         color: color.gray.gray900,
       },
+      blue: {
+        zIndex: "100", // BottomSheet.tsx가 99
+        top: "calc(100dvh - 5rem)",
+        background: "rgba(61, 196, 245, 0.70)",
+        backdropFilter: "blur(0.6rem)",
+        color: color.gray.gray000,
+      },
     },
   },
   defaultVariants: {
@@ -60,5 +66,4 @@ export const icon = recipe({
   },
 });
 
-export type ToastVariants = RecipeVariants<typeof icon> &
-  RecipeVariants<typeof toast>;
+export type ToastVariants = RecipeVariants<typeof icon> & RecipeVariants<typeof toast>;

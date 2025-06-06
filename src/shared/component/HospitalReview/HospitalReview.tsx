@@ -70,7 +70,7 @@ const HospitalReview = (props: propsType) => {
     setIsImageGalleryModalOpen(false);
   };
 
-  const isReviewImage = reviewData?.images?.length ? true : false;
+  const isReviewImage = !!reviewData.images?.length;
 
   return (
     <section className={styles.reviewItemContainer({ isNoProfile: isNoProfile })}>
@@ -185,6 +185,13 @@ const PetInfo = ({ reviewData }: { reviewData: ReviewItemType }) => (
   </div>
 );
 
+/**
+ * Chip Section (구조가 공통으로 반복되어 있음)
+ * @param title
+ * @param items
+ * @param color
+ * @constructor
+ */
 const ChipSection = ({
   title,
   items,

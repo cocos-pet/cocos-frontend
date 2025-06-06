@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { isLoggedIn } from "@api/index";
 import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
+import { useMypageMemberInfo } from "../_store/mypageStore";
+import { useAuth } from "@providers/AuthProvider";
 
 export type ActiveTabType = "review" | "post" | "comment";
 
@@ -17,21 +18,13 @@ export interface MemberInfo {
   nickname?: string;
 }
 
-export interface PetInfo {
-  petImage?: string;
-  breed?: string;
-  petAge?: string | number;
-  diseases?: Disease[];
-}
-
 export const useMypageState = () => {
   const router = useRouter();
-  const [isLogin, setIsLogin] = useState(true);
-  const [isRegister, setIsRegister] = useState(true);
   const [activeTab, setActiveTab] = useState<ActiveTabType>("review");
 
-  const { isLoading, data: member } = useGetMemberInfo();
-  const { data: petInfo } = useGetPetInfo();
+  const { data: member } = useGetMemberInfo();
+  const { isAuthenticated } = useAuth();
+  const setMemberInfo = useMypageMemberInfo((s) => s.setMemberInfo);
 
   // 초기화 시 sessionStorage에서 활성 탭 가져오기
   useEffect(() => {
@@ -41,19 +34,14 @@ export const useMypageState = () => {
     }
   }, []);
 
-  useEffect(() => {
-    setIsLogin(isLoggedIn());
-  }, []);
-
-  useEffect(() => {
-    if (!petInfo) setIsRegister(false);
-    else setIsRegister(true);
-  }, [petInfo]);
-
   // activeTab 변경 시 sessionStorage에 저장
   useEffect(() => {
     sessionStorage.setItem("activeTab", activeTab);
   }, [activeTab]);
+
+  useEffect(() => {
+    if (member) setMemberInfo(member);
+  }, [member]);
 
   const isActiveTab = (tab: ActiveTabType) => {
     return activeTab === tab;
@@ -64,7 +52,7 @@ export const useMypageState = () => {
   };
 
   const navigateToSettings = () => {
-    if (isLogin) {
+    if (isAuthenticated) {
       router.push(PATH.SETTING.ROOT);
     }
   };
@@ -78,17 +66,11 @@ export const useMypageState = () => {
   };
 
   return {
-    isLogin,
-    isRegister,
     activeTab,
-    isLoading,
-    member,
-    petInfo,
     isActiveTab,
     handleTabClick,
     navigateToSettings,
     navigateToEditPet,
     navigateToRegisterPet,
-    setIsLogin,
   };
 };

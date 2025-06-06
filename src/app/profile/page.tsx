@@ -2,7 +2,6 @@
 
 import * as styles from "./_style/profile.css";
 import Divider from "@common/component/Divider/Divider";
-import { useProtectedRoute } from "@route/useProtectedRoute";
 import { useProfileState } from "./_hooks/useProfileState";
 import HeaderSection from "./_component/HeaderSection/HeaderSection";
 import ProfileSection from "./_component/ProfileSection/ProfileSection";
@@ -20,7 +19,6 @@ import { Suspense } from "react";
  */
 const Profile = () => {
   // 보호된 라우트 설정
-  useProtectedRoute();
 
   return (
     <Suspense fallback={<div>로딩 중...</div>}>

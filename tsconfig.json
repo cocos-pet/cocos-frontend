@@ -3,11 +3,7 @@
     "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
     "target": "ES2020",
     "useDefineForClassFields": true,
-    "lib": [
-      "ES2020",
-      "DOM",
-      "DOM.Iterable"
-    ],
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
     "moduleResolution": "node",
@@ -33,49 +29,20 @@
     "incremental": true,
     "baseUrl": "./",
     "paths": {
-      "@api/*": [
-        "src/api/*"
-      ],
-      "@asset/*": [
-        "src/asset/*"
-      ],
-      "@common/*": [
-        "src/common/*"
-      ],
-      "@page/*": [
-        "src/page/*"
-      ],
-      "@app/*": [
-        "src/app/*"
-      ],
-      "@route/*": [
-        "src/route/*"
-      ],
-      "@shared/*": [
-        "src/shared/*"
-      ],
-      "@style/*": [
-        "src/style/*"
-      ],
-      "@type/*": [
-        "src/type/*"
-      ],
-      "@store/*": [
-        "src/store/*"
-      ],
-      "@auth/*": [
-        "src/auth/*"
-      ]
+      "@api/*": ["src/api/*"],
+      "@asset/*": ["src/asset/*"],
+      "@common/*": ["src/common/*"],
+      "@page/*": ["src/page/*"],
+      "@app/*": ["src/app/*"],
+      "@route/*": ["src/route/*"],
+      "@shared/*": ["src/shared/*"],
+      "@style/*": ["src/style/*"],
+      "@type/*": ["src/type/*"],
+      "@store/*": ["src/store/*"],
+      "@auth/*": ["src/auth/*"],
+      "@providers/*": ["src/providers/*"]
     }
   },
-  "include": [
-    "./dist/types/**/*.d.ts",
-    "./next-env.d.ts",
-    ".next/types/**/*.ts",
-    "src",
-    "./dist/types/**/*.ts"
-  ],
-  "exclude": [
-    "./node_modules"
-  ]
+  "include": ["./dist/types/**/*.d.ts", "./next-env.d.ts", ".next/types/**/*.ts", "src", "./dist/types/**/*.ts"],
+  "exclude": ["./node_modules"]
 }

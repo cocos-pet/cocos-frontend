@@ -2,21 +2,22 @@ import React from "react";
 import * as styles from "../../_style/mypage.css";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcSettings } from "@asset/svg";
+import { useAuth } from "@providers/AuthProvider";
 
 interface HeaderSectionProps {
-  isLogin: boolean;
   onNavigateToSettings: () => void;
 }
 
-const HeaderSection = ({ isLogin, onNavigateToSettings }: HeaderSectionProps) => {
+const HeaderSection = ({ onNavigateToSettings }: HeaderSectionProps) => {
+  const { isAuthenticated } = useAuth();
   return (
-    <span style={{ position: "fixed", top: 0, width: "100%" }}>
+    <span style={{ position: "fixed", top: 0, width: "100%", zIndex: 10 }}>
       <HeaderNav
         centerContent={"마이페이지"}
         rightBtn={
           <span
             className={styles.settingWrapper({
-              isLogin: isLogin,
+              isLogin: isAuthenticated,
             })}
             onClick={onNavigateToSettings}
           >

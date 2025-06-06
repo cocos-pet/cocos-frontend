@@ -44,7 +44,7 @@ const ProfileContent = ({ tab }: ProfileContentPropTypes) => {
   const renderContent = (tab: ActiveTabType) => {
     switch (tab) {
       case "review":
-        return <HospitalReviewWrapper />;
+        return <HospitalReviewWrapper nickname={query} />;
       case "post":
         if (!profilePosts?.length) {
           return <div className={styles.nothingContent}>{"아직 작성한 게시글이 없어요."}</div>;
