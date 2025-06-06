@@ -32,6 +32,8 @@ export const API_PATH = {
   TEST_TOKEN_CHECK: "/api/dev/test/token-check",
 
   HOSPITAL: "/api/dev/hospitals",
+  HOSPITAL_FILTERS: "/api/dev/hospitals/reviews/filter",
+  HOSPITAL_SUMMARY_OPTION: "/api/dev/hospitals/reviews/summary/option",
   HOSPITALS_PURPOSE: "/api/dev/hospitals/purposes",
   HOSPITALS_REVIEWS_SUMMARY: "/api/dev/hospitals/reviews/summary/option",
 

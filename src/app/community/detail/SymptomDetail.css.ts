@@ -1,6 +1,6 @@
-import {color, font, semanticColor} from "@style/styles.css.ts";
-import {style} from "@vanilla-extract/css";
-import {recipe} from "@vanilla-extract/recipes";
+import { color, font, semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { recipe } from "@vanilla-extract/recipes";
 
 export const categoryContainer = style({
   width: "100%",
@@ -8,8 +8,6 @@ export const categoryContainer = style({
 });
 
 export const headerContainer = style({
-  position: "fixed",
-  top: 0,
   width: "100%",
   backgroundColor: "#fff",
   zIndex: 20,
@@ -21,7 +19,6 @@ export const postsContainer = style({
   flexDirection: "column",
   gap: "1.6rem",
   position: "relative",
-  top: "6.4rem",
 });
 
 export const filterContainer = style({
@@ -43,9 +40,7 @@ export const tabContainer = style({
   padding: "1.2rem 2rem 0 2rem",
   borderBottom: `1px solid ${semanticColor.line.strong}`,
   justifyContent: "flex-start",
-  position: "sticky",
   backgroundColor: "#fff",
-  top: "6.4rem",
   width: "100%",
   zIndex: 10,
 });
@@ -101,7 +96,6 @@ export const emptyContainer = style([
 ]);
 
 export const reviewContainer = style({
-  top: "6.4rem",
   position: "relative",
   display: "flex",
   flexDirection: "column",
@@ -142,6 +136,11 @@ export const reviewRegion = style({
   flexDirection: "row",
 });
 
+export const targetImage = style({
+  width: "2rem",
+  height: "2rem",
+});
+
 export const reviewRegionText = style([
   font.body01,
   {
@@ -149,14 +148,11 @@ export const reviewRegionText = style([
   },
 ]);
 
-export const filterButton = style({
-  backgroundColor: "white !important",
-  color: semanticColor.text.normal,
-});
-
-export const filterButtonActive = style({
-  backgroundColor: "rgba(67, 214, 255, 0.16) !important",
-  color: "#14B5F0 !important",
+export const filterChip = style({
+  display: "flex",
+  gap: "0.8rem",
+  flexWrap: "wrap",
+  justifyContent: "flex-end",
 });
 
 export const filterContent = style({
