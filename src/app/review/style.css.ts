@@ -51,6 +51,7 @@ export const recommendList = style({
 
 export const hospitalCard = style({
   padding: "1.6rem",
+  padding: "1.6rem",
   border: `1px solid ${color.gray.gray200}`,
   borderRadius: "1.6rem",
   display: "flex",
@@ -69,6 +70,7 @@ export const hospitalTitleContainer = style({
 export const hospitalRank = style([
   font.heading03,
   {
+    fontWeight: "600",
     color: color.primary.blue600,
   },
 ]);
@@ -78,9 +80,9 @@ export const hospitalName = style([font.heading03]);
 export const hospitalAddress = style([
   font.body01,
   {
-    color: color.gray.gray500,
+    color: color.gray.gray700,
     fontSize: "1.4rem",
-    fontWeight: "500",
+    whiteSpace: "nowrap",
   },
 ]);
 

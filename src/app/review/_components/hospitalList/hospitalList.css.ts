@@ -9,7 +9,6 @@ export const title = style([
   font.heading02,
   {
     marginBottom: "2rem",
-    gap: "0,4rem",
   },
 ]);
 
@@ -35,32 +34,50 @@ export const hospitalItem = style({
 export const hospitalInfo = style({
   display: "flex",
   flexDirection: "column",
+  gap: "0.4rem",
+  flex: 1,
+  minWidth: 0,
+  marginRight: "1.2rem",
 });
 
 export const hospitalName = style([
   font.heading02,
   {
     fontWeight: "600",
-    marginBottom: "0.4rem",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
   },
 ]);
 
 export const hospitalAddress = style([
   font.body01,
   {
-    color: color.gray.gray500,
+    color: color.gray.gray700,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+]);
+
+export const reviewCount = style([
+  font.body01,
+  {
+    color: color.gray.gray700,
   },
 ]);
 
 export const hospitalImage = style({
-  borderRadius: "1.2rem",
+  borderRadius: "0.8rem",
   objectFit: "cover",
+  flexShrink: 0,
 });
 
 export const loadingTrigger = style({
-  height: "4rem",
+  width: "100%",
+  height: "2rem",
   display: "flex",
-  alignItems: "center",
   justifyContent: "center",
-  color: color.gray.gray500,
+  alignItems: "center",
+  color: color.gray.gray700,
 });

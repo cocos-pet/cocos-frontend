@@ -6,7 +6,6 @@ export const locationHeader = style({
   display: "flex",
   alignItems: "center",
   padding: "0 2rem",
-  borderBottom: `1px solid ${color.gray.gray200}`
 });
 
 export const locationWrapper = style({
