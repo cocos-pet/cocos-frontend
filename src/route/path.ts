@@ -41,6 +41,7 @@ export const PATH = {
   },
 
   REVIEW: {
+    SEARCH: "/review/search",
     ROOT: "/review",
     AGREE: "/review/agree",
     WRITE: "/review/write",
