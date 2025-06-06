@@ -9,6 +9,7 @@ import { Separated } from "react-simplikit";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
+import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 
 export interface ReviewItemType {
   id?: number;
@@ -39,7 +40,7 @@ export interface ReviewItemType {
 interface propsType {
   handleProfileClick?: () => void;
   handleHospitalDetailClick?: () => void;
-  reviewData: ReviewItemType;
+  reviewData: postHospitalReviewsResponseData;
   isBlurred?: boolean;
   isNoProfile?: boolean;
 }
@@ -76,7 +77,7 @@ const HospitalReview = (props: propsType) => {
       {!isNoProfile && (
         <Profile
           handleProfileClick={handleProfileClick}
-          createdAt={reviewData.vistitedAt}
+          createdAt={reviewData.visitedAt}
           nickname={reviewData.nickname}
           breed={reviewData.memberBreed}
           petAge={reviewData.age}
@@ -98,17 +99,13 @@ const HospitalReview = (props: propsType) => {
           transition={{ duration: 0.3 }}
         >
           <div className={styles.detailSection}>
-            {/*<ChipSection title="방문목적" items={reviewData.visitPurpose || ""} color="border" />*/}
-            {/*<ChipSection*/}
-            {/*  title="사전증상"*/}
-            {/*  items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}*/}
-            {/*  color="border"*/}
-            {/*/>*/}
-            {/*<ChipSection*/}
-            {/*  title="진단 내용"*/}
-            {/*  items={reviewData.diseases?.map((disease, index) => ({ id: index, name: disease })) || []}*/}
-            {/*  color="border"*/}
-            {/*/>*/}
+            <ChipSection title="방문목적" items={reviewData.visitPurpose || ""} color="border" />
+            <ChipSection
+              title="사전증상"
+              items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}
+              color="border"
+            />
+            <ChipSection title="진단 내용" items={reviewData.disease || ""} color="border" />
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
@@ -202,11 +199,11 @@ const ChipSection = ({
   <div>
     <div className={styles.detailTitle}>{title}</div>
     <div className={styles.detailContent}>
-      {Array.isArray(items) ? (
-        items.map((item) => <Chip key={item.id} label={item.name} color={color} disabled />)
-      ) : typeof items === 'string' ? (
+      {typeof items === "string" ? (
         <Chip label={items} color={color} disabled />
-      ) : null}
+      ) : (
+        items?.map((item) => <Chip key={item.id} label={item.name} color={color} disabled />)
+      )}
     </div>
   </div>
 );

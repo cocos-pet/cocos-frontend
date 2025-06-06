@@ -1,22 +1,61 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcFilterBlack, IcFilterBlue, IcTarget } from "@asset/svg";
+import { IcDownArrow, IcTarget } from "@asset/svg";
 import { motion } from "framer-motion";
-import { Button } from "@common/component/Button";
-import { sampleReviewData } from "@app/community/_constant/reviewMockData.ts";
-import ReviewItem from "@shared/component/HospitalReview/HospitalReview.tsx";
-import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
+import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
+import Chip from "@common/component/Chip/Chip.tsx";
+import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
+import NoData from "@shared/component/NoData/NoData.tsx";
+import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
+import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
+import { color } from "@style/styles.css.ts";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
+  const bodyId = searchParams?.get("id");
   const router = useRouter();
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false);
-
-  const handleProfileClick = (nickname: string) => {
+  const [filterId, setFilterId] = useState<number | undefined>(undefined);
+  const [filterType, setFilterType] = useState<"good" | "bad" | null>(null);
+  const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
+  const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
+  const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
   };
+
+  const handleFilterClick = (id: number | undefined, type: "good" | "bad") => {
+    setFilterId(id);
+    setFilterType(type);
+  };
+
+  useEffect(() => {
+    if (!bodyId) return;
+    postHospitalReviews(
+      {
+        size: 10,
+        locationId: 1,
+        locationType: "CITY",
+        bodyId: Number(bodyId),
+        summaryOptionId: filterId ?? undefined,
+        // cursorId: 1,
+      },
+      {
+        onSuccess: (data) => {
+          setReviewList(data);
+        },
+      },
+    );
+  }, [isReviewFilterOpen]);
+
+  if (isPending) {
+    return <LoadingFallback />;
+  }
+
+  if (reviewList.length === 0) {
+    return <NoData />;
+  }
 
   return (
     <div className={styles.reviewContainer}>
@@ -32,38 +71,28 @@ const ReviewDetailContent = () => {
             <IcDownArrow width={20} />
           </motion.div>
         </div>
-        <Button
-          variant={"outlinePrimary"}
-          size={"small"}
-          label={
-            <>
-              필터
-              {isReviewFilterOpen ? (
-                <IcFilterBlue style={{ width: "20px" }} />
-              ) : (
-                <IcFilterBlack style={{ width: "20px" }} />
-              )}
-            </>
-          }
-          style={{ width: "fit-content" }}
-          className={isReviewFilterOpen ? styles.filterButtonActive : styles.filterButton}
-          onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-        />
+        <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
+          <Chip
+            label={"좋아요"}
+            color={filterType === "good" ? "blue" : "gray"}
+            size={"small"}
+            rightIcon={
+              <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
+            }
+          />
+          <Chip
+            label={"아쉬워요"}
+            color={filterType === "bad" ? "blue" : "gray"}
+            size={"small"}
+            rightIcon={
+              <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
+            }
+          />
+        </div>
       </div>
       <div className={styles.reviewItemContainer}>
-        {sampleReviewData.reviews.map((review) => (
-          <ReviewItem
-            key={review.id}
-            handleProfileClick={() => handleProfileClick(review.nickname)}
-            reviewData={review}
-            isBlurred={true}
-            handleHospitalDetailClick={() => {
-              router.push(`/hospital/${review.hospitalId}`);
-            }}
-          />
-        ))}
-        {sampleReviewData.reviews.map((review) => (
-          <ReviewItem
+        {reviewList.map((review) => (
+          <HospitalReview
             key={review.id}
             handleProfileClick={() => handleProfileClick(review.nickname)}
             reviewData={review}
@@ -73,7 +102,12 @@ const ReviewDetailContent = () => {
           />
         ))}
       </div>
-      <ReviewFilter isOpen={isReviewFilterOpen} onClose={() => setIsReviewFilterOpen(false)} />
+      <ReviewFilter
+        isOpen={isReviewFilterOpen}
+        onClose={() => setIsReviewFilterOpen(false)}
+        selectedFilterId={filterId || undefined}
+        onFilterClick={handleFilterClick}
+      />
     </div>
   );
 };

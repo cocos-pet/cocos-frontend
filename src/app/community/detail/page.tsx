@@ -3,21 +3,22 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow } from "@asset/svg";
-import { PATH } from "@route/path.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { Suspense, useCallback, useEffect, useState } from "react";
-import { components } from "@type/schema";
+import {IcLeftarrow} from "@asset/svg";
+import {PATH} from "@route/path.ts";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {Suspense, useCallback, useEffect, useState} from "react";
+import {components} from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { postPostFiltersRequestType } from "@api/domain/community/search";
+import {postPostFiltersRequestType} from "@api/domain/community/search";
 import Image from "next/image";
-import { useRouter, useSearchParams } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { Modal } from "@common/component/Modal/Modal.tsx";
 import { ModalBottomStyle } from "@common/component/Modal/style.css.ts";
+import {ReviewDetailContent} from "@app/community/detail/_section";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -38,78 +39,6 @@ const symptomMapping: { [key: string]: string } = {
   12: "행동/소리",
 };
 
-const sampleReviewData = {
-  reviewCount: 2,
-  cursorId: 102,
-  reviews: [
-    {
-      id: 101,
-      memberId: 2001,
-      nickname: "멍멍이사랑해",
-      memberBreed: "푸들",
-      disease: "피부병",
-      age: 3,
-      hospitalId: 10,
-      hospitalName: "행복한동물병원",
-      vistitedAt: "2025-04-01",
-      hospitalAddress: "서울특별시 강남구 도곡로 123",
-      content: "친절하고 꼼꼼하게 진료해주셨어요. 재방문의사 100%",
-      reviewSummary: "친절하고 꼼꼼한 진료",
-      images: ["https://example.com/image1.jpg", "https://example.com/image2.jpg"],
-      symptoms: [
-        { id: 101, name: "기침" },
-        { id: 102, name: "호흡곤란" },
-      ],
-      diseases: [{ id: 201, name: "심장병" }],
-      animal: "강아지",
-      gender: "여아",
-      breed: "푸들",
-      weight: 3.5,
-      visitPurpose: "정기검진",
-      goodReviews: [
-        { id: 1, name: "친절해요" },
-        { id: 2, name: "설명이 자세해요" },
-      ],
-      badReviews: [{ id: 1, name: "기다림이 길어요" }],
-    },
-    {
-      id: 102,
-      memberId: 2002,
-      nickname: "고양이집사",
-      memberBreed: "페르시안",
-      disease: "요로결석",
-      age: 3,
-      hospitalId: 11,
-      hospitalName: "사랑동물병원",
-      vistitedAt: "2025-03-15",
-      hospitalAddress: "서울특별시 서초구 서초대로 456",
-      content: "24시간 운영이라 긴급한 상황에 도움이 되었어요.",
-      reviewSummary: "긴급 상황에 빠른 대응",
-      images: [
-        "https://example.com/image1.jpg",
-        "https://example.com/image2.jpg",
-        "https://example.com/image1.jpg",
-        "https://example.com/image2.jpg",
-      ],
-      symptoms: [
-        { id: 101, name: "소변보기 힘들어함" },
-        { id: 102, name: "배가 아파보임" },
-      ],
-      diseases: [{ id: 201, name: "요로결석" }],
-      animal: "고양이",
-      gender: "남아",
-      breed: "페르시안",
-      weight: 4.2,
-      visitPurpose: "응급처치",
-      goodReviews: [
-        { id: 1, name: "24시간 운영" },
-        { id: 2, name: "응급처치가 빨라요" },
-      ],
-      badReviews: [{ id: 1, name: "비용이 비싸요" }],
-    },
-  ],
-} as const;
-
 // 로딩 컴포넌트
 const LoadingFallback = () => <Loading height={80} />;
 type ActiveTabType = "review" | "community";
@@ -121,51 +50,6 @@ const EmptyState = () => (
     <h1> 아직 등록된 게시글이 없어요 </h1>
   </div>
 );
-
-const ReviewDetailContent = () => {
-  const searchParams = useSearchParams();
-  const typeId = searchParams?.get("id");
-  const router = useRouter();
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
-
-  const handleClick = () => {
-    setIsFilterOpen(!isFilterOpen);
-  };
-
-  const handleProfileClick = (nickname: string) => {
-    router.push(`/profile?nickname=${nickname}`);
-  };
-
-  return (
-    <div className={styles.reviewContainer}>
-      {/* @todo 추후 윤지언니 PR 머지 되면 가져다 쓸 예정 */}
-      {/*<div className={styles.reviewFilter}>*/}
-      {/*  <div className={styles.reviewRegion}>서울시 강남구</div>*/}
-      {/*  <button className={styles.reviewButton} onClick={handleClick}>*/}
-      {/*    필터*/}
-      {/*    {isFilterOpen ? <IcFilterBlue style={{ width: "20px" }} /> : <IcFilterBlack style={{ width: "20px" }} />}*/}
-      {/*  </button>*/}
-      {/*</div>*/}
-      <div className={styles.reviewItemContainer}>
-        {sampleReviewData.reviews.map((review) => (
-          <ReviewItem
-            key={review.id}
-            handleProfileClick={() => handleProfileClick(review.nickname)}
-            reviewData={review}
-            isBlurred={true}
-          />
-        ))}
-        {sampleReviewData.reviews.map((review) => (
-          <ReviewItem
-            key={review.id}
-            handleProfileClick={() => handleProfileClick(review.nickname)}
-            reviewData={review}
-          />
-        ))}
-      </div>
-    </div>
-  );
-};
 
 const CommunityDetailContent = () => {
   const searchParams = useSearchParams();
