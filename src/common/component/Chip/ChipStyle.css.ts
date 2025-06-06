@@ -1,5 +1,5 @@
-import { color, font, semanticColor } from "@style/styles.css.ts";
-import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
+import {color, font, semanticColor} from "@style/styles.css.ts";
+import {recipe, RecipeVariants} from "@vanilla-extract/recipes";
 
 export const chipItem = recipe({
   base: [
@@ -8,6 +8,7 @@ export const chipItem = recipe({
       display: "flex",
       padding: "0.8rem 1.2rem",
       justifyContent: "space-between",
+      gap: "0.4rem",
 
       borderRadius: "9.9rem",
       color: color.primary.blue700,

@@ -1,6 +1,10 @@
 import type { SVGProps } from "react";
 
-const SvgIcDownArrow = (props: SVGProps<SVGSVGElement>) => (
+type PropsType = SVGProps<SVGSVGElement> & {
+  fill?: string;
+};
+
+const SvgIcDownArrow = ({ fill, ...props }: PropsType) => (
   <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20" {...props}>
     <mask
       id="ic_down_arrow_svg__a"
@@ -13,10 +17,16 @@ const SvgIcDownArrow = (props: SVGProps<SVGSVGElement>) => (
         maskType: "alpha",
       }}
     >
-      <path stroke="#222" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="m5 7.5 5 5 5-5" />
+      <path
+        stroke={fill ? fill : "#222"}
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        strokeWidth={1.5}
+        d="m5 7.5 5 5 5-5"
+      />
     </mask>
     <g mask="url(#ic_down_arrow_svg__a)">
-      <path fill="#222" d="M0 0h20v20H0z" />
+      <path fill={fill ? fill : "#222"} d="M0 0h20v20H0z" />
     </g>
   </svg>
 );
