@@ -105,12 +105,7 @@ const HospitalReview = (props: propsType) => {
               items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}
               color="border"
             />
-            {/*@todo api 수정되면 수정 */}
-            {/*<ChipSection*/}
-            {/*  title="진단 내용"*/}
-            {/*  items={reviewData.disease?.map((disease, index) => ({ id: index, name: disease })) || []}*/}
-            {/*  color="border"*/}
-            {/*/>*/}
+            <ChipSection title="진단 내용" items={reviewData.disease || ""} color="border" />
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
