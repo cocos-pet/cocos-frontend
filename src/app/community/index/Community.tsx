@@ -14,6 +14,7 @@ import { useQueryGetCategory } from "@api/domain/community/category/hook";
 import { useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 
 const Community = () => {
   useEffect(() => {
@@ -27,13 +28,19 @@ const Community = () => {
   const type = searchParams?.get("type");
 
   const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
 
   const handleWriteClick = () => {
+    console.log(isPetRegistered);
     if (!isAuthenticated) {
       alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
-      router.push(PATH.COMMUNITY.ROOT);
       return;
     }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+
     router.push(`/community/write?category=${type}`);
   };
 
