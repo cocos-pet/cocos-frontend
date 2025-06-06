@@ -18,9 +18,9 @@ export const REVIEW_FILTER_CONFIG: ReviewFilterConfig = {
     { id: 6, name: "처방전을 제공받았어요" },
   ],
   badReviews: [
-    { id: 1, name: "설명이 부족했어요" },
-    { id: 2, name: "반려동물이 진료 중 불안해했어요" },
-    { id: 3, name: "진료비용 안내가 부족했어요" },
-    { id: 4, name: "대기시간이 길었어요" },
+    { id: 101, name: "설명이 부족했어요" },
+    { id: 102, name: "반려동물이 진료 중 불안해했어요" },
+    { id: 103, name: "진료비용 안내가 부족했어요" },
+    { id: 104, name: "대기시간이 길었어요" },
   ],
 };
