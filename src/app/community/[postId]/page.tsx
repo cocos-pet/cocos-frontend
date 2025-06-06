@@ -31,6 +31,7 @@ import { getCategoryResponse } from "../_utills/getPostCategoryLike.ts";
 import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from "../_utills/handleCategoryItem.tsx";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -62,6 +63,7 @@ const Page = () => {
     text: "",
   });
   const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
 
   useEffect(() => {
     if (postData) {
@@ -168,10 +170,12 @@ const Page = () => {
   const onLikePostClick = () => {
     if (!isAuthenticated) {
       alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
-      router.push(PATH.COMMUNITY.ROOT);
       return;
     }
-
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
     likeDelete(
       { postId: postIdString },
       {
@@ -187,7 +191,10 @@ const Page = () => {
   const onLikeDeleteClick = () => {
     if (!isAuthenticated) {
       alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
-      router.push(PATH.COMMUNITY.ROOT);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
       return;
     }
 
@@ -219,6 +226,10 @@ const Page = () => {
     if (!isAuthenticated) {
       alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
       return false;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
     }
     return true;
   };
