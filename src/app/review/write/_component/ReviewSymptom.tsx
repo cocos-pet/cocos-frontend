@@ -18,14 +18,18 @@ const ReviewSymptom = ({ onCategoryChange, symptomBodyData }: ReviewSymptomProps
   const selectedSymptomIds = watch("symptomIds");
 
   const handleRemoveSymptom = (removeId: number) => {
+    const selectedSymptomIds = watch("symptomIds") ?? [];
     const updated = selectedSymptomIds.filter((id) => id !== removeId);
     setValue("symptomIds", updated);
   };
 
   return (
     <div className={styles.wrapper}>
-      <span className={styles.questionStyle}>어떤 증상으로 방문했나요?</span>
-      {selectedSymptomIds.map((id) => (
+      <div className={styles.align}>
+        <span className={styles.questionStyle}>어떤 증상으로 방문했나요?</span>
+        <span className={styles.optionalStyle}>(선택)</span>
+      </div>
+      {selectedSymptomIds?.map((id) => (
         <BtnToChip
           key={id}
           label={getSymptomNameById(id, symptomBodyData)}
@@ -34,7 +38,7 @@ const ReviewSymptom = ({ onCategoryChange, symptomBodyData }: ReviewSymptomProps
           onRightIconClick={() => handleRemoveSymptom(id)}
         />
       ))}
-      <BtnToChip label="증상 없음" rightIcon={<IcRightArror />} onClick={() => onCategoryChange("symptom")} />
+      <BtnToChip label="증상 추가하기" rightIcon={<IcRightArror />} onClick={() => onCategoryChange("symptom")} />
     </div>
   );
 };

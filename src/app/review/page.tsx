@@ -8,7 +8,7 @@ import { TextField } from "@common/component/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";
-import HospitalList from "./_components/hospitalList/hospitalList";
+import HospitalList from "./hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
@@ -38,6 +38,7 @@ export default function ReviewPage() {
   return (
     <div>
       <LocationHeader />
+
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
           <div className={styles.headerContainer}>
@@ -74,15 +75,17 @@ export default function ReviewPage() {
               </div>
               <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
-            <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            <div className={styles.hospitalWrapper}>
+              <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
+              <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            </div>
+            <div className={styles.navWrapper}>
+              <Nav content={NAV_CONTENT} type={"nav"} />
+            </div>
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn />
-        </div>
-        <div className={styles.navWrapper}>
-          <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
       </div>
     </div>

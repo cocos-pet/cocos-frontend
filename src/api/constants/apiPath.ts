@@ -20,20 +20,17 @@ export const API_PATH = {
 
   LOCATION: "/api/dev/locations",
 
-  LOCATION: "/api/dev/locations",
-
-  LOCATION: "/api/dev/locations",
-
   POST: "/api/dev/posts",
   POST_FILTERS: "/api/dev/posts/filters",
   POST_POPULAR: "/api/dev/posts/popular",
   POST_CATEGORIES: "/api/dev/posts/categories",
 
+  HOSPITALS: "/api/dev/hospitals",
+
   TEST_HEALTH_CHECK: "/api/dev/test/health-check",
   TEST_TOKEN_CHECK: "/api/dev/test/token-check",
 
-  HOSPITALS: "/api/dev/hospitals",
-  HOSPITAL_SEARCH: "/api/dev/search/hospital",
+  HOSPITAL: "/api/dev/hospitals",
   HOSPITALS_PURPOSE: "/api/dev/hospitals/purposes",
   HOSPITALS_REVIEWS_SUMMARY: "/api/dev/hospitals/reviews/summary/option",
 

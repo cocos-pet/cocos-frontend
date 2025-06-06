@@ -1,10 +1,10 @@
-import { IcPlus } from "@asset/svg";
+
 import * as styles from "../_style/mypage.css";
 <<<<<<< HEAD
 <<<<<<< HEAD
-import React, { useRef, useState } from "react";
+import { } from "react";
 =======
-import React, { useState } from "react";
+import rom "react";
 >>>>>>> 37b44d2 ([Feat/#294] 병원 검색 바텀 시트 API 연결 및 무한 스크롤 구현 (#295))
 =======
 import React, { useRef, useState } from "react";
@@ -72,17 +72,12 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
               {/* {`· 리뷰 ${selectedHospital?.reviewCount}`} */}
             </span>
           </div>
-<<<<<<< HEAD
-          <Image src={data.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} />
->>>>>>> 7073707 ( HospitalReview 요청에 맞게 수정 (API 일부 붙임 + 무한 스크롤) (#299))
-=======
           {/* <Image src={data.image ?? nicknameCoco} alt="병원이미지" className={styles.rightContentBox} /> */}
->>>>>>> 632e39d ([Feat/#301] 방문 목적 response 추가 (Simple) (#302))
         </div>
       ) : (
-        <div className={styles.addBox}>
+        <div className=styles.addBox>
           즐겨찾는 동물병원 추가하기
-          <IcPlus width={20} height={20} />
+          <IcPlus width=20height={20} />
         </div>
       )}
       {/* 병원 검색 바텀시트 */}

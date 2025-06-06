@@ -11,6 +11,9 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.62.11
         version: 5.62.11(react@18.3.1)
+      '@use-funnel/core':
+        specifier: ^0.0.11
+        version: 0.0.11(react@18.3.1)
       '@vanilla-extract/css':
         specifier: ^1.17.0
         version: 1.17.0
@@ -762,6 +765,11 @@ packages:
 
   '@types/react@18.3.18':
     resolution: {integrity: sha512-t4yC+vtgnkYjNSKlFx1jkAhH8LgTo2N/7Qvi83kdEaUtMDiwpbLAktKDaAMlRcJ5eSxZkH74eEGt1ky31d7kfQ==}
+
+  '@use-funnel/core@0.0.11':
+    resolution: {integrity: sha512-a0T4mWXeL+ouMXtmyZn8MbrPZd9JgvFP9iAGAiaiuCvU3tj1jEWCvRjWfLVup3otH/3BBpf4zyi/v28/eLR9PQ==}
+    peerDependencies:
+      react: '>=16.8'
 
   '@vanilla-extract/babel-plugin-debug-ids@1.2.0':
     resolution: {integrity: sha512-z5nx2QBnOhvmlmBKeRX5sPVLz437wV30u+GJL+Hzj1rGiJYVNvgIIlzUpRNjVQ0MgAgiQIqIUbqPnmMc6HmDlQ==}
@@ -2355,6 +2363,10 @@ snapshots:
     dependencies:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
+
+  '@use-funnel/core@0.0.11(react@18.3.1)':
+    dependencies:
+      react: 18.3.1
 
   '@vanilla-extract/babel-plugin-debug-ids@1.2.0':
     dependencies:
