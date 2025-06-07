@@ -23,7 +23,7 @@ export const headerContainer = style({
 
 export const recommendHospital = style({
   marginTop: "2.4rem",
-  marginLeft: "2rem",
+  padding: "2rem 2rem",
 });
 
 export const recommendTitle = style([
@@ -50,7 +50,6 @@ export const recommendList = style({
 });
 
 export const hospitalCard = style({
-  padding: "1.6rem",
   padding: "1.6rem",
   border: `1px solid ${color.gray.gray200}`,
   borderRadius: "1.6rem",
@@ -87,16 +86,14 @@ export const hospitalAddress = style([
 ]);
 
 export const bannerContainer = style({
-  width: "100",
-  padding: "0rem 2rem",
+  width: "100%",
+  height: "10rem",
 });
 
 export const hospitalListText = style([
   font.label01,
   {
     fontWeight: "500",
-    marginLeft: "2rem",
-    marginTop: "2.4rem",
   },
 ]);
 

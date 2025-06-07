@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
 
 export const container = style({
-  margin: "0rem 2rem",
+  width: "100%",
 });
 
 export const title = style([
@@ -68,6 +68,7 @@ export const reviewCount = style([
 ]);
 
 export const hospitalImage = style({
+  width: "37.5rem",
   borderRadius: "0.8rem",
   objectFit: "cover",
   flexShrink: 0,

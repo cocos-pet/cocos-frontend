@@ -17,6 +17,7 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
+    image: "",
   });
 
   useEffect(() => {
