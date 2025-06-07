@@ -1,23 +1,12 @@
 import { post } from "@api/index";
 import { API_PATH } from "@api/constants/apiPath";
+import { paths } from "@type/schema";
 
-export interface Hospital {
-  id: number;
-  name: string;
-  address: string;
-  reviewCount: number;
-  averageRating: number;
-  imageUrl?: string;
-}
+/**
+ * @description 병원 리뷰 리스트 조회 API
+ */
 
-export interface HospitalListResponse {
-  hospitals: Hospital[];
-  cursorId?: number;
-  cursorReviewCount?: number;
-  hasNext: boolean;
-}
-
-export interface PostHospitalListRequest {
+export type PostHospitalListRequest = {
   locationId?: number;
   locationType: string;
   cursorId?: number;
@@ -25,14 +14,12 @@ export interface PostHospitalListRequest {
   size: number;
   sortBy: string;
   image: string;
-}
+};
 
-/**
- * @description 병원 리뷰 리스트 조회 API
- */
+export type PostHospitalListResponse = paths["/api/dev/hospitals"]["post"]["responses"]["200"]["content"]["*/*"];
 
-export const postHospitalList = async (body: PostHospitalListRequest): Promise<HospitalListResponse> => {
-  const { data } = await post<HospitalListResponse>(API_PATH.HOSPITALS, body);
+export const postHospitalList = async (body: PostHospitalListRequest): Promise<PostHospitalListResponse> => {
+  const { data } = await post<PostHospitalListResponse>(API_PATH.HOSPITAL, body);
   return data;
 };
 
@@ -51,7 +38,3 @@ export interface HospitalListResponse {
   cursorReviewCount?: number;
   hasNext: boolean;
 }
-
-/**
- * @description 병원 리뷰 리스트 조회 API
- */
