@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import styles from "./LocationBottomSheet.module.css";
+import * as styles from "./LocationBottomSheet.css";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
 import { Check as IcCheck } from "@asset/svg";

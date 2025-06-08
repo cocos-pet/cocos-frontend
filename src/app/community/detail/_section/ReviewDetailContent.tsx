@@ -10,17 +10,34 @@ import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 import { color } from "@style/styles.css.ts";
+import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
+
+interface Location {
+  id: number;
+  name: string;
+  districts?: {
+    id: number;
+    name: string;
+  }[];
+}
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const bodyId = searchParams?.get("id");
   const router = useRouter();
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
-  const [isRegionFilterOpen, setIsRegionFilterOpen] = useState(false);
   const [filterId, setFilterId] = useState<number | undefined>(undefined);
   const [filterType, setFilterType] = useState<"good" | "bad" | null>(null);
+
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
+
+  const [isLocationBottomSheetOpen, setIsLocationBottomSheetOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+
+  console.log("selectedLocation", selectedLocation);
+  console.log("isLocationBottomSheetOpen", isLocationBottomSheetOpen);
+
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
   };
@@ -49,6 +66,15 @@ const ReviewDetailContent = () => {
     );
   }, [isReviewFilterOpen]);
 
+  const handleCloseBottomSheet = () => {
+    setIsLocationBottomSheetOpen(false);
+  };
+
+  const handleLocationSelect = (location: Location) => {
+    setSelectedLocation(location);
+    handleCloseBottomSheet();
+  };
+
   if (isPending) {
     return <LoadingFallback />;
   }
@@ -60,12 +86,12 @@ const ReviewDetailContent = () => {
   return (
     <div className={styles.reviewContainer}>
       <div className={styles.reviewFilter}>
-        <div className={styles.reviewRegion} onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}>
+        <div className={styles.reviewRegion} onClick={() => setIsLocationBottomSheetOpen(true)}>
           <IcTarget width={20} />
           <span className={styles.reviewRegionText}>서울시 강남구</span>
           <motion.div
             style={{ height: "20px" }}
-            animate={{ rotate: isRegionFilterOpen ? 180 : 0 }}
+            animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}
             transition={{ duration: 0.2 }}
           >
             <IcDownArrow width={20} />
@@ -107,6 +133,11 @@ const ReviewDetailContent = () => {
         onClose={() => setIsReviewFilterOpen(false)}
         selectedFilterId={filterId || undefined}
         onFilterClick={handleFilterClick}
+      />
+      <LocationBottomSheet
+        isOpen={isLocationBottomSheetOpen}
+        onClose={handleCloseBottomSheet}
+        onLocationSelect={handleLocationSelect}
       />
     </div>
   );
