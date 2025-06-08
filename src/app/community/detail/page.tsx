@@ -119,7 +119,6 @@ const PostDetail = () => {
   const typeId = searchParams?.get("id");
   const router = useRouter();
   const [activeTab, setActiveTab] = useState<ActiveTabType>("community");
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // 항상 헤더를 렌더링하여 hydration 문제 방지
   const symptomName = typeId ? symptomMapping[typeId] || "증상" : "증상";
@@ -129,10 +128,6 @@ const PostDetail = () => {
 
   const handleTabClick = (tab: ActiveTabType) => {
     setActiveTab(tab);
-  };
-
-  const onOpenChange = (open: boolean) => {
-    setIsModalOpen(open);
   };
 
   return (

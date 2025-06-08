@@ -13,6 +13,7 @@ import { color } from "@style/styles.css.ts";
 import { useAuth } from "@providers/AuthProvider.tsx";
 import { Button } from "@common/component/Button";
 import { Modal } from "@common/component/Modal/Modal.tsx";
+import { PATH } from "@route/path.ts";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -134,7 +135,7 @@ const ReviewDetailContent = () => {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm label={"로그인"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
             </Modal.BottomAffix>
           }
         >
