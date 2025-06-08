@@ -13,6 +13,7 @@ import { useAuth } from "@providers/AuthProvider";
 
 export default function Setting() {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();
   const { isAuthenticated } = useAuth();
@@ -24,6 +25,11 @@ export default function Setting() {
   const handleMoveWithdraw = () => {
     router.push(PATH.SETTING.WITHDRAW);
   };
+
+  if (!isAuthenticated) {
+    alert("접근할 수 없습니다.");
+    router.push(PATH.MAIN);
+  }
 
   return (
     <>

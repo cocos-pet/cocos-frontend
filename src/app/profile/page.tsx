@@ -10,6 +10,9 @@ import ContentSection from "./_component/ContentSection/ContentSection";
 import NavSection from "./_component/NavSection/NavSection";
 import SuspenseWrapper from "@app/SuspenseWrapper";
 import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { useAuth } from "@providers/AuthProvider";
 
 /**
  * 프로필 페이지 컴포넌트
@@ -30,9 +33,16 @@ const Profile = () => {
 const ProfileContent = () => {
   // 커스텀 훅을 통한 상태 관리
   const { query, activeTab, isActiveTab, handleTabClick, navigateBack, member, petInfo, isLoading } = useProfileState();
+  const { isAuthenticated } = useAuth();
+  const router = useRouter();
+
+  if (!isAuthenticated) {
+    alert("로그인 후에 확인할 수 있습니다.");
+    router.push(PATH.MAIN);
+  }
 
   // 쿼리 파라미터가 없거나 로딩 중이거나 데이터가 없는 경우 렌더링하지 않음
-  if (!query || isLoading || !member || !petInfo) return null;
+  if (!query || isLoading || !member || !petInfo) return;
 
   return (
     <SuspenseWrapper>
@@ -42,7 +52,7 @@ const ProfileContent = () => {
 
         {/* 프로필 섹션 */}
         <article className={styles.myProfileWrapper}>
-          <ProfileSection member={member} petInfo={petInfo}  />
+          <ProfileSection member={member} petInfo={petInfo} />
         </article>
 
         <Divider />
