@@ -1,4 +1,4 @@
-import { CSSProperties, forwardRef, ReactNode, useState } from "react";
+import { CSSProperties, forwardRef, ReactNode, useEffect, useState } from "react";
 import { ModalContext } from "@common/component/Modal/context.ts";
 import { ModalClose } from "@common/component/Modal/group/ModalClose.tsx";
 import { ModalConfirm } from "@common/component/Modal/group/ModalConfirm.tsx";
@@ -58,6 +58,12 @@ const ModalRoot = forwardRef<HTMLDivElement, ModalBodyProps>((props, forwardRef)
   const handleBackdropClick = () => {
     setOpen(false);
   };
+
+  useEffect(() => {
+    if (typeof open === "boolean") {
+      setInternalOpen(open);
+    }
+  }, [open]);
 
   return (
     <ModalContext.Provider value={{ open: internalOpen, setOpen }}>
