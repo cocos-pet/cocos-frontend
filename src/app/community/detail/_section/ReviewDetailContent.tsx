@@ -69,37 +69,39 @@ const ReviewDetailContent = () => {
 
   return (
     <div className={styles.reviewContainer}>
-      <div className={styles.reviewFilter}>
-        <div className={styles.reviewRegion} onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}>
-          <IcTarget width={20} />
-          <span className={styles.reviewRegionText}>서울시 강남구</span>
-          <motion.div
-            style={{ height: "20px" }}
-            animate={{ rotate: isRegionFilterOpen ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <IcDownArrow width={20} />
-          </motion.div>
+      {isAuthenticated && (
+        <div className={styles.reviewFilter}>
+          <div className={styles.reviewRegion} onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}>
+            <IcTarget width={20} />
+            <span className={styles.reviewRegionText}>서울시 강남구</span>
+            <motion.div
+              style={{ height: "20px" }}
+              animate={{ rotate: isRegionFilterOpen ? 180 : 0 }}
+              transition={{ duration: 0.2 }}
+            >
+              <IcDownArrow width={20} />
+            </motion.div>
+          </div>
+          <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
+            <Chip
+              label={"좋아요"}
+              color={filterType === "good" ? "blue" : "gray"}
+              size={"small"}
+              rightIcon={
+                <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
+              }
+            />
+            <Chip
+              label={"아쉬워요"}
+              color={filterType === "bad" ? "blue" : "gray"}
+              size={"small"}
+              rightIcon={
+                <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
+              }
+            />
+          </div>
         </div>
-        <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
-          <Chip
-            label={"좋아요"}
-            color={filterType === "good" ? "blue" : "gray"}
-            size={"small"}
-            rightIcon={
-              <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
-            }
-          />
-          <Chip
-            label={"아쉬워요"}
-            color={filterType === "bad" ? "blue" : "gray"}
-            size={"small"}
-            rightIcon={
-              <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
-            }
-          />
-        </div>
-      </div>
+      )}
       <div className={styles.reviewItemContainer}>
         {reviewList.map((review) => (
           <HospitalReview
@@ -113,12 +115,6 @@ const ReviewDetailContent = () => {
           />
         ))}
       </div>
-      <ReviewFilter
-        isOpen={isReviewFilterOpen}
-        onClose={() => setIsReviewFilterOpen(false)}
-        selectedFilterId={filterId || undefined}
-        onFilterClick={handleFilterClick}
-      />
       {!isAuthenticated && (
         <div className={styles.notAuthButton}>
           <Button
@@ -129,6 +125,12 @@ const ReviewDetailContent = () => {
           />
         </div>
       )}
+      <ReviewFilter
+        isOpen={isReviewFilterOpen}
+        onClose={() => setIsReviewFilterOpen(false)}
+        selectedFilterId={filterId || undefined}
+        onFilterClick={handleFilterClick}
+      />
       <Modal.Root open={isModalOpen} onOpenChange={onOpenChange}>
         <Modal.Content
           title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
