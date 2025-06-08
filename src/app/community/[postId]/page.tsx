@@ -32,6 +32,7 @@ import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from ".
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "@common/component/Modal/Modal.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -62,6 +63,7 @@ const Page = () => {
     mention: "",
     text: "",
   });
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const isPetRegistered = useIsPetRegistered();
 
@@ -169,7 +171,7 @@ const Page = () => {
 
   const onLikePostClick = () => {
     if (!isAuthenticated) {
-      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      setIsLoginModalOpen(true);
       return;
     }
     if (!isPetRegistered) {
@@ -190,7 +192,7 @@ const Page = () => {
 
   const onLikeDeleteClick = () => {
     if (!isAuthenticated) {
-      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
+      setIsLoginModalOpen(true);
       return;
     }
     if (!isPetRegistered) {
@@ -224,8 +226,8 @@ const Page = () => {
 
   const handleCheckCommentPermission = () => {
     if (!isAuthenticated) {
-      alert("⚠️ 로그인이 필요해요 모달로 변경 필요");
-      return false;
+      setIsLoginModalOpen(true);
+      return;
     }
     if (!isPetRegistered) {
       router.push(PATH.ONBOARDING.COMPLETE);
@@ -366,6 +368,20 @@ const Page = () => {
         }}
         rightText={"삭제할게요"}
       />
+
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </>
   );
 };
