@@ -13,7 +13,6 @@ import { useAuth } from "@providers/AuthProvider";
 
 export default function Setting() {
   const router = useRouter();
-  const { isAuthenticated } = useAuth();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();
   const { isAuthenticated } = useAuth();
