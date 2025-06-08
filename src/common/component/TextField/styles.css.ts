@@ -25,6 +25,7 @@ export const styles = {
           padding: "1.2rem",
         },
         centerPlaceholder: { maxWidth: "12rem" },
+
         search: {
           width: "100%",
           marginLeft: "2rem",
@@ -35,6 +36,12 @@ export const styles = {
 
         main: {
           boxShadow: " 0px 2px 10px 0px rgba(0, 0, 0, 0.15)",
+        },
+
+        focus: { border: `0.1rem solid ${color.primary.blue600}` },
+        done: {
+          border: `0.1rem solid ${color.primary.blue600}`,
+          backgroundColor: "rgba(67, 214, 255, 0.16)",
         },
       },
       active: {
@@ -100,6 +107,8 @@ export const styles = {
         search: {},
         main: {},
         centerPlaceholder: { maxWidth: "8rem", textAlign: "center" },
+        focus: {},
+        done: { backgroundColor: "transparent" },
       },
     },
 

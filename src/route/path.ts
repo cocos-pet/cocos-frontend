@@ -35,4 +35,11 @@ export const PATH = {
     EDIT_PROFILE: "/setting/edit-profile",
     WITHDRAW: "/setting/withdraw",
   },
+
+  REVIEW: {
+    ROOT: "/review",
+    AGREE: "/review/agree",
+    WRITE: "/review/write",
+    COMPLETE: "/review/complete",
+  },
 };

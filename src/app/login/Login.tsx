@@ -4,7 +4,6 @@ import {KAKAO_AUTH_URI} from "@auth/OAuth";
 import {useRouter} from "next/navigation";
 
 const Login = () => {
-  // useProtectedRoute();
   const router = useRouter();
 
   // useEffect(() => {

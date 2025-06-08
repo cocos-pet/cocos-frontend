@@ -1,5 +1,5 @@
 // todo: api 요청으로 받아오는 예시
-import {CategoryGender} from "../../../../app/mypage/edit-pet/store/animalFilter.ts";
+import { CategoryGender } from "../../../../app/mypage/edit-pet/_store/animalFilter.ts";
 
 export const CATEGORY_KIND = [
   { id: 1, name: "고양이" },
