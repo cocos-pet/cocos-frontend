@@ -12,6 +12,7 @@ import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 import { color } from "@style/styles.css.ts";
 import { useAuth } from "@providers/AuthProvider.tsx";
 import { Button } from "@common/component/Button";
+import { Modal } from "@common/component/Modal/Modal.tsx";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -27,6 +28,11 @@ const ReviewDetailContent = () => {
     router.push(`/profile?nickname=${nickname}`);
   };
   const { isAuthenticated } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onOpenChange = (open: boolean) => {
+    setIsModalOpen(open);
+  };
 
   const handleFilterClick = (id: number | undefined, type: "good" | "bad") => {
     setFilterId(id);
@@ -114,9 +120,27 @@ const ReviewDetailContent = () => {
       />
       {!isAuthenticated && (
         <div className={styles.notAuthButton}>
-          <Button size={"large"} label={"로그인 하고 리뷰 확인하기"} rightIcon={<IcRightArrow />} />
+          <Button
+            size={"large"}
+            label={"로그인 하고 리뷰 확인하기"}
+            rightIcon={<IcRightArrow />}
+            onClick={() => onOpenChange(true)}
+          />
         </div>
       )}
+      <Modal.Root open={isModalOpen} onOpenChange={onOpenChange}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };
