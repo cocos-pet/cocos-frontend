@@ -1,15 +1,12 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcRightArrow, IcTarget } from "@asset/svg";
-import { motion } from "framer-motion";
+import { IcRightArrow } from "@asset/svg";
 import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
-import Chip from "@common/component/Chip/Chip.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
-import { color } from "@style/styles.css.ts";
 import { useAuth } from "@providers/AuthProvider.tsx";
 import { Button } from "@common/component/Button";
 import { Modal } from "@common/component/Modal/Modal.tsx";
