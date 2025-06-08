@@ -53,6 +53,7 @@ export { default as IcReviewRightIcon } from "./IcReviewRightIcon";
 export { default as IcReviewoff } from "./IcReviewoff";
 export { default as IcReviewon } from "./IcReviewon";
 export { default as IcRightArror } from "./IcRightArror";
+export { default as IcRightArrow } from "./IcRightArrow";
 export { default as IcSearch } from "./IcSearch";
 export { default as IcSearchFillter } from "./IcSearchFillter";
 export { default as IcSearchFillterBlue } from "./IcSearchFillterBlue";

@@ -1,7 +1,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcTarget } from "@asset/svg";
+import { IcDownArrow, IcRightArrow, IcTarget } from "@asset/svg";
 import { motion } from "framer-motion";
 import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
 import Chip from "@common/component/Chip/Chip.tsx";
@@ -10,6 +10,8 @@ import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 import { color } from "@style/styles.css.ts";
+import { useAuth } from "@providers/AuthProvider.tsx";
+import { Button } from "@common/component/Button";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -24,6 +26,7 @@ const ReviewDetailContent = () => {
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
   };
+  const { isAuthenticated } = useAuth();
 
   const handleFilterClick = (id: number | undefined, type: "good" | "bad") => {
     setFilterId(id);
@@ -99,6 +102,7 @@ const ReviewDetailContent = () => {
             handleHospitalDetailClick={() => {
               router.push(`/hospital/${review.hospitalId}`);
             }}
+            isBlurred={!isAuthenticated}
           />
         ))}
       </div>
@@ -108,6 +112,11 @@ const ReviewDetailContent = () => {
         selectedFilterId={filterId || undefined}
         onFilterClick={handleFilterClick}
       />
+      {!isAuthenticated && (
+        <div className={styles.notAuthButton}>
+          <Button size={"large"} label={"로그인 하고 리뷰 확인하기"} rightIcon={<IcRightArrow />} />
+        </div>
+      )}
     </div>
   );
 };
