@@ -19,6 +19,8 @@ export const API_PATH = {
   MEMBERS_WITHDRAW: "/api/dev/members/deactivate",
   MEMBERS_REVIEWS_AGREE: "/api/dev/members/reviews/agree",
 
+  LOCATION: "/api/dev/locations",
+
   POST: "/api/dev/posts",
   POST_FILTERS: "/api/dev/posts/filters",
   POST_POPULAR: "/api/dev/posts/popular",
