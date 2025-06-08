@@ -1,5 +1,7 @@
-import {color, font, semanticColor} from "@style/styles.css";
-import {style} from "@vanilla-extract/css";
+"use client";
+
+import { color, font, semanticColor } from "@style/styles.css";
+import { style } from "@vanilla-extract/css";
 
 export const profileEditWrapper = style({
   display: "flex",

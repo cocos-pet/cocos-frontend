@@ -33,6 +33,7 @@ export const PATH = {
   SETTING: {
     ROOT: "/setting",
     EDIT_PROFILE: "/setting/edit-profile",
+    WITHDRAW: "/setting/withdraw",
   },
 
   REVIEW: {
