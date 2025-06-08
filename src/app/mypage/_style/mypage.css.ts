@@ -161,7 +161,8 @@ export const nothingContent = style([
   a.alignCenter,
   a.textCenter,
   {
-    width: "33.5rem",
+    minWidth: "33.5rem",
+    width: "100%",
     height: "32rem",
     color: semanticColor.disable.text,
   },

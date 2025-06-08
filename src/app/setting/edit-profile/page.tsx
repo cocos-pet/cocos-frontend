@@ -7,13 +7,16 @@ import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 import { PATH } from "@route/path";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
-import { useProtectedRoute } from "@route/useProtectedRoute";
+import { useAuth } from "@providers/AuthProvider";
 
 const ProfileEdit = () => {
-  useProtectedRoute();
-
+  const { isAuthenticated } = useAuth();
   const router = useRouter();
   const { data: member } = useGetMemberInfo();
+
+  if (!isAuthenticated) {
+    router.push(PATH.LOGIN);
+  }
 
   if (!member) return;
 

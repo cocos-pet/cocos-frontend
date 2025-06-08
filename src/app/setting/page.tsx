@@ -9,11 +9,17 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
 import { useLogout } from "@api/domain/setting/hook";
+import { useAuth } from "@providers/AuthProvider";
 
 export default function Setting() {
   const router = useRouter();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    router.push(PATH.LOGIN);
+  }
 
   const handleMoveWithdraw = () => {
     router.push(PATH.SETTING.WITHDRAW);
