@@ -14,6 +14,7 @@ import { useAuth } from "@providers/AuthProvider.tsx";
 import { Button } from "@common/component/Button";
 import { Modal } from "@common/component/Modal/Modal.tsx";
 import { PATH } from "@route/path.ts";
+import HospitalReviewFilter from "@app/community/detail/_section/HospitalReviewFilter.tsx";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -70,37 +71,12 @@ const ReviewDetailContent = () => {
   return (
     <div className={styles.reviewContainer}>
       {isAuthenticated && (
-        <div className={styles.reviewFilter}>
-          <div className={styles.reviewRegion} onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}>
-            <IcTarget width={20} />
-            <span className={styles.reviewRegionText}>서울시 강남구</span>
-            <motion.div
-              style={{ height: "20px" }}
-              animate={{ rotate: isRegionFilterOpen ? 180 : 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <IcDownArrow width={20} />
-            </motion.div>
-          </div>
-          <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
-            <Chip
-              label={"좋아요"}
-              color={filterType === "good" ? "blue" : "gray"}
-              size={"small"}
-              rightIcon={
-                <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
-              }
-            />
-            <Chip
-              label={"아쉬워요"}
-              color={filterType === "bad" ? "blue" : "gray"}
-              size={"small"}
-              rightIcon={
-                <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
-              }
-            />
-          </div>
-        </div>
+        <HospitalReviewFilter
+          onRegionFilterClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}
+          isRegionFilterOpen={isRegionFilterOpen}
+          onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
+          filterType={filterType}
+        />
       )}
       <div className={styles.reviewItemContainer}>
         {reviewList.map((review) => (
