@@ -5,23 +5,23 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 import { useDeleteHospitalReview, useInfiniteHospitalReview } from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { API_PATH } from "@api/constants/apiPath";
 import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
 
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
+  nickname?: string;
 }
 
-const HospitalReviewWrapper = ({ isMypage = false }: HospitalReviewWrapperProps) => {
+const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: HospitalReviewWrapperProps) => {
+  const router = useRouter();
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
 
   const member = useMypageMemberInfo((s) => s.member);
-  const nickname = member?.nickname;
-
-  const router = useRouter();
+  const nickname = isMypage ? member?.nickname : _nickname;
 
   const isBlurred = !isLoggedIn();
   const observerRef = useRef<IntersectionObserver | null>(null);

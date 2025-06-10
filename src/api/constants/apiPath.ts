@@ -16,6 +16,7 @@ export const API_PATH = {
   MEMBERS_LOGIN: "/api/dev/members/login",
   MEMBERS_LOGOUT: "/api/dev/members/logout",
   MEMBRES_REFRESH: "/api/dev/members/refresh",
+  MEMBERS_WITHDRAW: "/api/dev/members/deactivate",
   MEMBERS_REVIEWS_AGREE: "/api/dev/members/reviews/agree",
 
   LOCATION: "/api/dev/locations",

@@ -532,6 +532,26 @@ export interface paths {
     patch?: never;
     trace?: never;
   };
+  "/api/dev/pets/owner/check": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /**
+     * 반려동물 등록 여부 확인 API
+     * @description 사용자가 반려동물을 등록했는지 확인하는 API입니다.
+     */
+    get: operations["checkOwner"];
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
   "/api/dev/members/refresh": {
     parameters: {
       query?: never;
@@ -2709,7 +2729,6 @@ export interface operations {
     requestBody?: never;
     responses: {
       /** @description 최근 커뮤니티 검색어 조회 성공 */
-      /** @description 최근 커뮤니티 검색어 조회 성공 */
       200: {
         headers: {
           [name: string]: unknown;
@@ -2732,50 +2751,6 @@ export interface operations {
     };
     requestBody?: never;
     responses: {
-      /** @description 최근 커뮤니티 검색어 저장 성공 */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseVoid"];
-        };
-      };
-    };
-  };
-  getHospitalSearch: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 최근 병원 검색어 조회 성공 */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseSearchResponse"];
-        };
-      };
-    };
-  };
-  addHospitalSearch: {
-    parameters: {
-      query: {
-        /** @description 검색어 */
-        keyword: unknown;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 최근 병원 검색어 저장 성공 */
       /** @description 최근 커뮤니티 검색어 저장 성공 */
       200: {
         headers: {
@@ -3089,81 +3064,6 @@ export interface operations {
       };
     };
   };
-  getHospitals: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["HospitalListRequest"];
-      };
-    };
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseHospitalListResponse"];
-        };
-      };
-    };
-  };
-  addReview: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description 병원 아이디 */
-        hospitalId: unknown;
-      };
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ReviewAddRequest"];
-      };
-    };
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseReviewAddResponse"];
-        };
-      };
-    };
-  };
-  getHospitalReviewList: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ReviewListRequest"];
-      };
-    };
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseHospitalReviewListResponse"];
-        };
-      };
-    };
-  };
   getPostComments: {
     parameters: {
       query?: never;
@@ -3293,15 +3193,9 @@ export interface operations {
   updateMemberProfile: {
     parameters: {
       query?: never;
-      query?: never;
       header?: never;
       path?: never;
       cookie?: never;
-    };
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["ProfileUpdateRequest"];
-      };
     };
     requestBody: {
       content: {
@@ -3316,68 +3210,6 @@ export interface operations {
         };
         content: {
           "*/*": components["schemas"]["BaseResponseNicknameExistenceResponse"];
-        };
-      };
-    };
-  };
-  getMemberReviewTerms: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseMemberReviewTermsAgreeResponse"];
-        };
-      };
-    };
-  };
-  updateMemberReviewTerms: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseVoid"];
-        };
-      };
-    };
-  };
-  updateMemberHospital: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        hospitalId: number;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseVoid"];
         };
       };
     };
@@ -3718,48 +3550,6 @@ export interface operations {
       };
     };
   };
-  getMemberLocation: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다.  */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseMemberLocationResponse"];
-        };
-      };
-    };
-  };
-  getMemberHospital: {
-    parameters: {
-      query?: {
-        nickname?: string;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseMemberHospitalResponse"];
-        };
-      };
-    };
-  };
   checkNickname: {
     parameters: {
       query: {
@@ -3778,139 +3568,6 @@ export interface operations {
         };
         content: {
           "*/*": components["schemas"]["BaseResponseNicknameExistenceResponse"];
-        };
-      };
-    };
-  };
-  getLocations: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseLocationResponse"];
-        };
-      };
-    };
-  };
-  getHospitalDetail: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description 병원 아이디 */
-        hospitalId: unknown;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseHospitalDetailResponse"];
-        };
-      };
-    };
-  };
-  getReviewSummaryList: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description 병원 아이디 */
-        hospitalId: unknown;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseReviewSummaryListResponse"];
-        };
-      };
-    };
-  };
-  getReviewSummaryOptionList: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseReviewSummaryOptionListResponse"];
-        };
-      };
-    };
-  };
-  getMemberHospitalReviewList: {
-    parameters: {
-      query?: {
-        /** @description 사용자 닉네임 */
-        nickname?: string;
-        /** @description 페이징용 마지막 리뷰 ID */
-        cursorId?: number;
-        /** @description 페이지당 조회할 리뷰 개수 (1~20) 비로그인 시 최대 4개 */
-        size?: number;
-      };
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseMemberHospitalReviewListResponse"];
-        };
-      };
-    };
-  };
-  getHospitalVisitPurposeList: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseHospitalVisitPurposeListResponse"];
         };
       };
     };
@@ -4158,49 +3815,6 @@ export interface operations {
         };
         content: {
           "*/*": components["schemas"]["BaseResponseAnimalsResponse"];
-        };
-      };
-    };
-  };
-  deactivateMember: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description OK */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseVoid"];
-        };
-      };
-    };
-  };
-  deleteReview: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description 리뷰 아이디 */
-        reviewId: unknown;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description 요청에 성공했습니다. */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "*/*": components["schemas"]["BaseResponseReviewImageDeleteListResponse"];
         };
       };
     };

@@ -20,7 +20,6 @@ import {
   useSubCommentPost,
 } from "@api/domain/community/post/hook";
 import { PATH } from "@route/path.ts";
-import { getAccessToken } from "@api/index.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
@@ -31,6 +30,9 @@ import { styles } from "./PostDetail.css.ts";
 import { getCategoryResponse } from "../_utills/getPostCategoryLike.ts";
 import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from "../_utills/handleCategoryItem.tsx";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "@common/component/Modal/Modal.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -61,6 +63,9 @@ const Page = () => {
     mention: "",
     text: "",
   });
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
 
   useEffect(() => {
     if (postData) {
@@ -91,7 +96,6 @@ const Page = () => {
   };
 
   const onSubmitComment = () => {
-   
     if (parsedComment.mention) {
       // 대댓글 등록
       subCommentPost(
@@ -166,11 +170,14 @@ const Page = () => {
   };
 
   const onLikePostClick = () => {
-    if (getAccessToken() === null) {
-      router.push(PATH.ONBOARDING.ROOT);
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
       return;
     }
-
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
     likeDelete(
       { postId: postIdString },
       {
@@ -184,8 +191,12 @@ const Page = () => {
   };
 
   const onLikeDeleteClick = () => {
-    if (getAccessToken() === null) {
-      router.push(PATH.ONBOARDING.ROOT);
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
       return;
     }
 
@@ -211,6 +222,18 @@ const Page = () => {
     if (postData.nickname) {
       router.push(`/profile?nickname=${postData.nickname}`);
     }
+  };
+
+  const handleCheckCommentPermission = () => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    return true;
   };
 
   return (
@@ -326,6 +349,7 @@ const Page = () => {
           onClearClick={onClearClick}
           placeholder={"댓글을 입력해주세요."}
           onKeyDown={onKeyDown}
+          onClick={handleCheckCommentPermission}
         />
         {parsedComment.text && (
           <button className={styles.upload} onClick={onSubmitComment}>
@@ -344,6 +368,20 @@ const Page = () => {
         }}
         rightText={"삭제할게요"}
       />
+
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </>
   );
 };
