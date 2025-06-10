@@ -1,4 +1,4 @@
-import { post } from "@api/index";
+import { get, post } from "@api/index";
 import { API_PATH } from "@api/constants/apiPath";
 import { paths } from "@type/schema";
 
@@ -47,4 +47,11 @@ export const postHospitalList = async (body: PostHospitalListRequest): Promise<H
     cursorReviewCount: data.data?.cursorReviewCount,
     hasNext: data.data?.hospitals?.length === body.size,
   };
+};
+
+type useGetHospitalDetail = paths["/api/dev/hospitals/{hospitalId}"]["get"]["responses"]["200"]["content"]["*/*"];
+
+export const getHospitalDetail = async (hospitalId: number) => {
+  const { data } = await get<useGetHospitalDetail>(`${API_PATH.HOSPITALS}/${hospitalId}`);
+  return data.data;
 };
