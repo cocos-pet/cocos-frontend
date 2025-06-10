@@ -18,18 +18,12 @@ export type PostHospitalListRequest = {
 
 export type PostHospitalListResponse = paths["/api/dev/hospitals"]["post"]["responses"]["200"]["content"]["*/*"];
 
-export const postHospitalList = async (body: PostHospitalListRequest): Promise<PostHospitalListResponse> => {
-  const { data } = await post<PostHospitalListResponse>(API_PATH.HOSPITAL, body);
-  return data;
-};
-
 export interface Hospital {
   id: number;
   name: string;
   address: string;
   reviewCount: number;
-  averageRating: number;
-  imageUrl?: string;
+  image?: string;
 }
 
 export interface HospitalListResponse {
@@ -38,3 +32,19 @@ export interface HospitalListResponse {
   cursorReviewCount?: number;
   hasNext: boolean;
 }
+
+export const postHospitalList = async (body: PostHospitalListRequest): Promise<HospitalListResponse> => {
+  const { data } = await post<PostHospitalListResponse>(API_PATH.HOSPITAL, body);
+  return {
+    hospitals: (data.data?.hospitals ?? []).map((hospital) => ({
+      id: hospital.id ?? 0,
+      name: hospital.name ?? "",
+      address: hospital.address ?? "",
+      reviewCount: hospital.reviewCount ?? 0,
+      image: hospital.image,
+    })),
+    cursorId: data.data?.cursorId,
+    cursorReviewCount: data.data?.cursorReviewCount,
+    hasNext: data.data?.hospitals?.length === body.size,
+  };
+};

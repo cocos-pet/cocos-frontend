@@ -1,11 +1,10 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
 import { TextField } from "@common/component/TextField";
-
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";
@@ -15,31 +14,36 @@ import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
-import { PATH } from "@route/path";
+import type { Hospital } from "@api/domain/hospitals";
 
 export default function ReviewPage() {
   const router = useRouter();
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
+  const [searchText, setSearchText] = useState("");
+  const [isRecentPost, setIsRecentPost] = useState(false);
 
-  const { data } = useInfiniteHospitalList({
-    locationType: "CITY",
+  const {
+    data: hospitalData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteHospitalList({
+    locationType: "ALL",
     size: 10,
-    sortBy: "REVIEW",
-
-  const { data: review = [] } = useQuery({
-    queryKey: ["reviews"],
-    queryFn: fetchReviews,
-    initialData: MOCK_REVIEWS,
+    sortBy: "REVIEW_COUNT",
+    image: "",
   });
 
-  const hospitals = data?.hospitals ?? [];
+  const hospitals = hospitalData?.pages?.[0]?.hospitals || [];
 
-  function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>) {}
+  const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+  };
 
-  function handleSearchClick() {
-    router.push(PATH.REVIEW.SEARCH);
-  }
+  const handleSearchClick = () => {
+    // 검색 로직 구현
+  };
 
   return (
     <div>
@@ -54,7 +58,7 @@ export default function ReviewPage() {
                 placeholder="심장병, 백내장"
                 onClick={handleSearchClick}
                 onChange={handleTextFieldChange}
-                value=""
+                value={searchText}
                 icon={<IcSearch />}
               />
             </div>
@@ -62,11 +66,10 @@ export default function ReviewPage() {
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
                 <span className={styles.recommendTitleHighlight}>추천 병원</span>
-                <span className={styles.recommendTitleHighlight}>추천 병원</span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
-                {hospitals.map((hospital, idx) => (
+                {hospitals.map((hospital: Hospital, idx: number) => (
                   <div
                     key={hospital.id}
                     className={styles.hospitalCard}
@@ -74,29 +77,25 @@ export default function ReviewPage() {
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
-                      <span className={styles.hospitalRank}>{idx + 1}</span>
-                      <span className={styles.hospitalName}>{hospital.name}</span>
-                      <span className={styles.hospitalRank}>{hospital.id}</span>
                       <span className={styles.hospitalName}>{hospital.name}</span>
                     </div>
-                    <span className={styles.hospitalAddress}>{hospital.address}</span>
                     <span className={styles.hospitalAddress}>{hospital.address}</span>
                   </div>
                 ))}
               </div>
               <Image src={banner} alt="banner" className={styles.bannerContainer} />
-              <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
-            <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            <div className={styles.hospitalWrapper}>
+              <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
+              <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            </div>
+            <div className={styles.navWrapper}>
+              <Nav content={NAV_CONTENT} type={"nav"} />
+            </div>
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn />
-        </div>
-        <div className={styles.navWrapper}>
-          <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
       </div>
     </div>

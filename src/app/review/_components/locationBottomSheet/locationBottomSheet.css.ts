@@ -99,6 +99,3 @@ export const cityTab = style([
 export const selectedCityTab = style({
   backgroundColor: color.gray.gray600,
 });
-export const selectedCityTab = style({
-  backgroundColor: color.gray.gray600,
-});
