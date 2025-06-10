@@ -13,8 +13,6 @@ export { default as IcShape } from "./IcShape";
 export { default as IcX } from "./IcX";
 export { default as IcAddphoto } from "./IcAddphoto";
 export { default as IcBaseProfileImage } from "./IcBaseProfileImage";
-export { default as IcCheck } from "./IcCheck";
-export { default as IcChevronDown } from "./IcChevronDown";
 export { default as IcCalenderLeft } from "./IcCalenderLeft";
 export { default as IcCalenderRight } from "./IcCalenderRight";
 export { default as IcCheckbox } from "./IcCheckbox";
