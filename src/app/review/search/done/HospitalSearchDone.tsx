@@ -10,15 +10,9 @@ import { styles } from "./HospitalSearchDone.css.ts";
 import Divider from "@common/component/Divider/Divider.tsx";
 import { useGetHospitalSearch } from "@api/domain/hospitals/search/hook";
 import { PATH } from "@route/path.ts";
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+import { Hospital } from "@api/domain/hospitals/search";
 
-interface Hospital {
-  id: number;
-  name: string;
-  address: string;
-  reviewCount: number;
-  image: string;
-}
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 function HospitalSearchDoneContent() {
   const searchParams = useSearchParams();
