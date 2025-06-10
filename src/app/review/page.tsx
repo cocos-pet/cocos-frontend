@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
@@ -14,32 +14,41 @@ import Nav from "@common/component/Nav/Nav";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
+import type { Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
 
 export default function ReviewPage() {
   const router = useRouter();
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
+  const [searchText, setSearchText] = useState("");
 
-  const { data } = useInfiniteHospitalList({
+  const {
+    data: hospitalData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+  } = useInfiniteHospitalList({
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
+    image: "",
   });
 
-  const hospitals = data?.hospitals ?? [];
+  const hospitals = hospitalData?.pages?.[0]?.hospitals?.slice(0, 3) || [];
 
-  function handleTextFieldChange(e: ChangeEvent<HTMLInputElement>): void {
-    throw new Error("Function not implemented.");
-  }
+  const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+  };
 
-  function handleSearchClick(): void {
+  const handleSearchClick = () => {
     router.push(PATH.REVIEW.SEARCH);
-  }
+  };
 
   return (
     <div>
       <LocationHeader />
+
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
           <div className={styles.headerContainer}>
@@ -49,7 +58,7 @@ export default function ReviewPage() {
                 placeholder="심장병, 백내장"
                 onClick={handleSearchClick}
                 onChange={handleTextFieldChange}
-                value=""
+                value={searchText}
                 icon={<IcSearch />}
               />
             </div>
@@ -60,7 +69,7 @@ export default function ReviewPage() {
                 이에요
               </h2>
               <div className={styles.recommendList}>
-                {hospitals.map((hospital, idx) => (
+                {hospitals.map((hospital: Hospital, idx: number) => (
                   <div
                     key={hospital.id}
                     className={styles.hospitalCard}

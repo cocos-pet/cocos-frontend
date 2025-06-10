@@ -23,7 +23,7 @@ export const headerContainer = style({
 
 export const recommendHospital = style({
   marginTop: "2.4rem",
-  padding: "2rem 2rem",
+  padding: "0rem 2rem",
 });
 
 export const recommendTitle = style([
@@ -47,6 +47,7 @@ export const recommendList = style({
   "::-webkit-scrollbar": {
     display: "none",
   },
+  whiteSpace: "nowrap",
 });
 
 export const hospitalCard = style({
@@ -58,12 +59,14 @@ export const hospitalCard = style({
   gap: "0.4rem",
   cursor: "pointer",
   minWidth: "30rem",
+  whiteSpace: "nowrap",
 });
 
 export const hospitalTitleContainer = style({
   display: "flex",
   alignItems: "center",
   gap: "0.8rem",
+  whiteSpace: "nowrap",
 });
 
 export const hospitalRank = style([
@@ -82,6 +85,9 @@ export const hospitalAddress = style([
     color: color.gray.gray700,
     fontSize: "1.4rem",
     whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "100%",
   },
 ]);
 
@@ -94,6 +100,8 @@ export const hospitalListText = style([
   font.label01,
   {
     fontWeight: "500",
+    marginLeft: "2rem",
+    marginTop: "2.4rem",
   },
 ]);
 

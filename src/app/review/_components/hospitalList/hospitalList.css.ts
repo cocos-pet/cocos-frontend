@@ -2,7 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
 
 export const container = style({
-  width: "100%",
+  margin: "0rem 2rem",
 });
 
 export const title = style([
@@ -68,17 +68,7 @@ export const reviewCount = style([
 ]);
 
 export const hospitalImage = style({
-  width: "37.5rem",
   borderRadius: "0.8rem",
   objectFit: "cover",
   flexShrink: 0,
-});
-
-export const loadingTrigger = style({
-  width: "100%",
-  height: "2rem",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  color: color.gray.gray700,
 });
