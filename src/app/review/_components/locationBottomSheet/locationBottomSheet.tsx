@@ -2,55 +2,57 @@ import { useEffect, useState } from "react";
 import * as styles from "./locationBottomSheet.css";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
-import { LOCATION_DATA, City, District } from "./Mock";
 import { IcCheck } from "@asset/svg";
 import { CityTab } from "./CityTab";
+import { useGetLocation } from "@api/domain/review/location/hook";
 
 interface LocationBottomSheetProps {
   isOpen: boolean;
   onClose: () => void;
-  onLocationSelect: (city: City, district: District) => void;
+  onLocationSelect: (location: { id: number; name: string }) => void;
 }
 
 export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect }: LocationBottomSheetProps) {
   const [selectedCityId, setSelectedCityId] = useState(1);
   const [selectedDistrictId, setSelectedDistrictId] = useState<number | null>(null);
+  const { data: cities, refetch } = useGetLocation();
 
   useEffect(() => {
     if (isOpen) {
       setSelectedCityId(1);
       setSelectedDistrictId(null);
+      refetch();
     }
-  }, [isOpen]);
+  }, [isOpen, refetch]);
 
-  const selectedCity = LOCATION_DATA.find((c) => c.locationId === selectedCityId)!;
+  if (!cities || cities.length === 0) return null;
+  const selectedCity = cities.find((city) => city.id === selectedCityId) || cities[0];
 
   return (
     <BottomSheet isOpen={isOpen} handleOpen={(open) => !open && onClose()} handleDimmedClose={onClose}>
       <>
         <div className={styles.locationSheetContainer}>
-          {/* 좌측: 시/도 리스트 */}
+          {/* 시/도 리스트 */}
           <div className={styles.cityList}>
-            {LOCATION_DATA.map((city) => (
+            {cities.map((city) => (
               <CityTab
-                key={city.locationId}
-                locationId={city.locationId}
-                locationName={city.locationName}
-                isSelected={city.locationId === selectedCityId}
-                onClick={() => setSelectedCityId(city.locationId)}
+                key={city.id}
+                locationName={city.name}
+                isSelected={city.id === selectedCityId}
+                onClick={() => setSelectedCityId(city.id)}
               />
             ))}
           </div>
-          {/* 우측: 군/구 리스트 */}
+          {/* 군/구 리스트 */}
           <div className={styles.districtList}>
-            {selectedCity.children.map((district) => (
+            {selectedCity.districts?.map((district) => (
               <div
-                key={district.locationId}
-                className={`${styles.districtItem} ${district.locationId === selectedDistrictId ? styles.selectedDistrict : ""}`}
-                onClick={() => setSelectedDistrictId(district.locationId)}
+                key={district.id}
+                className={`${styles.districtItem} ${district.id === selectedDistrictId ? styles.selectedDistrict : ""}`}
+                onClick={() => setSelectedDistrictId(district.id)}
               >
-                <span>{district.locationName}</span>
-                {district.locationId === selectedDistrictId && (
+                <span>{district.name}</span>
+                {district.id === selectedDistrictId && (
                   <span className={styles.checkIcon}>
                     <IcCheck />
                   </span>
@@ -66,10 +68,14 @@ export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect 
             width="100%"
             disabled={selectedDistrictId === null}
             onClick={() => {
-              if (selectedDistrictId !== null) {
-                onLocationSelect(selectedCity, selectedCity.children.find((d) => d.locationId === selectedDistrictId)!);
-                onClose();
+              const selectedDistrict = selectedCity.districts?.find((d) => d.id === selectedDistrictId);
+              if (selectedDistrict) {
+                onLocationSelect({
+                  id: selectedDistrict.id,
+                  name: selectedDistrict.name,
+                });
               }
+              onClose();
             }}
           />
         </div>
