@@ -8,15 +8,12 @@ import { useRouter } from "next/navigation";
 import { Separated } from "react-simplikit";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import Loading from "@common/component/Loading/Loading.tsx";
+import { If } from "@shared/component/If/if.tsx";
 
 const HotPost = () => {
   const router = useRouter();
 
   const { data: postsData, isLoading, isError } = useQueryGetPopular();
-
-  if (isLoading) {
-    return <Loading height={30} />;
-  }
 
   const posts = postsData?.data?.posts || [];
 
@@ -32,9 +29,13 @@ const HotPost = () => {
         <p className={styles.subTitle}>인기 게시물을 확인해보세요</p>
         <div className={styles.title}>반려인들이 주목하는 글 TOP 5</div>
       </div>
-      {!posts || isError ? (
-        <NoData style={{ marginTop: "10px" }} />
-      ) : (
+      <If condition={isLoading}>
+        <Loading height={20} />
+      </If>
+      <If condition={!isLoading && posts.length === 0}>
+        <NoData label="인기 게시물이 없습니다." style={{ marginTop: "10px" }} />
+      </If>
+      <If condition={!isLoading && posts.length > 0}>
         <div className={styles.hotPostListContainer}>
           <Separated by={<Divider size="popular" />}>
             {posts.slice(0, 5).map((post, index) => (
@@ -47,7 +48,7 @@ const HotPost = () => {
             ))}
           </Separated>
         </div>
-      )}
+      </If>
     </div>
   );
 };
