@@ -13,17 +13,11 @@ import Spacing from "@common/component/Spacing/Spacing.tsx";
 import { NAV_CONTENT } from "@common/component/Nav/constant.ts";
 
 import { PATH } from "@route/path.ts";
-import { useGetBodyParts, useQueryGetPopular } from "@api/domain/main/hook.ts";
 import { useEffect } from "react";
-import { useGetMemberInfo } from "@api/domain/mypage/hook.ts";
 import { useRouter } from "next/navigation";
 import HotHospital from "@app/main/_section/hotHospital/HotHospital.tsx";
 
 export default function Page() {
-
-  const { data: postsData } = useQueryGetPopular();
-  const { data: getBodyParts } = useGetBodyParts("SYMPTOM");
-  const { data: nickName } = useGetMemberInfo();
   const router = useRouter();
 
   useEffect(() => {
@@ -36,26 +30,15 @@ export default function Page() {
     router.push(PATH.COMMUNITY.SEARCH);
   };
 
-  const handleTextFieldChange = () => {};
-
-  if (!postsData || !getBodyParts) return null;
-
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
-        <TextField
-          state="main"
-          placeholder="심장병, 백내장"
-          onClick={handleSearchClick}
-          onChange={handleTextFieldChange}
-          value=""
-          icon={<IcSearch />}
-        />
+        <TextField state="main" placeholder="심장병, 백내장" onClick={handleSearchClick} value="" icon={<IcSearch />} />
       </div>
       <MainHeader />
       <Symptom />
       <Divider />
-      <HotPost nickname={nickName?.nickname} />
+      <HotPost />
       <Divider />
       <HotHospital />
       <MainFooter />
