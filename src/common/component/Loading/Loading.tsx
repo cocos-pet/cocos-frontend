@@ -2,7 +2,9 @@
 
 import loading from "@asset/lottie/loading.json";
 import { layout } from "./Loading.css";
-import Lottie from "lottie-react";
+import dynamic from "next/dynamic";
+
+const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 interface LoadingProps {
   height?: number;

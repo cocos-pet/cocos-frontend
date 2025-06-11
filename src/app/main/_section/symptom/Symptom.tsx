@@ -4,7 +4,7 @@ import { useGetBodyParts } from "@api/domain/main/hook.ts";
 import * as styles from "./Symptom.css.ts";
 import { PATH } from "@route/path.ts";
 import { components } from "@type/schema";
-import { useCallback, useEffect, useState, Suspense } from "react";
+import { Suspense, useCallback, useEffect, useState } from "react";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
@@ -38,7 +38,11 @@ function SymptomContent() {
     fetchPostData();
   }, [fetchPostData]);
 
-  const body = bodyParts?.data?.bodies || [];
+  if (!bodyParts?.data) {
+    return null;
+  }
+
+  const body = bodyParts.data.bodies || [];
 
   return (
     <div className={styles.symptomContainer}>
@@ -52,14 +56,7 @@ function SymptomContent() {
             aria-label={`증상 부위: ${bodyPart.name}`}
             type="button"
           >
-            {bodyPart.image && (
-              <Image 
-                src={bodyPart.image} 
-                alt={`${bodyPart.name} 아이콘`}
-                width={56}
-                height={56}
-              />
-            )}
+            {bodyPart.image && <Image src={bodyPart.image} alt={`${bodyPart.name} 아이콘`} width={56} height={56} />}
             <p className={styles.symptomName}>{bodyPart.name}</p>
           </button>
         ))}
