@@ -12,6 +12,10 @@ import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/categoryFilter.ts";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { PATH } from "@route/path";
+import { Modal } from "../Modal/Modal.tsx";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
@@ -23,15 +27,26 @@ interface CommentProps {
 
 const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
+
   const handleReplyClick = () => {
-    if (onCommentReplyClick) {
-      onCommentReplyClick(comment.nickname, comment.id);
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
     }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+
+    onCommentReplyClick?.(comment.nickname, comment.id);
   };
 
   if (!comment) return;
   const { setContentsType } = useCategoryFilterStore();
   const [isOpen, setOpen] = useState(false);
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { mutate: deleteComment } = useDeleteComment(comment.id);
   const { openModalId, setOpenModalId } = useModalStore();
 
@@ -41,6 +56,14 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
   };
 
   const handleProfileClick = (nickname: string) => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
     router.push(`/profile?nickname=${nickname}`);
   };
 
@@ -109,6 +132,19 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
         }}
         rightText={"삭제할게요"}
       />
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };
