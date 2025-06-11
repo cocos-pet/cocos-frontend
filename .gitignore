@@ -23,6 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-.env
+../cocos-frontend-2/.env
 .next
 next-env.d.ts
