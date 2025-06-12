@@ -56,7 +56,7 @@ function HospitalSearchDoneContent() {
   };
 
   const onClickHospital = (hospitalId: number) => {
-    router.push(`${PATH.REVIEW.ROOT}/${hospitalId}`);
+    router.push(`${PATH.HOSPITAL.ROOT}/${hospitalId}`);
   };
 
   const defaultImage = noSearchResult.src;

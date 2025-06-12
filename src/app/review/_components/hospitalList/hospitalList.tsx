@@ -5,6 +5,7 @@ import * as styles from "./hospitalList.css";
 import Image from "next/image";
 import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
+import { PATH } from "@route/path";
 
 interface HospitalListProps {
   title: string;
@@ -36,7 +37,7 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
         {data?.pages?.map((page: HospitalListResponse, pageIndex: number) =>
           page.hospitals?.map((hospital: Hospital) => (
             <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
-              <Link href={`/hospital-detail/${hospital.id}`} className={styles.link}>
+              <Link href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`} className={styles.link}>
                 <div className={styles.hospitalInfo}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
                   <p className={styles.hospitalAddress}>{hospital.address}</p>

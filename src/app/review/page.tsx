@@ -68,7 +68,7 @@ export default function ReviewPage() {
                   <div
                     key={hospital.id}
                     className={styles.hospitalCard}
-                    onClick={() => router.push(`/hospital-detail/${hospital.id}`)}
+                    onClick={() => router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)}
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
