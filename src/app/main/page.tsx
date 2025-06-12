@@ -30,10 +30,19 @@ export default function Page() {
     router.push(PATH.COMMUNITY.SEARCH);
   };
 
+  const handleTextFieldChange = () => {};
+
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
-        <TextField state="main" placeholder="심장병, 백내장" onClick={handleSearchClick} value="" icon={<IcSearch />} />
+        <TextField
+          state="main"
+          placeholder="심장병, 백내장"
+          onChange={handleTextFieldChange}
+          onClick={handleSearchClick}
+          value=""
+          icon={<IcSearch />}
+        />
       </div>
       <MainHeader />
       <Symptom />

@@ -1,37 +1,46 @@
 "use client";
 
 import * as styles from "./HotHospital.css.ts";
-import HotHospitalItem from "../../_component/HotHospitalItem/HotHospitalItem.tsx";
-import Divider from "@common/component/Divider/Divider.tsx";
-import { Separated } from "react-simplikit";
 import { useRouter } from "next/navigation";
+import { useGetHospitalList } from "@api/shared/hook.ts";
+import { useCallback, useEffect, useState } from "react";
+import { If } from "@shared/component/If/if.tsx";
+import NoData from "@shared/component/NoData/NoData.tsx";
+import { Separated } from "react-simplikit";
+import Divider from "@common/component/Divider/Divider.tsx";
+import HotHospitalItem from "@app/main/_component/HotHospitalItem/HotHospitalItem.tsx";
+import { HospitalListType } from "@api/shared";
 
 const HotHospital = () => {
-  const hotHospitals = [
-    {
-      id: 1,
-      name: "병원이름이길면어떡할건데너가어떡할거냐고응?어떡할건데",
-      address: "병원 주소",
-      reviewCount: 44,
-    },
-    {
-      id: 2,
-      name: "멍멍 동물병원",
-      address: "서울시 강남구",
-      reviewCount: 38,
-    },
-    {
-      id: 3,
-      name: "냥냥 동물병원",
-      address: "서울시 서초구",
-      reviewCount: 27,
-    },
-  ];
+  const [hotHospitals, setHotHospitals] = useState<HospitalListType>([]);
+  const { mutate: getHotHospital } = useGetHospitalList();
   const router = useRouter();
-  const handleHospitalClick = (id: number) => {
+
+  const fetchHotHospitals = useCallback(() => {
+    getHotHospital(
+      {
+        locationId: 1,
+        locationType: "CITY",
+        size: 3,
+        sortBy: "REVIEW",
+      },
+      {
+        onSuccess: (res) => {
+          const hospitals = res?.data?.hospitals ?? [];
+          setHotHospitals(hospitals);
+        },
+      },
+    );
+  }, [getHotHospital]);
+
+  const handleHospitalClick = (id?: number) => {
     // @TODO 병원 상세 페이지로 이동 - 우선 병원 id로 이동(구현 후 수정 필요)
     router.push(`/hospital/${id}`);
   };
+
+  useEffect(() => {
+    fetchHotHospitals();
+  }, [fetchHotHospitals]);
 
   return (
     <div className={styles.hotHospitalContainer}>
@@ -42,22 +51,28 @@ const HotHospital = () => {
         </div>
       </div>
 
-      <div className={styles.hotHospitalListContainer}>
-        <Separated by={<Divider size="popular" />}>
-          {hotHospitals.map((hospital) => (
-            <HotHospitalItem
-              key={hospital.id}
-              id={hospital.id}
-              name={hospital.name}
-              address={hospital.address}
-              reviewCount={hospital.reviewCount}
-              onClick={() => {
-                handleHospitalClick(hospital.id);
-              }}
-            />
-          ))}
-        </Separated>
-      </div>
+      <If condition={hotHospitals.length === 0}>
+        <NoData style={{ marginTop: "10px" }} />
+      </If>
+      <If condition={!!hotHospitals.length}>
+        <div className={styles.hotHospitalListContainer}>
+          <Separated by={<Divider size="popular" />}>
+            {hotHospitals?.map((hospital, index) => (
+              <HotHospitalItem
+                key={hospital.id}
+                id={index + 1}
+                name={hospital.name}
+                address={hospital.address}
+                reviewCount={hospital.reviewCount}
+                imageSrc={hospital.image}
+                onClick={() => {
+                  handleHospitalClick(hospital.id);
+                }}
+              />
+            ))}
+          </Separated>
+        </div>
+      </If>
     </div>
   );
 };
