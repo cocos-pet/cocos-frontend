@@ -33,7 +33,8 @@ export const PATH = {
     SEARCH: "/review/search",
   },
   HOSPITAL: {
-    ROOT: "/hospital",
+    ROOT: "/hospital-detail",
+    DETAIL: "/hospital-detail/:hospitalId",
   },
   PROFILE: {
     ROOT: "/profile",

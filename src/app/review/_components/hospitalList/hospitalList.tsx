@@ -3,6 +3,7 @@ import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import { useEffect } from "react";
 import * as styles from "./hospitalList.css";
 import Image from "next/image";
+import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 
 interface HospitalListProps {
@@ -35,20 +36,22 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
         {data?.pages?.map((page: HospitalListResponse, pageIndex: number) =>
           page.hospitals?.map((hospital: Hospital) => (
             <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
-              <div className={styles.hospitalInfo}>
-                <h3 className={styles.hospitalName}>{hospital.name}</h3>
-                <p className={styles.hospitalAddress}>{hospital.address}</p>
-                <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
-              </div>
-              {hospital.image && (
-                <Image
-                  src={hospital.image}
-                  alt={hospital.name}
-                  width={80}
-                  height={80}
-                  className={styles.hospitalImage}
-                />
-              )}
+              <Link href={`/hospital-detail/${hospital.id}`} className={styles.link}>
+                <div className={styles.hospitalInfo}>
+                  <h3 className={styles.hospitalName}>{hospital.name}</h3>
+                  <p className={styles.hospitalAddress}>{hospital.address}</p>
+                  <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
+                </div>
+                {hospital.image && (
+                  <Image
+                    src={hospital.image}
+                    alt={hospital.name}
+                    width={80}
+                    height={80}
+                    className={styles.hospitalImage}
+                  />
+                )}
+              </Link>
             </div>
           )),
         )}

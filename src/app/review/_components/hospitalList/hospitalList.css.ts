@@ -72,3 +72,8 @@ export const hospitalImage = style({
   objectFit: "cover",
   flexShrink: 0,
 });
+
+export const link = style({
+  textDecoration: "none",
+  color: "inherit",
+});
