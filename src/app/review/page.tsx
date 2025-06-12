@@ -23,12 +23,7 @@ export default function ReviewPage() {
   const nickname = userData?.nickname;
   const [searchText, setSearchText] = useState("");
 
-  const {
-    data: hospitalData,
-    fetchNextPage,
-    hasNextPage,
-    isFetchingNextPage,
-  } = useInfiniteHospitalList({
+  const { data: hospitalData } = useInfiniteHospitalList({
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
