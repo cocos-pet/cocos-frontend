@@ -40,9 +40,9 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
                 <p className={styles.hospitalAddress}>{hospital.address}</p>
                 <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
               </div>
-              {hospital.imageUrl && (
+              {hospital.image && (
                 <Image
-                  src={hospital.imageUrl}
+                  src={hospital.image}
                   alt={hospital.name}
                   width={80}
                   height={80}
@@ -52,9 +52,7 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
             </div>
           )),
         )}
-        <div ref={ref} className={styles.loadingTrigger}>
-          {isFetchingNextPage && "로딩 중"}
-        </div>
+        <div ref={ref}>{isFetchingNextPage && "로딩 중"}</div>
       </div>
     </div>
   );
