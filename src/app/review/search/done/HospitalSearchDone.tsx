@@ -48,7 +48,7 @@ function HospitalSearchDoneContent() {
   const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
-    router.push(PATH.REVIEW.HOSPITALS_DONE);
+    router.push(PATH.REVIEW.SEARCH);
   };
 
   const onBackClick = () => {

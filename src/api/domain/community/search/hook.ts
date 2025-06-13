@@ -19,12 +19,13 @@ const SEARCH_QUERY_KEY = {
 /**
  * @description 최근 검색어 GET API
  */
-export const useSearchGet = () => {
+export const useSearchGet = (enabled: boolean) => {
   return useQuery({
     queryKey: SEARCH_QUERY_KEY.SEARCH_QUERY_KEY(),
     queryFn: () => {
       return getSearch();
     },
+    enabled
   });
 };
 
