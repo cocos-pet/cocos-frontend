@@ -15,36 +15,58 @@ import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/
 import { If } from "@shared/component/If/if.tsx";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 
+interface ReviewFilterState {
+  location: LocationFilterType | null;
+  summaryOptionId: number | undefined;
+  filterType: ReviewActiveTabType;
+}
+
+const DEFAULT_LOCATION_ID = 143;
+const PAGE_SIZE = 20;
+
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const bodyId = searchParams?.get("id");
   const router = useRouter();
-  const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
-  const [filterType, setFilterType] = useState<ReviewActiveTabType>(undefined);
+  const { isAuthenticated } = useAuth();
 
-  const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
+  // State management
+  const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [filterState, setFilterState] = useState<ReviewFilterState>({
+    location: null,
+    summaryOptionId: undefined,
+    filterType: undefined,
+  });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
-  const { isAuthenticated } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<LocationFilterType | null>(null);
+  // API hooks
+  const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
 
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
   };
 
-  const onOpenChange = (open: boolean) => {
-    setIsModalOpen(open);
+  const handleHospitalClick = (hospitalId: number | undefined) => {
+    if (hospitalId) {
+      router.push(`/hospital-detail/${hospitalId}`);
+    }
+  };
+
+  const handleLoginClick = () => {
+    router.push(PATH.LOGIN);
   };
 
   const postReviews = (location?: number, summaryOptionId?: number) => {
+    if (!bodyId) return;
+
     postHospitalReviews(
       {
-        size: 20,
-        locationId: location ?? 143,
+        size: PAGE_SIZE,
+        locationId: location ?? DEFAULT_LOCATION_ID,
         locationType: "DISTRICT",
         bodyId: Number(bodyId),
-        summaryOptionId: summaryOptionId ?? undefined,
+        summaryOptionId,
       },
       {
         onSuccess: (data) => {
@@ -56,19 +78,30 @@ const ReviewDetailContent = () => {
 
   const handleReviewFilterClose = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
     setIsReviewFilterOpen(false);
-    setFilterType(filterType);
-    postReviews(selectedLocation?.id, summaryOptionId);
+    setFilterState((prev) => ({
+      ...prev,
+      summaryOptionId,
+      filterType,
+    }));
+    postReviews(filterState.location?.id, summaryOptionId);
   };
 
   const handleLocationSelect = (location: LocationFilterType) => {
-    setSelectedLocation(location);
+    setFilterState((prev) => ({
+      ...prev,
+      location,
+    }));
     postReviews(location.id);
   };
 
   const handleRefresh = () => {
-    setFilterType(undefined);
+    setFilterState((prev) => ({
+      ...prev,
+      summaryOptionId: undefined,
+      filterType: undefined,
+    }));
     setIsReviewFilterOpen(false);
-    postReviews(selectedLocation?.id, undefined);
+    postReviews(filterState.location?.id);
   };
 
   useEffect(() => {
@@ -85,13 +118,14 @@ const ReviewDetailContent = () => {
     <div className={styles.reviewContainer}>
       {isAuthenticated && (
         <HospitalReviewFilter
-          selectedLocation={selectedLocation}
+          selectedLocation={filterState.location}
           onRegionFilterClick={handleLocationSelect}
           onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-          filterType={filterType}
+          filterType={filterState.filterType}
           onRefresh={handleRefresh}
         />
       )}
+
       <div className={styles.reviewItemContainer}>
         <If condition={reviewList.length === 0}>
           <NoData />
@@ -101,32 +135,32 @@ const ReviewDetailContent = () => {
             key={review.id}
             handleProfileClick={() => handleProfileClick(review.nickname)}
             reviewData={review}
-            handleHospitalDetailClick={() => {
-              router.push(`/hospital/${review.hospitalId}`);
-            }}
+            handleHospitalDetailClick={() => handleHospitalClick(review.hospitalId)}
             isBlurred={!isAuthenticated}
           />
         ))}
       </div>
+
       <If condition={!isAuthenticated}>
         <div className={styles.notAuthButton}>
           <Button
-            size={"large"}
-            label={"로그인 하고 리뷰 확인하기"}
+            size="large"
+            label="로그인 하고 리뷰 확인하기"
             rightIcon={<IcRightArrow />}
-            onClick={() => onOpenChange(true)}
+            onClick={() => setIsModalOpen(true)}
           />
         </div>
       </If>
 
       <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
-      <Modal.Root open={isModalOpen} onOpenChange={onOpenChange}>
+
+      <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <Modal.Content
           title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
           bottomAffix={
             <Modal.BottomAffix>
-              <Modal.Close label={"취소"} />
-              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+              <Modal.Close label="취소" />
+              <Modal.Confirm label="로그인" onClick={handleLoginClick} />
             </Modal.BottomAffix>
           }
         >
