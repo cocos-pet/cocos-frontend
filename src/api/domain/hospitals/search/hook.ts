@@ -14,13 +14,14 @@ export interface Keyword {
   content: string;
 }
 
-export const useGetHospitalSearchKeywords = () => {
+export const useGetHospitalSearchKeywords = (enabled: boolean) => {
   return useQuery<HospitalSearchKeywordsResponse>({
     queryKey: ["hospital", "search", "keywords"],
     queryFn: async () => {
       const { data } = await get<HospitalSearchKeywordsResponse>(API_PATH.HOSPITAL_SEARCH);
       return data;
     },
+    enabled
   });
 };
 

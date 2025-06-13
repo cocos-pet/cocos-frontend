@@ -33,7 +33,8 @@ export default function Page() {
   return (
     <div className={styles.mainContainer}>
       <div className={styles.headerContainer}>
-        <TextField state="main" placeholder="심장병, 백내장" onClick={handleSearchClick} value="" icon={<IcSearch />} />
+        {/* tavian */}
+        <TextField state="main" placeholder="심장병, 백내장" onClick={handleSearchClick} value="" icon={<IcSearch />} readOnly/>
       </div>
       <MainHeader />
       <Symptom />

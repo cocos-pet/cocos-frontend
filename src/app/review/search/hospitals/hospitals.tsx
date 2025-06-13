@@ -8,6 +8,7 @@ import dynamic from "next/dynamic";
 import { useGetHospitalSearchKeywords, usePostHospitalSearchKeyword } from "@api/domain/hospitals/search/hook";
 import { HospitalSearchKeywordsResponse, Keyword } from "@api/domain/hospitals/search";
 import { PATH } from "@route/path";
+import { useAuth } from "@providers/AuthProvider";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -17,10 +18,11 @@ function SearchContent() {
   const query = searchParams?.get("searchText") || "";
   const [searchText, setSearchText] = useState(query);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const {isAuthenticated} = useAuth();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data: keywordsData, isLoading } = useGetHospitalSearchKeywords();
+  const { data: keywordsData, isLoading } = useGetHospitalSearchKeywords(isAuthenticated);
   const { mutate: saveKeyword } = usePostHospitalSearchKeyword();
 
   const handleSearch = (keyword: string) => {
@@ -80,6 +82,7 @@ function SearchContent() {
           onClearClick={() => setSearchText("")}
         />
       </div>
+      {isAuthenticated && (
       <div className={styles.searchContent}>
         <div className={styles.title}>최근 검색 기록</div>
         <ul className={styles.list}>
@@ -94,8 +97,9 @@ function SearchContent() {
               {keyword.content}
             </li>
           ))}
-        </ul>
-      </div>
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
