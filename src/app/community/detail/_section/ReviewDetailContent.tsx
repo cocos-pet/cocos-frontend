@@ -1,15 +1,17 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcTarget } from "@asset/svg";
-import { motion } from "framer-motion";
+import { IcRightArrow } from "@asset/svg";
 import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
-import Chip from "@common/component/Chip/Chip.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
-import { color } from "@style/styles.css.ts";
+import { useAuth } from "@providers/AuthProvider.tsx";
+import { Button } from "@common/component/Button";
+import { Modal } from "@common/component/Modal/Modal.tsx";
+import { PATH } from "@route/path.ts";
+import HospitalReviewFilter from "@app/community/detail/_section/HospitalReviewFilter.tsx";
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -23,6 +25,12 @@ const ReviewDetailContent = () => {
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
+  };
+  const { isAuthenticated } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const onOpenChange = (open: boolean) => {
+    setIsModalOpen(open);
   };
 
   const handleFilterClick = (id: number | undefined, type: "good" | "bad") => {
@@ -59,37 +67,14 @@ const ReviewDetailContent = () => {
 
   return (
     <div className={styles.reviewContainer}>
-      <div className={styles.reviewFilter}>
-        <div className={styles.reviewRegion} onClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}>
-          <IcTarget width={20} />
-          <span className={styles.reviewRegionText}>서울시 강남구</span>
-          <motion.div
-            style={{ height: "20px" }}
-            animate={{ rotate: isRegionFilterOpen ? 180 : 0 }}
-            transition={{ duration: 0.2 }}
-          >
-            <IcDownArrow width={20} />
-          </motion.div>
-        </div>
-        <div className={styles.filterChip} onClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}>
-          <Chip
-            label={"좋아요"}
-            color={filterType === "good" ? "blue" : "gray"}
-            size={"small"}
-            rightIcon={
-              <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
-            }
-          />
-          <Chip
-            label={"아쉬워요"}
-            color={filterType === "bad" ? "blue" : "gray"}
-            size={"small"}
-            rightIcon={
-              <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
-            }
-          />
-        </div>
-      </div>
+      {isAuthenticated && (
+        <HospitalReviewFilter
+          onRegionFilterClick={() => setIsRegionFilterOpen(!isRegionFilterOpen)}
+          isRegionFilterOpen={isRegionFilterOpen}
+          onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
+          filterType={filterType}
+        />
+      )}
       <div className={styles.reviewItemContainer}>
         {reviewList.map((review) => (
           <HospitalReview
@@ -99,15 +84,39 @@ const ReviewDetailContent = () => {
             handleHospitalDetailClick={() => {
               router.push(`/hospital/${review.hospitalId}`);
             }}
+            isBlurred={!isAuthenticated}
           />
         ))}
       </div>
+      {!isAuthenticated && (
+        <div className={styles.notAuthButton}>
+          <Button
+            size={"large"}
+            label={"로그인 하고 리뷰 확인하기"}
+            rightIcon={<IcRightArrow />}
+            onClick={() => onOpenChange(true)}
+          />
+        </div>
+      )}
       <ReviewFilter
         isOpen={isReviewFilterOpen}
         onClose={() => setIsReviewFilterOpen(false)}
         selectedFilterId={filterId || undefined}
         onFilterClick={handleFilterClick}
       />
+      <Modal.Root open={isModalOpen} onOpenChange={onOpenChange}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };
