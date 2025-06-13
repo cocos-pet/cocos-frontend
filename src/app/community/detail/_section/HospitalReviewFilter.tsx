@@ -3,19 +3,37 @@ import { IcDownArrow, IcTarget } from "@asset/svg";
 import { motion } from "framer-motion";
 import Chip from "@common/component/Chip/Chip.tsx";
 import { color } from "@style/styles.css.ts";
+import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
+import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 
-interface propsType {
-  onRegionFilterClick: () => void;
+export interface LocationFilterType {
+  id: number;
+  name: string;
+}
+
+interface HospitalReviewFilterPropsType {
+  onRegionFilterClick: (location: LocationFilterType) => void;
   isRegionFilterOpen: boolean;
   onReviewFilterClick: () => void;
   filterType: "good" | "bad" | null;
 }
-const HospitalReviewFilter = (props: propsType) => {
+
+const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
   const { onRegionFilterClick, isRegionFilterOpen, onReviewFilterClick, filterType } = props;
+  const {
+    isOpen: isLocationBottomSheetOpen,
+    handleClose: handleCloseBottomSheet,
+    handleOpen: handleOpenBottomSheet,
+  } = useOpenToggle();
+
+  const handleLocationSelect = (location: LocationFilterType) => {
+    handleCloseBottomSheet();
+    onRegionFilterClick(location);
+  };
 
   return (
     <div className={styles.reviewFilter}>
-      <div className={styles.reviewRegion} onClick={onRegionFilterClick}>
+      <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
         <span className={styles.reviewRegionText}>서울시 강남구</span>
         <motion.div
@@ -44,6 +62,11 @@ const HospitalReviewFilter = (props: propsType) => {
           }
         />
       </div>
+      <LocationBottomSheet
+        isOpen={isLocationBottomSheetOpen}
+        onClose={handleCloseBottomSheet}
+        onLocationSelect={handleLocationSelect}
+      />
     </div>
   );
 };
