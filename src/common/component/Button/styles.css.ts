@@ -139,6 +139,7 @@ export const button = recipe({
 export type ButtonVariants = RecipeVariants<typeof button>;
 
 export const icon = style({
+  width: "2rem",
   height: "2rem",
   display: "flex",
   alignItems: "center",
