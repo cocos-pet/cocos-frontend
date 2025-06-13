@@ -10,6 +10,7 @@ import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 import { useAuth } from "@providers/AuthProvider";
 import Divider from "@common/component/Divider/Divider";
 import { Modal } from "@common/component/Modal/Modal";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 
 interface RecentViewProps {
   hospitalId: string;
@@ -18,6 +19,7 @@ interface RecentViewProps {
 const RecentView = ({ hospitalId }: RecentViewProps) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { mutate: getReviews, data: reviewsData } = usePostHospitalReviews();
 
@@ -30,7 +32,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
 
   const handleProfileClick = (memberId: number) => {
     if (memberId) {
-      router.push(`${PATH.MYPAGE.ROOT}/${memberId}`);
+      router.push(`${PATH.ONBOARDING.ROOT}/${memberId}`);
     }
   };
 
@@ -43,7 +45,14 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   };
 
   const handleLoginClick = () => {
-    setIsLoginModalOpen(true);
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.REGISTER_PET.ROOT);
+      return;
+    }
   };
 
   const reviews = reviewsData || [];
