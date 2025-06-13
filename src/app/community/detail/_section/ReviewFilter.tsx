@@ -7,30 +7,32 @@ import { Button } from "@common/component/Button";
 import { useGetReviewSummaryOption } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 
-type ReviewActiveTabType = "good" | "bad";
+export type ReviewActiveTabType = "good" | "bad" | undefined;
 
 const ReviewFilter = ({
   isOpen,
   onClose,
-  selectedFilterId,
-  onFilterClick,
 }: {
   isOpen: boolean;
-  onClose: () => void;
-  selectedFilterId?: number;
-  onFilterClick?: (id: number | undefined, type: "good" | "bad") => void;
+  onClose: (summaryOptionId: number | undefined, type?: ReviewActiveTabType) => void;
 }) => {
   const [activeTab, setActiveTab] = useState<ReviewActiveTabType>("good");
+  const [filterId, setFilterId] = useState<number | undefined>(undefined);
+  const [filterType, setFilterType] = useState<ReviewActiveTabType>(undefined);
+  const { data } = useGetReviewSummaryOption();
 
   const handleTabClick = (tab: ReviewActiveTabType) => setActiveTab(tab);
   const isActiveTab = (tab: ReviewActiveTabType) => activeTab === tab;
-
-  const { data } = useGetReviewSummaryOption();
+  const handleChipClick = (id: number | undefined, type: ReviewActiveTabType) => {
+    setFilterId(id);
+    setFilterType(type);
+  };
+  const handleClose = () => onClose(filterId, filterType);
 
   if (!data) return <NoData label={"필터를 불러오는데 실패했어요."} />;
 
   return (
-    <BottomSheet isOpen={isOpen} handleOpen={onClose}>
+    <BottomSheet isOpen={isOpen} handleOpen={handleClose}>
       <div className={styles.filterContent}>
         <div className={styles.filterTitle}>리뷰 필터</div>
         <div className={styles.tabContainer}>
@@ -49,8 +51,8 @@ const ReviewFilter = ({
                 size={"small"}
                 label={item.label}
                 color={"blue"}
-                isSelected={item.id === selectedFilterId}
-                onClick={() => onFilterClick?.(item.id, "good")}
+                isSelected={item.id === filterId}
+                onClick={() => handleChipClick(item.id, "good")}
               />
             ))}
           {activeTab === "bad" &&
@@ -60,8 +62,8 @@ const ReviewFilter = ({
                 size={"small"}
                 label={item.label}
                 color={"red"}
-                isSelected={item.id === selectedFilterId}
-                onClick={() => onFilterClick?.(item.id, "bad")}
+                isSelected={item.id === filterId}
+                onClick={() => handleChipClick(item.id, "bad")}
               />
             ))}
         </div>
@@ -71,7 +73,7 @@ const ReviewFilter = ({
             size={"large"}
             label={"확인하기"}
             style={{ width: "100%" }}
-            onClick={onClose}
+            onClick={handleClose}
           />
         </div>
       </div>

@@ -1,11 +1,12 @@
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcTarget } from "@asset/svg";
+import { IcDownArrow, IcRefresh, IcTarget } from "@asset/svg";
 import { motion } from "framer-motion";
 import Chip from "@common/component/Chip/Chip.tsx";
 import { color } from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
-import { useState } from "react";
+import React, { useState } from "react";
+import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 
 export interface LocationFilterType {
   id: number;
@@ -15,29 +16,29 @@ export interface LocationFilterType {
 interface HospitalReviewFilterPropsType {
   onRegionFilterClick: (location: LocationFilterType) => void;
   onReviewFilterClick: () => void;
-  filterType: "good" | "bad" | null;
+  filterType: ReviewActiveTabType;
+  selectedLocation: LocationFilterType | null;
+  onRefresh: () => void;
 }
 
 const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
-  const { onRegionFilterClick, onReviewFilterClick, filterType } = props;
+  const { onRegionFilterClick, onReviewFilterClick, onRefresh, filterType, selectedLocation } = props;
   const {
     isOpen: isLocationBottomSheetOpen,
     handleClose: handleCloseBottomSheet,
     handleOpen: handleOpenBottomSheet,
   } = useOpenToggle();
-  const [location, setLocation] = useState<LocationFilterType | null>(null);
 
   const handleLocationSelect = (location: LocationFilterType) => {
     handleCloseBottomSheet();
     onRegionFilterClick(location);
-    setLocation(location);
   };
 
   return (
     <div className={styles.reviewFilter}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
-        <span className={styles.reviewRegionText}>{location !== null ? location.name : "서울시 강남구"}</span>
+        <span className={styles.reviewRegionText}>{selectedLocation !== null ? selectedLocation.name : "강남구"}</span>
         <motion.div
           style={{ height: "20px" }}
           animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}
@@ -46,23 +47,28 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
           <IcDownArrow width={20} />
         </motion.div>
       </div>
-      <div className={styles.filterChip} onClick={onReviewFilterClick}>
-        <Chip
-          label={"좋아요"}
-          color={filterType === "good" ? "blue" : "gray"}
-          size={"small"}
-          rightIcon={
-            <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
-          }
-        />
-        <Chip
-          label={"아쉬워요"}
-          color={filterType === "bad" ? "blue" : "gray"}
-          size={"small"}
-          rightIcon={
-            <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
-          }
-        />
+      <div className={styles.filterChip}>
+        {(filterType === "good" || filterType === "bad") && <IcRefresh width={20} onClick={onRefresh} />}
+        <div onClick={onReviewFilterClick}>
+          <Chip
+            label={"좋아요"}
+            color={filterType === "good" ? "blue" : "gray"}
+            size={"small"}
+            rightIcon={
+              <IcDownArrow width={20} fill={filterType === "good" ? color.primary.blue700 : color.gray.gray700} />
+            }
+          />
+        </div>
+        <div onClick={onReviewFilterClick}>
+          <Chip
+            label={"아쉬워요"}
+            color={filterType === "bad" ? "blue" : "gray"}
+            size={"small"}
+            rightIcon={
+              <IcDownArrow width={20} fill={filterType === "bad" ? color.primary.blue700 : color.gray.gray700} />
+            }
+          />
+        </div>
       </div>
       <LocationBottomSheet
         isOpen={isLocationBottomSheetOpen}

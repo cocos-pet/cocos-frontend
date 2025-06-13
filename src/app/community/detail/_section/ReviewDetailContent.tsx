@@ -13,53 +13,38 @@ import { Modal } from "@common/component/Modal/Modal.tsx";
 import { PATH } from "@route/path.ts";
 import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/_section/HospitalReviewFilter.tsx";
 import { If } from "@shared/component/If/if.tsx";
+import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 
-interface Location {
-  id: number;
-  name: string;
-  districts?: {
-    id: number;
-    name: string;
-  }[];
-}
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const bodyId = searchParams?.get("id");
   const router = useRouter();
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
-  const [filterId, setFilterId] = useState<number | undefined>(undefined);
-  const [filterType, setFilterType] = useState<"good" | "bad" | null>(null);
+  const [filterType, setFilterType] = useState<ReviewActiveTabType>(undefined);
 
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
+  const { isAuthenticated } = useAuth();
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<LocationFilterType | null>(null);
 
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
   };
-  const { isAuthenticated } = useAuth();
-  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const onOpenChange = (open: boolean) => {
     setIsModalOpen(open);
   };
 
-  const handleFilterClick = (id: number | undefined, type: "good" | "bad") => {
-    setFilterId(id);
-    setFilterType(type);
-  };
-
-  useEffect(() => {
-    if (!bodyId) return;
+  const postReviews = (location?: number, summaryOptionId?: number) => {
     postHospitalReviews(
       {
-        size: 10,
-        locationId: selectedLocation?.id ?? 1,
+        size: 20,
+        locationId: location ?? 143,
         locationType: "DISTRICT",
         bodyId: Number(bodyId),
-        summaryOptionId: filterId ?? undefined,
-        // cursorId: 1,
+        summaryOptionId: summaryOptionId ?? undefined,
       },
       {
         onSuccess: (data) => {
@@ -67,11 +52,30 @@ const ReviewDetailContent = () => {
         },
       },
     );
-  }, [filterId, selectedLocation]);
+  };
+
+  const handleReviewFilterClose = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
+    setIsReviewFilterOpen(false);
+    setFilterType(filterType);
+    postReviews(selectedLocation?.id, summaryOptionId);
+  };
 
   const handleLocationSelect = (location: LocationFilterType) => {
     setSelectedLocation(location);
+    postReviews(location.id);
   };
+
+  const handleRefresh = () => {
+    setFilterType(undefined);
+    setIsReviewFilterOpen(false);
+    postReviews(selectedLocation?.id, undefined);
+  };
+
+  useEffect(() => {
+    if (bodyId) {
+      postReviews();
+    }
+  }, [bodyId]);
 
   if (isPending) {
     return <LoadingFallback />;
@@ -81,9 +85,11 @@ const ReviewDetailContent = () => {
     <div className={styles.reviewContainer}>
       {isAuthenticated && (
         <HospitalReviewFilter
+          selectedLocation={selectedLocation}
           onRegionFilterClick={handleLocationSelect}
           onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
           filterType={filterType}
+          onRefresh={handleRefresh}
         />
       )}
       <div className={styles.reviewItemContainer}>
@@ -112,12 +118,8 @@ const ReviewDetailContent = () => {
           />
         </div>
       </If>
-      <ReviewFilter
-        isOpen={isReviewFilterOpen}
-        onClose={() => setIsReviewFilterOpen(false)}
-        selectedFilterId={filterId || undefined}
-        onFilterClick={handleFilterClick}
-      />
+
+      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
       <Modal.Root open={isModalOpen} onOpenChange={onOpenChange}>
         <Modal.Content
           title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
