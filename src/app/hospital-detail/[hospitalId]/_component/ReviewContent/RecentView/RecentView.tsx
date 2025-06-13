@@ -9,7 +9,7 @@ import { useEffect, useState } from "react";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 import { useAuth } from "@providers/AuthProvider";
 import Divider from "@common/component/Divider/Divider";
-import { IcChevronRight } from "@asset/svg";
+import { Modal } from "@common/component/Modal/Modal";
 
 interface RecentViewProps {
   hospitalId: string;
@@ -18,6 +18,7 @@ interface RecentViewProps {
 const RecentView = ({ hospitalId }: RecentViewProps) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { mutate: getReviews, data: reviewsData } = usePostHospitalReviews();
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   };
 
   const handleLoginClick = () => {
-    router.push(PATH.LOGIN);
+    setIsLoginModalOpen(true);
   };
 
   const reviews = reviewsData || [];
@@ -128,6 +129,23 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
           로그인 하고 리뷰 확인하기 &nbsp; &gt;
         </div>
       )}
+
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm
+                label={"로그인"}
+                onClick={() => router.push(PATH.LOGIN)}
+              />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };
