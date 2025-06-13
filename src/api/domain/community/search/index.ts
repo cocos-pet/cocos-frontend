@@ -53,5 +53,5 @@ export interface postPostFiltersRequestType {
 
 export const postPostFilters = async (payload: postPostFiltersRequestType) => {
   const { data } = await post<postPostFiltersResponse>(API_PATH.POST_FILTERS, payload);
-  return data.data?.posts || [];
+  return data?.data?.posts || [];
 };

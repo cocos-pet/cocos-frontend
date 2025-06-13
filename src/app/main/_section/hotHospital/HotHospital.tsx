@@ -19,8 +19,6 @@ const HotHospital = () => {
   const fetchHotHospitals = useCallback(() => {
     getHotHospital(
       {
-        locationId: 1,
-        locationType: "CITY",
         size: 3,
         sortBy: "REVIEW",
       },
@@ -34,8 +32,7 @@ const HotHospital = () => {
   }, [getHotHospital]);
 
   const handleHospitalClick = (id?: number) => {
-    // @TODO 병원 상세 페이지로 이동 - 우선 병원 id로 이동(구현 후 수정 필요)
-    router.push(`/hospital/${id}`);
+    router.push(`/hospital-detail/${id}`);
   };
 
   useEffect(() => {
