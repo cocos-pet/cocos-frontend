@@ -6,11 +6,12 @@ import {
   getMemeberHospitalReviews,
   patchMemberFavoriteHospitals,
   RequestBody,
+  ResponseType,
 } from "./index";
 
-export const useGetHospitalList = (body: RequestBody) => {
+export const useGetHospitalList = () => {
   return useMutation({
-    mutationFn: () => getHospitalList(body),
+    mutationFn: (body: RequestBody) => getHospitalList(body),
   });
 };
 

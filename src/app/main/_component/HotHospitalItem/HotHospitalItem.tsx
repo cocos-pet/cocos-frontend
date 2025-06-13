@@ -5,9 +5,9 @@ import * as styles from "./HotHospitalItem.css.ts";
 
 interface HotHospitalItemProps {
   id: number;
-  name: string;
-  address: string;
-  reviewCount: number;
+  name?: string;
+  address?: string;
+  reviewCount?: number;
   imageSrc?: string | StaticImageData;
   onClick?: () => void;
 }
@@ -42,7 +42,12 @@ const HotHospitalItem = ({
           {address} · 리뷰수 {reviewCount}
         </div>
       </div>
-      <Image src={imageSrc} alt={"병원 이미지"} className={styles.hotHospitalImage} height={76} width={76} />
+      {/* 병원 이미지가 없을 경우를 대비하여 기본 이미지 설정 */}
+      {typeof imageSrc !== "string" && !imageSrc ? (
+        <Image src={notFoundGraphic} alt={"병원 이미지"} className={styles.hotHospitalImage} height={76} width={76} />
+      ) : (
+        <Image src={imageSrc} alt={"병원 이미지"} className={styles.hotHospitalImage} height={76} width={76} />
+      )}
     </div>
   );
 };
