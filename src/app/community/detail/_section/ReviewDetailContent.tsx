@@ -30,7 +30,7 @@ const ReviewDetailContent = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  // State management
+  // State
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [filterState, setFilterState] = useState<ReviewFilterState>({
@@ -40,7 +40,7 @@ const ReviewDetailContent = () => {
   });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
-  // API hooks
+  // API
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
 
   const handleProfileClick = (nickname: string | undefined) => {
