@@ -5,6 +5,7 @@ import Chip from "@common/component/Chip/Chip.tsx";
 import { color } from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
+import { useState } from "react";
 
 export interface LocationFilterType {
   id: number;
@@ -13,32 +14,33 @@ export interface LocationFilterType {
 
 interface HospitalReviewFilterPropsType {
   onRegionFilterClick: (location: LocationFilterType) => void;
-  isRegionFilterOpen: boolean;
   onReviewFilterClick: () => void;
   filterType: "good" | "bad" | null;
 }
 
 const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
-  const { onRegionFilterClick, isRegionFilterOpen, onReviewFilterClick, filterType } = props;
+  const { onRegionFilterClick, onReviewFilterClick, filterType } = props;
   const {
     isOpen: isLocationBottomSheetOpen,
     handleClose: handleCloseBottomSheet,
     handleOpen: handleOpenBottomSheet,
   } = useOpenToggle();
+  const [location, setLocation] = useState<LocationFilterType | null>(null);
 
   const handleLocationSelect = (location: LocationFilterType) => {
     handleCloseBottomSheet();
     onRegionFilterClick(location);
+    setLocation(location);
   };
 
   return (
     <div className={styles.reviewFilter}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
-        <span className={styles.reviewRegionText}>서울시 강남구</span>
+        <span className={styles.reviewRegionText}>{location !== null ? location.name : "서울시 강남구"}</span>
         <motion.div
           style={{ height: "20px" }}
-          animate={{ rotate: isRegionFilterOpen ? 180 : 0 }}
+          animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}
           transition={{ duration: 0.2 }}
         >
           <IcDownArrow width={20} />

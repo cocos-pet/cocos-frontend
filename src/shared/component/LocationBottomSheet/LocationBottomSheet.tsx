@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import * as styles from "./LocationBottomSheet.css";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
-import { Check as IcCheck } from "@asset/svg";
+import { IcCheck } from "@asset/svg";
 import { useGetLocation } from "@api/domain/review/location/hook";
 import { CityTab } from "@shared/component/LocationBottomSheet/CityTap.tsx";
 
