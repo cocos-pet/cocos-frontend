@@ -7,6 +7,7 @@ import { PATH } from "@route/path";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook";
 import { useEffect } from "react";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
+import { useAuth } from "@providers/AuthProvider";
 
 interface RecentViewProps {
   hospitalId: string;
@@ -14,6 +15,7 @@ interface RecentViewProps {
 
 const RecentView = ({ hospitalId }: RecentViewProps) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const { mutate: getReviews, data: reviewsData } = usePostHospitalReviews();
 
   useEffect(() => {
@@ -57,52 +59,54 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       </div>
 
       {reviewCount > 0
-        ? reviews.map((review: postHospitalReviewsResponseData) => (
-            <HospitalReview
-              key={review.id}
-              handleProfileClick={() =>
-                review.memberId && handleProfileClick(review.memberId)
-              }
-              handleHospitalDetailClick={handleHospitalDetailClick}
-              reviewData={{
-                id: review.id ?? 0,
-                memberId: review.memberId ?? 0,
-                nickname: review.nickname ?? "",
-                breed: review.memberBreed ?? "",
-                breedName: review.memberBreed ?? "",
-                petAge: review.age ?? 0,
-                petDisease: review.disease ?? "",
-                vistitedAt: review.visitedAt ?? "",
-                hospitalId: review.hospitalId ?? 0,
-                hospitalName: review.hospitalName ?? "",
-                hospitalAddress: review.hospitalAddress ?? "",
-                content: review.content ?? "",
-                goodReviews:
-                  review.reviewSummary?.goodReviews?.map((item) => ({
-                    id: item.id ?? 0,
-                    name: item.label ?? "",
-                  })) ?? [],
-                badReviews:
-                  review.reviewSummary?.badReviews?.map((item) => ({
-                    id: item.id ?? 0,
-                    name: item.label ?? "",
-                  })) ?? [],
-                images: review.images ?? [],
-                symptoms:
-                  review.symptoms?.map((symptom) => ({
-                    id: 0,
-                    name: symptom,
-                  })) ?? [],
-                diseases: review.disease
-                  ? [{ id: 1, name: review.disease }]
-                  : [],
-                animal: review.animal ?? "",
-                gender: review.gender ?? "",
-                weight: review.weight ?? 0,
-              }}
-              isBlurred={false}
-            />
-          ))
+        ? reviews.map(
+            (review: postHospitalReviewsResponseData, index: number) => (
+              <HospitalReview
+                key={review.id}
+                handleProfileClick={() =>
+                  review.memberId && handleProfileClick(review.memberId)
+                }
+                handleHospitalDetailClick={handleHospitalDetailClick}
+                reviewData={{
+                  id: review.id ?? 0,
+                  memberId: review.memberId ?? 0,
+                  nickname: review.nickname ?? "",
+                  breed: review.memberBreed ?? "",
+                  breedName: review.memberBreed ?? "",
+                  petAge: review.age ?? 0,
+                  petDisease: review.disease ?? "",
+                  vistitedAt: review.visitedAt ?? "",
+                  hospitalId: review.hospitalId ?? 0,
+                  hospitalName: review.hospitalName ?? "",
+                  hospitalAddress: review.hospitalAddress ?? "",
+                  content: review.content ?? "",
+                  goodReviews:
+                    review.reviewSummary?.goodReviews?.map((item) => ({
+                      id: item.id ?? 0,
+                      name: item.label ?? "",
+                    })) ?? [],
+                  badReviews:
+                    review.reviewSummary?.badReviews?.map((item) => ({
+                      id: item.id ?? 0,
+                      name: item.label ?? "",
+                    })) ?? [],
+                  images: review.images ?? [],
+                  symptoms:
+                    review.symptoms?.map((symptom) => ({
+                      id: 0,
+                      name: symptom,
+                    })) ?? [],
+                  diseases: review.disease
+                    ? [{ id: 1, name: review.disease }]
+                    : [],
+                  animal: review.animal ?? "",
+                  gender: review.gender ?? "",
+                  weight: review.weight ?? 0,
+                }}
+                isBlurred={!isAuthenticated && index >= 3}
+              />
+            )
+          )
         : null}
     </div>
   );
