@@ -1,8 +1,6 @@
 import { IcPlus } from "@asset/svg";
 import * as styles from "../_style/mypage.css";
 import React, { useRef, useState } from "react";
-import nicknameCoco from "@asset/image/nicknameCoco.png";
-import Image from "next/image";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 import { useGetFavoriteHospital, usePatchFavoriteHospital } from "@api/shared/hook";
 
