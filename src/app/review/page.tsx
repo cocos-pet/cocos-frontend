@@ -16,12 +16,18 @@ import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import type { Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "@common/component/Modal/Modal.tsx";
 
 export default function ReviewPage() {
   const router = useRouter();
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
   const [searchText, setSearchText] = useState("");
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
 
   const { data: hospitalData } = useInfiniteHospitalList({
     locationType: "CITY",
@@ -38,6 +44,18 @@ export default function ReviewPage() {
 
   const handleSearchClick = () => {
     router.push(PATH.REVIEW.SEARCH);
+  };
+
+  const handleFloatingBtnClick = () => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    router.push(PATH.REVIEW.AGREE);
   };
 
   return (
@@ -85,12 +103,26 @@ export default function ReviewPage() {
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
-          <FloatingBtn />
+          <FloatingBtn onClick={handleFloatingBtnClick} />
         </div>
         <div className={styles.navWrapper}>
           <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
       </div>
+
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 }

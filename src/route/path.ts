@@ -31,6 +31,7 @@ export const PATH = {
     ROOT: "/review",
     HOSPITALS_DONE: "/review/hospitals/done",
     SEARCH: "/review/search",
+    AGREE:"/review/agree",
   },
   HOSPITAL: {
     ROOT: "/hospital-detail",
