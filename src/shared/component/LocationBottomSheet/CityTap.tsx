@@ -1,4 +1,4 @@
-import * as styles from "./locationBottomSheet.css";
+import * as styles from "./LocationBottomSheet.css.ts";
 
 interface CityTabProps {
   locationName: string;
