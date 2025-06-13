@@ -14,6 +14,7 @@ import { PATH } from "@route/path.ts";
 import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/_section/HospitalReviewFilter.tsx";
 import { If } from "@shared/component/If/if.tsx";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
+import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 
 interface ReviewFilterState {
   location: LocationFilterType | null;
@@ -32,7 +33,7 @@ const ReviewDetailContent = () => {
 
   // State
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [filterState, setFilterState] = useState<ReviewFilterState>({
     location: null,
     summaryOptionId: undefined,
@@ -116,15 +117,13 @@ const ReviewDetailContent = () => {
 
   return (
     <div className={styles.reviewContainer}>
-      {isAuthenticated && (
-        <HospitalReviewFilter
-          selectedLocation={filterState.location}
-          onRegionFilterClick={handleLocationSelect}
-          onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-          filterType={filterState.filterType}
-          onRefresh={handleRefresh}
-        />
-      )}
+      <HospitalReviewFilter
+        selectedLocation={filterState.location}
+        onRegionFilterClick={handleLocationSelect}
+        onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
+        filterType={filterState.filterType}
+        onRefresh={handleRefresh}
+      />
 
       <div className={styles.reviewItemContainer}>
         <If condition={reviewList.length === 0}>
@@ -147,14 +146,14 @@ const ReviewDetailContent = () => {
             size="large"
             label="로그인 하고 리뷰 확인하기"
             rightIcon={<IcRightArrow />}
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleOpenModal}
           />
         </div>
       </If>
 
       <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
 
-      <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <Modal.Root open={isModalOpen} onOpenChange={handleOpenChange}>
         <Modal.Content
           title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
           bottomAffix={

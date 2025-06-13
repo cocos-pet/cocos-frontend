@@ -7,6 +7,7 @@ import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationB
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 import React, { useState } from "react";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
+import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
 
 export interface LocationFilterType {
   id: number;
@@ -27,6 +28,11 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
     isOpen: isLocationBottomSheetOpen,
     handleClose: handleCloseBottomSheet,
     handleOpen: handleOpenBottomSheet,
+  } = useOpenToggle();
+  const {
+    isOpen: isReviewFilterOpen,
+    handleClose: handleReviewFilterClose,
+    handleOpen: handleReviewFilterOpen,
   } = useOpenToggle();
 
   const handleLocationSelect = (location: LocationFilterType) => {
@@ -70,6 +76,7 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
           />
         </div>
       </div>
+      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
       <LocationBottomSheet
         isOpen={isLocationBottomSheetOpen}
         onClose={handleCloseBottomSheet}
