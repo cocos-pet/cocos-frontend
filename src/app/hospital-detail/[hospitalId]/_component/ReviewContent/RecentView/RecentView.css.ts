@@ -58,3 +58,27 @@ export const headerMore = style([
     paddingBottom: "0.05rem",
   },
 ]);
+
+export const toast = style([
+  font.label01,
+  {
+    color: color.gray.gray000,
+    width: "22.2rem",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    gap: "0.4rem",
+    height: "4rem",
+    backgroundColor: color.primary.blue500,
+    padding: "0.8rem 1.6rem",
+    borderRadius: "0.8rem",
+    position: "fixed",
+    left: "50%",
+    transform: "translateX(-50%)",
+    bottom: "2.4rem",
+    zIndex: 9999,
+    cursor: "pointer",
+    margin: "0 auto",
+    textAlign: "center",
+  },
+]);
