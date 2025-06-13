@@ -82,3 +82,10 @@ export const toast = style([
     textAlign: "center",
   },
 ]);
+
+export const floatBtnWrapper = style({
+  position: "fixed",
+  right: "2rem",
+  bottom: "8.8rem",
+  zIndex: 999,
+});

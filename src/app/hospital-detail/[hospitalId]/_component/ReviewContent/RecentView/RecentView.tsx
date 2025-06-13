@@ -11,9 +11,10 @@ import { useAuth } from "@providers/AuthProvider";
 import Divider from "@common/component/Divider/Divider";
 import { Modal } from "@common/component/Modal/Modal";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import FloatingBtn from "@common/component/FloatingBtn/Floating";
 
 interface RecentViewProps {
-  hospitalId: string;
+  hospitalId: number;
 }
 
 const RecentView = ({ hospitalId }: RecentViewProps) => {
@@ -32,7 +33,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
 
   const handleProfileClick = (memberId: number) => {
     if (memberId) {
-      router.push(`${PATH.ONBOARDING.ROOT}/${memberId}`);
+      router.push(`${PATH.ONBOARDING.ROOT}`);
     }
   };
 
@@ -50,9 +51,21 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       return;
     }
     if (!isPetRegistered) {
-      router.push(PATH.REGISTER_PET.ROOT);
+      router.push(PATH.ONBOARDING.COMPLETE);
       return;
     }
+  };
+
+  const handleFloatingBtnClick = () => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    router.push(PATH.REVIEW.AGREE);
   };
 
   const reviews = reviewsData || [];
@@ -136,6 +149,12 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       {!isAuthenticated && (
         <div className={styles.toast} onClick={handleLoginClick}>
           로그인 하고 리뷰 확인하기 &nbsp; &gt;
+        </div>
+      )}
+
+      {isAuthenticated && (
+        <div className={styles.floatBtnWrapper}>
+          <FloatingBtn onClick={handleFloatingBtnClick} />
         </div>
       )}
 
