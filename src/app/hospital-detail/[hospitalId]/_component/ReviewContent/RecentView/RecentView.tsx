@@ -1,63 +1,109 @@
 "use client";
 
-import ReviewItem from "@shared/component/ReviewItem/ReviewItem";
+import HospitalReview from "@shared/component/ReviewItem/ReviewItem";
 import * as styles from "./RecentView.css";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { usePostHospitalReviews } from "@api/domain/community/detail/hook";
+import { useEffect } from "react";
+import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 
-// API 응답 스펙에 맞는 목데이터
-const mockData = {
-  code: 200,
-  message: "조회 성공",
-  data: {
-    reviewCount: 123,
-    cursorId: 12345,
-    reviews: [
-      {
-        id: 1,
-        memberId: 1,
-        nickname: "사용자1",
-        breedName: "말티즈",
-        petDisease: "감기",
-        petAge: 3,
-        vistitedAt: "2024-03-20",
-        hospitalId: 1,
-        hospitalName: "행복한 동물병원",
-        hospitalAddress: "서울시 강남구",
-        content: "친절한 진료와 깔끔한 시설이 좋았습니다.",
-        goodReviews: [{ id: 1, name: "친절함" }],
-        badReviews: [{ id: 2, name: "대기시간" }],
-        images: ["https://example.com/image1.jpg"],
-        symptoms: [{ id: 1, name: "기침" }],
-        diseases: [{ id: 1, name: "감기" }],
-        animal: "강아지",
-        gender: "M",
-        breed: "말티즈",
-        weight: 5.2,
-      },
-    ],
-  },
-};
+interface RecentViewProps {
+  hospitalId: string;
+}
 
-const RecentView = () => {
-  const { reviewCount, reviews } = mockData.data;
+const RecentView = ({ hospitalId }: RecentViewProps) => {
+  const router = useRouter();
+  const { mutate: getReviews, data: reviewsData } = usePostHospitalReviews();
+
+  useEffect(() => {
+    getReviews({
+      hospitalId: Number(hospitalId),
+      size: 5,
+    });
+  }, [hospitalId, getReviews]);
+
+  const handleProfileClick = (memberId: number) => {
+    if (memberId) {
+      router.push(`${PATH.MYPAGE.ROOT}/${memberId}`);
+    }
+  };
+
+  const handleHospitalDetailClick = () => {
+    router.push(`${PATH.HOSPITAL.ROOT}/${hospitalId}`);
+  };
+
+  const handleMoreClick = () => {
+    router.push(`${PATH.HOSPITAL.ROOT}/${hospitalId}/reviews`);
+  };
+
+  const reviews = reviewsData || [];
+  const reviewCount = reviews.length;
 
   return (
     <div className={styles.recentViewContainer}>
       <div className={styles.headerRow}>
         <div className={styles.headerLeft}>
           <span className={styles.recentViewTitle}>최근 많이 본 리뷰</span>
-          <span className={styles.reviewCount}>+{reviewCount}</span>
+          {reviewCount > 0 && (
+            <span className={styles.reviewCount}>+{reviewCount}</span>
+          )}
         </div>
-        <button className={styles.headerMore}>리뷰 더보기 &nbsp; &gt;</button>
+        {reviewCount > 0 && (
+          <button className={styles.headerMore} onClick={handleMoreClick}>
+            리뷰 더보기 &nbsp; &gt;
+          </button>
+        )}
       </div>
-      {reviews.map((review) => (
-        <ReviewItem
-          key={review.id}
-          handleProfileClick={() => {}}
-          handleHospitalDetailClick={() => {}}
-          reviewData={review}
-          isBlurred={false}
-        />
-      ))}
+
+      {reviewCount > 0
+        ? reviews.map((review: postHospitalReviewsResponseData) => (
+            <HospitalReview
+              key={review.id}
+              handleProfileClick={() =>
+                review.memberId && handleProfileClick(review.memberId)
+              }
+              handleHospitalDetailClick={handleHospitalDetailClick}
+              reviewData={{
+                id: review.id ?? 0,
+                memberId: review.memberId ?? 0,
+                nickname: review.nickname ?? "",
+                breed: review.memberBreed ?? "",
+                breedName: review.memberBreed ?? "",
+                petAge: review.age ?? 0,
+                petDisease: review.disease ?? "",
+                vistitedAt: review.visitedAt ?? "",
+                hospitalId: review.hospitalId ?? 0,
+                hospitalName: review.hospitalName ?? "",
+                hospitalAddress: review.hospitalAddress ?? "",
+                content: review.content ?? "",
+                goodReviews:
+                  review.reviewSummary?.goodReviews?.map((item) => ({
+                    id: item.id ?? 0,
+                    name: item.label ?? "",
+                  })) ?? [],
+                badReviews:
+                  review.reviewSummary?.badReviews?.map((item) => ({
+                    id: item.id ?? 0,
+                    name: item.label ?? "",
+                  })) ?? [],
+                images: review.images ?? [],
+                symptoms:
+                  review.symptoms?.map((symptom) => ({
+                    id: 0,
+                    name: symptom,
+                  })) ?? [],
+                diseases: review.disease
+                  ? [{ id: 1, name: review.disease }]
+                  : [],
+                animal: review.animal ?? "",
+                gender: review.gender ?? "",
+                weight: review.weight ?? 0,
+              }}
+              isBlurred={false}
+            />
+          ))
+        : null}
     </div>
   );
 };
