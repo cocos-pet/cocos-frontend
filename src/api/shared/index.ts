@@ -1,13 +1,14 @@
 import { API_PATH } from "@api/constants/apiPath";
 import { del, patch, post, get } from "@api/index";
-import { paths } from "@type/schema";
+import { components, paths } from "@type/schema";
 
 export type RequestBody = paths["/api/dev/hospitals"]["post"]["requestBody"]["content"]["application/json"];
-type ResponseType = paths["/api/dev/hospitals"]["post"]["responses"]["200"]["content"]["*/*"];
+export type ResponseType = paths["/api/dev/hospitals"]["post"]["responses"]["200"]["content"]["*/*"];
+export type HospitalListType = components["schemas"]["HospitalResponse"][];
 
 export const getHospitalList = async (body: RequestBody) => {
   const response = await post<ResponseType>(`${API_PATH.HOSPITAL}`, body);
-  return response.data.data;
+  return response.data;
 };
 
 /************************************
