@@ -181,3 +181,9 @@ export const filterContentText = style({
 export const filterButtonContainer = style({
   margin: "1.2rem 2rem 3.2rem 2rem",
 });
+
+export const notAuthButton = style({
+  margin: "0 auto",
+  position: "fixed",
+  bottom: "1.6rem",
+});

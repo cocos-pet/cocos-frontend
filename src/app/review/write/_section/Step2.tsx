@@ -47,7 +47,7 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
   };
 
   const handleGoHospitalDetail = () => {
-    window.history.go(-2); 
+    window.history.go(-2);
   };
 
   return (

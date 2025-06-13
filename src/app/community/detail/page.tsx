@@ -3,22 +3,23 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcLeftarrow} from "@asset/svg";
-import {PATH} from "@route/path.ts";
-import {formatTime} from "@shared/util/formatTime.ts";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {Suspense, useCallback, useEffect, useState} from "react";
-import {components} from "@type/schema";
+import { IcLeftarrow } from "@asset/svg";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import {postPostFiltersRequestType} from "@api/domain/community/search";
+import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import ReviewItem from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { Modal } from "@common/component/Modal/Modal.tsx";
 import { ModalBottomStyle } from "@common/component/Modal/style.css.ts";
-import {ReviewDetailContent} from "@app/community/detail/_section";
+import { ReviewDetailContent } from "@app/community/detail/_section";
+import { useAuth } from "@providers/AuthProvider.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -144,19 +145,6 @@ const PostDetail = () => {
       </div>
       {activeTab === "review" && <ReviewDetailContent />}
       {activeTab === "community" && <CommunityDetailContent />}
-      <Modal.Root open={true}>
-        <Modal.Content
-          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
-          bottomAffix={
-            <Modal.BottomAffix>
-              <Modal.Close label={"취소"} />
-              <Modal.Confirm label={"로그인"} />
-            </Modal.BottomAffix>
-          }
-        >
-          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
-        </Modal.Content>
-      </Modal.Root>
     </div>
   );
 };
