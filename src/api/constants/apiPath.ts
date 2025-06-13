@@ -19,6 +19,8 @@ export const API_PATH = {
   MEMBERS_WITHDRAW: "/api/dev/members/deactivate",
   MEMBERS_REVIEWS_AGREE: "/api/dev/members/reviews/agree",
 
+  LOCATION: "/api/dev/locations",
+
   POST: "/api/dev/posts",
   POST_FILTERS: "/api/dev/posts/filters",
   POST_POPULAR: "/api/dev/posts/popular",
@@ -30,6 +32,8 @@ export const API_PATH = {
   HOSPITAL: "/api/dev/hospitals",
   HOSPITAL_FILTERS: "/api/dev/hospitals/reviews/filter",
   HOSPITAL_SUMMARY_OPTION: "/api/dev/hospitals/reviews/summary/option",
+  HOSPITALS: "/api/dev/hospitals",
+  HOSPITAL_SEARCH: "/api/dev/search/hospital",
   HOSPITALS_PURPOSE: "/api/dev/hospitals/purposes",
   HOSPITALS_REVIEWS_SUMMARY: "/api/dev/hospitals/reviews/summary/option",
 

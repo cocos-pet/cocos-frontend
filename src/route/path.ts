@@ -27,6 +27,14 @@ export const PATH = {
     ROOT: "/search",
     DONE: "/search/done",
   },
+  REVIEW: {
+    ROOT: "/review",
+    HOSPITALS_DONE: "/review/hospitals/done",
+    SEARCH: "/review/search",
+  },
+  HOSPITAL: {
+    ROOT: "/hospital-detail",
+  },
   PROFILE: {
     ROOT: "/profile",
   },
@@ -34,12 +42,5 @@ export const PATH = {
     ROOT: "/setting",
     EDIT_PROFILE: "/setting/edit-profile",
     WITHDRAW: "/setting/withdraw",
-  },
-
-  REVIEW: {
-    ROOT: "/review",
-    AGREE: "/review/agree",
-    WRITE: "/review/write",
-    COMPLETE: "/review/complete",
   },
 };

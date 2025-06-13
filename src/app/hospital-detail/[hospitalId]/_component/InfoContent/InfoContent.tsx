@@ -1,0 +1,60 @@
+"use client";
+
+import { useState } from "react";
+import KakaoMap from "../KakaoMap/KakaoMap";
+import * as styles from "./InfoContent.css";
+import { IcCopy } from "@asset/svg";
+import { useGetHospitalDetail } from "@api/domain/review/hospital-detail/hook";
+
+export interface InfoContentProps {
+  hospitalId: number;
+}
+
+export default function InfoContent({ hospitalId }: InfoContentProps) {
+  const [showToast, setShowToast] = useState(false);
+
+  const { data: hospitalData, isLoading, error } = useGetHospitalDetail(hospitalId);
+
+  const handleCopy = () => {
+    if (!hospitalData?.address) return;
+    navigator.clipboard.writeText(hospitalData.address);
+    setShowToast(true);
+    setTimeout(() => setShowToast(false), 5000);
+  };
+
+  if (isLoading) return <div>로딩 중...</div>;
+  if (error) {
+    return <div>에러가 발생했습니다.</div>;
+  }
+  if (!hospitalData) return null;
+
+  return (
+    <div className={styles.container}>
+      <div className={styles.tags}>
+        {hospitalData.tags && hospitalData.tags.length > 0 ? (
+          hospitalData.tags.map((tag) => (
+            <span key={tag} className={styles.tag}>
+              #{tag}
+            </span>
+          ))
+        ) : (
+          <span className={styles.noTag}>태그 없음</span>
+        )}
+      </div>
+
+      <div className={styles.introduction}>
+        <div className={styles.introductionText}>{hospitalData.introduction || "병원 소개가 없습니다."}</div>
+      </div>
+
+      <div className={styles.addressRow}>
+        <span className={styles.address}>주소</span>
+        <IcCopy className={styles.copyIcon} onClick={handleCopy} />
+      </div>
+      {showToast && <div className={styles.toast}>주소가 복사되었습니다.</div>}
+
+      <div className={styles.mapWrapper}>
+        <KakaoMap address={hospitalData.address || ""} latitude={35.1657} longitude={126.8531} />
+      </div>
+    </div>
+  );
+}

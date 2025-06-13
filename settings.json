@@ -1,0 +1,11 @@
+{
+	// 모든 VCS에서 파일을 포매팅할 때 기본 포매터로 지정
+  "editor.defaultFormatter": "biomejs.biome", 
+  // 파일 저장 시 자동으로 실행할 코드 작업을 정의할 수 있음
+  "editor.codeActionsOnSave": {
+	  // Biome 익스텐션에서 제공하는 빠른 수정을 저장할 때 자동으로 실행하도록 함
+    "quickfix.biome": "explicit",
+    // Biome에서 제공하는 import 정리 기능을 저장할 때 자동으로 실행하도록 함
+    "source.organizeImports.biome": "explicit"
+  }
+}
