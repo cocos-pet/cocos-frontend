@@ -20,6 +20,15 @@ import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal.tsx";
 
+interface Location {
+  id: number;
+  name: string;
+  districts?: {
+    id: number;
+    name: string;
+  }[];
+}
+
 export default function ReviewPage() {
   const router = useRouter();
   const { data: userData } = useGetMemberInfo();
@@ -28,15 +37,20 @@ export default function ReviewPage() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const isPetRegistered = useIsPetRegistered();
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
 
-  const { data: hospitalData } = useInfiniteHospitalList({
+  // 추천 병원 리스트 (위치 필터링 없음)
+  const { data: recommendedHospitalData } = useInfiniteHospitalList({
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
     image: "",
   });
 
-  const hospitals = hospitalData?.pages?.[0]?.hospitals?.slice(0, 3) || [];
+  const recommendedHospitals =
+    recommendedHospitalData?.pages?.[0]?.hospitals?.slice(0, 3) || [];
 
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
@@ -58,9 +72,13 @@ export default function ReviewPage() {
     router.push(PATH.REVIEW.AGREE);
   };
 
+  const handleLocationChange = (location: Location) => {
+    setSelectedLocation(location);
+  };
+
   return (
     <div>
-      <LocationHeader />
+      <LocationHeader onLocationChange={handleLocationChange} />
 
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
@@ -78,28 +96,44 @@ export default function ReviewPage() {
             <div className={styles.recommendHospital}>
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
-                <span className={styles.recommendTitleHighlight}>추천 병원</span>
+                <span className={styles.recommendTitleHighlight}>
+                  추천 병원
+                </span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
-                {hospitals.map((hospital: Hospital, idx: number) => (
+                {recommendedHospitals.map((hospital: Hospital, idx: number) => (
                   <div
                     key={hospital.id}
                     className={styles.hospitalCard}
-                    onClick={() => router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)}
+                    onClick={() =>
+                      router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)
+                    }
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
-                      <span className={styles.hospitalName}>{hospital.name}</span>
+                      <span className={styles.hospitalName}>
+                        {hospital.name}
+                      </span>
                     </div>
-                    <span className={styles.hospitalAddress}>{hospital.address}</span>
+                    <span className={styles.hospitalAddress}>
+                      {hospital.address}
+                    </span>
                   </div>
                 ))}
               </div>
-              <Image src={banner} alt="banner" className={styles.bannerContainer} />
+              <Image
+                src={banner}
+                alt="banner"
+                className={styles.bannerContainer}
+              />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            <HospitalList
+              title={"많은 반려인들이"}
+              highlightText={"다녀간 병원"}
+              selectedLocation={selectedLocation || undefined}
+            />
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>
@@ -116,7 +150,10 @@ export default function ReviewPage() {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+              <Modal.Confirm
+                label={"로그인"}
+                onClick={() => router.push(PATH.LOGIN)}
+              />
             </Modal.BottomAffix>
           }
         >

@@ -13,7 +13,7 @@ export const tags = style({
   padding: "1.2rem 2rem 1.2rem 1.6rem",
 });
 
-export const tag = style([
+export const keywords = style([
   font.body01,
   {
     color: color.primary.blue700,
@@ -21,7 +21,7 @@ export const tag = style([
   },
 ]);
 
-export const noTag = style({
+export const noKeywords = style({
   color: color.gray.gray400,
   fontSize: "1.2rem",
 });

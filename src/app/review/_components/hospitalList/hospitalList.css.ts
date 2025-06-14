@@ -3,6 +3,7 @@ import { color, font } from "@style/styles.css";
 
 export const container = style({
   margin: "0rem 2rem",
+  width: "100%",
 });
 
 export const title = style([
@@ -32,6 +33,7 @@ export const hospitalItem = style({
 });
 
 export const hospitalInfo = style({
+  width: "24.7rem",
   display: "flex",
   flexDirection: "column",
   gap: "0.4rem",
