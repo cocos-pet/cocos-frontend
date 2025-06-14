@@ -26,7 +26,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
 
   useEffect(() => {
     getReviews({
-      hospitalId: Number(hospitalId),
+      hospitalId: hospitalId,
       size: 5,
     });
   }, [hospitalId, getReviews]);

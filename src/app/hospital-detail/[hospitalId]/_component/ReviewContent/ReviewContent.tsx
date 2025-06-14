@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 
 const ReviewContent = () => {
   const params = useParams();
-  const hospitalId = params?.hospitalId as string;
+  const hospitalId = Number(params?.hospitalId as string);
 
   if (!hospitalId) {
     return null;
@@ -15,8 +15,7 @@ const ReviewContent = () => {
   return (
     <div>
       <Summary />
-      {/* TODO: hospitalId 받아오기 */}
-      <RecentView hospitalId={1} />
+      <RecentView hospitalId={hospitalId} />
     </div>
   );
 };
