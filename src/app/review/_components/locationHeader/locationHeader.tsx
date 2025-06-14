@@ -13,9 +13,17 @@ interface Location {
   }[];
 }
 
-export default function LocationHeader() {
+interface LocationHeaderProps {
+  onLocationChange: (location: Location) => void;
+}
+
+export default function LocationHeader({
+  onLocationChange,
+}: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
 
   const { data: cities } = useGetLocation();
 
@@ -30,6 +38,7 @@ export default function LocationHeader() {
   const handleLocationSelect = (location: Location) => {
     setSelectedLocation(location);
     setIsBottomSheetOpen(false);
+    onLocationChange(location);
   };
 
   if (!cities) return null;
@@ -41,7 +50,9 @@ export default function LocationHeader() {
       <div className={styles.locationHeader}>
         <div className={styles.locationWrapper} onClick={handleLocationClick}>
           <Icon style={{ width: "2rem", height: "2rem" }} />
-          <span className={styles.locationText}>{selectedLocation?.name || defaultCity.name}</span>
+          <span className={styles.locationText}>
+            {selectedLocation?.name || defaultCity.name}
+          </span>
           <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
         </div>
       </div>
