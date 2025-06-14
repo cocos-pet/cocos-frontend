@@ -33,7 +33,7 @@ export const hospitalItem = style({
 });
 
 export const hospitalInfo = style({
-  width: "100%",
+  width: "24.7rem",
   display: "flex",
   flexDirection: "column",
   gap: "0.4rem",
@@ -55,7 +55,6 @@ export const hospitalName = style([
 export const hospitalAddress = style([
   font.body01,
   {
-    width: "24.7rem",
     color: color.gray.gray700,
     overflow: "hidden",
     textOverflow: "ellipsis",
