@@ -123,13 +123,15 @@ const ReviewDetailContent = () => {
 
   return (
     <div className={styles.reviewContainer}>
-      <HospitalReviewFilter
-        selectedLocation={filterState.location}
-        onRegionFilterClick={handleLocationSelect}
-        onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-        filterType={filterState.filterType}
-        onRefresh={handleRefresh}
-      />
+      {!isAuthenticated && (
+        <HospitalReviewFilter
+          selectedLocation={filterState.location}
+          onRegionFilterClick={handleLocationSelect}
+          onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
+          filterType={filterState.filterType}
+          onRefresh={handleRefresh}
+        />
+      )}
 
       <div className={styles.reviewItemContainer}>
         <If condition={reviewList.length === 0}>
