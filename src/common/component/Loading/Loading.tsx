@@ -3,7 +3,6 @@
 import loading from "@asset/lottie/loading.json";
 import { layout } from "./Loading.css";
 import dynamic from "next/dynamic";
-
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 interface LoadingProps {

@@ -10,6 +10,9 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
+import { useAuth } from "@providers/AuthProvider.tsx";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path.ts";
 
 export interface ReviewItemType {
   id?: number;
@@ -40,6 +43,7 @@ export interface ReviewItemType {
 interface propsType {
   handleProfileClick?: () => void;
   handleHospitalDetailClick?: () => void;
+  handleHospitalReviewClick?: () => void;
   reviewData: postHospitalReviewsResponseData;
   isBlurred?: boolean;
   isNoProfile?: boolean;
@@ -53,10 +57,18 @@ interface propsType {
  * @param isBlurred 리뷰가 블러 처리되어야 하는지 여부
  */
 const HospitalReview = (props: propsType) => {
-  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false, isNoProfile = false } = props;
+  const {
+    handleProfileClick,
+    handleHospitalDetailClick,
+    handleHospitalReviewClick,
+    reviewData,
+    isBlurred = false,
+    isNoProfile = false,
+  } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const router = useRouter();
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);
@@ -73,7 +85,7 @@ const HospitalReview = (props: propsType) => {
   const isReviewImage = !!reviewData.images?.length;
 
   return (
-    <section className={styles.reviewItemContainer({ isNoProfile: isNoProfile })}>
+    <section className={styles.reviewItemContainer({ isNoProfile: isNoProfile })} onClick={handleHospitalReviewClick}>
       {!isNoProfile && (
         <Profile
           handleProfileClick={handleProfileClick}
