@@ -105,6 +105,12 @@ const ReviewDetailContent = () => {
     postReviews(filterState.location?.id);
   };
 
+  const handleHospitalReviewClick = () => {
+    if (!isAuthenticated) {
+      handleOpenModal();
+    }
+  };
+
   useEffect(() => {
     if (bodyId) {
       postReviews();
@@ -136,6 +142,7 @@ const ReviewDetailContent = () => {
             reviewData={review}
             handleHospitalDetailClick={() => handleHospitalClick(review.hospitalId)}
             isBlurred={!isAuthenticated}
+            handleHospitalReviewClick={handleHospitalReviewClick}
           />
         ))}
       </div>
