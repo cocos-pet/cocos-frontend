@@ -11,13 +11,14 @@ import * as styles from "./Community.css";
 import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import { useQueryGetCategory } from "@api/domain/community/category/hook";
-import { useEffect } from "react";
-import { useProtectedRoute } from "@route/useProtectedRoute";
+import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "@common/component/Modal/Modal";
 
 const Community = () => {
-  useProtectedRoute();
-
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   useEffect(() => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("searchBackUrl", PATH.COMMUNITY.ROOT);
@@ -26,7 +27,23 @@ const Community = () => {
 
   const router = useRouter();
   const searchParams = useSearchParams();
-  const type = searchParams.get("type");
+  const type = searchParams?.get("type");
+
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
+
+  const handleWriteClick = () => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+
+    router.push(`/community/write?category=${type}`);
+  };
 
   const handleSearchClick = () => {
     router.push(PATH.COMMUNITY.SEARCH);
@@ -78,11 +95,25 @@ const Community = () => {
         <SelectPost />
       </div>
       <div className={styles.btnContainer}>
-        <FloatingBtn onClick={() => router.push(`/community/write?category=${type}`)} />
+        <FloatingBtn onClick={handleWriteClick} />
       </div>
       <div className={styles.communityFooter}>
         <Nav content={NAV_CONTENT} />
       </div>
+
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };

@@ -2,20 +2,33 @@
 
 import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import * as styles from "./index/Setting.css";
+import * as styles from "./page.css";
 import Divider from "@common/component/Divider/Divider";
 import { useRouter } from "next/navigation";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
 import { useLogout } from "@api/domain/setting/hook";
-import { useProtectedRoute } from "@route/useProtectedRoute";
+import { useAuth } from "@providers/AuthProvider";
 
-export default function SettingPage() {
-  useProtectedRoute();
+export default function Setting() {
   const router = useRouter();
   const { isOpen, openBottomSheet, closeBottomSheet } = useSimpleBottomSheet();
   const { mutate: logout } = useLogout();
+  const { isAuthenticated } = useAuth();
+
+  if (!isAuthenticated) {
+    router.push(PATH.LOGIN);
+  }
+
+  const handleMoveWithdraw = () => {
+    router.push(PATH.SETTING.WITHDRAW);
+  };
+
+  if (!isAuthenticated) {
+    alert("접근할 수 없습니다.");
+    router.push(PATH.MAIN);
+  }
 
   return (
     <>
@@ -42,8 +55,13 @@ export default function SettingPage() {
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
             <span className={styles.myProfileSpan} onClick={() => openBottomSheet()}>
-              <IcOut width={20} height={20} />
               <span className={styles.myProfileSpanText}>로그아웃</span>
+            </span>
+          </div>
+
+          <div className={styles.editMyProfile}>
+            <span className={styles.myProfileSpan} onClick={handleMoveWithdraw}>
+              <span className={styles.myProfileSpanText}>회원탈퇴</span>
             </span>
           </div>
         </div>
@@ -61,4 +79,4 @@ export default function SettingPage() {
       />
     </>
   );
-} 
+}

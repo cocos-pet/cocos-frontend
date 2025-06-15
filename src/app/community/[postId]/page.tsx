@@ -1,22 +1,14 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {
-  IcBaseProfileImage,
-  IcCuriousActive,
-  IcCuriousUnactive,
-  IcLeftarrow,
-  IcLikeActive,
-  IcLikeDisabled,
-} from "@asset/svg";
-import {Button} from "@common/component/Button";
+import { IcCuriousActive, IcCuriousUnactive, IcLeftarrow, IcLikeActive, IcLikeDisabled } from "@asset/svg";
+import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
-import {TextField} from "@common/component/TextField";
+import { TextField } from "@common/component/TextField";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
-import {formatTime} from "@shared/util/formatTime.ts";
 import useModalStore from "@store/moreModalStore.ts";
 import {
   useCommentPost,
@@ -27,26 +19,27 @@ import {
   usePostGet,
   useSubCommentPost,
 } from "@api/domain/community/post/hook";
-import {PATH} from "@route/path.ts";
-import {getAccessToken} from "@api/index.ts";
+import { PATH } from "@route/path.ts";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
-import {useProtectedRoute} from "@route/useProtectedRoute";
-import {useParams, useRouter} from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import {styles} from "./PostDetail.css.ts";
-import {getCategoryResponse} from "../_utills/getPostCategoryLike.ts";
-import {getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon} from "../_utills/handleCategoryItem.tsx";
+import { styles } from "./PostDetail.css.ts";
+import { getCategoryResponse } from "../_utills/getPostCategoryLike.ts";
+import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from "../_utills/handleCategoryItem.tsx";
+import Profile from "@app/community/_component/Profile/Profile.tsx";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "@common/component/Modal/Modal.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const Page = () => {
-  const { isNoPet } = useProtectedRoute();
   const router = useRouter();
   const params = useParams();
-  const { postId } = params;
+  const { postId } = params as { postId: string | string[] | undefined };
   const postIdString = typeof postId === "string" ? postId : Array.isArray(postId) ? postId[0] : "";
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postIdString));
@@ -70,6 +63,9 @@ const Page = () => {
     mention: "",
     text: "",
   });
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
 
   useEffect(() => {
     if (postData) {
@@ -100,10 +96,6 @@ const Page = () => {
   };
 
   const onSubmitComment = () => {
-    if (isNoPet) {
-      alert("반려동물을 등록한 사람만 댓글을 작성할 수 있습니다.");
-      return;
-    }
     if (parsedComment.mention) {
       // 대댓글 등록
       subCommentPost(
@@ -178,11 +170,14 @@ const Page = () => {
   };
 
   const onLikePostClick = () => {
-    if (getAccessToken() === null) {
-      router.push(PATH.ONBOARDING.ROOT);
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
       return;
     }
-
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
     likeDelete(
       { postId: postIdString },
       {
@@ -196,8 +191,12 @@ const Page = () => {
   };
 
   const onLikeDeleteClick = () => {
-    if (getAccessToken() === null) {
-      router.push(PATH.ONBOARDING.ROOT);
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
       return;
     }
 
@@ -223,6 +222,18 @@ const Page = () => {
     if (postData.nickname) {
       router.push(`/profile?nickname=${postData.nickname}`);
     }
+  };
+
+  const handleCheckCommentPermission = () => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    return true;
   };
 
   return (
@@ -256,25 +267,15 @@ const Page = () => {
             );
           }}
         />
-        <div className={styles.top} onClick={handleProfileClick}>
-          {postData.profileImage ? (
-            <Image
-              src={postData.profileImage}
-              alt="userProfile"
-              className={styles.profileImage}
-              width={32}
-              height={32}
-            />
-          ) : (
-            <IcBaseProfileImage width={32} height={32} />
-          )}
-          <div className={styles.info}>
-            <div className={styles.infoName}>{postData.nickname}</div>
-            <div className={styles.infoDetail}>
-              {postData.breed}·{postData.petAge}살 · {formatTime(postData.createdAt ?? "")}
-            </div>
-          </div>
-        </div>
+
+        <Profile
+          handleProfileClick={handleProfileClick}
+          profileImageData={postData.profileImage}
+          nickname={postData.nickname}
+          breed={postData.breed}
+          petAge={postData.petAge}
+          createdAt={postData.createdAt}
+        />
         <div>
           <div className={styles.title}>{postData.title}</div>
           <div className={styles.content}>{postData.content}</div>
@@ -348,6 +349,7 @@ const Page = () => {
           onClearClick={onClearClick}
           placeholder={"댓글을 입력해주세요."}
           onKeyDown={onKeyDown}
+          onClick={handleCheckCommentPermission}
         />
         {parsedComment.text && (
           <button className={styles.upload} onClick={onSubmitComment}>
@@ -366,6 +368,20 @@ const Page = () => {
         }}
         rightText={"삭제할게요"}
       />
+
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </>
   );
 };

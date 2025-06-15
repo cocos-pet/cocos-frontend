@@ -1,5 +1,5 @@
-import {color, font, semanticColor} from "@style/styles.css";
-import {style} from "@vanilla-extract/css";
+import { color, font, semanticColor } from "@style/styles.css";
+import { style } from "@vanilla-extract/css";
 
 export const petEditWrapper = style({
   display: "flex",
@@ -30,16 +30,7 @@ export const defaultInfo = style({
   alignSelf: "stretch",
 });
 
-export const knownSymptoms = style({
-  display: "flex",
-  padding: "0rem 2rem",
-  flexDirection: "column",
-  alignItems: "flex-start",
-  gap: "1.2rem",
-  alignSelf: "stretch",
-});
-
-export const knownDisease = style({
+export const editArticle = style({
   display: "flex",
   padding: "0rem 2rem",
   flexDirection: "column",
@@ -148,3 +139,37 @@ export const nameInput = style([
 export const errorLayout = style({
   marginTop: "0.8rem",
 });
+
+export const favoriteHospitalWrapper = style({
+  display: "flex",
+  padding: "1.6rem",
+  alignItems: "center",
+  gap: "1.2rem",
+  alignSelf: "stretch",
+
+  borderRadius: "8px",
+  border: `1px solid ${semanticColor.line.strong}`,
+});
+
+export const favoriteHospitalInfo = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "flex-start",
+  gap: "0.4rem",
+  flex: "1 0 0",
+  minWidth: "18.9rem",
+});
+
+export const favoriteHospitalName = style([
+  font.heading03,
+  {
+    color: semanticColor.text.normal,
+  },
+]);
+
+export const favoriteHospitalSubInfo = style([
+  font.label01,
+  {
+    color: semanticColor.text.assistive,
+  },
+]);

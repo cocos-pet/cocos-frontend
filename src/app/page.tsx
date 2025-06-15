@@ -11,9 +11,7 @@ const Index = () => {
   }
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
-    if (user) router.push(PATH.MAIN);
-    else router.push(PATH.LOGIN);
+    router.push(PATH.MAIN);
   }, [router]);
 
   return <></>;

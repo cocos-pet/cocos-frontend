@@ -15,8 +15,11 @@ interface TextFieldProps {
   onClick?: () => void;
   onKeyDown?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
   onClearClick?: (e: React.MouseEvent<HTMLButtonElement>) => void;
+  onFocus?: () => void;
+  onBlur?: () => void;
   maxLength?: number; // input 입력 가능길이
   mentionedNickname?: string; // 언급된 닉네임
+  readOnly?: boolean;
 }
 
 type propsType = WrapVariants & TextFieldProps & InputVariants;
@@ -51,8 +54,11 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       onClick,
       onKeyDown,
       onClearClick,
+      onFocus,
+      onBlur,
       maxLength,
       mentionedNickname,
+      readOnly,
     },
     ref,
   ) => {
@@ -69,8 +75,11 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
             value={value}
             onChange={onChange}
             onKeyDown={onKeyDown}
+            onFocus={onFocus}
+            onBlur={onBlur}
             disabled={!active}
             maxLength={maxLength}
+            readOnly={readOnly}
           />
         </div>
         {value && isDelete ? (
