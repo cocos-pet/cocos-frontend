@@ -8,6 +8,7 @@ import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 import React, { useState } from "react";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
+import { useAuth } from "@providers/AuthProvider.tsx";
 
 export interface LocationFilterType {
   id: number;
@@ -39,9 +40,10 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
     handleCloseBottomSheet();
     onRegionFilterClick(location);
   };
+  const { isAuthenticated } = useAuth();
 
   return (
-    <div className={styles.reviewFilter}>
+    <div className={styles.reviewFilter} style={!isAuthenticated ? { pointerEvents: "none", opacity: 0.5 } : undefined}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
         <span className={styles.reviewRegionText}>{selectedLocation !== null ? selectedLocation.name : "강남구"}</span>

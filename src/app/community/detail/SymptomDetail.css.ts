@@ -110,12 +110,6 @@ export const reviewItemContainer = style({
   flexDirection: "column",
 });
 
-export const reviewContent = style({
-  display: "flex",
-  gap: "0.8rem",
-  alignItems: "center",
-});
-
 export const reviewFilter = style({
   display: "flex",
   justifyContent: "space-between",
