@@ -1,8 +1,9 @@
 import * as styles from "./locationHeader.css";
-import { IcChevronDown, Icon } from "@asset/svg";
-import { useState } from "react";
+import { IcChevronDown, IcTarget } from "@asset/svg";
+import { useState, useEffect } from "react";
 import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
 import { useGetLocation } from "@api/domain/review/location/hook";
+import { motion } from "framer-motion";
 
 interface Location {
   id: number;
@@ -27,6 +28,29 @@ export default function LocationHeader({
 
   const { data: cities } = useGetLocation();
 
+  useEffect(() => {
+    if (cities && cities.length > 0 && !selectedLocation) {
+      // 서울시 찾기
+      const seoul = cities.find(
+        (city) => city.name === "서울시" || city.name === "서울특별시"
+      );
+      if (seoul) {
+        // 강남구 찾기
+        const gangnam = seoul.districts?.find(
+          (district) => district.name === "강남구"
+        );
+        if (gangnam) {
+          const defaultLocation = {
+            id: gangnam.id,
+            name: gangnam.name,
+          };
+          setSelectedLocation(defaultLocation);
+          onLocationChange(defaultLocation);
+        }
+      }
+    }
+  }, [cities, selectedLocation, onLocationChange]);
+
   const handleLocationClick = () => {
     setIsBottomSheetOpen(true);
   };
@@ -43,17 +67,23 @@ export default function LocationHeader({
 
   if (!cities) return null;
 
-  const defaultCity = cities[0];
-
   return (
     <>
-      <div className={styles.locationHeader}>
-        <div className={styles.locationWrapper} onClick={handleLocationClick}>
-          <Icon style={{ width: "2rem", height: "2rem" }} />
-          <span className={styles.locationText}>
-            {selectedLocation?.name || defaultCity.name}
-          </span>
-          <IcChevronDown style={{ width: "2rem", height: "2rem" }} />
+      <div className={styles.location}>
+        <div className={styles.locationButton} onClick={handleLocationClick}>
+          <div className={styles.locationContent}>
+            <IcTarget width={20} />
+            <span className={styles.locationText}>
+              {selectedLocation?.name || "강남구"}
+            </span>
+          </div>
+          <motion.div
+            style={{ height: "20px" }}
+            animate={{ rotate: isBottomSheetOpen ? 180 : 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <IcChevronDown width={20} />
+          </motion.div>
         </div>
       </div>
 
