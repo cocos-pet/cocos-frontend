@@ -66,6 +66,13 @@ export const summaryItem = style({
   borderColor: color.gray.gray100,
 });
 
+export const label = style([
+  font.body01,
+  {
+    color: color.gray.gray700,
+  },
+]);
+
 export const goodCount = style([
   font.body01,
   {

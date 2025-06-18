@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 export interface ReviewSummaryItem {
   id: number;
   label: string;
+  count: number;
 }
 
 const Summary = () => {
@@ -27,13 +28,16 @@ const Summary = () => {
   return (
     <div className={styles.summaryContainer}>
       <p className={styles.summaryTitle}>리뷰 요약</p>
-      <p className={styles.summarySubTitle}>맞춤 리뷰를 통해 나에게 맞는 병원의 후기를 확인해요.</p>
+      <p className={styles.summarySubTitle}>
+        맞춤 리뷰를 통해 나에게 맞는 병원의 후기를 확인해요.
+      </p>
       <div className={styles.summaryGrid}>
         <div>
           <h3 className={styles.summarySectionTitle}>좋았던 점</h3>
           {displayedGoodReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
-              <span>{item.label}</span>
+              <span className={styles.label}>{item.label}</span>
+              <span className={styles.goodCount}>{item.count}</span>
             </div>
           ))}
         </div>
@@ -41,14 +45,18 @@ const Summary = () => {
           <h3 className={styles.summarySectionTitle}>아쉬운 점</h3>
           {displayedBadReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
-              <span>{item.label}</span>
+              <span className={styles.label}>{item.label}</span>
+              <span className={styles.badCount}>{item.count}</span>
             </div>
           ))}
         </div>
       </div>
       {(goodReviews.length > 3 || badReviews.length > 3) && (
         <div className={styles.folderButtonWrapper}>
-          <button className={styles.folderButton} onClick={() => setIsFolded(!isFolded)}>
+          <button
+            className={styles.folderButton}
+            onClick={() => setIsFolded(!isFolded)}
+          >
             <IcChevronDown className={isFolded ? styles.rotateIcon : ""} />
           </button>
         </div>
