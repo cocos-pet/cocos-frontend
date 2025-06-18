@@ -89,3 +89,26 @@ export const floatBtnWrapper = style({
   bottom: "8.8rem",
   zIndex: 999,
 });
+
+export const noReviewContainer = style({
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  paddingBottom: "5.8rem",
+  gap: "1.2rem",
+  alignSelf: "stretch",
+});
+
+export const noReviewText = style([
+  font.heading03,
+  {
+    color: color.gray.gray600,
+  },
+]);
+
+export const imageContainer = style({
+  display: "flex",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: " 0rem 12.4rem 0rem 12.4rem",
+});
