@@ -14,6 +14,7 @@ import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import Image from "next/image";
 import no_review from "@asset/image/no_review.png";
+import { Button } from "@common/component/Button";
 
 interface RecentViewProps {
   hospitalId: number;
@@ -158,6 +159,11 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
               />
             </div>
             <p className={styles.noReviewText}>리뷰가 아직 없어요</p>
+            <Button
+              size="large"
+              onClick={handleFloatingBtnClick}
+              label="리뷰 작성하기"
+            />
           </div>
         )}
       </div>
@@ -167,7 +173,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
         </div>
       )}
 
-      {isAuthenticated && (
+      {isAuthenticated && reviewCount > 0 && (
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn onClick={handleFloatingBtnClick} />
         </div>

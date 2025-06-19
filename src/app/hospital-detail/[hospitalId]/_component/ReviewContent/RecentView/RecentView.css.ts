@@ -86,7 +86,7 @@ export const toast = style([
 export const floatBtnWrapper = style({
   position: "fixed",
   right: "2rem",
-  bottom: "8.8rem",
+  bottom: "1.6rem",
   zIndex: 999,
 });
 
@@ -100,9 +100,10 @@ export const noReviewContainer = style({
 });
 
 export const noReviewText = style([
-  font.heading03,
+  font.heading02,
   {
     color: color.gray.gray600,
+    marginBottom: "14.7rem",
   },
 ]);
 
