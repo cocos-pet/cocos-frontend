@@ -37,13 +37,13 @@ export const summaryGrid = style({
 export const summarySection = style({
   display: "flex",
   flexDirection: "column",
-  gap: "1.2rem",
+  gap: "0.4rem",
 });
 
 export const summaryContent = style({
   display: "flex",
   flexDirection: "column",
-  gap: "0.8rem",
+  gap: "0.4rem",
 });
 
 export const summarySectionTitle = style([
@@ -64,12 +64,17 @@ export const summaryItem = style({
   borderRadius: "0.8rem",
   border: "1px solid",
   borderColor: color.gray.gray100,
+  gap: "0.8rem",
 });
 
 export const label = style([
   font.body01,
   {
     color: color.gray.gray700,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    maxWidth: "12rem",
   },
 ]);
 
