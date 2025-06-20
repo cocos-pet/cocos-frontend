@@ -5,6 +5,7 @@ import { getHospitalSummaryOption } from "./index";
 interface ReviewOption {
   id: number;
   label: string;
+  count: number;
 }
 
 interface HospitalSummaryOptionData {

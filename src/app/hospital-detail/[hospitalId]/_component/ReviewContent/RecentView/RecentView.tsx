@@ -12,6 +12,9 @@ import Divider from "@common/component/Divider/Divider";
 import { Modal } from "@common/component/Modal/Modal";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
+import Image from "next/image";
+import no_review from "@asset/image/no_review.png";
+import { Button } from "@common/component/Button";
 
 interface RecentViewProps {
   hospitalId: number;
@@ -88,63 +91,81 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       </div>
 
       <div>
-        {reviewCount > 0
-          ? reviews.map(
-              (review: postHospitalReviewsResponseData, index: number) => (
-                <div
-                  key={review.id}
-                  onClick={() =>
-                    !isAuthenticated && index >= 3 && handleLoginClick()
+        {reviewCount > 0 ? (
+          reviews.map(
+            (review: postHospitalReviewsResponseData, index: number) => (
+              <div
+                key={review.id}
+                onClick={() =>
+                  !isAuthenticated && index >= 3 && handleLoginClick()
+                }
+              >
+                <HospitalReview
+                  handleProfileClick={() =>
+                    review.memberId && handleProfileClick(review.memberId)
                   }
-                >
-                  <HospitalReview
-                    handleProfileClick={() =>
-                      review.memberId && handleProfileClick(review.memberId)
-                    }
-                    handleHospitalDetailClick={handleHospitalDetailClick}
-                    reviewData={{
-                      id: review.id ?? 0,
-                      memberId: review.memberId ?? 0,
-                      nickname: review.nickname ?? "",
-                      breed: review.memberBreed ?? "",
-                      breedName: review.memberBreed ?? "",
-                      petAge: review.age ?? 0,
-                      petDisease: review.disease ?? "",
-                      vistitedAt: review.visitedAt ?? "",
-                      hospitalId: review.hospitalId ?? 0,
-                      hospitalName: review.hospitalName ?? "",
-                      hospitalAddress: review.hospitalAddress ?? "",
-                      content: review.content ?? "",
-                      goodReviews:
-                        review.reviewSummary?.goodReviews?.map((item) => ({
-                          id: item.id ?? 0,
-                          name: item.label ?? "",
-                        })) ?? [],
-                      badReviews:
-                        review.reviewSummary?.badReviews?.map((item) => ({
-                          id: item.id ?? 0,
-                          name: item.label ?? "",
-                        })) ?? [],
-                      images: review.images ?? [],
-                      symptoms:
-                        review.symptoms?.map((symptom) => ({
-                          id: 0,
-                          name: symptom,
-                        })) ?? [],
-                      diseases: review.disease
-                        ? [{ id: 1, name: review.disease }]
-                        : [],
-                      animal: review.animal ?? "",
-                      gender: review.gender ?? "",
-                      weight: review.weight ?? 0,
-                    }}
-                    isBlurred={!isAuthenticated && index >= 3}
-                  />
-                  {index < reviews.length - 1 && <Divider size="small" />}
-                </div>
-              )
+                  handleHospitalDetailClick={handleHospitalDetailClick}
+                  reviewData={{
+                    id: review.id ?? 0,
+                    memberId: review.memberId ?? 0,
+                    nickname: review.nickname ?? "",
+                    breed: review.memberBreed ?? "",
+                    breedName: review.memberBreed ?? "",
+                    petAge: review.age ?? 0,
+                    petDisease: review.disease ?? "",
+                    vistitedAt: review.visitedAt ?? "",
+                    hospitalId: review.hospitalId ?? 0,
+                    hospitalName: review.hospitalName ?? "",
+                    hospitalAddress: review.hospitalAddress ?? "",
+                    content: review.content ?? "",
+                    goodReviews:
+                      review.reviewSummary?.goodReviews?.map((item) => ({
+                        id: item.id ?? 0,
+                        name: item.label ?? "",
+                      })) ?? [],
+                    badReviews:
+                      review.reviewSummary?.badReviews?.map((item) => ({
+                        id: item.id ?? 0,
+                        name: item.label ?? "",
+                      })) ?? [],
+                    images: review.images ?? [],
+                    symptoms:
+                      review.symptoms?.map((symptom) => ({
+                        id: 0,
+                        name: symptom,
+                      })) ?? [],
+                    diseases: review.disease
+                      ? [{ id: 1, name: review.disease }]
+                      : [],
+                    animal: review.animal ?? "",
+                    gender: review.gender ?? "",
+                    weight: review.weight ?? 0,
+                  }}
+                  isBlurred={!isAuthenticated && index >= 3}
+                />
+                {index < reviews.length - 1 && <Divider size="small" />}
+              </div>
             )
-          : null}
+          )
+        ) : (
+          <div className={styles.noReviewContainer}>
+            <div className={styles.imageContainer}>
+              <Image
+                src={no_review}
+                alt="리뷰 없음"
+                width={127}
+                height={127}
+                style={{ objectFit: "contain" }}
+              />
+            </div>
+            <p className={styles.noReviewText}>리뷰가 아직 없어요</p>
+            <Button
+              size="large"
+              onClick={handleFloatingBtnClick}
+              label="리뷰 작성하기"
+            />
+          </div>
+        )}
       </div>
       {!isAuthenticated && (
         <div className={styles.toast} onClick={handleLoginClick}>
@@ -152,7 +173,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
         </div>
       )}
 
-      {isAuthenticated && (
+      {isAuthenticated && reviewCount > 0 && (
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn onClick={handleFloatingBtnClick} />
         </div>

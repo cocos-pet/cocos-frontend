@@ -18,14 +18,17 @@ interface HospitalSummaryResponse {
 
 //병원 리뷰 요약 조회
 //param hospitalId
-export const getHospitalSummary = async () => {
-  const { data } = await get<HospitalSummaryResponse>(API_PATH.HOSPITAL_SUMMARY_OPTION);
+export const getHospitalSummary = async (hospitalId: number) => {
+  const { data } = await get<HospitalSummaryResponse>(
+    `${API_PATH.HOSPITALS}/${hospitalId}/reviews/summary`
+  );
   return data.data;
 };
 
 interface ReviewOption {
   id: number;
   label: string;
+  count: number;
 }
 
 interface HospitalSummaryOptionData {
@@ -34,7 +37,10 @@ interface HospitalSummaryOptionData {
 }
 
 //리뷰 요약 옵션 리스트 조회 API
-export const getHospitalSummaryOption = async (): Promise<HospitalSummaryOptionData> => {
-  const { data } = await get<{ data: HospitalSummaryOptionData }>(API_PATH.HOSPITAL_SUMMARY_OPTION);
-  return data.data;
-};
+export const getHospitalSummaryOption =
+  async (): Promise<HospitalSummaryOptionData> => {
+    const { data } = await get<{ data: HospitalSummaryOptionData }>(
+      API_PATH.HOSPITAL_SUMMARY_OPTION
+    );
+    return data.data;
+  };
