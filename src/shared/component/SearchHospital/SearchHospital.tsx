@@ -84,7 +84,7 @@ const SearchHospital = (props: SearchHospitalProps) => {
   }, [debouncedSearchWord, refetch]);
 
   // 병원 목록 평탄화
-  const hospitals = data?.pages.flatMap((page) => page?.hospitals || []).map(mapToHospital) || [];
+  const hospitals = data?.pages.flatMap((page) => page?.data?.hospitals || []).map(mapToHospital) || [];
   useEffect(() => {
     const initialHospital = hospitals.find((hospital) => hospital.id === initialId);
     if (initialId && initialHospital) {
