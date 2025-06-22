@@ -1,4 +1,4 @@
-import {IcCocosM, IcHealing, IcHospital, IcSymptom} from "@asset/svg";
+import { IcCocosM, IcHealing, IcHospital, IcSymptom } from "@asset/svg";
 
 export const DropDownItems = [
   {
@@ -23,6 +23,6 @@ export const DropDownItems = [
     icon: <IcCocosM width={20} height={20} />,
     label: "코코스매거진",
     value: 4,
-    english: "cocos",
+    english: "magazine",
   },
 ];
