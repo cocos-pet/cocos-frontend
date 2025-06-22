@@ -127,7 +127,7 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: Hospit
             )}
           </div>
           <HospitalReview
-            handleHospitalDetailClick={() => handleHospitalDetailClick(review.id as number)}
+            handleHospitalDetailClick={() => handleHospitalDetailClick(review.hospitalId as number)}
             reviewData={review}
             isBlurred={isBlurred}
             isNoProfile={true}
