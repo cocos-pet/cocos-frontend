@@ -54,6 +54,7 @@ const MyPageContent = ({ tab }: MyPageContentPropTypes) => {
               commentCnt={data.commentCount}
               timeAgo={formatTime(data.createdAt as string)}
               onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${data.id}`)}
+              postImage={data.image}
             />
           </div>
         ));
