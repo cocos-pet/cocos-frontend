@@ -28,22 +28,24 @@ export const summarySubTitle = style([
 
 export const summaryGrid = style({
   display: "grid",
-  gridTemplateColumns: "1fr 1fr",
+  gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1fr)",
   gap: "1.6rem",
   padding: "1.2rem 2rem 1.2rem 2rem",
   width: "100%",
+  boxSizing: "border-box",
 });
 
 export const summarySection = style({
   display: "flex",
   flexDirection: "column",
-  gap: "1.2rem",
+  gap: "0.4rem",
+  minWidth: 0,
 });
 
 export const summaryContent = style({
   display: "flex",
   flexDirection: "column",
-  gap: "0.8rem",
+  gap: "0.4rem",
 });
 
 export const summarySectionTitle = style([
@@ -57,14 +59,27 @@ export const summarySectionTitle = style([
 
 export const summaryItem = style({
   display: "flex",
-  justifyContent: "space-between",
   padding: "0.8rem",
   alignItems: "center",
   alignSelf: "stretch",
   borderRadius: "0.8rem",
   border: "1px solid",
   borderColor: color.gray.gray100,
+  gap: "0.8rem",
+  minWidth: 0,
 });
+
+export const label = style([
+  font.body01,
+  {
+    color: color.gray.gray700,
+    whiteSpace: "nowrap",
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    flex: "1 1 auto",
+    minWidth: 0,
+  },
+]);
 
 export const goodCount = style([
   font.body01,

@@ -9,7 +9,10 @@ export interface InfoProps {
   phoneNumber?: string;
 }
 
-export default function Info({ name = "병원명 없음", phoneNumber = "전화번호 없음" }: InfoProps) {
+export default function Info({
+  name = "병원명 없음",
+  phoneNumber = "전화번호 없음",
+}: InfoProps) {
   const [showToast, setShowToast] = useState(false);
 
   const handleCopy = () => {
@@ -25,7 +28,9 @@ export default function Info({ name = "병원명 없음", phoneNumber = "전화�
         <h2 className={styles.infoName}>{name}</h2>
         <div className={styles.infoPhoneNumber}>
           {phoneNumber}
-          <IcCopy className={styles.copyIcon} onClick={handleCopy} />
+          {phoneNumber && phoneNumber !== "전화번호 없음" && (
+            <IcCopy className={styles.copyIcon} onClick={handleCopy} />
+          )}
         </div>
       </div>
       {showToast && <div className={styles.toast}>번호가 복사되었습니다.</div>}

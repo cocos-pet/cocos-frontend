@@ -20,3 +20,24 @@ export const locationText = style([
     color: color.gray.gray900,
   },
 ]);
+
+export const location = style({
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "space-between",
+  padding: "1.2rem 2rem",
+  backgroundColor: "white",
+});
+
+export const locationButton = style({
+  display: "flex",
+  alignItems: "center",
+  cursor: "pointer",
+});
+
+export const locationContent = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "0.6rem",
+  marginRight: "0.4rem",
+});
