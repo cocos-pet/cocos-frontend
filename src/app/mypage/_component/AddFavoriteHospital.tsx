@@ -21,14 +21,16 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
   };
 
   const handleCloseHospitalSearchBottomSheet = () => {
-    if (!selectedHospital?.id) return;
+    setIsHospitalSearchBottomSheetOpen(false);
+  };
 
+  const handleClickConfirm = () => {
+    if (!selectedHospital?.id) return;
     if (prevSelectedHospital.current?.id !== selectedHospital?.id) {
       prevSelectedHospital.current = selectedHospital;
       mutate(selectedHospital.id);
     }
-
-    setIsHospitalSearchBottomSheetOpen(false);
+    handleCloseHospitalSearchBottomSheet();
   };
 
   const handleSelectHospital = (hospital: Hospital | null) => {
@@ -58,6 +60,7 @@ const AddFavoriteHospital = ({ nickname }: AddFavoriteHospitalPropTypes) => {
       {/* 병원 검색 바텀시트 */}
       <SearchHospital
         active={isHospitalSearchBottomSheetOpen}
+        onConfirm={handleClickConfirm}
         onCloseBottomSheet={handleCloseHospitalSearchBottomSheet}
         selectedHospital={selectedHospital}
         onSelectHospital={handleSelectHospital}
