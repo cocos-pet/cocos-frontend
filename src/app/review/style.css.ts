@@ -112,10 +112,10 @@ export const hospitalWrapper = style({
 export const navWrapper = style({
   position: "fixed",
   bottom: 0,
-  left: 0,
-  right: 0,
-  zIndex: 100,
-  backgroundColor: "white",
+  zIndex: 10,
+  backgroundColor: "#fff",
+  width: "100%",
+  maxWidth: "76.8rem",
 });
 
 export const floatBtnWrapper = style({
