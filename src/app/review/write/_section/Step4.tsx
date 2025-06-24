@@ -19,6 +19,7 @@ interface Step4Props {
 
 const Step4 = ({ onPrev, onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const searchParams = useSearchParams();
   const rawHospitalId = searchParams?.get("hospitalId");
   const hospitalId = rawHospitalId ? Number(rawHospitalId) : undefined;
@@ -35,6 +36,12 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
   const { handleSubmit } = useFormContext<ReviewFormData>();
 
   const onValid = (data: ReviewFormData) => {
+    if (isSubmitting) {
+      console.log("[중단] 이미 제출 중입니다.");
+      return;
+    }
+
+    setIsSubmitting(true); // 제출 시작
     submitReview(
       {
         ...data,
@@ -68,9 +75,11 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
             );
 
             onNext();
+            setIsSubmitting(false); // 제출 완료 후 상태 해제
           } catch (uploadErr) {
             console.error("이미지 업로드 실패", uploadErr);
             alert("이미지 업로드에 실패했습니다.");
+            setIsSubmitting(false); // 실패 시 해제
           }
         },
 
@@ -80,6 +89,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
           } else {
             alert("리뷰 작성에 실패했습니다.");
           }
+          setIsSubmitting(false); // 실패 시 해제
         },
       },
     );
