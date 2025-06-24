@@ -37,7 +37,6 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
 
   const onValid = (data: ReviewFormData) => {
     if (isSubmitting) {
-      console.log("[중단] 이미 제출 중입니다.");
       return;
     }
 
