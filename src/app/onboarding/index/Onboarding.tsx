@@ -1,8 +1,13 @@
-import {useProtectedRoute} from "@route/useProtectedRoute";
+import { useProtectedRoute } from "@route/useProtectedRoute";
 import Nickname from "./component/nickname/Nickname";
 
 const Onboarding = () => {
-  useProtectedRoute();
+  const { isWillRedirect } = useProtectedRoute();
+
+  if (isWillRedirect) {
+    return null;
+  }
+
   return (
     <>
       <Nickname />
