@@ -23,6 +23,9 @@ export default function LocationHeader({
   onBottomSheetOpenChange,
 }: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
+    null
+  );
   const { data: memberLocation } = useGetMemberLocation();
 
   const handleBottomSheetOpen = () => {
@@ -36,19 +39,22 @@ export default function LocationHeader({
   };
 
   const handleLocationSelect = async (location: Location) => {
+    setSelectedLocation(location);
     onLocationChange(location);
     handleBottomSheetClose();
     await updateMemberLocation(location.id);
   };
+
+  // 표시할 위치 이름 결정
+  const displayLocationName =
+    selectedLocation?.name || memberLocation?.locationName || "위치 선택";
 
   return (
     <div className={styles.location}>
       <div className={styles.locationButton} onClick={handleBottomSheetOpen}>
         <div className={styles.locationContent}>
           <IcTarget width={20} />
-          <span className={styles.locationText}>
-            {memberLocation?.locationName || "위치 선택"}
-          </span>
+          <span className={styles.locationText}>{displayLocationName}</span>
         </div>
         <motion.div
           style={{ height: "20px" }}
