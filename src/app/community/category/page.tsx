@@ -17,6 +17,9 @@ import { postPostFiltersRequest } from "@api/domain/community/search";
 import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook";
 import dynamic from "next/dynamic";
 import NoData from "@shared/component/NoData/NoData.tsx";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "@common/component/Modal/Modal";
 
 const Loading = dynamic(() => import("../../../common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -33,6 +36,8 @@ const LoadingFallback = () => <Loading height={80} />;
 
 // 메인 컨텐츠 컴포넌트
 const CategoryContent = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   const searchParams = useSearchParams();
   const type = searchParams?.get("type");
   const typeId = searchParams?.get("id");
@@ -122,6 +127,21 @@ const CategoryContent = () => {
 
   const onSubmitClick = () => {
     fetchPostData();
+  };
+
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
+
+  const handleWriteClick = () => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    router.push(`/community/write?category=${type}`);
   };
 
   useEffect(() => {
@@ -218,11 +238,24 @@ const CategoryContent = () => {
 
         {type !== "magazine" && (
           <div className={styles.floatingBtnContainer}>
-            <FloatingBtn onClick={() => router.push(`/community/write?category=${type}`)} />
+            <FloatingBtn onClick={handleWriteClick} />
           </div>
         )}
       </div>
       <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </>
   );
 };
