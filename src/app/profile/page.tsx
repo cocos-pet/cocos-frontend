@@ -46,7 +46,7 @@ const ProfileContent = () => {
 
   return (
     <SuspenseWrapper>
-      <div style={{ position: "relative", height: "auto" }}>
+      <div className={styles.profileContainer}>
         {/* 헤더 섹션 */}
         <HeaderSection onNavigateBack={navigateBack} />
 

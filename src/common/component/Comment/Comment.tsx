@@ -67,6 +67,18 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
     router.push(`/profile?nickname=${nickname}`);
   };
 
+  const onSubCommentReplyClick = (nickname: string | undefined, id: number | undefined) => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    onCommentReplyClick?.(nickname, id);
+  };
+
   return (
     <div className={styles.commentItem} onClick={onModalClose}>
       <div className={styles.contentContainer}>
@@ -116,7 +128,7 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
             commentId={comment.id}
             subComments={comment.subComments}
             onCommentDelete={onDeleteClick}
-            onSubCommentReplyClick={onCommentReplyClick}
+            onSubCommentReplyClick={onSubCommentReplyClick}
             onModalClose={onModalClose}
           />
         </div>

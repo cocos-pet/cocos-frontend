@@ -7,6 +7,7 @@ import { useEffect, useState, useRef, useCallback } from "react";
 import { useDebounce } from "@shared/hook/useDebounce";
 import { useInfiniteHospitalList } from "@api/shared/hook";
 import { components } from "@type/schema";
+import { usePathname } from "next/navigation";
 
 type HospitalResponse = components["schemas"]["HospitalResponse"];
 
@@ -25,8 +26,9 @@ interface SearchHospitalProps {
   onCloseBottomSheet: () => void;
   selectedHospital: Hospital | null;
   onSelectHospital: (hospital: Hospital | null) => void;
-  locationId?: number; // 지역 ID (옵션)
-  locationType?: "CITY" | "DISTRICT"; // 지역 타입 (옵션)
+  onConfirm?: () => void;
+  locationId?: number; // 지역 ID (옵션) - 병원 리뷰에서는 보내면 안됨
+  locationType?: "CITY" | "DISTRICT"; // 지역 타입 (옵션) - 병원 리뷰에서는 보내면 안됨
 }
 
 const SearchHospital = (props: SearchHospitalProps) => {
@@ -36,9 +38,13 @@ const SearchHospital = (props: SearchHospitalProps) => {
     onCloseBottomSheet,
     selectedHospital,
     onSelectHospital,
+    onConfirm,
     locationId = 1,
     locationType = "CITY",
   } = props;
+
+  const pathName = usePathname();
+  const isReview = pathName?.includes("review");
 
   // 스크롤 방지
   useEffect(() => {
@@ -70,8 +76,8 @@ const SearchHospital = (props: SearchHospitalProps) => {
   // useInfiniteQuery를 사용하여 병원 목록 가져오기
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, refetch } = useInfiniteHospitalList(
     {
-      locationId,
-      locationType,
+      locationId: isReview ? undefined : locationId,
+      locationType: isReview ? undefined : locationType,
       keyword: debouncedSearchWord || undefined,
       size: 10,
       sortBy: debouncedSearchWord ? undefined : "REVIEW",
@@ -194,7 +200,7 @@ const SearchHospital = (props: SearchHospitalProps) => {
             size="large"
             variant="solidPrimary"
             disabled={!selectedHospital}
-            onClick={onCloseBottomSheet}
+            onClick={onConfirm ?? onCloseBottomSheet}
           />
           <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} onClick={handleCancelSearch} />
         </div>

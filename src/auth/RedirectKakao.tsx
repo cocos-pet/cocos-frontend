@@ -2,10 +2,12 @@ import { API_PATH } from "@api/constants/apiPath";
 import { useNavigate } from "react-router-dom";
 import { paths } from "@type/schema";
 import Loading from "@common/component/Loading/Loading";
+import { useAuth } from "@providers/AuthProvider";
 
 const RedirectKakao = () => {
   const navigate = useNavigate();
   const code = new URL(window.location.href).searchParams.get("code"); // URL에서 인가 코드 파싱
+  const { login } = useAuth();
 
   type responseType = paths["/api/dev/members/login"]["post"]["responses"]["200"]["content"]["*/*"];
 
@@ -37,6 +39,7 @@ const RedirectKakao = () => {
         }),
       );
 
+      login();
       navigate("/onboarding");
     } catch (e) {
       console.log(e);

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import KakaoMap from "../KakaoMap/KakaoMap";
+import MapComponent from "../MapComponent/MapComponent";
 import * as styles from "./InfoContent.css";
 import { IcCopy } from "@asset/svg";
 import { useGetHospitalDetail } from "@api/domain/review/hospital-detail/hook";
@@ -63,11 +63,7 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
       {showToast && <div className={styles.toast}>주소가 복사되었습니다.</div>}
 
       <div className={styles.mapWrapper}>
-        <KakaoMap
-          address={hospitalData.address || ""}
-          latitude={35.1657}
-          longitude={126.8531}
-        />
+        <MapComponent address={hospitalData.address || ""} />
       </div>
     </div>
   );

@@ -12,7 +12,9 @@ import { useGetHospitalSearch } from "@api/domain/hospitals/search/hook";
 import { PATH } from "@route/path.ts";
 import { Hospital } from "@api/domain/hospitals/search";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 function HospitalSearchDoneContent() {
   const searchParams = useSearchParams();
@@ -45,7 +47,9 @@ function HospitalSearchDoneContent() {
     }
   };
 
-  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
+  const onTextFieldClear = (
+    e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>
+  ) => {
     e.stopPropagation();
     setSearchText("");
     router.push(PATH.REVIEW.SEARCH);
@@ -66,7 +70,11 @@ function HospitalSearchDoneContent() {
   }
 
   if (isError) {
-    return <div className={styles.noSearchData}>에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</div>;
+    return (
+      <div className={styles.noSearchData}>
+        에러가 발생했습니다. 잠시 후 다시 시도해 주세요.
+      </div>
+    );
   }
 
   return (
@@ -92,7 +100,9 @@ function HospitalSearchDoneContent() {
             width={276}
             height={155}
           />
-          <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
+          <span className={styles.noSearchText}>
+            검색 결과를 찾지 못했어요.
+          </span>
           <span className={styles.noSearchRecommendText}>
             {"검색어를 확인하거나"}
             <br />
@@ -111,11 +121,16 @@ function HospitalSearchDoneContent() {
                 <div className={styles.hospitalText}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
                   <p className={styles.hospitalAddress}>
-                    {hospital.address} 리뷰 {hospital.reviewCount}{" "}
+                    {hospital.address} · 리뷰 {hospital.reviewCount}{" "}
                   </p>
                 </div>
                 <div className={styles.hospitalImage}>
-                  <Image src={hospital.image || defaultImage} alt={hospital.name} width={100} height={100} />
+                  <Image
+                    src={hospital.image || defaultImage}
+                    alt={hospital.name}
+                    width={100}
+                    height={100}
+                  />
                 </div>
               </div>
               <Divider size="small" />
