@@ -1,6 +1,6 @@
 import * as styles from "./locationHeader.css";
 import { IcChevronDown, IcTarget } from "@asset/svg";
-import { useState } from "react";
+import { useState, Dispatch, SetStateAction } from "react";
 import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
 import { useGetMemberLocation } from "@api/domain/review/location/hook";
 import { motion } from "framer-motion";
@@ -15,26 +15,35 @@ interface Location {
 
 interface LocationHeaderProps {
   onLocationChange: (location: Location) => void;
+  onBottomSheetOpenChange: Dispatch<SetStateAction<boolean>>;
 }
 
 export default function LocationHeader({
   onLocationChange,
+  onBottomSheetOpenChange,
 }: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const { data: memberLocation } = useGetMemberLocation();
 
+  const handleBottomSheetOpen = () => {
+    setIsBottomSheetOpen(true);
+    onBottomSheetOpenChange(true);
+  };
+
+  const handleBottomSheetClose = () => {
+    setIsBottomSheetOpen(false);
+    onBottomSheetOpenChange(false);
+  };
+
   const handleLocationSelect = async (location: Location) => {
     onLocationChange(location);
-    setIsBottomSheetOpen(false);
+    handleBottomSheetClose();
     await updateMemberLocation(location.id);
   };
 
   return (
     <div className={styles.location}>
-      <div
-        className={styles.locationButton}
-        onClick={() => setIsBottomSheetOpen(true)}
-      >
+      <div className={styles.locationButton} onClick={handleBottomSheetOpen}>
         <div className={styles.locationContent}>
           <IcTarget width={20} />
           <span className={styles.locationText}>
@@ -51,7 +60,7 @@ export default function LocationHeader({
       </div>
       <LocationBottomSheet
         isOpen={isBottomSheetOpen}
-        onClose={() => setIsBottomSheetOpen(false)}
+        onClose={handleBottomSheetClose}
         onLocationSelect={handleLocationSelect}
       />
     </div>

@@ -32,6 +32,7 @@ export default function ReviewPage() {
   const nickname = userData?.nickname;
   const [searchText, setSearchText] = useState("");
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLocationSheetOpen, setIsLocationSheetOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const isPetRegistered = useIsPetRegistered();
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
@@ -75,7 +76,10 @@ export default function ReviewPage() {
 
   return (
     <div>
-      <LocationHeader onLocationChange={handleLocationChange} />
+      <LocationHeader
+        onLocationChange={handleLocationChange}
+        onBottomSheetOpenChange={setIsLocationSheetOpen}
+      />
 
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
@@ -133,9 +137,11 @@ export default function ReviewPage() {
             />
           </div>
         </div>
-        <div className={styles.floatBtnWrapper}>
-          <FloatingBtn onClick={handleFloatingBtnClick} />
-        </div>
+        {!isLocationSheetOpen && (
+          <div className={styles.floatBtnWrapper}>
+            <FloatingBtn onClick={handleFloatingBtnClick} />
+          </div>
+        )}
         <div className={styles.navWrapper}>
           <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
