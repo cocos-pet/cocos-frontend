@@ -23,10 +23,7 @@ import { Modal } from "@common/component/Modal/Modal.tsx";
 interface Location {
   id: number;
   name: string;
-  districts?: {
-    id: number;
-    name: string;
-  }[];
+  type: "CITY" | "DISTRICT";
 }
 
 export default function ReviewPage() {
