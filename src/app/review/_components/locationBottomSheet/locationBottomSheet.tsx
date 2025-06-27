@@ -5,11 +5,7 @@ import { Button } from "@common/component/Button";
 import { IcCheck } from "@asset/svg";
 import { CityTab } from "./CityTab";
 import { useGetLocation } from "@api/domain/review/location/hook";
-import {
-  City,
-  District,
-  LocationType,
-} from "@api/domain/review/location/types";
+import { District, LocationType } from "@api/domain/review/location/types";
 
 interface LocationBottomSheetProps {
   isOpen: boolean;
@@ -49,7 +45,7 @@ export default function LocationBottomSheet({
   const selectedCity =
     cities.find((city) => city.id === selectedCityId) || cities[0];
 
-  // 고유한 키를 생성하는 함수
+  // 고유한 키를 생성하는 함수 -> 중복 방지
   const generateDistrictKey = (
     cityId: number,
     district: District,
