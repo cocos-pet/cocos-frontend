@@ -1,6 +1,6 @@
 "use client";
 
-import HospitalReview from "@shared/component/ReviewItem/ReviewItem";
+import HospitalReview from "@shared/component/HospitalReview/HospitalReview";
 import * as styles from "./RecentView.css";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
@@ -97,8 +97,8 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
     router.push(PATH.REVIEW.AGREE);
   };
 
-  const reviews = data?.pages.flatMap((page) => page.reviews) || [];
-  const totalReviewCount = data?.pages[0]?.reviewCount || 0;
+  const reviews = data?.pages.flat() || [];
+  const totalReviewCount = reviews.length;
 
   return (
     <div className={styles.recentViewContainer}>
@@ -119,68 +119,24 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       <div>
         {reviews.length > 0 ? (
           <>
-            {reviews.map(
-              (
-                review: components["schemas"]["HospitalReviewResponse"],
-                index: number
-              ) => (
-                <div
-                  key={review.id}
-                  onClick={() =>
-                    !isAuthenticated && index >= 3 && handleLoginClick()
+            {reviews.map((review, index) => (
+              <div
+                key={review.id}
+                onClick={() =>
+                  !isAuthenticated && index >= 3 && handleLoginClick()
+                }
+              >
+                <HospitalReview
+                  handleProfileClick={() =>
+                    review.memberId && handleProfileClick(review.memberId)
                   }
-                >
-                  <HospitalReview
-                    handleProfileClick={() =>
-                      review.memberId && handleProfileClick(review.memberId)
-                    }
-                    handleHospitalDetailClick={handleHospitalDetailClick}
-                    reviewData={{
-                      id: review.id ?? 0,
-                      memberId: review.memberId ?? 0,
-                      nickname: review.nickname ?? "",
-                      breed: review.memberBreed ?? "",
-                      breedName: review.memberBreed ?? "",
-                      petAge: review.age ?? 0,
-                      petDisease: review.disease ?? "",
-                      vistitedAt: review.visitedAt ?? "",
-                      hospitalId: review.hospitalId ?? 0,
-                      hospitalName: review.hospitalName ?? "",
-                      hospitalAddress: review.hospitalAddress ?? "",
-                      content: review.content ?? "",
-                      goodReviews:
-                        review.reviewSummary?.goodReviews?.map(
-                          (item: ReviewSummaryItem) => ({
-                            id: item.id ?? 0,
-                            name: item.label ?? "",
-                          })
-                        ) ?? [],
-                      badReviews:
-                        review.reviewSummary?.badReviews?.map(
-                          (item: ReviewSummaryItem) => ({
-                            id: item.id ?? 0,
-                            name: item.label ?? "",
-                          })
-                        ) ?? [],
-                      images: review.images ?? [],
-                      symptoms:
-                        review.symptoms?.map((symptom: string) => ({
-                          id: 0,
-                          name: symptom,
-                        })) ?? [],
-                      diseases: review.disease
-                        ? [{ id: 1, name: review.disease }]
-                        : [],
-                      animal: review.animal ?? "",
-                      gender: review.gender ?? "",
-                      weight: review.weight ?? 0,
-                    }}
-                    isBlurred={!isAuthenticated && index >= 3}
-                  />
-                  {index < reviews.length - 1 && <Divider size="small" />}
-                </div>
-              )
-            )}
+                  handleHospitalDetailClick={handleHospitalDetailClick}
+                  reviewData={review}
+                  isBlurred={!isAuthenticated && index >= 3}
+                />
+                {index < reviews.length - 1 && <Divider size="small" />}
+              </div>
+            ))}
             {hasNextPage && (
               <div ref={loadMoreRef} style={{ height: "10px" }} />
             )}

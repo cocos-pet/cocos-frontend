@@ -32,7 +32,7 @@ export const useGetReviewSummaryOption = () => {
 };
 
 export const useInfiniteHospitalReviews = (hospitalId: number) => {
-  return useInfiniteQuery<postHospitalReviewsResponseData>({
+  return useInfiniteQuery<postHospitalReviewsResponseData[]>({
     queryKey: ["hospitalReviews", hospitalId],
     queryFn: ({ pageParam }) => {
       return postHospitalReviews({
@@ -42,8 +42,8 @@ export const useInfiniteHospitalReviews = (hospitalId: number) => {
       });
     },
     getNextPageParam: (lastPage) => {
-      if (lastPage.reviews.length === 0) return undefined;
-      return lastPage.cursorId;
+      if (lastPage.length === 0) return undefined;
+      return lastPage[lastPage.length - 1].id;
     },
     initialPageParam: undefined,
   });
