@@ -119,24 +119,52 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       <div>
         {reviews.length > 0 ? (
           <>
-            {reviews.map((review, index) => (
-              <div
-                key={review.id}
-                onClick={() =>
-                  !isAuthenticated && index >= 3 && handleLoginClick()
-                }
-              >
-                <HospitalReview
-                  handleProfileClick={() =>
-                    review.memberId && handleProfileClick(review.memberId)
+            {reviews.map(
+              (
+                review: components["schemas"]["HospitalReviewResponse"],
+                index: number
+              ) => (
+                <div
+                  key={review.id}
+                  onClick={() =>
+                    !isAuthenticated && index >= 3 && handleLoginClick()
                   }
-                  handleHospitalDetailClick={handleHospitalDetailClick}
-                  reviewData={review}
-                  isBlurred={!isAuthenticated && index >= 3}
-                />
-                {index < reviews.length - 1 && <Divider size="small" />}
-              </div>
-            ))}
+                >
+                  <HospitalReview
+                    handleProfileClick={() =>
+                      review.memberId && handleProfileClick(review.memberId)
+                    }
+                    handleHospitalDetailClick={handleHospitalDetailClick}
+                    reviewData={{
+                      id: review.id ?? 0,
+                      memberId: review.memberId ?? 0,
+                      nickname: review.nickname ?? "",
+                      breed: review.memberBreed ?? "",
+                      memberBreed: review.memberBreed ?? "",
+                      age: review.age ?? 0,
+                      disease: review.disease ?? "",
+                      visitedAt: review.visitedAt ?? "",
+                      hospitalId: review.hospitalId ?? 0,
+                      hospitalName: review.hospitalName ?? "",
+                      hospitalAddress: review.hospitalAddress ?? "",
+                      content: review.content ?? "",
+                      visitPurpose: review.visitPurpose ?? "",
+                      reviewSummary: {
+                        goodReviews: review.reviewSummary?.goodReviews ?? [],
+                        badReviews: review.reviewSummary?.badReviews ?? [],
+                      },
+                      images: review.images ?? [],
+                      symptoms: review.symptoms ?? [],
+                      animal: review.animal ?? "",
+                      gender: review.gender || "M",
+                      weight: review.weight ?? 0,
+                    }}
+                    isBlurred={!isAuthenticated && index >= 3}
+                  />
+                  {index < reviews.length - 1 && <Divider size="small" />}
+                </div>
+              )
+            )}
             {hasNextPage && (
               <div ref={loadMoreRef} style={{ height: "10px" }} />
             )}

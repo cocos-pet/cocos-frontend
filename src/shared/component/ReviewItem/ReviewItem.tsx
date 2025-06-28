@@ -22,6 +22,7 @@ export interface ReviewItemType {
   hospitalName: string;
   hospitalAddress: string;
   content: string;
+  visitPurpose: string;
   goodReviews: ReadonlyArray<{ id: number; name: string }>;
   badReviews: ReadonlyArray<{ id: number; name: string }>;
   images: ReadonlyArray<string>;
@@ -48,7 +49,12 @@ interface propsType {
  * @param isBlurred 리뷰가 블러 처리되어야 하는지 여부
  */
 const HospitalReview = (props: propsType) => {
-  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false } = props;
+  const {
+    handleProfileClick,
+    handleHospitalDetailClick,
+    reviewData,
+    isBlurred = false,
+  } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -75,11 +81,22 @@ const HospitalReview = (props: propsType) => {
         petAge={reviewData.petAge}
       />
       <article className={isBlurred ? styles.blurEffect : undefined}>
-        <div className={styles.hospitalDetail} onClick={handleHospitalDetailClick}>
+        <div
+          className={styles.hospitalDetail}
+          onClick={handleHospitalDetailClick}
+        >
           <div className={styles.hospitalName}>{reviewData.hospitalName}</div>
-          <div className={styles.hospitalAddress}>{reviewData.hospitalAddress}</div>
+          <div className={styles.hospitalAddress}>
+            {reviewData.hospitalAddress}
+          </div>
         </div>
-        <div className={isExpanded ? styles.reviewContentExpanded : styles.reviewContent}>{reviewData.content}</div>
+        <div
+          className={
+            isExpanded ? styles.reviewContentExpanded : styles.reviewContent
+          }
+        >
+          {reviewData.content}
+        </div>
         <motion.div
           initial={false}
           animate={{
@@ -90,8 +107,16 @@ const HospitalReview = (props: propsType) => {
           transition={{ duration: 0.3 }}
         >
           <div className={styles.detailSection}>
-            <ChipSection title="사전증상" items={reviewData.symptoms} color="border" />
-            <ChipSection title="진단 내용" items={reviewData.diseases} color="border" />
+            <ChipSection
+              title="사전증상"
+              items={reviewData.symptoms}
+              color="border"
+            />
+            <ChipSection
+              title="진단 내용"
+              items={reviewData.diseases}
+              color="border"
+            />
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
