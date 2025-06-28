@@ -8,13 +8,28 @@ import { components, paths } from "src/type/schema";
 
 export type postHospitalReviewsResponse =
   paths["/api/dev/hospitals/reviews/filter"]["post"]["responses"]["200"]["content"]["*/*"];
-export type postHospitalReviewsResponseData = components["schemas"]["HospitalReviewResponse"];
+
+export interface postHospitalReviewsResponseData {
+  reviewCount: number;
+  cursorId: number;
+  reviews: components["schemas"]["HospitalReviewResponse"][];
+}
+
 export type postHospitalReviewsRequest =
   paths["/api/dev/hospitals/reviews/filter"]["post"]["requestBody"]["content"]["application/json"];
 
-export const postHospitalReviews = async (payload: postHospitalReviewsRequest) => {
-  const { data } = await post<postHospitalReviewsResponse>(API_PATH.HOSPITAL_FILTERS, payload);
-  return data.data?.reviews || [];
+export const postHospitalReviews = async (
+  payload: postHospitalReviewsRequest
+) => {
+  const { data } = await post<postHospitalReviewsResponse>(
+    API_PATH.HOSPITAL_FILTERS,
+    payload
+  );
+  return {
+    reviewCount: data.data?.reviewCount || 0,
+    cursorId: data.data?.cursorId || 0,
+    reviews: data.data?.reviews || [],
+  };
 };
 
 /**
@@ -25,6 +40,8 @@ export type getReviewSummaryOptionResponse =
   paths["/api/dev/hospitals/reviews/summary/option"]["get"]["responses"]["200"]["content"]["*/*"];
 
 export const getReviewSummaryOption = async () => {
-  const { data } = await get<getReviewSummaryOptionResponse>(API_PATH.HOSPITAL_SUMMARY_OPTION);
+  const { data } = await get<getReviewSummaryOptionResponse>(
+    API_PATH.HOSPITAL_SUMMARY_OPTION
+  );
   return data.data;
 };

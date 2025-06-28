@@ -4,17 +4,22 @@ import HospitalReview from "@shared/component/ReviewItem/ReviewItem";
 import * as styles from "./RecentView.css";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
-import { usePostHospitalReviews } from "@api/domain/community/detail/hook";
-import { useEffect, useState } from "react";
-import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
+import { useInfiniteHospitalReviews } from "@api/domain/community/detail/hook";
+import { useEffect, useRef, useCallback, useState } from "react";
+import { components } from "src/type/schema";
 import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import Divider from "@common/component/Divider/Divider";
 import { Modal } from "@common/component/Modal/Modal";
-import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import Image from "next/image";
 import no_review from "@asset/image/no_review.png";
 import { Button } from "@common/component/Button";
+
+interface ReviewSummaryItem {
+  id?: number;
+  label?: string;
+}
 
 interface RecentViewProps {
   hospitalId: number;
@@ -25,14 +30,35 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   const { isAuthenticated } = useAuth();
   const isPetRegistered = useIsPetRegistered();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const { mutate: getReviews, data: reviewsData } = usePostHospitalReviews();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
+
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteHospitalReviews(hospitalId);
 
   useEffect(() => {
-    getReviews({
-      hospitalId: hospitalId,
-      size: 5,
+    const element = loadMoreRef.current;
+    if (!element || !hasNextPage) return;
+
+    const handleObserver = (entries: IntersectionObserverEntry[]) => {
+      const [target] = entries;
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    };
+
+    observerRef.current = new IntersectionObserver(handleObserver, {
+      threshold: 0.1,
     });
-  }, [hospitalId, getReviews]);
+
+    observerRef.current.observe(element);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
 
   const handleProfileClick = (memberId: number) => {
     if (memberId) {
@@ -45,7 +71,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   };
 
   const handleMoreClick = () => {
-    router.push(`${PATH.HOSPITAL.ROOT}/${hospitalId}/reviews`);
+    router.push(`${PATH.HOSPITAL.ROOT}/${hospitalId}/more-reviews`);
   };
 
   const handleLoginClick = () => {
@@ -71,19 +97,19 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
     router.push(PATH.REVIEW.AGREE);
   };
 
-  const reviews = reviewsData || [];
-  const reviewCount = reviews.length;
+  const reviews = data?.pages.flatMap((page) => page.reviews) || [];
+  const totalReviewCount = data?.pages[0]?.reviewCount || 0;
 
   return (
     <div className={styles.recentViewContainer}>
       <div className={styles.headerRow}>
         <div className={styles.headerLeft}>
           <span className={styles.recentViewTitle}>최근 많이 본 리뷰</span>
-          {reviewCount > 0 && (
-            <span className={styles.reviewCount}>+{reviewCount}</span>
+          {totalReviewCount > 0 && (
+            <span className={styles.reviewCount}>+{totalReviewCount}</span>
           )}
         </div>
-        {reviewCount > 0 && (
+        {totalReviewCount > 0 && (
           <button className={styles.headerMore} onClick={handleMoreClick}>
             리뷰 더보기 &nbsp; &gt;
           </button>
@@ -91,62 +117,74 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       </div>
 
       <div>
-        {reviewCount > 0 ? (
-          reviews.map(
-            (review: postHospitalReviewsResponseData, index: number) => (
-              <div
-                key={review.id}
-                onClick={() =>
-                  !isAuthenticated && index >= 3 && handleLoginClick()
-                }
-              >
-                <HospitalReview
-                  handleProfileClick={() =>
-                    review.memberId && handleProfileClick(review.memberId)
+        {reviews.length > 0 ? (
+          <>
+            {reviews.map(
+              (
+                review: components["schemas"]["HospitalReviewResponse"],
+                index: number
+              ) => (
+                <div
+                  key={review.id}
+                  onClick={() =>
+                    !isAuthenticated && index >= 3 && handleLoginClick()
                   }
-                  handleHospitalDetailClick={handleHospitalDetailClick}
-                  reviewData={{
-                    id: review.id ?? 0,
-                    memberId: review.memberId ?? 0,
-                    nickname: review.nickname ?? "",
-                    breed: review.memberBreed ?? "",
-                    breedName: review.memberBreed ?? "",
-                    petAge: review.age ?? 0,
-                    petDisease: review.disease ?? "",
-                    vistitedAt: review.visitedAt ?? "",
-                    hospitalId: review.hospitalId ?? 0,
-                    hospitalName: review.hospitalName ?? "",
-                    hospitalAddress: review.hospitalAddress ?? "",
-                    content: review.content ?? "",
-                    goodReviews:
-                      review.reviewSummary?.goodReviews?.map((item) => ({
-                        id: item.id ?? 0,
-                        name: item.label ?? "",
-                      })) ?? [],
-                    badReviews:
-                      review.reviewSummary?.badReviews?.map((item) => ({
-                        id: item.id ?? 0,
-                        name: item.label ?? "",
-                      })) ?? [],
-                    images: review.images ?? [],
-                    symptoms:
-                      review.symptoms?.map((symptom) => ({
-                        id: 0,
-                        name: symptom,
-                      })) ?? [],
-                    diseases: review.disease
-                      ? [{ id: 1, name: review.disease }]
-                      : [],
-                    animal: review.animal ?? "",
-                    gender: review.gender ?? "",
-                    weight: review.weight ?? 0,
-                  }}
-                  isBlurred={!isAuthenticated && index >= 3}
-                />
-                {index < reviews.length - 1 && <Divider size="small" />}
-              </div>
-            )
-          )
+                >
+                  <HospitalReview
+                    handleProfileClick={() =>
+                      review.memberId && handleProfileClick(review.memberId)
+                    }
+                    handleHospitalDetailClick={handleHospitalDetailClick}
+                    reviewData={{
+                      id: review.id ?? 0,
+                      memberId: review.memberId ?? 0,
+                      nickname: review.nickname ?? "",
+                      breed: review.memberBreed ?? "",
+                      breedName: review.memberBreed ?? "",
+                      petAge: review.age ?? 0,
+                      petDisease: review.disease ?? "",
+                      vistitedAt: review.visitedAt ?? "",
+                      hospitalId: review.hospitalId ?? 0,
+                      hospitalName: review.hospitalName ?? "",
+                      hospitalAddress: review.hospitalAddress ?? "",
+                      content: review.content ?? "",
+                      goodReviews:
+                        review.reviewSummary?.goodReviews?.map(
+                          (item: ReviewSummaryItem) => ({
+                            id: item.id ?? 0,
+                            name: item.label ?? "",
+                          })
+                        ) ?? [],
+                      badReviews:
+                        review.reviewSummary?.badReviews?.map(
+                          (item: ReviewSummaryItem) => ({
+                            id: item.id ?? 0,
+                            name: item.label ?? "",
+                          })
+                        ) ?? [],
+                      images: review.images ?? [],
+                      symptoms:
+                        review.symptoms?.map((symptom: string) => ({
+                          id: 0,
+                          name: symptom,
+                        })) ?? [],
+                      diseases: review.disease
+                        ? [{ id: 1, name: review.disease }]
+                        : [],
+                      animal: review.animal ?? "",
+                      gender: review.gender ?? "",
+                      weight: review.weight ?? 0,
+                    }}
+                    isBlurred={!isAuthenticated && index >= 3}
+                  />
+                  {index < reviews.length - 1 && <Divider size="small" />}
+                </div>
+              )
+            )}
+            {hasNextPage && (
+              <div ref={loadMoreRef} style={{ height: "10px" }} />
+            )}
+          </>
         ) : (
           <div className={styles.noReviewContainer}>
             <div className={styles.imageContainer}>
@@ -173,7 +211,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
         </div>
       )}
 
-      {isAuthenticated && reviewCount > 0 && (
+      {isAuthenticated && reviews.length > 0 && (
         <div className={styles.floatBtnWrapper}>
           <FloatingBtn onClick={handleFloatingBtnClick} />
         </div>

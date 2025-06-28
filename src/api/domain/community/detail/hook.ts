@@ -1,8 +1,9 @@
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useInfiniteQuery } from "@tanstack/react-query";
 import {
   getReviewSummaryOption,
   postHospitalReviews,
   postHospitalReviewsRequest,
+  postHospitalReviewsResponseData,
 } from "@api/domain/community/detail/index.ts";
 
 const HOSPITAL_REVIEW_KEY = {
@@ -27,5 +28,23 @@ export const useGetReviewSummaryOption = () => {
   return useQuery({
     queryKey: HOSPITAL_REVIEW_KEY.REVIEW_SUMMARY_OPTION(),
     queryFn: getReviewSummaryOption,
+  });
+};
+
+export const useInfiniteHospitalReviews = (hospitalId: number) => {
+  return useInfiniteQuery<postHospitalReviewsResponseData>({
+    queryKey: ["hospitalReviews", hospitalId],
+    queryFn: ({ pageParam }) => {
+      return postHospitalReviews({
+        hospitalId,
+        cursorId: pageParam as number | undefined,
+        size: 5,
+      });
+    },
+    getNextPageParam: (lastPage) => {
+      if (lastPage.reviews.length === 0) return undefined;
+      return lastPage.cursorId;
+    },
+    initialPageParam: undefined,
   });
 };
