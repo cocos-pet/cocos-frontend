@@ -31,16 +31,6 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
 
   const isPetRegistered = useIsPetRegistered();
 
-  // useEffect(() => {
-  //   // 등록된 반려동물이 있는 경우 진입 불가
-  //   if (isPetRegistered) {
-  //     console.log("isPetRegistered 값:", isPetRegistered);
-  //     alert("이미 반려동물이 등록되어 있습니다.");
-
-  //     window.history.go(-1);
-  //   }
-  // }, [isPetRegistered]);
-
   useEffect(() => {
     if (isPetRegistered) {
       alert("이미 반려동물이 등록되어 있습니다.");
