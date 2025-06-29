@@ -48,6 +48,7 @@ const DirectMyPetInfo = ({
     const formatted =
       trimmedInt === "" && input.startsWith(".") ? `0.${decimal}` : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
     onChange(formatted);
+    setValue("weight", formatted === "" ? -1 : Number(formatted));
   };
 
   // 텍스트 필드 분기 결정
