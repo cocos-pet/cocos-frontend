@@ -332,7 +332,7 @@ const WriteContent = () => {
               </React.Fragment>
             ))}
           </WriteInputSection>
-          <Spacing marginBottom={"13.5"} />
+          {/*<Spacing marginBottom={"13.5"} />*/}
         </div>
         {/* 바닥 버튼 영역 */}
         <div className={bottomButton}>
