@@ -51,7 +51,7 @@ interface writeProps {
 const WriteContent = () => {
   //빌테용
   const searchParams = useSearchParams();
-  const category = searchParams.get("category");
+  const category = searchParams?.get("category");
   const router = useRouter();
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
