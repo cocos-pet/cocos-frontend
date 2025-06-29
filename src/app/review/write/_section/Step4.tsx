@@ -44,7 +44,10 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
       {
         onSuccess: async (res) => {
           const presignedUrls = res?.data?.data?.images;
+
+          // 이미지가 없으면 바로 다음 단계로 이동
           if (!presignedUrls || presignedUrls.length === 0) {
+            onNext();
             return;
           }
 
@@ -65,7 +68,6 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
                 });
               }),
             );
-
             onNext();
           } catch (uploadErr) {
             console.error("이미지 업로드 실패", uploadErr);
