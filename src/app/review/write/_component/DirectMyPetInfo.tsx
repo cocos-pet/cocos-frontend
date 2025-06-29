@@ -59,10 +59,11 @@ const DirectMyPetInfo = ({
   };
 
   // 종류 조회 api 연동시 종 정보를 보내야함
-  const breedId = Number(watch("breedId"));
   const inferredPetId = useMemo(() => {
-    return breedId > 0 ? (breedId < 230 ? 2 : 1) : -1;
-  }, [breedId]);
+    if (petType === "고양이") return 1;
+    if (petType === "강아지") return 2;
+    return -1;
+  }, [petType]);
 
   // api
   const { data: breedIdData } = usePetIdGet(inferredPetId ?? 2);
@@ -75,7 +76,12 @@ const DirectMyPetInfo = ({
           <span>종</span>
           <TextField
             value={petType}
-            onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
+            onClick={() => {
+              setActiveDropDown((prev) => (prev === "petType" ? null : "petType"));
+              setValue("breedId", -1); // 종 선택 시 breedId 초기화 (내 동물 정보에서 불러오기 먼저 클릭한 경우 초기화하기 위함)
+              setBreedInput(""); // 입력값도 초기화
+              setIsBreedInputTouched(false); // 입력 상태도 초기화
+            }}
             placeholder="종 선택하기"
             isDelete={false}
             state={getState("petType", petType)}
