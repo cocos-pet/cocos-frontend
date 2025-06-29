@@ -32,7 +32,7 @@ interface SearchDonePropTypes {
 
 function SearchDoneContent() {
   const searchParams = useSearchParams();
-  const query = searchParams.get("searchText");
+  const query = searchParams?.get("searchText");
   const [isFilterActive, setIsFilterActive] = useState(false);
   const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
   const [searchText, setSearchText] = useState(query || "");
@@ -110,7 +110,7 @@ function SearchDoneContent() {
 
   const onTextFieldClick = () => {
     clearAllChips();
-    router.push(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
+    router.push(PATH.COMMUNITY.SEARCH);
   };
 
   const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {

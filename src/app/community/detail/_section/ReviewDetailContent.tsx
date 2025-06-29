@@ -58,14 +58,15 @@ const ReviewDetailContent = () => {
     router.push(PATH.LOGIN);
   };
 
-  const postReviews = (location?: number, summaryOptionId?: number) => {
+  const postReviews = (location?: LocationFilterType, summaryOptionId?: number) => {
     if (!bodyId) return;
+    console.log(location);
 
     postHospitalReviews(
       {
         size: PAGE_SIZE,
-        locationId: location ?? DEFAULT_LOCATION_ID,
-        locationType: "DISTRICT",
+        locationId: location?.id ?? DEFAULT_LOCATION_ID,
+        locationType: location?.type,
         bodyId: Number(bodyId),
         summaryOptionId,
       },
@@ -92,7 +93,7 @@ const ReviewDetailContent = () => {
       ...prev,
       location,
     }));
-    postReviews(location.id);
+    postReviews(location);
   };
 
   const handleRefresh = () => {
@@ -102,7 +103,7 @@ const ReviewDetailContent = () => {
       filterType: undefined,
     }));
     setIsReviewFilterOpen(false);
-    postReviews(filterState.location?.id);
+    postReviews(filterState.location || undefined);
   };
 
   const handleHospitalReviewClick = () => {

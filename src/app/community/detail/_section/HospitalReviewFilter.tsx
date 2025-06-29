@@ -5,14 +5,15 @@ import Chip from "@common/component/Chip/Chip.tsx";
 import { color } from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
-import React, { useState } from "react";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
 import { useAuth } from "@providers/AuthProvider.tsx";
+import { LocationType } from "@api/domain/review/location/types.ts";
 
 export interface LocationFilterType {
   id: number;
   name: string;
+  type: LocationType;
 }
 
 interface HospitalReviewFilterPropsType {
