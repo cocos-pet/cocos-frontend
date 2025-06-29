@@ -3,7 +3,7 @@ import { IcDeleteBlack } from "@asset/svg/index";
 import { Button } from "@common/component/Button";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "../page";
+import { ReviewFormData, ReviewFormWithUIData } from "../page";
 import { useReviewPost } from "@app/api/review/write/submit/hook";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
@@ -33,11 +33,15 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
 
   const { mutate: submitReview } = useReviewPost(hospitalId);
   const { handleSubmit } = useFormContext<ReviewFormData>();
+  const { getValues } = useFormContext<ReviewFormWithUIData>();
 
   const onValid = (data: ReviewFormData) => {
+    const fullData = getValues(); // 전체 데이터 받기
+    const { selectedHospital, selectedPetInfoType, ...submitData }: ReviewFormWithUIData = fullData;
+
     submitReview(
       {
-        ...data,
+        ...submitData,
         gender: data.gender as "F" | "M",
         images: imageNames || undefined,
       },
