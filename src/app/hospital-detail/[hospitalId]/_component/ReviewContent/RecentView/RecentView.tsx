@@ -1,6 +1,6 @@
 "use client";
 
-import HospitalReview from "@shared/component/ReviewItem/ReviewItem";
+import HospitalReview from "@shared/component/HospitalReview/HospitalReview";
 import * as styles from "./RecentView.css";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
@@ -97,8 +97,8 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
     router.push(PATH.REVIEW.AGREE);
   };
 
-  const reviews = data?.pages.flatMap((page) => page.reviews) || [];
-  const totalReviewCount = data?.pages[0]?.reviewCount || 0;
+  const reviews = data?.pages.flat() || [];
+  const totalReviewCount = reviews.length;
 
   return (
     <div className={styles.recentViewContainer}>
@@ -140,39 +140,23 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
                       memberId: review.memberId ?? 0,
                       nickname: review.nickname ?? "",
                       breed: review.memberBreed ?? "",
-                      breedName: review.memberBreed ?? "",
-                      petAge: review.age ?? 0,
-                      petDisease: review.disease ?? "",
-                      vistitedAt: review.visitedAt ?? "",
+                      memberBreed: review.memberBreed ?? "",
+                      age: review.age ?? 0,
+                      disease: review.disease ?? "",
+                      visitedAt: review.visitedAt ?? "",
                       hospitalId: review.hospitalId ?? 0,
                       hospitalName: review.hospitalName ?? "",
                       hospitalAddress: review.hospitalAddress ?? "",
                       content: review.content ?? "",
-                      goodReviews:
-                        review.reviewSummary?.goodReviews?.map(
-                          (item: ReviewSummaryItem) => ({
-                            id: item.id ?? 0,
-                            name: item.label ?? "",
-                          })
-                        ) ?? [],
-                      badReviews:
-                        review.reviewSummary?.badReviews?.map(
-                          (item: ReviewSummaryItem) => ({
-                            id: item.id ?? 0,
-                            name: item.label ?? "",
-                          })
-                        ) ?? [],
+                      visitPurpose: review.visitPurpose ?? "",
+                      reviewSummary: {
+                        goodReviews: review.reviewSummary?.goodReviews ?? [],
+                        badReviews: review.reviewSummary?.badReviews ?? [],
+                      },
                       images: review.images ?? [],
-                      symptoms:
-                        review.symptoms?.map((symptom: string) => ({
-                          id: 0,
-                          name: symptom,
-                        })) ?? [],
-                      diseases: review.disease
-                        ? [{ id: 1, name: review.disease }]
-                        : [],
+                      symptoms: review.symptoms ?? [],
                       animal: review.animal ?? "",
-                      gender: review.gender ?? "",
+                      gender: review.gender || "M",
                       weight: review.weight ?? 0,
                     }}
                     isBlurred={!isAuthenticated && index >= 3}

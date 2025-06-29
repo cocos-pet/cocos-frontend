@@ -8,13 +8,8 @@ import { components, paths } from "src/type/schema";
 
 export type postHospitalReviewsResponse =
   paths["/api/dev/hospitals/reviews/filter"]["post"]["responses"]["200"]["content"]["*/*"];
-
-export interface postHospitalReviewsResponseData {
-  reviewCount: number;
-  cursorId: number;
-  reviews: components["schemas"]["HospitalReviewResponse"][];
-}
-
+export type postHospitalReviewsResponseData =
+  components["schemas"]["HospitalReviewResponse"];
 export type postHospitalReviewsRequest =
   paths["/api/dev/hospitals/reviews/filter"]["post"]["requestBody"]["content"]["application/json"];
 
@@ -25,11 +20,7 @@ export const postHospitalReviews = async (
     API_PATH.HOSPITAL_FILTERS,
     payload
   );
-  return {
-    reviewCount: data.data?.reviewCount || 0,
-    cursorId: data.data?.cursorId || 0,
-    reviews: data.data?.reviews || [],
-  };
+  return data.data?.reviews || [];
 };
 
 /**
