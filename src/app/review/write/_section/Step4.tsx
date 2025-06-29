@@ -45,7 +45,6 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
         onSuccess: async (res) => {
           const presignedUrls = res?.data?.data?.images;
           if (!presignedUrls || presignedUrls.length === 0) {
-            alert("이미지 업로드 URL이 없습니다.");
             return;
           }
 
