@@ -1,5 +1,5 @@
-import {color, font, semanticColor} from "@style/styles.css.ts";
-import {recipe, RecipeVariants} from "@vanilla-extract/recipes";
+import { color, font, semanticColor } from "@style/styles.css.ts";
+import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
 
 export const chipItem = recipe({
   base: [
@@ -40,6 +40,10 @@ export const chipItem = recipe({
         color: color.red.warning_red200,
         border: `0.1rem solid ${color.red.warning_red200}`,
       },
+      solidBlue: {
+        color: color.primary.blue700,
+        border: `0.1rem solid ${color.primary.blue500}`,
+      },
       border: {
         color: semanticColor.text.normal,
         border: `0.1rem solid ${semanticColor.line.heavy}`,
@@ -71,6 +75,16 @@ export const chipItem = recipe({
       },
       style: {
         backgroundColor: "#F5D8D8",
+      },
+    },
+    {
+      variants: {
+        color: "solidBlue",
+        active: true,
+      },
+      style: {
+        color: color.gray.gray000,
+        background: color.primary.blue500,
       },
     },
   ],

@@ -25,6 +25,12 @@ export const wrapper = recipe({
   },
 });
 
+export const box = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "1.2rem",
+});
+
 export const infoLayout = style({
   display: "flex",
   flexDirection: "column",

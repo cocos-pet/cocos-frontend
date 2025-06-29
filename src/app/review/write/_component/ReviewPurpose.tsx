@@ -23,6 +23,7 @@ const ReviewPurpose = () => {
         <div className={styles.chipLayout}>
           {data?.purposes?.map((purpose) => (
             <Chip
+              color={"solidBlue"}
               key={purpose.id}
               label={purpose.label ?? ""}
               isSelected={selectedPurposeId === purpose.id}

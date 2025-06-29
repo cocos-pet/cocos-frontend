@@ -2,21 +2,16 @@ import { IcRightArror, IcChevronRight2 } from "@asset/svg/index";
 import { color } from "@style/styles.css";
 import * as styles from "./ReviewPetInfo.style.css";
 import DirectMyPetInfo from "./DirectMyPetInfo";
-import { PetInfoType } from "@app/review/write/_section/Step1";
 import { useGetPetInfo } from "@api/domain/mypage/hook";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "@app/review/write/page";
+import { ReviewFormWithUIData } from "@app/review/write/page";
 import { useState } from "react";
 import { Toast } from "@common/component/Toast/Toast";
 import { PET_TYPE_STANDARD } from "../constant";
 
-interface ReviewPetInfoProps {
-  selectedPetInfo: PetInfoType | null;
-  onSelectPetInfo: (type: PetInfoType) => void;
-}
-
-const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps) => {
-  const { setValue } = useFormContext<ReviewFormData>();
+const ReviewPetInfo = () => {
+  const { watch, setValue } = useFormContext<ReviewFormWithUIData>();
+  const selectedPetInfo = watch("selectedPetInfoType");
   const { data: petInfo } = useGetPetInfo();
   // 토스트 리렌더링
   const [toastKey, setToastKey] = useState(0);
@@ -25,6 +20,11 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
   const [petType, setPetType] = useState("");
   // 내 동물정보 가져오기 클릭 후 내 정보 해지 후 직접 입력하기 위한 상태
   const [isBreedInputTouched, setIsBreedInputTouched] = useState(false);
+
+  const handleSelectPetInfo = (type: "myPet" | "manual") => {
+    const nextValue = selectedPetInfo === type ? null : type;
+    setValue("selectedPetInfoType", nextValue);
+  };
 
   return (
     <>
@@ -41,7 +41,7 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
             selected: selectedPetInfo === "myPet" && !!petInfo,
           })}
           onClick={() => {
-            onSelectPetInfo("myPet");
+            handleSelectPetInfo("myPet");
             if (petInfo) {
               setValue("breedId", petInfo?.breedId ?? -1);
               setValue("gender", petInfo?.petGender ?? "F");
@@ -84,7 +84,7 @@ const ReviewPetInfo = ({ selectedPetInfo, onSelectPetInfo }: ReviewPetInfoProps)
             petInfoType: "manual",
           })}
         >
-          <span className={styles.buttonText} onClick={() => onSelectPetInfo("manual")}>
+          <span className={styles.buttonText} onClick={() => handleSelectPetInfo("manual")}>
             직접 입력하기
             <IcChevronRight2
               className={styles.rotateIcon({ selected: selectedPetInfo === "manual" })}
