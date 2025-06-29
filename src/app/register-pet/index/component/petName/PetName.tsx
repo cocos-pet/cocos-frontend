@@ -1,17 +1,18 @@
-import React, {ChangeEvent, useState} from "react";
-import {useRouter} from "next/navigation";
+import React, { ChangeEvent, useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import * as styles from "./PetName.css";
 
-import {TextField} from "@common/component/TextField";
-import {Button} from "@common/component/Button";
-import {validatePetName} from "@shared/util/validatePetName";
+import { TextField } from "@common/component/TextField";
+import { Button } from "@common/component/Button";
+import { validatePetName } from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
-import {PATH} from "@route/path";
+import { PATH } from "@route/path";
 import Image from "next/image";
-import {PetData} from "../../RegisterPet.tsx";
-import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import { PetData } from "../../RegisterPet.tsx";
+import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered.ts";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -27,6 +28,18 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
 
   const validationMessages = petName ? validatePetName(petName) : [];
   const isValid = petName && validationMessages.length === 0;
+
+  const isPetRegistered = useIsPetRegistered();
+
+  useEffect(() => {
+    if (isPetRegistered) {
+      alert("이미 반려동물이 등록되어 있습니다.");
+      window.history.go(-1);
+    }
+  }, [isPetRegistered]);
+
+  // 등록된 경우엔 화면 자체를 보여주지 않음
+  if (isPetRegistered) return null;
 
   // 뒤로 가기
   const router = useRouter();

@@ -1,13 +1,13 @@
 import * as styles from "./PetHealth.css";
-import {useState} from "react";
-import {useRouter} from "next/navigation";
-import {PATH} from "@route/path";
-import {Button} from "@common/component/Button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { Button } from "@common/component/Button";
 
-import {useBodiesGet} from "@api/domain/register-pet/bodies/hook";
-import {useDiseaseGet} from "@api/domain/register-pet/disease/hook";
-import {useSymptomGet} from "@api/domain/register-pet/symptom/hook";
-import {PetData} from "../../RegisterPet.tsx";
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { PetData } from "../../RegisterPet.tsx";
 import Step1 from "./disease/Step1.tsx";
 import Step2 from "./disease/Step2.tsx";
 import SymStep1 from "./symptom/SymStep1.tsx";
@@ -40,6 +40,8 @@ const PetHealth = ({
   // 증상 대분류, 소분류
   const [selectedSymptomBody, setSelectedSymBodyParts] = useState<number[]>([]);
   const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
+  // 반려동물 등록 중복요청 방지
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // 질병 선택 부위 (최대 2개 선택 가능???)
   const handleBodyPartSelection = (bodyPartId: number) => {
@@ -137,13 +139,19 @@ const PetHealth = ({
   // 최종 폼 제출
   const router = useRouter();
   const handleGoComplete = () => {
-    if (selectedSymptom.length > 0) {
+    if (isSubmitting) return;
+    if (selectedSymptom.length === 0) return;
+
+    setIsSubmitting(true);
+
+    try {
       updatePetData("symptomIds", selectedSymptom, () => {
         handleSubmit();
         router.push(PATH.REGISTER_PET.COMPLETE);
       });
-    } else {
-      return;
+    } finally {
+      // 제출 실패한 경우 재활성화
+      setIsSubmitting(false);
     }
   };
 
@@ -239,7 +247,7 @@ const PetHealth = ({
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedSymptom.length === 0}
+              disabled={selectedSymptom.length === 0 || isSubmitting}
               onClick={handleGoComplete} // 증상 선택 후 폼 제출
             />
           </div>
