@@ -73,7 +73,6 @@ const DirectMyPetInfo = ({
         {/* 1-3-1. 종 */}
         <div className={styles.halfTextField}>
           <span>종</span>
-          {/* tavian */}
           <TextField
             value={petType}
             onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
@@ -104,7 +103,6 @@ const DirectMyPetInfo = ({
             control={control}
             render={({ field }) => (
               <>
-                {/* tavian */}
                 <TextField
                   value={field.value === "F" ? "암컷" : field.value === "M" ? "수컷" : ""}
                   onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
