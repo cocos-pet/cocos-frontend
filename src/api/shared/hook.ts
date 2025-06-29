@@ -36,7 +36,7 @@ export const useInfiniteHospitalList = (initialParams: Omit<RequestBody, "cursor
     initialPageParam: {},
     getNextPageParam: (lastPage) => {
       //룰은 https://www.notion.so/API-1c3c12bc8533807ca1dee16f155604d4 참고
-      const { cursorId, cursorReviewCount, hospitals } = lastPage || {};
+      const { cursorId, cursorReviewCount, hospitals } = lastPage?.data || {};
 
       // 더 이상 데이터가 없으면 undefined 반환 -> hasNextPage가 false로 설정됨
       if (!hospitals || hospitals.length === 0) {

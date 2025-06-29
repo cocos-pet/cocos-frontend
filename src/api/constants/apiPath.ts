@@ -18,6 +18,7 @@ export const API_PATH = {
   MEMBRES_REFRESH: "/api/dev/members/refresh",
   MEMBERS_WITHDRAW: "/api/dev/members/deactivate",
   MEMBERS_REVIEWS_AGREE: "/api/dev/members/reviews/agree",
+  MEMBER_LOCATION: "/api/dev/members/location",
 
   LOCATION: "/api/dev/locations",
 

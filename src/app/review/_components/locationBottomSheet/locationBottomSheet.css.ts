@@ -15,7 +15,6 @@ export const cityList = style([
     },
     scrollbarWidth: "none",
     msOverflowStyle: "none",
-    marginBottom: "18rem",
   },
 ]);
 
@@ -26,9 +25,8 @@ export const buttonWrapper = style([
     bottom: 0,
     left: 0,
     width: "100%",
-    padding: "1.2rem 2rem 2.4rem 2rem",
+    padding: "1.2rem 2rem 3.2rem 2rem",
     display: "flex",
-    marginTop: "-18rem",
     justifyContent: "center",
     alignItems: "center",
     zIndex: 999,
@@ -61,7 +59,6 @@ export const districtList = style([
     },
     scrollbarWidth: "none",
     msOverflowStyle: "none",
-    marginBottom: "18rem",
   },
 ]);
 

@@ -21,7 +21,7 @@ const Mypage = () => {
     useMypageState();
 
   return (
-    <div style={{ position: "relative", height: "auto" }}>
+    <div className={styles.mypageContainer}>
       {/* 헤더 섹션 */}
       <HeaderSection onNavigateToSettings={navigateToSettings} />
 

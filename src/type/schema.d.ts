@@ -2198,6 +2198,7 @@ export interface components {
             /** Format: int64 */
             id?: number;
             name?: string;
+            type?: string;
         };
         LocationResponse: {
             cities?: components["schemas"]["CityResponse"][];
