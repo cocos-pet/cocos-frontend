@@ -54,6 +54,7 @@ function Search() {
   };
 
   const handleNavigate = (searchText: string) => {
+    onSubmit(searchText);
     router.push(`${PATH.COMMUNITY.SEARCH_DONE}?searchText=${searchText}`);
   };
 
