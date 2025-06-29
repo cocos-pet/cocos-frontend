@@ -19,6 +19,7 @@ import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal.tsx";
+import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
 
 interface Location {
   id: number;
@@ -37,9 +38,7 @@ export default function ReviewPage() {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
   const { isAuthenticated } = useAuth();
   const isPetRegistered = useIsPetRegistered();
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-    null
-  );
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
   // 추천 병원 리스트 (위치 필터링 없음)
   const { data: recommendedHospitalData } = useInfiniteHospitalList({
@@ -49,8 +48,7 @@ export default function ReviewPage() {
     image: "",
   });
 
-  const recommendedHospitals =
-    recommendedHospitalData?.pages?.[0]?.hospitals?.slice(0, 3) || [];
+  const recommendedHospitals = recommendedHospitalData?.pages?.[0]?.hospitals?.slice(0, 3) || [];
 
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
@@ -60,16 +58,22 @@ export default function ReviewPage() {
     router.push(PATH.REVIEW.SEARCH);
   };
 
+  const isReviewAgree = useGetReviewAgreementStatus();
+
   const handleFloatingBtnClick = () => {
+    // 로그인x -> 로그인 모달
     if (!isAuthenticated) {
       setIsLoginModalOpen(true);
       return;
     }
+    // 펫 등록x -> 펫 등록 페이지
     if (!isPetRegistered) {
       router.push(PATH.ONBOARDING.COMPLETE);
       return;
     }
-    router.push(PATH.REVIEW.AGREE);
+    // 리뷰작성 동의 여부에 따라, 동의x -> 리뷰동의 페이지, 동의o -> 바로 리뷰 작성
+    const nextPath = isReviewAgree ? PATH.REVIEW.WRITE : PATH.REVIEW.AGREE;
+    router.push(nextPath);
   };
 
   const handleLocationChange = (location: Location) => {
@@ -96,9 +100,7 @@ export default function ReviewPage() {
             <div className={styles.recommendHospital}>
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
-                <span className={styles.recommendTitleHighlight}>
-                  추천 병원
-                </span>
+                <span className={styles.recommendTitleHighlight}>추천 병원</span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
@@ -106,27 +108,17 @@ export default function ReviewPage() {
                   <div
                     key={hospital.id}
                     className={styles.hospitalCard}
-                    onClick={() =>
-                      router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)
-                    }
+                    onClick={() => router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)}
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
-                      <span className={styles.hospitalName}>
-                        {hospital.name}
-                      </span>
+                      <span className={styles.hospitalName}>{hospital.name}</span>
                     </div>
-                    <span className={styles.hospitalAddress}>
-                      {hospital.address}
-                    </span>
+                    <span className={styles.hospitalAddress}>{hospital.address}</span>
                   </div>
                 ))}
               </div>
-              <Image
-                src={banner}
-                alt="banner"
-                className={styles.bannerContainer}
-              />
+              <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
             <HospitalList
@@ -150,10 +142,7 @@ export default function ReviewPage() {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm
-                label={"로그인"}
-                onClick={() => router.push(PATH.LOGIN)}
-              />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
             </Modal.BottomAffix>
           }
         >
