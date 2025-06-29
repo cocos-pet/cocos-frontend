@@ -22,7 +22,6 @@ interface Step1Props {
 
 const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [selectedPetInfo, setSelectedPetInfo] = useState<PetInfoType | null>(null);
 
   const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
 
@@ -48,10 +47,9 @@ const Step1 = ({ onNext }: Step1Props) => {
     router.replace(`?hospitalId=${hospital?.id}`);
   };
 
-  // 1-3. petInfo
-  const handleSelectPetInfo = (type: PetInfoType) => {
-    setSelectedPetInfo((prev) => (prev === type ? null : type));
-  };
+  // // 1-3. petInfo
+  // const selectedPetInfo = watch("selectedPetInfoType");
+  // setValue("selectedPetInfoType",  selectedPetInfo === type ? null : type);
 
   const handleGoHospitalDetail = () => {
     window.history.go(-2); //review/agree +1
@@ -72,7 +70,7 @@ const Step1 = ({ onNext }: Step1Props) => {
         {/* 1-2. 날짜 선택 */}
         <ReviewDate />
         {/* 1-3. 동물 정보 */}
-        <ReviewPetInfo selectedPetInfo={selectedPetInfo} onSelectPetInfo={handleSelectPetInfo} />
+        <ReviewPetInfo />
       </div>
 
       <div className={styles.buttonContainer}>
