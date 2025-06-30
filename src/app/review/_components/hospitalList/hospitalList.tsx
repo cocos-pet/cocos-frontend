@@ -10,6 +10,7 @@ import { PATH } from "@route/path";
 interface Location {
   id: number;
   name: string;
+  type?: "CITY" | "DISTRICT";
   districts?: {
     id: number;
     name: string;
@@ -29,14 +30,18 @@ export default function HospitalList({
 }: HospitalListProps) {
   const { ref, inView } = useInView();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useInfiniteHospitalList({
-      locationType: selectedLocation ? "DISTRICT" : "CITY",
+      locationType: selectedLocation?.type || "CITY",
       locationId: selectedLocation?.id,
       size: 10,
       sortBy: "REVIEW",
       image: "",
     });
+
+  useEffect(() => {
+    refetch();
+  }, [selectedLocation, refetch]);
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {

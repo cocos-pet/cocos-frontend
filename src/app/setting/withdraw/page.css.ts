@@ -32,9 +32,7 @@ export const withdrawSubTitle = style([
 ]);
 
 export const withdrawButtonWrapper = style({
-  position: "fixed",
-  bottom: "0",
-  left: "0",
+  marginTop: "41.8rem",
 
   display: "flex",
   width: "100%",

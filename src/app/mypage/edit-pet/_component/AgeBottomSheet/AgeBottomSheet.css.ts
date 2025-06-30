@@ -1,5 +1,5 @@
-import {font} from "@style/styles.css";
-import {style} from "@vanilla-extract/css";
+import { font } from "@style/styles.css";
+import { style } from "@vanilla-extract/css";
 
 export const ageWrapper = style({
   display: "inline-flex",
@@ -11,7 +11,8 @@ export const ageWrapper = style({
 
 export const ageContainer = style({
   display: "flex",
-  width: "33.5rem",
+  width: "100%",
+  minWidth: "33.5rem",
   flexDirection: "column",
   alignItems: "flex-start",
   gap: "1.2rem",
