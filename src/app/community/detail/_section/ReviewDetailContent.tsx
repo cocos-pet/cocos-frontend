@@ -35,7 +35,7 @@ const ReviewDetailContent = () => {
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [filterState, setFilterState] = useState<ReviewFilterState>({
-    location: null,
+    location: undefined,
     summaryOptionId: undefined,
     filterType: undefined,
   });
@@ -58,9 +58,8 @@ const ReviewDetailContent = () => {
     router.push(PATH.LOGIN);
   };
 
-  const postReviews = (location?: LocationFilterType, summaryOptionId?: number) => {
+  const postReviews = (location?: LocationFilterType | undefined, summaryOptionId?: number | undefined) => {
     if (!bodyId) return;
-    console.log(location);
 
     postHospitalReviews(
       {
@@ -85,7 +84,7 @@ const ReviewDetailContent = () => {
       summaryOptionId,
       filterType,
     }));
-    postReviews(filterState.location?.id, summaryOptionId);
+    postReviews(filterState.location || undefined, summaryOptionId);
   };
 
   const handleLocationSelect = (location: LocationFilterType) => {

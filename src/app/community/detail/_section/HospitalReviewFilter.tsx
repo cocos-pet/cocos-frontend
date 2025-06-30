@@ -38,6 +38,7 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
   } = useOpenToggle();
 
   const handleLocationSelect = (location: LocationFilterType) => {
+    console.log("handleLocationSelect", location);
     handleCloseBottomSheet();
     onRegionFilterClick(location);
   };

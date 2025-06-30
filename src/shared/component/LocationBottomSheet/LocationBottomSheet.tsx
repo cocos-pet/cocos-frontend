@@ -45,6 +45,7 @@ export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect 
   };
 
   const handleLocationSelect = (district: District) => {
+    console.log("여기서도 district", district);
     setSelectedLocation({
       id: district.id,
       name: district.name,
@@ -98,7 +99,10 @@ export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect 
                       ? styles.selectedDistrict
                       : ""
                   }`}
-                  onClick={() => handleLocationSelect(district)}
+                  onClick={() => {
+                    console.log("여기서 클릭했을 때는 district 여야 함", district);
+                    handleLocationSelect(district);
+                  }}
                 >
                   <span>{district.name}</span>
                   {district.id === selectedLocation?.id && selectedLocation?.type === "DISTRICT" && (
@@ -118,14 +122,11 @@ export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect 
             width="100%"
             disabled={selectedLocation?.id === null}
             onClick={() => {
-              const selectedDistrict = selectedCity.districts?.find((d) => d.id === selectedLocation?.id);
-              if (selectedDistrict) {
-                onLocationSelect({
-                  id: selectedDistrict.id,
-                  name: selectedDistrict.name,
-                  type: selectedDistrict.type,
-                });
-              }
+              onLocationSelect({
+                id: selectedLocation.id,
+                name: selectedLocation.name,
+                type: selectedLocation.type,
+              });
               onClose();
             }}
           />
