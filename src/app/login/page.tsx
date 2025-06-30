@@ -5,14 +5,15 @@ import { IcCocosLogin, IcGroup, IcLeftIcon } from "@asset/svg";
 import { KAKAO_AUTH_URI } from "@auth/OAuth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
-import { isLoggedIn } from "@api/index.ts";
 import { PATH } from "@route/path.ts";
+import { useAuth } from "@providers/AuthProvider";
 
 const Login = () => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
 
   useEffect(() => {
-    if (isLoggedIn()) {
+    if (isAuthenticated) {
       router.push(PATH.MAIN);
     }
   }, []);
@@ -20,6 +21,8 @@ const Login = () => {
   const handleLogin = () => {
     window.location.href = KAKAO_AUTH_URI; // 상수화
   };
+
+  if (isAuthenticated) return;
 
   return (
     <div className={styles.layout}>

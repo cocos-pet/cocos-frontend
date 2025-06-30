@@ -3,11 +3,10 @@ import * as styles from "./HospitalReviewWrapper.css";
 import { IcEllipses } from "@asset/svg";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import { useDeleteHospitalReview, useInfiniteHospitalReview } from "@api/shared/hook";
-import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
-import { useRouter, useSearchParams } from "next/navigation";
-import { API_PATH } from "@api/constants/apiPath";
+import { useRouter } from "next/navigation";
 import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
+import { useAuth } from "@providers/AuthProvider";
 
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
@@ -16,6 +15,7 @@ interface HospitalReviewWrapperProps {
 
 const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: HospitalReviewWrapperProps) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
@@ -23,7 +23,7 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: Hospit
   const member = useMypageMemberInfo((s) => s.member);
   const nickname = isMypage ? member?.nickname : _nickname;
 
-  const isBlurred = !isLoggedIn();
+  const isBlurred = !isAuthenticated;
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
