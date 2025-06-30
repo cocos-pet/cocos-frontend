@@ -1,11 +1,11 @@
 import { API_PATH } from "@api/constants/apiPath";
-import { useNavigate } from "react-router-dom";
 import { paths } from "@type/schema";
 import Loading from "@common/component/Loading/Loading";
 import { useAuth } from "@providers/AuthProvider";
+import { useRouter } from "next/navigation";
 
 const RedirectKakao = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
   const code = new URL(window.location.href).searchParams.get("code"); // URL에서 인가 코드 파싱
   const { login } = useAuth();
 
@@ -40,7 +40,7 @@ const RedirectKakao = () => {
       );
 
       login();
-      setTimeout(() => navigate("/onboarding"), 0);
+      router.push("/onboarding");
     } catch (e) {
       console.log(e);
       // alert("로그인 실패!");
