@@ -40,7 +40,7 @@ const RedirectKakao = () => {
       );
 
       login();
-      navigate("/onboarding");
+      setTimeout(() => navigate("/onboarding"), 0);
     } catch (e) {
       console.log(e);
       // alert("로그인 실패!");
