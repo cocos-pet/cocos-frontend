@@ -24,6 +24,7 @@ interface PetHealthPropTypes {
   setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
   isSkipDisease: boolean | null;
   handleSubmit: () => void;
+  isPending: boolean;
 }
 
 const PetHealth = ({
@@ -33,6 +34,7 @@ const PetHealth = ({
   updatePetData,
   handleSubmit,
   isSkipDisease,
+  isPending,
 }: PetHealthPropTypes) => {
   // 질병 대분류, 소분류
   const [selectedDiseaseBody, setSelectedDiseaseBody] = useState<number[]>([]);
@@ -137,6 +139,7 @@ const PetHealth = ({
   // 최종 폼 제출
   const router = useRouter();
   const handleGoComplete = () => {
+    if (isPending) return;
     if (selectedSymptom.length === 0) return;
 
     updatePetData("symptomIds", selectedSymptom, () => {
@@ -230,14 +233,14 @@ const PetHealth = ({
               label="이전으로"
               size="large"
               variant="solidNeutral"
-              disabled={false}
+              disabled={isPending}
               onClick={handleBackSymptom1}
             />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedSymptom.length === 0}
+              disabled={selectedSymptom.length === 0 || isPending}
               onClick={handleGoComplete} // 증상 선택 후 폼 제출
             />
           </div>
