@@ -11,7 +11,7 @@ import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 import { Button } from "@common/component/Button/index";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "../page";
+import { ReviewFormWithUIData } from "../page";
 import { useRouter } from "next/navigation";
 
 export type PetInfoType = "myPet" | "manual";
@@ -22,15 +22,14 @@ interface Step1Props {
 
 const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
-  const [selectedPetInfo, setSelectedPetInfo] = useState<PetInfoType | null>(null);
 
-  const { watch } = useFormContext<ReviewFormData>();
+  const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
 
   const visitedAt = watch("visitedAt");
   const breedId = watch("breedId");
   const gender = watch("gender");
 
+  const selectedHospital = watch("selectedHospital");
   const isFormValid = selectedHospital !== null && visitedAt !== "" && breedId !== -1 && gender !== null;
 
   const router = useRouter();
@@ -44,14 +43,13 @@ const Step1 = ({ onNext }: Step1Props) => {
   };
 
   const handleSelectHospital = (hospital: Hospital | null) => {
-    setSelectedHospital(hospital);
+    setValue("selectedHospital", hospital);
     router.replace(`?hospitalId=${hospital?.id}`);
   };
 
-  // 1-3. petInfo
-  const handleSelectPetInfo = (type: PetInfoType) => {
-    setSelectedPetInfo((prev) => (prev === type ? null : type));
-  };
+  // // 1-3. petInfo
+  // const selectedPetInfo = watch("selectedPetInfoType");
+  // setValue("selectedPetInfoType",  selectedPetInfo === type ? null : type);
 
   const handleGoHospitalDetail = () => {
     window.history.go(-2); //review/agree +1
@@ -68,11 +66,11 @@ const Step1 = ({ onNext }: Step1Props) => {
       {/* 중앙 컨텐츠 */}
       <div className={styles.wrapper}>
         {/* 1-1. 병원 검색 */}
-        <ReviewHospital selectedHospital={selectedHospital} handleOpenSearchHospital={handleOpenSearchHospital} />
+        <ReviewHospital handleOpenSearchHospital={handleOpenSearchHospital} />
         {/* 1-2. 날짜 선택 */}
         <ReviewDate />
         {/* 1-3. 동물 정보 */}
-        <ReviewPetInfo selectedPetInfo={selectedPetInfo} onSelectPetInfo={handleSelectPetInfo} />
+        <ReviewPetInfo />
       </div>
 
       <div className={styles.buttonContainer}>

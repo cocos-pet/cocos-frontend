@@ -26,7 +26,7 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const goodReviewIds = watch("goodReviewIds");
   const badReviewIds = watch("badReviewIds");
 
-  const isFromValid = goodReviewIds.length > 0 && badReviewIds.length > 0;
+  const isFromValid = goodReviewIds.length > 0 || badReviewIds.length > 0;
 
   const handleGoHospitalDetail = () => {
     window.history.go(-2);

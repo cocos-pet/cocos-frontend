@@ -4,12 +4,16 @@ import dynamic from "next/dynamic";
 import * as styles from "./style.css";
 import registerPet from "@asset/lottie/registerPet.json";
 import { Button } from "@common/component/Button";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });
 
 const page = () => {
+  const router = useRouter();
+
   const handleGoHospitalDetail = () => {
-    window.history.go(-3);
+    router.push(PATH.REVIEW.ROOT);
   };
 
   return (

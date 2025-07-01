@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useFormContext, Controller, useWatch } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
-import { ReviewFormData } from "../page";
+import { ReviewFormData, ReviewFormWithUIData } from "../page";
 import { TextField } from "@common/component/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
 import { GENDER, PET_TYPES } from "../constant";
@@ -12,21 +12,14 @@ type PetField = keyof ReviewFormData;
 type FocusableField = keyof ReviewFormData | "petType";
 
 interface DirectMyPetInfoProps {
-  petType: string;
-  setPetType: (value: string) => void;
   isBreedInputTouched: boolean;
   setIsBreedInputTouched: (value: boolean) => void;
 }
 
-const DirectMyPetInfo = ({
-  petType,
-  setPetType,
-  isBreedInputTouched,
-  setIsBreedInputTouched,
-}: DirectMyPetInfoProps) => {
+const DirectMyPetInfo = ({ isBreedInputTouched, setIsBreedInputTouched }: DirectMyPetInfoProps) => {
   // 내 동물정보 가져오고 직접 입력하기로 동물 종류 수정하는 경우
   const watchedBreedId = useWatch({ name: "breedId" });
-  const { control, watch, setValue } = useFormContext<ReviewFormData>();
+  const { control, watch, setValue } = useFormContext<ReviewFormWithUIData>();
 
   // 종, 성별 드롭다운
   const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
@@ -34,6 +27,8 @@ const DirectMyPetInfo = ({
   const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
   // 드롭다운 필터링용 검색 입력값 (breedId는 리뷰 제출용)
   const [breedInput, setBreedInput] = useState("");
+
+  const petType = watch("petType");
 
   const handleDropDownClick = (field: PetField, value: string | number) => {
     setValue(field, value);
@@ -48,6 +43,7 @@ const DirectMyPetInfo = ({
     const formatted =
       trimmedInt === "" && input.startsWith(".") ? `0.${decimal}` : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
     onChange(formatted);
+    setValue("weight", formatted === "" ? -1 : Number(formatted));
   };
 
   // 텍스트 필드 분기 결정
@@ -58,10 +54,11 @@ const DirectMyPetInfo = ({
   };
 
   // 종류 조회 api 연동시 종 정보를 보내야함
-  const breedId = Number(watch("breedId"));
   const inferredPetId = useMemo(() => {
-    return breedId > 0 ? (breedId < 230 ? 2 : 1) : -1;
-  }, [breedId]);
+    if (petType === "고양이") return 1;
+    if (petType === "강아지") return 2;
+    return -1;
+  }, [petType]);
 
   // api
   const { data: breedIdData } = usePetIdGet(inferredPetId ?? 2);
@@ -72,10 +69,14 @@ const DirectMyPetInfo = ({
         {/* 1-3-1. 종 */}
         <div className={styles.halfTextField}>
           <span>종</span>
-          {/* tavian */}
           <TextField
             value={petType}
-            onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
+            onClick={() => {
+              setActiveDropDown((prev) => (prev === "petType" ? null : "petType"));
+              setValue("breedId", -1); // 종 선택 시 breedId 초기화 (내 동물 정보에서 불러오기 먼저 클릭한 경우 초기화하기 위함)
+              setBreedInput(""); // 입력값도 초기화
+              setIsBreedInputTouched(false); // 입력 상태도 초기화
+            }}
             placeholder="종 선택하기"
             isDelete={false}
             state={getState("petType", petType)}
@@ -87,7 +88,7 @@ const DirectMyPetInfo = ({
               items={PET_TYPES}
               onClickItem={(name) => {
                 // 리뷰 제출 항목이 아니므로 handleDropDownClick함수 사용 불가
-                setPetType(name);
+                setValue("petType", name);
                 setActiveDropDown(null);
               }}
               size="half"
@@ -103,7 +104,6 @@ const DirectMyPetInfo = ({
             control={control}
             render={({ field }) => (
               <>
-                {/* tavian */}
                 <TextField
                   value={field.value === "F" ? "암컷" : field.value === "M" ? "수컷" : ""}
                   onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
