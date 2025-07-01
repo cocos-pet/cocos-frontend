@@ -15,6 +15,7 @@ import { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 export interface ReviewExtraData {
   selectedHospital: Hospital | null;
   selectedPetInfoType: PetInfoType | null;
+  petType: string;
 }
 
 // 제출 대상 필드
@@ -59,6 +60,7 @@ export default function Page() {
       ...defaultValues,
       selectedHospital: null,
       selectedPetInfoType: null,
+      petType: "",
     },
     mode: "onChange",
   });

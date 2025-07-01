@@ -1,7 +1,7 @@
 import { useState, useMemo } from "react";
 import { useFormContext, Controller, useWatch } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
-import { ReviewFormData } from "../page";
+import { ReviewFormData, ReviewFormWithUIData } from "../page";
 import { TextField } from "@common/component/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
 import { GENDER, PET_TYPES } from "../constant";
@@ -12,21 +12,14 @@ type PetField = keyof ReviewFormData;
 type FocusableField = keyof ReviewFormData | "petType";
 
 interface DirectMyPetInfoProps {
-  petType: string;
-  setPetType: (value: string) => void;
   isBreedInputTouched: boolean;
   setIsBreedInputTouched: (value: boolean) => void;
 }
 
-const DirectMyPetInfo = ({
-  petType,
-  setPetType,
-  isBreedInputTouched,
-  setIsBreedInputTouched,
-}: DirectMyPetInfoProps) => {
+const DirectMyPetInfo = ({ isBreedInputTouched, setIsBreedInputTouched }: DirectMyPetInfoProps) => {
   // 내 동물정보 가져오고 직접 입력하기로 동물 종류 수정하는 경우
   const watchedBreedId = useWatch({ name: "breedId" });
-  const { control, watch, setValue } = useFormContext<ReviewFormData>();
+  const { control, watch, setValue } = useFormContext<ReviewFormWithUIData>();
 
   // 종, 성별 드롭다운
   const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
@@ -34,6 +27,8 @@ const DirectMyPetInfo = ({
   const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
   // 드롭다운 필터링용 검색 입력값 (breedId는 리뷰 제출용)
   const [breedInput, setBreedInput] = useState("");
+
+  const petType = watch("petType");
 
   const handleDropDownClick = (field: PetField, value: string | number) => {
     setValue(field, value);
@@ -93,7 +88,7 @@ const DirectMyPetInfo = ({
               items={PET_TYPES}
               onClickItem={(name) => {
                 // 리뷰 제출 항목이 아니므로 handleDropDownClick함수 사용 불가
-                setPetType(name);
+                setValue("petType", name);
                 setActiveDropDown(null);
               }}
               size="half"
