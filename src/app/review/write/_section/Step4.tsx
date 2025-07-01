@@ -3,7 +3,7 @@ import { IcDeleteBlack } from "@asset/svg/index";
 import { Button } from "@common/component/Button";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "../page";
+import { ReviewFormData, ReviewFormWithUIData } from "../page";
 import { useReviewPost } from "@app/api/review/write/submit/hook";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
@@ -19,7 +19,6 @@ interface Step4Props {
 
 const Step4 = ({ onPrev, onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const searchParams = useSearchParams();
   const rawHospitalId = searchParams?.get("hospitalId");
   const hospitalId = rawHospitalId ? Number(rawHospitalId) : undefined;
@@ -34,24 +33,25 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
 
   const { mutate: submitReview } = useReviewPost(hospitalId);
   const { handleSubmit } = useFormContext<ReviewFormData>();
+  const { getValues } = useFormContext<ReviewFormWithUIData>();
 
   const onValid = (data: ReviewFormData) => {
-    if (isSubmitting) {
-      return;
-    }
+    const fullData = getValues(); // 전체 데이터 받기
+    const { selectedHospital, selectedPetInfoType, ...submitData }: ReviewFormWithUIData = fullData;
 
-    setIsSubmitting(true); // 제출 시작
     submitReview(
       {
-        ...data,
+        ...submitData,
         gender: data.gender as "F" | "M",
         images: imageNames || undefined,
       },
       {
         onSuccess: async (res) => {
           const presignedUrls = res?.data?.data?.images;
+
+          // 이미지가 없으면 바로 다음 단계로 이동
           if (!presignedUrls || presignedUrls.length === 0) {
-            alert("이미지 업로드 URL이 없습니다.");
+            onNext();
             return;
           }
 
@@ -72,13 +72,10 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
                 });
               }),
             );
-
             onNext();
-            setIsSubmitting(false); // 제출 완료 후 상태 해제
           } catch (uploadErr) {
             console.error("이미지 업로드 실패", uploadErr);
             alert("이미지 업로드에 실패했습니다.");
-            setIsSubmitting(false); // 실패 시 해제
           }
         },
 
@@ -88,7 +85,6 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
           } else {
             alert("리뷰 작성에 실패했습니다.");
           }
-          setIsSubmitting(false); // 실패 시 해제
         },
       },
     );
