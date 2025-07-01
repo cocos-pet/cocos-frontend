@@ -31,7 +31,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
     throw new Error("유효하지 않은 병원입니다.");
   }
 
-  const { mutate: submitReview } = useReviewPost(hospitalId);
+  const { mutate: submitReview, isPending } = useReviewPost(hospitalId);
   const { handleSubmit } = useFormContext<ReviewFormData>();
   const { getValues } = useFormContext<ReviewFormWithUIData>();
 
@@ -106,6 +106,11 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
     window.history.go(-2);
   };
 
+  const handleSubmitReview = () => {
+    if (isPending) return; // 이미 요청 중이면 더블 클릭 방지
+    handleSubmit(onValid)();
+  };
+
   return (
     <div className={styles.wrapper}>
       {/* 상단 리뷰 영역 */}
@@ -127,8 +132,8 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
-        <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} disabled={isPending} />
+        <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={isPending} />
       </section>
 
       <SimpleBottomSheet
@@ -138,7 +143,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
         isOpen={isBottomSheetOpen}
         handleClose={handleCloseBottomSheet}
         leftOnClick={handleCloseBottomSheet}
-        rightOnClick={handleSubmit(onValid)}
+        rightOnClick={handleSubmitReview}
       />
     </div>
   );
