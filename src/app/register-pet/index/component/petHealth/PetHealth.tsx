@@ -1,13 +1,13 @@
 import * as styles from "./PetHealth.css";
-import {useState} from "react";
-import {useRouter} from "next/navigation";
-import {PATH} from "@route/path";
-import {Button} from "@common/component/Button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { Button } from "@common/component/Button";
 
-import {useBodiesGet} from "@api/domain/register-pet/bodies/hook";
-import {useDiseaseGet} from "@api/domain/register-pet/disease/hook";
-import {useSymptomGet} from "@api/domain/register-pet/symptom/hook";
-import {PetData} from "../../RegisterPet.tsx";
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { PetData } from "../../RegisterPet.tsx";
 import Step1 from "./disease/Step1.tsx";
 import Step2 from "./disease/Step2.tsx";
 import SymStep1 from "./symptom/SymStep1.tsx";
@@ -24,6 +24,7 @@ interface PetHealthPropTypes {
   setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
   isSkipDisease: boolean | null;
   handleSubmit: () => void;
+  isPending: boolean;
 }
 
 const PetHealth = ({
@@ -33,6 +34,7 @@ const PetHealth = ({
   updatePetData,
   handleSubmit,
   isSkipDisease,
+  isPending,
 }: PetHealthPropTypes) => {
   // 질병 대분류, 소분류
   const [selectedDiseaseBody, setSelectedDiseaseBody] = useState<number[]>([]);
@@ -137,14 +139,13 @@ const PetHealth = ({
   // 최종 폼 제출
   const router = useRouter();
   const handleGoComplete = () => {
-    if (selectedSymptom.length > 0) {
-      updatePetData("symptomIds", selectedSymptom, () => {
-        handleSubmit();
-        router.push(PATH.REGISTER_PET.COMPLETE);
-      });
-    } else {
-      return;
-    }
+    if (isPending) return;
+    if (selectedSymptom.length === 0) return;
+
+    updatePetData("symptomIds", selectedSymptom, () => {
+      handleSubmit();
+      router.push(PATH.REGISTER_PET.COMPLETE);
+    });
   };
 
   const { data: diseaseData } = useBodiesGet("disease");
@@ -232,14 +233,14 @@ const PetHealth = ({
               label="이전으로"
               size="large"
               variant="solidNeutral"
-              disabled={false}
+              disabled={isPending}
               onClick={handleBackSymptom1}
             />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedSymptom.length === 0}
+              disabled={selectedSymptom.length === 0 || isPending}
               onClick={handleGoComplete} // 증상 선택 후 폼 제출
             />
           </div>

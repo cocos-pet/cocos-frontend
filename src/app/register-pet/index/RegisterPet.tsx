@@ -105,6 +105,7 @@ const RegisterPet = () => {
             handleSubmit={handleSubmit}
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
+            isPending={isPending}
           />
         );
 

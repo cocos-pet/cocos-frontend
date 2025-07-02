@@ -4,14 +4,16 @@ import * as styles from "./ReviewHospital.style.css";
 import { IcSearch } from "@asset/svg/index";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import Image from "next/image";
-import { Hospital } from "@shared/component/SearchHospital/SearchHospital";
-
+import { useFormContext } from "react-hook-form";
+import { ReviewFormWithUIData } from "../page";
 interface ReviewHospitalProps {
-  selectedHospital: Hospital | null;
   handleOpenSearchHospital: () => void;
 }
 
-const ReviewHospital = ({ selectedHospital, handleOpenSearchHospital }: ReviewHospitalProps) => {
+const ReviewHospital = ({ handleOpenSearchHospital }: ReviewHospitalProps) => {
+  const { watch } = useFormContext<ReviewFormWithUIData>();
+  const selectedHospital = watch("selectedHospital");
+
   return (
     <>
       {/* 1-1. 병원 검색 */}
