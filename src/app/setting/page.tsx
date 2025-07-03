@@ -26,7 +26,6 @@ export default function Setting() {
   };
 
   if (!isAuthenticated) {
-    alert("접근할 수 없습니다.");
     router.push(PATH.MAIN);
   }
 

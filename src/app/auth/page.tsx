@@ -1,18 +1,20 @@
 "use client";
 
-import {useEffect} from 'react';
-import {API_PATH} from "@api/constants/apiPath";
-import {useRouter, useSearchParams} from "next/navigation";
-import {paths} from "@type/schema";
+import { useEffect } from "react";
+import { API_PATH } from "@api/constants/apiPath";
+import { useRouter, useSearchParams } from "next/navigation";
+import { paths } from "@type/schema";
 import SuspenseWrapper from "../SuspenseWrapper";
 import dynamic from "next/dynamic";
+import { useAuth } from "@providers/AuthProvider";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading"), { ssr: false });
 
 function AuthRedirectContent() {
   const router = useRouter();
+  const { login } = useAuth();
   const searchParams = useSearchParams();
-  const code = searchParams.get("code");
+  const code = searchParams?.get("code");
 
   type responseType = paths["/api/dev/members/login"]["post"]["responses"]["200"]["content"]["*/*"];
 
@@ -45,6 +47,7 @@ function AuthRedirectContent() {
           }),
         );
 
+        await login();
         router.push("/onboarding");
       } catch (e) {
         console.log(e);
@@ -56,7 +59,7 @@ function AuthRedirectContent() {
     if (code) {
       getAccessToken();
     }
-  }, [code, router]);
+  }, [code, router, login]);
 
   return <Loading />;
 }
@@ -67,4 +70,4 @@ export default function AuthRedirect() {
       <AuthRedirectContent />
     </SuspenseWrapper>
   );
-} 
+}

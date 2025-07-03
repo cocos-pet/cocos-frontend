@@ -37,7 +37,6 @@ const ProfileContent = () => {
   const router = useRouter();
 
   if (!isAuthenticated) {
-    alert("로그인 후에 확인할 수 있습니다.");
     router.push(PATH.MAIN);
   }
 

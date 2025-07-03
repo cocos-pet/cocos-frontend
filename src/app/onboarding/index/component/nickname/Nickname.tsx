@@ -1,17 +1,17 @@
 import * as styles from "./Nickname.css";
-import {ChangeEvent, useState} from "react";
-import {useRouter} from "next/navigation";
+import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import {validateNickname} from "@shared/util/validateNickname";
-import {Button} from "@common/component/Button";
-import {TextField} from "@common/component/TextField";
+import { validateNickname } from "@shared/util/validateNickname";
+import { Button } from "@common/component/Button";
+import { TextField } from "@common/component/TextField";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
-import {useCheckNicknameGet} from "@api/domain/onboarding/nicknameDuplicate/hook";
-import {usePatchNickname} from "@api/domain/onboarding/nickname/hook";
-import {PATH} from "@route/path";
+import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
+import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
+import { PATH } from "@route/path";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import {ONBOARDING_GUIDE} from "../../constant/onboardingGuide.ts";
+import { ONBOARDING_GUIDE } from "../../constant/onboardingGuide.ts";
 import Title from "../../common/title/Title.tsx";
 import Docs from "../../common/docs/Docs.tsx";
 
@@ -21,10 +21,11 @@ const Nickname = () => {
   // 상태 하나로 관리
   const [nickname, setNickname] = useState("");
 
-  // api 참 거짓을 반환
-  const { data: isExistNickname } = useCheckNicknameGet(nickname);
+  // api nickname있는 경우에만 실행
+  const isEnabled = nickname.length > 0;
+  const { data: isExistNickname } = useCheckNicknameGet(isEnabled ? nickname : "");
 
-  const { mutate: patchNickname, mutateAsync, isPending } = usePatchNickname();
+  const { mutate: mutateAsync, isPending } = usePatchNickname();
 
   // 닉네임 입력 처리
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
