@@ -47,7 +47,7 @@ function AuthRedirectContent() {
           }),
         );
 
-        login();
+        await login();
         router.push("/onboarding");
       } catch (e) {
         console.log(e);
@@ -59,7 +59,7 @@ function AuthRedirectContent() {
     if (code) {
       getAccessToken();
     }
-  }, [code, router]);
+  }, [code, router, login]);
 
   return <Loading />;
 }
