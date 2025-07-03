@@ -22,7 +22,7 @@ interface ReviewFilterState {
   filterType: ReviewActiveTabType;
 }
 
-const DEFAULT_LOCATION_ID = 143;
+const DEFAULT_LOCATION_ID = 1;
 const PAGE_SIZE = 20;
 
 const ReviewDetailContent = () => {
@@ -31,11 +31,18 @@ const ReviewDetailContent = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
+  if (!bodyId) {
+    return null;
+  }
   // State
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [filterState, setFilterState] = useState<ReviewFilterState>({
-    location: undefined,
+    location: {
+      id: 1,
+      name: "경기 전체",
+      type: "CITY",
+    },
     summaryOptionId: undefined,
     filterType: undefined,
   });
@@ -65,7 +72,7 @@ const ReviewDetailContent = () => {
       {
         size: PAGE_SIZE,
         locationId: location?.id ?? DEFAULT_LOCATION_ID,
-        locationType: location?.type,
+        locationType: location?.type ?? "CITY",
         bodyId: Number(bodyId),
         summaryOptionId,
       },

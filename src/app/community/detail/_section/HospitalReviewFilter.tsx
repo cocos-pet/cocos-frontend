@@ -38,7 +38,6 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
   } = useOpenToggle();
 
   const handleLocationSelect = (location: LocationFilterType) => {
-    console.log("handleLocationSelect", location);
     handleCloseBottomSheet();
     onRegionFilterClick(location);
   };
@@ -48,7 +47,9 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
     <div className={styles.reviewFilter} style={!isAuthenticated ? { pointerEvents: "none", opacity: 0.5 } : undefined}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
-        <span className={styles.reviewRegionText}>{selectedLocation !== null ? selectedLocation.name : "강남구"}</span>
+        <span className={styles.reviewRegionText}>
+          {selectedLocation?.name !== null ? selectedLocation?.name : "강남구"}
+        </span>
         <motion.div
           style={{ height: "20px" }}
           animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}
