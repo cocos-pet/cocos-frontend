@@ -3,19 +3,19 @@
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import {IcLeftarrow} from "@asset/svg";
-import {PATH} from "@route/path.ts";
-import {formatTime} from "@shared/util/formatTime.ts";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {Suspense, useCallback, useEffect, useState} from "react";
-import {components} from "@type/schema";
+import { IcLeftarrow } from "@asset/svg";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { Suspense, useCallback, useEffect, useState } from "react";
+import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import {postPostFiltersRequestType} from "@api/domain/community/search";
+import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
-import {useRouter, useSearchParams} from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
-import {ReviewDetailContent} from "@app/community/detail/_section";
+import { ReviewDetailContent } from "@app/community/detail/_section";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -54,7 +54,9 @@ const CommunityDetailContent = () => {
   const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
-
+  if (!typeId) {
+    return null;
+  }
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
 

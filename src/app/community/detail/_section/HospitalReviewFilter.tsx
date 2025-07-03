@@ -5,14 +5,15 @@ import Chip from "@common/component/Chip/Chip.tsx";
 import { color } from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
-import React, { useState } from "react";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
 import { useAuth } from "@providers/AuthProvider.tsx";
+import { LocationType } from "@api/domain/review/location/types.ts";
 
 export interface LocationFilterType {
   id: number;
   name: string;
+  type: LocationType;
 }
 
 interface HospitalReviewFilterPropsType {
@@ -46,7 +47,9 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
     <div className={styles.reviewFilter} style={!isAuthenticated ? { pointerEvents: "none", opacity: 0.5 } : undefined}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
-        <span className={styles.reviewRegionText}>{selectedLocation !== null ? selectedLocation.name : "강남구"}</span>
+        <span className={styles.reviewRegionText}>
+          {selectedLocation?.name !== null ? selectedLocation?.name : "강남구"}
+        </span>
         <motion.div
           style={{ height: "20px" }}
           animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}
