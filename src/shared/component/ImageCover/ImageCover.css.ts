@@ -1,4 +1,4 @@
-import {style} from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 export const container = style({
   position: "relative",
@@ -10,6 +10,7 @@ export const deleteButton = style({
   right: 0,
   top: 0,
   zIndex: 3,
+  cursor: "pointer",
 });
 
 export const ghost = style({
@@ -20,8 +21,7 @@ export const ghost = style({
   height: "10.4rem",
   zIndex: 1,
   borderRadius: "0.8rem",
-  background:
-    "linear-gradient(0deg, rgba(217, 217, 217, 0.00) 0%, rgba(115, 115, 115, 0.30) 100%)",
+  background: "linear-gradient(0deg, rgba(217, 217, 217, 0.00) 0%, rgba(115, 115, 115, 0.30) 100%)",
 });
 
 export const image = style({

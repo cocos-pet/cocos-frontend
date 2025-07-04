@@ -51,7 +51,7 @@ interface writeProps {
 const WriteContent = () => {
   //빌테용
   const searchParams = useSearchParams();
-  const category = searchParams.get("category");
+  const category = searchParams?.get("category");
   const router = useRouter();
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -184,9 +184,10 @@ const WriteContent = () => {
 
   // 이미지 삭제
   const handleDeleteImage = (index: number) => {
+    console.log(index);
     setParams((prevParams) => ({
       ...prevParams,
-      image: prevParams.images.filter((_, i) => i !== index), // 선택한 이미지 제거
+      images: prevParams.images.filter((_, i) => i !== index),
     }));
   };
 
