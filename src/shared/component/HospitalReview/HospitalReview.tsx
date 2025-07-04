@@ -10,9 +10,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
-import { useAuth } from "@providers/AuthProvider.tsx";
 import { useRouter } from "next/navigation";
-import { PATH } from "@route/path.ts";
 
 export interface ReviewItemType {
   id?: number;
@@ -117,7 +115,7 @@ const HospitalReview = (props: propsType) => {
               items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}
               color="border"
             />
-            <ChipSection title="진단 내용" items={reviewData.disease || ""} color="border" />
+            {reviewData.disease ? <ChipSection title="진단 내용" items={reviewData.disease} color="border" /> : null}
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
