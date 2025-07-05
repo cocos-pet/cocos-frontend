@@ -34,9 +34,9 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.tags}>
-        {hospitalData.keywords ? (
-          hospitalData.keywords
+      {hospitalData.keywords && (
+        <div className={styles.tags}>
+          {hospitalData.keywords
             .replace(/,/g, "")
             .split("#")
             .filter(Boolean)
@@ -44,11 +44,9 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
               <span key={tag} className={styles.keywords}>
                 #{tag.trim()}
               </span>
-            ))
-        ) : (
-          <span className={styles.noKeywords}>태그 없음</span>
-        )}
-      </div>
+            ))}
+        </div>
+      )}
 
       <div className={styles.introduction}>
         <div className={styles.introductionText}>
