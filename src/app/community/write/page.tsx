@@ -46,7 +46,7 @@ interface writeProps {
     symptomIds: number[];
   };
 }
-
+//todo: useEffect 중복 코드 제거
 // 메인 컨텐츠 컴포넌트
 const WriteContent = () => {
   //빌테용
