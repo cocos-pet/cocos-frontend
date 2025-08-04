@@ -22,7 +22,7 @@ interface ReviewFilterState {
   filterType: ReviewActiveTabType;
 }
 
-const DEFAULT_LOCATION_ID = 143;
+const DEFAULT_LOCATION_ID = 1;
 const PAGE_SIZE = 20;
 
 const ReviewDetailContent = () => {
@@ -31,11 +31,18 @@ const ReviewDetailContent = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
+  if (!bodyId) {
+    return null;
+  }
   // State
   const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [filterState, setFilterState] = useState<ReviewFilterState>({
-    location: null,
+    location: {
+      id: 1,
+      name: "경기 전체",
+      type: "CITY",
+    },
     summaryOptionId: undefined,
     filterType: undefined,
   });
@@ -58,14 +65,14 @@ const ReviewDetailContent = () => {
     router.push(PATH.LOGIN);
   };
 
-  const postReviews = (location?: number, summaryOptionId?: number) => {
+  const postReviews = (location?: LocationFilterType | undefined, summaryOptionId?: number | undefined) => {
     if (!bodyId) return;
 
     postHospitalReviews(
       {
         size: PAGE_SIZE,
-        locationId: location ?? DEFAULT_LOCATION_ID,
-        locationType: "DISTRICT",
+        locationId: location?.id ?? DEFAULT_LOCATION_ID,
+        locationType: location?.type ?? "CITY",
         bodyId: Number(bodyId),
         summaryOptionId,
       },
@@ -84,7 +91,7 @@ const ReviewDetailContent = () => {
       summaryOptionId,
       filterType,
     }));
-    postReviews(filterState.location?.id, summaryOptionId);
+    postReviews(filterState.location || undefined, summaryOptionId);
   };
 
   const handleLocationSelect = (location: LocationFilterType) => {
@@ -92,7 +99,7 @@ const ReviewDetailContent = () => {
       ...prev,
       location,
     }));
-    postReviews(location.id);
+    postReviews(location);
   };
 
   const handleRefresh = () => {
@@ -102,7 +109,7 @@ const ReviewDetailContent = () => {
       filterType: undefined,
     }));
     setIsReviewFilterOpen(false);
-    postReviews(filterState.location?.id);
+    postReviews(filterState.location || undefined);
   };
 
   const handleHospitalReviewClick = () => {

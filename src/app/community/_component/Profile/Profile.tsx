@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { IcBaseProfileImage } from "@asset/svg";
-import { formatTime } from "@shared/util/formatTime.ts";
 import {
   info,
   infoDetail,
@@ -30,7 +29,7 @@ const Profile = (props: propsType) => {
       <div className={info}>
         <div className={infoName}>{nickname}</div>
         <div className={infoDetail}>
-          {breed}·{petAge}살 · {formatTime(createdAt ?? "")}
+          {breed}·{petAge}살 · {createdAt}
         </div>
       </div>
     </div>

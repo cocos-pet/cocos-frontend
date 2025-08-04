@@ -11,11 +11,12 @@ export const useProtectedRoute = () => {
   const { data } = useGetMemberInfo();
   const { isError: isNoPet } = useGetPetInfoWithError();
 
+  const isOnOnboardingPage = pathname === PATH.ONBOARDING.ROOT;
   const hasNickName = data?.nickname;
   const isWillRedirect =
     !isAuthenticated ||
-    !hasNickName ||
-    (hasNickName && pathname === "/onboarding") ||
+    (!hasNickName && !isOnOnboardingPage) ||
+    (hasNickName && isOnOnboardingPage) ||
     (isNoPet && pathname === "/community/write");
 
   useEffect(() => {
@@ -25,15 +26,15 @@ export const useProtectedRoute = () => {
     }
 
     if (data) {
-      if (pathname === "/onboarding") {
-        if (hasNickName) {
-          router.replace(PATH.MAIN);
-        }
+      if (hasNickName && isOnOnboardingPage) {
+        router.replace(PATH.MAIN);
+        return;
       }
 
-      if (!hasNickName) {
-        console.log("Redirecting to onboarding...");
+      if (!hasNickName && !isOnOnboardingPage) {
+        console.log("Redirecting to login...");
         router.replace(PATH.ONBOARDING.ROOT);
+        return;
       }
     }
 
@@ -41,7 +42,7 @@ export const useProtectedRoute = () => {
       alert("반려동물을 등록하지 않으면 접근할 수 없습니다.");
       router.push(PATH.MYPAGE.ROOT);
     }
-  }, [data, isNoPet, isAuthenticated]);
+  }, [data, isNoPet, isAuthenticated, pathname]);
 
   return { isNoPet, isWillRedirect };
 };

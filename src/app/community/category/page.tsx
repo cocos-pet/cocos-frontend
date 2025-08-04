@@ -115,7 +115,7 @@ const CategoryContent = () => {
   const handleGoBack = () => {
     clearAllChips();
 
-    router.push(PATH.COMMUNITY.ROOT);
+    router.back();
   };
 
   const handleGoSearch = () => {

@@ -28,6 +28,8 @@ export const plusImage = style({
 });
 
 export const bottomButton = style({
+  position: "sticky",
+  bottom: 0,
   backgroundColor: color.gray.gray000,
   width: "100%",
   padding: "1.2rem 2rem 3.2rem 2rem",
