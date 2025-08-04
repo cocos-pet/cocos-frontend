@@ -26,8 +26,14 @@ export const isLoggedIn = (): boolean => {
   return false;
 };
 
+const getApiBasePath = (): string => {
+  return process.env.NODE_ENV === "production"
+    ? "https://www.cocos.r-e.kr/api/prod"
+    : "https://www.cocos-dev.r-e.kr/api/dev";
+};
+
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: getApiBasePath(),
   withCredentials: true,
 });
 
