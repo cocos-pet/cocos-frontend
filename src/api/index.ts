@@ -27,7 +27,7 @@ export const isLoggedIn = (): boolean => {
 };
 
 const getApiBasePath = (): string => {
-  return process.env.NODE_ENV === "production"
+  return process.env.NEXT_PUBLIC_DEPLOY_ENV === "prod"
     ? "https://www.cocos.r-e.kr/api/prod"
     : "https://www.cocos-dev.r-e.kr/api/dev";
 };
