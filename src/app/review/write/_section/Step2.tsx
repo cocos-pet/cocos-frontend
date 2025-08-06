@@ -13,6 +13,7 @@ import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../page";
+import { Modal } from "@common/component/Modal/Modal";
 
 type CategoryType = "symptom" | "disease";
 
@@ -24,6 +25,7 @@ interface Step2Props {
 const Step2 = ({ onPrev, onNext }: Step2Props) => {
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -50,12 +52,16 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
     window.history.go(-2);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className={styles.backgroundColor}>
       {/* 상단 헤더 영역 */}
       <HeaderNav
         centerContent="리뷰작성(2/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
 
       <section className={styles.wrapper}>
@@ -89,6 +95,21 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
         diseaseData={diseaseData?.data}
         diseaseBodyData={diseaseBodyData}
       />
+
+      {/* 이탈 방지 모달 */}
+      <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>작성을 그만두시겠어요?</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"계속쓰기"} />
+              <Modal.Confirm label={"작성취소"} onClick={handleGoHospitalDetail} />
+            </Modal.BottomAffix>
+          }
+        >
+          지금까지 쓴 내용은 저장되지 않아요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };

@@ -13,6 +13,7 @@ import { Button } from "@common/component/Button/index";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormWithUIData } from "../page";
 import { useRouter } from "next/navigation";
+import { Modal } from "@common/component/Modal/Modal";
 
 export type PetInfoType = "myPet" | "manual";
 
@@ -22,6 +23,7 @@ interface Step1Props {
 
 const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
 
@@ -55,12 +57,16 @@ const Step1 = ({ onNext }: Step1Props) => {
     window.history.go(-2); //review/agree +1
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className={styles.preventScroll}>
       {/* 상단 헤더 */}
       <HeaderNav
         centerContent="리뷰작성(1/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
 
       {/* 중앙 컨텐츠 */}
@@ -84,6 +90,21 @@ const Step1 = ({ onNext }: Step1Props) => {
         selectedHospital={selectedHospital}
         onSelectHospital={handleSelectHospital}
       />
+
+      {/* 이탈 방지 모달 */}
+      <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>작성을 그만두시겠어요?</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"계속쓰기"} />
+              <Modal.Confirm label={"작성취소"} onClick={handleGoHospitalDetail} />
+            </Modal.BottomAffix>
+          }
+        >
+          지금까지 쓴 내용은 저장되지 않아요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 };
