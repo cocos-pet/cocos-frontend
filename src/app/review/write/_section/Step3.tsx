@@ -10,6 +10,7 @@ import feedbackImg from "@asset/image/reviewFeedback.png";
 import { FEEDBACK_CATEGORIES } from "../constant";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../page";
+import { Modal } from "@common/component/Modal/Modal";
 
 type CategoryType = "good" | "bad";
 
@@ -20,6 +21,7 @@ interface Step3Props {
 
 const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -32,12 +34,15 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
     window.history.go(-2);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
   return (
     <>
       {/* 상단 리뷰 영역 */}
       <HeaderNav
         centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
@@ -77,6 +82,21 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
           <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFromValid} />
         </section>
       </div>
+
+      {/* 이탈 방지 모달 */}
+      <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>작성을 그만두시겠어요?</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"계속쓰기"} />
+              <Modal.Confirm label={"작성취소"} onClick={handleGoHospitalDetail} />
+            </Modal.BottomAffix>
+          }
+        >
+          지금까지 쓴 내용은 저장되지 않아요.
+        </Modal.Content>
+      </Modal.Root>
     </>
   );
 };
