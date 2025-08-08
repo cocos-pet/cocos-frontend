@@ -7,7 +7,7 @@ import "react-day-picker/dist/style.css";
 import { DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
 import CalenderNav from "./CalenderNav";
-// @예림: 자동 배포 확인용 푸시(추후 삭제 예정)
+// @예림: 추후 삭제를 위한 배포 확인용 주석
 
 // 서버 제출용 날짜 데이터 포멧팅
 const formatDate = (date: Date) => {
