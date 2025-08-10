@@ -7,6 +7,7 @@ import { paths } from "@type/schema";
 import SuspenseWrapper from "../SuspenseWrapper";
 import dynamic from "next/dynamic";
 import { useAuth } from "@providers/AuthProvider";
+import { API_BASE_URL } from "@api/index";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading"), { ssr: false });
 
@@ -21,7 +22,7 @@ function AuthRedirectContent() {
   useEffect(() => {
     const getAccessToken = async () => {
       try {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}${API_PATH.MEMBERS_LOGIN}`, {
+        const response = await fetch(`${API_BASE_URL}/${API_PATH.MEMBERS_LOGIN}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -1,4 +1,7 @@
 import axios from "axios";
+const PROD_API_URL = "https://www.cocos.r-e.kr/api/prod";
+const DEV_API_URL = "https://www.cocos-dev.r-e.kr/api/dev";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_DEPLOY_ENV === "prod" ? PROD_API_URL : DEV_API_URL;
 
 export const getAccessToken = (): string | null => {
   const user = localStorage.getItem("user");
@@ -26,14 +29,8 @@ export const isLoggedIn = (): boolean => {
   return false;
 };
 
-const getApiBasePath = (): string => {
-  return process.env.NEXT_PUBLIC_DEPLOY_ENV === "prod"
-    ? "https://www.cocos.r-e.kr/api/prod"
-    : "https://www.cocos-dev.r-e.kr/api/dev";
-};
-
 export const api = axios.create({
-  baseURL: getApiBasePath(),
+  baseURL: API_BASE_URL,
   withCredentials: true,
 });
 
