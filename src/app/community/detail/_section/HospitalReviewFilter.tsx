@@ -6,7 +6,6 @@ import { color } from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
-import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
 import { useAuth } from "@providers/AuthProvider.tsx";
 import { LocationType } from "@api/domain/review/location/types.ts";
 
@@ -32,21 +31,17 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
     handleOpen: handleOpenBottomSheet,
   } = useOpenToggle();
 
-
   const handleLocationSelect = (location: LocationFilterType) => {
     handleCloseBottomSheet();
     onRegionFilterClick(location);
   };
   const { isAuthenticated } = useAuth();
-  console.log(filterType);
 
   return (
     <div className={styles.reviewFilter} style={!isAuthenticated ? { pointerEvents: "none", opacity: 0.5 } : undefined}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
-        <span className={styles.reviewRegionText}>
-          {selectedLocation?.name !== null ? selectedLocation?.name : "강남구"}
-        </span>
+        <span className={styles.reviewRegionText}>{selectedLocation?.name ?? "경기 전체"}</span>
         <motion.div
           style={{ height: "20px" }}
           animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}
@@ -78,6 +73,7 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
           />
         </div>
       </div>
+
       <LocationBottomSheet
         isOpen={isLocationBottomSheetOpen}
         onClose={handleCloseBottomSheet}

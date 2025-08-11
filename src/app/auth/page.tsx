@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { API_PATH } from "@api/constants/apiPath";
-import { useRouter, } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { paths } from "@type/schema";
 import SuspenseWrapper from "../SuspenseWrapper";
 import dynamic from "next/dynamic";
@@ -14,7 +14,7 @@ const Loading = dynamic(() => import("@common/component/Loading/Loading"), { ssr
 function AuthRedirectContent() {
   const router = useRouter();
   const { login } = useAuth();
-ㅊ  const code = searchParams?.get("code");
+  const code = searchParams?.get("code");
 
   type responseType = paths["/api/dev/members/login"]["post"]["responses"]["200"]["content"]["*/*"];
 

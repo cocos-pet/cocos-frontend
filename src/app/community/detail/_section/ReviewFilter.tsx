@@ -7,7 +7,7 @@ import { Button } from "@common/component/Button";
 import { useGetReviewSummaryOption } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import { motion } from "framer-motion";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams, useRouter, usePathname } from "next/navigation";
 
 export type ReviewActiveTabType = "good" | "bad" | undefined;
 
@@ -20,37 +20,38 @@ const ReviewFilter = ({
 }) => {
   const searchParams = useSearchParams();
   const router = useRouter();
-  
-  const initialFilterId = searchParams?.get("filterId");
-  const initialFilterType = searchParams?.get("filterType") as ReviewActiveTabType;
-  
-  const [activeTab, setActiveTab] = useState<ReviewActiveTabType>(initialFilterType || "good");
-  const [filterId, setFilterId] = useState<number | undefined>(initialFilterId ? Number(initialFilterId) : undefined);
-  const [filterType, setFilterType] = useState<ReviewActiveTabType>(initialFilterType || undefined);
+  const pathname = usePathname();
+
+  const currentFilterId = Number(searchParams?.get("filterId"));
+  const currentFilterType = searchParams?.get("filterType") as ReviewActiveTabType;
+
+  console.log(typeof currentFilterId);
+
+  const [activeTab, setActiveTab] = useState<ReviewActiveTabType>(currentFilterType || "good");
   const { data } = useGetReviewSummaryOption();
 
-  const handleTabClick = (tab: ReviewActiveTabType) => setActiveTab(tab);
-  const isActiveTab = (tab: ReviewActiveTabType) => activeTab === tab;
-  const handleChipClick = (id: number | undefined, type: ReviewActiveTabType) => {
-    setFilterId(id);
-    setFilterType(type);
+  const handleTabClick = (tab: ReviewActiveTabType) => {
+    setActiveTab(tab);
   };
-  const handleClose = () => {
-    if (searchParams) {
-      const newSearchParams = new URLSearchParams(searchParams);
-      
-      if (filterId && filterType) {
-        newSearchParams.set('filterId', filterId.toString());
-        newSearchParams.set('filterType', filterType);
-      } else {
-        newSearchParams.delete('filterId');
-        newSearchParams.delete('filterType');
-      }
-      
-      router.replace(`?${newSearchParams.toString()}`);
+
+  const isActiveTab = (tab: ReviewActiveTabType) => activeTab === tab;
+
+  const handleChipClick = (id: number | undefined, type: ReviewActiveTabType) => {
+    const newSearchParams = new URLSearchParams(searchParams?.toString() ?? "");
+
+    if (id !== undefined && type) {
+      newSearchParams.set("filterId", String(id));
+      newSearchParams.set("filterType", type);
+    } else {
+      newSearchParams.delete("filterId");
+      newSearchParams.delete("filterType");
     }
-    
-    onClose(filterId, filterType);
+
+    router.replace(`${pathname}?${newSearchParams.toString()}`);
+  };
+
+  const handleClose = () => {
+    onClose(currentFilterId ? Number(currentFilterId) : undefined, currentFilterType);
   };
 
   if (!data) return <NoData label={"필터를 불러오는데 실패했어요."} />;
@@ -76,7 +77,7 @@ const ReviewFilter = ({
                   size={"small"}
                   label={item.label}
                   color={"blue"}
-                  isSelected={item.id === filterId}
+                  isSelected={item.id === currentFilterId}
                   onClick={() => handleChipClick(item.id, "good")}
                 />
               ))}
@@ -87,7 +88,7 @@ const ReviewFilter = ({
                   size={"small"}
                   label={item.label}
                   color={"red"}
-                  isSelected={item.id === filterId}
+                  isSelected={item.id === currentFilterId}
                   onClick={() => handleChipClick(item.id, "bad")}
                 />
               ))}
