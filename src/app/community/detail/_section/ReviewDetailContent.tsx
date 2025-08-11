@@ -28,6 +28,8 @@ const PAGE_SIZE = 20;
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const bodyId = searchParams?.get("id");
+  const filterId = searchParams?.get("filterId");
+  const filterType = searchParams?.get("filterType") as ReviewActiveTabType;
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
@@ -43,8 +45,8 @@ const ReviewDetailContent = () => {
       name: "경기 전체",
       type: "CITY",
     },
-    summaryOptionId: undefined,
-    filterType: undefined,
+    summaryOptionId: filterId ? Number(filterId) : undefined,
+    filterType: filterType || undefined,
   });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
@@ -120,7 +122,7 @@ const ReviewDetailContent = () => {
 
   useEffect(() => {
     if (bodyId) {
-      postReviews();
+      postReviews(filterState.location || undefined, filterState.summaryOptionId);
     }
   }, [bodyId]);
 

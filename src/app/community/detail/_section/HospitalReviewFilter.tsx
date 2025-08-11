@@ -31,17 +31,14 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
     handleClose: handleCloseBottomSheet,
     handleOpen: handleOpenBottomSheet,
   } = useOpenToggle();
-  const {
-    isOpen: isReviewFilterOpen,
-    handleClose: handleReviewFilterClose,
-    handleOpen: handleReviewFilterOpen,
-  } = useOpenToggle();
+
 
   const handleLocationSelect = (location: LocationFilterType) => {
     handleCloseBottomSheet();
     onRegionFilterClick(location);
   };
   const { isAuthenticated } = useAuth();
+  console.log(filterType);
 
   return (
     <div className={styles.reviewFilter} style={!isAuthenticated ? { pointerEvents: "none", opacity: 0.5 } : undefined}>
@@ -81,7 +78,6 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
           />
         </div>
       </div>
-      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
       <LocationBottomSheet
         isOpen={isLocationBottomSheetOpen}
         onClose={handleCloseBottomSheet}
