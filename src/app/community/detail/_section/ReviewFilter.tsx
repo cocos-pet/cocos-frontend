@@ -25,8 +25,6 @@ const ReviewFilter = ({
   const currentFilterId = Number(searchParams?.get("filterId"));
   const currentFilterType = searchParams?.get("filterType") as ReviewActiveTabType;
 
-  console.log(typeof currentFilterId);
-
   const [activeTab, setActiveTab] = useState<ReviewActiveTabType>(currentFilterType || "good");
   const { data } = useGetReviewSummaryOption();
 

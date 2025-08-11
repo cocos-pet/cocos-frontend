@@ -6,6 +6,7 @@ import { color } from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
+import { ReviewFilter } from "@app/community/detail/_section/index.tsx";
 import { useAuth } from "@providers/AuthProvider.tsx";
 import { LocationType } from "@api/domain/review/location/types.ts";
 
@@ -17,31 +18,44 @@ export interface LocationFilterType {
 
 interface HospitalReviewFilterPropsType {
   onRegionFilterClick: (location: LocationFilterType) => void;
-  onReviewFilterClick: () => void;
   filterType: ReviewActiveTabType;
   selectedLocation: LocationFilterType | null;
   onRefresh: () => void;
+  onReviewFilterClose: (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => void;
 }
 
 const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
-  const { onRegionFilterClick, onReviewFilterClick, onRefresh, filterType, selectedLocation } = props;
+  const { onRegionFilterClick, onRefresh, filterType, selectedLocation, onReviewFilterClose } = props;
   const {
     isOpen: isLocationBottomSheetOpen,
     handleClose: handleCloseBottomSheet,
     handleOpen: handleOpenBottomSheet,
+  } = useOpenToggle();
+  const {
+    isOpen: isReviewFilterOpen,
+    handleClose: handleReviewFilterClose,
+    handleOpen: handleReviewFilterOpen,
   } = useOpenToggle();
 
   const handleLocationSelect = (location: LocationFilterType) => {
     handleCloseBottomSheet();
     onRegionFilterClick(location);
   };
+  
+  const handleReviewFilterCloseWrapper = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
+    handleReviewFilterClose();
+    onReviewFilterClose(summaryOptionId, filterType);
+  };
+
   const { isAuthenticated } = useAuth();
 
   return (
     <div className={styles.reviewFilter} style={!isAuthenticated ? { pointerEvents: "none", opacity: 0.5 } : undefined}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
         <IcTarget width={20} />
-        <span className={styles.reviewRegionText}>{selectedLocation?.name ?? "경기 전체"}</span>
+        <span className={styles.reviewRegionText}>
+          {selectedLocation?.name ?? "경기 전체"}
+        </span>
         <motion.div
           style={{ height: "20px" }}
           animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}
@@ -52,7 +66,7 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
       </div>
       <div className={styles.filterChip}>
         {(filterType === "good" || filterType === "bad") && <IcRefresh width={20} onClick={onRefresh} />}
-        <div onClick={onReviewFilterClick}>
+        <div onClick={handleReviewFilterOpen}>
           <Chip
             label={"좋아요"}
             color={filterType === "good" ? "blue" : "gray"}
@@ -62,7 +76,7 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
             }
           />
         </div>
-        <div onClick={onReviewFilterClick}>
+        <div onClick={handleReviewFilterOpen}>
           <Chip
             label={"아쉬워요"}
             color={filterType === "bad" ? "blue" : "gray"}
@@ -73,7 +87,7 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
           />
         </div>
       </div>
-
+      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterCloseWrapper} />
       <LocationBottomSheet
         isOpen={isLocationBottomSheetOpen}
         onClose={handleCloseBottomSheet}

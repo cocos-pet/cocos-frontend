@@ -2,7 +2,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcRightArrow } from "@asset/svg";
-import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
+import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
@@ -38,7 +38,6 @@ const ReviewDetailContent = () => {
   }
 
   // State
-  const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [location, setLocation] = useState<LocationFilterType>({
     id: 1,
@@ -87,7 +86,6 @@ const ReviewDetailContent = () => {
   );
 
   const handleReviewFilterClose = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
-    setIsReviewFilterOpen(false);
     postReviews(location, summaryOptionId);
   };
 
@@ -104,7 +102,6 @@ const ReviewDetailContent = () => {
       router.replace(`?${newSearchParams.toString()}`);
     }
 
-    setIsReviewFilterOpen(false);
     postReviews(location);
   };
 
@@ -123,9 +120,9 @@ const ReviewDetailContent = () => {
       <HospitalReviewFilter
         selectedLocation={location}
         onRegionFilterClick={handleLocationSelect}
-        onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
         filterType={filterType}
         onRefresh={handleRefresh}
+        onReviewFilterClose={handleReviewFilterClose}
       />
 
       <div className={styles.reviewItemContainer}>
@@ -154,8 +151,6 @@ const ReviewDetailContent = () => {
           />
         </div>
       </If>
-
-      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
 
       <Modal.Root open={isModalOpen} onOpenChange={handleOpenChange}>
         <Modal.Content
