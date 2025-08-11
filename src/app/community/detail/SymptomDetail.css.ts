@@ -147,6 +147,7 @@ export const filterChip = style({
   gap: "0.8rem",
   flexWrap: "wrap",
   justifyContent: "flex-end",
+  width: "inherit",
 });
 
 export const filterContent = style({
