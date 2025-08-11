@@ -10,7 +10,6 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
-import { useRouter } from "next/navigation";
 
 export interface ReviewItemType {
   id?: number;
@@ -66,7 +65,6 @@ const HospitalReview = (props: propsType) => {
   const [isExpanded, setIsExpanded] = useState(false);
   const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const router = useRouter();
 
   const toggleExpand = () => {
     setIsExpanded(!isExpanded);

@@ -27,7 +27,9 @@ const page = () => {
 
   // url 입력해서 들어오는 경우 방지
   useEffect(() => {
-    if (isReviewAgree) {
+    const isAgreed = isReviewAgree?.data?.isReviewTermsAgree;
+
+    if (isAgreed) {
       router.push(PATH.REVIEW.WRITE);
     }
   }, [isReviewAgree]);

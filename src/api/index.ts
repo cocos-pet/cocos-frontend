@@ -1,4 +1,7 @@
 import axios from "axios";
+const PROD_API_URL = "https://www.cocos.r-e.kr/api/prod";
+const DEV_API_URL = "https://www.cocos-dev.r-e.kr/api/dev";
+export const API_BASE_URL = process.env.NEXT_PUBLIC_DEPLOY_ENV === "prod" ? PROD_API_URL : DEV_API_URL;
 
 export const getAccessToken = (): string | null => {
   const user = localStorage.getItem("user");
@@ -27,7 +30,7 @@ export const isLoggedIn = (): boolean => {
 };
 
 export const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL: API_BASE_URL,
   withCredentials: true,
 });
 

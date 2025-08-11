@@ -32,6 +32,7 @@ import SearchHospital, { Hospital } from "@shared/component/SearchHospital/Searc
 import { useGetFavoriteHospital, usePatchFavoriteHospital } from "@api/shared/hook.ts";
 import { useMypageMemberInfo } from "../_store/mypageStore.ts";
 
+//todo: useEffect 중복 코드 제거
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
 const DEFAULT_TYPE = [

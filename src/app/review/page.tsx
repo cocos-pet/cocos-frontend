@@ -57,6 +57,7 @@ export default function ReviewPage() {
   };
 
   const isReviewAgree = useGetReviewAgreementStatus();
+  const isAgreed = isReviewAgree?.data?.isReviewTermsAgree;
 
   const handleFloatingBtnClick = () => {
     // 로그인x -> 로그인 모달
@@ -70,7 +71,7 @@ export default function ReviewPage() {
       return;
     }
     // 리뷰작성 동의 여부에 따라, 동의x -> 리뷰동의 페이지, 동의o -> 바로 리뷰 작성
-    const nextPath = isReviewAgree ? PATH.REVIEW.WRITE : PATH.REVIEW.AGREE;
+    const nextPath = isAgreed ? PATH.REVIEW.WRITE : PATH.REVIEW.AGREE;
     router.push(nextPath);
   };
 
@@ -80,10 +81,7 @@ export default function ReviewPage() {
 
   return (
     <div>
-      <LocationHeader
-        onLocationChange={handleLocationChange}
-        onBottomSheetOpenChange={setIsLocationSheetOpen}
-      />
+      <LocationHeader onLocationChange={handleLocationChange} onBottomSheetOpenChange={setIsLocationSheetOpen} />
 
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
