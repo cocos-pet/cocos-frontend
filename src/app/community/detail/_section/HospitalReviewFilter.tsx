@@ -41,7 +41,7 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
     handleCloseBottomSheet();
     onRegionFilterClick(location);
   };
-  
+
   const handleReviewFilterCloseWrapper = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
     handleReviewFilterClose();
     onReviewFilterClose(summaryOptionId, filterType);
@@ -52,10 +52,8 @@ const HospitalReviewFilter = (props: HospitalReviewFilterPropsType) => {
   return (
     <div className={styles.reviewFilter} style={!isAuthenticated ? { pointerEvents: "none", opacity: 0.5 } : undefined}>
       <div className={styles.reviewRegion} onClick={handleOpenBottomSheet}>
-        <IcTarget width={20} />
-        <span className={styles.reviewRegionText}>
-          {selectedLocation?.name ?? "경기 전체"}
-        </span>
+        <IcTarget width={20} height={20} />
+        <span className={styles.reviewRegionText}>{selectedLocation?.name ?? "경기 전체"}</span>
         <motion.div
           style={{ height: "20px" }}
           animate={{ rotate: isLocationBottomSheetOpen ? 180 : 0 }}

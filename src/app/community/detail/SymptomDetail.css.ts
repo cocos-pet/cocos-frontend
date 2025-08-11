@@ -128,6 +128,7 @@ export const reviewRegion = style({
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "row",
+  flexShrink: 0,
 });
 
 export const targetImage = style({
