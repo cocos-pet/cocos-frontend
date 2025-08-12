@@ -49,7 +49,6 @@ interface writeProps {
 //todo: useEffect 중복 코드 제거
 // 메인 컨텐츠 컴포넌트
 const WriteContent = () => {
-  //빌테용
   const searchParams = useSearchParams();
   const category = searchParams?.get("category");
   const router = useRouter();
@@ -184,7 +183,6 @@ const WriteContent = () => {
 
   // 이미지 삭제
   const handleDeleteImage = (index: number) => {
-    console.log(index);
     setParams((prevParams) => ({
       ...prevParams,
       images: prevParams.images.filter((_, i) => i !== index),
