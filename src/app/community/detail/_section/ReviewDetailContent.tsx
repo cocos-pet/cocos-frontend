@@ -1,8 +1,8 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState, useCallback } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcRightArrow } from "@asset/svg";
-import { LoadingFallback, ReviewFilter } from "@app/community/detail/_section/index.tsx";
+import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
@@ -28,23 +28,21 @@ const PAGE_SIZE = 20;
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const bodyId = searchParams?.get("id");
+  const filterId = searchParams?.get("filterId");
+  const filterType = searchParams?.get("filterType") as ReviewActiveTabType;
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
   if (!bodyId) {
     return null;
   }
+
   // State
-  const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
-  const [filterState, setFilterState] = useState<ReviewFilterState>({
-    location: {
-      id: 1,
-      name: "경기 전체",
-      type: "CITY",
-    },
-    summaryOptionId: undefined,
-    filterType: undefined,
+  const [location, setLocation] = useState<LocationFilterType>({
+    id: 1,
+    name: "경기 전체",
+    type: "CITY",
   });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
@@ -65,51 +63,46 @@ const ReviewDetailContent = () => {
     router.push(PATH.LOGIN);
   };
 
-  const postReviews = (location?: LocationFilterType | undefined, summaryOptionId?: number | undefined) => {
-    if (!bodyId) return;
+  const postReviews = useCallback(
+    (location?: LocationFilterType | undefined, summaryOptionId?: number | undefined) => {
+      if (!bodyId) return;
 
-    postHospitalReviews(
-      {
-        size: PAGE_SIZE,
-        locationId: location?.id ?? DEFAULT_LOCATION_ID,
-        locationType: location?.type ?? "CITY",
-        bodyId: Number(bodyId),
-        summaryOptionId,
-      },
-      {
-        onSuccess: (data) => {
-          setReviewList(data);
+      postHospitalReviews(
+        {
+          size: PAGE_SIZE,
+          locationId: location?.id ?? DEFAULT_LOCATION_ID,
+          locationType: location?.type ?? "CITY",
+          bodyId: Number(bodyId),
+          summaryOptionId,
         },
-      },
-    );
-  };
+        {
+          onSuccess: (data) => {
+            setReviewList(data);
+          },
+        },
+      );
+    },
+    [bodyId, postHospitalReviews],
+  );
 
   const handleReviewFilterClose = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
-    setIsReviewFilterOpen(false);
-    setFilterState((prev) => ({
-      ...prev,
-      summaryOptionId,
-      filterType,
-    }));
-    postReviews(filterState.location || undefined, summaryOptionId);
+    postReviews(location, summaryOptionId);
   };
 
-  const handleLocationSelect = (location: LocationFilterType) => {
-    setFilterState((prev) => ({
-      ...prev,
-      location,
-    }));
-    postReviews(location);
+  const handleLocationSelect = (newLocation: LocationFilterType) => {
+    setLocation(newLocation);
+    postReviews(newLocation, filterId ? Number(filterId) : undefined);
   };
 
   const handleRefresh = () => {
-    setFilterState((prev) => ({
-      ...prev,
-      summaryOptionId: undefined,
-      filterType: undefined,
-    }));
-    setIsReviewFilterOpen(false);
-    postReviews(filterState.location || undefined);
+    if (searchParams) {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.delete("filterId");
+      newSearchParams.delete("filterType");
+      router.replace(`?${newSearchParams.toString()}`);
+    }
+
+    postReviews(location);
   };
 
   const handleHospitalReviewClick = () => {
@@ -118,12 +111,6 @@ const ReviewDetailContent = () => {
     }
   };
 
-  useEffect(() => {
-    if (bodyId) {
-      postReviews();
-    }
-  }, [bodyId]);
-
   if (isPending) {
     return <LoadingFallback />;
   }
@@ -131,11 +118,11 @@ const ReviewDetailContent = () => {
   return (
     <div className={styles.reviewContainer}>
       <HospitalReviewFilter
-        selectedLocation={filterState.location}
+        selectedLocation={location}
         onRegionFilterClick={handleLocationSelect}
-        onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-        filterType={filterState.filterType}
+        filterType={filterType}
         onRefresh={handleRefresh}
+        onReviewFilterClose={handleReviewFilterClose}
       />
 
       <div className={styles.reviewItemContainer}>
@@ -164,8 +151,6 @@ const ReviewDetailContent = () => {
           />
         </div>
       </If>
-
-      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
 
       <Modal.Root open={isModalOpen} onOpenChange={handleOpenChange}>
         <Modal.Content

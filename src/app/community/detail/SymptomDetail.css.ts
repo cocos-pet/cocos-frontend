@@ -128,6 +128,7 @@ export const reviewRegion = style({
   alignItems: "center",
   justifyContent: "center",
   flexDirection: "row",
+  flexShrink: 0,
 });
 
 export const targetImage = style({
@@ -147,6 +148,7 @@ export const filterChip = style({
   gap: "0.8rem",
   flexWrap: "wrap",
   justifyContent: "flex-end",
+  width: "inherit",
 });
 
 export const filterContent = style({
