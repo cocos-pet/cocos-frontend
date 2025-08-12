@@ -1,9 +1,6 @@
-import { question } from "./../../../../app/review/write/_component/ReviewHospital.style.css";
-import { nickname } from "./../../../../common/component/SubComment/SubComment.css";
 import { API_PATH } from "@api/constants/apiPath";
-import { del, get, patch } from "@api/index";
+import { get, patch } from "@api/index";
 import { paths } from "@type/schema";
-import { AxiosError } from "axios";
 
 export const getAnimal = async () => {
   type AnimalResponse = paths["/api/dev/animals"]["get"]["responses"]["200"]["content"]["*/*"];

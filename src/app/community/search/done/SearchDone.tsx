@@ -1,6 +1,6 @@
 import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
-import { ChangeEvent, Suspense, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { styles } from "@app/community/search/done/SearchDone.css.ts";
 import { PATH } from "@route/path.ts";
@@ -30,10 +30,10 @@ interface SearchDonePropTypes {
   category?: string;
 }
 
-function SearchDoneContent() {
+function SearchDone() {
   const searchParams = useSearchParams();
   const query = searchParams?.get("searchText");
-  const [isFilterActive, setIsFilterActive] = useState(false);
+
   const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
   const [searchText, setSearchText] = useState(query || "");
   const router = useRouter();
@@ -59,6 +59,12 @@ function SearchDoneContent() {
     }
   }, [symptoms, disease, animal]);
 
+  const isFilterActive = useMemo(() => {
+    return (
+      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0
+    );
+  }, [selectedChips]);
+
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
       const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
@@ -69,40 +75,6 @@ function SearchDoneContent() {
       }
     }
   }, [diseaseBodies, symptomBodies]);
-
-  useEffect(() => {
-    if (!searchText) return;
-
-    mutate(
-      {
-        keyword: searchText,
-        animalIds: selectedChips.breedId,
-        symptomIds: selectedChips.symptomIds,
-        diseaseIds: selectedChips.diseaseIds,
-        cursorId: null,
-        categoryId: null,
-        likeCount: null,
-        createdAt: null,
-        sortBy: "RECENT",
-      },
-      {
-        onSuccess: (data) => {
-          setSearchDoneData(data || []);
-          console.log("Search Success:", data);
-        },
-        onError: (error) => {
-          console.error("Search Error:", error);
-        },
-      },
-    );
-  }, [searchText, selectedChips, mutate]);
-
-  // 필터 활성화 여부 계산
-  useEffect(() => {
-    setIsFilterActive(
-      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0,
-    );
-  }, [selectedChips]);
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
@@ -127,6 +99,34 @@ function SearchDoneContent() {
 
   const onClickPost = (postId: number | undefined) => {
     router.push(`${PATH.COMMUNITY.ROOT}/${postId}`);
+  };
+
+  const handleFilterSubmit = () => {
+    setOpen(false);
+    if (searchText) {
+      mutate(
+        {
+          keyword: searchText,
+          animalIds: selectedChips.breedId,
+          symptomIds: selectedChips.symptomIds,
+          diseaseIds: selectedChips.diseaseIds,
+          cursorId: null,
+          categoryId: null,
+          likeCount: null,
+          createdAt: null,
+          sortBy: "RECENT",
+        },
+        {
+          onSuccess: (data) => {
+            setSearchDoneData(data || []);
+            console.log("Filter Search Success:", data);
+          },
+          onError: (error) => {
+            console.error("Filter Search Error:", error);
+          },
+        },
+      );
+    }
   };
 
   if (isPending) {
@@ -197,17 +197,9 @@ function SearchDoneContent() {
         )}
       </div>
 
-      <FilterBottomSheet />
+      <FilterBottomSheet onSubmitClick={handleFilterSubmit} />
     </div>
   );
 }
-
-const SearchDone = () => {
-  return (
-    <Suspense fallback={<div>로딩 중...</div>}>
-      <SearchDoneContent />
-    </Suspense>
-  );
-};
 
 export default SearchDone;
