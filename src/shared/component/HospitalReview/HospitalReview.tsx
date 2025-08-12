@@ -107,13 +107,16 @@ const HospitalReview = (props: propsType) => {
           transition={{ duration: 0.3 }}
         >
           <div className={styles.detailSection}>
-            <ChipSection title="방문목적" items={reviewData.visitPurpose || ""} color="border" />
-            <ChipSection
-              title="사전증상"
-              items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}
-              color="border"
-            />
-            <ChipSection title="진단 내용" items={reviewData.disease || ""} color="border" />
+            {reviewData.visitPurpose && <ChipSection title="방문목적" items={reviewData.visitPurpose} color="border" />}
+            {reviewData.symptoms && (
+              <ChipSection
+                title="사전증상"
+                items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}
+                color="border"
+              />
+            )}
+
+            {reviewData.disease && <ChipSection title="진단 내용" items={reviewData.disease} color="border" />}
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
