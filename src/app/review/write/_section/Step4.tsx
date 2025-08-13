@@ -11,8 +11,9 @@ import axios from "axios";
 import * as styles from "./Step4.style.css";
 import ReviewContent from "@app/review/write/_component/ReviewContent";
 import ReviewImg from "@app/review/write/_component/ReviewImg";
-import { Modal } from "@common/component/Modal/Modal";
 import { useState } from "react";
+import ExitConfirmModal from "../../_components/ExitConfirmModal";
+
 interface Step4Props {
   onPrev: () => void;
   onNext: () => void;
@@ -154,19 +155,11 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
       />
 
       {/* 이탈 방지 모달 */}
-      <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
-        <Modal.Content
-          title={<Modal.Title>작성을 그만두시겠어요?</Modal.Title>}
-          bottomAffix={
-            <Modal.BottomAffix>
-              <Modal.Close label={"계속쓰기"} />
-              <Modal.Confirm label={"작성취소"} onClick={handleGoHospitalDetail} />
-            </Modal.BottomAffix>
-          }
-        >
-          지금까지 쓴 내용은 저장되지 않아요.
-        </Modal.Content>
-      </Modal.Root>
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
+      />
     </div>
   );
 };
