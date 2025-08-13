@@ -13,6 +13,7 @@ import { Button } from "@common/component/Button/index";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormWithUIData } from "../page";
 import { useRouter } from "next/navigation";
+import ExitConfirmModal from "../../_components/ExitConfirmModal";
 
 export type PetInfoType = "myPet" | "manual";
 
@@ -22,6 +23,7 @@ interface Step1Props {
 
 const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
 
@@ -55,12 +57,16 @@ const Step1 = ({ onNext }: Step1Props) => {
     window.history.go(-2); //review/agree +1
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className={styles.preventScroll}>
       {/* 상단 헤더 */}
       <HeaderNav
         centerContent="리뷰작성(1/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
 
       {/* 중앙 컨텐츠 */}
@@ -83,6 +89,13 @@ const Step1 = ({ onNext }: Step1Props) => {
         onCloseBottomSheet={handleCloseBottomSheet}
         selectedHospital={selectedHospital}
         onSelectHospital={handleSelectHospital}
+      />
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
       />
     </div>
   );
