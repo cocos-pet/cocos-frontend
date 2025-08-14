@@ -15,7 +15,6 @@ export const useLogout = () => {
     mutationKey: LOGOUT_QUERY_KEY.LOGOUT_MEMEBER(),
     mutationFn: postLogout,
     onSuccess: () => {
-      localStorage.removeItem("user");
       logout();
       router.push(PATH.LOGIN);
     },
@@ -24,10 +23,11 @@ export const useLogout = () => {
 
 export const useWithdraw = () => {
   const router = useRouter();
+  const { logout } = useAuth();
   return useMutation({
     mutationFn: deleteWithdraw,
     onSuccess: () => {
-      localStorage.clear();
+      logout();
       router.push(PATH.MAIN);
     },
   });
