@@ -28,7 +28,7 @@ export const useWithdraw = () => {
     mutationFn: deleteWithdraw,
     onSuccess: () => {
       localStorage.clear();
-      router.push(PATH.LOGIN);
+      router.push(PATH.MAIN);
     },
   });
 };
