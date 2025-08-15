@@ -61,7 +61,11 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
       {showToast && <div className={styles.toast}>주소가 복사되었습니다.</div>}
 
       <div className={styles.mapWrapper}>
-        <MapComponent address={hospitalData.address || ""} />
+        <MapComponent
+          address={hospitalData.address || ""}
+          latitude={hospitalData.latitude}
+          longitude={hospitalData.longitude}
+        />
       </div>
     </div>
   );
