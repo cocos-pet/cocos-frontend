@@ -15,7 +15,7 @@ declare global {
 
 const KakaoMap = ({ address, latitude, longitude }: KakaoMapProps) => {
   const apiKey = process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY;
-
+  const { kakao } = window;
   useEffect(() => {
     if (!apiKey) return;
 
