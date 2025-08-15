@@ -446,7 +446,7 @@ const EditFavoriteHospital = ({ nickname }: { nickname: string | undefined }) =>
           rightIcon={<IcPlus width={20} height={20} />}
           label={"즐겨찾는 동물병원 추가하기"}
           size="small"
-          width="21.2rem"
+          width="20.3rem"
           onClick={openCategoryBottomSheet}
         />
       )}

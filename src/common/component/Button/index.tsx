@@ -39,13 +39,18 @@ export const Button = ({
   variant = "solidPrimary",
   disabled,
   onClick,
-   style,
+  style,
   className,
   ...props
 }: CombinedButtonProps) => {
+  const buttonStyle = {
+    ...style,
+    ...(width && { width }),
+  };
+
   return (
     <button
-      style={style}
+      style={buttonStyle}
       className={`${button({ size, variant, disabled })} ${className ?? ""}`}
       disabled={disabled}
       onClick={onClick}
