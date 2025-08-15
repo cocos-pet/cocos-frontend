@@ -3,9 +3,11 @@ import * as styles from "./MapComponent.css";
 
 interface MapComponentProps {
   address: string;
+  latitude?: number;
+  longitude?: number;
 }
 
-const MapComponent = ({ address }: MapComponentProps) => {
+const MapComponent = ({ address, latitude, longitude }: MapComponentProps) => {
   const mapEl = useRef(null);
 
   useEffect(() => {
@@ -32,20 +34,15 @@ const MapComponent = ({ address }: MapComponentProps) => {
 
       if (!mapEl.current) return;
 
-      const geocoder = new window.kakao.maps.services.Geocoder();
+      const coords = new window.kakao.maps.LatLng(latitude, longitude);
+      const map = new window.kakao.maps.Map(mapEl.current, {
+        center: coords,
+        level: 3,
+      });
 
-      geocoder.addressSearch(address, (result, status) => {
-        if (status === window.kakao.maps.services.Status.OK) {
-          const coords = new window.kakao.maps.LatLng(result[0].y, result[0].x);
-          const map = new window.kakao.maps.Map(mapEl.current, {
-            center: coords,
-            level: 3,
-          });
-          new window.kakao.maps.Marker({
-            map: map,
-            position: coords,
-          });
-        }
+      new window.kakao.maps.Marker({
+        map: map,
+        position: coords,
       });
     };
 
@@ -57,7 +54,7 @@ const MapComponent = ({ address }: MapComponentProps) => {
         document.head.removeChild(mapScript);
       }
     };
-  }, [address]);
+  }, [address, latitude, longitude]);
 
   return (
     <div className={styles.mapWrapper}>
