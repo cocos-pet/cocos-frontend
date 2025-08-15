@@ -14,7 +14,10 @@ export const reviewContainer = style({
 
 export const reviewList = style({
   height: "100%",
-  overflow: "auto",
+  overflowX: "hidden",
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
 });
 
 export const headerContainer = style({
