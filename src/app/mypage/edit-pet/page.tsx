@@ -52,8 +52,6 @@ const Page = () => {
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
   const [isValid, setIsVaild] = useState(false);
   const [petAge, setPetAge] = useState("");
-  const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
-  const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
 
   const member = useMypageMemberInfo((s) => s.member);
   const setMemberInfo = useMypageMemberInfo((s) => s.setMemberInfo);
@@ -89,11 +87,14 @@ const Page = () => {
 
   const { data: animal } = useGetAnimal();
   const { data: breed } = useGetBreed((animalChips.animalId as number) || 1);
+
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
-
-  const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
+  const bodyDiseaseIds = diseaseBodies?.bodies?.map((item) => item.id as number);
+  const bodySymptomsIds = symptomBodies?.bodies?.map((item) => item.id as number);
   const { data: disease } = useGetDisease(bodyDiseaseIds);
+  const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
+  
   const { data: petInfo } = useGetPetInfo();
   const { mutate: patchPetInfo } = usePatchPetInfo();
 
@@ -103,17 +104,6 @@ const Page = () => {
       setMemberInfo(memberData);
     }
   }, [memberData, setMemberInfo]);
-
-  useEffect(() => {
-    if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
-      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
-      if (diseaseIdArr.length && symptomIdArr.length) {
-        setBodyDiseaseIds(diseaseIdArr);
-        setBodySymptomsIds(symptomIdArr);
-      }
-    }
-  }, [diseaseBodies, symptomBodies]);
 
   useEffect(() => {
     // animalId가 변경되었을 때만 breedId를 초기화
