@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
+import { DEFAULT_LOCATION } from "../../_constant/locationConfig";
 
 interface Location {
   id: number;
@@ -32,8 +33,8 @@ export default function HospitalList({
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
     useInfiniteHospitalList({
-      locationType: selectedLocation?.type || "CITY",
-      locationId: selectedLocation?.id,
+      locationType: selectedLocation?.type || DEFAULT_LOCATION.DISTRICT.type,
+      locationId: selectedLocation?.id || DEFAULT_LOCATION.DISTRICT.id,
       size: 10,
       sortBy: "REVIEW",
       image: "",
