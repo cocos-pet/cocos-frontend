@@ -23,7 +23,7 @@ export const useProtectedRoute = () => {
   // 데이터가 로딩 중이거나 인증되지 않은 상태에서는 리다이렉트 로직을 실행하지 않음
   const shouldRedirect = isAuthenticated && !isMemberInfoLoading;
 
-  const isWillRedirect = useMemo(() => {
+  const isNeedRedirect = useMemo(() => {
     if (!isAuthenticated || isMemberInfoLoading) return true;
 
     // 멤버 정보 로딩 완료 후 조건 체크
@@ -84,5 +84,5 @@ export const useProtectedRoute = () => {
     router,
   ]);
 
-  return { isNoPet, isWillRedirect };
+  return { isNoPet, isNeedRedirect };
 };
