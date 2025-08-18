@@ -6,6 +6,7 @@ import { IcCheck } from "@asset/svg";
 import { CityTab } from "./CityTab";
 import { useGetLocation } from "@api/domain/review/location/hook";
 import { District, LocationType } from "@api/domain/review/location/types";
+import { DEFAULT_LOCATION } from "../../_constant/locationConfig";
 
 interface LocationBottomSheetProps {
   isOpen: boolean;
@@ -28,15 +29,17 @@ export default function LocationBottomSheet({
   onClose,
   onLocationSelect,
 }: LocationBottomSheetProps) {
-  const [selectedCityId, setSelectedCityId] = useState(1);
+  const [selectedCityId, setSelectedCityId] = useState(
+    DEFAULT_LOCATION.CITY.id
+  );
   const [selectedLocation, setSelectedLocation] =
-    useState<SelectedLocation | null>(null);
+    useState<SelectedLocation | null>(DEFAULT_LOCATION.DISTRICT);
   const { data: cities, refetch } = useGetLocation();
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedCityId(1);
-      setSelectedLocation(null);
+      setSelectedCityId(DEFAULT_LOCATION.CITY.id);
+      setSelectedLocation(DEFAULT_LOCATION.DISTRICT);
       refetch();
     }
   }, [isOpen, refetch]);

@@ -6,6 +6,7 @@ import { useGetMemberLocation } from "@api/domain/review/location/hook";
 import { motion } from "framer-motion";
 import { updateMemberLocation } from "@api/domain/review/location";
 import { LocationType } from "@api/domain/review/location/types";
+import { DEFAULT_LOCATION } from "../../_constant/locationConfig";
 
 interface Location {
   id: number;
@@ -24,7 +25,7 @@ export default function LocationHeader({
 }: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-    null
+    DEFAULT_LOCATION.DISTRICT
   );
   const { data: memberLocation } = useGetMemberLocation();
 
