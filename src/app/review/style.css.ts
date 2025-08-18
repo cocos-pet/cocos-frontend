@@ -124,7 +124,7 @@ export const navWrapper = style({
 export const floatBtnWrapper = style({
   position: "fixed",
   bottom: "9.6rem",
-  right: "2rem",
+  right: "max(2.8rem, calc((100% - 76.8rem) / 2 + 2.8rem))",
   zIndex: 1000,
   display: "flex",
   justifyContent: "flex-end",
