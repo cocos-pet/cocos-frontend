@@ -5,6 +5,9 @@ globalStyle("html", {
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
+  touchAction: "manipulation",
+  WebkitTouchCallout: "none",
+  WebkitUserSelect: "none",
 
   fontSize: "10px", //default
 
