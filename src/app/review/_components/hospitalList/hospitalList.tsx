@@ -6,7 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
-import { DEFAULT_LOCATION } from "../../_constant/locationConfig";
+import { DEFAULT_LOCATION } from "@app/review/_constant/locationConfig";
 
 interface Location {
   id: number;

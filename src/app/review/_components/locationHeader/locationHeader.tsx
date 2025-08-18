@@ -6,7 +6,7 @@ import { useGetMemberLocation } from "@api/domain/review/location/hook";
 import { motion } from "framer-motion";
 import { updateMemberLocation } from "@api/domain/review/location";
 import { LocationType } from "@api/domain/review/location/types";
-import { DEFAULT_LOCATION } from "../../_constant/locationConfig";
+import { DEFAULT_LOCATION } from "@app/review/_constant/locationConfig";
 
 interface Location {
   id: number;
@@ -69,6 +69,7 @@ export default function LocationHeader({
         isOpen={isBottomSheetOpen}
         onClose={handleBottomSheetClose}
         onLocationSelect={handleLocationSelect}
+        currentLocation={selectedLocation || DEFAULT_LOCATION.DISTRICT}
       />
     </div>
   );
