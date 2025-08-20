@@ -1,152 +1,95 @@
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
+import Tab from "@common/component/Tab/Tab";
 import { Button } from "@common/component/Button";
-import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
-import { useFormContext } from "react-hook-form";
-import { ReviewFormData, ReviewFormWithUIData } from "../page";
-import { useReviewPost } from "@app/api/review/write/submit/hook";
-import { useSearchParams } from "next/navigation";
-import axios from "axios";
-
-import * as styles from "./Step4.style.css";
-import ReviewContent from "@app/review/write/_component/ReviewContent";
-import ReviewImg from "@app/review/write/_component/ReviewImg";
+import * as styles from "./Step3.style.css";
 import { useState } from "react";
-interface Step4Props {
+import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCategoryContent";
+import Image from "next/image";
+import feedbackImg from "@asset/image/reviewFeedback.png";
+import { FEEDBACK_CATEGORIES } from "../constant";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "../page";
+import ExitConfirmModal from "../_component/ExitConfirmModal";
+type CategoryType = "good" | "bad";
+
+interface Step3Props {
   onPrev: () => void;
   onNext: () => void;
 }
 
-const Step4 = ({ onPrev, onNext }: Step4Props) => {
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const searchParams = useSearchParams();
-  const rawHospitalId = searchParams?.get("hospitalId");
-  const hospitalId = rawHospitalId ? Number(rawHospitalId) : undefined;
+const Step3 = ({ onPrev, onNext }: Step3Props) => {
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  // presigned URL
-  const [imageNames, setImageNames] = useState<string[]>([]);
-  const [uploadedImageForms, setUploadedImageForms] = useState<FormData[]>([]);
+  const { watch } = useFormContext<ReviewFormData>();
 
-  if (!hospitalId || Number.isNaN(hospitalId)) {
-    throw new Error("유효하지 않은 병원입니다.");
-  }
+  const goodReviewIds = watch("goodReviewIds");
+  const badReviewIds = watch("badReviewIds");
 
-  const { mutate: submitReview, isPending } = useReviewPost(hospitalId);
-  const { handleSubmit } = useFormContext<ReviewFormData>();
-  const { getValues } = useFormContext<ReviewFormWithUIData>();
-
-  const onValid = (data: ReviewFormData) => {
-    const fullData = getValues(); // 전체 데이터 받기
-    const { selectedHospital, selectedPetInfoType, ...submitData }: ReviewFormWithUIData = fullData;
-
-    submitReview(
-      {
-        ...submitData,
-        gender: data.gender as "F" | "M",
-        images: imageNames || undefined,
-      },
-      {
-        onSuccess: async (res) => {
-          const presignedUrls = res?.data?.data?.images;
-
-          // 이미지가 없으면 바로 다음 단계로 이동
-          if (!presignedUrls || presignedUrls.length === 0) {
-            onNext();
-            return;
-          }
-
-          try {
-            await Promise.all(
-              presignedUrls.map((url: string, index: number) => {
-                const formData = uploadedImageForms[index];
-                const file = formData.get("file");
-
-                if (!file) {
-                  throw new Error("FormData에 파일이 없습니다.");
-                }
-
-                return axios.put(url, file, {
-                  headers: {
-                    "Content-Type": (file as File).type,
-                  },
-                });
-              }),
-            );
-            onNext();
-          } catch (uploadErr) {
-            console.error("이미지 업로드 실패", uploadErr);
-            alert("이미지 업로드에 실패했습니다.");
-          }
-        },
-
-        onError: (error) => {
-          if (axios.isAxiosError(error) && error.response?.data?.code === 40415) {
-            console.log("알 수 없는 오류");
-          } else {
-            alert("리뷰 작성에 실패했습니다.");
-          }
-        },
-      },
-    );
-  };
-
-  const handleOpenBottomSheet = () => {
-    setIsBottomSheetOpen(true);
-  };
-
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleNext = () => {
-    handleOpenBottomSheet();
-  };
+  const isFromValid = goodReviewIds.length > 0 || badReviewIds.length > 0;
 
   const handleGoHospitalDetail = () => {
     window.history.go(-2);
   };
 
-  const handleSubmitReview = () => {
-    if (isPending) return; // 이미 요청 중이면 더블 클릭 방지
-    handleSubmit(onValid)();
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
   };
-
   return (
-    <div className={styles.wrapper}>
+    <>
       {/* 상단 리뷰 영역 */}
       <HeaderNav
         centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
-      {/* 중앙 컨텐츠 영역 */}
-      <section className={styles.contentLayout}>
-        {/* 4-1. 후기 작성 */}
-        <ReviewContent />
+      <div className={styles.backgroundColor}>
+        {/* 타이틀 */}
+        <section className={styles.TopLayout}>
+          <Image src={feedbackImg} alt="review-feedback img" className={styles.img} />
+          <div className={styles.titleBox}>
+            <h1 className={styles.title}>진료 경험은 어땠나요?</h1>
+            <div>
+              <p className={styles.docs}>진료 후기를 하나 이상 골라주세요.</p>
+              <p className={styles.docs}>좋아요/아쉬워요 각각 3개까지 선택할 수 있어요.</p>
+            </div>
+          </div>
+        </section>
 
-        {/* 4-2. 사진 첨부 */}
-        <ReviewImg setImageNames={setImageNames} setUploadedImageForms={setUploadedImageForms} />
-        <span className={styles.docs}>
-          서비스 운영 규정에 어긋나는 대가성 댓글은 사전 통보 없이 블라인드 처리될 수 있습니다.
-        </span>
-      </section>
+        {/* 탭 */}
+        <section>
+          <div className={styles.TapBox}>
+            {FEEDBACK_CATEGORIES.map(({ id, label }) => (
+              <Tab
+                key={id}
+                active={selectedCategory === id}
+                variant={selectedCategory}
+                onClick={() => setSelectedCategory(id as CategoryType)}
+              >
+                {label}
+              </Tab>
+            ))}
+          </div>
 
-      {/* 하단 버튼 영역 */}
-      <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} disabled={isPending} />
-        <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={isPending} />
-      </section>
+          {/* 3-1. 진료 후기 칩 선택 */}
+          <FeedbackCategoryContent category={selectedCategory} />
+        </section>
 
-      <SimpleBottomSheet
-        content="리뷰를 업로드할까요?"
-        leftText="아니요"
-        rightText="업로드하기"
-        isOpen={isBottomSheetOpen}
-        handleClose={handleCloseBottomSheet}
-        leftOnClick={handleCloseBottomSheet}
-        rightOnClick={handleSubmitReview}
+        {/* 하단 버튼 영역 */}
+        <section className={styles.btnLayout}>
+          <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
+          <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFromValid} />
+        </section>
+      </div>
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
       />
-    </div>
+    </>
   );
 };
 
-export default Step4;
+export default Step3;

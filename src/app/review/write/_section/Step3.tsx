@@ -10,7 +10,7 @@ import feedbackImg from "@asset/image/reviewFeedback.png";
 import { FEEDBACK_CATEGORIES } from "../constant";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../page";
-
+import ExitConfirmModal from "../_component/ExitConfirmModal";
 type CategoryType = "good" | "bad";
 
 interface Step3Props {
@@ -20,6 +20,7 @@ interface Step3Props {
 
 const Step3 = ({ onPrev, onNext }: Step3Props) => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -32,12 +33,15 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
     window.history.go(-2);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
   return (
     <>
       {/* 상단 리뷰 영역 */}
       <HeaderNav
         centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
@@ -77,6 +81,13 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
           <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFromValid} />
         </section>
       </div>
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
+      />
     </>
   );
 };
