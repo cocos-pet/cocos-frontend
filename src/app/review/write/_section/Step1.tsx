@@ -1,91 +1,109 @@
-"use client";
-
-import { useState } from "react";
-import { IcDeleteBlack } from "@asset/svg/index";
-import * as styles from "./Step1.style.css";
-
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import ReviewHospital from "@app/review/write/_component/ReviewHospital";
-import ReviewDate from "@app/review/write/_component/ReviewDate";
-import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
-import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
-import { Button } from "@common/component/Button/index";
+import { IcDeleteBlack } from "@asset/svg/index";
+import ReviewSymptom from "@app/review/write/_component/ReviewSymptom";
+import ReviewPurpose from "@app/review/write/_component/ReviewPurpose";
+import ReviewDisease from "@app/review/write/_component/ReviewDisease";
+import * as styles from "./Step2.style.css";
+import { Button } from "@common/component/Button";
+import { useState } from "react";
+import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDisease";
+
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormWithUIData } from "../page";
-import { useRouter } from "next/navigation";
+import { ReviewFormData } from "../page";
+import ExitConfirmModal from "../_component/ExitConfirmModal";
 
-export type PetInfoType = "myPet" | "manual";
+type CategoryType = "symptom" | "disease";
 
-interface Step1Props {
+interface Step2Props {
+  onPrev: () => void;
   onNext: () => void;
 }
 
-const Step1 = ({ onNext }: Step1Props) => {
-  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+const Step2 = ({ onPrev, onNext }: Step2Props) => {
+  const [open, setOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
+  const { watch } = useFormContext<ReviewFormData>();
 
-  const visitedAt = watch("visitedAt");
-  const breedId = watch("breedId");
-  const gender = watch("gender");
+  const purposeId = watch("purposeId");
+  const isFormValid = purposeId !== -1;
 
-  const selectedHospital = watch("selectedHospital");
-  const isFormValid = selectedHospital !== null && visitedAt !== "" && breedId !== -1 && gender !== null;
+  const { data: diseaseData } = useBodiesGet("disease");
+  const { data: symptomData } = useBodiesGet("symptom");
 
-  const router = useRouter();
+  const allDiseaseBodyIds =
+    diseaseData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+  const allSymptomBodyIds =
+    symptomData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
 
-  // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
-  const handleOpenSearchHospital = () => {
-    setIsBottomSheetOpen(true);
+  const { data: symptomBodyData } = useSymptomGet(allSymptomBodyIds);
+  const { data: diseaseBodyData } = useDiseaseGet(allDiseaseBodyIds);
+
+  const handleOpenBottomSheet = (category: CategoryType) => {
+    setSelectedCategory(category);
+    setOpen(true);
   };
-  const handleCloseBottomSheet = () => {
-    setIsBottomSheetOpen(false);
-  };
-
-  const handleSelectHospital = (hospital: Hospital | null) => {
-    setValue("selectedHospital", hospital);
-    router.replace(`?hospitalId=${hospital?.id}`);
-  };
-
-  // // 1-3. petInfo
-  // const selectedPetInfo = watch("selectedPetInfoType");
-  // setValue("selectedPetInfoType",  selectedPetInfo === type ? null : type);
 
   const handleGoHospitalDetail = () => {
-    window.history.go(-2); //review/agree +1
+    window.history.go(-2);
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
   };
 
   return (
-    <div className={styles.preventScroll}>
-      {/* 상단 헤더 */}
+    <div className={styles.backgroundColor}>
+      {/* 상단 헤더 영역 */}
       <HeaderNav
-        centerContent="리뷰작성(1/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        centerContent="리뷰작성(2/4)"
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
 
-      {/* 중앙 컨텐츠 */}
-      <div className={styles.wrapper}>
-        {/* 1-1. 병원 검색 */}
-        <ReviewHospital handleOpenSearchHospital={handleOpenSearchHospital} />
-        {/* 1-2. 날짜 선택 */}
-        <ReviewDate />
-        {/* 1-3. 동물 정보 */}
-        <ReviewPetInfo />
-      </div>
+      <section className={styles.wrapper}>
+        {/* 2-1. 증상 선택 */}
+        <ReviewSymptom
+          onCategoryChange={handleOpenBottomSheet}
+          symptomBodyData={symptomBodyData}
+          diseaseBodyData={diseaseBodyData}
+        />
+        {/* 2-2. 방문 목적 */}
+        <ReviewPurpose />
 
-      <div className={styles.buttonContainer}>
-        <Button label="다음으로" size="large" variant="solidPrimary" disabled={!isFormValid} onClick={onNext} />
-      </div>
+        {/* 2-3. 질병 선택 */}
+        <ReviewDisease onCategoryChange={handleOpenBottomSheet} diseaseBodyData={diseaseBodyData} />
+      </section>
 
-      {/* 병원 검색 바텀시트 */}
-      <SearchHospital
-        active={isBottomSheetOpen}
-        onCloseBottomSheet={handleCloseBottomSheet}
-        selectedHospital={selectedHospital}
-        onSelectHospital={handleSelectHospital}
+      {/* 하단 버튼 영역 */}
+      <section className={styles.btnLayout}>
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
+        <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFormValid} />
+      </section>
+
+      {/* 증상&질병 바텀시트 */}
+      <SearchSymptomDisease
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        symptomData={symptomData?.data}
+        symptomBodyData={symptomBodyData}
+        diseaseData={diseaseData?.data}
+        diseaseBodyData={diseaseBodyData}
+      />
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
       />
     </div>
   );
 };
 
-export default Step1;
+export default Step2;
