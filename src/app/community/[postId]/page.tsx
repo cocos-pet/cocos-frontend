@@ -174,10 +174,7 @@ const Page = () => {
       setIsLoginModalOpen(true);
       return;
     }
-    if (!isPetRegistered) {
-      router.push(PATH.ONBOARDING.COMPLETE);
-      return;
-    }
+  
     likeDelete(
       { postId: postIdString },
       {
@@ -195,10 +192,7 @@ const Page = () => {
       setIsLoginModalOpen(true);
       return;
     }
-    if (!isPetRegistered) {
-      router.push(PATH.ONBOARDING.COMPLETE);
-      return;
-    }
+   
 
     likePost(
       { postId: postIdString },
