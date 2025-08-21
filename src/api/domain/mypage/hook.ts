@@ -39,12 +39,13 @@ export const useGetPetInfoWithError = (nickname?: string) => {
   });
 };
 
-export const useGetMemberInfo = (nickname?: string) => {
+export const useGetMemberInfo = (nickname?: string, options?: { enabled?: boolean }) => {
   return useQuery({
     queryKey: MEMBER_QUERY_KEY.MEMBER_INFO(nickname),
     queryFn: () => {
       return getMemberInfo(nickname);
     },
+    enabled: options?.enabled,
     //staleTime: 1000 * 60 * 5,
   });
 };
