@@ -13,6 +13,7 @@ import { Button } from "@common/component/Button/index";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormWithUIData } from "../page";
 import { useRouter } from "next/navigation";
+import ExitConfirmModal from "../_component/ExitConfirmModal";
 
 export type PetInfoType = "myPet" | "manual";
 
@@ -22,7 +23,7 @@ interface Step1Props {
 
 const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-
+  const [isModalOpen, setIsModalOpen] = useState(false);    
   const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
 
   const visitedAt = watch("visitedAt");
@@ -83,6 +84,13 @@ const Step1 = ({ onNext }: Step1Props) => {
         onCloseBottomSheet={handleCloseBottomSheet}
         selectedHospital={selectedHospital}
         onSelectHospital={handleSelectHospital}
+      />
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
       />
     </div>
   );
