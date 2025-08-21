@@ -1,6 +1,6 @@
 import * as styles from "./locationHeader.css";
 import { IcChevronDown, IcTarget } from "@asset/svg";
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, useEffect } from "react";
 import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
 import { useGetMemberLocation } from "@api/domain/review/location/hook";
 import { motion } from "framer-motion";
@@ -25,9 +25,19 @@ export default function LocationHeader({
 }: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-    DEFAULT_LOCATION.DISTRICT
+    null
   );
   const { data: memberLocation } = useGetMemberLocation();
+
+  useEffect(() => {
+    if (memberLocation?.locationId) {
+      setSelectedLocation({
+        id: memberLocation.locationId,
+        name: memberLocation.locationName,
+        type: "DISTRICT",
+      });
+    }
+  }, [memberLocation]);
 
   const handleBottomSheetOpen = () => {
     setIsBottomSheetOpen(true);
@@ -39,14 +49,30 @@ export default function LocationHeader({
     onBottomSheetOpenChange(false);
   };
 
-  const handleLocationSelect = async (location: Location) => {
-    setSelectedLocation(location);
-    onLocationChange(location);
+  const handleLocationSelect = (location: {
+    id: number;
+    name: string;
+    type: LocationType;
+  }) => {
+    const updatedLocation = {
+      ...location,
+      cityName: "",
+      districtName: location.name,
+      townName: "",
+    };
+    setSelectedLocation(updatedLocation);
+    onLocationChange(updatedLocation);
     handleBottomSheetClose();
-    await updateMemberLocation(location.id);
-  };
 
-  // 표시할 위치 이름 결정
+    updateMemberLocation({
+      address: "서울특별시 강동구 천호동",
+      roadAddress: "서울특별시 강동구 천호대로 1095",
+      locationId: location.id,
+      latitude: "37.5380",
+      longitude: "127.1270",
+      locationType: location.type,
+    });
+  };
   const displayLocationName =
     selectedLocation?.name || memberLocation?.locationName || "위치 선택";
 
