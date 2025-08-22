@@ -30,6 +30,15 @@ export interface MemberLocationResponse {
 }
 
 export type GetLocationResponse = City[];
+export interface UpdateMemberLocationRequest {
+  address: string;
+  roadAddress: string;
+  locationId: number;
+  latitude: string;
+  longitude: string;
+  locationType: LocationType;
+}
+
 export type GetMemberLocationResponse = {
   locationId: number;
   locationName: string;
