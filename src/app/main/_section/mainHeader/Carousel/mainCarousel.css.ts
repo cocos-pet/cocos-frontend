@@ -1,10 +1,12 @@
-import {semanticColor} from "@style/styles.css.ts";
-import {style} from "@vanilla-extract/css";
+import { semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 
 export const carouselContainer = style({
   position: "relative",
   width: "100%",
-  height: "20rem",
+  maxWidth: "76.8rem",
+  margin: "0 auto",
+  aspectRatio: "360/159",
   overflow: "hidden",
 });
 
@@ -15,12 +17,14 @@ export const carouselSlides = style({
 export const carouselSlide = style({
   flex: "0 0 100%",
   position: "relative",
+  aspectRatio: "360/159",
 });
 
 export const image = style({
   width: "100%",
   height: "100%",
-  objectFit: "fill",
+  objectFit: "cover",
+  aspectRatio: "360/159",
 });
 
 export const carouselStatus = style({

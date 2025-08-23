@@ -9,7 +9,7 @@ export const cityList = style([
     background: color.gray.gray100,
     borderRadius: "0.8rem",
     overflowY: "auto",
-    maxHeight: "calc(100vh - 21rem)",
+    maxHeight: "calc(100vh - 22rem)",
     "::-webkit-scrollbar": {
       display: "none",
     },
@@ -42,6 +42,7 @@ export const locationSheetContainer = style({
   height: "100%",
   padding: "3.3rem 2rem 0rem 2rem",
   background: color.gray.gray000,
+  overflow: "scroll",
 });
 
 export const districtList = style([
@@ -53,7 +54,7 @@ export const districtList = style([
     flexDirection: "column",
     overflowY: "auto",
     flex: 1,
-    maxHeight: "calc(100vh - 21rem)",
+    maxHeight: "calc(100vh - 22rem)",
     "::-webkit-scrollbar": {
       display: "none",
     },

@@ -32,8 +32,8 @@ export default function Page() {
 
   return (
     <div className={styles.mainContainer}>
+      <MainHeader />
       <div className={styles.headerContainer}>
-        {/* tavian */}
         <TextField
           state="main"
           placeholder="심장병, 백내장"
@@ -43,7 +43,6 @@ export default function Page() {
           readOnly
         />
       </div>
-      <MainHeader />
       <Symptom />
       <Divider />
       <HotPost />
