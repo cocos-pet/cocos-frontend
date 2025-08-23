@@ -11,6 +11,7 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import { useGetHospitalSearch } from "@api/domain/hospitals/search/hook";
 import { PATH } from "@route/path.ts";
 import { Hospital } from "@api/domain/hospitals/search";
+import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -71,9 +72,7 @@ function HospitalSearchDoneContent() {
 
   if (isError) {
     return (
-      <div className={styles.noSearchData}>
-        에러가 발생했습니다. 잠시 후 다시 시도해 주세요.
-      </div>
+      <WarningToastWrap errorMessage="에러가 발생했습니다. 잠시 후 다시 시도해 주세요." />
     );
   }
 
