@@ -6,6 +6,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
+import Loading from "@common/component/Loading/Loading";
 
 interface Location {
   id: number;
@@ -85,7 +86,7 @@ export default function HospitalList({
             </div>
           ))
         )}
-        <div ref={ref}>{isFetchingNextPage && "로딩 중"}</div>
+        <div ref={ref}>{isFetchingNextPage && <Loading height={80} />}</div>
       </div>
     </div>
   );
