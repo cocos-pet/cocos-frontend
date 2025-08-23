@@ -42,6 +42,7 @@ export const locationSheetContainer = style({
   height: "100%",
   padding: "3.3rem 2rem 0rem 2rem",
   background: color.gray.gray000,
+  overflow: "scroll",
 });
 
 export const districtList = style([
