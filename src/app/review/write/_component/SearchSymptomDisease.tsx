@@ -58,7 +58,7 @@ const SearchSymptomDisease = ({
   const toggleDiseaseChip = (chipId: number) => {
     if (selectedDiseaseId === chipId) {
       // 이미 선택된 칩을 다시 클릭하면 선택 해제
-      setValue("diseaseId", null);
+      setValue("diseaseId", undefined);
     } else if (selectedDiseaseId != null) {
       // 이미 선택된 상태에서 다른 칩을 클릭하면 교체 + 토스트
       setValue("diseaseId", chipId);

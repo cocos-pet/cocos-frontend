@@ -1,4 +1,4 @@
-import * as styles from "./BtnToChip.style.css"
+import * as styles from "./BtnToChip.style.css";
 
 interface BtnToChipProps {
   label?: string;
