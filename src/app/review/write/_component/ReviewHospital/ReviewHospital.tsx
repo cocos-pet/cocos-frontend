@@ -5,7 +5,7 @@ import { IcSearch } from "@asset/svg/index";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import Image from "next/image";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormWithUIData } from "../page";
+import { ReviewFormWithUIData } from "../../page";
 interface ReviewHospitalProps {
   handleOpenSearchHospital: () => void;
 }

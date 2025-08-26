@@ -1,13 +1,12 @@
 import * as styles from "./ReviewDate.style.css";
 import { useFormContext } from "react-hook-form";
 import { useState, useEffect, useMemo } from "react";
-import { ReviewFormData } from "../page";
+import { ReviewFormData } from "../../page";
 
 import "react-day-picker/dist/style.css";
 import { DayPicker } from "react-day-picker";
 import { ko } from "date-fns/locale";
-import CalenderNav from "./CalenderNav";
-// @예림: 이거 안되면 폭파 진짜임 진짜진짜
+import CalenderNav from "../CalenderNav/CalenderNav";
 
 // 서버 제출용 날짜 데이터 포멧팅
 const formatDate = (date: Date) => {

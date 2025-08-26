@@ -3,16 +3,16 @@ import { IcDeleteBlack } from "@asset/svg/index";
 import { Button } from "@common/component/Button";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData, ReviewFormWithUIData } from "../page";
+import { ReviewFormData, ReviewFormWithUIData } from "../../page";
 import { useReviewPost } from "@app/api/review/write/submit/hook";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 
 import * as styles from "./Step4.style.css";
-import ReviewContent from "@app/review/write/_component/ReviewContent";
-import ReviewImg from "@app/review/write/_component/ReviewImg";
-import { useState } from "react"; 
-import ExitConfirmModal from "../_component/ExitConfirmModal";
+import ReviewContent from "../../_component/ReviewContent/ReviewContent";
+import ReviewImg from "../../_component/ReviewImg/ReviewImg";
+import { useState } from "react";
+import ExitConfirmModal from "../../_component/ExitConfirmModal";
 
 interface Step4Props {
   onPrev: () => void;

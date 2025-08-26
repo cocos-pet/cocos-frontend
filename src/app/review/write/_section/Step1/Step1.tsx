@@ -5,15 +5,15 @@ import { IcDeleteBlack } from "@asset/svg/index";
 import * as styles from "./Step1.style.css";
 
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import ReviewHospital from "@app/review/write/_component/ReviewHospital";
-import ReviewDate from "@app/review/write/_component/ReviewDate";
-import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
+import ReviewHospital from "@app/review/write/_component/ReviewHospital/ReviewHospital";
+import ReviewDate from "@app/review/write/_component/ReviewDate/ReviewDate";
+import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo/ReviewPetInfo";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 import { Button } from "@common/component/Button/index";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormWithUIData } from "../page";
+import { ReviewFormWithUIData } from "../../page";
 import { useRouter } from "next/navigation";
-import ExitConfirmModal from "../_component/ExitConfirmModal";
+import ExitConfirmModal from "../../_component/ExitConfirmModal";
 
 export type PetInfoType = "myPet" | "manual";
 
@@ -23,7 +23,7 @@ interface Step1Props {
 
 const Step1 = ({ onNext }: Step1Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);    
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
 
   const visitedAt = watch("visitedAt");
