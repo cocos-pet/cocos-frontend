@@ -50,20 +50,6 @@ const usePetInfoSelection = () => {
   };
 };
 
-// 토스트 컴포넌트 분리
-const PetInfoToast = ({ showToast, toastKey }: { showToast: boolean; toastKey: number }) => {
-  if (!showToast) return null;
-
-  return (
-    <Toast
-      key={toastKey}
-      message="등록된 동물이 없어요. 직접 입력하기를 눌러주세요"
-      showDeleteIcon={false}
-      variant="blue"
-    />
-  );
-};
-
 // 기존에 저장된 내 동물 정보로 동물 정보 입력
 const MyPetInfoButton = ({
   selected,
@@ -132,7 +118,14 @@ const ReviewPetInfo = () => {
         {/* 버튼1. 내 정보 */}
         <MyPetInfoButton selected={selectedPetInfo === "myPet" && !!petInfo} onClick={handleMyPetSelection} />
 
-        <PetInfoToast showToast={showToast} toastKey={toastKey} />
+        {showToast && (
+          <Toast
+            key={toastKey}
+            message="등록된 동물이 없어요. 직접 입력하기를 눌러주세요"
+            showDeleteIcon={false}
+            variant="blue"
+          />
+        )}
 
         {/* 버튼2. 직접 입력하기 */}
         <ManualInputButton selected={selectedPetInfo === "manual"} onClick={() => handleSelectPetInfo("manual")}>
