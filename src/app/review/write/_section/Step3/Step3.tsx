@@ -4,13 +4,13 @@ import Tab from "@common/component/Tab/Tab";
 import { Button } from "@common/component/Button";
 import * as styles from "./Step3.style.css";
 import { useState } from "react";
-import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCategoryContent";
+import FeedbackCategoryContent from "../../_component/FeedbackCategoryContent/FeedbackCategoryContent";
 import Image from "next/image";
 import feedbackImg from "@asset/image/reviewFeedback.png";
-import { FEEDBACK_CATEGORIES } from "../constant";
+import { FEEDBACK_CATEGORIES } from "../../constant";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "../page";
-import ExitConfirmModal from "../_component/ExitConfirmModal";
+import { ReviewFormData } from "../../page";
+import ExitConfirmModal from "../../_component/ExitConfirmModal";
 type CategoryType = "good" | "bad";
 
 interface Step3Props {

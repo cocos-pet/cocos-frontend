@@ -1,19 +1,13 @@
 import { IcRightArror, IcChevronRight2 } from "@asset/svg/index";
 import { color } from "@style/styles.css";
 import * as styles from "./ReviewPetInfo.style.css";
-import DirectMyPetInfo from "./DirectMyPetInfo";
+import DirectMyPetInfo from "../DirectMyPetInfo/DirectMyPetInfo";
 import { useGetPetInfo } from "@api/domain/mypage/hook";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormWithUIData } from "@app/review/write/page";
 import { useState } from "react";
 import { Toast } from "@common/component/Toast/Toast";
-import { PET_TYPE_STANDARD } from "../constant";
-
-// 동물 타입 판단
-const getPetTypeFromBreedId = (breedId: number | undefined): string => {
-  if (typeof breedId !== "number") return "";
-  return breedId > 0 ? (breedId < PET_TYPE_STANDARD ? "강아지" : "고양이") : "";
-};
+import { getPetTypeFromBreedId } from "@app/review/write/_utils/getPetTypeById";
 
 // 동물정보 저장
 const usePetInfoSelection = () => {
