@@ -1,9 +1,11 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
 import type { NextConfig } from "next";
+import { execSync } from "node:child_process";
 import * as path from "node:path";
 
 const withVanillaExtract = createVanillaExtractPlugin();
+const VERSION = getGitCommitHash();
 
 const nextConfig: NextConfig = {
   reactStrictMode: true,
@@ -45,10 +47,12 @@ const nextConfig: NextConfig = {
 export default withSentryConfig(withVanillaExtract(nextConfig), {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
-
   org: "tavian",
-
   project: "cocos",
+  authToken: process.env.SENTRY_AUTH_TOKEN,
+  release: {
+    name: VERSION,
+  },
 
   // Only print logs for uploading source maps in CI
   silent: !process.env.CI,
@@ -74,3 +78,12 @@ export default withSentryConfig(withVanillaExtract(nextConfig), {
   // https://vercel.com/docs/cron-jobs
   automaticVercelMonitors: true,
 });
+
+function getGitCommitHash() {
+  try {
+    return execSync("git rev-parse --short HEAD").toString().trim();
+  } catch (error) {
+    console.error("Error getting git commit hash:", error);
+    return "unknown";
+  }
+}
