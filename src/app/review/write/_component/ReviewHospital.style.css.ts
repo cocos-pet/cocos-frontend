@@ -57,8 +57,6 @@ export const hospitalInfo = style([
 ]);
 
 export const img = style({
-  width: "4.8rem",
-  height: "4.8rem",
   borderRadius: "8px",
 });
 

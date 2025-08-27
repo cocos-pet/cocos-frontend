@@ -7,8 +7,6 @@ export const hospitalHeaderContainer = style({
 });
 
 export const hospitalImage = style({
-  width: "100%",
-  height: "100%",
   objectFit: "cover",
 });
 

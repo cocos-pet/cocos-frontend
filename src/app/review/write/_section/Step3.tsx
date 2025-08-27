@@ -10,6 +10,7 @@ import feedbackImg from "@asset/image/reviewFeedback.png";
 import { FEEDBACK_CATEGORIES } from "../constant";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../page";
+import LazyImage from "@common/component/LazyImage";
 
 type CategoryType = "good" | "bad";
 
@@ -42,7 +43,7 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
         <section className={styles.TopLayout}>
-          <Image src={feedbackImg} alt="review-feedback img" className={styles.img} />
+          <LazyImage src={feedbackImg} alt="review-feedback img" className={styles.img} width="8rem" height="6rem" />
           <div className={styles.titleBox}>
             <h1 className={styles.title}>진료 경험은 어땠나요?</h1>
             <div>

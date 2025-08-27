@@ -1,11 +1,11 @@
 "use client";
 
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import * as styles from "./notFound/NotFound.css";
 import notFoundGraphic from "@asset/image/notFoundGraphic.png";
-import {PATH} from "@route/path";
-import Image from "next/image";
-import {useEffect, useState} from "react";
+import { PATH } from "@route/path";
+import { useEffect, useState } from "react";
+import LazyImage from "@common/component/LazyImage";
 
 const REDIRECT_TIME = 5;
 
@@ -32,19 +32,10 @@ export default function NotFound() {
   return (
     <section className={styles.notFoundContainer}>
       <article className={styles.notFoundeWrapper}>
-        <Image
-          className={styles.notFoundImage}
-          src={notFoundGraphic}
-          alt="404"
-          width={196}
-          height={196}
-        />
+        <LazyImage className={styles.notFoundImage} src={notFoundGraphic} alt="404" width="29.2rem" height="16.5rem" />
         <div className={styles.notFoundTextWrapper}>
           <h1 className={styles.nothingText}>앗, 이곳엔 아무것도 없어요</h1>
-          <p
-            className={styles.goHomeText}
-            onClick={() => router.push(PATH.MAIN)}
-          >
+          <p className={styles.goHomeText} onClick={() => router.push(PATH.MAIN)}>
             홈으로 가기
           </p>
           <p style={{ fontSize: "14px", color: "#888", marginTop: "10px" }}>

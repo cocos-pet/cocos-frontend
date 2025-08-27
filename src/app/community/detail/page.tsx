@@ -11,11 +11,11 @@ import { Suspense, useCallback, useEffect, useState } from "react";
 import { components } from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
 import { postPostFiltersRequestType } from "@api/domain/community/search";
-import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
 import Tab from "@common/component/Tab/Tab.tsx";
 import { ReviewDetailContent } from "@app/community/detail/_section";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -43,7 +43,7 @@ type ActiveTabType = "review" | "community";
 // 빈 상태 컴포넌트
 const EmptyState = () => (
   <div className={styles.emptyContainer}>
-    <Image src={nocategory} alt="게시글 없음." style={{ objectFit: "cover" }} width={276} height={155} />
+    <LazyImage src={nocategory} alt="게시글 없음." width="27.6rem" height="15.5rem" style={{ objectFit: "cover" }} />
     <h1> 아직 등록된 게시글이 없어요 </h1>
   </div>
 );

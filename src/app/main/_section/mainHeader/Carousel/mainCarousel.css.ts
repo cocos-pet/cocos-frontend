@@ -1,5 +1,5 @@
-import {semanticColor} from "@style/styles.css.ts";
-import {style} from "@vanilla-extract/css";
+import { semanticColor } from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
 
 export const carouselContainer = style({
   position: "relative",

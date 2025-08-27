@@ -2,7 +2,7 @@
 
 import { IcCurious, IcLikeDisabled, IcoMessage } from "@asset/svg";
 import { styles } from "@common/component/Content/Content.css.ts";
-import Image from "next/image";
+import LazyImage from "@common/component/LazyImage";
 
 interface ContentPropTypes {
   breed?: string;
@@ -74,7 +74,7 @@ const Content = ({
       </div>
       {postImage && (
         <div className={styles.postImage}>
-          <Image className={styles.postImage} src={postImage} alt="Post image" width={76} height={76} />
+          <LazyImage className={styles.postImage} src={postImage} alt="Post image" width="7.6rem" height="7.6rem" />
         </div>
       )}
     </div>
