@@ -43,6 +43,7 @@ export const tabContainer = style({
   backgroundColor: "#fff",
   width: "100%",
   zIndex: 10,
+  height: "5.8rem",
 });
 
 export const tabButton = recipe({
@@ -108,6 +109,11 @@ export const reviewItemContainer = style({
   width: "100%",
   display: "flex",
   flexDirection: "column",
+  height: "calc(100vh - (6.4rem + 5.8rem + 6.8rem))",
+  overflowY: "scroll",
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
 });
 
 export const reviewFilter = style({
