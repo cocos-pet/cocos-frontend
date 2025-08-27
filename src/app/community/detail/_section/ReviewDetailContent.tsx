@@ -1,5 +1,5 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useEffect, useRef } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcRightArrow } from "@asset/svg";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
@@ -8,8 +8,6 @@ import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx"
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 import { useAuth } from "@providers/AuthProvider.tsx";
 import { Button } from "@common/component/Button";
-import { Modal } from "@common/component/Modal/Modal.tsx";
-import { PATH } from "@route/path.ts";
 import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/_section/HospitalReviewFilter.tsx";
 import { If } from "@shared/component/If/if.tsx";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
@@ -27,10 +25,6 @@ const ReviewDetailContent = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  if (!bodyId) {
-    return null;
-  }
-
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [location, setLocation] = useState<LocationFilterType>({
     id: 9,
@@ -41,10 +35,15 @@ const ReviewDetailContent = () => {
   const [cursorId, setCursorId] = useState<number | undefined>(undefined);
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const observerRef = useRef<IntersectionObserver | null>(null);
 
+  // API
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
+
+  if (!bodyId) {
+    return null;
+  }
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -106,10 +105,6 @@ const ReviewDetailContent = () => {
     if (hospitalId) {
       router.push(`/hospital-detail/${hospitalId}`);
     }
-  };
-
-  const handleLoginClick = () => {
-    router.push(PATH.LOGIN);
   };
 
   const postReviews = useCallback(
