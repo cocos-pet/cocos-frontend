@@ -5,7 +5,7 @@ import * as styles from "./RecentView.css";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 import { useInfiniteHospitalReviews } from "@api/domain/community/detail/hook";
-import { useEffect, useRef, useCallback, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { components } from "src/type/schema";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
@@ -15,11 +15,6 @@ import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import Image from "next/image";
 import no_review from "@asset/image/no_review.png";
 import { Button } from "@common/component/Button";
-
-interface ReviewSummaryItem {
-  id?: number;
-  label?: string;
-}
 
 interface RecentViewProps {
   hospitalId: number;
@@ -36,29 +31,35 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
     useInfiniteHospitalReviews(hospitalId);
 
-  useEffect(() => {
-    const element = loadMoreRef.current;
-    if (!element || !hasNextPage) return;
-
-    const handleObserver = (entries: IntersectionObserverEntry[]) => {
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
       const [target] = entries;
       if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
         fetchNextPage();
       }
-    };
+    },
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
+  );
 
-    observerRef.current = new IntersectionObserver(handleObserver, {
-      threshold: 0.1,
-    });
+  useEffect(() => {
+    const element = loadMoreRef.current;
 
-    observerRef.current.observe(element);
+    if (element) {
+      observerRef.current = new IntersectionObserver(handleObserver, {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      });
+
+      observerRef.current.observe(element);
+    }
 
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
     };
-  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
+  }, [handleObserver]);
 
   const handleProfileClick = (memberId: number) => {
     if (memberId) {
@@ -166,7 +167,9 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
               )
             )}
             {hasNextPage && (
-              <div ref={loadMoreRef} style={{ height: "10px" }} />
+              <div ref={loadMoreRef} style={{ height: "10px" }}>
+                {isFetchingNextPage ? "더 불러오는 중..." : ""}
+              </div>
             )}
           </>
         ) : (
