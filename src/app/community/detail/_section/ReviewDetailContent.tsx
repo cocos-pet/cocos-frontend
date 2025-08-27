@@ -190,10 +190,6 @@ const ReviewDetailContent = () => {
     }
   };
 
-  if (isPending) {
-    return <LoadingFallback />;
-  }
-
   return (
     <div className={styles.reviewContainer}>
       <HospitalReviewFilter
