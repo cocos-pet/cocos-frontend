@@ -28,8 +28,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteHospitalReviews(hospitalId);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -38,7 +37,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
         fetchNextPage();
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage]
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
   );
 
   useEffect(() => {
@@ -106,9 +105,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       <div className={styles.headerRow}>
         <div className={styles.headerLeft}>
           <span className={styles.recentViewTitle}>최근 많이 본 리뷰</span>
-          {totalReviewCount > 0 && (
-            <span className={styles.reviewCount}>+{totalReviewCount}</span>
-          )}
+          {totalReviewCount > 0 && <span className={styles.reviewCount}>+{totalReviewCount}</span>}
         </div>
         {totalReviewCount > 0 && (
           <button className={styles.headerMore} onClick={handleMoreClick}>
@@ -120,52 +117,40 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
       <div>
         {reviews.length > 0 ? (
           <>
-            {reviews.map(
-              (
-                review: components["schemas"]["HospitalReviewResponse"],
-                index: number
-              ) => (
-                <div
-                  key={review.id}
-                  onClick={() =>
-                    !isAuthenticated && index >= 3 && handleLoginClick()
-                  }
-                >
-                  <HospitalReview
-                    handleProfileClick={() =>
-                      review.memberId && handleProfileClick(review.memberId)
-                    }
-                    handleHospitalDetailClick={handleHospitalDetailClick}
-                    reviewData={{
-                      id: review.id ?? 0,
-                      memberId: review.memberId ?? 0,
-                      nickname: review.nickname ?? "",
-                      breed: review.memberBreed ?? "",
-                      memberBreed: review.memberBreed ?? "",
-                      age: review.age ?? 0,
-                      disease: review.disease ?? "",
-                      visitedAt: review.visitedAt ?? "",
-                      hospitalId: review.hospitalId ?? 0,
-                      hospitalName: review.hospitalName ?? "",
-                      hospitalAddress: review.hospitalAddress ?? "",
-                      content: review.content ?? "",
-                      visitPurpose: review.visitPurpose ?? "",
-                      reviewSummary: {
-                        goodReviews: review.reviewSummary?.goodReviews ?? [],
-                        badReviews: review.reviewSummary?.badReviews ?? [],
-                      },
-                      images: review.images ?? [],
-                      symptoms: review.symptoms ?? [],
-                      animal: review.animal ?? "",
-                      gender: review.gender || "M",
-                      weight: review.weight ?? 0,
-                    }}
-                    isBlurred={!isAuthenticated && index >= 3}
-                  />
-                  {index < reviews.length - 1 && <Divider size="small" />}
-                </div>
-              )
-            )}
+            {reviews.map((review: components["schemas"]["HospitalReviewResponse"], index: number) => (
+              <div key={review.id} onClick={() => !isAuthenticated && index >= 3 && handleLoginClick()}>
+                <HospitalReview
+                  handleProfileClick={() => review.memberId && handleProfileClick(review.memberId)}
+                  handleHospitalDetailClick={handleHospitalDetailClick}
+                  reviewData={{
+                    id: review.id ?? 0,
+                    memberId: review.memberId ?? 0,
+                    nickname: review.nickname ?? "",
+                    breed: review.memberBreed ?? "",
+                    memberBreed: review.memberBreed ?? "",
+                    age: review.age ?? 0,
+                    disease: review.disease ?? "",
+                    visitedAt: review.visitedAt ?? "",
+                    hospitalId: review.hospitalId ?? 0,
+                    hospitalName: review.hospitalName ?? "",
+                    hospitalAddress: review.hospitalAddress ?? "",
+                    content: review.content ?? "",
+                    visitPurpose: review.visitPurpose ?? "",
+                    reviewSummary: {
+                      goodReviews: review.reviewSummary?.goodReviews ?? [],
+                      badReviews: review.reviewSummary?.badReviews ?? [],
+                    },
+                    images: review.images ?? [],
+                    symptoms: review.symptoms ?? [],
+                    animal: review.animal ?? "",
+                    gender: review.gender || "M",
+                    weight: review.weight ?? 0,
+                  }}
+                  isBlurred={!isAuthenticated && index >= 3}
+                />
+                {index < reviews.length - 1 && <Divider size="small" />}
+              </div>
+            ))}
             {hasNextPage && (
               <div ref={loadMoreRef} style={{ height: "10px" }}>
                 {isFetchingNextPage ? "더 불러오는 중..." : ""}
@@ -175,20 +160,10 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
         ) : (
           <div className={styles.noReviewContainer}>
             <div className={styles.imageContainer}>
-              <Image
-                src={no_review}
-                alt="리뷰 없음"
-                width={127}
-                height={127}
-                style={{ objectFit: "contain" }}
-              />
+              <Image src={no_review} alt="리뷰 없음" width={127} height={127} style={{ objectFit: "contain" }} />
             </div>
             <p className={styles.noReviewText}>리뷰가 아직 없어요</p>
-            <Button
-              size="large"
-              onClick={handleFloatingBtnClick}
-              label="리뷰 작성하기"
-            />
+            <Button size="large" onClick={handleFloatingBtnClick} label="리뷰 작성하기" />
           </div>
         )}
       </div>
@@ -210,10 +185,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm
-                label={"로그인"}
-                onClick={() => router.push(PATH.LOGIN)}
-              />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
             </Modal.BottomAffix>
           }
         >

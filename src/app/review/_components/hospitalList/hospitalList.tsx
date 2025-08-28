@@ -24,21 +24,16 @@ interface HospitalListProps {
   selectedLocation?: Location;
 }
 
-export default function HospitalList({
-  title,
-  highlightText,
-  selectedLocation,
-}: HospitalListProps) {
+export default function HospitalList({ title, highlightText, selectedLocation }: HospitalListProps) {
   const { ref, inView } = useInView();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
-    useInfiniteHospitalList({
-      locationType: selectedLocation?.type || "CITY",
-      locationId: selectedLocation?.id,
-      size: 10,
-      sortBy: "REVIEW",
-      image: "",
-    });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteHospitalList({
+    locationType: selectedLocation?.type || "CITY",
+    locationId: selectedLocation?.id,
+    size: 10,
+    sortBy: "REVIEW",
+    image: "",
+  });
 
   useEffect(() => {
     refetch();
@@ -58,20 +53,12 @@ export default function HospitalList({
       <div className={styles.listContainer}>
         {data?.pages?.map((page: HospitalListResponse, pageIndex: number) =>
           page.hospitals?.map((hospital: Hospital) => (
-            <div
-              key={`${pageIndex}-${hospital.id}`}
-              className={styles.hospitalItem}
-            >
-              <Link
-                href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`}
-                className={styles.link}
-              >
+            <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
+              <Link href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`} className={styles.link}>
                 <div className={styles.hospitalInfo}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
                   <p className={styles.hospitalAddress}>{hospital.address}</p>
-                  <p className={styles.reviewCount}>
-                    리뷰 {hospital.reviewCount}
-                  </p>
+                  <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
                 </div>
                 {hospital.image && (
                   <Image
@@ -84,7 +71,7 @@ export default function HospitalList({
                 )}
               </Link>
             </div>
-          ))
+          )),
         )}
         <div ref={ref}>{isFetchingNextPage && <Loading height={80} />}</div>
       </div>

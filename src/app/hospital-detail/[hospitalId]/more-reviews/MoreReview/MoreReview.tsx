@@ -26,8 +26,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
   const { data: hospitalData } = useGetHospitalDetail(hospitalId);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteHospitalReviews(hospitalId);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -36,7 +35,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
         fetchNextPage();
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage]
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
   );
 
   useEffect(() => {
@@ -96,16 +95,9 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
       <div className={styles.container}>
         <div className={styles.reviewList}>
           {reviews.map((review, index) => (
-            <div
-              key={review.id}
-              onClick={() =>
-                !isAuthenticated && index >= 3 && handleLoginClick()
-              }
-            >
+            <div key={review.id} onClick={() => !isAuthenticated && index >= 3 && handleLoginClick()}>
               <HospitalReview
-                handleProfileClick={() =>
-                  review.memberId && handleProfileClick(review.memberId)
-                }
+                handleProfileClick={() => review.memberId && handleProfileClick(review.memberId)}
                 handleHospitalDetailClick={handleHospitalDetailClick}
                 reviewData={{
                   id: review.id ?? 0,
@@ -150,10 +142,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm
-                label={"로그인"}
-                onClick={() => router.push(PATH.LOGIN)}
-              />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
             </Modal.BottomAffix>
           }
         >

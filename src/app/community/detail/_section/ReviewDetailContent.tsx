@@ -2,7 +2,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useState, useCallback, useRef, useEffect } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcRightArrow } from "@asset/svg";
-import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
@@ -11,9 +10,7 @@ import { useAuth } from "@providers/AuthProvider.tsx";
 import { Button } from "@common/component/Button";
 import { Modal } from "@common/component/Modal/Modal.tsx";
 import { PATH } from "@route/path.ts";
-import HospitalReviewFilter, {
-  LocationFilterType,
-} from "@app/community/detail/_section/HospitalReviewFilter.tsx";
+import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/_section/HospitalReviewFilter.tsx";
 import { If } from "@shared/component/If/if.tsx";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
@@ -33,19 +30,13 @@ const ReviewDetailContent = () => {
     return null;
   }
 
-  const {
-    isOpen: isModalOpen,
-    handleOpenChange,
-    handleOpen: handleOpenModal,
-  } = useOpenToggle();
+  const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [location, setLocation] = useState<LocationFilterType>({
     id: 9,
     name: "서울 전체",
     type: "CITY",
   });
-  const [reviewList, setReviewList] = useState<
-    postHospitalReviewsResponseData[]
-  >([]);
+  const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
   const [cursorId, setCursorId] = useState<number | undefined>(undefined);
   const [hasMore, setHasMore] = useState(true);
   const [isLoadingMore, setIsLoadingMore] = useState(false);
@@ -79,20 +70,11 @@ const ReviewDetailContent = () => {
               }
               setIsLoadingMore(false);
             },
-          }
+          },
         );
       }
     },
-    [
-      bodyId,
-      filterId,
-      hasMore,
-      isLoadingMore,
-      isPending,
-      location,
-      cursorId,
-      postHospitalReviews,
-    ]
+    [bodyId, filterId, hasMore, isLoadingMore, isPending, location, cursorId, postHospitalReviews],
   );
 
   useEffect(() => {
@@ -130,10 +112,7 @@ const ReviewDetailContent = () => {
   };
 
   const postReviews = useCallback(
-    (
-      location?: LocationFilterType | undefined,
-      summaryOptionId?: number | undefined
-    ) => {
+    (location?: LocationFilterType | undefined, summaryOptionId?: number | undefined) => {
       if (!bodyId) return;
 
       setCursorId(undefined);
@@ -158,10 +137,10 @@ const ReviewDetailContent = () => {
               setCursorId(data[data.length - 1].id);
             }
           },
-        }
+        },
       );
     },
-    [bodyId, postHospitalReviews]
+    [bodyId, postHospitalReviews],
   );
 
   const handleReviewFilterClose = (summaryOptionId: number | undefined) => {
@@ -209,9 +188,7 @@ const ReviewDetailContent = () => {
             key={review.id}
             handleProfileClick={() => handleProfileClick(review.nickname)}
             reviewData={review}
-            handleHospitalDetailClick={() =>
-              handleHospitalClick(review.hospitalId)
-            }
+            handleHospitalDetailClick={() => handleHospitalClick(review.hospitalId)}
             isBlurred={!isAuthenticated}
             handleHospitalReviewClick={handleHospitalReviewClick}
           />
