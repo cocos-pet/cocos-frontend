@@ -79,12 +79,12 @@ const CommunityDetailContent = () => {
     fetchPostData();
   }, [fetchPostData]);
 
-  if (!typeId) {
-    return <EmptyState />;
+  if (isPending) {
+    return <LoadingFallback />;
   }
 
-  if (isPending || posts.length === 0) {
-    return <LoadingFallback />;
+  if (!typeId || posts.length === 0) {
+    return <EmptyState />;
   }
 
   return (
