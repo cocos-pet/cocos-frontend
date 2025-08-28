@@ -7,7 +7,6 @@ import { Button } from "@common/component/Button";
 import { validatePetName } from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
 import { PATH } from "@route/path";
-import Image from "next/image";
 import { PetData } from "../../RegisterPet.tsx";
 import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
@@ -64,8 +63,8 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
             src={petNameBori}
             alt="onboarding-character"
             className={styles.imgStyle}
-            width="27.6rem"
-            height="15.5rem"
+            width="16.5rem"
+            height="9.3rem"
           />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />

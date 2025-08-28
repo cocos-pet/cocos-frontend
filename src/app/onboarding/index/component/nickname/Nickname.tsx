@@ -74,8 +74,8 @@ const Nickname = () => {
             src={nicknameCoco}
             alt="onboarding-character"
             className={styles.imgStyle}
-            width="27.6rem"
-            height="15.5rem"
+            width="16.5rem"
+            height="9.3rem"
           />
           <Title text={ONBOARDING_GUIDE.nickname.title} />
           <Docs text={ONBOARDING_GUIDE.nickname.docs} />
