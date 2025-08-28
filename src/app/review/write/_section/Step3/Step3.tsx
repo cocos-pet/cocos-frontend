@@ -11,16 +11,13 @@ import { FEEDBACK_CATEGORIES } from "../../constant";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../../page";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
+import { useReviewFunnel } from "../../_hook/useReviewFunnel";
 type CategoryType = "good" | "bad";
 
-interface Step3Props {
-  onPrev: () => void;
-  onNext: () => void;
-}
-
-const Step3 = ({ onPrev, onNext }: Step3Props) => {
+const Step3 = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const funnel = useReviewFunnel();
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -35,6 +32,14 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
+  };
+
+  const handlePrev = () => {
+    funnel.pop();
+  };
+
+  const handleNext = () => {
+    funnel.push({ step: "Step4", context: {} });
   };
   return (
     <>
@@ -77,8 +82,8 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
 
         {/* 하단 버튼 영역 */}
         <section className={styles.btnLayout}>
-          <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
-          <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFromValid} />
+          <Button label="이전으로" size="large" variant="solidNeutral" onClick={handlePrev} />
+          <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={!isFromValid} />
         </section>
       </div>
 
