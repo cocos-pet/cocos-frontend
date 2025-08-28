@@ -10,6 +10,7 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 export interface ReviewItemType {
   id?: number;
@@ -126,13 +127,13 @@ const HospitalReview = (props: propsType) => {
         {isReviewImage && (
           <div className={styles.imagesContainer}>
             {reviewData.images?.map((image, index) => (
-              <Image
+              <LazyImage
                 key={`${image}-${index}`}
                 className={styles.reviewImage}
                 src={image}
                 alt="Post image"
-                width={76}
-                height={76}
+                width={"7.6rem"}
+                height={"7.6rem"}
                 onClick={() => handleImageClick(index)}
               />
             ))}

@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {color, font, semanticColor} from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
   container: style({
@@ -76,7 +76,6 @@ export const styles = {
   ]),
 
   image: style({
-    width: "100%",
     maxHeight: "33.5rem",
     borderRadius: "0.8rem",
     objectFit: "cover",

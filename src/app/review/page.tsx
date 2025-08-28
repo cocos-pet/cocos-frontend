@@ -20,6 +20,7 @@ import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal.tsx";
 import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
+import LazyImage from "@common/component/LazyImage";
 
 interface Location {
   id: number;
@@ -117,7 +118,7 @@ export default function ReviewPage() {
                   </div>
                 ))}
               </div>
-              <Image src={banner} alt="banner" className={styles.bannerContainer} />
+              <LazyImage src={banner} alt="banner" className={styles.bannerContainer} width="100%" height="10rem" />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
             <HospitalList

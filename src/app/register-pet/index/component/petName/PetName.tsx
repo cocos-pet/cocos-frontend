@@ -7,12 +7,12 @@ import { Button } from "@common/component/Button";
 import { validatePetName } from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
 import { PATH } from "@route/path";
-import Image from "next/image";
 import { PetData } from "../../RegisterPet.tsx";
 import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered.ts";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -59,7 +59,13 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div className={styles.gap}>
-          <Image src={petNameBori} alt="onboarding-character" className={styles.imgStyle} width={276} height={155} />
+          <LazyImage
+            src={petNameBori}
+            alt="onboarding-character"
+            className={styles.imgStyle}
+            width="16.5rem"
+            height="9.3rem"
+          />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />
         </div>

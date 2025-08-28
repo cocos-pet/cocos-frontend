@@ -11,6 +11,7 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import { useGetHospitalSearch } from "@api/domain/hospitals/search/hook";
 import { PATH } from "@route/path.ts";
 import { Hospital } from "@api/domain/hospitals/search";
+import LazyImage from "@common/component/LazyImage";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -47,9 +48,7 @@ function HospitalSearchDoneContent() {
     }
   };
 
-  const onTextFieldClear = (
-    e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>
-  ) => {
+  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
     router.push(PATH.REVIEW.SEARCH);
@@ -70,11 +69,7 @@ function HospitalSearchDoneContent() {
   }
 
   if (isError) {
-    return (
-      <div className={styles.noSearchData}>
-        에러가 발생했습니다. 잠시 후 다시 시도해 주세요.
-      </div>
-    );
+    return <div className={styles.noSearchData}>에러가 발생했습니다. 잠시 후 다시 시도해 주세요.</div>;
   }
 
   return (
@@ -93,16 +88,14 @@ function HospitalSearchDoneContent() {
       </div>
       {hospitals.length === 0 ? (
         <div className={styles.noSearchData}>
-          <Image
+          <LazyImage
             className={styles.noSearchResultImage}
             src={noSearchResult}
             alt="검색 결과 없음"
-            width={276}
-            height={155}
+            width="26.3rem"
+            height="15.5rem"
           />
-          <span className={styles.noSearchText}>
-            검색 결과를 찾지 못했어요.
-          </span>
+          <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
           <span className={styles.noSearchRecommendText}>
             {"검색어를 확인하거나"}
             <br />
@@ -125,12 +118,7 @@ function HospitalSearchDoneContent() {
                   </p>
                 </div>
                 <div className={styles.hospitalImage}>
-                  <Image
-                    src={hospital.image || defaultImage}
-                    alt={hospital.name}
-                    width={100}
-                    height={100}
-                  />
+                  <LazyImage src={hospital.image || defaultImage} alt={hospital.name} width="10rem" height="10rem" />
                 </div>
               </div>
               <Divider size="small" />

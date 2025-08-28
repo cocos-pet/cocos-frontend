@@ -5,7 +5,7 @@ import { usePathname, useRouter } from "next/navigation";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
 import { PATH } from "@route/path";
-import Image from "next/image";
+import LazyImage from "@common/component/LazyImage";
 
 type CommunityContent = {
   id: string;
@@ -59,12 +59,11 @@ const Nav = ({ content, type = "nav" }: Props) => {
               })}
             >
               {communityItem.image && (
-                <Image
+                <LazyImage
                   src={communityItem.image}
                   alt={communityItem.name || "Unnamed"}
-                  width={72}
-                  height={72}
-                  style={{ width: "7.2rem" }}
+                  width={"7.2rem"}
+                  height={"7.2rem"}
                 />
               )}
               <span>{communityItem.name || "Unnamed"}</span>
@@ -73,8 +72,7 @@ const Nav = ({ content, type = "nav" }: Props) => {
         }
 
         const navItem = item as (typeof NAV_CONTENT)[number];
-        const SvgComponent =
-          activeItem === navItem.id ? navItem.activeSvg : navItem.svg;
+        const SvgComponent = activeItem === navItem.id ? navItem.activeSvg : navItem.svg;
 
         return (
           <button

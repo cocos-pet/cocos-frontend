@@ -11,8 +11,8 @@ import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomS
 import { useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
 import { formatTime } from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
-import Image from "next/image";
 import dynamic from "next/dynamic";
+import LazyImage from "@common/component/LazyImage";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -164,12 +164,12 @@ function SearchDone() {
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>
-            <Image
+            <LazyImage
               className={styles.noSearchResultImage}
               src={noSearchResult}
               alt="검색 결과 없음"
-              width={276}
-              height={155}
+              width="27.6rem"
+              height="15.5rem"
             />
             <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
             <span className={styles.noSearchRecommendText}>

@@ -39,9 +39,6 @@ export const docs = style([
 ]);
 
 export const mainImg = style({
-  width: "26rem",
-  height: "19.5rem",
-
   margin: "2.4rem 0 4.8rem",
 });
 

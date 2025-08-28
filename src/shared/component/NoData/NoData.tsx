@@ -3,6 +3,7 @@ import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
 import FloatingBtn from "@common/component/FloatingBtn/Floating.tsx";
 import { HTMLAttributes } from "react";
+import LazyImage from "@common/component/LazyImage";
 
 interface noDataType extends HTMLAttributes<HTMLDivElement> {
   label?: string;
@@ -12,11 +13,11 @@ interface noDataType extends HTMLAttributes<HTMLDivElement> {
 const NoData = ({ label = "아직 등록된 게시글이 없어요", onBtnClick, ...rest }: noDataType) => {
   return (
     <div className={styles.emptyContainer} {...rest}>
-      <Image
+      <LazyImage
         src={nocategory}
         alt="게시글 없음."
-        width={276}
-        height={155}
+        width={"27.6rem"}
+        height={"15.5rem"}
         style={{
           objectFit: "cover",
         }}

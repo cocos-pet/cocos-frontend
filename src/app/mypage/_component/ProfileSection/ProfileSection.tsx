@@ -3,7 +3,6 @@ import * as styles from "../../_style/mypage.css";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 import { IcChevronRight, IcPlus } from "@asset/svg";
-import Image from "next/image";
 import AddFavoriteHospital from "../AddFavoriteHospital";
 import { Disease, MemberInfo } from "../../_hooks/useMypageState";
 import { PetInfo, useProfileSectionState } from "@app/mypage/_hooks/useProfileSectionState";
@@ -11,6 +10,7 @@ import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
+import LazyImage from "@common/component/LazyImage";
 
 interface ProfileSectionProps {
   onNavigateToEditPet: () => void;
@@ -75,7 +75,13 @@ const LoggedProfile = ({
 }) => (
   <div className={styles.loginProfile}>
     {member.profileImage && (
-      <Image className={styles.profileImage} alt="프로필 이미지" src={member.profileImage} width={68} height={68} />
+      <LazyImage
+        className={styles.profileImage}
+        alt="프로필 이미지"
+        src={member.profileImage}
+        width="4.8rem"
+        height="4.8rem"
+      />
     )}
     <span className={styles.userProfileText}>{member.nickname}</span>
     <Divider size="small" />
@@ -107,7 +113,13 @@ const PetProfile = ({
     return (
       <div className={styles.animalProfileWrapper}>
         {petInfo.petImage && (
-          <Image className={styles.animalImage} alt="프로필이미지" src={petInfo.petImage} width={52} height={52} />
+          <LazyImage
+            className={styles.animalImage}
+            alt="프로필이미지"
+            src={petInfo.petImage}
+            width="5.2rem"
+            height="5.2rem"
+          />
         )}
         <div className={styles.animalProfileTextWrapper}>
           <span className={styles.animalMainText}>

@@ -67,13 +67,7 @@ export const userProfile = style([
   },
 ]);
 
-export const profileImage = style([
-  a.profileImageBase,
-  {
-    width: "4.8rem",
-    height: "4.8rem",
-  },
-]);
+export const profileImage = style([a.profileImageBase]);
 
 export const userProfileText = style([
   font.heading02,

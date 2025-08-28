@@ -64,8 +64,6 @@ export const styles = {
   ]),
   postImage: style({
     flexShrink: 0,
-    width: "7.6rem",
-    height: "7.6rem",
     objectFit: "cover",
     borderRadius: "0.8rem",
   }),

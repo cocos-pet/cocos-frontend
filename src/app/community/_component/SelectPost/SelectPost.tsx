@@ -1,18 +1,18 @@
 "use client";
 
-import {useCallback, useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import * as styles from "./SelectPost.css.ts";
 import Divider from "@common/component/Divider/Divider.tsx";
-import {IcUnderline} from "@asset/svg";
+import { IcUnderline } from "@asset/svg";
 import Content from "@common/component/Content/Content.tsx";
-import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
-import {postPostFiltersResponse} from "@api/domain/community/search";
-import {PATH} from "@route/path.ts";
-import {formatTime} from "@shared/util/formatTime.ts";
+import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
+import { postPostFiltersResponse } from "@api/domain/community/search";
+import { PATH } from "@route/path.ts";
+import { formatTime } from "@shared/util/formatTime.ts";
 import nocategory from "@asset/image/nocategory.png";
-import Image from "next/image";
 import dynamic from "next/dynamic";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -104,7 +104,13 @@ const PostList = () => {
           ))
         ) : (
           <div className={styles.emptyContainer}>
-            <Image src={nocategory} alt="게시글 없음." width={276} height={155} style={{ objectFit: "cover" }} />
+            <LazyImage
+              src={nocategory}
+              alt="게시글 없음."
+              width="27.6rem"
+              height="15.5rem"
+              style={{ objectFit: "cover" }}
+            />
             <h1> 아직 등록된 게시글이 없어요 </h1>
           </div>
         )}
