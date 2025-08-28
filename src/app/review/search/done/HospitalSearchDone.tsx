@@ -65,7 +65,7 @@ function HospitalSearchDoneContent() {
   const defaultImage = noSearchResult.src;
 
   if (isPending) {
-    // return <Loading height={80} />;
+    return <Loading height={80} />;
   }
 
   if (isError) {

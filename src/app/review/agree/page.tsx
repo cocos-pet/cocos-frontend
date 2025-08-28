@@ -4,12 +4,11 @@ import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";
-import Image from "next/image";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 import * as style from "./style.css";
 import { IcCheckbox } from "@asset/svg";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
 import { useAgreeReviewMutation } from "@app/api/review/agree/hook";
 import { useRouter } from "next/navigation";
@@ -27,13 +26,13 @@ const page = () => {
   const isReviewAgree = useGetReviewAgreementStatus();
 
   // url 입력해서 들어오는 경우 방지
-  // useEffect(() => {
-  //   const isAgreed = isReviewAgree?.data?.isReviewTermsAgree;
+  useEffect(() => {
+    const isAgreed = isReviewAgree?.data?.isReviewTermsAgree;
 
-  //   if (isAgreed) {
-  //     router.push(PATH.REVIEW.WRITE);
-  //   }
-  // }, [isReviewAgree]);
+    if (isAgreed) {
+      router.push(PATH.REVIEW.WRITE);
+    }
+  }, [isReviewAgree]);
 
   const handleClickBtn = () => {
     mutation.mutate(undefined, {
