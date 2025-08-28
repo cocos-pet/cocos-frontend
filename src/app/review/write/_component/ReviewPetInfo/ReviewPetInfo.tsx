@@ -9,6 +9,56 @@ import { useState } from "react";
 import { Toast } from "@common/component/Toast/Toast";
 import { getPetTypeFromBreedId } from "@app/review/write/_utils/getPetTypeById";
 
+// 동물 정보 입력방식 선택 UI
+const ReviewPetInfo = () => {
+  const {
+    selectedPetInfo,
+    petInfo,
+    toastKey,
+    showToast,
+    isBreedInputTouched,
+    setIsBreedInputTouched,
+    handleSelectPetInfo,
+    handleMyPetSelection,
+  } = usePetInfoSelection();
+
+  return (
+    <>
+      {/* 1-3. 동물 정보 */}
+      <div className={styles.wrapper}>
+        <div>
+          <span className={styles.question}>동물 정보를 알려주세요</span>
+          <span className={styles.star}>*</span>
+        </div>
+
+        {/* 버튼1. 내 정보 */}
+        <MyPetInfoButton selected={selectedPetInfo === "myPet" && !!petInfo} onClick={handleMyPetSelection} />
+
+        {showToast && (
+          <Toast
+            key={toastKey}
+            message="등록된 동물이 없어요. 직접 입력하기를 눌러주세요"
+            showDeleteIcon={false}
+            variant="blue"
+          />
+        )}
+
+        {/* 버튼2. 직접 입력하기 */}
+        <ManualInputButton selected={selectedPetInfo === "manual"} onClick={() => handleSelectPetInfo("manual")}>
+          {selectedPetInfo === "manual" && (
+            <DirectMyPetInfo
+              isBreedInputTouched={isBreedInputTouched}
+              setIsBreedInputTouched={setIsBreedInputTouched}
+            />
+          )}
+        </ManualInputButton>
+      </div>
+    </>
+  );
+};
+
+export default ReviewPetInfo;
+
 // 동물정보 저장
 const usePetInfoSelection = () => {
   const { watch, setValue } = useFormContext<ReviewFormWithUIData>();
@@ -92,53 +142,3 @@ const ManualInputButton = ({
     {children}
   </form>
 );
-
-// 동물 정보 입력방식 선택 UI
-const ReviewPetInfo = () => {
-  const {
-    selectedPetInfo,
-    petInfo,
-    toastKey,
-    showToast,
-    isBreedInputTouched,
-    setIsBreedInputTouched,
-    handleSelectPetInfo,
-    handleMyPetSelection,
-  } = usePetInfoSelection();
-
-  return (
-    <>
-      {/* 1-3. 동물 정보 */}
-      <div className={styles.wrapper}>
-        <div>
-          <span className={styles.question}>동물 정보를 알려주세요</span>
-          <span className={styles.star}>*</span>
-        </div>
-
-        {/* 버튼1. 내 정보 */}
-        <MyPetInfoButton selected={selectedPetInfo === "myPet" && !!petInfo} onClick={handleMyPetSelection} />
-
-        {showToast && (
-          <Toast
-            key={toastKey}
-            message="등록된 동물이 없어요. 직접 입력하기를 눌러주세요"
-            showDeleteIcon={false}
-            variant="blue"
-          />
-        )}
-
-        {/* 버튼2. 직접 입력하기 */}
-        <ManualInputButton selected={selectedPetInfo === "manual"} onClick={() => handleSelectPetInfo("manual")}>
-          {selectedPetInfo === "manual" && (
-            <DirectMyPetInfo
-              isBreedInputTouched={isBreedInputTouched}
-              setIsBreedInputTouched={setIsBreedInputTouched}
-            />
-          )}
-        </ManualInputButton>
-      </div>
-    </>
-  );
-};
-
-export default ReviewPetInfo;
