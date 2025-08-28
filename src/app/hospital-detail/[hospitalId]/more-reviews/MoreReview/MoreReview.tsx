@@ -35,7 +35,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
         fetchNextPage();
       }
     },
-    [hasNextPage, isFetchingNextPage, fetchNextPage],
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
   );
 
   useEffect(() => {
