@@ -1,7 +1,7 @@
 import { useFormContext } from "react-hook-form";
 import * as styles from "./ReviewDisease.style.css";
 import { IcRightArror } from "@asset/svg/index";
-import BtnToChip from "@app/review/write/_component/BtnToChip";
+import BtnToChip from "../BtnToChip/BtnToChip";
 import { getDiseaseNameById } from "@app/review/write/_utils/getNameById";
 import { ReviewFormData } from "@app/review/write/page";
 import { diseaseGetResponse } from "@api/domain/register-pet/disease";

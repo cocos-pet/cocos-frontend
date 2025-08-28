@@ -5,10 +5,10 @@ import { useReviewFunnel } from "@app/review/write/_hook/useReviewFunnel";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 
-import Step1, { PetInfoType } from "@app/review/write/_section/Step1";
-import Step2 from "@app/review/write/_section/Step2";
-import Step3 from "@app/review/write/_section/Step3";
-import Step4 from "@app/review/write/_section/Step4";
+import Step1, { PetInfoType } from "@app/review/write/_section/Step1/Step1";
+import Step2 from "@app/review/write/_section/Step2/Step2";
+import Step3 from "@app/review/write/_section/Step3/Step3";
+import Step4 from "@app/review/write/_section/Step4/Step4";
 import { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 
 // UI 상태 분리

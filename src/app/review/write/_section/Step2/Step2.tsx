@@ -1,8 +1,8 @@
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
-import ReviewSymptom from "@app/review/write/_component/ReviewSymptom";
-import ReviewPurpose from "@app/review/write/_component/ReviewPurpose";
-import ReviewDisease from "@app/review/write/_component/ReviewDisease";
+import ReviewSymptom from "../../_component/ReviewSymptom/ReviewSymptom";
+import ReviewPurpose from "../../_component/ReviewPurpose/ReviewPurpose";
+import ReviewDisease from "../../_component/ReviewDisease/ReviewDisease";
 import * as styles from "./Step2.style.css";
 import { Button } from "@common/component/Button";
 import { useState } from "react";
@@ -12,7 +12,8 @@ import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
 import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "../page";
+import { ReviewFormData } from "../../page";
+import ExitConfirmModal from "../../_component/ExitConfirmModal";
 
 type CategoryType = "symptom" | "disease";
 
@@ -24,6 +25,7 @@ interface Step2Props {
 const Step2 = ({ onPrev, onNext }: Step2Props) => {
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -50,12 +52,16 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
     window.history.go(-2);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
   return (
     <div className={styles.backgroundColor}>
       {/* 상단 헤더 영역 */}
       <HeaderNav
         centerContent="리뷰작성(2/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
 
       <section className={styles.wrapper}>
@@ -88,6 +94,13 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
         symptomBodyData={symptomBodyData}
         diseaseData={diseaseData?.data}
         diseaseBodyData={diseaseBodyData}
+      />
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
       />
     </div>
   );
