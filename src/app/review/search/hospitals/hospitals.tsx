@@ -10,7 +10,9 @@ import { HospitalSearchKeywordsResponse, Keyword } from "@api/domain/hospitals/s
 import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 function SearchContent() {
   const router = useRouter();
@@ -18,7 +20,7 @@ function SearchContent() {
   const query = searchParams?.get("searchText") || "";
   const [searchText, setSearchText] = useState(query);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const {isAuthenticated} = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -83,20 +85,20 @@ function SearchContent() {
         />
       </div>
       {isAuthenticated && (
-      <div className={styles.searchContent}>
-        <div className={styles.title}>최근 검색 기록</div>
-        <ul className={styles.list}>
-          {keywords.map((keyword: Keyword) => (
-            <li
-              key={keyword.id}
-              className={styles.listItem}
-              onClick={() => {
-                if (keyword.content) handleNavigate(keyword.content);
-              }}
-            >
-              {keyword.content}
-            </li>
-          ))}
+        <div className={styles.searchContent}>
+          <div className={styles.title}>최근 검색 기록</div>
+          <ul className={styles.list}>
+            {keywords.map((keyword: Keyword) => (
+              <li
+                key={keyword.id}
+                className={styles.listItem}
+                onClick={() => {
+                  if (keyword.content) handleNavigate(keyword.content);
+                }}
+              >
+                {keyword.content}
+              </li>
+            ))}
           </ul>
         </div>
       )}
@@ -106,7 +108,7 @@ function SearchContent() {
 
 const Search = () => {
   return (
-    <Suspense fallback={<div>로딩 중...</div>}>
+    <Suspense fallback={<Loading height={80} />}>
       <SearchContent />
     </Suspense>
   );
