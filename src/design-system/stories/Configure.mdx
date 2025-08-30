@@ -1,290 +1,258 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import Image from "next/image";
 
-import Github from "./assets/github.svg";
-import Discord from "./assets/discord.svg";
-import Youtube from "./assets/youtube.svg";
-import Tutorials from "./assets/tutorials.svg";
-import Styling from "./assets/styling.png";
-import Context from "./assets/context.png";
-import Assets from "./assets/assets.png";
-import Docs from "./assets/docs.png";
-import Share from "./assets/share.png";
-import FigmaPlugin from "./assets/figma-plugin.png";
-import Testing from "./assets/testing.png";
-import Accessibility from "./assets/accessibility.png";
-import Theming from "./assets/theming.png";
-import AddonLibrary from "./assets/addon-library.png";
-
-export const RightArrow = () => <svg 
-    viewBox="0 0 14 14" 
-    width="8px" 
-    height="14px" 
-    style={{ 
-      marginLeft: '4px',
-      display: 'inline-block',
-      shapeRendering: 'inherit',
-      verticalAlign: 'middle',
-      fill: 'currentColor',
-      'path fill': 'currentColor'
+export const RightArrow = () => (
+  <svg
+    viewBox="0 0 14 14"
+    width="8px"
+    height="14px"
+    style={{
+      marginLeft: "4px",
+      display: "inline-block",
+      shapeRendering: "inherit",
+      verticalAlign: "middle",
+      fill: "currentColor",
+      "path fill": "currentColor",
     }}
->
-  <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
-</svg>
+  >
+    <path d="m11.1 7.35-5.5 5.5a.5.5 0 0 1-.7-.7L10.04 7 4.9 1.85a.5.5 0 1 1 .7-.7l5.5 5.5c.2.2.2.5 0 .7Z" />
+  </svg>
+);
 
-<Meta title="Configure your project" />
+<Meta title="🐶 COCOS Design System" />
 
 <div className="sb-container">
-  <div className='sb-section-title'>
-    # Configure your project
-
-    Because Storybook works separately from your app, you'll need to configure it for your specific stack and setup. Below, explore guides for configuring Storybook with popular frameworks and tools. If you get stuck, learn how you can ask for help from our community.
-  </div>
-  <div className="sb-section">
-    <div className="sb-section-item">
-      <Image
-        src={Styling}
-        alt="A wall of logos representing different styling technologies"
-        width={0}
-        height={0}
-        style={{ width: '100%', height: 'auto' }}
-      />
-      <h4 className="sb-section-item-heading">Add styling and CSS</h4>
-      <p className="sb-section-item-paragraph">Like with web applications, there are many ways to include CSS within Storybook. Learn more about setting up styling within Storybook.</p>
-      <a
-        href="https://storybook.js.org/docs/configure/styling-and-css/?renderer=react&ref=configure"
-        target="_blank"
-      >Learn more<RightArrow /></a>
-    </div>
-    <div className="sb-section-item">
-      <Image 
-        width={0}
-        height={0}
-        style={{ width: '100%', height: 'auto' }}
-        src={Context}
-        alt="An abstraction representing the composition of data for a component"
-      />
-      <h4 className="sb-section-item-heading">Provide context and mocking</h4>
-      <p className="sb-section-item-paragraph">Often when a story doesn't render, it's because your component is expecting a specific environment or context (like a theme provider) to be available.</p>
-      <a
-        href="https://storybook.js.org/docs/writing-stories/decorators/?renderer=react&ref=configure#context-for-mocking"
-        target="_blank"
-      >Learn more<RightArrow /></a>
-    </div>
-    <div className="sb-section-item">
-      <Image 
-        width={0}
-        height={0}
-        style={{ width: '100%', height: 'auto' }} 
-        src={Assets} 
-        alt="A representation of typography and image assets" 
-      />
-      <div>
-        <h4 className="sb-section-item-heading">Load assets and resources</h4>
-        <p className="sb-section-item-paragraph">To link static files (like fonts) to your projects and stories, use the
-        `staticDirs` configuration option to specify folders to load when
-        starting Storybook.</p>
-        <a
-          href="https://storybook.js.org/docs/configure/images-and-assets/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
-      </div>
-    </div>
+  <div className="sb-section-title">
+    # 🐶 COCOS Design System 반려동물 증상을 겪는 반려인들이 커뮤니티를 통해
+    고민을 공유하고 병원 정보를 확인할 수 있는 서비스! COCOS 프로젝트에서
+    사용되는 디자인 시스템 컴포넌트들을 Storybook으로 문서화하고 관리합니다.
   </div>
 </div>
+
 <div className="sb-container">
   <div className='sb-section-title'>
-    # Do more with Storybook
-
-    Now that you know the basics, let's explore other parts of Storybook that will improve your experience. This list is just to get you started. You can customise Storybook in many ways to fit your needs.
+    ## 📦 컴포넌트 목록
+    
+    현재 COCOS Design System에 포함된 모든 컴포넌트들입니다. 각 컴포넌트를 클릭하면 해당 스토리로 이동합니다.
   </div>
 
   <div className="sb-section">
     <div className="sb-features-grid">
       <div className="sb-grid-item">
-        <Image 
-          width={0}
-          height={0}
-          style={{ width: '100%', height: 'auto' }} 
-          src={Docs} 
-          alt="A screenshot showing the autodocs tag being set, pointing a docs page being generated" 
-        />
-        <h4 className="sb-section-item-heading">Autodocs</h4>
-        <p className="sb-section-item-paragraph">Auto-generate living,
-          interactive reference documentation from your components and stories.</p>
-        <a
-          href="https://storybook.js.org/docs/writing-docs/autodocs/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Button</h4>
+          <p className="sb-section-item-paragraph">다양한 크기와 스타일의 버튼 컴포넌트</p>
+          <a href="?path=/docs/design-system-button--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
       </div>
+      
       <div className="sb-grid-item">
-        <Image 
-          width={0}
-          height={0}
-          style={{ width: '100%', height: 'auto' }} 
-          src={Share} 
-          alt="A browser window showing a Storybook being published to a chromatic.com URL" 
-        />
-        <h4 className="sb-section-item-heading">Publish to Chromatic</h4>
-        <p className="sb-section-item-paragraph">Publish your Storybook to review and collaborate with your entire team.</p>
-        <a
-          href="https://storybook.js.org/docs/sharing/publish-storybook/?renderer=react&ref=configure#publish-storybook-with-chromatic"
-          target="_blank"
-        >Learn more<RightArrow /></a>
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">TextField</h4>
+          <p className="sb-section-item-paragraph">검색 및 입력을 위한 텍스트 필드</p>
+          <a href="?path=/docs/design-system-textfield--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
       </div>
+
       <div className="sb-grid-item">
-        <Image 
-          width={0}
-          height={0}
-          style={{ width: '100%', height: 'auto' }} 
-          src={FigmaPlugin} 
-          alt="Windows showing the Storybook plugin in Figma" 
-        />
-        <h4 className="sb-section-item-heading">Figma Plugin</h4>
-        <p className="sb-section-item-paragraph">Embed your stories into Figma to cross-reference the design and live
-          implementation in one place.</p>
-        <a
-          href="https://storybook.js.org/docs/sharing/design-integrations/?renderer=react&ref=configure#embed-storybook-in-figma-with-the-plugin"
-          target="_blank"
-        >Learn more<RightArrow /></a>
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Chip</h4>
+          <p className="sb-section-item-paragraph">태그, 필터링을 위한 칩 컴포넌트</p>
+          <a href="?path=/docs/design-system-chip--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
       </div>
+
       <div className="sb-grid-item">
-        <Image 
-          width={0}
-          height={0}
-          style={{ width: '100%', height: 'auto' }} 
-          src={Testing} 
-          alt="Screenshot of tests passing and failing" 
-        />
-        <h4 className="sb-section-item-heading">Testing</h4>
-        <p className="sb-section-item-paragraph">Use stories to test a component in all its variations, no matter how
-          complex.</p>
-        <a
-          href="https://storybook.js.org/docs/writing-tests/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Modal</h4>
+          <p className="sb-section-item-paragraph">팝업 및 확인 대화상자</p>
+          <a href="?path=/docs/design-system-modal--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
       </div>
+
       <div className="sb-grid-item">
-        <Image 
-          width={0}
-          height={0}
-          style={{ width: '100%', height: 'auto' }} 
-          src={Accessibility} 
-          alt="Screenshot of accessibility tests passing and failing" 
-        />
-        <h4 className="sb-section-item-heading">Accessibility</h4>
-        <p className="sb-section-item-paragraph">Automatically test your components for a11y issues as you develop.</p>
-        <a
-          href="https://storybook.js.org/docs/writing-tests/accessibility-testing/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Toast</h4>
+          <p className="sb-section-item-paragraph">알림 메시지 표시</p>
+          <a href="?path=/docs/design-system-toast--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
       </div>
+
       <div className="sb-grid-item">
-        <Image 
-          width={0}
-          height={0}
-          style={{ width: '100%', height: 'auto' }} 
-          src={Theming} 
-          alt="Screenshot of Storybook in light and dark mode" 
-        />
-        <h4 className="sb-section-item-heading">Theming</h4>
-        <p className="sb-section-item-paragraph">Theme Storybook's UI to personalize it to your project.</p>
-        <a
-          href="https://storybook.js.org/docs/configure/theming/?renderer=react&ref=configure"
-          target="_blank"
-        >Learn more<RightArrow /></a>
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">HeaderNav</h4>
+          <p className="sb-section-item-paragraph">페이지 상단 네비게이션</p>
+          <a href="?path=/docs/design-system-headernav--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Tab</h4>
+          <p className="sb-section-item-paragraph">콘텐츠 분류를 위한 탭</p>
+          <a href="?path=/docs/design-system-tab--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">SimpleBottomSheet</h4>
+          <p className="sb-section-item-paragraph">하단에서 올라오는 액션시트</p>
+          <a href="?path=/docs/design-system-simplebottomsheet--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Radio</h4>
+          <p className="sb-section-item-paragraph">단일 선택을 위한 라디오 버튼</p>
+          <a href="?path=/docs/design-system-radio--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">CheckBoxText</h4>
+          <p className="sb-section-item-paragraph">텍스트와 체크박스 조합</p>
+          <a href="?path=/docs/design-system-checkboxtext--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Loading</h4>
+          <p className="sb-section-item-paragraph">로딩 상태 표시</p>
+          <a href="?path=/docs/design-system-loading--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">FloatingBtn</h4>
+          <p className="sb-section-item-paragraph">플로팅 액션 버튼</p>
+          <a href="?path=/docs/design-system-floatingbtn--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">Divider</h4>
+          <p className="sb-section-item-paragraph">섹션 구분선</p>
+          <a href="?path=/docs/design-system-divider--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+
+      <div className="sb-grid-item">
+        <div className="sb-component-card">
+          <h4 className="sb-section-item-heading">ColorChip</h4>
+          <p className="sb-section-item-paragraph">색상별 분류 칩</p>
+          <a href="?path=/docs/design-system-colorchip--docs">
+            스토리 보기<RightArrow />
+          </a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    ## 🛠 기술 스택
+  </div>
+
+  <div className="sb-section">
+    <div className="sb-tech-grid">
+      <div className="sb-tech-item">
+        <h4>React + TypeScript</h4>
+        <p>컴포넌트 기반 개발과 타입 안전성</p>
+      </div>
+      <div className="sb-tech-item">
+        <h4>Vanilla Extract</h4>
+        <p>타입 안전한 CSS-in-JS 스타일링</p>
+      </div>
+      <div className="sb-tech-item">
+        <h4>Next.js</h4>
+        <p>리액트 프레임워크</p>
+      </div>
+      <div className="sb-tech-item">
+        <h4>React Query</h4>
+        <p>데이터 패칭 및 캐싱</p>
+      </div>
+      <div className="sb-tech-item">
+        <h4>Zustand</h4>
+        <p>경량 상태 관리</p>
+      </div>
+      <div className="sb-tech-item">
+        <h4>Storybook</h4>
+        <p>컴포넌트 문서화 및 테스트</p>
       </div>
     </div>
   </div>
 </div>
-<div className='sb-addon'>
-  <div className='sb-addon-text'>
-    <h4>Addons</h4>
-    <p className="sb-section-item-paragraph">Integrate your tools with Storybook to connect workflows.</p>
-    <a
-        href="https://storybook.js.org/addons/?ref=configure"
-        target="_blank"
-      >Discover all addons<RightArrow /></a>
+
+<div className="sb-container">
+  <div className='sb-section-title'>
+    ## 👥 COCOS Team
   </div>
-  <div className='sb-addon-img'>
-    <Image 
-      width={650}
-      height={347}
-      src={AddonLibrary} 
-      alt="Integrate your tools with Storybook to connect workflows." 
-    />
-  </div>
-</div>
 
-<div className="sb-section sb-socials">
-    <div className="sb-section-item">
-      <Image 
-        width={32}
-        height={32}
-        layout="fixed"
-        src={Github} 
-        alt="Github logo" 
-        className="sb-explore-image"
-      />
-      Join our contributors building the future of UI development.
-
-      <a
-        href="https://github.com/storybookjs/storybook"
-        target="_blank"
-      >Star on GitHub<RightArrow /></a>
-    </div>
-    <div className="sb-section-item">
-      <Image 
-        width={33}
-        height={32}
-        layout="fixed"
-        src={Discord} 
-        alt="Discord logo" 
-        className="sb-explore-image"
-      />
-      <div>
-        Get support and chat with frontend developers.
-
-        <a
-          href="https://discord.gg/storybook"
-          target="_blank"
-        >Join Discord server<RightArrow /></a>
+  <div className="sb-section">
+    <div className="sb-team-grid">
+      <div className="sb-team-member">
+        <h4>🎧 공준혁</h4>
+        <p>Lead, 마이페이지 뷰</p>
+        <a href="https://github.com/ocahs9" target="_blank">
+          GitHub<RightArrow />
+        </a>
+      </div>
+      <div className="sb-team-member">
+        <h4>🌸 김민정</h4>
+        <p>검색, 게시물 뷰</p>
+        <a href="https://github.com/minjeoong" target="_blank">
+          GitHub<RightArrow />
+        </a>
+      </div>
+      <div className="sb-team-member">
+        <h4>🐶 이예림</h4>
+        <p>로그인, 온보딩 뷰</p>
+        <a href="https://github.com/yarimu" target="_blank">
+          GitHub<RightArrow />
+        </a>
+      </div>
+      <div className="sb-team-member">
+        <h4>🐾 이윤지</h4>
+        <p>메인, 커뮤니티 뷰</p>
+        <a href="https://github.com/Leeyoonji23" target="_blank">
+          GitHub<RightArrow />
+        </a>
       </div>
     </div>
-    <div className="sb-section-item">
-      <Image 
-        width={32}
-        height={32}
-        layout="fixed"
-        src={Youtube} 
-        alt="Youtube logo" 
-        className="sb-explore-image"
-      />
-      <div>
-        Watch tutorials, feature previews and interviews.
-
-        <a
-          href="https://www.youtube.com/@chromaticui"
-          target="_blank"
-        >Watch on YouTube<RightArrow /></a>
-      </div>
-    </div>
-    <div className="sb-section-item">
-      <Image 
-        width={33}
-        height={32}
-        layout="fixed"
-        src={Tutorials} 
-        alt="A book" 
-        className="sb-explore-image"
-      />
-      <p>Follow guided walkthroughs on for key workflows.</p>
-
-      <a
-          href="https://storybook.js.org/tutorials/?ref=configure"
-          target="_blank"
-        >Discover tutorials<RightArrow /></a>
-    </div>
+  </div>
 </div>
 
 <style>
@@ -300,16 +268,19 @@ export const RightArrow = () => <svg
     gap: 20px;
   }
 
-  img {
-    object-fit: cover;
-  }
-
   .sb-section-title {
     margin-bottom: 32px;
   }
 
   .sb-section a:not(h1 a, h2 a, h3 a) {
     font-size: 14px;
+    color: #1976d2;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .sb-section a:hover {
+    text-decoration: underline;
   }
 
   .sb-section-item, .sb-grid-item {
@@ -318,85 +289,96 @@ export const RightArrow = () => <svg
     flex-direction: column;
   }
 
-  .sb-section-item-heading {
-    padding-top: 20px !important;
-    padding-bottom: 5px !important;
-    margin: 0 !important;
-  }
-  .sb-section-item-paragraph {
-    margin: 0;
-    padding-bottom: 10px;
+  .sb-component-card {
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    background: #fafafa;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: all 0.2s ease;
   }
 
-  .sb-chevron {
-    margin-left: 5px;
+  .sb-component-card:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transform: translateY(-2px);
+  }
+
+  .sb-section-item-heading {
+    padding-top: 0 !important;
+    padding-bottom: 5px !important;
+    margin: 0 0 8px 0 !important;
+    color: #333;
+    font-size: 16px;
+  }
+
+  .sb-section-item-paragraph {
+    margin: 0 0 16px 0;
+    padding-bottom: 0;
+    color: #666;
+    font-size: 14px;
+    flex-grow: 1;
   }
 
   .sb-features-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-gap: 32px 20px;
-  }
-
-  .sb-socials {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .sb-socials p {
-    margin-bottom: 10px;
-  }
-
-  .sb-explore-image {
-    max-height: 32px;
-    align-self: flex-start;
-  }
-
-  .sb-addon {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-gap: 20px;
     width: 100%;
-    display: flex;
-    align-items: center;
-    position: relative;
-    background-color: #EEF3F8;
-    border-radius: 5px;
-    border: 1px solid rgba(0, 0, 0, 0.05);
-    background: #EEF3F8;
-    height: 180px;
-    margin-bottom: 48px;
-    overflow: hidden;
   }
 
-  .sb-addon-text {
-    padding-left: 48px;
-    max-width: 240px;
+  .sb-tech-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 16px;
+    width: 100%;
   }
 
-  .sb-addon-text h4 {
-    padding-top: 0px;
+  .sb-tech-item {
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: #f9f9f9;
   }
 
-  .sb-addon-img {
-    position: absolute;
-    left: 345px;
-    top: 0;
-    height: 100%;
-    width: 200%;
-    overflow: hidden;
+  .sb-tech-item h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 14px;
   }
 
-  .sb-addon-img img {
-    width: 650px;
-    transform: rotate(-15deg);
-    margin-left: 40px;
-    margin-top: -72px;
-    box-shadow: 0 0 1px rgba(255, 255, 255, 0);
-    backface-visibility: hidden;
+  .sb-tech-item p {
+    margin: 0;
+    color: #666;
+    font-size: 13px;
   }
 
-  @media screen and (max-width: 800px) {
-    .sb-addon-img {
-      left: 300px;
-    }
+  .sb-team-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    grid-gap: 16px;
+    width: 100%;
+  }
+
+  .sb-team-member {
+    padding: 16px;
+    border: 1px solid #e0e0e0;
+    border-radius: 6px;
+    background: #f0f8ff;
+    text-align: center;
+  }
+
+  .sb-team-member h4 {
+    margin: 0 0 8px 0;
+    color: #333;
+    font-size: 16px;
+  }
+
+  .sb-team-member p {
+    margin: 0 0 12px 0;
+    color: #666;
+    font-size: 13px;
   }
 
   @media screen and (max-width: 600px) {
@@ -408,38 +390,12 @@ export const RightArrow = () => <svg
       grid-template-columns: repeat(1, 1fr);
     }
 
-    .sb-socials {
-      grid-template-columns: repeat(2, 1fr);
+    .sb-tech-grid {
+      grid-template-columns: repeat(1, 1fr);
     }
 
-    .sb-addon {
-      height: 280px;
-      align-items: flex-start;
-      padding-top: 32px;
-      overflow: hidden;
-    }
-
-    .sb-addon-text {
-      padding-left: 24px;
-    }
-
-    .sb-addon-img {
-      right: 0;
-      left: 0;
-      top: 130px;
-      bottom: 0;
-      overflow: hidden;
-      height: auto;
-      width: 124%;
-    }
-
-    .sb-addon-img img {
-      width: 1200px;
-      transform: rotate(-12deg);
-      margin-left: 0;
-      margin-top: 48px;
-      margin-bottom: -40px;
-      margin-left: -24px;
+    .sb-team-grid {
+      grid-template-columns: repeat(1, 1fr);
     }
   }
   `}

@@ -1,8 +1,8 @@
 "use client";
 
-import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
-import * as styles from "./SimpleBottomSheet.css";
-import { Button } from "../Button";
+import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine.tsx";
+import * as styles from "./SimpleBottomSheet.css.ts";
+import { Button } from "../index";
 import React, { useEffect, useRef } from "react";
 
 interface BottomSheetProps {
@@ -47,7 +47,10 @@ const SimpleBottomSheet = ({
 
   return (
     <div className={styles.overlay} onClick={handleClose}>
-      <div className={styles.bottomSheetContainer} onClick={handleBottomSheetClick}>
+      <div
+        className={styles.bottomSheetContainer}
+        onClick={handleBottomSheetClick}
+      >
         <div className={styles.bottomSheetHeader}>
           <IcBottomSheetLine width={80} onClick={handleClose} />
         </div>
@@ -58,7 +61,13 @@ const SimpleBottomSheet = ({
             {subContent && <p className={styles.subContent}>{subContent}</p>}
           </div>
           <div className={styles.buttonContainer}>
-            <Button label={`${leftText}`} size="large" variant="solidNeutral" disabled={false} onClick={leftOnClick} />
+            <Button
+              label={`${leftText}`}
+              size="large"
+              variant="solidNeutral"
+              disabled={false}
+              onClick={leftOnClick}
+            />
             <Button
               label={`${rightText}`}
               size="large"
