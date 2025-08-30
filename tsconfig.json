@@ -40,9 +40,16 @@
       "@type/*": ["src/type/*"],
       "@store/*": ["src/store/*"],
       "@auth/*": ["src/auth/*"],
-      "@providers/*": ["src/providers/*"]
+      "@providers/*": ["src/providers/*"],
+      "@design-system/*": ["src/design-system/*"]
     }
   },
-  "include": ["./dist/types/**/*.d.ts", "./next-env.d.ts", ".next/types/**/*.ts", "src", "./dist/types/**/*.ts"],
+  "include": [
+    "./dist/types/**/*.d.ts",
+    "./next-env.d.ts",
+    ".next/types/**/*.ts",
+    "src",
+    "./dist/types/**/*.ts"
+  ],
   "exclude": ["./node_modules"]
 }

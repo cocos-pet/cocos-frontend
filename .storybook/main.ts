@@ -1,7 +1,7 @@
-import type { StorybookConfig } from "@storybook/nextjs-vite";
-import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
+import type {StorybookConfig} from "@storybook/nextjs-vite";
+import {vanillaExtractPlugin} from "@vanilla-extract/vite-plugin";
 import * as path from "node:path";
-import { fileURLToPath } from "node:url";
+import {fileURLToPath} from "node:url";
 
 // ESM에서 __dirname 대체
 const __filename = fileURLToPath(import.meta.url);
@@ -44,6 +44,7 @@ const config: StorybookConfig = {
       "@store": path.resolve(__dirname, "../src/store"),
       "@auth": path.resolve(__dirname, "../src/auth"),
       "@providers": path.resolve(__dirname, "../src/providers"),
+      "@design-system": path.resolve(__dirname, "../src/design-system"),
     };
 
     return config;

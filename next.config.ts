@@ -1,5 +1,5 @@
-import {createVanillaExtractPlugin} from "@vanilla-extract/next-plugin";
-import type {NextConfig} from "next";
+import { createVanillaExtractPlugin } from "@vanilla-extract/next-plugin";
+import type { NextConfig } from "next";
 import * as path from "node:path";
 
 const withVanillaExtract = createVanillaExtractPlugin();
@@ -20,7 +20,7 @@ const nextConfig: NextConfig = {
   webpack: (config) => {
     // 기존 alias 설정을 유지하면서 확장
     const existingAlias = config.resolve.alias || {};
-    
+
     // 절대 경로에 기반한 alias 설정
     config.resolve.alias = {
       ...existingAlias,
@@ -35,6 +35,7 @@ const nextConfig: NextConfig = {
       "@type": path.resolve(__dirname, "src/type"),
       "@store": path.resolve(__dirname, "src/store"),
       "@auth": path.resolve(__dirname, "src/auth"),
+      "@design-system": path.resolve(__dirname, "src/design-system"),
     };
     return config;
   },
