@@ -2,7 +2,7 @@ import {useRouter, useSearchParams} from "next/navigation";
 import {useEffect, useState} from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import {IcRightArrow} from "@asset/svg";
-import {LoadingFallback, ReviewFilter,} from "@app/community/detail/_section/index.tsx";
+import {LoadingFallback, ReviewFilter} from "@app/community/detail/_section/index.tsx";
 import {usePostHospitalReviews} from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
@@ -11,7 +11,7 @@ import {useAuth} from "@providers/AuthProvider.tsx";
 import {Button} from "@common/component/Button";
 import {Modal} from "@common/component/Modal/Modal.tsx";
 import {PATH} from "@route/path.ts";
-import HospitalReviewFilter, {LocationFilterType,} from "@app/community/detail/_section/HospitalReviewFilter.tsx";
+import HospitalReviewFilter, {LocationFilterType} from "@app/community/detail/_section/HospitalReviewFilter.tsx";
 import {If} from "@shared/component/If/if.tsx";
 import {ReviewActiveTabType} from "@app/community/detail/_section/ReviewFilter.tsx";
 
@@ -38,9 +38,7 @@ const ReviewDetailContent = () => {
     summaryOptionId: undefined,
     filterType: undefined,
   });
-  const [reviewList, setReviewList] = useState<
-    postHospitalReviewsResponseData[]
-  >([]);
+  const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
   // API hooks
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
@@ -74,14 +72,11 @@ const ReviewDetailContent = () => {
         onSuccess: (data) => {
           setReviewList(data);
         },
-      }
+      },
     );
   };
 
-  const handleReviewFilterClose = (
-    summaryOptionId: number | undefined,
-    filterType: ReviewActiveTabType
-  ) => {
+  const handleReviewFilterClose = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
     setIsReviewFilterOpen(false);
     setFilterState((prev) => ({
       ...prev,
@@ -140,9 +135,7 @@ const ReviewDetailContent = () => {
             key={review.id}
             handleProfileClick={() => handleProfileClick(review.nickname)}
             reviewData={review}
-            handleHospitalDetailClick={() =>
-              handleHospitalClick(review.hospitalId)
-            }
+            handleHospitalDetailClick={() => handleHospitalClick(review.hospitalId)}
             isBlurred={!isAuthenticated}
           />
         ))}
@@ -159,10 +152,7 @@ const ReviewDetailContent = () => {
         </div>
       </If>
 
-      <ReviewFilter
-        isOpen={isReviewFilterOpen}
-        onClose={handleReviewFilterClose}
-      />
+      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
 
       <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
         <Modal.Content
