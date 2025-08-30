@@ -1,6 +1,6 @@
 import React from "react";
 import * as styles from "../../_style/mypage.css";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import { IcSettings } from "@asset/svg";
 import { useAuth } from "@providers/AuthProvider";
 

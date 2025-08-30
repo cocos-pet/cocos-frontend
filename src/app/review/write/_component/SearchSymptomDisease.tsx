@@ -1,20 +1,23 @@
 import * as styles from "@shared/component/FilterBottomSheet/FilterBottomSheet.css";
-import {useFormContext} from "react-hook-form";
-import {useState} from "react";
+import { useFormContext } from "react-hook-form";
+import { useState } from "react";
 
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
-import Tab from "@common/component/Tab/Tab";
-import {Button} from "@common/component/Button";
+import Tab from "src/design-system/Tab/Tab";
+import { Button } from "@common/component/Button";
 import Chip from "../../../../design-system/Chip/Chip";
 import CategoryContent from "@app/review/write/_component/CategoryContent";
-import {ReviewFormData} from "@app/review/write/page";
-import {getDiseaseNameById, getSymptomNameById} from "@app/review/write/_utils/getNameById";
-import {Toast} from "@common/component/Toast/Toast";
-import {CATEGORIES} from "../constant";
+import { ReviewFormData } from "@app/review/write/page";
+import {
+  getDiseaseNameById,
+  getSymptomNameById,
+} from "@app/review/write/_utils/getNameById";
+import { Toast } from "@common/component/Toast/Toast";
+import { CATEGORIES } from "../constant";
 
-import {symptomGetResponse} from "@api/domain/register-pet/symptom";
-import {diseaseGetResponse} from "@api/domain/register-pet/disease";
-import {bodiesGetResponse} from "@api/domain/register-pet/bodies";
+import { symptomGetResponse } from "@api/domain/register-pet/symptom";
+import { diseaseGetResponse } from "@api/domain/register-pet/disease";
+import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
 
 type CategoryType = "symptom" | "disease";
 
@@ -71,7 +74,11 @@ const SearchSymptomDisease = ({
   };
 
   return (
-    <BottomSheet isOpen={isOpen} handleOpen={() => {}} handleDimmedClose={onClose}>
+    <BottomSheet
+      isOpen={isOpen}
+      handleOpen={() => {}}
+      handleDimmedClose={onClose}
+    >
       <>
         {/* 선택된 칩 */}
         <div className={styles.selectedZone}>
@@ -96,7 +103,11 @@ const SearchSymptomDisease = ({
         {/* 탭 */}
         <div className={styles.categoryZone}>
           {CATEGORIES.map(({ id, label }) => (
-            <Tab key={id} active={selectedCategory === id} onClick={() => onCategoryChange(id)}>
+            <Tab
+              key={id}
+              active={selectedCategory === id}
+              onClick={() => onCategoryChange(id)}
+            >
               {label}
             </Tab>
           ))}
@@ -116,12 +127,22 @@ const SearchSymptomDisease = ({
         </div>
 
         {showToast && (
-          <Toast key={toastKey} message="진단은 하나만 선택할 수 있어요" showDeleteIcon={false} variant="blue" />
+          <Toast
+            key={toastKey}
+            message="진단은 하나만 선택할 수 있어요"
+            showDeleteIcon={false}
+            variant="blue"
+          />
         )}
 
         {/* 하단 버튼 */}
         <div className={styles.buttonWrapper}>
-          <Button label="확인하기" size="large" width="100%" onClick={onClose} />
+          <Button
+            label="확인하기"
+            size="large"
+            width="100%"
+            onClick={onClose}
+          />
         </div>
       </>
     </BottomSheet>

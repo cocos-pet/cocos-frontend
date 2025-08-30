@@ -1,7 +1,7 @@
 "use client";
 
 import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
 import * as styles from "./PetEdit.css";

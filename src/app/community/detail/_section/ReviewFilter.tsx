@@ -1,7 +1,7 @@
 import { useState } from "react";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet.tsx";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import Tab from "@common/component/Tab/Tab.tsx";
+import Tab from "src/design-system/Tab/Tab.tsx";
 import Chip from "../../../../design-system/Chip/Chip.tsx";
 import { Button } from "@common/component/Button";
 import { useGetReviewSummaryOption } from "@api/domain/community/detail/hook.ts";
@@ -14,7 +14,10 @@ const ReviewFilter = ({
   onClose,
 }: {
   isOpen: boolean;
-  onClose: (summaryOptionId: number | undefined, type?: ReviewActiveTabType) => void;
+  onClose: (
+    summaryOptionId: number | undefined,
+    type?: ReviewActiveTabType
+  ) => void;
 }) => {
   const [activeTab, setActiveTab] = useState<ReviewActiveTabType>("good");
   const [filterId, setFilterId] = useState<number | undefined>(undefined);
@@ -23,7 +26,10 @@ const ReviewFilter = ({
 
   const handleTabClick = (tab: ReviewActiveTabType) => setActiveTab(tab);
   const isActiveTab = (tab: ReviewActiveTabType) => activeTab === tab;
-  const handleChipClick = (id: number | undefined, type: ReviewActiveTabType) => {
+  const handleChipClick = (
+    id: number | undefined,
+    type: ReviewActiveTabType
+  ) => {
     setFilterId(id);
     setFilterType(type);
   };
@@ -36,10 +42,18 @@ const ReviewFilter = ({
       <div className={styles.filterContent}>
         <div className={styles.filterTitle}>리뷰 필터</div>
         <div className={styles.tabContainer}>
-          <Tab active={isActiveTab("good")} width={"100%"} onClick={() => handleTabClick("good")}>
+          <Tab
+            active={isActiveTab("good")}
+            width={"100%"}
+            onClick={() => handleTabClick("good")}
+          >
             좋았던 점
           </Tab>
-          <Tab active={isActiveTab("bad")} width={"100%"} onClick={() => handleTabClick("bad")}>
+          <Tab
+            active={isActiveTab("bad")}
+            width={"100%"}
+            onClick={() => handleTabClick("bad")}
+          >
             아쉬웠던 점
           </Tab>
         </div>

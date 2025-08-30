@@ -1,5 +1,5 @@
 "use client";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import { IcX } from "@asset/svg";
 import { useRouter } from "next/navigation";
 import * as styles from "./page.css";
@@ -8,7 +8,7 @@ import { PATH } from "@route/path";
 import { useWithdraw } from "@api/domain/setting/hook";
 export default function Withdraw() {
   const router = useRouter();
-  const {mutate: withdraw} = useWithdraw();
+  const { mutate: withdraw } = useWithdraw();
 
   const handleWithdraw = () => {
     withdraw();
@@ -30,8 +30,20 @@ export default function Withdraw() {
           </span>
         </div>
         <div className={styles.withdrawButtonWrapper}>
-          <Button width="9.6rem" variant="solidNeutral" size="large" label="이전으로" onClick={() => router.push(PATH.SETTING.ROOT)} />
-          <Button width="22.7rem" variant="solidPrimary" size="large" label="탈퇴하기" onClick={handleWithdraw} />
+          <Button
+            width="9.6rem"
+            variant="solidNeutral"
+            size="large"
+            label="이전으로"
+            onClick={() => router.push(PATH.SETTING.ROOT)}
+          />
+          <Button
+            width="22.7rem"
+            variant="solidPrimary"
+            size="large"
+            label="탈퇴하기"
+            onClick={handleWithdraw}
+          />
         </div>
       </div>
     </div>

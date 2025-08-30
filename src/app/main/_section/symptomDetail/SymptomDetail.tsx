@@ -1,7 +1,7 @@
 import { useSearchParams, useRouter } from "next/navigation";
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
 import { IcLeftarrow, IcUnderline } from "@asset/svg";
 import { PATH } from "@route/path.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
@@ -32,7 +32,9 @@ function SymptomDetailContent() {
   const [isRecentPost, setIsRecentPost] = useState(true);
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
+    []
+  );
   const { mutate: fetchPosts } = usePostPostFilters();
   const router = useRouter();
 
@@ -89,7 +91,11 @@ function SymptomDetailContent() {
   return (
     <div className={styles.categoryContainer}>
       <div className={styles.headerContainer}>
-        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => router.push(PATH.MAIN)} />
+        <HeaderNav
+          leftIcon={<IcLeftarrow />}
+          centerContent={symptomName}
+          onLeftClick={() => router.push(PATH.MAIN)}
+        />
       </div>
       <div className={styles.tabContainer}>
         <button

@@ -3,7 +3,7 @@ import { TextField } from "src/design-system/TextField";
 import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useDropDown } from "@app/community/_component/DropDown/useDropDown";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import {
   bottomButton,
   fileInput,

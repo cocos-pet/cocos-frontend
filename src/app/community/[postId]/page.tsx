@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
 import {
   IcCuriousActive,
   IcCuriousUnactive,

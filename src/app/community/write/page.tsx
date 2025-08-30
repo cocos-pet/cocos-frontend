@@ -10,7 +10,7 @@ import React, {
   useState,
 } from "react";
 import { useDropDown } from "../_component/DropDown/useDropDown";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
 
 import Spacing from "@common/component/Spacing/Spacing.tsx";
 import { Button } from "@common/component/Button";

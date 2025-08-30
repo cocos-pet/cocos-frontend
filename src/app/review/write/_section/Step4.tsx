@@ -1,4 +1,4 @@
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
 import { Button } from "@common/component/Button";
 import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet";

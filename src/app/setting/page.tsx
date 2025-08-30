@@ -1,7 +1,7 @@
 "use client";
 
 import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import * as styles from "./page.css";
 import Divider from "src/design-system/Divider/Divider";
 import { useRouter } from "next/navigation";

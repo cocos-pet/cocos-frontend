@@ -1,4 +1,4 @@
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
 import ReviewSymptom from "@app/review/write/_component/ReviewSymptom";
 import ReviewPurpose from "@app/review/write/_component/ReviewPurpose";
@@ -23,7 +23,8 @@ interface Step2Props {
 
 const Step2 = ({ onPrev, onNext }: Step2Props) => {
   const [open, setOpen] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryType>("symptom");
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -34,9 +35,13 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
   const { data: symptomData } = useBodiesGet("symptom");
 
   const allDiseaseBodyIds =
-    diseaseData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+    diseaseData?.data?.bodies
+      ?.map((body) => body.id)
+      .filter((id): id is number => id !== undefined) ?? [];
   const allSymptomBodyIds =
-    symptomData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+    symptomData?.data?.bodies
+      ?.map((body) => body.id)
+      .filter((id): id is number => id !== undefined) ?? [];
 
   const { data: symptomBodyData } = useSymptomGet(allSymptomBodyIds);
   const { data: diseaseBodyData } = useDiseaseGet(allDiseaseBodyIds);
@@ -55,7 +60,12 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
       {/* 상단 헤더 영역 */}
       <HeaderNav
         centerContent="리뷰작성(2/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={
+          <IcDeleteBlack
+            style={{ width: 24, height: 24 }}
+            onClick={handleGoHospitalDetail}
+          />
+        }
       />
 
       <section className={styles.wrapper}>
@@ -69,13 +79,27 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
         <ReviewPurpose />
 
         {/* 2-3. 질병 선택 */}
-        <ReviewDisease onCategoryChange={handleOpenBottomSheet} diseaseBodyData={diseaseBodyData} />
+        <ReviewDisease
+          onCategoryChange={handleOpenBottomSheet}
+          diseaseBodyData={diseaseBodyData}
+        />
       </section>
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
-        <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFormValid} />
+        <Button
+          label="이전으로"
+          size="large"
+          variant="solidNeutral"
+          onClick={onPrev}
+        />
+        <Button
+          label="다음으로"
+          size="large"
+          variant="solidPrimary"
+          onClick={onNext}
+          disabled={!isFormValid}
+        />
       </section>
 
       {/* 증상&질병 바텀시트 */}

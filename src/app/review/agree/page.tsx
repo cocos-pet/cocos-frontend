@@ -1,6 +1,6 @@
 "use client";
 
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";

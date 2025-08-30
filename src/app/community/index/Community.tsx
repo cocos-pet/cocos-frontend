@@ -1,7 +1,7 @@
 "use client";
 
 import { IcSearch } from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
 import Divider from "src/design-system/Divider/Divider";
 import Banner from "../_component/Banner/Banner";

@@ -3,7 +3,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import * as styles from "./Category.css";
 import Content from "@common/component/Content/Content";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
 import { Icfilter, Icfilteron, IcLeftarrow, IcSearch } from "@asset/svg";
 import FloatingBtn from "src/design-system/FloatingBtn/Floating.tsx";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";

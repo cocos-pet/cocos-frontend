@@ -1,6 +1,6 @@
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
-import Tab from "@common/component/Tab/Tab";
+import Tab from "src/design-system/Tab/Tab";
 import { Button } from "@common/component/Button";
 import * as styles from "./Step3.style.css";
 import { useState } from "react";
@@ -19,7 +19,8 @@ interface Step3Props {
 }
 
 const Step3 = ({ onPrev, onNext }: Step3Props) => {
-  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
+  const [selectedCategory, setSelectedCategory] =
+    useState<CategoryType>("good");
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -37,17 +38,28 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
       {/* 상단 리뷰 영역 */}
       <HeaderNav
         centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={
+          <IcDeleteBlack
+            style={{ width: 24, height: 24 }}
+            onClick={handleGoHospitalDetail}
+          />
+        }
       />
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
         <section className={styles.TopLayout}>
-          <Image src={feedbackImg} alt="review-feedback img" className={styles.img} />
+          <Image
+            src={feedbackImg}
+            alt="review-feedback img"
+            className={styles.img}
+          />
           <div className={styles.titleBox}>
             <h1 className={styles.title}>진료 경험은 어땠나요?</h1>
             <div>
               <p className={styles.docs}>진료 후기를 하나 이상 골라주세요.</p>
-              <p className={styles.docs}>좋아요/아쉬워요 각각 3개까지 선택할 수 있어요.</p>
+              <p className={styles.docs}>
+                좋아요/아쉬워요 각각 3개까지 선택할 수 있어요.
+              </p>
             </div>
           </div>
         </section>
@@ -73,8 +85,19 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
 
         {/* 하단 버튼 영역 */}
         <section className={styles.btnLayout}>
-          <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
-          <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFromValid} />
+          <Button
+            label="이전으로"
+            size="large"
+            variant="solidNeutral"
+            onClick={onPrev}
+          />
+          <Button
+            label="다음으로"
+            size="large"
+            variant="solidPrimary"
+            onClick={onNext}
+            disabled={!isFromValid}
+          />
         </section>
       </div>
     </>
