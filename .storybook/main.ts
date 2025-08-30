@@ -1,17 +1,14 @@
-import type {StorybookConfig} from "@storybook/nextjs-vite";
-import {vanillaExtractPlugin} from "@vanilla-extract/vite-plugin";
+import type { StorybookConfig } from "@storybook/nextjs-vite";
+import { vanillaExtractPlugin } from "@vanilla-extract/vite-plugin";
 import * as path from "node:path";
-import {fileURLToPath} from "node:url";
+import { fileURLToPath } from "node:url";
 
 // ESM에서 __dirname 대체
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 const config: StorybookConfig = {
-  stories: [
-    "../src/design-system/**/*.mdx",
-    "../src/design-system/**/*.stories.@(js|jsx|mjs|ts|tsx)",
-  ],
+  stories: ["../src/design-system/**/*.mdx", "../src/design-system/**/*.stories.@(js|jsx|mjs|ts|tsx)"],
   addons: [
     "@chromatic-com/storybook",
     "@storybook/addon-docs",
