@@ -39,6 +39,7 @@ import {
 } from "@api/shared/hook.ts";
 import { useMypageMemberInfo } from "../_store/mypageStore.ts";
 
+//todo: useEffect 중복 코드 제거
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
 //todo2: 종류가 달라질 경우 세부 종류 선택 off 만들기
 const DEFAULT_TYPE = [
@@ -513,7 +514,7 @@ const EditFavoriteHospital = ({
           rightIcon={<IcPlus width={20} height={20} />}
           label={"즐겨찾는 동물병원 추가하기"}
           size="small"
-          width="21.2rem"
+          width="20.3rem"
           onClick={openCategoryBottomSheet}
         />
       )}

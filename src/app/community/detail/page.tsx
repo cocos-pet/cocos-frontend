@@ -62,7 +62,9 @@ const CommunityDetailContent = () => {
   );
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
-
+  if (!typeId) {
+    return null;
+  }
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
 
@@ -137,25 +139,13 @@ const PostDetail = () => {
   return (
     <div className={styles.categoryContainer}>
       <div className={styles.headerContainer}>
-        <HeaderNav
-          leftIcon={<IcLeftarrow />}
-          centerContent={symptomName}
-          onLeftClick={() => router.push(PATH.MAIN)}
-        />
+        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => router.push(PATH.MAIN)} />
       </div>
       <div className={styles.tabContainer}>
-        <Tab
-          active={isActiveTab("community")}
-          width={"100%"}
-          onClick={() => handleTabClick("community")}
-        >
+        <Tab active={isActiveTab("community")} width={"100%"} onClick={() => handleTabClick("community")}>
           커뮤니티
         </Tab>
-        <Tab
-          active={isActiveTab("review")}
-          width={"100%"}
-          onClick={() => handleTabClick("review")}
-        >
+        <Tab active={isActiveTab("review")} width={"100%"} onClick={() => handleTabClick("review")}>
           병원리뷰
         </Tab>
       </div>

@@ -14,15 +14,15 @@ jobs:
       - name: Checkout develop
         uses: actions/checkout@v4
         with:
-          token: ${{ secrets.FORKED_REPO_TOKEN }}
+          token: ${{ secrets.FORKED_DEV_SERVER_TOKEN }}
           fetch-depth: 0
           ref: develop
 
       - name: Add remote-url
         run: |
-          git remote add forked-repo https://ocahs9:${{ secrets.FORKED_REPO_TOKEN }}@github.com/ocahs9/cocos-frontend
-          git config user.name ocahs9
-          git config user.email ${{ secrets.EMAIL }}
+          git remote add forked-repo https://yarimu:${{ secrets.FORKED_DEV_SERVER_TOKEN }}@github.com/yarimu/cocos-frontend
+          git config user.name yarimu
+          git config user.email ${{ secrets.YARIMU_EMAIL }}
 
       - name: Push changes to forked-repo
         run: |

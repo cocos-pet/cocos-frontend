@@ -1,19 +1,20 @@
-import {useRouter, useSearchParams} from "next/navigation";
-import {useEffect, useState} from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useState, useCallback } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import {IcRightArrow} from "@asset/svg";
-import {LoadingFallback, ReviewFilter} from "@app/community/detail/_section/index.tsx";
-import {usePostHospitalReviews} from "@api/domain/community/detail/hook.ts";
+import { IcRightArrow } from "@asset/svg";
+import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
+import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
-import {postHospitalReviewsResponseData} from "@api/domain/community/detail";
-import {useAuth} from "@providers/AuthProvider.tsx";
-import {Button} from "@common/component/Button";
-import {Modal} from "@common/component/Modal/Modal.tsx";
-import {PATH} from "@route/path.ts";
-import HospitalReviewFilter, {LocationFilterType} from "@app/community/detail/_section/HospitalReviewFilter.tsx";
-import {If} from "@shared/component/If/if.tsx";
-import {ReviewActiveTabType} from "@app/community/detail/_section/ReviewFilter.tsx";
+import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
+import { useAuth } from "@providers/AuthProvider.tsx";
+import { Button } from "src/design-system/Button";
+import { Modal } from "src/design-system/Modal/Modal.tsx";
+import { PATH } from "@route/path.ts";
+import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/_section/HospitalReviewFilter.tsx";
+import { If } from "@shared/component/If/if.tsx";
+import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
+import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 
 interface ReviewFilterState {
   location: LocationFilterType | null;
@@ -21,26 +22,31 @@ interface ReviewFilterState {
   filterType: ReviewActiveTabType;
 }
 
-const DEFAULT_LOCATION_ID = 143;
+const DEFAULT_LOCATION_ID = 1;
 const PAGE_SIZE = 20;
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const bodyId = searchParams?.get("id");
+  const filterId = searchParams?.get("filterId");
+  const filterType = searchParams?.get("filterType") as ReviewActiveTabType;
   const router = useRouter();
   const { isAuthenticated } = useAuth();
 
-  // State management
-  const [isReviewFilterOpen, setIsReviewFilterOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [filterState, setFilterState] = useState<ReviewFilterState>({
-    location: null,
-    summaryOptionId: undefined,
-    filterType: undefined,
+  if (!bodyId) {
+    return null;
+  }
+
+  // State
+  const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
+  const [location, setLocation] = useState<LocationFilterType>({
+    id: 1,
+    name: "경기 전체",
+    type: "CITY",
   });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
-  // API hooks
+  // API
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
 
   const handleProfileClick = (nickname: string | undefined) => {
@@ -49,7 +55,7 @@ const ReviewDetailContent = () => {
 
   const handleHospitalClick = (hospitalId: number | undefined) => {
     if (hospitalId) {
-      router.push(`/hospital/${hospitalId}`);
+      router.push(`/hospital-detail/${hospitalId}`);
     }
   };
 
@@ -57,58 +63,53 @@ const ReviewDetailContent = () => {
     router.push(PATH.LOGIN);
   };
 
-  const postReviews = (location?: number, summaryOptionId?: number) => {
-    if (!bodyId) return;
+  const postReviews = useCallback(
+    (location?: LocationFilterType | undefined, summaryOptionId?: number | undefined) => {
+      if (!bodyId) return;
 
-    postHospitalReviews(
-      {
-        size: PAGE_SIZE,
-        locationId: location ?? DEFAULT_LOCATION_ID,
-        locationType: "DISTRICT",
-        bodyId: Number(bodyId),
-        summaryOptionId,
-      },
-      {
-        onSuccess: (data) => {
-          setReviewList(data);
+      postHospitalReviews(
+        {
+          size: PAGE_SIZE,
+          locationId: location?.id ?? DEFAULT_LOCATION_ID,
+          locationType: location?.type ?? "CITY",
+          bodyId: Number(bodyId),
+          summaryOptionId,
         },
-      },
-    );
-  };
+        {
+          onSuccess: (data) => {
+            setReviewList(data);
+          },
+        },
+      );
+    },
+    [bodyId, postHospitalReviews],
+  );
 
   const handleReviewFilterClose = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
-    setIsReviewFilterOpen(false);
-    setFilterState((prev) => ({
-      ...prev,
-      summaryOptionId,
-      filterType,
-    }));
-    postReviews(filterState.location?.id, summaryOptionId);
+    postReviews(location, summaryOptionId);
   };
 
-  const handleLocationSelect = (location: LocationFilterType) => {
-    setFilterState((prev) => ({
-      ...prev,
-      location,
-    }));
-    postReviews(location.id);
+  const handleLocationSelect = (newLocation: LocationFilterType) => {
+    setLocation(newLocation);
+    postReviews(newLocation, filterId ? Number(filterId) : undefined);
   };
 
   const handleRefresh = () => {
-    setFilterState((prev) => ({
-      ...prev,
-      summaryOptionId: undefined,
-      filterType: undefined,
-    }));
-    setIsReviewFilterOpen(false);
-    postReviews(filterState.location?.id);
+    if (searchParams) {
+      const newSearchParams = new URLSearchParams(searchParams.toString());
+      newSearchParams.delete("filterId");
+      newSearchParams.delete("filterType");
+      router.replace(`?${newSearchParams.toString()}`);
+    }
+
+    postReviews(location);
   };
 
-  useEffect(() => {
-    if (bodyId) {
-      postReviews();
+  const handleHospitalReviewClick = () => {
+    if (!isAuthenticated) {
+      handleOpenModal();
     }
-  }, [bodyId]);
+  };
 
   if (isPending) {
     return <LoadingFallback />;
@@ -116,15 +117,13 @@ const ReviewDetailContent = () => {
 
   return (
     <div className={styles.reviewContainer}>
-      {isAuthenticated && (
-        <HospitalReviewFilter
-          selectedLocation={filterState.location}
-          onRegionFilterClick={handleLocationSelect}
-          onReviewFilterClick={() => setIsReviewFilterOpen(!isReviewFilterOpen)}
-          filterType={filterState.filterType}
-          onRefresh={handleRefresh}
-        />
-      )}
+      <HospitalReviewFilter
+        selectedLocation={location}
+        onRegionFilterClick={handleLocationSelect}
+        filterType={filterType}
+        onRefresh={handleRefresh}
+        onReviewFilterClose={handleReviewFilterClose}
+      />
 
       <div className={styles.reviewItemContainer}>
         <If condition={reviewList.length === 0}>
@@ -137,6 +136,7 @@ const ReviewDetailContent = () => {
             reviewData={review}
             handleHospitalDetailClick={() => handleHospitalClick(review.hospitalId)}
             isBlurred={!isAuthenticated}
+            handleHospitalReviewClick={handleHospitalReviewClick}
           />
         ))}
       </div>
@@ -147,14 +147,12 @@ const ReviewDetailContent = () => {
             size="large"
             label="로그인 하고 리뷰 확인하기"
             rightIcon={<IcRightArrow />}
-            onClick={() => setIsModalOpen(true)}
+            onClick={handleOpenModal}
           />
         </div>
       </If>
 
-      <ReviewFilter isOpen={isReviewFilterOpen} onClose={handleReviewFilterClose} />
-
-      <Modal.Root open={isModalOpen} onOpenChange={setIsModalOpen}>
+      <Modal.Root open={isModalOpen} onOpenChange={handleOpenChange}>
         <Modal.Content
           title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
           bottomAffix={

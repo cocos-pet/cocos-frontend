@@ -22,6 +22,7 @@ export interface ReviewItemType {
   hospitalName: string;
   hospitalAddress: string;
   content: string;
+  visitPurpose: string;
   goodReviews: ReadonlyArray<{ id: number; name: string }>;
   badReviews: ReadonlyArray<{ id: number; name: string }>;
   images: ReadonlyArray<string>;

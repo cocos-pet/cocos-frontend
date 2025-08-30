@@ -1,19 +1,10 @@
 "use client";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "src/design-system/TextField/index.tsx";
-import React, {
-  ChangeEvent,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { PATH } from "@route/path.ts";
-import {
-  useSearchGet,
-  useSearchPost,
-} from "@api/domain/community/search/hook.ts";
+import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 import dynamic from "next/dynamic";
 import { styles } from "./Search.css.ts";
@@ -25,9 +16,7 @@ const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
 
 function Search() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const query = searchParams?.get("searchText");
-  const [searchText, setSearchText] = useState(query || "");
+  const [searchText, setSearchText] = useState("");
   const { isAuthenticated } = useAuth();
   const { mutate } = useSearchPost();
   const { clearAllChips } = useFilterStore();
@@ -50,7 +39,7 @@ function Search() {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      }
+      },
     );
   };
 

@@ -5,11 +5,20 @@ import { useReviewFunnel } from "@app/review/write/_hook/useReviewFunnel";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 
-import Step1 from "@app/review/write/_section/Step1";
+import Step1, { PetInfoType } from "@app/review/write/_section/Step1";
 import Step2 from "@app/review/write/_section/Step2";
 import Step3 from "@app/review/write/_section/Step3";
 import Step4 from "@app/review/write/_section/Step4";
+import { Hospital } from "@shared/component/SearchHospital/SearchHospital";
 
+// UI 상태 분리
+export interface ReviewExtraData {
+  selectedHospital: Hospital | null;
+  selectedPetInfoType: PetInfoType | null;
+  petType: string;
+}
+
+// 제출 대상 필드
 export interface ReviewFormData {
   visitedAt: string;
   symptomIds?: number[];
@@ -23,6 +32,8 @@ export interface ReviewFormData {
   gender: "F" | "M" | null;
   weight: number;
 }
+
+export type ReviewFormWithUIData = ReviewFormData & ReviewExtraData;
 
 export const defaultValues: ReviewFormData = {
   visitedAt: "",
@@ -44,8 +55,13 @@ export default function Page() {
 
   const router = useRouter();
 
-  const methods = useForm<ReviewFormData>({
-    defaultValues,
+  const methods = useForm<ReviewFormWithUIData>({
+    defaultValues: {
+      ...defaultValues,
+      selectedHospital: null,
+      selectedPetInfoType: null,
+      petType: "",
+    },
     mode: "onChange",
   });
 

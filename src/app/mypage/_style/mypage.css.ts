@@ -3,6 +3,18 @@ import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import * as a from "@shared/style/atomic.css";
 
+export const mypageContainer = style([
+  a.fullWidth,
+  {
+    position: "relative",
+    height: "100vh",
+    overflow: "scroll",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+]);
+
 /* ------------------- 프로필 섹션 스타일 ------------------- */
 export const myProfileWrapper = style([
   a.fullWidth,

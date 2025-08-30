@@ -65,12 +65,11 @@ interface writeProps {
     symptomIds: number[];
   };
 }
-
+//todo: useEffect 중복 코드 제거
 // 메인 컨텐츠 컴포넌트
 const WriteContent = () => {
-  //빌테용
   const searchParams = useSearchParams();
-  const category = searchParams.get("category");
+  const category = searchParams?.get("category");
   const router = useRouter();
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -223,7 +222,7 @@ const WriteContent = () => {
   const handleDeleteImage = (index: number) => {
     setParams((prevParams) => ({
       ...prevParams,
-      image: prevParams.images.filter((_, i) => i !== index), // 선택한 이미지 제거
+      images: prevParams.images.filter((_, i) => i !== index),
     }));
   };
 
@@ -340,13 +339,14 @@ const WriteContent = () => {
               placeholder={"제목을 입력해주세요"}
               state={"write"}
               value={params.title}
-              onClearClick={() => onChangeValue("title", "")}
+              isDelete={false}
               onChange={(e) => onChangeValue("title", e.target.value)}
             />
             <Spacing marginBottom={"1.2"} />
             <TextArea
               value={params.content}
-              placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.\n(예시: ~한 증상은 어디로 가야 하나요?)`}
+              placeholder={`커뮤니티에 올릴 게시글 내용을 작성해 주세요.
+(예시: ~한 증상은 어디로 가야 하나요?)`}
               onChange={(e) => onChangeValue("content", e.target.value)}
             />
             <Spacing marginBottom={"1.2"} />
@@ -392,7 +392,7 @@ const WriteContent = () => {
               </React.Fragment>
             ))}
           </WriteInputSection>
-          <Spacing marginBottom={"13.5"} />
+          {/*<Spacing marginBottom={"13.5"} />*/}
         </div>
         {/* 바닥 버튼 영역 */}
         <div className={bottomButton}>

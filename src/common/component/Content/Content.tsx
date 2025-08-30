@@ -74,13 +74,7 @@ const Content = ({
       </div>
       {postImage && (
         <div className={styles.postImage}>
-          <Image 
-            className={styles.postImage}
-            src={postImage} 
-            alt="Post image" 
-            width={0}
-            height={0}
-          />
+          <Image className={styles.postImage} src={postImage} alt="Post image" width={76} height={76} />
         </div>
       )}
     </div>

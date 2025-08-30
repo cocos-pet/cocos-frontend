@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import KakaoMap from "../KakaoMap/KakaoMap";
+import MapComponent from "../MapComponent/MapComponent";
 import * as styles from "./InfoContent.css";
 import { IcCopy } from "@asset/svg";
 import { useGetHospitalDetail } from "@api/domain/review/hospital-detail/hook";
@@ -13,7 +13,11 @@ export interface InfoContentProps {
 export default function InfoContent({ hospitalId }: InfoContentProps) {
   const [showToast, setShowToast] = useState(false);
 
-  const { data: hospitalData, isLoading, error } = useGetHospitalDetail(hospitalId);
+  const {
+    data: hospitalData,
+    isLoading,
+    error,
+  } = useGetHospitalDetail(hospitalId);
 
   const handleCopy = () => {
     if (!hospitalData?.address) return;
@@ -30,20 +34,24 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
 
   return (
     <div className={styles.container}>
-      <div className={styles.tags}>
-        {hospitalData.tags && hospitalData.tags.length > 0 ? (
-          hospitalData.tags.map((tag) => (
-            <span key={tag} className={styles.tag}>
-              #{tag}
-            </span>
-          ))
-        ) : (
-          <span className={styles.noTag}>태그 없음</span>
-        )}
-      </div>
+      {hospitalData.keywords && (
+        <div className={styles.tags}>
+          {hospitalData.keywords
+            .replace(/,/g, "")
+            .split("#")
+            .filter(Boolean)
+            .map((tag: string) => (
+              <span key={tag} className={styles.keywords}>
+                #{tag.trim()}
+              </span>
+            ))}
+        </div>
+      )}
 
       <div className={styles.introduction}>
-        <div className={styles.introductionText}>{hospitalData.introduction || "병원 소개가 없습니다."}</div>
+        <div className={styles.introductionText}>
+          {hospitalData.introduction || "병원 소개가 없습니다."}
+        </div>
       </div>
 
       <div className={styles.addressRow}>
@@ -53,7 +61,11 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
       {showToast && <div className={styles.toast}>주소가 복사되었습니다.</div>}
 
       <div className={styles.mapWrapper}>
-        <KakaoMap address={hospitalData.address || ""} latitude={35.1657} longitude={126.8531} />
+        <MapComponent
+          address={hospitalData.address || ""}
+          latitude={hospitalData.latitude}
+          longitude={hospitalData.longitude}
+        />
       </div>
     </div>
   );

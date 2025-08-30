@@ -10,6 +10,7 @@ import { useParams } from "next/navigation";
 export interface ReviewSummaryItem {
   id: number;
   label: string;
+  count: number;
 }
 
 const Summary = () => {
@@ -31,19 +32,21 @@ const Summary = () => {
         맞춤 리뷰를 통해 나에게 맞는 병원의 후기를 확인해요.
       </p>
       <div className={styles.summaryGrid}>
-        <div>
+        <div className={styles.summarySection}>
           <h3 className={styles.summarySectionTitle}>좋았던 점</h3>
           {displayedGoodReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
-              <span>{item.label}</span>
+              <span className={styles.label}>{item.label}</span>
+              <span className={styles.goodCount}>{item.count}</span>
             </div>
           ))}
         </div>
-        <div>
+        <div className={styles.summarySection}>
           <h3 className={styles.summarySectionTitle}>아쉬운 점</h3>
           {displayedBadReviews.map((item) => (
             <div className={styles.summaryItem} key={item.id}>
-              <span>{item.label}</span>
+              <span className={styles.label}>{item.label}</span>
+              <span className={styles.badCount}>{item.count}</span>
             </div>
           ))}
         </div>

@@ -1,11 +1,6 @@
-import {
-  IcLeftarrow,
-  IcSearch,
-  IcSearchFillter,
-  IcSearchFillterBlue,
-} from "@asset/svg";
+import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@asset/svg";
 import { TextField } from "src/design-system/TextField";
-import { ChangeEvent, Suspense, useEffect, useState } from "react";
+import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { styles } from "@app/community/search/done/SearchDone.css.ts";
 import { PATH } from "@route/path.ts";
@@ -13,12 +8,7 @@ import Content from "@common/component/Content/Content.tsx";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import {
-  useGetAnimal,
-  useGetBodies,
-  useGetDisease,
-  useGetSymptoms,
-} from "@api/domain/mypage/edit-pet/hook.ts";
+import { useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
 import { formatTime } from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import Image from "next/image";
@@ -42,20 +32,17 @@ interface SearchDonePropTypes {
   category?: string;
 }
 
-function SearchDoneContent() {
+function SearchDone() {
   const searchParams = useSearchParams();
-  const query = searchParams.get("searchText");
-  const [isFilterActive, setIsFilterActive] = useState(false);
-  const [searchDoneData, setSearchDoneData] = useState<
-    Array<SearchDonePropTypes>
-  >([]);
+  const query = searchParams?.get("searchText");
+
+  const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
   const [searchText, setSearchText] = useState(query || "");
   const router = useRouter();
   const { mutate, isPending } = usePostPostFilters();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
-  const { setCategoryData, selectedChips, clearAllChips, setOpen } =
-    useFilterStore();
+  const { setCategoryData, selectedChips, clearAllChips, setOpen } = useFilterStore();
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
@@ -74,14 +61,16 @@ function SearchDoneContent() {
     }
   }, [symptoms, disease, animal]);
 
+  const isFilterActive = useMemo(() => {
+    return (
+      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0
+    );
+  }, [selectedChips]);
+
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -89,54 +78,16 @@ function SearchDoneContent() {
     }
   }, [diseaseBodies, symptomBodies]);
 
-  useEffect(() => {
-    if (!searchText) return;
-
-    mutate(
-      {
-        keyword: searchText,
-        animalIds: selectedChips.breedId,
-        symptomIds: selectedChips.symptomIds,
-        diseaseIds: selectedChips.diseaseIds,
-        cursorId: null,
-        categoryId: null,
-        likeCount: null,
-        createdAt: null,
-        sortBy: "RECENT",
-      },
-      {
-        onSuccess: (data) => {
-          setSearchDoneData(data || []);
-          console.log("Search Success:", data);
-        },
-        onError: (error) => {
-          console.error("Search Error:", error);
-        },
-      }
-    );
-  }, [searchText, selectedChips, mutate]);
-
-  // 필터 활성화 여부 계산
-  useEffect(() => {
-    setIsFilterActive(
-      selectedChips.breedId.length > 0 ||
-        selectedChips.symptomIds.length > 0 ||
-        selectedChips.diseaseIds.length > 0
-    );
-  }, [selectedChips]);
-
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     setSearchText(e.target.value);
   };
 
   const onTextFieldClick = () => {
     clearAllChips();
-    router.push(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
+    router.push(PATH.COMMUNITY.SEARCH);
   };
 
-  const onTextFieldClear = (
-    e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>
-  ) => {
+  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
     clearAllChips();
@@ -150,6 +101,34 @@ function SearchDoneContent() {
 
   const onClickPost = (postId: number | undefined) => {
     router.push(`${PATH.COMMUNITY.ROOT}/${postId}`);
+  };
+
+  const handleFilterSubmit = () => {
+    setOpen(false);
+    if (searchText) {
+      mutate(
+        {
+          keyword: searchText,
+          animalIds: selectedChips.breedId,
+          symptomIds: selectedChips.symptomIds,
+          diseaseIds: selectedChips.diseaseIds,
+          cursorId: null,
+          categoryId: null,
+          likeCount: null,
+          createdAt: null,
+          sortBy: "RECENT",
+        },
+        {
+          onSuccess: (data) => {
+            setSearchDoneData(data || []);
+            console.log("Filter Search Success:", data);
+          },
+          onError: (error) => {
+            console.error("Filter Search Error:", error);
+          },
+        },
+      );
+    }
   };
 
   if (isPending) {
@@ -194,9 +173,7 @@ function SearchDoneContent() {
               width={276}
               height={155}
             />
-            <span className={styles.noSearchText}>
-              검색 결과를 찾지 못했어요.
-            </span>
+            <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
             <span className={styles.noSearchRecommendText}>
               {"검색어를 확인하거나"}
               <br />
@@ -222,17 +199,9 @@ function SearchDoneContent() {
         )}
       </div>
 
-      <FilterBottomSheet />
+      <FilterBottomSheet onSubmitClick={handleFilterSubmit} />
     </div>
   );
 }
-
-const SearchDone = () => {
-  return (
-    <Suspense fallback={<div>로딩 중...</div>}>
-      <SearchDoneContent />
-    </Suspense>
-  );
-};
 
 export default SearchDone;

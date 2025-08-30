@@ -16,21 +16,37 @@ import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import type { Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "src/design-system/Modal/Modal.tsx";
+import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
+
+interface Location {
+  id: number;
+  name: string;
+  type: "CITY" | "DISTRICT";
+}
 
 export default function ReviewPage() {
   const router = useRouter();
   const { data: userData } = useGetMemberInfo();
   const nickname = userData?.nickname;
   const [searchText, setSearchText] = useState("");
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+  const [isLocationSheetOpen, setIsLocationSheetOpen] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
 
-  const { data: hospitalData } = useInfiniteHospitalList({
+  // 추천 병원 리스트 (위치 필터링 없음)
+  const { data: recommendedHospitalData } = useInfiniteHospitalList({
     locationType: "CITY",
     size: 10,
     sortBy: "REVIEW",
     image: "",
   });
 
-  const hospitals = hospitalData?.pages?.[0]?.hospitals?.slice(0, 3) || [];
+  const recommendedHospitals = recommendedHospitalData?.pages?.[0]?.hospitals?.slice(0, 3) || [];
 
   const handleTextFieldChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
@@ -40,9 +56,32 @@ export default function ReviewPage() {
     router.push(PATH.REVIEW.SEARCH);
   };
 
+  const isReviewAgree = useGetReviewAgreementStatus();
+  const isAgreed = isReviewAgree?.data?.isReviewTermsAgree;
+
+  const handleFloatingBtnClick = () => {
+    // 로그인x -> 로그인 모달
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    // 펫 등록x -> 펫 등록 페이지
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    // 리뷰작성 동의 여부에 따라, 동의x -> 리뷰동의 페이지, 동의o -> 바로 리뷰 작성
+    const nextPath = isAgreed ? PATH.REVIEW.WRITE : PATH.REVIEW.AGREE;
+    router.push(nextPath);
+  };
+
+  const handleLocationChange = (location: Location) => {
+    setSelectedLocation(location);
+  };
+
   return (
     <div>
-      <LocationHeader />
+      <LocationHeader onLocationChange={handleLocationChange} onBottomSheetOpenChange={setIsLocationSheetOpen} />
 
       <div className={styles.reviewContainer}>
         <div className={styles.reviewList}>
@@ -50,7 +89,7 @@ export default function ReviewPage() {
             <div className={styles.searchBarContainer}>
               <TextField
                 state="default"
-                placeholder="심장병, 백내장"
+                placeholder="병원명을 검색해보세요"
                 onClick={handleSearchClick}
                 onChange={handleTextFieldChange}
                 value={searchText}
@@ -60,52 +99,57 @@ export default function ReviewPage() {
             <div className={styles.recommendHospital}>
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
-                <span className={styles.recommendTitleHighlight}>
-                  추천 병원
-                </span>
+                <span className={styles.recommendTitleHighlight}>추천 병원</span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
-                {hospitals.map((hospital: Hospital, idx: number) => (
+                {recommendedHospitals.map((hospital: Hospital, idx: number) => (
                   <div
                     key={hospital.id}
                     className={styles.hospitalCard}
-                    onClick={() =>
-                      router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)
-                    }
+                    onClick={() => router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)}
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
-                      <span className={styles.hospitalName}>
-                        {hospital.name}
-                      </span>
+                      <span className={styles.hospitalName}>{hospital.name}</span>
                     </div>
-                    <span className={styles.hospitalAddress}>
-                      {hospital.address}
-                    </span>
+                    <span className={styles.hospitalAddress}>{hospital.address}</span>
                   </div>
                 ))}
               </div>
-              <Image
-                src={banner}
-                alt="banner"
-                className={styles.bannerContainer}
-              />
+              <Image src={banner} alt="banner" className={styles.bannerContainer} />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
             <HospitalList
               title={"많은 반려인들이"}
               highlightText={"다녀간 병원"}
+              selectedLocation={selectedLocation || undefined}
             />
           </div>
         </div>
-        <div className={styles.floatBtnWrapper}>
-          <FloatingBtn />
-        </div>
+        {!isLocationSheetOpen && (
+          <div className={styles.floatBtnWrapper}>
+            <FloatingBtn onClick={handleFloatingBtnClick} />
+          </div>
+        )}
         <div className={styles.navWrapper}>
           <Nav content={NAV_CONTENT} type={"nav"} />
         </div>
       </div>
+
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </div>
   );
 }

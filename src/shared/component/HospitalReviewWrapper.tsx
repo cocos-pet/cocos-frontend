@@ -8,20 +8,18 @@ import {
 } from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
-import { useRouter, useSearchParams } from "next/navigation";
-import { API_PATH } from "@api/constants/apiPath";
+import { useRouter } from "next/navigation";
 import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
+import { useAuth } from "@providers/AuthProvider";
 
 interface HospitalReviewWrapperProps {
   isMypage?: boolean;
   nickname?: string;
 }
 
-const HospitalReviewWrapper = ({
-  isMypage = false,
-  nickname: _nickname,
-}: HospitalReviewWrapperProps) => {
+const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: HospitalReviewWrapperProps) => {
   const router = useRouter();
+  const { isAuthenticated } = useAuth();
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
   const [isDeleteButtonOpen, setIsDeleteButtonOpen] = useState(false);
@@ -29,16 +27,15 @@ const HospitalReviewWrapper = ({
   const member = useMypageMemberInfo((s) => s.member);
   const nickname = isMypage ? member?.nickname : _nickname;
 
-  const isBlurred = !isLoggedIn();
+  const isBlurred = !isAuthenticated;
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
-    useInfiniteHospitalReview({
-      nickname: nickname ?? "",
-      cursorId: undefined,
-      size: 5,
-    });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteHospitalReview({
+    nickname: nickname ?? "",
+    cursorId: undefined,
+    size: 5,
+  });
 
   const { mutate: deleteReview } = useDeleteHospitalReview();
 
@@ -49,7 +46,7 @@ const HospitalReviewWrapper = ({
         fetchNextPage();
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage]
+    [fetchNextPage, hasNextPage, isFetchingNextPage],
   );
 
   useEffect(() => {
@@ -103,19 +100,11 @@ const HospitalReviewWrapper = ({
     router.push(`/hospital-detail/${hospitalId}`);
   };
 
-  if (isLoading)
-    return (
-      <div className={styles.nothingContent}>{"리뷰를 불러오는 중..."}</div>
-    );
+  if (isLoading) return <div className={styles.nothingContent}>{"리뷰를 불러오는 중..."}</div>;
 
   const reviews = data?.pages.flatMap((page) => page?.reviews || []) || [];
 
-  if (reviews.length === 0)
-    return (
-      <div className={styles.nothingContent}>
-        {"아직 작성한 후기가 없어요."}
-      </div>
-    );
+  if (reviews.length === 0) return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
 
   return (
     <>
@@ -135,19 +124,14 @@ const HospitalReviewWrapper = ({
             )}
             {selectedReviewId === review.id && isDeleteButtonOpen && (
               <div className={styles.dropdownContainer}>
-                <div
-                  className={styles.dropdownItem}
-                  onClick={openDeleteReviewModal}
-                >
+                <div className={styles.dropdownItem} onClick={openDeleteReviewModal}>
                   삭제하기
                 </div>
               </div>
             )}
           </div>
           <HospitalReview
-            handleHospitalDetailClick={() =>
-              handleHospitalDetailClick(review.id as number)
-            }
+            handleHospitalDetailClick={() => handleHospitalDetailClick(review.hospitalId as number)}
             reviewData={review}
             isBlurred={isBlurred}
             isNoProfile={true}

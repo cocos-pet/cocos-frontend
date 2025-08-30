@@ -9,11 +9,12 @@ import Divider from "src/design-system/Divider/Divider";
 import { Button } from "@common/component/Button";
 import * as style from "./style.css";
 import { IcCheckbox } from "@asset/svg";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
 import { useAgreeReviewMutation } from "@app/api/review/agree/hook";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
+import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
 
 const page = () => {
   const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;
@@ -23,6 +24,17 @@ const page = () => {
 
   const mutation = useAgreeReviewMutation();
   const router = useRouter();
+
+  const isReviewAgree = useGetReviewAgreementStatus();
+
+  // url 입력해서 들어오는 경우 방지
+  useEffect(() => {
+    const isAgreed = isReviewAgree?.data?.isReviewTermsAgree;
+
+    if (isAgreed) {
+      router.push(PATH.REVIEW.WRITE);
+    }
+  }, [isReviewAgree]);
 
   const handleClickBtn = () => {
     mutation.mutate(undefined, {

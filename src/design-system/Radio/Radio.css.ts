@@ -2,6 +2,7 @@ import { style } from "@vanilla-extract/css";
 import { color } from "@style/styles.css";
 
 export const radio = style({
+  flexShrink: "0",
   appearance: "none",
   position: "relative",
   margin: "0rem",

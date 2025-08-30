@@ -7,20 +7,41 @@ import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
 
+interface Location {
+  id: number;
+  name: string;
+  type?: "CITY" | "DISTRICT";
+  districts?: {
+    id: number;
+    name: string;
+  }[];
+}
+
 interface HospitalListProps {
   title: string;
   highlightText: string;
+  selectedLocation?: Location;
 }
 
-export default function HospitalList({ title, highlightText }: HospitalListProps) {
+export default function HospitalList({
+  title,
+  highlightText,
+  selectedLocation,
+}: HospitalListProps) {
   const { ref, inView } = useInView();
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalList({
-    locationType: "CITY",
-    size: 10,
-    sortBy: "REVIEW",
-    image: "",
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } =
+    useInfiniteHospitalList({
+      locationType: selectedLocation?.type || "CITY",
+      locationId: selectedLocation?.id,
+      size: 10,
+      sortBy: "REVIEW",
+      image: "",
+    });
+
+  useEffect(() => {
+    refetch();
+  }, [selectedLocation, refetch]);
 
   useEffect(() => {
     if (inView && hasNextPage && !isFetchingNextPage) {
@@ -36,12 +57,20 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
       <div className={styles.listContainer}>
         {data?.pages?.map((page: HospitalListResponse, pageIndex: number) =>
           page.hospitals?.map((hospital: Hospital) => (
-            <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
-              <Link href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`} className={styles.link}>
+            <div
+              key={`${pageIndex}-${hospital.id}`}
+              className={styles.hospitalItem}
+            >
+              <Link
+                href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`}
+                className={styles.link}
+              >
                 <div className={styles.hospitalInfo}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
                   <p className={styles.hospitalAddress}>{hospital.address}</p>
-                  <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
+                  <p className={styles.reviewCount}>
+                    리뷰 {hospital.reviewCount}
+                  </p>
                 </div>
                 {hospital.image && (
                   <Image
@@ -54,7 +83,7 @@ export default function HospitalList({ title, highlightText }: HospitalListProps
                 )}
               </Link>
             </div>
-          )),
+          ))
         )}
         <div ref={ref}>{isFetchingNextPage && "로딩 중"}</div>
       </div>

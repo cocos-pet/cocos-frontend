@@ -14,19 +14,17 @@ import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { components } from "@type/schema";
 import { postPostFiltersRequest } from "@api/domain/community/search";
-import {
-  useGetBodies,
-  useGetDisease,
-  useGetSymptoms,
-} from "@api/domain/mypage/edit-pet/hook";
+import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook";
 import dynamic from "next/dynamic";
 import NoData from "@shared/component/NoData/NoData.tsx";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "src/design-system/Modal/Modal";
 
 const Loading = dynamic(
   () => import("../../../design-system/Loading/Loading.tsx"),
   { ssr: false }
 );
-
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
   symptom: "증상·질병",
@@ -40,26 +38,18 @@ const LoadingFallback = () => <Loading height={80} />;
 
 // 메인 컨텐츠 컴포넌트
 const CategoryContent = () => {
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
+
   const searchParams = useSearchParams();
   const type = searchParams?.get("type");
   const typeId = searchParams?.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
-    []
-  );
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
 
   // 필터 관련 상태와 hooks
-  const {
-    isOpen,
-    setOpen,
-    category,
-    setCategory,
-    setCategoryData,
-    selectedChips,
-    toggleChips,
-    categoryData,
-  } = useFilterStore();
+  const { isOpen, setOpen, category, setCategory, setCategoryData, selectedChips, toggleChips, categoryData } =
+    useFilterStore();
   const { clearAllChips } = useFilterStore();
 
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
@@ -91,12 +81,8 @@ const CategoryContent = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -105,9 +91,7 @@ const CategoryContent = () => {
   }, [diseaseBodies, symptomBodies]);
 
   const isFilterOn =
-    !!selectedChips.breedId.length ||
-    !!selectedChips.diseaseIds.length ||
-    !!selectedChips.symptomIds.length;
+    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
 
   const fetchPostData = useCallback(() => {
     if (!typeId) return;
@@ -115,16 +99,9 @@ const CategoryContent = () => {
     const filterPayload: postPostFiltersRequest = {
       categoryId: Number(typeId),
       sortBy: "RECENT",
-      animalIds:
-        selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
-      symptomIds:
-        selectedChips.symptomIds.length > 0
-          ? selectedChips.symptomIds
-          : undefined,
-      diseaseIds:
-        selectedChips.diseaseIds.length > 0
-          ? selectedChips.diseaseIds
-          : undefined,
+      animalIds: selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
+      symptomIds: selectedChips.symptomIds.length > 0 ? selectedChips.symptomIds : undefined,
+      diseaseIds: selectedChips.diseaseIds.length > 0 ? selectedChips.diseaseIds : undefined,
     };
 
     fetchPosts(filterPayload, {
@@ -140,7 +117,7 @@ const CategoryContent = () => {
   const handleGoBack = () => {
     clearAllChips();
 
-    router.push(PATH.COMMUNITY.ROOT);
+    router.back();
   };
 
   const handleGoSearch = () => {
@@ -154,6 +131,21 @@ const CategoryContent = () => {
     fetchPostData();
   };
 
+  const { isAuthenticated } = useAuth();
+  const isPetRegistered = useIsPetRegistered();
+
+  const handleWriteClick = () => {
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
+    }
+    if (!isPetRegistered) {
+      router.push(PATH.ONBOARDING.COMPLETE);
+      return;
+    }
+    router.push(`/community/write?category=${type}`);
+  };
+
   useEffect(() => {
     fetchPostData();
   }, []);
@@ -162,13 +154,10 @@ const CategoryContent = () => {
     return (
       <>
         <NoData
-          label={"아직 등록된 리뷰가 없어요"}
+          label={"아직 등록된 게시물이 없어요"}
           onBtnClick={() => router.push(`/community/write?category=${type}`)}
         />
-        <FilterBottomSheet
-          handleDimmedClose={handleDimmedClose}
-          onSubmitClick={onSubmitClick}
-        />
+        <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
       </>
     );
   }
@@ -202,10 +191,7 @@ const CategoryContent = () => {
             onBtnClick={() => router.push(`/community/write?category=${type}`)}
           />
         </div>
-        <FilterBottomSheet
-          handleDimmedClose={handleDimmedClose}
-          onSubmitClick={onSubmitClick}
-        />
+        <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
       </>
     );
   }
@@ -254,16 +240,24 @@ const CategoryContent = () => {
 
         {type !== "magazine" && (
           <div className={styles.floatingBtnContainer}>
-            <FloatingBtn
-              onClick={() => router.push(`/community/write?category=${type}`)}
-            />
+            <FloatingBtn onClick={handleWriteClick} />
           </div>
         )}
       </div>
-      <FilterBottomSheet
-        handleDimmedClose={handleDimmedClose}
-        onSubmitClick={onSubmitClick}
-      />
+      <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
+      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
+        <Modal.Content
+          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+            </Modal.BottomAffix>
+          }
+        >
+          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
+        </Modal.Content>
+      </Modal.Root>
     </>
   );
 };

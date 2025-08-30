@@ -2,6 +2,18 @@ import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 import * as a from "./atomic.css";
 
+export const profileContainer = style([
+  a.fullWidth,
+  {
+    position: "relative",
+    height: "100vh",
+    overflow: "scroll",
+    "::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+]);
+
 /* ------------------- 프로필 섹션 스타일 ------------------- */
 export const myProfileWrapper = style([
   a.fullWidth,

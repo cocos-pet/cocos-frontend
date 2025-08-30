@@ -46,7 +46,6 @@ const ProfileContent = () => {
   const router = useRouter();
 
   if (!isAuthenticated) {
-    alert("로그인 후에 확인할 수 있습니다.");
     router.push(PATH.MAIN);
   }
 
@@ -55,7 +54,7 @@ const ProfileContent = () => {
 
   return (
     <SuspenseWrapper>
-      <div style={{ position: "relative", height: "auto" }}>
+      <div className={styles.profileContainer}>
         {/* 헤더 섹션 */}
         <HeaderSection onNavigateBack={navigateBack} />
 

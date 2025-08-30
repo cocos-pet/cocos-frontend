@@ -121,7 +121,7 @@ function HospitalSearchDoneContent() {
                 <div className={styles.hospitalText}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
                   <p className={styles.hospitalAddress}>
-                    {hospital.address} 리뷰 {hospital.reviewCount}{" "}
+                    {hospital.address} · 리뷰 {hospital.reviewCount}{" "}
                   </p>
                 </div>
                 <div className={styles.hospitalImage}>

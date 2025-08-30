@@ -10,6 +10,7 @@ import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
 import { useLogout } from "@api/domain/setting/hook";
 import { useAuth } from "@providers/AuthProvider";
+import { useEffect } from "react";
 
 export default function Setting() {
   const router = useRouter();
@@ -17,18 +18,15 @@ export default function Setting() {
   const { mutate: logout } = useLogout();
   const { isAuthenticated } = useAuth();
 
-  if (!isAuthenticated) {
-    router.push(PATH.LOGIN);
-  }
+  useEffect(() => {
+    if (!isAuthenticated) {
+      router.push(PATH.LOGIN);
+    }
+  }, [isAuthenticated, router]);
 
   const handleMoveWithdraw = () => {
     router.push(PATH.SETTING.WITHDRAW);
   };
-
-  if (!isAuthenticated) {
-    alert("접근할 수 없습니다.");
-    router.push(PATH.MAIN);
-  }
 
   return (
     <>
