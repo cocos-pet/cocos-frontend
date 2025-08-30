@@ -15,25 +15,17 @@ import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/cate
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { PATH } from "@route/path";
-import { Modal } from "../Modal/Modal.tsx";
+import { Modal } from "@design-system/Modal/Modal.tsx";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;
-  onCommentReplyClick?: (
-    nickname: string | undefined,
-    commentId: number | undefined
-  ) => void;
+  onCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
 
   onDelete?: () => void;
   onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
 }
 
-const Comment = ({
-  comment,
-  onCommentReplyClick,
-  onDelete,
-  onModalClose,
-}: CommentProps) => {
+const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: CommentProps) => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const isPetRegistered = useIsPetRegistered();
@@ -104,9 +96,7 @@ const Comment = ({
             </span>
             <span className={styles.meta}>
               {comment.breed} · {comment.petAge}살 ·{" "}
-              {comment.createdAt
-                ? formatTime(comment.createdAt).toLocaleString()
-                : ""}
+              {comment.createdAt ? formatTime(comment.createdAt).toLocaleString() : ""}
             </span>
           </div>
           {comment.isWriter && (
@@ -160,10 +150,7 @@ const Comment = ({
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm
-                label={"로그인"}
-                onClick={() => router.push(PATH.LOGIN)}
-              />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
             </Modal.BottomAffix>
           }
         >
