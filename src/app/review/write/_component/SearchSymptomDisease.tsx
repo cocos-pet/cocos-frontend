@@ -1,20 +1,20 @@
 import * as styles from "@shared/component/FilterBottomSheet/FilterBottomSheet.css";
-import { useFormContext } from "react-hook-form";
-import { useState } from "react";
+import {useFormContext} from "react-hook-form";
+import {useState} from "react";
 
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import Tab from "@common/component/Tab/Tab";
-import { Button } from "@common/component/Button";
-import Chip from "@common/component/Chip/Chip";
+import {Button} from "@common/component/Button";
+import Chip from "../../../../design-system/Chip/Chip";
 import CategoryContent from "@app/review/write/_component/CategoryContent";
-import { ReviewFormData } from "@app/review/write/page";
-import { getSymptomNameById, getDiseaseNameById } from "@app/review/write/_utils/getNameById";
-import { Toast } from "@common/component/Toast/Toast";
-import { CATEGORIES } from "../constant";
+import {ReviewFormData} from "@app/review/write/page";
+import {getDiseaseNameById, getSymptomNameById} from "@app/review/write/_utils/getNameById";
+import {Toast} from "@common/component/Toast/Toast";
+import {CATEGORIES} from "../constant";
 
-import { symptomGetResponse } from "@api/domain/register-pet/symptom";
-import { diseaseGetResponse } from "@api/domain/register-pet/disease";
-import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
+import {symptomGetResponse} from "@api/domain/register-pet/symptom";
+import {diseaseGetResponse} from "@api/domain/register-pet/disease";
+import {bodiesGetResponse} from "@api/domain/register-pet/bodies";
 
 type CategoryType = "symptom" | "disease";
 

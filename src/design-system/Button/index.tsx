@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { button, ButtonVariants, icon } from "@common/component/Button/styles.css.ts";
+import {button, ButtonVariants, icon} from "./styles.css.ts";
 
 interface ButtonProps {
   width?: string;
@@ -39,7 +39,7 @@ export const Button = ({
   variant = "solidPrimary",
   disabled,
   onClick,
-   style,
+  style,
   className,
   ...props
 }: CombinedButtonProps) => {

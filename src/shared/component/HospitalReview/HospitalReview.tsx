@@ -1,15 +1,15 @@
 "use client";
 
-import { useState } from "react";
+import {useState} from "react";
 import * as styles from "./HospitalReview.css.ts";
-import Chip from "@common/component/Chip/Chip";
+import Chip from "../../../design-system/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
-import { Separated } from "react-simplikit";
-import { motion } from "framer-motion";
+import {Separated} from "react-simplikit";
+import {motion} from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
-import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
+import {postHospitalReviewsResponseData} from "@api/domain/community/detail";
 
 export interface ReviewItemType {
   id?: number;

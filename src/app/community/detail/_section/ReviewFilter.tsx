@@ -2,7 +2,7 @@ import { useState } from "react";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet.tsx";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import Tab from "@common/component/Tab/Tab.tsx";
-import Chip from "@common/component/Chip/Chip.tsx";
+import Chip from "../../../../design-system/Chip/Chip.tsx";
 import { Button } from "@common/component/Button";
 import { useGetReviewSummaryOption } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";

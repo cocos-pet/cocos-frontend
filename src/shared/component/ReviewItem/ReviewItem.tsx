@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import {useState} from "react";
 import * as styles from "./ReviewItem.css";
-import Chip from "@common/component/Chip/Chip";
+import Chip from "../../../design-system/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
-import { Separated } from "react-simplikit";
-import { motion } from "framer-motion";
+import {Separated} from "react-simplikit";
+import {motion} from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
 

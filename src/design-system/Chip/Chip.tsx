@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { chipItem, ChipType } from "./ChipStyle.css.ts";
-import { IcDelete } from "@asset/svg/index";
+import React, {useEffect, useState} from "react";
+import {chipItem, ChipType} from "./ChipStyle.css.ts";
+import {IcDelete} from "@asset/svg";
 
 interface ChipProps {
   label?: string;

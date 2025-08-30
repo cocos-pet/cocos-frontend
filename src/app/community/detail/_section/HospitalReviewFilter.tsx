@@ -1,12 +1,11 @@
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcDownArrow, IcRefresh, IcTarget } from "@asset/svg";
-import { motion } from "framer-motion";
-import Chip from "@common/component/Chip/Chip.tsx";
-import { color } from "@style/styles.css.ts";
+import {IcDownArrow, IcRefresh, IcTarget} from "@asset/svg";
+import {motion} from "framer-motion";
+import Chip from "../../../../design-system/Chip/Chip.tsx";
+import {color} from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
-import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
-import React, { useState } from "react";
-import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
+import {useOpenToggle} from "@shared/hook/useOpenToggle.ts";
+import {ReviewActiveTabType} from "@app/community/detail/_section/ReviewFilter.tsx";
 
 export interface LocationFilterType {
   id: number;

@@ -1,6 +1,6 @@
-import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
-import { color, font } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
+import {recipe, RecipeVariants} from "@vanilla-extract/recipes";
+import {color, font} from "@style/styles.css.ts";
+import {style} from "@vanilla-extract/css";
 
 export const button = recipe({
   base: [
