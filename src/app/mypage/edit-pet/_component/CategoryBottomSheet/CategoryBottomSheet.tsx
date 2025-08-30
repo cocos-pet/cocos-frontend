@@ -1,16 +1,12 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
-import {
-  CategoryType,
-  SelectedChips,
-  useCategoryFilterStore,
-} from "../../_store/categoryFilter";
+import {CategoryType, SelectedChips, useCategoryFilterStore} from "../../_store/categoryFilter";
 import Tab from "src/design-system/Tab/Tab";
 import * as styles from "./CategoryBottomSheet.css";
-import { Button } from "@common/component/Button";
+import {Button} from "@design-system/Button";
 import Chip from "../../../../../design-system/Chip/Chip";
-import { getSelectedChipNamesById } from "../../_utils/getSelectedChipNamesById";
+import {getSelectedChipNamesById} from "../../_utils/getSelectedChipNamesById";
 import CategoryContent from "./components/CategoryContent/CategoryContent";
-import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
+import {usePatchPetInfo} from "@api/domain/mypage/edit-pet/hook";
 
 const categories: { id: CategoryType; label: string }[] = [
   { id: "symptoms", label: "증상" },
@@ -18,15 +14,7 @@ const categories: { id: CategoryType; label: string }[] = [
 ];
 
 const CategoryBottomSheet = ({ petId }: { petId: number }) => {
-  const {
-    category,
-    selectedChips,
-    setCategory,
-    isOpen,
-    setOpen,
-    toggleChips,
-    categoryData,
-  } = useCategoryFilterStore();
+  const { category, selectedChips, setCategory, isOpen, setOpen, toggleChips, categoryData } = useCategoryFilterStore();
   const { mutate: patchPetInfo } = usePatchPetInfo();
 
   const handleClickButton = () => {
@@ -73,23 +61,17 @@ const CategoryBottomSheet = ({ petId }: { petId: number }) => {
                 } as const;
 
                 const category = keyMap[key as keyof SelectedChips];
-                const name = getSelectedChipNamesById(
-                  id,
-                  category,
-                  categoryData
-                );
+                const name = getSelectedChipNamesById(id, category, categoryData);
 
                 return (
                   <Chip
                     key={`filter-${key}-${id}`}
                     label={name || "Unknown"}
                     icon={true}
-                    onClick={() =>
-                      toggleChips({ id, category: key as keyof SelectedChips })
-                    }
+                    onClick={() => toggleChips({ id, category: key as keyof SelectedChips })}
                   />
                 );
-              })
+              }),
             )}
           </div>
         ) : (
@@ -98,11 +80,7 @@ const CategoryBottomSheet = ({ petId }: { petId: number }) => {
 
         <div className={styles.categoryZone}>
           {categories.map(({ id, label }) => (
-            <Tab
-              key={id}
-              active={isSelectedCategory(id)}
-              onClick={() => handleClickCategory(id)}
-            >
+            <Tab key={id} active={isSelectedCategory(id)} onClick={() => handleClickCategory(id)}>
               {label}
             </Tab>
           ))}
@@ -113,12 +91,7 @@ const CategoryBottomSheet = ({ petId }: { petId: number }) => {
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button
-            label="수정하기"
-            size="large"
-            style={{ width: "100%" }}
-            onClick={handleClickButton}
-          />
+          <Button label="수정하기" size="large" style={{ width: "100%" }} onClick={handleClickButton} />
         </div>
       </>
     </BottomSheet>

@@ -1,24 +1,21 @@
 "use client";
 
-import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
+import {IcChevronLeft, IcChevronRight, IcEditPen, IcPlus} from "@asset/svg";
 import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
-import { PATH } from "@route/path";
-import { useRouter } from "next/navigation";
+import {PATH} from "@route/path";
+import {useRouter} from "next/navigation";
 import * as styles from "./PetEdit.css";
 import Divider from "src/design-system/Divider/Divider.tsx";
-import { Button } from "@common/component/Button";
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { validateNickname } from "@shared/util/validateNickname";
+import {Button} from "@design-system/Button";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
+import {validateNickname} from "@shared/util/validateNickname";
 import CategoryBottomSheet from "./_component/CategoryBottomSheet/CategoryBottomSheet";
-import {
-  CategoryData,
-  useCategoryFilterStore,
-} from "./_store/categoryFilter.ts";
+import {CategoryData, useCategoryFilterStore} from "./_store/categoryFilter.ts";
 import Chip from "../../../design-system/Chip/Chip";
-import { getSelectedChipNamesById } from "./_utils/getSelectedChipNamesById.ts";
+import {getSelectedChipNamesById} from "./_utils/getSelectedChipNamesById.ts";
 import AnimalBottomSheet from "./_component/AnimalBottomSheet/AnimalBottomSheet";
-import { useAnimalFilterStore } from "./_store/animalFilter.ts";
-import { getAnimalChipNamesById } from "./_utils/getAnimalChipNamesById.ts";
+import {useAnimalFilterStore} from "./_store/animalFilter.ts";
+import {getAnimalChipNamesById} from "./_utils/getAnimalChipNamesById.ts";
 import AgeBottomSheet from "./_component/AgeBottomSheet/AgeBottomSheet";
 import {
   useGetAnimal,
@@ -28,16 +25,11 @@ import {
   useGetSymptoms,
   usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
-import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
+import {useGetMemberInfo, useGetPetInfo} from "@api/domain/mypage/hook";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";
-import SearchHospital, {
-  Hospital,
-} from "@shared/component/SearchHospital/SearchHospital.tsx";
-import {
-  useGetFavoriteHospital,
-  usePatchFavoriteHospital,
-} from "@api/shared/hook.ts";
-import { useMypageMemberInfo } from "../_store/mypageStore.ts";
+import SearchHospital, {Hospital} from "@shared/component/SearchHospital/SearchHospital.tsx";
+import {useGetFavoriteHospital, usePatchFavoriteHospital} from "@api/shared/hook.ts";
+import {useMypageMemberInfo} from "../_store/mypageStore.ts";
 
 //todo: useEffect 중복 코드 제거
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,
@@ -113,12 +105,8 @@ const Page = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -175,15 +163,7 @@ const Page = () => {
         }
       }
     }
-  }, [
-    animal,
-    symptoms,
-    disease,
-    petInfo,
-    setCategoryData,
-    setAnimalCategoryData,
-    animalToggleChips,
-  ]);
+  }, [animal, symptoms, disease, petInfo, setCategoryData, setAnimalCategoryData, animalToggleChips]);
 
   useEffect(() => {
     if (breed?.breeds) {
@@ -273,11 +253,7 @@ const Page = () => {
       />
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
-          <img
-            className={styles.profileImage}
-            alt="프로필 이미지"
-            src={petInfo.petImage}
-          />
+          <img className={styles.profileImage} alt="프로필 이미지" src={petInfo.petImage} />
           <span className={styles.nicknameWrapper}>
             {isEditing ? (
               <div
@@ -297,23 +273,14 @@ const Page = () => {
                 />
                 <div className={styles.errorLayout}>
                   {validationMessages.map((message) => (
-                    <Docs
-                      key={`error-${message}`}
-                      state="lError"
-                      text={message}
-                    />
+                    <Docs key={`error-${message}`} state="lError" text={message} />
                   ))}
                 </div>
               </div>
             ) : (
               <>
                 {name}
-                <IcEditPen
-                  width={24}
-                  height={24}
-                  onClick={handleEditClick}
-                  style={{ cursor: "pointer" }}
-                />
+                <IcEditPen width={24} height={24} onClick={handleEditClick} style={{ cursor: "pointer" }} />
               </>
             )}
           </span>
@@ -324,38 +291,20 @@ const Page = () => {
           <Divider size="small" />
           <div className={styles.defaultInfoListWrapper}>
             {DEFAULT_TYPE.map((item) => (
-              <div
-                key={`default-type-${item.tab}`}
-                className={styles.defaultInfoList}
-              >
+              <div key={`default-type-${item.tab}`} className={styles.defaultInfoList}>
                 <span className={styles.defaultInfoListLeft}>{item.type}</span>
-                <button
-                  className={styles.defaultInfoListRight}
-                  onClick={() => openAnimalBottomSheet(item.tab)}
-                >
+                <button className={styles.defaultInfoListRight} onClick={() => openAnimalBottomSheet(item.tab)}>
                   {item.tab === "animal" &&
                     (animalChips.animalId
-                      ? getAnimalChipNamesById(
-                          animalChips.animalId as number,
-                          "animal",
-                          animalCategoryData
-                        )
+                      ? getAnimalChipNamesById(animalChips.animalId as number, "animal", animalCategoryData)
                       : "_")}
                   {item.tab === "breeds" &&
                     (animalChips.breedId
-                      ? getAnimalChipNamesById(
-                          animalChips.breedId as number,
-                          "breeds",
-                          animalCategoryData
-                        )
+                      ? getAnimalChipNamesById(animalChips.breedId as number, "breeds", animalCategoryData)
                       : "_")}
                   {item.tab === "gender" &&
                     (animalChips.gender
-                      ? getAnimalChipNamesById(
-                          animalChips.gender as "M" | "F",
-                          "gender",
-                          animalCategoryData
-                        )
+                      ? getAnimalChipNamesById(animalChips.gender as "M" | "F", "gender", animalCategoryData)
                       : "_")}
                   {item.tab === "age" && (`${petAge}살` || "_")}
                   <IcChevronRight width={20} height={20} />
@@ -378,9 +327,7 @@ const Page = () => {
           categoryData={categoryData}
           onButtonClick={() => openCategoryBottomSheet("symptom")}
         />
-        <EditFavoriteHospital
-          nickname={member?.nickname || memberData?.nickname}
-        />
+        <EditFavoriteHospital nickname={member?.nickname || memberData?.nickname} />
         <AnimalBottomSheet petId={petInfo.petId} />
         <CategoryBottomSheet petId={petInfo.petId} />
         <AgeBottomSheet
@@ -405,13 +352,7 @@ interface EditArticleProps {
   onButtonClick: () => void;
 }
 
-const EditArticle = ({
-  title,
-  type,
-  selectedChips,
-  categoryData,
-  onButtonClick,
-}: EditArticleProps) => {
+const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }: EditArticleProps) => {
   return (
     <article className={styles.editArticle}>
       <span className={styles.defaultText}>{title}</span>
@@ -421,18 +362,14 @@ const EditArticle = ({
           ? selectedChips.symptomIds.map((id) => (
               <Chip
                 key={`symptom-edit-${id}`}
-                label={
-                  getSelectedChipNamesById(id, "symptoms", categoryData) || ""
-                }
+                label={getSelectedChipNamesById(id, "symptoms", categoryData) || ""}
                 disabled={true}
               />
             ))
           : selectedChips.diseaseIds.map((id) => (
               <Chip
                 key={`disease-edit-${id}`}
-                label={
-                  getSelectedChipNamesById(id, "disease", categoryData) || ""
-                }
+                label={getSelectedChipNamesById(id, "disease", categoryData) || ""}
                 disabled={true}
               />
             ))}
@@ -456,9 +393,7 @@ const EditFavoriteHospital = ({
   nickname: string | undefined;
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(
-    null
-  );
+  const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
   const prevSelectedHospital = useRef<Hospital | null>(null);
 
   const { mutate } = usePatchFavoriteHospital();

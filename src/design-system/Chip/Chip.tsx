@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {chipItem, ChipType} from "./ChipStyle.css.ts";
 import {IcDelete} from "@asset/svg";
 
-interface ChipProps {
+export interface ChipProps {
   label?: string;
   icon?: boolean;
   color?: "blue" | "gray" | "red" | "border" | "solidBlue";
@@ -39,7 +39,10 @@ const Chip = ({
   };
 
   return (
-    <div className={chipItem({ size, color, active: isActive })} onClick={handleClick}>
+    <div
+      className={chipItem({ size, color, active: isActive })}
+      onClick={handleClick}
+    >
       {label}
       {rightIcon ? (
         <>{rightIcon}</>

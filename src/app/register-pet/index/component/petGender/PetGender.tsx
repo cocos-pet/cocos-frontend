@@ -1,7 +1,7 @@
 import * as styles from "./PetGender.css";
 
 import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelector";
-import {Button} from "@common/component/Button";
+import {Button} from "@design-system/Button";
 import {useState} from "react";
 import {PetData} from "../../RegisterPet.tsx";
 import {genderOptions} from "../../constant/genderData.ts";

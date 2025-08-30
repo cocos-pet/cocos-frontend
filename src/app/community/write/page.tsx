@@ -1,46 +1,27 @@
 "use client";
 
-import { TextField } from "src/design-system/TextField/index.tsx";
-import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
-import React, {
-  ChangeEvent,
-  Suspense,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { useDropDown } from "../_component/DropDown/useDropDown";
+import {TextField} from "src/design-system/TextField/index.tsx";
+import {IcAddphoto, IcDeleteBlack, IcRightArror} from "@asset/svg";
+import React, {ChangeEvent, Suspense, useEffect, useRef, useState} from "react";
+import {useDropDown} from "../_component/DropDown/useDropDown";
 import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
 
 import Spacing from "@common/component/Spacing/Spacing.tsx";
-import { Button } from "@common/component/Button";
+import {Button} from "@design-system/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import { useFilterStore } from "@store/filter.ts";
-import { useRouter, useSearchParams } from "next/navigation";
-import { PATH } from "@route/path.ts";
+import {useFilterStore} from "@store/filter.ts";
+import {useRouter, useSearchParams} from "next/navigation";
+import {PATH} from "@route/path.ts";
 import axios from "axios";
-import {
-  useGetBodies,
-  useGetDisease,
-  useGetSymptoms,
-} from "@api/domain/mypage/edit-pet/hook.ts";
-import { useArticlePost } from "@api/domain/community/post/hook.ts";
-import { CustomAxiosError } from "@type/global";
+import {useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook.ts";
+import {useArticlePost} from "@api/domain/community/post/hook.ts";
+import {CustomAxiosError} from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
-import { FillterToName } from "../_utills/getFillterNamebyid.ts";
-import { DropDownItems } from "../_constant/writeConfig.tsx";
-import {
-  bottomButton,
-  fileInput,
-  imageContainer,
-  plusImage,
-  writeWrap,
-} from "./Write.css.ts";
+import {FillterToName} from "../_utills/getFillterNamebyid.ts";
+import {DropDownItems} from "../_constant/writeConfig.tsx";
+import {bottomButton, fileInput, imageContainer, plusImage, writeWrap} from "./Write.css.ts";
 import WriteInputSection from "../_component/WriteInputSection/WriteInputSection.tsx";
-import {
-  getDropdownIdtoIcon,
-  getDropdownIdtoValue,
-} from "../_utills/handleCategoryItem.tsx";
+import {getDropdownIdtoIcon, getDropdownIdtoValue} from "../_utills/handleCategoryItem.tsx";
 import DropDown from "../_component/DropDown/DropDown.tsx";
 import TextArea from "../_component/TextArea/TextArea.tsx";
 import ImageCover from "../../../shared/component/ImageCover/ImageCover.tsx";
@@ -74,14 +55,7 @@ const WriteContent = () => {
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const {
-    selectedChips,
-    isOpen,
-    setOpen,
-    clearAllChips,
-    setCategoryData,
-    setCategory,
-  } = useFilterStore();
+  const { selectedChips, isOpen, setOpen, clearAllChips, setCategoryData, setCategory } = useFilterStore();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -138,9 +112,7 @@ const WriteContent = () => {
 
   useEffect(() => {
     if (category) {
-      const matchedItem = DropDownItems.find(
-        (item) => item.english === category
-      );
+      const matchedItem = DropDownItems.find((item) => item.english === category);
       if (matchedItem) {
         setParams((prevParams) => ({
           ...prevParams,
@@ -161,12 +133,8 @@ const WriteContent = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -175,9 +143,7 @@ const WriteContent = () => {
   }, [diseaseBodies, symptomBodies]);
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedValue = DropDownItems.find(
-      (item) => item.label === e.target.value
-    );
+    const selectedValue = DropDownItems.find((item) => item.label === e.target.value);
     if (!selectedValue) return;
     onChangeValue("categoryId", selectedValue.value);
     if (!isDropDownOpen) closeDropDown();
@@ -187,10 +153,7 @@ const WriteContent = () => {
     toggleDropDown();
   };
 
-  const onChangeValue = (
-    target: string,
-    value: string | number | React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onChangeValue = (target: string, value: string | number | React.ChangeEvent<HTMLInputElement>) => {
     setParams({
       ...params,
       [target]: value,
@@ -275,7 +238,7 @@ const WriteContent = () => {
                       "Content-Type": (file as File).type,
                     },
                   });
-                })
+                }),
               );
               clearAllChips();
               router.push(PATH.COMMUNITY.ROOT);
@@ -291,29 +254,19 @@ const WriteContent = () => {
               alert("게시글 작성에 실패했습니다.");
             }
           },
-        }
+        },
       );
     }
   };
 
   const isAllParamsFilled =
-    params.categoryId &&
-    params.title &&
-    params.content &&
-    params.selectedChips.breedId.length > 0;
+    params.categoryId && params.title && params.content && params.selectedChips.breedId.length > 0;
 
   return (
     <>
-      <WorningToastWrap
-        errorMessage={errorMessage}
-        setErrorMessage={setErrorMessage}
-      />
+      <WorningToastWrap errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
       <div>
-        <HeaderNav
-          leftIcon={<IcDeleteBlack width={24} />}
-          onLeftClick={onBackClick}
-          centerContent={"글쓰기"}
-        />
+        <HeaderNav leftIcon={<IcDeleteBlack width={24} />} onLeftClick={onBackClick} centerContent={"글쓰기"} />
         <div className={writeWrap}>
           {/* 제목 영역 */}
           <WriteInputSection title={"게시판 선택"}>
@@ -350,25 +303,12 @@ const WriteContent = () => {
               onChange={(e) => onChangeValue("content", e.target.value)}
             />
             <Spacing marginBottom={"1.2"} />
-            <input
-              type="file"
-              onChange={handleAddImage}
-              accept="image/*"
-              ref={fileInputRef}
-              className={fileInput}
-            />
+            <input type="file" onChange={handleAddImage} accept="image/*" ref={fileInputRef} className={fileInput} />
             <div className={imageContainer}>
-              <IcAddphoto
-                className={plusImage}
-                onClick={handleFileUploadClick}
-              />
+              <IcAddphoto className={plusImage} onClick={handleFileUploadClick} />
               {params.images.map((imageSrc, index) => (
                 <div key={index}>
-                  <ImageCover
-                    imageId={index}
-                    imageSrc={imageSrc}
-                    onDeleteClick={() => handleDeleteImage(index)}
-                  />
+                  <ImageCover imageId={index} imageSrc={imageSrc} onDeleteClick={() => handleDeleteImage(index)} />
                 </div>
               ))}
             </div>

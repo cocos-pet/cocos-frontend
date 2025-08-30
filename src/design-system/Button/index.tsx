@@ -3,7 +3,7 @@
 import React from "react";
 import {button, ButtonVariants, icon} from "./styles.css.ts";
 
-interface ButtonProps {
+export interface ButtonProps {
   width?: string;
   label?: string | React.ReactNode;
   leftIcon?: React.ReactNode;

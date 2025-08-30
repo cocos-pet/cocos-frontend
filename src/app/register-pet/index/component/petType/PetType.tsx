@@ -1,7 +1,7 @@
 import * as styles from "./PetType.css";
 import {useState} from "react";
 
-import {Button} from "@common/component/Button";
+import {Button} from "@design-system/Button";
 import {useAnimalGet} from "@api/domain/register-pet/animal/hook";
 import {PetData} from "../../RegisterPet.tsx";
 import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";

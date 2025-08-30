@@ -1,10 +1,10 @@
 import * as styles from "./PetAge.css";
-import { ChangeEvent, useState } from "react";
+import {ChangeEvent, useState} from "react";
 
-import { TextField } from "src/design-system/TextField/index.tsx";
-import { Button } from "@common/component/Button";
-import { PetData } from "../../RegisterPet.tsx";
-import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import {TextField} from "src/design-system/TextField/index.tsx";
+import {Button} from "@design-system/Button";
+import {PetData} from "../../RegisterPet.tsx";
+import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 
@@ -17,9 +17,7 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
   const [petAge, setPetAge] = useState("");
 
   // 유효성 검사 통과한 반려동물 나이
-  const updatePetAge = ({
-    target: { value },
-  }: ChangeEvent<HTMLInputElement>) => {
+  const updatePetAge = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     setPetAge(value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
   };
 
@@ -65,13 +63,7 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
       </div>
       {/* 하단 영역 */}
       <div className={styles.btnWrapper}>
-        <Button
-          label="돌아가기"
-          size="large"
-          variant="solidNeutral"
-          disabled={false}
-          onClick={handleGoBack}
-        />
+        <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
         <Button
           label="다음"
           size="large"

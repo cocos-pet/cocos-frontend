@@ -4,7 +4,7 @@ import {ONBOARDING_GUIDE} from "@app/onboarding/index/constant/onboardingGuide";
 
 import Title from "@app/onboarding/index/common/title/Title";
 import Docs from "@app/onboarding/index/common/docs/Docs";
-import {Button} from "@common/component/Button";
+import {Button} from "@design-system/Button";
 
 interface PetHealthDualSelectorProps {
   setStep: Dispatch<SetStateAction<number>>;
@@ -41,7 +41,7 @@ const PetHealthDualSelector = ({ setStep, setIsSkipDisease, setCurrentStep }: Pe
     <>
       {/* 상단 영역 */}
       <div className={styles.layout}>
-        <div className={styles.gap}> 
+        <div className={styles.gap}>
           <Title text={ONBOARDING_GUIDE.isPetDisease.title} />
           <Docs text={ONBOARDING_GUIDE.isPetDisease.docs} />
         </div>
