@@ -7,6 +7,9 @@ const meta: Meta<typeof TextField> = {
   component: TextField,
   parameters: {
     layout: "centered",
+    viewport: {
+      defaultViewport: "mobile",
+    },
   },
   tags: ["autodocs"],
   argTypes: {
