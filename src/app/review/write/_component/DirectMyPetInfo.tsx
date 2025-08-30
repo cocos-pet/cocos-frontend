@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useFormContext, Controller, useWatch } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
 import { ReviewFormData, ReviewFormWithUIData } from "../page";
-import { TextField } from "src/design-system/TextField/index";
+import { TextField } from "@design-system/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
 import { GENDER, PET_TYPES } from "../constant";
 import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
@@ -22,9 +22,7 @@ const DirectMyPetInfo = ({ isBreedInputTouched, setIsBreedInputTouched }: Direct
   const { control, watch, setValue } = useFormContext<ReviewFormWithUIData>();
 
   // 종, 성별 드롭다운
-  const [activeDropDown, setActiveDropDown] = useState<
-    "petType" | keyof ReviewFormData | null
-  >(null);
+  const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
   // 종류, 몸무게 포커스
   const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
   // 드롭다운 필터링용 검색 입력값 (breedId는 리뷰 제출용)
@@ -37,18 +35,13 @@ const DirectMyPetInfo = ({ isBreedInputTouched, setIsBreedInputTouched }: Direct
     setActiveDropDown(null);
   };
 
-  const handleWeightChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    onChange: (value: string) => void
-  ) => {
+  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>, onChange: (value: string) => void) => {
     const input = e.target.value.replace(/[^0-9.]/g, "");
     const [intPart = "", ...rest] = input.split(".");
     const decimal = rest.join("").slice(0, 1);
     const trimmedInt = intPart.slice(0, 3);
     const formatted =
-      trimmedInt === "" && input.startsWith(".")
-        ? `0.${decimal}`
-        : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
+      trimmedInt === "" && input.startsWith(".") ? `0.${decimal}` : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
     onChange(formatted);
     setValue("weight", formatted === "" ? -1 : Number(formatted));
   };

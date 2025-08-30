@@ -1,20 +1,20 @@
-import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback } from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import {useCallback, useState} from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
-import { IcRightArrow } from "@asset/svg";
-import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
-import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
+import {IcRightArrow} from "@asset/svg";
+import {LoadingFallback} from "@app/community/detail/_section/index.tsx";
+import {usePostHospitalReviews} from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
-import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
-import { useAuth } from "@providers/AuthProvider.tsx";
-import { Button } from "src/design-system/Button";
-import { Modal } from "src/design-system/Modal/Modal.tsx";
-import { PATH } from "@route/path.ts";
-import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/_section/HospitalReviewFilter.tsx";
-import { If } from "@shared/component/If/if.tsx";
-import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
-import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
+import {postHospitalReviewsResponseData} from "@api/domain/community/detail";
+import {useAuth} from "@providers/AuthProvider.tsx";
+import {Button} from "@design-system/Button";
+import {Modal} from "@design-system/Modal/Modal.tsx";
+import {PATH} from "@route/path.ts";
+import HospitalReviewFilter, {LocationFilterType} from "@app/community/detail/_section/HospitalReviewFilter.tsx";
+import {If} from "@shared/component/If/if.tsx";
+import {ReviewActiveTabType} from "@app/community/detail/_section/ReviewFilter.tsx";
+import {useOpenToggle} from "@shared/hook/useOpenToggle.ts";
 
 interface ReviewFilterState {
   location: LocationFilterType | null;

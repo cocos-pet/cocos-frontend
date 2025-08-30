@@ -1,7 +1,7 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { CategoryType, useAnimalFilterStore } from "../../_store/animalFilter";
 import * as styles from "./AnimalBottomSheet.css";
-import Tab from "src/design-system/Tab/Tab";
+import Tab from "@design-system/Tab/Tab";
 import { Button } from "@design-system/Button";
 import CategoryContent from "./components/CategoryContent/CategoryContent";
 import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";

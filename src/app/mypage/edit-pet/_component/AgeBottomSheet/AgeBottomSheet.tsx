@@ -1,7 +1,7 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@design-system/Button";
 import * as styles from "./AgeBottomSheet.css";
-import { TextField } from "src/design-system/TextField";
+import { TextField } from "@design-system/TextField";
 import { ChangeEvent } from "react";
 import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
 

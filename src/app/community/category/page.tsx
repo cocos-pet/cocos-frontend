@@ -3,9 +3,9 @@
 import { useRouter, useSearchParams } from "next/navigation";
 import * as styles from "./Category.css";
 import Content from "@common/component/Content/Content";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
 import { Icfilter, Icfilteron, IcLeftarrow, IcSearch } from "@asset/svg";
-import FloatingBtn from "src/design-system/FloatingBtn/Floating.tsx";
+import FloatingBtn from "@design-system/FloatingBtn/Floating.tsx";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 import { useFilterStore } from "@store/filter";
 import { PATH } from "@route/path";
@@ -19,12 +19,9 @@ import dynamic from "next/dynamic";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "src/design-system/Modal/Modal";
+import { Modal } from "@design-system/Modal/Modal";
 
-const Loading = dynamic(
-  () => import("../../../design-system/Loading/Loading.tsx"),
-  { ssr: false }
-);
+const Loading = dynamic(() => import("../../../design-system/Loading/Loading.tsx"), { ssr: false });
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
   symptom: "증상·질병",

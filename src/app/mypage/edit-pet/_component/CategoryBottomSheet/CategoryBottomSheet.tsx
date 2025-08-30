@@ -1,6 +1,6 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { CategoryType, SelectedChips, useCategoryFilterStore } from "../../_store/categoryFilter";
-import Tab from "src/design-system/Tab/Tab";
+import Tab from "@design-system/Tab/Tab";
 import * as styles from "./CategoryBottomSheet.css";
 import { Button } from "@design-system/Button";
 import Chip from "../../../../../design-system/Chip/Chip";

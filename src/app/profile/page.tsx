@@ -1,18 +1,18 @@
 "use client";
 
 import * as styles from "./_style/profile.css";
-import Divider from "src/design-system/Divider/Divider";
-import { useProfileState } from "./_hooks/useProfileState";
+import Divider from "@design-system/Divider/Divider";
+import {useProfileState} from "./_hooks/useProfileState";
 import HeaderSection from "./_component/HeaderSection/HeaderSection";
 import ProfileSection from "./_component/ProfileSection/ProfileSection";
 import TabsSection from "./_component/TabsSection/TabsSection";
 import ContentSection from "./_component/ContentSection/ContentSection";
 import NavSection from "./_component/NavSection/NavSection";
 import SuspenseWrapper from "@app/SuspenseWrapper";
-import { Suspense } from "react";
-import { useRouter } from "next/navigation";
-import { PATH } from "@route/path";
-import { useAuth } from "@providers/AuthProvider";
+import {Suspense} from "react";
+import {useRouter} from "next/navigation";
+import {PATH} from "@route/path";
+import {useAuth} from "@providers/AuthProvider";
 
 /**
  * 프로필 페이지 컴포넌트
@@ -32,16 +32,7 @@ const Profile = () => {
 
 const ProfileContent = () => {
   // 커스텀 훅을 통한 상태 관리
-  const {
-    query,
-    activeTab,
-    isActiveTab,
-    handleTabClick,
-    navigateBack,
-    member,
-    petInfo,
-    isLoading,
-  } = useProfileState();
+  const { query, activeTab, isActiveTab, handleTabClick, navigateBack, member, petInfo, isLoading } = useProfileState();
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
@@ -66,11 +57,7 @@ const ProfileContent = () => {
         <Divider />
 
         {/* 탭 섹션 */}
-        <TabsSection
-          activeTab={activeTab}
-          isActiveTab={isActiveTab}
-          onTabClick={handleTabClick}
-        />
+        <TabsSection activeTab={activeTab} isActiveTab={isActiveTab} onTabClick={handleTabClick} />
 
         {/* 컨텐츠 섹션 */}
         <ContentSection activeTab={activeTab} />

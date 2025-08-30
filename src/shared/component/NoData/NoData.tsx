@@ -1,7 +1,7 @@
 import * as styles from "@app/community/category/Category.css.ts";
 import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
-import FloatingBtn from "src/design-system/FloatingBtn/Floating";
+import FloatingBtn from "@design-system/FloatingBtn/Floating";
 import { HTMLAttributes } from "react";
 
 interface noDataType extends HTMLAttributes<HTMLDivElement> {
@@ -9,11 +9,7 @@ interface noDataType extends HTMLAttributes<HTMLDivElement> {
   onBtnClick?: () => void;
 }
 
-const NoData = ({
-  label = "아직 등록된 게시글이 없어요",
-  onBtnClick,
-  ...rest
-}: noDataType) => {
+const NoData = ({ label = "아직 등록된 게시글이 없어요", onBtnClick, ...rest }: noDataType) => {
   return (
     <div className={styles.emptyContainer} {...rest}>
       <Image
@@ -26,9 +22,7 @@ const NoData = ({
         }}
       />
       <h1>{label}</h1>
-      <div className={styles.floatingBtnContainer}>
-        {onBtnClick && <FloatingBtn onClick={onBtnClick} />}
-      </div>
+      <div className={styles.floatingBtnContainer}>{onBtnClick && <FloatingBtn onClick={onBtnClick} />}</div>
     </div>
   );
 };

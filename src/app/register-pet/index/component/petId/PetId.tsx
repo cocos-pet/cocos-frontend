@@ -1,12 +1,12 @@
 import * as styles from "./PetId.css";
-import { ChangeEvent, useState } from "react";
+import {ChangeEvent, useState} from "react";
 import Docs from "../../../../onboarding/index/common/docs/Docs";
-import { TextField } from "src/design-system/TextField/index.tsx";
-import { Button } from "@design-system/Button";
+import {TextField} from "@design-system/TextField/index.tsx";
+import {Button} from "@design-system/Button";
 
-import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
-import { PetData } from "../../RegisterPet.tsx";
-import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import {usePetIdGet} from "@api/domain/register-pet/petId/hook";
+import {PetData} from "../../RegisterPet.tsx";
+import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import DropDown from "../../common/dropDown/DropDown.tsx";
 

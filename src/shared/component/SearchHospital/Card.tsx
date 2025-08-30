@@ -2,7 +2,7 @@
 import * as styles from "./Card.css";
 import Image from "next/image";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
-import Radio from "@common/component/Radio/Radio";
+import { Radio } from "@design-system/index.ts";
 
 type CardProps = {
   id: number;

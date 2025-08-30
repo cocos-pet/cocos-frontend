@@ -1,28 +1,28 @@
 import DropDown from "@app/community/_component/DropDown/DropDown.tsx";
-import { TextField } from "src/design-system/TextField";
-import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import { useDropDown } from "@app/community/_component/DropDown/useDropDown";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
-import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "@app/community/write/Write.css.ts";
+import {TextField} from "@design-system/TextField";
+import {IcAddphoto, IcDeleteBlack, IcRightArror} from "@asset/svg";
+import React, {ChangeEvent, useEffect, useRef, useState} from "react";
+import {useDropDown} from "@app/community/_component/DropDown/useDropDown";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
+import {bottomButton, fileInput, imageContainer, plusImage, writeWrap} from "@app/community/write/Write.css.ts";
 import WriteInputSection from "@app/community/_component/WriteInputSection/WriteInputSection.tsx";
 
 import Tag from "@app/community/_component/Tag/Tag.tsx";
 import TextArea from "@app/community/_component/TextArea/TextArea.tsx";
 import Spacing from "@common/component/Spacing/Spacing.tsx";
 import ImageCover from "@shared/component/ImageCover/ImageCover";
-import { Button } from "@design-system/Button";
+import {Button} from "@design-system/Button";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import { useFilterStore } from "@store/filter.ts";
-import { useNavigate, useSearchParams } from "react-router-dom";
-import { PATH } from "@route/path.ts";
+import {useFilterStore} from "@store/filter.ts";
+import {useNavigate, useSearchParams} from "react-router-dom";
+import {PATH} from "@route/path.ts";
 import axios from "axios";
-import { FillterToName } from "@app/community/_utills/getFillterNamebyid.ts";
-import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
-import { getDropdownIdtoIcon, getDropdownIdtoValue } from "@app/community/_utills/handleCategoryItem.tsx";
-import { useArticlePost } from "@api/domain/community/post/hook.ts";
-import { DropDownItems } from "@app/community/_constant/writeConfig.tsx";
-import { CustomAxiosError } from "@type/global";
+import {FillterToName} from "@app/community/_utills/getFillterNamebyid.ts";
+import {useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook.ts";
+import {getDropdownIdtoIcon, getDropdownIdtoValue} from "@app/community/_utills/handleCategoryItem.tsx";
+import {useArticlePost} from "@api/domain/community/post/hook.ts";
+import {DropDownItems} from "@app/community/_constant/writeConfig.tsx";
+import {CustomAxiosError} from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
 
 interface DropDownItem {

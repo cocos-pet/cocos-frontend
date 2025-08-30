@@ -1,10 +1,10 @@
 "use client";
 
-import { TextField } from "src/design-system/TextField/index.tsx";
+import { TextField } from "@design-system/TextField/index.tsx";
 import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
 import React, { ChangeEvent, Suspense, useEffect, useRef, useState } from "react";
 import { useDropDown } from "../_component/DropDown/useDropDown";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
 
 import Spacing from "@common/component/Spacing/Spacing.tsx";
 import { Button } from "@design-system/Button";
@@ -28,7 +28,7 @@ import ImageCover from "../../../shared/component/ImageCover/ImageCover.tsx";
 import Tag from "../_component/Tag/Tag.tsx";
 import dynamic from "next/dynamic";
 
-const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
   ssr: false,
 });
 

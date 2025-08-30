@@ -1,12 +1,8 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import * as styles from "./HospitalReviewWrapper.css";
 import { IcEllipses } from "@asset/svg";
-import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
-import {
-  useDeleteHospitalReview,
-  useInfiniteHospitalReview,
-} from "@api/shared/hook";
-import { isLoggedIn } from "@api/index";
+import SimpleBottomSheet from "@design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
+import { useDeleteHospitalReview, useInfiniteHospitalReview } from "@api/shared/hook";
 import HospitalReview from "./HospitalReview/HospitalReview";
 import { useRouter } from "next/navigation";
 import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";

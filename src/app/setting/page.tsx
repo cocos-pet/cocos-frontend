@@ -1,16 +1,16 @@
 "use client";
 
-import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
+import {IcChevronLeft, IcEditPen} from "@asset/svg";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
 import * as styles from "./page.css";
-import Divider from "src/design-system/Divider/Divider";
-import { useRouter } from "next/navigation";
-import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
+import Divider from "@design-system/Divider/Divider";
+import {useRouter} from "next/navigation";
+import SimpleBottomSheet from "@design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
-import { PATH } from "@route/path";
-import { useLogout } from "@api/domain/setting/hook";
-import { useAuth } from "@providers/AuthProvider";
-import { useEffect } from "react";
+import {PATH} from "@route/path";
+import {useLogout} from "@api/domain/setting/hook";
+import {useAuth} from "@providers/AuthProvider";
+import {useEffect} from "react";
 
 export default function Setting() {
   const router = useRouter();
@@ -41,10 +41,7 @@ export default function Setting() {
           <span className={styles.myprofileText}>마이 프로필</span>
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
-            <span
-              className={styles.myProfileSpan}
-              onClick={() => router.push(PATH.SETTING.EDIT_PROFILE)}
-            >
+            <span className={styles.myProfileSpan} onClick={() => router.push(PATH.SETTING.EDIT_PROFILE)}>
               <IcEditPen width={20} height={20} />
               <span className={styles.myProfileSpanText}>내 정보수정</span>
             </span>
@@ -55,10 +52,7 @@ export default function Setting() {
           <span className={styles.myprofileText}>계정</span>
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
-            <span
-              className={styles.myProfileSpan}
-              onClick={() => openBottomSheet()}
-            >
+            <span className={styles.myProfileSpan} onClick={() => openBottomSheet()}>
               <span className={styles.myProfileSpanText}>로그아웃</span>
             </span>
           </div>

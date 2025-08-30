@@ -1,16 +1,16 @@
-import { useSearchParams, useRouter } from "next/navigation";
+import {useRouter, useSearchParams} from "next/navigation";
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
-import { IcLeftarrow, IcUnderline } from "@asset/svg";
-import { PATH } from "@route/path.ts";
-import { formatTime } from "@shared/util/formatTime.ts";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { useEffect, useState, useCallback, Suspense } from "react";
-import { components } from "@type/schema";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
+import {IcLeftarrow, IcUnderline} from "@asset/svg";
+import {PATH} from "@route/path.ts";
+import {formatTime} from "@shared/util/formatTime.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {Suspense, useCallback, useEffect, useState} from "react";
+import {components} from "@type/schema";
 import nocategory from "@asset/image/nocategory.png";
-import { useFilterStore } from "@store/filter.ts";
-import { postPostFiltersRequestType } from "@api/domain/community/search";
+import {useFilterStore} from "@store/filter.ts";
+import {postPostFiltersRequestType} from "@api/domain/community/search";
 import Image from "next/image";
 
 const symptomMapping: { [key: string]: string } = {
@@ -32,9 +32,7 @@ function SymptomDetailContent() {
   const [isRecentPost, setIsRecentPost] = useState(true);
   const searchParams = useSearchParams();
   const typeId = searchParams.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
-    []
-  );
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts } = usePostPostFilters();
   const router = useRouter();
 
@@ -73,13 +71,7 @@ function SymptomDetailContent() {
           />
         </div>
         <div className={styles.emptyContainer}>
-          <Image
-            src={nocategory}
-            alt="게시글 없음."
-            width={276}
-            height={155}
-            style={{ objectFit: "cover" }}
-          />
+          <Image src={nocategory} alt="게시글 없음." width={276} height={155} style={{ objectFit: "cover" }} />
           <h1> 아직 등록된 게시글이 없어요 </h1>
         </div>
       </div>
@@ -91,11 +83,7 @@ function SymptomDetailContent() {
   return (
     <div className={styles.categoryContainer}>
       <div className={styles.headerContainer}>
-        <HeaderNav
-          leftIcon={<IcLeftarrow />}
-          centerContent={symptomName}
-          onLeftClick={() => router.push(PATH.MAIN)}
-        />
+        <HeaderNav leftIcon={<IcLeftarrow />} centerContent={symptomName} onLeftClick={() => router.push(PATH.MAIN)} />
       </div>
       <div className={styles.tabContainer}>
         <button

@@ -1,20 +1,20 @@
-import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@asset/svg";
-import { TextField } from "src/design-system/TextField";
-import { ChangeEvent, useEffect, useMemo, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { styles } from "@app/community/search/done/SearchDone.css.ts";
-import { PATH } from "@route/path.ts";
+import {IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue} from "@asset/svg";
+import {TextField} from "@design-system/TextField";
+import {ChangeEvent, useEffect, useMemo, useState} from "react";
+import {useRouter, useSearchParams} from "next/navigation";
+import {styles} from "@app/community/search/done/SearchDone.css.ts";
+import {PATH} from "@route/path.ts";
 import Content from "@common/component/Content/Content.tsx";
-import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { useFilterStore } from "@store/filter.ts";
+import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
+import {useFilterStore} from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import { useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
-import { formatTime } from "@shared/util/formatTime";
+import {useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms} from "@api/domain/mypage/edit-pet/hook.ts";
+import {formatTime} from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const Loading = dynamic(() => import("src/design-system/Loading/Loading"), {
+const Loading = dynamic(() => import("@design-system/Loading/Loading"), {
   ssr: false,
 });
 

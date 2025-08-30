@@ -1,6 +1,6 @@
 "use client";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
-import { TextField } from "src/design-system/TextField/index.tsx";
+import { TextField } from "@design-system/TextField/index.tsx";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path.ts";
@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 import { styles } from "./Search.css.ts";
 import { useAuth } from "@providers/AuthProvider.tsx";
 
-const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
   ssr: false,
 });
 

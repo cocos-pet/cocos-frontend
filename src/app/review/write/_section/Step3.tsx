@@ -1,15 +1,15 @@
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
-import { IcDeleteBlack } from "@asset/svg/index";
-import Tab from "src/design-system/Tab/Tab";
-import { Button } from "@design-system/Button";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
+import {IcDeleteBlack} from "@asset/svg/index";
+import Tab from "@design-system/Tab/Tab";
+import {Button} from "@design-system/Button";
 import * as styles from "./Step3.style.css";
-import { useState } from "react";
+import {useState} from "react";
 import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCategoryContent";
 import Image from "next/image";
 import feedbackImg from "@asset/image/reviewFeedback.png";
-import { FEEDBACK_CATEGORIES } from "../constant";
-import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "../page";
+import {FEEDBACK_CATEGORIES} from "../constant";
+import {useFormContext} from "react-hook-form";
+import {ReviewFormData} from "../page";
 
 type CategoryType = "good" | "bad";
 

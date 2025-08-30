@@ -1,11 +1,11 @@
 "use client";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
-import { IcX } from "@asset/svg";
-import { useRouter } from "next/navigation";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
+import {IcX} from "@asset/svg";
+import {useRouter} from "next/navigation";
 import * as styles from "./page.css";
-import { Button } from "@design-system/Button";
-import { PATH } from "@route/path";
-import { useWithdraw } from "@api/domain/setting/hook";
+import {Button} from "@design-system/Button";
+import {PATH} from "@route/path";
+import {useWithdraw} from "@api/domain/setting/hook";
 
 export default function Withdraw() {
   const router = useRouter();

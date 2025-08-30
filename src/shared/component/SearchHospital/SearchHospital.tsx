@@ -1,13 +1,13 @@
 import * as styles from "./SearchHospital.css";
 import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
-import { Button } from "src/design-system/Button";
-import { TextField } from "src/design-system/TextField";
+import {Button} from "@design-system/Button";
+import {TextField} from "@design-system/TextField";
 import Card from "./Card";
-import { useEffect, useState, useRef, useCallback } from "react";
-import { useDebounce } from "@shared/hook/useDebounce";
-import { useInfiniteHospitalList } from "@api/shared/hook";
-import { components } from "@type/schema";
-import { usePathname } from "next/navigation";
+import {useCallback, useEffect, useRef, useState} from "react";
+import {useDebounce} from "@shared/hook/useDebounce";
+import {useInfiniteHospitalList} from "@api/shared/hook";
+import {components} from "@type/schema";
+import {usePathname} from "next/navigation";
 
 type HospitalResponse = components["schemas"]["HospitalResponse"];
 

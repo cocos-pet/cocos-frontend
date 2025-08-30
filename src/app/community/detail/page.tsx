@@ -2,7 +2,7 @@
 
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
 import { IcLeftarrow } from "@asset/svg";
 import { PATH } from "@route/path.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
@@ -14,10 +14,10 @@ import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import Tab from "src/design-system/Tab/Tab.tsx";
+import Tab from "@design-system/Tab/Tab.tsx";
 import { ReviewDetailContent } from "@app/community/detail/_section";
 
-const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
   ssr: false,
 });
 
@@ -43,13 +43,7 @@ type ActiveTabType = "review" | "community";
 // 빈 상태 컴포넌트
 const EmptyState = () => (
   <div className={styles.emptyContainer}>
-    <Image
-      src={nocategory}
-      alt="게시글 없음."
-      style={{ objectFit: "cover" }}
-      width={276}
-      height={155}
-    />
+    <Image src={nocategory} alt="게시글 없음." style={{ objectFit: "cover" }} width={276} height={155} />
     <h1> 아직 등록된 게시글이 없어요 </h1>
   </div>
 );
@@ -57,9 +51,7 @@ const EmptyState = () => (
 const CommunityDetailContent = () => {
   const searchParams = useSearchParams();
   const typeId = searchParams?.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
-    []
-  );
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
   if (!typeId) {

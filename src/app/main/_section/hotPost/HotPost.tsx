@@ -1,13 +1,13 @@
 "use client";
 
 import * as styles from "./HotPost.css.ts";
-import Divider from "src/design-system/Divider/Divider.tsx";
+import Divider from "@design-system/Divider/Divider.tsx";
 import { useQueryGetPopular } from "@api/domain/main/hook.ts";
 import { PATH } from "@route/path.ts";
 import { useRouter } from "next/navigation";
 import { Separated } from "react-simplikit";
 import NoData from "@shared/component/NoData/NoData.tsx";
-import Loading from "src/design-system/Loading/Loading.tsx";
+import Loading from "@design-system/Loading/Loading.tsx";
 import { If } from "@shared/component/If/if.tsx";
 
 const HotPost = () => {
@@ -40,10 +40,7 @@ const HotPost = () => {
           <Separated by={<Divider size="popular" />}>
             {posts.slice(0, 5).map((post, index) => (
               <div key={post.id} className={styles.postlist}>
-                <div
-                  className={styles.postContent}
-                  onClick={() => handlePostClick(post.id)}
-                >
+                <div className={styles.postContent} onClick={() => handlePostClick(post.id)}>
                   <div className={styles.contentId}>{index + 1}</div>
                   <div className={styles.contentTitle}>{post.title}</div>
                 </div>

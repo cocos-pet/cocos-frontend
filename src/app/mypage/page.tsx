@@ -1,7 +1,7 @@
 "use client";
 
 import * as styles from "./_style/mypage.css";
-import Divider from "src/design-system/Divider/Divider";
+import Divider from "@design-system/Divider/Divider";
 import { useMypageState } from "./_hooks/useMypageState";
 import ProfileSection from "./_component/ProfileSection/ProfileSection";
 import HeaderSection from "./_component/HeaderSection/HeaderSection";
@@ -17,14 +17,8 @@ import ContentSection from "./_component/ContentSection/ContentSection";
  */
 const Mypage = () => {
   // 커스텀 훅을 통한 상태 관리
-  const {
-    activeTab,
-    isActiveTab,
-    handleTabClick,
-    navigateToSettings,
-    navigateToEditPet,
-    navigateToRegisterPet,
-  } = useMypageState();
+  const { activeTab, isActiveTab, handleTabClick, navigateToSettings, navigateToEditPet, navigateToRegisterPet } =
+    useMypageState();
 
   return (
     <div className={styles.mypageContainer}>
@@ -33,20 +27,13 @@ const Mypage = () => {
 
       {/* 프로필 섹션 */}
       <article className={styles.myProfileWrapper}>
-        <ProfileSection
-          onNavigateToEditPet={navigateToEditPet}
-          onNavigateToRegisterPet={navigateToRegisterPet}
-        />
+        <ProfileSection onNavigateToEditPet={navigateToEditPet} onNavigateToRegisterPet={navigateToRegisterPet} />
       </article>
 
       <Divider />
 
       {/* 탭 섹션 */}
-      <TabsSection
-        activeTab={activeTab}
-        isActiveTab={isActiveTab}
-        onTabClick={handleTabClick}
-      />
+      <TabsSection activeTab={activeTab} isActiveTab={isActiveTab} onTabClick={handleTabClick} />
 
       {/* 컨텐츠 섹션 */}
       <ContentSection activeTab={activeTab} />

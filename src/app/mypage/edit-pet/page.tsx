@@ -1,11 +1,11 @@
 "use client";
 
 import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
-import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
 import * as styles from "./PetEdit.css";
-import Divider from "src/design-system/Divider/Divider.tsx";
+import Divider from "@design-system/Divider/Divider.tsx";
 import { Button } from "@design-system/Button";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { validateNickname } from "@shared/util/validateNickname";
