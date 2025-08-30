@@ -1,11 +1,17 @@
-import CheckBoxText from "@common/component/CheckBoxText/CheckBoxText";
+import CheckBoxText from "src/design-system/CheckBoxText/CheckBoxText";
 import { styles } from "./CategoryContent.css";
 import DropDownText from "@common/component/DropDownText/DropDownText";
-import { DiseaseItem, SelectedChips, SymptomItem, useFilterStore } from "@store/filter";
+import {
+  DiseaseItem,
+  SelectedChips,
+  SymptomItem,
+  useFilterStore,
+} from "@store/filter";
 
 // 선택한 카테고리에 맞게 보여줄 내용들
 const CategoryContent = () => {
-  const { category, categoryData, selectedChips, toggleChips } = useFilterStore();
+  const { category, categoryData, selectedChips, toggleChips } =
+    useFilterStore();
 
   const dropDownData = categoryData[category];
 

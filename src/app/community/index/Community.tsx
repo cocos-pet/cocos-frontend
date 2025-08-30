@@ -6,7 +6,7 @@ import Nav from "@common/component/Nav/Nav";
 import Divider from "@common/component/Divider/Divider";
 import Banner from "../_component/Banner/Banner";
 import SelectPost from "../_component/SelectPost/SelectPost";
-import FloatingBtn from "@common/component/FloatingBtn/Floating";
+import FloatingBtn from "src/design-system/FloatingBtn/Floating";
 import * as styles from "./Community.css";
 import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
@@ -82,7 +82,10 @@ const Community = () => {
   return (
     <div className={styles.communityContainer}>
       <div className={styles.communityHeader}>
-        <HeaderNav centerContent="커뮤니티" rightBtn={<IcSearch onClick={handleSearchClick} />} />
+        <HeaderNav
+          centerContent="커뮤니티"
+          rightBtn={<IcSearch onClick={handleSearchClick} />}
+        />
       </div>
       <div className={styles.bannerContainer}>
         <Banner />
@@ -107,7 +110,10 @@ const Community = () => {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
+              <Modal.Confirm
+                label={"로그인"}
+                onClick={() => router.push(PATH.LOGIN)}
+              />
             </Modal.BottomAffix>
           }
         >

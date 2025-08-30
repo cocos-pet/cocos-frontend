@@ -11,7 +11,7 @@ import Image from "next/image";
 import HospitalList from "./_components/hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
-import FloatingBtn from "@common/component/FloatingBtn/Floating";
+import FloatingBtn from "src/design-system/FloatingBtn/Floating";
 import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import type { Hospital } from "@api/domain/hospitals";
@@ -60,7 +60,9 @@ export default function ReviewPage() {
             <div className={styles.recommendHospital}>
               <h2 className={styles.recommendTitle}>
                 {nickname && `${nickname}님을 위한 `}
-                <span className={styles.recommendTitleHighlight}>추천 병원</span>
+                <span className={styles.recommendTitleHighlight}>
+                  추천 병원
+                </span>
                 이에요
               </h2>
               <div className={styles.recommendList}>
@@ -68,20 +70,33 @@ export default function ReviewPage() {
                   <div
                     key={hospital.id}
                     className={styles.hospitalCard}
-                    onClick={() => router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)}
+                    onClick={() =>
+                      router.push(`${PATH.HOSPITAL.ROOT}/${hospital.id}`)
+                    }
                   >
                     <div className={styles.hospitalTitleContainer}>
                       <span className={styles.hospitalRank}>{idx + 1}</span>
-                      <span className={styles.hospitalName}>{hospital.name}</span>
+                      <span className={styles.hospitalName}>
+                        {hospital.name}
+                      </span>
                     </div>
-                    <span className={styles.hospitalAddress}>{hospital.address}</span>
+                    <span className={styles.hospitalAddress}>
+                      {hospital.address}
+                    </span>
                   </div>
                 ))}
               </div>
-              <Image src={banner} alt="banner" className={styles.bannerContainer} />
+              <Image
+                src={banner}
+                alt="banner"
+                className={styles.bannerContainer}
+              />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
-            <HospitalList title={"많은 반려인들이"} highlightText={"다녀간 병원"} />
+            <HospitalList
+              title={"많은 반려인들이"}
+              highlightText={"다녀간 병원"}
+            />
           </div>
         </div>
         <div className={styles.floatBtnWrapper}>

@@ -1,4 +1,4 @@
-import CheckBoxText from "@common/component/CheckBoxText/CheckBoxText";
+import CheckBoxText from "src/design-system/CheckBoxText/CheckBoxText.tsx";
 import { styles } from "./CategoryContent.css";
 import { useEffect, useRef, useState } from "react";
 import { TextField } from "@common/component/TextField";
@@ -11,7 +11,8 @@ import {
 } from "../../../../_store/animalFilter.ts";
 
 const CategoryContent = () => {
-  const { category, categoryData, selectedChips, toggleChips } = useAnimalFilterStore();
+  const { category, categoryData, selectedChips, toggleChips } =
+    useAnimalFilterStore();
   const [searchString, setSearchString] = useState("");
   const ref = useRef<HTMLInputElement>(null);
 
@@ -23,7 +24,10 @@ const CategoryContent = () => {
   const dropDownData = categoryData[category];
 
   // 선택 여부 확인 함수
-  const isSelected = (key: keyof SelectedChips, id: number | "M" | "F"): boolean => {
+  const isSelected = (
+    key: keyof SelectedChips,
+    id: number | "M" | "F"
+  ): boolean => {
     return selectedChips[key] === id;
   };
 
@@ -35,7 +39,13 @@ const CategoryContent = () => {
   return (
     <>
       {category === "breeds" && (
-        <span style={{ width: "calc(100% - 4rem)", position: "absolute", top: "1.2rem" }}>
+        <span
+          style={{
+            width: "calc(100% - 4rem)",
+            position: "absolute",
+            top: "1.2rem",
+          }}
+        >
           <TextField
             value={searchString}
             onChange={(e) => setSearchString(e.target.value)}
@@ -60,7 +70,9 @@ const CategoryContent = () => {
 
         {category === "breeds" &&
           (dropDownData as CategoryBreed)
-            .filter((breed) => breed.name.toLowerCase().includes(searchString.toLowerCase())) // 필터링
+            .filter((breed) =>
+              breed.name.toLowerCase().includes(searchString.toLowerCase())
+            ) // 필터링
             .map((breed) => (
               <CheckBoxText
                 key={`${category}-${breed.id}`}
