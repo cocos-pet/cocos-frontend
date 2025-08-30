@@ -1,13 +1,13 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
-import {IcCuriousActive, IcCuriousUnactive, IcLeftarrow, IcLikeActive, IcLikeDisabled} from "@asset/svg";
-import {Button} from "@design-system/Button";
+import { IcCuriousActive, IcCuriousUnactive, IcLeftarrow, IcLikeActive, IcLikeDisabled } from "@asset/svg";
+import { Button } from "@design-system/Button";
 import Chip from "../../../design-system/Chip/Chip.tsx";
 import Divider from "src/design-system/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
-import {TextField} from "src/design-system/TextField/index.tsx";
+import { TextField } from "src/design-system/TextField/index.tsx";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import {
@@ -19,20 +19,20 @@ import {
   usePostGet,
   useSubCommentPost,
 } from "@api/domain/community/post/hook";
-import {PATH} from "@route/path.ts";
+import { PATH } from "@route/path.ts";
 import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
-import {useParams, useRouter} from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import {styles} from "./PostDetail.css.ts";
-import {getCategoryResponse} from "../_utills/getPostCategoryLike.ts";
-import {getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon} from "../_utills/handleCategoryItem.tsx";
+import { styles } from "./PostDetail.css.ts";
+import { getCategoryResponse } from "../_utills/getPostCategoryLike.ts";
+import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from "../_utills/handleCategoryItem.tsx";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
-import {useAuth} from "@providers/AuthProvider";
-import {useIsPetRegistered} from "@common/hook/useIsPetRegistered";
-import {Modal} from "@common/component/Modal/Modal.tsx";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import { Modal } from "@common/component/Modal/Modal.tsx";
 
 const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
   ssr: false,

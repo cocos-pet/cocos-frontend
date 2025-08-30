@@ -1,10 +1,10 @@
 import * as styles from "./PetType.css";
-import {useState} from "react";
+import { useState } from "react";
 
-import {Button} from "@design-system/Button";
-import {useAnimalGet} from "@api/domain/register-pet/animal/hook";
-import {PetData} from "../../RegisterPet.tsx";
-import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import { Button } from "@design-system/Button";
+import { useAnimalGet } from "@api/domain/register-pet/animal/hook";
+import { PetData } from "../../RegisterPet.tsx";
+import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelector.tsx";

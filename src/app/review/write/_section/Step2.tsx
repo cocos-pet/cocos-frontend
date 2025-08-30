@@ -1,18 +1,18 @@
 import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
-import {IcDeleteBlack} from "@asset/svg/index";
+import { IcDeleteBlack } from "@asset/svg/index";
 import ReviewSymptom from "@app/review/write/_component/ReviewSymptom";
 import ReviewPurpose from "@app/review/write/_component/ReviewPurpose";
 import ReviewDisease from "@app/review/write/_component/ReviewDisease";
 import * as styles from "./Step2.style.css";
-import {Button} from "@design-system/Button";
-import {useState} from "react";
+import { Button } from "@design-system/Button";
+import { useState } from "react";
 import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDisease";
 
-import {useBodiesGet} from "@api/domain/register-pet/bodies/hook";
-import {useSymptomGet} from "@api/domain/register-pet/symptom/hook";
-import {useDiseaseGet} from "@api/domain/register-pet/disease/hook";
-import {useFormContext} from "react-hook-form";
-import {ReviewFormData} from "../page";
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "../page";
 
 type CategoryType = "symptom" | "disease";
 

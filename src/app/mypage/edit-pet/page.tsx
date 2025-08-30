@@ -1,21 +1,21 @@
 "use client";
 
-import {IcChevronLeft, IcChevronRight, IcEditPen, IcPlus} from "@asset/svg";
+import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
 import HeaderNav from "src/design-system/HeaderNav/HeaderNav.tsx";
-import {PATH} from "@route/path";
-import {useRouter} from "next/navigation";
+import { PATH } from "@route/path";
+import { useRouter } from "next/navigation";
 import * as styles from "./PetEdit.css";
 import Divider from "src/design-system/Divider/Divider.tsx";
-import {Button} from "@design-system/Button";
-import {ChangeEvent, useEffect, useRef, useState} from "react";
-import {validateNickname} from "@shared/util/validateNickname";
+import { Button } from "@design-system/Button";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
+import { validateNickname } from "@shared/util/validateNickname";
 import CategoryBottomSheet from "./_component/CategoryBottomSheet/CategoryBottomSheet";
-import {CategoryData, useCategoryFilterStore} from "./_store/categoryFilter.ts";
+import { CategoryData, useCategoryFilterStore } from "./_store/categoryFilter.ts";
 import Chip from "../../../design-system/Chip/Chip";
-import {getSelectedChipNamesById} from "./_utils/getSelectedChipNamesById.ts";
+import { getSelectedChipNamesById } from "./_utils/getSelectedChipNamesById.ts";
 import AnimalBottomSheet from "./_component/AnimalBottomSheet/AnimalBottomSheet";
-import {useAnimalFilterStore} from "./_store/animalFilter.ts";
-import {getAnimalChipNamesById} from "./_utils/getAnimalChipNamesById.ts";
+import { useAnimalFilterStore } from "./_store/animalFilter.ts";
+import { getAnimalChipNamesById } from "./_utils/getAnimalChipNamesById.ts";
 import AgeBottomSheet from "./_component/AgeBottomSheet/AgeBottomSheet";
 import {
   useGetAnimal,
@@ -25,11 +25,11 @@ import {
   useGetSymptoms,
   usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
-import {useGetMemberInfo, useGetPetInfo} from "@api/domain/mypage/hook";
+import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";
-import SearchHospital, {Hospital} from "@shared/component/SearchHospital/SearchHospital.tsx";
-import {useGetFavoriteHospital, usePatchFavoriteHospital} from "@api/shared/hook.ts";
-import {useMypageMemberInfo} from "../_store/mypageStore.ts";
+import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital.tsx";
+import { useGetFavoriteHospital, usePatchFavoriteHospital } from "@api/shared/hook.ts";
+import { useMypageMemberInfo } from "../_store/mypageStore.ts";
 
 //todo: useEffect 중복 코드 제거
 //todo: 세부 종류는 종류를 기반으로 가져와서 렌더링,

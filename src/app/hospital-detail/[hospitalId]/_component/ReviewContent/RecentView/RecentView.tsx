@@ -2,19 +2,19 @@
 
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview";
 import * as styles from "./RecentView.css";
-import {useRouter} from "next/navigation";
-import {PATH} from "@route/path";
-import {useInfiniteHospitalReviews} from "@api/domain/community/detail/hook";
-import {useEffect, useRef, useState} from "react";
-import {components} from "src/type/schema";
-import {useAuth} from "@providers/AuthProvider";
-import {useIsPetRegistered} from "@common/hook/useIsPetRegistered";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { useInfiniteHospitalReviews } from "@api/domain/community/detail/hook";
+import { useEffect, useRef, useState } from "react";
+import { components } from "src/type/schema";
+import { useAuth } from "@providers/AuthProvider";
+import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import Divider from "@common/component/Divider/Divider";
-import {Modal} from "@common/component/Modal/Modal";
+import { Modal } from "@common/component/Modal/Modal";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import Image from "next/image";
 import no_review from "@asset/image/no_review.png";
-import {Button} from "@design-system/Button";
+import { Button } from "@design-system/Button";
 
 interface ReviewSummaryItem {
   id?: number;

@@ -1,8 +1,8 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
-import {chipItem, ChipType} from "./ChipStyle.css.ts";
-import {IcDelete} from "@asset/svg";
+import React, { useEffect, useState } from "react";
+import { chipItem, ChipType } from "./ChipStyle.css.ts";
+import { IcDelete } from "@asset/svg";
 
 export interface ChipProps {
   label?: string;
@@ -39,10 +39,7 @@ const Chip = ({
   };
 
   return (
-    <div
-      className={chipItem({ size, color, active: isActive })}
-      onClick={handleClick}
-    >
+    <div className={chipItem({ size, color, active: isActive })} onClick={handleClick}>
       {label}
       {rightIcon ? (
         <>{rightIcon}</>

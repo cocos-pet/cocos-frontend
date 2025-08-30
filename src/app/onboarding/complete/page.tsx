@@ -1,14 +1,14 @@
 "use client";
 
 import * as styles from "./Complete.css";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
-import {Button} from "@design-system/Button";
-import {PATH} from "@route/path";
-import {useGetNickname} from "@api/domain/complete/hook";
+import { Button } from "@design-system/Button";
+import { PATH } from "@route/path";
+import { useGetNickname } from "@api/domain/complete/hook";
 import registerPet from "@asset/lottie/registerPet.json";
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 
 const Lottie = dynamic(() => import("lottie-react"), { ssr: false });

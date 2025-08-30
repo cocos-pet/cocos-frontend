@@ -1,17 +1,17 @@
 import HeaderNav from "src/design-system/HeaderNav/HeaderNav";
-import {IcDeleteBlack} from "@asset/svg/index";
-import {Button} from "@design-system/Button";
+import { IcDeleteBlack } from "@asset/svg/index";
+import { Button } from "@design-system/Button";
 import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
-import {useFormContext} from "react-hook-form";
-import {ReviewFormData, ReviewFormWithUIData} from "../page";
-import {useReviewPost} from "@app/api/review/write/submit/hook";
-import {useSearchParams} from "next/navigation";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData, ReviewFormWithUIData } from "../page";
+import { useReviewPost } from "@app/api/review/write/submit/hook";
+import { useSearchParams } from "next/navigation";
 import axios from "axios";
 
 import * as styles from "./Step4.style.css";
 import ReviewContent from "@app/review/write/_component/ReviewContent";
 import ReviewImg from "@app/review/write/_component/ReviewImg";
-import {useState} from "react";
+import { useState } from "react";
 
 interface Step4Props {
   onPrev: () => void;

@@ -1,12 +1,12 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
-import {CategoryType, SelectedChips, useCategoryFilterStore} from "../../_store/categoryFilter";
+import { CategoryType, SelectedChips, useCategoryFilterStore } from "../../_store/categoryFilter";
 import Tab from "src/design-system/Tab/Tab";
 import * as styles from "./CategoryBottomSheet.css";
-import {Button} from "@design-system/Button";
+import { Button } from "@design-system/Button";
 import Chip from "../../../../../design-system/Chip/Chip";
-import {getSelectedChipNamesById} from "../../_utils/getSelectedChipNamesById";
+import { getSelectedChipNamesById } from "../../_utils/getSelectedChipNamesById";
 import CategoryContent from "./components/CategoryContent/CategoryContent";
-import {usePatchPetInfo} from "@api/domain/mypage/edit-pet/hook";
+import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
 
 const categories: { id: CategoryType; label: string }[] = [
   { id: "symptoms", label: "증상" },

@@ -1,11 +1,11 @@
-import {useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import * as styles from "./locationBottomSheet.css";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
-import {Button} from "@design-system/Button";
-import {IcCheck} from "@asset/svg";
-import {CityTab} from "./CityTab";
-import {useGetLocation} from "@api/domain/review/location/hook";
-import {District, LocationType} from "@api/domain/review/location/types";
+import { Button } from "@design-system/Button";
+import { IcCheck } from "@asset/svg";
+import { CityTab } from "./CityTab";
+import { useGetLocation } from "@api/domain/review/location/hook";
+import { District, LocationType } from "@api/domain/review/location/types";
 
 interface LocationBottomSheetProps {
   isOpen: boolean;

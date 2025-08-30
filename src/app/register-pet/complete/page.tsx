@@ -1,11 +1,11 @@
 "use client";
 
 import * as styles from "./Complete.css";
-import {useRouter} from "next/navigation";
+import { useRouter } from "next/navigation";
 
-import {Button} from "@design-system/Button";
-import {PATH} from "@route/path";
-import {useGetNickname} from "@api/domain/complete/hook";
+import { Button } from "@design-system/Button";
+import { PATH } from "@route/path";
+import { useGetNickname } from "@api/domain/complete/hook";
 import onboarding from "@asset/lottie/onboarding.json";
 import Title from "../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";

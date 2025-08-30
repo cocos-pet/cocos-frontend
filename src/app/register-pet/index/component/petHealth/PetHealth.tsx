@@ -1,13 +1,13 @@
 import * as styles from "./PetHealth.css";
-import {useState} from "react";
-import {useRouter} from "next/navigation";
-import {PATH} from "@route/path";
-import {Button} from "@design-system/Button";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { Button } from "@design-system/Button";
 
-import {useBodiesGet} from "@api/domain/register-pet/bodies/hook";
-import {useDiseaseGet} from "@api/domain/register-pet/disease/hook";
-import {useSymptomGet} from "@api/domain/register-pet/symptom/hook";
-import {PetData} from "../../RegisterPet.tsx";
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { PetData } from "../../RegisterPet.tsx";
 import Step1 from "./disease/Step1.tsx";
 import Step2 from "./disease/Step2.tsx";
 import SymStep1 from "./symptom/SymStep1.tsx";

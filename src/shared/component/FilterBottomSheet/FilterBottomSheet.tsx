@@ -2,10 +2,10 @@ import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import * as styles from "./FilterBottomSheet.css";
 import Tab from "src/design-system/Tab/Tab";
 import CategoryContent from "./CategoryContent/CategoryContent";
-import {Button} from "@design-system/Button";
+import { Button } from "@design-system/Button";
 import Chip from "../../../design-system/Chip/Chip";
-import {CategoryType, SelectedChips, useFilterStore} from "@store/filter";
-import {getSelectedChipNamesById} from "@shared/util/getSelectedChipNamesById";
+import { CategoryType, SelectedChips, useFilterStore } from "@store/filter";
+import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById";
 
 const categories: { id: CategoryType; label: string }[] = [
   { id: "breeds", label: "종류" },

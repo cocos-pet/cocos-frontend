@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import {button, ButtonVariants, icon} from "./styles.css.ts";
+import { button, ButtonVariants, icon } from "./styles.css.ts";
 
 export interface ButtonProps {
   width?: string;
