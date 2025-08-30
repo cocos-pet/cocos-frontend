@@ -1,5 +1,5 @@
-import { useModalContext } from "@common/component/Modal/context.ts";
-import { Button } from "@common/component/Button";
+import { useModalContext } from "../context.ts";
+import { Button } from "../../Button";
 
 export interface ModalConfirmProps {
   onClick?: () => void;
@@ -13,7 +13,14 @@ export const ModalConfirm = (props: ModalConfirmProps) => {
     onClick?.();
     setOpen(false);
   };
-  return <Button size={"large"} variant={"solidPrimary"} label={label} onClick={handleClick} />;
+  return (
+    <Button
+      size={"large"}
+      variant={"solidPrimary"}
+      label={label}
+      onClick={handleClick}
+    />
+  );
 };
 
 ModalConfirm.displayName = "ModalConfirm";

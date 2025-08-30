@@ -3,7 +3,7 @@
 import { IcSearch } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 import Banner from "../_component/Banner/Banner";
 import SelectPost from "../_component/SelectPost/SelectPost";
 import FloatingBtn from "src/design-system/FloatingBtn/Floating";

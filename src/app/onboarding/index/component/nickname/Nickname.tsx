@@ -1,21 +1,23 @@
 import * as styles from "./Nickname.css";
-import {ChangeEvent, useState} from "react";
-import {useRouter} from "next/navigation";
+import { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 
-import {validateNickname} from "@shared/util/validateNickname";
-import {Button} from "@common/component/Button";
-import {TextField} from "@common/component/TextField";
+import { validateNickname } from "@shared/util/validateNickname";
+import { Button } from "@common/component/Button";
+import { TextField } from "src/design-system/TextField/index.tsx";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
-import {useCheckNicknameGet} from "@api/domain/onboarding/nicknameDuplicate/hook";
-import {usePatchNickname} from "@api/domain/onboarding/nickname/hook";
-import {PATH} from "@route/path";
+import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
+import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
+import { PATH } from "@route/path";
 import Image from "next/image";
 import dynamic from "next/dynamic";
-import {ONBOARDING_GUIDE} from "../../constant/onboardingGuide.ts";
+import { ONBOARDING_GUIDE } from "../../constant/onboardingGuide.ts";
 import Title from "../../common/title/Title.tsx";
 import Docs from "../../common/docs/Docs.tsx";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 const Nickname = () => {
   // 상태 하나로 관리
@@ -42,7 +44,8 @@ const Nickname = () => {
   const isValid = nickname && validationMessages.length === 0;
 
   // TextField 상태
-  const textFieldState = nickname === "" || validationMessages.length === 0 ? "default" : "error";
+  const textFieldState =
+    nickname === "" || validationMessages.length === 0 ? "default" : "error";
 
   // 뒤로 가기
   const router = useRouter();
@@ -69,7 +72,13 @@ const Nickname = () => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div>
-          <Image src={nicknameCoco} alt="onboarding-character" className={styles.imgStyle} width={276} height={155} />
+          <Image
+            src={nicknameCoco}
+            alt="onboarding-character"
+            className={styles.imgStyle}
+            width={276}
+            height={155}
+          />
           <Title text={ONBOARDING_GUIDE.nickname.title} />
           <Docs text={ONBOARDING_GUIDE.nickname.docs} />
         </div>
@@ -93,8 +102,20 @@ const Nickname = () => {
 
       {/* 하단 버튼 */}
       <div className={styles.btnWrapper}>
-        <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button label="다음" size="large" variant="solidPrimary" disabled={!isValid} onClick={handleNext} />
+        <Button
+          label="돌아가기"
+          size="large"
+          variant="solidNeutral"
+          disabled={false}
+          onClick={handleGoBack}
+        />
+        <Button
+          label="다음"
+          size="large"
+          variant="solidPrimary"
+          disabled={!isValid}
+          onClick={handleNext}
+        />
       </div>
     </>
   );

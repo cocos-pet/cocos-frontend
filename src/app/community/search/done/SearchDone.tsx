@@ -1,5 +1,10 @@
-import { IcLeftarrow, IcSearch, IcSearchFillter, IcSearchFillterBlue } from "@asset/svg";
-import { TextField } from "@common/component/TextField";
+import {
+  IcLeftarrow,
+  IcSearch,
+  IcSearchFillter,
+  IcSearchFillterBlue,
+} from "@asset/svg";
+import { TextField } from "src/design-system/TextField";
 import { ChangeEvent, Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { styles } from "@app/community/search/done/SearchDone.css.ts";
@@ -8,13 +13,20 @@ import Content from "@common/component/Content/Content.tsx";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import { useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
+import {
+  useGetAnimal,
+  useGetBodies,
+  useGetDisease,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook.ts";
 import { formatTime } from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("src/design-system/Loading/Loading"), {
+  ssr: false,
+});
 
 interface SearchDonePropTypes {
   id?: number;
@@ -34,13 +46,16 @@ function SearchDoneContent() {
   const searchParams = useSearchParams();
   const query = searchParams.get("searchText");
   const [isFilterActive, setIsFilterActive] = useState(false);
-  const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
+  const [searchDoneData, setSearchDoneData] = useState<
+    Array<SearchDonePropTypes>
+  >([]);
   const [searchText, setSearchText] = useState(query || "");
   const router = useRouter();
   const { mutate, isPending } = usePostPostFilters();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
-  const { setCategoryData, selectedChips, clearAllChips, setOpen } = useFilterStore();
+  const { setCategoryData, selectedChips, clearAllChips, setOpen } =
+    useFilterStore();
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
@@ -61,8 +76,12 @@ function SearchDoneContent() {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
-      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      const diseaseIdArr = diseaseBodies.bodies.map(
+        (item) => item.id as number
+      );
+      const symptomIdArr = symptomBodies.bodies.map(
+        (item) => item.id as number
+      );
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -93,14 +112,16 @@ function SearchDoneContent() {
         onError: (error) => {
           console.error("Search Error:", error);
         },
-      },
+      }
     );
   }, [searchText, selectedChips, mutate]);
 
   // 필터 활성화 여부 계산
   useEffect(() => {
     setIsFilterActive(
-      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0,
+      selectedChips.breedId.length > 0 ||
+        selectedChips.symptomIds.length > 0 ||
+        selectedChips.diseaseIds.length > 0
     );
   }, [selectedChips]);
 
@@ -113,7 +134,9 @@ function SearchDoneContent() {
     router.push(`${PATH.COMMUNITY.SEARCH}?searchText=${searchText}`);
   };
 
-  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
+  const onTextFieldClear = (
+    e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>
+  ) => {
     e.stopPropagation();
     setSearchText("");
     clearAllChips();
@@ -171,7 +194,9 @@ function SearchDoneContent() {
               width={276}
               height={155}
             />
-            <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
+            <span className={styles.noSearchText}>
+              검색 결과를 찾지 못했어요.
+            </span>
             <span className={styles.noSearchRecommendText}>
               {"검색어를 확인하거나"}
               <br />

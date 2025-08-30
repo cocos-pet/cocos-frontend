@@ -5,7 +5,7 @@ import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";
 import Image from "next/image";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 import { Button } from "@common/component/Button";
 import * as style from "./style.css";
 import { IcCheckbox } from "@asset/svg";
@@ -17,7 +17,9 @@ import { PATH } from "@route/path";
 
 const page = () => {
   const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;
-  const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(Array(CHECKBOX_COUNT).fill(false));
+  const [checkedBoxes, setCheckedBoxes] = useState<boolean[]>(
+    Array(CHECKBOX_COUNT).fill(false)
+  );
 
   const mutation = useAgreeReviewMutation();
   const router = useRouter();
@@ -58,7 +60,12 @@ const page = () => {
       <HeaderNav
         centerContent="후기 작성 유의사항"
         type="noBackground"
-        leftIcon={<IcLeftarrow style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={
+          <IcLeftarrow
+            style={{ width: 24, height: 24 }}
+            onClick={handleGoHospitalDetail}
+          />
+        }
       />
       <div className={style.wrapper}>
         <section className={style.topLayout}>
@@ -68,7 +75,12 @@ const page = () => {
           <p className={style.docs}>{TITLE.descriptions[0]}</p>
           <p className={style.docs}>{TITLE.descriptions[1]}</p>
         </section>
-        <Image src={reviewNoticeFrame} alt="리뷰작성 유의사항 이미지" priority className={style.mainImg} />
+        <Image
+          src={reviewNoticeFrame}
+          alt="리뷰작성 유의사항 이미지"
+          priority
+          className={style.mainImg}
+        />
         <section className={style.bottomLayout}>
           {CHECKBOX_TEXTS.map((text, idx) => (
             <div key={idx}>
@@ -79,9 +91,16 @@ const page = () => {
               )}
               <div
                 className={style.checkbox}
-                onClick={() => (idx === ALL_CHECKBOX_INDEX ? handleToggleAll() : handleToggleItem(idx))}
+                onClick={() =>
+                  idx === ALL_CHECKBOX_INDEX
+                    ? handleToggleAll()
+                    : handleToggleItem(idx)
+                }
               >
-                <IcCheckbox checked={checkedBoxes[idx]} className={style.check} />
+                <IcCheckbox
+                  checked={checkedBoxes[idx]}
+                  className={style.check}
+                />
                 <span>
                   <span className={style.red}>(필수)</span> {text}
                 </span>
@@ -92,7 +111,11 @@ const page = () => {
       </div>
 
       <section className={style.buttonLayout}>
-        <Button label="다음으로" disabled={!allChecked} onClick={handleClickBtn} />
+        <Button
+          label="다음으로"
+          disabled={!allChecked}
+          onClick={handleClickBtn}
+        />
       </section>
     </div>
   );

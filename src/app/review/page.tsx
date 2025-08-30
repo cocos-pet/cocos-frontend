@@ -4,7 +4,7 @@ import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
-import { TextField } from "@common/component/TextField";
+import { TextField } from "src/design-system/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";

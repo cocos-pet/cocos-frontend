@@ -1,7 +1,7 @@
 "use client";
 
 import * as styles from "./_style/profile.css";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 import { useProfileState } from "./_hooks/useProfileState";
 import HeaderSection from "./_component/HeaderSection/HeaderSection";
 import ProfileSection from "./_component/ProfileSection/ProfileSection";
@@ -32,7 +32,16 @@ const Profile = () => {
 
 const ProfileContent = () => {
   // 커스텀 훅을 통한 상태 관리
-  const { query, activeTab, isActiveTab, handleTabClick, navigateBack, member, petInfo, isLoading } = useProfileState();
+  const {
+    query,
+    activeTab,
+    isActiveTab,
+    handleTabClick,
+    navigateBack,
+    member,
+    petInfo,
+    isLoading,
+  } = useProfileState();
   const { isAuthenticated } = useAuth();
   const router = useRouter();
 
@@ -58,7 +67,11 @@ const ProfileContent = () => {
         <Divider />
 
         {/* 탭 섹션 */}
-        <TabsSection activeTab={activeTab} isActiveTab={isActiveTab} onTabClick={handleTabClick} />
+        <TabsSection
+          activeTab={activeTab}
+          isActiveTab={isActiveTab}
+          onTabClick={handleTabClick}
+        />
 
         {/* 컨텐츠 섹션 */}
         <ContentSection activeTab={activeTab} />

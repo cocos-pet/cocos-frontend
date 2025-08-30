@@ -1,7 +1,7 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
 import * as styles from "./AgeBottomSheet.css";
-import { TextField } from "@common/component/TextField";
+import { TextField } from "src/design-system/TextField";
 import { ChangeEvent } from "react";
 import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
 
@@ -13,7 +13,13 @@ interface AgeBottomSheetPropTypes {
   petId: number;
 }
 
-const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge, petId }: AgeBottomSheetPropTypes) => {
+const AgeBottomSheet = ({
+  isOpen,
+  setIsOpen,
+  age,
+  updatePetAge,
+  petId,
+}: AgeBottomSheetPropTypes) => {
   const { mutate: patchPetInfo } = usePatchPetInfo();
 
   const handleClickButton = () => {
@@ -30,7 +36,9 @@ const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge, petId }: AgeBott
       <>
         <div className={styles.ageWrapper}>
           <div className={styles.ageContainer}>
-            <span className={styles.pleaseAgeText}>반려동물의 나이를 알려주세요.</span>
+            <span className={styles.pleaseAgeText}>
+              반려동물의 나이를 알려주세요.
+            </span>
             <div className={styles.ageInputContainer}>
               <div className={styles.ageInputWrapper}>
                 <span style={{ minWidth: "10rem" }}>
@@ -52,7 +60,12 @@ const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge, petId }: AgeBott
         </div>
 
         <div className={styles.buttonWrapper}>
-          <Button label="수정하기" size="large" style={{ width: "100%" }} onClick={handleClickButton} />
+          <Button
+            label="수정하기"
+            size="large"
+            style={{ width: "100%" }}
+            onClick={handleClickButton}
+          />
         </div>
       </>
     </BottomSheet>

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ModalBottomStyle } from "@common/component/Modal/style.css.ts";
+import { ModalBottomStyle } from "../style.css.ts";
 
 export interface ModalBottomProps {
   children: ReactNode;

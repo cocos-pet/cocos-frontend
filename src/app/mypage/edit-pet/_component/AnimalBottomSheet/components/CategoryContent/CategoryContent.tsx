@@ -1,7 +1,7 @@
 import CheckBoxText from "src/design-system/CheckBoxText/CheckBoxText.tsx";
 import { styles } from "./CategoryContent.css";
 import { useEffect, useRef, useState } from "react";
-import { TextField } from "@common/component/TextField";
+import { TextField } from "src/design-system/TextField/index.tsx";
 import {
   CategoryAnimal,
   CategoryBreed,

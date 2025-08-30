@@ -12,7 +12,9 @@ import PetId from "./component/petId/PetId.tsx";
 import PetHealth from "./component/petHealth/PetHealth.tsx";
 import ProgressBar from "./common/ProgressBar/ProgressBar.tsx";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 export interface PetData {
   breedId: number | null;
@@ -47,7 +49,7 @@ const RegisterPet = () => {
   const updatePetData = <K extends keyof PetData>(
     field: K,
     value: PetData[K],
-    callback?: (updatedData: PetData) => void,
+    callback?: (updatedData: PetData) => void
   ) => {
     setPetData((prev) => {
       const updatedData = { ...prev, [field]: value };
@@ -84,7 +86,13 @@ const RegisterPet = () => {
       case 2:
         return <PetGender setStep={setStep} updatePetData={updatePetData} />;
       case 3:
-        return <PetId setStep={setStep} updatePetData={updatePetData} petData={petData} />;
+        return (
+          <PetId
+            setStep={setStep}
+            updatePetData={updatePetData}
+            petData={petData}
+          />
+        );
       case 4:
         return <PetAge setStep={setStep} updatePetData={updatePetData} />;
       case 5:

@@ -1,11 +1,17 @@
-import { CSSProperties, forwardRef, ReactNode, useEffect, useState } from "react";
-import { ModalContext } from "@common/component/Modal/context.ts";
-import { ModalClose } from "@common/component/Modal/group/ModalClose.tsx";
-import { ModalConfirm } from "@common/component/Modal/group/ModalConfirm.tsx";
-import { ModalContent } from "@common/component/Modal/group/ModalContent.tsx";
-import { ModalRootStyle } from "@common/component/Modal/style.css.ts";
-import { ModalTitle } from "@common/component/Modal/group/ModalTitle.tsx";
-import { ModalBottomAffix } from "@common/component/Modal/group/ModalBottomAffix.tsx";
+import {
+  CSSProperties,
+  forwardRef,
+  ReactNode,
+  useEffect,
+  useState,
+} from "react";
+import { ModalContext } from "./context.ts";
+import { ModalClose } from "./group/ModalClose.tsx";
+import { ModalConfirm } from "./group/ModalConfirm.tsx";
+import { ModalContent } from "./group/ModalContent.tsx";
+import { ModalRootStyle } from "./style.css.ts";
+import { ModalTitle } from "./group/ModalTitle.tsx";
+import { ModalBottomAffix } from "./group/ModalBottomAffix.tsx";
 
 export interface ModalBodyProps {
   children: ReactNode;
@@ -44,40 +50,42 @@ export interface ModalBodyProps {
  * ```
  */
 
-const ModalRoot = forwardRef<HTMLDivElement, ModalBodyProps>((props, forwardRef) => {
-  const { children, className, open, onOpenChange, ...restProps } = props;
-  const [internalOpen, setInternalOpen] = useState(open || false);
+const ModalRoot = forwardRef<HTMLDivElement, ModalBodyProps>(
+  (props, forwardRef) => {
+    const { children, className, open, onOpenChange, ...restProps } = props;
+    const [internalOpen, setInternalOpen] = useState(open || false);
 
-  const setOpen = (newOpen: boolean) => {
-    setInternalOpen(newOpen);
-    if (onOpenChange) {
-      onOpenChange(newOpen);
-    }
-  };
+    const setOpen = (newOpen: boolean) => {
+      setInternalOpen(newOpen);
+      if (onOpenChange) {
+        onOpenChange(newOpen);
+      }
+    };
 
-  const handleBackdropClick = () => {
-    setOpen(false);
-  };
+    const handleBackdropClick = () => {
+      setOpen(false);
+    };
 
-  useEffect(() => {
-    if (typeof open === "boolean") {
-      setInternalOpen(open);
-    }
-  }, [open]);
+    useEffect(() => {
+      if (typeof open === "boolean") {
+        setInternalOpen(open);
+      }
+    }, [open]);
 
-  return (
-    <ModalContext.Provider value={{ open: internalOpen, setOpen }}>
-      <div
-        ref={forwardRef}
-        className={ModalRootStyle({ isOpen: internalOpen })}
-        onClick={handleBackdropClick}
-        {...restProps}
-      >
-        {children}
-      </div>
-    </ModalContext.Provider>
-  );
-});
+    return (
+      <ModalContext.Provider value={{ open: internalOpen, setOpen }}>
+        <div
+          ref={forwardRef}
+          className={ModalRootStyle({ isOpen: internalOpen })}
+          onClick={handleBackdropClick}
+          {...restProps}
+        >
+          {children}
+        </div>
+      </ModalContext.Provider>
+    );
+  }
+);
 
 ModalRoot.displayName = "ModalRoot";
 

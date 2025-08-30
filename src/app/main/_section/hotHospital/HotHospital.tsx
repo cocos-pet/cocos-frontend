@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState } from "react";
 import { If } from "@shared/component/If/if.tsx";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import { Separated } from "react-simplikit";
-import Divider from "@common/component/Divider/Divider.tsx";
+import Divider from "src/design-system/Divider/Divider.tsx";
 import HotHospitalItem from "@app/main/_component/HotHospitalItem/HotHospitalItem.tsx";
 import { HospitalListType } from "@api/shared";
 
@@ -27,7 +27,7 @@ const HotHospital = () => {
           const hospitals = res?.data?.hospitals ?? [];
           setHotHospitals(hospitals);
         },
-      },
+      }
     );
   }, [getHotHospital]);
 

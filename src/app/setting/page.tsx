@@ -3,9 +3,9 @@
 import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import * as styles from "./page.css";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 import { useRouter } from "next/navigation";
-import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
+import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
 import { useLogout } from "@api/domain/setting/hook";
@@ -43,7 +43,10 @@ export default function Setting() {
           <span className={styles.myprofileText}>마이 프로필</span>
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
-            <span className={styles.myProfileSpan} onClick={() => router.push(PATH.SETTING.EDIT_PROFILE)}>
+            <span
+              className={styles.myProfileSpan}
+              onClick={() => router.push(PATH.SETTING.EDIT_PROFILE)}
+            >
               <IcEditPen width={20} height={20} />
               <span className={styles.myProfileSpanText}>내 정보수정</span>
             </span>
@@ -54,7 +57,10 @@ export default function Setting() {
           <span className={styles.myprofileText}>계정</span>
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
-            <span className={styles.myProfileSpan} onClick={() => openBottomSheet()}>
+            <span
+              className={styles.myProfileSpan}
+              onClick={() => openBottomSheet()}
+            >
               <span className={styles.myProfileSpanText}>로그아웃</span>
             </span>
           </div>

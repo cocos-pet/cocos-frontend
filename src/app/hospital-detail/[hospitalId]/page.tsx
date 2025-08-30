@@ -5,7 +5,7 @@ import Info from "./_component/Info/Info";
 import Selection from "./_component/Selection/Selection";
 import { useGetHospitalDetail } from "@api/domain/review/hospital-detail/hook";
 import { Suspense } from "react";
-import Loading from "@common/component/Loading/Loading";
+import Loading from "src/design-system/Loading/Loading";
 
 const LoadingFallback = () => <Loading height={80} />;
 

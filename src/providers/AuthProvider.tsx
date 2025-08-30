@@ -1,8 +1,15 @@
 "use client";
 
-import React, { createContext, useContext, useEffect, useState, ReactNode, Suspense } from "react";
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+  ReactNode,
+  Suspense,
+} from "react";
 import { isLoggedIn } from "@api/index";
-import Loading from "@common/component/Loading/Loading";
+import Loading from "src/design-system/Loading/Loading";
 
 interface AuthContextType {
   isAuthenticated: boolean;

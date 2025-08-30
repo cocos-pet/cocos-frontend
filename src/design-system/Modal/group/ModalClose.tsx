@@ -1,5 +1,5 @@
-import { useModalContext } from "@common/component/Modal/context.ts";
-import { Button } from "@common/component/Button";
+import { useModalContext } from "../context.ts";
+import { Button } from "../../Button";
 
 export interface ModalCloseProps {
   label?: string;
@@ -8,7 +8,14 @@ export interface ModalCloseProps {
 export const ModalClose = (props: ModalCloseProps) => {
   const { label = "취소" } = props;
   const { setOpen } = useModalContext();
-  return <Button size={"large"} variant={"solidNeutral"} label={label} onClick={() => setOpen(false)} />;
+  return (
+    <Button
+      size={"large"}
+      variant={"solidNeutral"}
+      label={label}
+      onClick={() => setOpen(false)}
+    />
+  );
 };
 
 ModalClose.displayName = "ModalClose";

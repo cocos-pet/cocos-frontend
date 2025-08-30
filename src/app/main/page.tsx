@@ -2,10 +2,10 @@
 
 import Symptom from "@app/main/_section/symptom/Symptom.tsx";
 import * as styles from "./Main.css.ts";
-import { TextField } from "@common/component/TextField";
+import { TextField } from "src/design-system/TextField/index.tsx";
 import { IcSearch } from "@asset/svg";
 import MainFooter from "@app/main/_section/mainFooter/MainFooter.tsx";
-import Divider from "@common/component/Divider/Divider.tsx";
+import Divider from "src/design-system/Divider/Divider.tsx";
 import HotPost from "@app/main/_section/hotPost/HotPost.tsx";
 import MainHeader from "@app/main/_section/mainHeader/mainHeader.tsx";
 import Nav from "@common/component/Nav/Nav.tsx";

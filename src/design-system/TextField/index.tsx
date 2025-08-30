@@ -1,7 +1,12 @@
 "use client";
 
 import React from "react";
-import { iconstyle, InputVariants, styles, WrapVariants } from "@common/component/TextField/styles.css.ts";
+import {
+  iconstyle,
+  InputVariants,
+  styles,
+  WrapVariants,
+} from "src/design-system/TextField/styles.css";
 import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
@@ -60,7 +65,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
       mentionedNickname,
       readOnly,
     },
-    ref,
+    ref
   ) => {
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
@@ -91,5 +96,5 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
         )}
       </div>
     );
-  },
+  }
 );

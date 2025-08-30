@@ -1,15 +1,15 @@
-import React, {ChangeEvent, useState} from "react";
-import {useRouter} from "next/navigation";
+import React, { ChangeEvent, useState } from "react";
+import { useRouter } from "next/navigation";
 import * as styles from "./PetName.css";
 
-import {TextField} from "@common/component/TextField";
-import {Button} from "@common/component/Button";
-import {validatePetName} from "@shared/util/validatePetName";
+import { TextField } from "src/design-system/TextField/index.tsx";
+import { Button } from "@common/component/Button";
+import { validatePetName } from "@shared/util/validatePetName";
 import petNameBori from "@asset/image/petNameBori.png";
-import {PATH} from "@route/path";
+import { PATH } from "@route/path";
 import Image from "next/image";
-import {PetData} from "../../RegisterPet.tsx";
-import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import { PetData } from "../../RegisterPet.tsx";
+import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 
@@ -46,7 +46,13 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div className={styles.gap}>
-          <Image src={petNameBori} alt="onboarding-character" className={styles.imgStyle} width={276} height={155} />
+          <Image
+            src={petNameBori}
+            alt="onboarding-character"
+            className={styles.imgStyle}
+            width={276}
+            height={155}
+          />
           <Title text={ONBOARDING_GUIDE.petName.title} />
           <Docs text={ONBOARDING_GUIDE.petName.docs} />
         </div>
@@ -70,8 +76,20 @@ const PetName = ({ setStep, updatePetData }: PetNameProps) => {
 
       {/* 하단 버튼 */}
       <div className={styles.btnWrapper}>
-        <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button label="다음" size="large" variant="solidPrimary" disabled={!isValid} onClick={handleNext} />
+        <Button
+          label="돌아가기"
+          size="large"
+          variant="solidNeutral"
+          disabled={false}
+          onClick={handleGoBack}
+        />
+        <Button
+          label="다음"
+          size="large"
+          variant="solidPrimary"
+          disabled={!isValid}
+          onClick={handleNext}
+        />
       </div>
     </>
   );

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { icon, toast, ToastVariants } from "@common/component/Toast/Toast.css.ts";
+import { icon, toast, ToastVariants } from "./Toast.css.ts";
 import { IcDelete } from "@asset/svg";
 
 interface ToastProps {
@@ -19,7 +19,13 @@ type CombinedButtonProps = ToastProps & Exclude<ToastVariants, undefined>;
  * @constructor
  */
 
-export const Toast = ({ message, variant, iconColor, onClick, showDeleteIcon = true }: CombinedButtonProps) => {
+export const Toast = ({
+  message,
+  variant,
+  iconColor,
+  onClick,
+  showDeleteIcon = true,
+}: CombinedButtonProps) => {
   const [isVisible, setIsVisible] = useState(message !== "");
 
   useEffect(() => {

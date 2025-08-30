@@ -5,7 +5,7 @@ import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
 import { formatTime } from "@shared/util/formatTime.ts";
-import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import { useDeleteSubComment } from "@api/domain/community/post/hook.ts";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -14,7 +14,10 @@ import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/cate
 interface SubCommentProps {
   commentId: number | undefined;
   subComment: commentGetRequestSubCommentType;
-  onSubCommentReplyClick?: (nickname: string | undefined, commentId: number | undefined) => void;
+  onSubCommentReplyClick?: (
+    nickname: string | undefined,
+    commentId: number | undefined
+  ) => void;
   onReplyClick?: (id: number | undefined) => void;
   onCommentDelete: () => void;
   onModalClose?: (e: React.MouseEvent<HTMLDivElement>) => void;
@@ -73,11 +76,15 @@ const SubComment = ({
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {subComment.nickname}
-              <p className={styles.blue}>{subComment.isPostWriter && "작성자"}</p>
+              <p className={styles.blue}>
+                {subComment.isPostWriter && "작성자"}
+              </p>
             </span>
             <span className={styles.meta}>
               {subComment.breed} · {subComment.petAge}살 ·{" "}
-              {subComment.createdAt ? formatTime(subComment.createdAt).toLocaleString() : ""}
+              {subComment.createdAt
+                ? formatTime(subComment.createdAt).toLocaleString()
+                : ""}
             </span>
           </div>
           {subComment.isWriter && (
@@ -88,7 +95,9 @@ const SubComment = ({
                 setIsOpen(true);
               }}
               isOpen={openModalId === `subComment-${subComment.id}`}
-              onToggleModal={() => setOpenModalId(`subComment-${subComment.id}`)}
+              onToggleModal={() =>
+                setOpenModalId(`subComment-${subComment.id}`)
+              }
             />
           )}
         </div>

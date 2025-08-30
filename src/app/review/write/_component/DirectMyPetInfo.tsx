@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useFormContext, Controller, useWatch } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
 import { ReviewFormData } from "../page";
-import { TextField } from "@common/component/TextField/index";
+import { TextField } from "src/design-system/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
 import { GENDER, PET_TYPES } from "../constant";
 import { usePetIdGet } from "@api/domain/register-pet/petId/hook";
@@ -29,7 +29,9 @@ const DirectMyPetInfo = ({
   const { control, watch, setValue } = useFormContext<ReviewFormData>();
 
   // 종, 성별 드롭다운
-  const [activeDropDown, setActiveDropDown] = useState<"petType" | keyof ReviewFormData | null>(null);
+  const [activeDropDown, setActiveDropDown] = useState<
+    "petType" | keyof ReviewFormData | null
+  >(null);
   // 종류, 몸무게 포커스
   const [focusedField, setFocusedField] = useState<FocusableField | null>(null);
   // 드롭다운 필터링용 검색 입력값 (breedId는 리뷰 제출용)
@@ -40,13 +42,18 @@ const DirectMyPetInfo = ({
     setActiveDropDown(null);
   };
 
-  const handleWeightChange = (e: React.ChangeEvent<HTMLInputElement>, onChange: (value: string) => void) => {
+  const handleWeightChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    onChange: (value: string) => void
+  ) => {
     const input = e.target.value.replace(/[^0-9.]/g, "");
     const [intPart = "", ...rest] = input.split(".");
     const decimal = rest.join("").slice(0, 1);
     const trimmedInt = intPart.slice(0, 3);
     const formatted =
-      trimmedInt === "" && input.startsWith(".") ? `0.${decimal}` : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
+      trimmedInt === "" && input.startsWith(".")
+        ? `0.${decimal}`
+        : `${trimmedInt}${rest.length ? `.${decimal}` : ""}`;
     onChange(formatted);
   };
 
@@ -75,7 +82,11 @@ const DirectMyPetInfo = ({
           {/* tavian */}
           <TextField
             value={petType}
-            onClick={() => setActiveDropDown((prev) => (prev === "petType" ? null : "petType"))}
+            onClick={() =>
+              setActiveDropDown((prev) =>
+                prev === "petType" ? null : "petType"
+              )
+            }
             placeholder="종 선택하기"
             isDelete={false}
             state={getState("petType", petType)}
@@ -105,8 +116,18 @@ const DirectMyPetInfo = ({
               <>
                 {/* tavian */}
                 <TextField
-                  value={field.value === "F" ? "암컷" : field.value === "M" ? "수컷" : ""}
-                  onClick={() => setActiveDropDown((prev) => (prev === "gender" ? null : "gender"))}
+                  value={
+                    field.value === "F"
+                      ? "암컷"
+                      : field.value === "M"
+                      ? "수컷"
+                      : ""
+                  }
+                  onClick={() =>
+                    setActiveDropDown((prev) =>
+                      prev === "gender" ? null : "gender"
+                    )
+                  }
                   placeholder="성별 선택하기"
                   isDelete={false}
                   state={getState("gender", field.value ?? "")}
@@ -142,18 +163,26 @@ const DirectMyPetInfo = ({
               const filteredBreeds = useMemo(() => {
                 const breeds = (breedIdData?.data?.breeds ?? []).filter(
                   (item): item is { id: number; name: string } =>
-                    typeof item.id === "number" && typeof item.name === "string",
+                    typeof item.id === "number" && typeof item.name === "string"
                 );
                 const inputFiltered = breeds.filter((item) =>
-                  item.name.replace(/\s+/g, "").includes(debouncedBreedInput.replace(/\s+/g, "")),
+                  item.name
+                    .replace(/\s+/g, "")
+                    .includes(debouncedBreedInput.replace(/\s+/g, ""))
                 );
                 const lastBreed = breeds.at(-1); // 찾는종이 없음 필드
-                const isLastIncluded = inputFiltered.some((b) => b.id === lastBreed?.id);
+                const isLastIncluded = inputFiltered.some(
+                  (b) => b.id === lastBreed?.id
+                );
 
-                return lastBreed && !isLastIncluded ? [...inputFiltered, lastBreed] : inputFiltered;
+                return lastBreed && !isLastIncluded
+                  ? [...inputFiltered, lastBreed]
+                  : inputFiltered;
               }, [breedIdData, debouncedBreedInput]);
 
-              const selectedBreedName = breedIdData?.data?.breeds?.find((b) => b.id === field.value)?.name ?? "";
+              const selectedBreedName =
+                breedIdData?.data?.breeds?.find((b) => b.id === field.value)
+                  ?.name ?? "";
               return (
                 <>
                   <TextField
@@ -170,14 +199,20 @@ const DirectMyPetInfo = ({
                     placeholder="예시: 샴"
                     isDelete={false}
                     maxLength={20}
-                    state={watchedBreedId !== -1 ? "done" : getState("breedId", watchedBreedId)}
+                    state={
+                      watchedBreedId !== -1
+                        ? "done"
+                        : getState("breedId", watchedBreedId)
+                    }
                   />
                   {activeDropDown === "breedId" && (
                     <DropDown
                       isOpen
                       items={filteredBreeds}
                       onClickItem={(selectedName) => {
-                        const selected = filteredBreeds.find((b) => b.name === selectedName);
+                        const selected = filteredBreeds.find(
+                          (b) => b.name === selectedName
+                        );
                         if (selected) {
                           setBreedInput(selected.name);
                           setIsBreedInputTouched(true); // 이 시점부터는 breedInput 고정

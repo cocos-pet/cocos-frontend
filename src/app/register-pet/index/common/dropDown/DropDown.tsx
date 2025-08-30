@@ -1,4 +1,4 @@
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 import { container, itemStyle, span } from "./DropDown.css";
 
 interface DropDownType {
@@ -19,7 +19,11 @@ const DropDown = ({ isOpen, items, onClickItem, size }: DropDownType) => {
   return (
     <div className={container({ size })}>
       {visibleItems.map((item, index) => (
-        <div key={item.id} className={itemStyle} onClick={() => onClickItem(item.name)}>
+        <div
+          key={item.id}
+          className={itemStyle}
+          onClick={() => onClickItem(item.name)}
+        >
           <span className={span}>{item.name}</span>
           {index < visibleItems.length - 1 && <Divider size="small" />}
         </div>

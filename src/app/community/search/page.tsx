@@ -1,24 +1,35 @@
 "use client";
-import {IcLeftarrow, IcSearch} from "@asset/svg";
-import {TextField} from "@common/component/TextField";
-import React, {ChangeEvent, Suspense, useEffect, useRef, useState} from "react";
-import {useRouter, useSearchParams} from "next/navigation";
-import {PATH} from "@route/path.ts";
-import {useSearchGet, useSearchPost} from "@api/domain/community/search/hook.ts";
-import {useFilterStore} from "@store/filter.ts";
+import { IcLeftarrow, IcSearch } from "@asset/svg";
+import { TextField } from "src/design-system/TextField/index.tsx";
+import React, {
+  ChangeEvent,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { PATH } from "@route/path.ts";
+import {
+  useSearchGet,
+  useSearchPost,
+} from "@api/domain/community/search/hook.ts";
+import { useFilterStore } from "@store/filter.ts";
 import dynamic from "next/dynamic";
-import {styles} from "./Search.css.ts";
+import { styles } from "./Search.css.ts";
 import { useAuth } from "@providers/AuthProvider.tsx";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("src/design-system/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 function Search() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams?.get("searchText");
   const [searchText, setSearchText] = useState(query || "");
-  const {isAuthenticated} = useAuth();
-  const { mutate} = useSearchPost();  
+  const { isAuthenticated } = useAuth();
+  const { mutate } = useSearchPost();
   const { clearAllChips } = useFilterStore();
   const { data: recentSearchData, isLoading } = useSearchGet(isAuthenticated);
 
@@ -39,7 +50,7 @@ function Search() {
         onError: () => {
           alert("검색에 실패했습니다.");
         },
-      },
+      }
     );
   };
 
@@ -91,26 +102,25 @@ function Search() {
         />
       </div>
       {isAuthenticated && (
-      <div className={styles.searchContent}>
-        <div className={styles.title}>최근 검색 기록</div>
-        <ul className={styles.list}>
-          {recentSearchData?.keywords?.map((data) => (
-            <li
-              key={data.id}
-              className={styles.listItem}
-              onClick={() => {
-                if (data.content) handleNavigate(data.content);
-              }}
-            >
-              {data.content || ""}
-            </li>
-          ))}
-        </ul>
-      </div>
-    )}
+        <div className={styles.searchContent}>
+          <div className={styles.title}>최근 검색 기록</div>
+          <ul className={styles.list}>
+            {recentSearchData?.keywords?.map((data) => (
+              <li
+                key={data.id}
+                className={styles.listItem}
+                onClick={() => {
+                  if (data.content) handleNavigate(data.content);
+                }}
+              >
+                {data.content || ""}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 }
-
 
 export default Search;

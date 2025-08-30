@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 import * as styles from "./Summary.css";
 import { IcChevronDown } from "@asset/svg";
 import { useGetHospitalSummary } from "@api/domain/review/summary/hook";
@@ -27,7 +27,9 @@ const Summary = () => {
   return (
     <div className={styles.summaryContainer}>
       <p className={styles.summaryTitle}>리뷰 요약</p>
-      <p className={styles.summarySubTitle}>맞춤 리뷰를 통해 나에게 맞는 병원의 후기를 확인해요.</p>
+      <p className={styles.summarySubTitle}>
+        맞춤 리뷰를 통해 나에게 맞는 병원의 후기를 확인해요.
+      </p>
       <div className={styles.summaryGrid}>
         <div>
           <h3 className={styles.summarySectionTitle}>좋았던 점</h3>
@@ -48,7 +50,10 @@ const Summary = () => {
       </div>
       {(goodReviews.length > 3 || badReviews.length > 3) && (
         <div className={styles.folderButtonWrapper}>
-          <button className={styles.folderButton} onClick={() => setIsFolded(!isFolded)}>
+          <button
+            className={styles.folderButton}
+            onClick={() => setIsFolded(!isFolded)}
+          >
             <IcChevronDown className={isFolded ? styles.rotateIcon : ""} />
           </button>
         </div>

@@ -1,5 +1,5 @@
 import { ReactNode } from "react";
-import { ModalTitleStyle } from "@common/component/Modal/style.css.ts";
+import { ModalTitleStyle } from "../style.css.ts";
 
 export interface ModalTitleProps {
   children: ReactNode;

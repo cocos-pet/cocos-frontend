@@ -1,16 +1,30 @@
 "use client";
 import { styles } from "./hospitals.css";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
-import { TextField } from "@common/component/TextField";
-import React, { ChangeEvent, Suspense, useEffect, useRef, useState } from "react";
+import { TextField } from "src/design-system/TextField";
+import React, {
+  ChangeEvent,
+  Suspense,
+  useEffect,
+  useRef,
+  useState,
+} from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import { useGetHospitalSearchKeywords, usePostHospitalSearchKeyword } from "@api/domain/hospitals/search/hook";
-import { HospitalSearchKeywordsResponse, Keyword } from "@api/domain/hospitals/search";
+import {
+  useGetHospitalSearchKeywords,
+  usePostHospitalSearchKeyword,
+} from "@api/domain/hospitals/search/hook";
+import {
+  HospitalSearchKeywordsResponse,
+  Keyword,
+} from "@api/domain/hospitals/search";
 import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("src/design-system/Loading/Loading"), {
+  ssr: false,
+});
 
 function SearchContent() {
   const router = useRouter();
@@ -18,11 +32,12 @@ function SearchContent() {
   const query = searchParams?.get("searchText") || "";
   const [searchText, setSearchText] = useState(query);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const {isAuthenticated} = useAuth();
+  const { isAuthenticated } = useAuth();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const { data: keywordsData, isLoading } = useGetHospitalSearchKeywords(isAuthenticated);
+  const { data: keywordsData, isLoading } =
+    useGetHospitalSearchKeywords(isAuthenticated);
   const { mutate: saveKeyword } = usePostHospitalSearchKeyword();
 
   const handleSearch = (keyword: string) => {
@@ -32,7 +47,9 @@ function SearchContent() {
     }
     saveKeyword(keyword, {
       onSettled: () => {
-        router.push(`${PATH.REVIEW.SEARCH}/done?searchText=${encodeURIComponent(keyword)}`);
+        router.push(
+          `${PATH.REVIEW.SEARCH}/done?searchText=${encodeURIComponent(keyword)}`
+        );
       },
     });
   };
@@ -47,7 +64,9 @@ function SearchContent() {
   };
 
   const handleNavigate = (keyword: string) => {
-    router.push(`${PATH.REVIEW.SEARCH}/done?searchText=${encodeURIComponent(keyword)}`);
+    router.push(
+      `${PATH.REVIEW.SEARCH}/done?searchText=${encodeURIComponent(keyword)}`
+    );
   };
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -64,7 +83,8 @@ function SearchContent() {
     }
   }, []);
 
-  const keywords = (keywordsData as HospitalSearchKeywordsResponse)?.data?.keywords || [];
+  const keywords =
+    (keywordsData as HospitalSearchKeywordsResponse)?.data?.keywords || [];
 
   if (isLoading) return <Loading height={45} />;
 
@@ -78,25 +98,31 @@ function SearchContent() {
           placeholder={"우리 동네를 알려주세요 (예:서초동)"}
           onChange={onChange}
           onKeyDown={handleKeyDown}
-          icon={<IcSearch width={20} height={20} onClick={() => handleSearch(searchText)} />}
+          icon={
+            <IcSearch
+              width={20}
+              height={20}
+              onClick={() => handleSearch(searchText)}
+            />
+          }
           onClearClick={() => setSearchText("")}
         />
       </div>
       {isAuthenticated && (
-      <div className={styles.searchContent}>
-        <div className={styles.title}>최근 검색 기록</div>
-        <ul className={styles.list}>
-          {keywords.map((keyword: Keyword) => (
-            <li
-              key={keyword.id}
-              className={styles.listItem}
-              onClick={() => {
-                if (keyword.content) handleNavigate(keyword.content);
-              }}
-            >
-              {keyword.content}
-            </li>
-          ))}
+        <div className={styles.searchContent}>
+          <div className={styles.title}>최근 검색 기록</div>
+          <ul className={styles.list}>
+            {keywords.map((keyword: Keyword) => (
+              <li
+                key={keyword.id}
+                className={styles.listItem}
+                onClick={() => {
+                  if (keyword.content) handleNavigate(keyword.content);
+                }}
+              >
+                {keyword.content}
+              </li>
+            ))}
           </ul>
         </div>
       )}

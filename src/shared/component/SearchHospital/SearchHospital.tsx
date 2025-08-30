@@ -1,7 +1,7 @@
 import * as styles from "./SearchHospital.css";
 import IcBottomSheetLine from "@asset/svg/IcBottomSheetLine";
 import { Button } from "@common/component/Button";
-import { TextField } from "@common/component/TextField";
+import { TextField } from "src/design-system/TextField";
 import Card from "./Card";
 import { useEffect, useState, useRef, useCallback } from "react";
 import { useDebounce } from "@shared/hook/useDebounce";
@@ -68,15 +68,21 @@ const SearchHospital = (props: SearchHospitalProps) => {
   }, []);
 
   // useInfiniteQuery를 사용하여 병원 목록 가져오기
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading, isError, refetch } = useInfiniteHospitalList(
-    {
-      locationId,
-      locationType,
-      keyword: debouncedSearchWord || undefined,
-      size: 10,
-      sortBy: debouncedSearchWord ? undefined : "REVIEW",
-    },
-  );
+  const {
+    data,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isLoading,
+    isError,
+    refetch,
+  } = useInfiniteHospitalList({
+    locationId,
+    locationType,
+    keyword: debouncedSearchWord || undefined,
+    size: 10,
+    sortBy: debouncedSearchWord ? undefined : "REVIEW",
+  });
 
   // 검색어 변경 시 쿼리 다시 실행
   useEffect(() => {
@@ -84,9 +90,13 @@ const SearchHospital = (props: SearchHospitalProps) => {
   }, [debouncedSearchWord, refetch]);
 
   // 병원 목록 평탄화
-  const hospitals = data?.pages.flatMap((page) => page?.hospitals || []).map(mapToHospital) || [];
+  const hospitals =
+    data?.pages.flatMap((page) => page?.hospitals || []).map(mapToHospital) ||
+    [];
   useEffect(() => {
-    const initialHospital = hospitals.find((hospital) => hospital.id === initialId);
+    const initialHospital = hospitals.find(
+      (hospital) => hospital.id === initialId
+    );
     if (initialId && initialHospital) {
       onSelectHospital(initialHospital);
     }
@@ -104,7 +114,7 @@ const SearchHospital = (props: SearchHospitalProps) => {
             fetchNextPage();
           }
         },
-        { threshold: 0.5 },
+        { threshold: 0.5 }
       );
     }
 
@@ -133,7 +143,10 @@ const SearchHospital = (props: SearchHospitalProps) => {
 
   return (
     <div className={styles.dimmed({ active })} onClick={handleCancelSearch}>
-      <div className={styles.wrapper({ active })} onClick={handleBottomSheetClick}>
+      <div
+        className={styles.wrapper({ active })}
+        onClick={handleBottomSheetClick}
+      >
         <div className={styles.bottomSheetHandleBar}>
           <IcBottomSheetLine />
         </div>
@@ -153,14 +166,20 @@ const SearchHospital = (props: SearchHospitalProps) => {
         <ul className={styles.cardContainer}>
           {isError ? (
             <li>
-              <div className={styles.emptyState}>데이터를 불러오는 중 오류가 발생했습니다.</div>
+              <div className={styles.emptyState}>
+                데이터를 불러오는 중 오류가 발생했습니다.
+              </div>
             </li>
           ) : hospitals.length > 0 ? (
             hospitals.map((hospital, index) => (
               <li
                 key={hospital.id}
-                ref={index === hospitals.length - 2 ? beforeLastHospitalRef : null}
-                className={index === hospitals.length - 1 ? styles.lastCard : undefined}
+                ref={
+                  index === hospitals.length - 2 ? beforeLastHospitalRef : null
+                }
+                className={
+                  index === hospitals.length - 1 ? styles.lastCard : undefined
+                }
                 onClick={() => onSelectHospital(hospital)}
               >
                 <Card
@@ -176,7 +195,9 @@ const SearchHospital = (props: SearchHospitalProps) => {
           ) : (
             <li>
               <div className={styles.emptyState}>
-                {isLoading ? "병원 정보를 불러오는 중입니다." : "검색 결과가 없습니다."}
+                {isLoading
+                  ? "병원 정보를 불러오는 중입니다."
+                  : "검색 결과가 없습니다."}
               </div>
             </li>
           )}
@@ -196,7 +217,13 @@ const SearchHospital = (props: SearchHospitalProps) => {
             disabled={!selectedHospital}
             onClick={onCloseBottomSheet}
           />
-          <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} onClick={handleCancelSearch} />
+          <Button
+            label="취소하기"
+            size="large"
+            variant="solidNeutral"
+            disabled={false}
+            onClick={handleCancelSearch}
+          />
         </div>
       </div>
     </div>

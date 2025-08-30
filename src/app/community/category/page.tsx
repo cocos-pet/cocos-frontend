@@ -23,7 +23,7 @@ import dynamic from "next/dynamic";
 import NoData from "@shared/component/NoData/NoData.tsx";
 
 const Loading = dynamic(
-  () => import("../../../common/component/Loading/Loading.tsx"),
+  () => import("../../../design-system/Loading/Loading.tsx"),
   { ssr: false }
 );
 

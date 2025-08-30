@@ -1,15 +1,15 @@
 "use client";
 
-import {useState} from "react";
+import { useState } from "react";
 import * as styles from "./HospitalReview.css.ts";
 import Chip from "../../../design-system/Chip/Chip";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
-import Divider from "@common/component/Divider/Divider.tsx";
-import {Separated} from "react-simplikit";
-import {motion} from "framer-motion";
+import Divider from "src/design-system/Divider/Divider.tsx";
+import { Separated } from "react-simplikit";
+import { motion } from "framer-motion";
 import Image from "next/image";
 import ImageGalleryModal from "@shared/component/ImageGalleryModal.tsx";
-import {postHospitalReviewsResponseData} from "@api/domain/community/detail";
+import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
 
 export interface ReviewItemType {
   id?: number;
@@ -53,7 +53,13 @@ interface propsType {
  * @param isBlurred 리뷰가 블러 처리되어야 하는지 여부
  */
 const HospitalReview = (props: propsType) => {
-  const { handleProfileClick, handleHospitalDetailClick, reviewData, isBlurred = false, isNoProfile = false } = props;
+  const {
+    handleProfileClick,
+    handleHospitalDetailClick,
+    reviewData,
+    isBlurred = false,
+    isNoProfile = false,
+  } = props;
   const [isExpanded, setIsExpanded] = useState(false);
   const [isImageGalleryModalOpen, setIsImageGalleryModalOpen] = useState(false);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
@@ -73,7 +79,9 @@ const HospitalReview = (props: propsType) => {
   const isReviewImage = !!reviewData.images?.length;
 
   return (
-    <section className={styles.reviewItemContainer({ isNoProfile: isNoProfile })}>
+    <section
+      className={styles.reviewItemContainer({ isNoProfile: isNoProfile })}
+    >
       {!isNoProfile && (
         <Profile
           handleProfileClick={handleProfileClick}
@@ -84,11 +92,22 @@ const HospitalReview = (props: propsType) => {
         />
       )}
       <article className={isBlurred ? styles.blurEffect : undefined}>
-        <div className={styles.hospitalDetail} onClick={handleHospitalDetailClick}>
+        <div
+          className={styles.hospitalDetail}
+          onClick={handleHospitalDetailClick}
+        >
           <div className={styles.hospitalName}>{reviewData.hospitalName}</div>
-          <div className={styles.hospitalAddress}>{reviewData.hospitalAddress}</div>
+          <div className={styles.hospitalAddress}>
+            {reviewData.hospitalAddress}
+          </div>
         </div>
-        <div className={isExpanded ? styles.reviewContentExpanded : styles.reviewContent}>{reviewData.content}</div>
+        <div
+          className={
+            isExpanded ? styles.reviewContentExpanded : styles.reviewContent
+          }
+        >
+          {reviewData.content}
+        </div>
         <motion.div
           initial={false}
           animate={{
@@ -99,13 +118,26 @@ const HospitalReview = (props: propsType) => {
           transition={{ duration: 0.3 }}
         >
           <div className={styles.detailSection}>
-            <ChipSection title="방문목적" items={reviewData.visitPurpose || ""} color="border" />
             <ChipSection
-              title="사전증상"
-              items={reviewData.symptoms?.map((symptom, index) => ({ id: index, name: symptom })) || []}
+              title="방문목적"
+              items={reviewData.visitPurpose || ""}
               color="border"
             />
-            <ChipSection title="진단 내용" items={reviewData.disease || ""} color="border" />
+            <ChipSection
+              title="사전증상"
+              items={
+                reviewData.symptoms?.map((symptom, index) => ({
+                  id: index,
+                  name: symptom,
+                })) || []
+              }
+              color="border"
+            />
+            <ChipSection
+              title="진단 내용"
+              items={reviewData.disease || ""}
+              color="border"
+            />
             <PetInfo reviewData={reviewData} />
           </div>
         </motion.div>
@@ -131,10 +163,20 @@ const HospitalReview = (props: propsType) => {
         {reviewData.reviewSummary && (
           <div className={styles.reviewChipsContainer}>
             {reviewData.reviewSummary?.goodReviews?.map((review, index) => (
-              <Chip key={`good-${review.id}-${index}`} label={review.label || ""} color="blue" disabled />
+              <Chip
+                key={`good-${review.id}-${index}`}
+                label={review.label || ""}
+                color="blue"
+                disabled
+              />
             ))}
             {reviewData.reviewSummary?.badReviews?.map((review, index) => (
-              <Chip key={`bad-${review.id}-${index}`} label={review.label || ""} color="red" disabled />
+              <Chip
+                key={`bad-${review.id}-${index}`}
+                label={review.label || ""}
+                color="red"
+                disabled
+              />
             ))}
           </div>
         )}
@@ -202,7 +244,9 @@ const ChipSection = ({
       {typeof items === "string" ? (
         <Chip label={items} color={color} disabled />
       ) : (
-        items?.map((item) => <Chip key={item.id} label={item.name} color={color} disabled />)
+        items?.map((item) => (
+          <Chip key={item.id} label={item.name} color={color} disabled />
+        ))
       )}
     </div>
   </div>

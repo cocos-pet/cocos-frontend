@@ -1,8 +1,11 @@
 import React, { useState, useRef, useEffect, useCallback } from "react";
 import * as styles from "./HospitalReviewWrapper.css";
 import { IcEllipses } from "@asset/svg";
-import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
-import { useDeleteHospitalReview, useInfiniteHospitalReview } from "@api/shared/hook";
+import SimpleBottomSheet from "src/design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
+import {
+  useDeleteHospitalReview,
+  useInfiniteHospitalReview,
+} from "@api/shared/hook";
 import { isLoggedIn } from "@api/index";
 import HospitalReview from "./HospitalReview/HospitalReview";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -14,7 +17,10 @@ interface HospitalReviewWrapperProps {
   nickname?: string;
 }
 
-const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: HospitalReviewWrapperProps) => {
+const HospitalReviewWrapper = ({
+  isMypage = false,
+  nickname: _nickname,
+}: HospitalReviewWrapperProps) => {
   const router = useRouter();
   const [isDeleteReviewModalOpen, setIsDeleteReviewModalOpen] = useState(false);
   const [selectedReviewId, setSelectedReviewId] = useState<number | null>(null);
@@ -27,11 +33,12 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: Hospit
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } = useInfiniteHospitalReview({
-    nickname: nickname ?? "",
-    cursorId: undefined,
-    size: 5,
-  });
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isLoading } =
+    useInfiniteHospitalReview({
+      nickname: nickname ?? "",
+      cursorId: undefined,
+      size: 5,
+    });
 
   const { mutate: deleteReview } = useDeleteHospitalReview();
 
@@ -42,7 +49,7 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: Hospit
         fetchNextPage();
       }
     },
-    [fetchNextPage, hasNextPage, isFetchingNextPage],
+    [fetchNextPage, hasNextPage, isFetchingNextPage]
   );
 
   useEffect(() => {
@@ -96,11 +103,19 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: Hospit
     router.push(`/hospital-detail/${hospitalId}`);
   };
 
-  if (isLoading) return <div className={styles.nothingContent}>{"리뷰를 불러오는 중..."}</div>;
+  if (isLoading)
+    return (
+      <div className={styles.nothingContent}>{"리뷰를 불러오는 중..."}</div>
+    );
 
   const reviews = data?.pages.flatMap((page) => page?.reviews || []) || [];
 
-  if (reviews.length === 0) return <div className={styles.nothingContent}>{"아직 작성한 후기가 없어요."}</div>;
+  if (reviews.length === 0)
+    return (
+      <div className={styles.nothingContent}>
+        {"아직 작성한 후기가 없어요."}
+      </div>
+    );
 
   return (
     <>
@@ -120,14 +135,19 @@ const HospitalReviewWrapper = ({ isMypage = false, nickname: _nickname }: Hospit
             )}
             {selectedReviewId === review.id && isDeleteButtonOpen && (
               <div className={styles.dropdownContainer}>
-                <div className={styles.dropdownItem} onClick={openDeleteReviewModal}>
+                <div
+                  className={styles.dropdownItem}
+                  onClick={openDeleteReviewModal}
+                >
                   삭제하기
                 </div>
               </div>
             )}
           </div>
           <HospitalReview
-            handleHospitalDetailClick={() => handleHospitalDetailClick(review.id as number)}
+            handleHospitalDetailClick={() =>
+              handleHospitalDetailClick(review.id as number)
+            }
             reviewData={review}
             isBlurred={isBlurred}
             isNoProfile={true}
