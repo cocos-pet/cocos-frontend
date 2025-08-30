@@ -1,0 +1,65 @@
+/* Storybook specific CSS reset and styling */
+
+/* Reset default Storybook styling */
+#storybook-root {
+  font-family: "Pretendard", sans-serif !important;
+  font-size: 10px !important;
+  line-height: 1.5 !important;
+}
+
+/* Ensure components render at correct scale */
+.sb-show-main {
+  background: #f5f5f5;
+}
+
+/* Component container styling */
+.sb-story {
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+/* Fix font scaling issues */
+* {
+  box-sizing: border-box;
+}
+
+/* Mobile-first responsive design */
+.sb-show-main {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+/* Button and input scaling fixes */
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+  font-size: inherit;
+}
+
+/* Fix text rendering */
+body,
+html {
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent content from being too large */
+.sb-story > * {
+  max-width: 100%;
+}
+
+/* Fix for modal and overlay components */
+.sb-story [data-testid="modal-overlay"] {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+}

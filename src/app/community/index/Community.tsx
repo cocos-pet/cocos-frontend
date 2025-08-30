@@ -1,12 +1,12 @@
 "use client";
 
 import { IcSearch } from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
 import Nav from "@common/component/Nav/Nav";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "@design-system/Divider/Divider";
 import Banner from "../_component/Banner/Banner";
 import SelectPost from "../_component/SelectPost/SelectPost";
-import FloatingBtn from "@common/component/FloatingBtn/Floating";
+import FloatingBtn from "@design-system/FloatingBtn/Floating";
 import * as styles from "./Community.css";
 import { PATH } from "@route/path";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
@@ -15,7 +15,7 @@ import { useEffect, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "@common/component/Modal/Modal";
+import { Modal } from "@design-system/Modal/Modal";
 
 const Community = () => {
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);

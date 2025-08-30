@@ -2,7 +2,7 @@ import * as styles from "./PetHealth.css";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
-import { Button } from "@common/component/Button";
+import { Button } from "@design-system/Button";
 
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";

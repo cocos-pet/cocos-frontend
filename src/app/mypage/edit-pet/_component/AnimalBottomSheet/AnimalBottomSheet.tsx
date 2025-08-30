@@ -1,8 +1,8 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { CategoryType, useAnimalFilterStore } from "../../_store/animalFilter";
 import * as styles from "./AnimalBottomSheet.css";
-import Tab from "@common/component/Tab/Tab";
-import { Button } from "@common/component/Button";
+import Tab from "@design-system/Tab/Tab";
+import { Button } from "@design-system/Button";
 import CategoryContent from "./components/CategoryContent/CategoryContent";
 import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
 
@@ -18,7 +18,13 @@ const AnimalBottomSheet = ({ petId }: { petId: number }) => {
 
   const handleClickButton = () => {
     if (selectedChips.breedId && selectedChips.gender && selectedChips.animalId) {
-      patchPetInfo({ petId, reqBody: { breedId: selectedChips.breedId, gender: selectedChips.gender } });
+      patchPetInfo({
+        petId,
+        reqBody: {
+          breedId: selectedChips.breedId,
+          gender: selectedChips.gender,
+        },
+      });
       setOpen(false);
     } else {
       //만약 animalId가 없다면

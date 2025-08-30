@@ -3,7 +3,7 @@
 import dynamic from "next/dynamic";
 import * as styles from "./style.css";
 import registerPet from "@asset/lottie/registerPet.json";
-import { Button } from "@common/component/Button";
+import { Button } from "@design-system/Button";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 

@@ -3,7 +3,7 @@
 import * as styles from "./Complete.css";
 import { useRouter } from "next/navigation";
 
-import { Button } from "@common/component/Button";
+import { Button } from "@design-system/Button";
 import { PATH } from "@route/path";
 import { useGetNickname } from "@api/domain/complete/hook";
 import onboarding from "@asset/lottie/onboarding.json";

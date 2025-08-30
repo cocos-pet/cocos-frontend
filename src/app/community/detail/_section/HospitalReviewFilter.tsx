@@ -1,7 +1,7 @@
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcDownArrow, IcRefresh, IcTarget } from "@asset/svg";
 import { motion } from "framer-motion";
-import Chip from "@common/component/Chip/Chip.tsx";
+import { Chip } from "../../../../design-system";
 import { color } from "@style/styles.css.ts";
 import LocationBottomSheet from "@shared/component/LocationBottomSheet/LocationBottomSheet.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";

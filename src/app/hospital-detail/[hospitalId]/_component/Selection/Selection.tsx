@@ -5,7 +5,7 @@ import * as styles from "./Selection.css";
 import { IcUnderline } from "@asset/svg";
 import InfoContent from "@app/hospital-detail/[hospitalId]/_component/InfoContent/InfoContent";
 import ReviewContent from "@app/hospital-detail/[hospitalId]/_component/ReviewContent/ReviewContent";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 
 const Selections = [
   { label: "병원 정보", value: "info" },
@@ -30,7 +30,9 @@ export default function Selection({ hospitalId }: SelectionProps) {
             onClick={() => setSelected(tab.value)}
           >
             {tab.label}
-            {selected === tab.value && <IcUnderline className={styles.underline} />}
+            {selected === tab.value && (
+              <IcUnderline className={styles.underline} />
+            )}
           </button>
         ))}
       </div>

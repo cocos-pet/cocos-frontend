@@ -1,18 +1,18 @@
 "use client";
 
-import { useState } from "react";
-import { IcDeleteBlack } from "@asset/svg/index";
+import {useState} from "react";
+import {IcDeleteBlack} from "@asset/svg/index";
 import * as styles from "./Step1.style.css";
 
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
 import ReviewHospital from "@app/review/write/_component/ReviewHospital";
 import ReviewDate from "@app/review/write/_component/ReviewDate";
 import ReviewPetInfo from "@app/review/write/_component/ReviewPetInfo";
-import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital";
-import { Button } from "@common/component/Button/index";
-import { useFormContext } from "react-hook-form";
-import { ReviewFormWithUIData } from "../page";
-import { useRouter } from "next/navigation";
+import SearchHospital, {Hospital} from "@shared/component/SearchHospital/SearchHospital";
+import {Button} from "@design-system/Button/index";
+import {useFormContext} from "react-hook-form";
+import {ReviewFormWithUIData} from "../page";
+import {useRouter} from "next/navigation";
 
 export type PetInfoType = "myPet" | "manual";
 
@@ -34,7 +34,7 @@ const Step1 = ({ onNext }: Step1Props) => {
 
   const router = useRouter();
 
-  // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
+  // 1-1. hospital ! 나갈 수 있는 방법이 2가지라 분리
   const handleOpenSearchHospital = () => {
     setIsBottomSheetOpen(true);
   };

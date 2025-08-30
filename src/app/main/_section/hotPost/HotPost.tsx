@@ -1,13 +1,13 @@
 "use client";
 
 import * as styles from "./HotPost.css.ts";
-import Divider from "@common/component/Divider/Divider.tsx";
+import Divider from "@design-system/Divider/Divider.tsx";
 import { useQueryGetPopular } from "@api/domain/main/hook.ts";
 import { PATH } from "@route/path.ts";
 import { useRouter } from "next/navigation";
 import { Separated } from "react-simplikit";
 import NoData from "@shared/component/NoData/NoData.tsx";
-import Loading from "@common/component/Loading/Loading.tsx";
+import Loading from "@design-system/Loading/Loading.tsx";
 import { If } from "@shared/component/If/if.tsx";
 
 const HotPost = () => {

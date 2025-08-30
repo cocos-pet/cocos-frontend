@@ -1,6 +1,5 @@
 import { createVar, style } from "@vanilla-extract/css";
-import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
-import { button } from "@common/component/Button/styles.css.ts";
+import { recipe } from "@vanilla-extract/recipes";
 import { color, font } from "@style/styles.css.ts";
 
 export const iconSizeVar = createVar();

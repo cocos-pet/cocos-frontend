@@ -1,4 +1,4 @@
-import CheckBoxText from "@common/component/CheckBoxText/CheckBoxText";
+import CheckBoxText from "@design-system/CheckBoxText/CheckBoxText";
 import { styles } from "./CategoryContent.css";
 import DropDownText from "@common/component/DropDownText/DropDownText";
 import { DiseaseItem, SelectedChips, SymptomItem, useFilterStore } from "@store/filter";

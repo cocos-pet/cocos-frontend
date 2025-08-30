@@ -1,8 +1,8 @@
 import * as styles from "./PetAge.css";
 import {ChangeEvent, useState} from "react";
 
-import {TextField} from "@common/component/TextField";
-import {Button} from "@common/component/Button";
+import {TextField} from "@design-system/TextField/index.tsx";
+import {Button} from "@design-system/Button";
 import {PetData} from "../../RegisterPet.tsx";
 import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";

@@ -8,14 +8,14 @@ import useModalStore from "@store/moreModalStore.ts";
 import { commentGetResponseCommentType } from "@api/domain/community/post";
 import { formatTime } from "@shared/util/formatTime.ts";
 import { useDeleteComment } from "@api/domain/community/post/hook.ts";
-import SimpleBottomSheet from "../SimpleBottomSheet/SimpleBottomSheet";
+import SimpleBottomSheet from "../../../design-system/Button/SimpleBottomSheet/SimpleBottomSheet.tsx";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useCategoryFilterStore } from "../../../app/mypage/edit-pet/_store/categoryFilter.ts";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { PATH } from "@route/path";
-import { Modal } from "../Modal/Modal.tsx";
+import { Modal } from "@design-system/Modal/Modal.tsx";
 
 interface CommentProps {
   comment: commentGetResponseCommentType;

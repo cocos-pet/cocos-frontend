@@ -1,8 +1,8 @@
-import { IcUp } from "@asset/svg";
+import {IcUp} from "@asset/svg";
 import * as styles from "./DropDownText.css";
-import { useState } from "react";
-import Chip from "@common/component/Chip/Chip";
-import { DiseaseItem, SelectedChips, SymptomItem, useCategoryFilterStore } from "../../../../_store/categoryFilter.ts";
+import {useState} from "react";
+import Chip from "../../../../../../../design-system/Chip/Chip";
+import {DiseaseItem, SelectedChips, SymptomItem, useCategoryFilterStore} from "../../../../_store/categoryFilter.ts";
 
 interface DropDownTextPropTypes {
   children: string; // title

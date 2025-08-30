@@ -1,7 +1,7 @@
 "use client";
 import * as styles from "../../_style/profile.css";
 import * as favoriteHospitalStyles from "./FavoriteHospital.css";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "@design-system/Divider/Divider";
 import { Disease, MemberInfo, PetInfo } from "../../_hooks/useProfileState";
 import { useRouter } from "next/navigation";
 import { useGetFavoriteHospital } from "@api/shared/hook";

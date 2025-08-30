@@ -1,11 +1,11 @@
 import * as styles from "./PetGender.css";
 
 import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelector";
-import {Button} from "@common/component/Button";
-import {useState} from "react";
-import {PetData} from "../../RegisterPet.tsx";
-import {genderOptions} from "../../constant/genderData.ts";
-import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import { Button } from "@design-system/Button";
+import { useState } from "react";
+import { PetData } from "../../RegisterPet.tsx";
+import { genderOptions } from "../../constant/genderData.ts";
+import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 

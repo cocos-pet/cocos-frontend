@@ -1,16 +1,16 @@
 "use client";
 
-import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import {IcChevronLeft, IcEditPen} from "@asset/svg";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
 import * as styles from "./page.css";
-import Divider from "@common/component/Divider/Divider";
-import { useRouter } from "next/navigation";
-import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
+import Divider from "@design-system/Divider/Divider";
+import {useRouter} from "next/navigation";
+import SimpleBottomSheet from "@design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
-import { PATH } from "@route/path";
-import { useLogout } from "@api/domain/setting/hook";
-import { useAuth } from "@providers/AuthProvider";
-import { useEffect } from "react";
+import {PATH} from "@route/path";
+import {useLogout} from "@api/domain/setting/hook";
+import {useAuth} from "@providers/AuthProvider";
+import {useEffect} from "react";
 
 export default function Setting() {
   const router = useRouter();

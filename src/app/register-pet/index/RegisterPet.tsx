@@ -1,8 +1,8 @@
-import { useState } from "react";
+import {useState} from "react";
 
 import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
 
-import { useMyPetPost } from "@api/domain/register-pet/pets/hook";
+import {useMyPetPost} from "@api/domain/register-pet/pets/hook";
 import dynamic from "next/dynamic";
 import PetName from "./component/petName/PetName.tsx";
 import PetType from "./component/petType/PetType.tsx";
@@ -12,7 +12,9 @@ import PetId from "./component/petId/PetId.tsx";
 import PetHealth from "./component/petHealth/PetHealth.tsx";
 import ProgressBar from "./common/ProgressBar/ProgressBar.tsx";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 export interface PetData {
   breedId: number | null;

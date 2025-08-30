@@ -3,16 +3,14 @@
 import { useInfiniteHospitalReviews } from "@api/domain/community/detail/hook";
 import { useGetHospitalDetail } from "@api/domain/hospitals/hook";
 import { useEffect, useRef, useState } from "react";
-import { components } from "src/type/schema";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview";
-import Divider from "@common/component/Divider/Divider";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import { Divider, HeaderNav } from "../../../../../design-system";
 import { IcChevronLeft } from "@asset/svg";
 import * as styles from "./MoreReview.css";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
-import { Modal } from "@common/component/Modal/Modal";
+import { Modal } from "@design-system/Modal/Modal";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 
 interface MoreReviewProps {
@@ -28,8 +26,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const { data: hospitalData } = useGetHospitalDetail(hospitalId);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteHospitalReviews(hospitalId);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
 
   useEffect(() => {
     const element = loadMoreRef.current;
@@ -92,16 +89,9 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
       <div className={styles.container}>
         <div className={styles.reviewList}>
           {reviews.map((review, index) => (
-            <div
-              key={review.id}
-              onClick={() =>
-                !isAuthenticated && index >= 3 && handleLoginClick()
-              }
-            >
+            <div key={review.id} onClick={() => !isAuthenticated && index >= 3 && handleLoginClick()}>
               <HospitalReview
-                handleProfileClick={() =>
-                  review.memberId && handleProfileClick(review.memberId)
-                }
+                handleProfileClick={() => review.memberId && handleProfileClick(review.memberId)}
                 handleHospitalDetailClick={handleHospitalDetailClick}
                 reviewData={{
                   id: review.id ?? 0,
@@ -142,10 +132,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
-              <Modal.Confirm
-                label={"로그인"}
-                onClick={() => router.push(PATH.LOGIN)}
-              />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
             </Modal.BottomAffix>
           }
         >

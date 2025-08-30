@@ -1,7 +1,7 @@
 import * as styles from "@app/community/category/Category.css.ts";
 import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
-import FloatingBtn from "@common/component/FloatingBtn/Floating.tsx";
+import FloatingBtn from "@design-system/FloatingBtn/Floating";
 import { HTMLAttributes } from "react";
 
 interface noDataType extends HTMLAttributes<HTMLDivElement> {

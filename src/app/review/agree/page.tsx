@@ -1,20 +1,18 @@
 "use client";
 
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { IcLeftarrow } from "@asset/svg";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
+import {IcCheckbox, IcLeftarrow} from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";
 import Image from "next/image";
-import Divider from "@common/component/Divider/Divider";
-import { Button } from "@common/component/Button";
+import Divider from "@design-system/Divider/Divider";
+import {Button} from "@design-system/Button";
 import * as style from "./style.css";
-import { IcCheckbox } from "@asset/svg";
-import { useState, useEffect } from "react";
-import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
-import { useAgreeReviewMutation } from "@app/api/review/agree/hook";
-import { useRouter } from "next/navigation";
-import { PATH } from "@route/path";
-import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
+import {useEffect, useState} from "react";
+import {CHECKBOX_TEXTS, TITLE} from "@app/review/agree/constant";
+import {useAgreeReviewMutation, useGetReviewAgreementStatus} from "@app/api/review/agree/hook";
+import {useRouter} from "next/navigation";
+import {PATH} from "@route/path";
 
 const page = () => {
   const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;

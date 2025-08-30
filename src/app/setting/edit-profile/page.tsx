@@ -1,13 +1,13 @@
 "use client";
-import { IcChevronLeft } from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { useRouter } from "next/navigation";
+import {IcChevronLeft} from "@asset/svg";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
+import {useRouter} from "next/navigation";
 import * as styles from "./ProfileEdit.css";
-import Divider from "@common/component/Divider/Divider";
-import { Button } from "@common/component/Button";
-import { PATH } from "@route/path";
-import { useGetMemberInfo } from "@api/domain/mypage/hook";
-import { useAuth } from "@providers/AuthProvider";
+import Divider from "@design-system/Divider/Divider";
+import {Button} from "@design-system/Button";
+import {PATH} from "@route/path";
+import {useGetMemberInfo} from "@api/domain/mypage/hook";
+import {useAuth} from "@providers/AuthProvider";
 
 const ProfileEdit = () => {
   const { isAuthenticated } = useAuth();

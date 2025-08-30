@@ -2,7 +2,7 @@
 
 import * as styles from "./SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
 import { IcLeftarrow } from "@asset/svg";
 import { PATH } from "@route/path.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
@@ -14,10 +14,10 @@ import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 import dynamic from "next/dynamic";
-import Tab from "@common/component/Tab/Tab.tsx";
+import Tab from "@design-system/Tab/Tab.tsx";
 import { ReviewDetailContent } from "@app/community/detail/_section";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
   ssr: false,
 });
 
