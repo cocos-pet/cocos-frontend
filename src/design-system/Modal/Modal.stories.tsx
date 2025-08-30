@@ -6,45 +6,100 @@ const meta: Meta<typeof Modal.Root> = {
   title: "Design System/Modal",
   component: Modal.Root,
   parameters: {
-    layout: "centered",
+    layout: "fullscreen",
   },
   tags: ["autodocs"],
 };
 
 export default meta;
 
-// Basic Modal Example
-export const BasicModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
+// Always Open Modal for easier viewing
+export const AlwaysOpen = () => {
   return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>모달 열기</button>
-
-      <Modal.Root open={isOpen} onOpenChange={setIsOpen}>
+    <div style={{ padding: "20px" }}>
+      <p>Modal이 항상 열려있는 상태입니다.</p>
+      <Modal.Root open={true}>
         <Modal.Content
-          title={<Modal.Title>기본 모달</Modal.Title>}
+          title={<Modal.Title>항상 열린 모달</Modal.Title>}
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label="취소" />
-              <Modal.Confirm label="확인" onClick={() => setIsOpen(false)} />
+              <Modal.Confirm
+                label="확인"
+                onClick={() => console.log("확인 클릭")}
+              />
             </Modal.BottomAffix>
           }
         >
-          이것은 기본 모달의 내용입니다.
+          이 모달은 항상 열려있어서 스타일을 확인하기 좋습니다.
         </Modal.Content>
       </Modal.Root>
     </div>
   );
 };
 
-// Login Required Modal Example
-export const LoginRequiredModal = () => {
+// Interactive Modal
+export const Interactive = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>로그인 모달 열기</button>
+    <div style={{ padding: "20px" }}>
+      <button
+        onClick={() => setIsOpen(true)}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "#007bff",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        모달 열기
+      </button>
+
+      <Modal.Root open={isOpen} onOpenChange={setIsOpen}>
+        <Modal.Content
+          title={<Modal.Title>인터랙티브 모달</Modal.Title>}
+          bottomAffix={
+            <Modal.BottomAffix>
+              <Modal.Close label="취소" />
+              <Modal.Confirm
+                label="확인"
+                onClick={() => {
+                  console.log("확인 버튼 클릭");
+                  setIsOpen(false);
+                }}
+              />
+            </Modal.BottomAffix>
+          }
+        >
+          이 모달은 버튼을 클릭해서 열고 닫을 수 있습니다.
+        </Modal.Content>
+      </Modal.Root>
+    </div>
+  );
+};
+
+// Login Modal Example
+export const LoginModal = () => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <div style={{ padding: "20px" }}>
+      <button
+        onClick={() => setIsOpen(true)}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "#28a745",
+          color: "white",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        로그인 모달 열기
+      </button>
 
       <Modal.Root open={isOpen} onOpenChange={setIsOpen}>
         <Modal.Content
@@ -69,44 +124,25 @@ export const LoginRequiredModal = () => {
   );
 };
 
-// Confirmation Modal Example
-export const ConfirmationModal = () => {
-  const [isOpen, setIsOpen] = useState(false);
-
-  return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>확인 모달 열기</button>
-
-      <Modal.Root open={isOpen} onOpenChange={setIsOpen}>
-        <Modal.Content
-          title={<Modal.Title>정말 삭제하시겠습니까?</Modal.Title>}
-          bottomAffix={
-            <Modal.BottomAffix>
-              <Modal.Close label="취소" />
-              <Modal.Confirm
-                label="삭제"
-                onClick={() => {
-                  console.log("삭제 확인");
-                  setIsOpen(false);
-                }}
-              />
-            </Modal.BottomAffix>
-          }
-        >
-          이 작업은 되돌릴 수 없습니다.
-        </Modal.Content>
-      </Modal.Root>
-    </div>
-  );
-};
-
-// Simple Modal (Without Bottom Buttons)
+// Simple Modal without buttons
 export const SimpleModal = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <button onClick={() => setIsOpen(true)}>단순 모달 열기</button>
+    <div style={{ padding: "20px" }}>
+      <button
+        onClick={() => setIsOpen(true)}
+        style={{
+          padding: "10px 20px",
+          backgroundColor: "#ffc107",
+          color: "black",
+          border: "none",
+          borderRadius: "5px",
+          cursor: "pointer",
+        }}
+      >
+        단순 모달 열기
+      </button>
 
       <Modal.Root open={isOpen} onOpenChange={setIsOpen}>
         <Modal.Content title={<Modal.Title>알림</Modal.Title>}>
