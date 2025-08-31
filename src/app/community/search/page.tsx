@@ -1,8 +1,8 @@
 "use client";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
-import React, { ChangeEvent, Suspense, useEffect, useRef, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { PATH } from "@route/path.ts";
 import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
@@ -54,7 +54,6 @@ function Search() {
   };
 
   const handleNavigate = (searchText: string) => {
-    onSubmit(searchText);
     router.push(`${PATH.COMMUNITY.SEARCH_DONE}?searchText=${searchText}`);
   };
 

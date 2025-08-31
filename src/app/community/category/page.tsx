@@ -152,7 +152,7 @@ const CategoryContent = () => {
     return (
       <>
         <NoData
-          label={"아직 등록된 리뷰가 없어요"}
+          label={"아직 등록된 게시물이 없어요"}
           onBtnClick={() => router.push(`/community/write?category=${type}`)}
         />
         <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
