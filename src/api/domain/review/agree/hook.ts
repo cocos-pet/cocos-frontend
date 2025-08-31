@@ -1,7 +1,7 @@
 "use client";
 
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { patchAgreeReview } from "@app/api/review/agree";
+import { patchAgreeReview } from "@api/domain/review/agree";
 import { getReviewAgreementStatus } from "./index";
 
 // 리뷰 동의 PATCH API
