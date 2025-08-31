@@ -6,7 +6,7 @@
     "lib": ["ES2020", "DOM", "DOM.Iterable"],
     "module": "ESNext",
     "skipLibCheck": true,
-    "moduleResolution": "node",
+    "moduleResolution": "Bundler",
     "allowImportingTsExtensions": true,
     "isolatedModules": true,
     "resolveJsonModule": true,
@@ -44,12 +44,6 @@
       "@design-system/*": ["src/design-system/*"]
     }
   },
-  "include": [
-    "./dist/types/**/*.d.ts",
-    "./next-env.d.ts",
-    ".next/types/**/*.ts",
-    "src",
-    "./dist/types/**/*.ts"
-  ],
+  "include": ["./dist/types/**/*.d.ts", "./next-env.d.ts", ".next/types/**/*.ts", "src", "./dist/types/**/*.ts"],
   "exclude": ["./node_modules"]
 }
