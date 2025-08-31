@@ -4,7 +4,7 @@ import { Button } from "@common/component/Button";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData, ReviewFormWithUIData } from "../page";
-import { useReviewPost } from "@app/api/review/write/submit/hook";
+import { useReviewPost } from "@api/domain/review/write/submit/hook";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 

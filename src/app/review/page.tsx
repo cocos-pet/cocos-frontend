@@ -19,7 +19,7 @@ import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal.tsx";
-import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
+import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
 
 interface Location {
   id: number;
