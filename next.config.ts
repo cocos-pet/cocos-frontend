@@ -44,6 +44,7 @@ const nextConfig: NextConfig = {
   basePath: process.env.NEXT_PUBLIC_BASE_PATH,
 };
 
+//only excute in server side
 export default withSentryConfig(withVanillaExtract(nextConfig), {
   // For all available options, see:
   // https://www.npmjs.com/package/@sentry/webpack-plugin#options
