@@ -11,10 +11,10 @@ import * as style from "./style.css";
 import { IcCheckbox } from "@asset/svg";
 import { useState, useEffect } from "react";
 import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
-import { useAgreeReviewMutation } from "@app/api/review/agree/hook";
+import { useAgreeReviewMutation } from "@api/domain/review/agree/hook";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
-import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
+import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
 
 const page = () => {
   const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;

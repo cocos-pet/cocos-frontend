@@ -1,8 +1,8 @@
 import Chip from "@common/component/Chip/Chip";
 import * as styles from "./ReviewPurpose.style.css";
-import { usePurposeGet } from "@app/api/review/write/hook";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "@app/review/write/page";
+import { usePurposeGet } from "@api/domain/review/write/hook";
 
 const ReviewPurpose = () => {
   const { data } = usePurposeGet();
