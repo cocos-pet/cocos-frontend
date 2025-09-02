@@ -19,14 +19,9 @@ interface LocationHeaderProps {
   onBottomSheetOpenChange: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function LocationHeader({
-  onLocationChange,
-  onBottomSheetOpenChange,
-}: LocationHeaderProps) {
+export default function LocationHeader({ onLocationChange, onBottomSheetOpenChange }: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-    null
-  );
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const { data: memberLocation } = useGetMemberLocation();
 
   useEffect(() => {
@@ -65,16 +60,11 @@ export default function LocationHeader({
     handleBottomSheetClose();
 
     updateMemberLocation({
-      address: "서울특별시 강동구 천호동",
-      roadAddress: "서울특별시 강동구 천호대로 1095",
       locationId: location.id,
-      latitude: "37.5380",
-      longitude: "127.1270",
       locationType: location.type,
     });
   };
-  const displayLocationName =
-    selectedLocation?.name || memberLocation?.locationName || "위치 선택";
+  const displayLocationName = selectedLocation?.name || memberLocation?.locationName || "위치 선택";
 
   return (
     <div className={styles.location}>

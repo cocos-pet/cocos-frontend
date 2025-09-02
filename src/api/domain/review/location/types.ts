@@ -31,12 +31,12 @@ export interface MemberLocationResponse {
 
 export type GetLocationResponse = City[];
 export interface UpdateMemberLocationRequest {
-  address: string;
-  roadAddress: string;
   locationId: number;
-  latitude: string;
-  longitude: string;
   locationType: LocationType;
+  address?: string;
+  roadAddress?: string;
+  latitude?: string;
+  longitude?: string;
 }
 
 export type GetMemberLocationResponse = {
