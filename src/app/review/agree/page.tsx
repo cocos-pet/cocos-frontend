@@ -8,11 +8,12 @@ import Image from "next/image";
 import Divider from "@design-system/Divider/Divider";
 import {Button} from "@design-system/Button";
 import * as style from "./style.css";
-import {useEffect, useState} from "react";
-import {CHECKBOX_TEXTS, TITLE} from "@app/review/agree/constant";
-import {useAgreeReviewMutation, useGetReviewAgreementStatus} from "@app/api/review/agree/hook";
-import {useRouter} from "next/navigation";
-import {PATH} from "@route/path";
+import { useState, useEffect } from "react";
+import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
+import { useAgreeReviewMutation } from "@api/domain/review/agree/hook";
+import { useRouter } from "next/navigation";
+import { PATH } from "@route/path";
+import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
 
 const page = () => {
   const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;

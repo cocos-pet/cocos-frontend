@@ -3,7 +3,7 @@ import { useState } from "react";
 import { ColorChip, Toast } from "../../../../design-system";
 import { ReviewFormData } from "@app/review/write/page";
 import * as styles from "./FeedbackCategoryContent.style.css";
-import { useFeedbackGet } from "@app/api/review/write/feedback/hook";
+import { useFeedbackGet } from "@api/domain/review/write/feedback/hook";
 
 interface FeedbackCategoryContentProps {
   category: "good" | "bad";
