@@ -1,8 +1,7 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcRightArrow } from "@asset/svg";
-import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
@@ -16,14 +15,8 @@ import { If } from "@shared/component/If/if.tsx";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
 
-interface ReviewFilterState {
-  location: LocationFilterType | null;
-  summaryOptionId: number | undefined;
-  filterType: ReviewActiveTabType;
-}
-
-const DEFAULT_LOCATION_ID = 1;
 const PAGE_SIZE = 20;
+const DEFAULT_LOCATION_ID = 9;
 
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
@@ -37,17 +30,72 @@ const ReviewDetailContent = () => {
     return null;
   }
 
-  // State
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [location, setLocation] = useState<LocationFilterType>({
-    id: 1,
-    name: "경기 전체",
+    id: 9,
+    name: "서울 전체",
     type: "CITY",
   });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
+  const [cursorId, setCursorId] = useState<number | undefined>(undefined);
+  const [hasMore, setHasMore] = useState(true);
+  const [isLoadingMore, setIsLoadingMore] = useState(false);
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
 
-  // API
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
+
+  const handleObserver = useCallback(
+    (entries: IntersectionObserverEntry[]) => {
+      const [target] = entries;
+      if (target.isIntersecting && hasMore && !isLoadingMore && !isPending) {
+        setIsLoadingMore(true);
+        postHospitalReviews(
+          {
+            size: PAGE_SIZE,
+            cursorId,
+            locationId: location.id,
+            locationType: location.type,
+            bodyId: Number(bodyId),
+            summaryOptionId: filterId ? Number(filterId) : undefined,
+          },
+          {
+            onSuccess: (data) => {
+              if (data.length < PAGE_SIZE) {
+                setHasMore(false);
+              }
+              setReviewList((prev) => [...prev, ...data]);
+              if (data.length > 0) {
+                setCursorId(data[data.length - 1].id);
+              }
+              setIsLoadingMore(false);
+            },
+          },
+        );
+      }
+    },
+    [bodyId, filterId, hasMore, isLoadingMore, isPending, location, cursorId, postHospitalReviews],
+  );
+
+  useEffect(() => {
+    const element = loadMoreRef.current;
+
+    if (element) {
+      observerRef.current = new IntersectionObserver(handleObserver, {
+        root: null,
+        rootMargin: "0px",
+        threshold: 0.1,
+      });
+
+      observerRef.current.observe(element);
+    }
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [handleObserver]);
 
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
@@ -67,6 +115,10 @@ const ReviewDetailContent = () => {
     (location?: LocationFilterType | undefined, summaryOptionId?: number | undefined) => {
       if (!bodyId) return;
 
+      setCursorId(undefined);
+      setHasMore(true);
+      setIsLoadingMore(false);
+
       postHospitalReviews(
         {
           size: PAGE_SIZE,
@@ -77,7 +129,13 @@ const ReviewDetailContent = () => {
         },
         {
           onSuccess: (data) => {
+            if (data.length < PAGE_SIZE) {
+              setHasMore(false);
+            }
             setReviewList(data);
+            if (data.length > 0) {
+              setCursorId(data[data.length - 1].id);
+            }
           },
         },
       );
@@ -85,7 +143,7 @@ const ReviewDetailContent = () => {
     [bodyId, postHospitalReviews],
   );
 
-  const handleReviewFilterClose = (summaryOptionId: number | undefined, filterType: ReviewActiveTabType) => {
+  const handleReviewFilterClose = (summaryOptionId: number | undefined) => {
     postReviews(location, summaryOptionId);
   };
 
@@ -111,10 +169,6 @@ const ReviewDetailContent = () => {
     }
   };
 
-  if (isPending) {
-    return <LoadingFallback />;
-  }
-
   return (
     <div className={styles.reviewContainer}>
       <HospitalReviewFilter
@@ -139,6 +193,11 @@ const ReviewDetailContent = () => {
             handleHospitalReviewClick={handleHospitalReviewClick}
           />
         ))}
+        {hasMore && (
+          <div ref={loadMoreRef} style={{ height: "10px" }}>
+            {isLoadingMore ? "더 불러오는 중..." : ""}
+          </div>
+        )}
       </div>
 
       <If condition={!isAuthenticated}>
