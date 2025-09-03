@@ -7,6 +7,7 @@ import {
   GetMemberLocationResponse,
   LocationResponse,
   MemberLocationResponse,
+  UpdateMemberLocationRequest,
 } from "./types";
 
 // 전체 지역 조회 API
@@ -45,9 +46,9 @@ export const getMemberLocation =
 
 // 사용자 위치 업데이트 API
 export const updateMemberLocation = async (
-  locationId: number
+  locationData: UpdateMemberLocationRequest
 ): Promise<void> => {
-  await patch(`${API_PATH.MEMBERS}`, { locationId });
+  await patch(`${API_PATH.MEMBERS}`, locationData);
 };
 
 export type getLocationRequest =

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import * as styles from "./locationBottomSheet.css";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { Button } from "@common/component/Button";
@@ -6,6 +6,7 @@ import { IcCheck } from "@asset/svg";
 import { CityTab } from "./CityTab";
 import { useGetLocation } from "@api/domain/review/location/hook";
 import { District, LocationType } from "@api/domain/review/location/types";
+import { DEFAULT_LOCATION } from "@app/review/_constant/locationConfig";
 
 interface LocationBottomSheetProps {
   isOpen: boolean;
@@ -15,6 +16,11 @@ interface LocationBottomSheetProps {
     name: string;
     type: LocationType;
   }) => void;
+  currentLocation?: {
+    id: number;
+    name: string;
+    type: LocationType;
+  };
 }
 
 interface SelectedLocation {
@@ -27,16 +33,51 @@ export default function LocationBottomSheet({
   isOpen,
   onClose,
   onLocationSelect,
+  currentLocation,
 }: LocationBottomSheetProps) {
-  const [selectedCityId, setSelectedCityId] = useState(1);
+  const [selectedCityId, setSelectedCityId] = useState<number>(
+    DEFAULT_LOCATION.CITY.id
+  );
   const [selectedLocation, setSelectedLocation] =
-    useState<SelectedLocation | null>(null);
+    useState<SelectedLocation | null>(DEFAULT_LOCATION.DISTRICT);
   const { data: cities, refetch } = useGetLocation();
+
+  const districtToCityMap = useMemo(() => {
+    const mapping: { [key: number]: number } = {};
+    if (cities) {
+      for (const city of cities) {
+        if (city.districts) {
+          for (const district of city.districts) {
+            mapping[district.id] = city.id;
+          }
+        }
+      }
+    }
+    return mapping;
+  }, [cities]);
 
   useEffect(() => {
     if (isOpen) {
-      setSelectedCityId(1);
-      setSelectedLocation(null);
+      if (currentLocation) {
+        if (currentLocation.type === "DISTRICT") {
+          const cityId = districtToCityMap[currentLocation.id];
+          if (cityId) {
+            setSelectedCityId(cityId);
+            setSelectedLocation(currentLocation);
+          }
+        } else {
+          setSelectedCityId(currentLocation.id);
+          setSelectedLocation(null);
+        }
+      } else {
+        setSelectedCityId(DEFAULT_LOCATION.CITY.id);
+        setSelectedLocation(DEFAULT_LOCATION.DISTRICT);
+      }
+    }
+  }, [isOpen, currentLocation, districtToCityMap]);
+
+  useEffect(() => {
+    if (isOpen) {
       refetch();
     }
   }, [isOpen, refetch]);
