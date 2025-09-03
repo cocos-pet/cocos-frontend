@@ -1,4 +1,4 @@
-import {style} from "@vanilla-extract/css";
+import { style } from "@vanilla-extract/css";
 
 export const mainContainer = style({
   width: "100%",
@@ -7,9 +7,8 @@ export const mainContainer = style({
 });
 
 export const headerContainer = style({
-  position: "absolute",
-  top: "18rem",
-  padding: "0rem 2rem 0rem 2rem",
-  zIndex: 4,
+  padding: "0rem 2rem",
+  zIndex: 1000,
   width: "100%",
+  transform: "translateY(-50%)",
 });
