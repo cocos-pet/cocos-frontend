@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as styles from "./locationBottomSheet.css";
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
-import { Button } from "@common/component/Button";
+import { Button } from "@design-system/Button";
 import { IcCheck } from "@asset/svg";
 import { CityTab } from "./CityTab";
 import { useGetLocation } from "@api/domain/review/location/hook";
@@ -23,14 +23,9 @@ interface SelectedLocation {
   type: LocationType;
 }
 
-export default function LocationBottomSheet({
-  isOpen,
-  onClose,
-  onLocationSelect,
-}: LocationBottomSheetProps) {
+export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect }: LocationBottomSheetProps) {
   const [selectedCityId, setSelectedCityId] = useState(1);
-  const [selectedLocation, setSelectedLocation] =
-    useState<SelectedLocation | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(null);
   const { data: cities, refetch } = useGetLocation();
 
   useEffect(() => {
@@ -42,15 +37,11 @@ export default function LocationBottomSheet({
   }, [isOpen, refetch]);
 
   if (!cities || cities.length === 0) return null;
-  const selectedCity =
-    cities.find((city) => city.id === selectedCityId) || cities[0];
+  const selectedCity = cities.find((city) => city.id === selectedCityId) || cities[0];
 
   // 고유한 키를 생성하는 함수 -> 중복 방지
-  const generateDistrictKey = (
-    cityId: number,
-    district: District,
-    cityName: string
-  ) => `${cityName}-${cityId}-${district.name}-${district.id}-${district.type}`;
+  const generateDistrictKey = (cityId: number, district: District, cityName: string) =>
+    `${cityName}-${cityId}-${district.name}-${district.id}-${district.type}`;
 
   const handleCitySelect = (cityId: number) => {
     setSelectedCityId(cityId);
@@ -58,8 +49,7 @@ export default function LocationBottomSheet({
   };
 
   // 구/군 목록에서 "전체"를 제외한 실제 구/군들
-  const districts =
-    selectedCity.districts?.filter((d) => d.type === "DISTRICT") || [];
+  const districts = selectedCity.districts?.filter((d) => d.type === "DISTRICT") || [];
   // "전체" 옵션 찾기
   const cityWideOption = selectedCity.districts?.find((d) => d.type === "CITY");
 
@@ -72,11 +62,7 @@ export default function LocationBottomSheet({
   };
 
   return (
-    <BottomSheet
-      isOpen={isOpen}
-      handleOpen={(open) => !open && onClose()}
-      handleDimmedClose={onClose}
-    >
+    <BottomSheet isOpen={isOpen} handleOpen={(open) => !open && onClose()} handleDimmedClose={onClose}>
       <>
         <div className={styles.locationSheetContainer}>
           {/* 시/도 리스트 */}
@@ -85,9 +71,7 @@ export default function LocationBottomSheet({
               <CityTab
                 key={`city-${city.name}-${city.id}`}
                 locationName={city.name}
-                isSelected={
-                  city.id === selectedCityId && selectedLocation === null
-                }
+                isSelected={city.id === selectedCityId && selectedLocation === null}
                 onClick={() => handleCitySelect(city.id)}
               />
             ))}
@@ -98,51 +82,39 @@ export default function LocationBottomSheet({
               {/* 전체 옵션 */}
               {cityWideOption && (
                 <div
-                  key={generateDistrictKey(
-                    selectedCity.id,
-                    cityWideOption,
-                    selectedCity.name
-                  )}
+                  key={generateDistrictKey(selectedCity.id, cityWideOption, selectedCity.name)}
                   className={`${styles.districtItem} ${
-                    selectedLocation?.id === cityWideOption.id &&
-                    selectedLocation?.type === "CITY"
+                    selectedLocation?.id === cityWideOption.id && selectedLocation?.type === "CITY"
                       ? styles.selectedDistrict
                       : ""
                   }`}
                   onClick={() => handleLocationSelect(cityWideOption)}
                 >
                   <span>{cityWideOption.name}</span>
-                  {selectedLocation?.id === cityWideOption.id &&
-                    selectedLocation?.type === "CITY" && (
-                      <span className={styles.checkIcon}>
-                        <IcCheck />
-                      </span>
-                    )}
+                  {selectedLocation?.id === cityWideOption.id && selectedLocation?.type === "CITY" && (
+                    <span className={styles.checkIcon}>
+                      <IcCheck />
+                    </span>
+                  )}
                 </div>
               )}
               {/* 구/군 목록 */}
               {districts.map((district) => (
                 <div
-                  key={generateDistrictKey(
-                    selectedCity.id,
-                    district,
-                    selectedCity.name
-                  )}
+                  key={generateDistrictKey(selectedCity.id, district, selectedCity.name)}
                   className={`${styles.districtItem} ${
-                    selectedLocation?.id === district.id &&
-                    selectedLocation?.type === "DISTRICT"
+                    selectedLocation?.id === district.id && selectedLocation?.type === "DISTRICT"
                       ? styles.selectedDistrict
                       : ""
                   }`}
                   onClick={() => handleLocationSelect(district)}
                 >
                   <span>{district.name}</span>
-                  {selectedLocation?.id === district.id &&
-                    selectedLocation?.type === "DISTRICT" && (
-                      <span className={styles.checkIcon}>
-                        <IcCheck />
-                      </span>
-                    )}
+                  {selectedLocation?.id === district.id && selectedLocation?.type === "DISTRICT" && (
+                    <span className={styles.checkIcon}>
+                      <IcCheck />
+                    </span>
+                  )}
                 </div>
               ))}
             </div>

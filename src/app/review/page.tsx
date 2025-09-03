@@ -4,21 +4,21 @@ import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 import { IcSearch } from "@asset/svg";
 import * as styles from "./style.css";
-import { TextField } from "@common/component/TextField";
+import {TextField} from "@design-system/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
 import Image from "next/image";
 import HospitalList from "./_components/hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
-import FloatingBtn from "@common/component/FloatingBtn/Floating";
+import FloatingBtn from "@design-system/FloatingBtn/Floating";
 import LocationHeader from "./_components/locationHeader/locationHeader";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import type { Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "@common/component/Modal/Modal.tsx";
+import {Modal} from "@design-system/Modal/Modal.tsx";
 import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
 
 interface Location {

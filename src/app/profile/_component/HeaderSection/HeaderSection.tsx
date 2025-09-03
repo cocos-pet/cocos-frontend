@@ -1,5 +1,4 @@
-import React from "react";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
 import { IcChevronLeft } from "@asset/svg";
 
 interface HeaderSectionProps {

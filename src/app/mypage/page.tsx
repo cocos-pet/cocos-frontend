@@ -1,7 +1,7 @@
 "use client";
 
 import * as styles from "./_style/mypage.css";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "@design-system/Divider/Divider";
 import { useMypageState } from "./_hooks/useMypageState";
 import ProfileSection from "./_component/ProfileSection/ProfileSection";
 import HeaderSection from "./_component/HeaderSection/HeaderSection";

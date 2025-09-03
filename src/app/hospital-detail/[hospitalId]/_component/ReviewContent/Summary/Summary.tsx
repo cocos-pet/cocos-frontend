@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Divider from "@common/component/Divider/Divider";
+import Divider from "src/design-system/Divider/Divider";
 import * as styles from "./Summary.css";
 import { IcChevronDown } from "@asset/svg";
 import { useGetHospitalSummary } from "@api/domain/review/summary/hook";

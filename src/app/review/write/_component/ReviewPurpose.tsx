@@ -1,4 +1,4 @@
-import Chip from "@common/component/Chip/Chip";
+import Chip from "../../../../design-system/Chip/Chip";
 import * as styles from "./ReviewPurpose.style.css";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "@app/review/write/page";

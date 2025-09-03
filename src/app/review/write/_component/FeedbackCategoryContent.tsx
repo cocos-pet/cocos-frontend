@@ -1,10 +1,9 @@
 import { useFormContext } from "react-hook-form";
 import { useState } from "react";
-import ColorChip from "@common/component/ColorChip/ColorChip";
+import { ColorChip, Toast } from "../../../../design-system";
 import { ReviewFormData } from "@app/review/write/page";
 import * as styles from "./FeedbackCategoryContent.style.css";
 import { useFeedbackGet } from "@api/domain/review/write/feedback/hook";
-import { Toast } from "@common/component/Toast/Toast";
 
 interface FeedbackCategoryContentProps {
   category: "good" | "bad";

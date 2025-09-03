@@ -1,7 +1,7 @@
-import { IcUp } from "@asset/svg";
+import {IcUp} from "@asset/svg";
 import * as styles from "@common/component/DropDownText/DropDownText.css";
-import { useState } from "react";
-import Chip from "@common/component/Chip/Chip";
+import {useState} from "react";
+import Chip from "../../../../design-system/Chip/Chip";
 
 interface DropDownTextProps {
   children: string;

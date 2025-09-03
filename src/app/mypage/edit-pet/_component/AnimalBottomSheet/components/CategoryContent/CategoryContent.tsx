@@ -1,7 +1,7 @@
-import CheckBoxText from "@common/component/CheckBoxText/CheckBoxText";
+import CheckBoxText from "@design-system/CheckBoxText/CheckBoxText.tsx";
 import { styles } from "./CategoryContent.css";
 import { useEffect, useRef, useState } from "react";
-import { TextField } from "@common/component/TextField";
+import { TextField } from "@design-system/TextField/index.tsx";
 import {
   CategoryAnimal,
   CategoryBreed,
@@ -35,7 +35,13 @@ const CategoryContent = () => {
   return (
     <>
       {category === "breeds" && (
-        <span style={{ width: "calc(100% - 4rem)", position: "absolute", top: "1.2rem" }}>
+        <span
+          style={{
+            width: "calc(100% - 4rem)",
+            position: "absolute",
+            top: "1.2rem",
+          }}
+        >
           <TextField
             value={searchString}
             onChange={(e) => setSearchString(e.target.value)}

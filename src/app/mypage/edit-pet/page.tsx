@@ -1,23 +1,22 @@
 "use client";
 
 import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
 import * as styles from "./PetEdit.css";
-import Divider from "@common/component/Divider/Divider";
-import { Button } from "@common/component/Button";
+import Divider from "@design-system/Divider/Divider.tsx";
+import { Button } from "@design-system/Button";
 import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { validateNickname } from "@shared/util/validateNickname";
 import CategoryBottomSheet from "./_component/CategoryBottomSheet/CategoryBottomSheet";
-import { useCategoryFilterStore } from "./_store/categoryFilter.ts";
-import Chip from "@common/component/Chip/Chip";
+import { CategoryData, useCategoryFilterStore } from "./_store/categoryFilter.ts";
+import Chip from "../../../design-system/Chip/Chip";
 import { getSelectedChipNamesById } from "./_utils/getSelectedChipNamesById.ts";
 import AnimalBottomSheet from "./_component/AnimalBottomSheet/AnimalBottomSheet";
 import { useAnimalFilterStore } from "./_store/animalFilter.ts";
 import { getAnimalChipNamesById } from "./_utils/getAnimalChipNamesById.ts";
 import AgeBottomSheet from "./_component/AgeBottomSheet/AgeBottomSheet";
-import { CategoryData } from "./_store/categoryFilter.ts";
 import {
   useGetAnimal,
   useGetBodies,
@@ -26,7 +25,7 @@ import {
   useGetSymptoms,
   usePatchPetInfo,
 } from "@api/domain/mypage/edit-pet/hook";
-import { useGetPetInfo, useGetMemberInfo } from "@api/domain/mypage/hook";
+import { useGetMemberInfo, useGetPetInfo } from "@api/domain/mypage/hook";
 import Docs from "../../onboarding/index/common/docs/Docs.tsx";
 import SearchHospital, { Hospital } from "@shared/component/SearchHospital/SearchHospital.tsx";
 import { useGetFavoriteHospital, usePatchFavoriteHospital } from "@api/shared/hook.ts";
@@ -388,7 +387,11 @@ const EditArticle = ({ title, type, selectedChips, categoryData, onButtonClick }
   );
 };
 
-const EditFavoriteHospital = ({ nickname }: { nickname: string | undefined }) => {
+const EditFavoriteHospital = ({
+  nickname,
+}: {
+  nickname: string | undefined;
+}) => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedHospital, setSelectedHospital] = useState<Hospital | null>(null);
   const prevSelectedHospital = useRef<Hospital | null>(null);

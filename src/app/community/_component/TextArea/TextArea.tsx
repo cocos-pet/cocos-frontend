@@ -1,6 +1,6 @@
 import React from "react";
 import {textareaContainer} from "./TextArea.css.ts";
-import {WrapVariants} from "@common/component/TextField/styles.css.ts";
+import {WrapVariants} from "@design-system/TextField/styles.css.ts";
 
 interface TextAreaProps {
   value: string;

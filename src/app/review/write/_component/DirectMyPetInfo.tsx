@@ -2,7 +2,7 @@ import { useState, useMemo } from "react";
 import { useFormContext, Controller, useWatch } from "react-hook-form";
 import * as styles from "./DirectMyPetInfo.style.css";
 import { ReviewFormData, ReviewFormWithUIData } from "../page";
-import { TextField } from "@common/component/TextField/index";
+import { TextField } from "@design-system/TextField/index";
 import DropDown from "@app/register-pet/index/common/dropDown/DropDown";
 import { GENDER, PET_TYPES } from "../constant";
 import { usePetIdGet } from "@api/domain/register-pet/petId/hook";

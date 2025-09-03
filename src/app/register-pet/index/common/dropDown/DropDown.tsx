@@ -1,4 +1,4 @@
-import Divider from "@common/component/Divider/Divider";
+import Divider from "@design-system/Divider/Divider";
 import { container, itemStyle, span } from "./DropDown.css";
 
 interface DropDownType {

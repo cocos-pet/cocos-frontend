@@ -1,13 +1,13 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav.tsx";
 import { IcCuriousActive, IcCuriousUnactive, IcLeftarrow, IcLikeActive, IcLikeDisabled } from "@asset/svg";
-import { Button } from "@common/component/Button";
-import Chip from "@common/component/Chip/Chip.tsx";
-import Divider from "@common/component/Divider/Divider.tsx";
+import { Button } from "@design-system/Button";
+import Chip from "../../../design-system/Chip/Chip.tsx";
+import Divider from "@design-system/Divider/Divider.tsx";
 import CommentList from "@common/component/Comment/CommentList.tsx";
-import { TextField } from "@common/component/TextField";
+import { TextField } from "@design-system/TextField/index.tsx";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import {
@@ -20,7 +20,7 @@ import {
   useSubCommentPost,
 } from "@api/domain/community/post/hook";
 import { PATH } from "@route/path.ts";
-import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet.tsx";
+import SimpleBottomSheet from "@design-system/Button/SimpleBottomSheet/SimpleBottomSheet.tsx";
 
 import nocategory from "@asset/image/nocategory.png";
 import { useParams, useRouter } from "next/navigation";
@@ -32,9 +32,11 @@ import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from ".
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "@common/component/Modal/Modal.tsx";
+import { Modal } from "@design-system/Modal/Modal";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 const Page = () => {
   const router = useRouter();

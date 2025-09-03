@@ -1,7 +1,6 @@
-import React from "react";
-import Tab from "@common/component/Tab/Tab";
+import Tab from "@design-system/Tab/Tab";
 import * as styles from "../../_style/profile.css";
-import { ActiveTabType } from "../../_hooks/useProfileState";
+import {ActiveTabType} from "../../_hooks/useProfileState";
 
 interface TabsSectionProps {
   activeTab: ActiveTabType;

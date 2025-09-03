@@ -1,7 +1,7 @@
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
-import { Button } from "@common/component/Button";
-import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
+import {Button} from "@design-system/Button";
+import SimpleBottomSheet from "@design-system/Button/SimpleBottomSheet/SimpleBottomSheet";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData, ReviewFormWithUIData } from "../page";
 import { useReviewPost } from "@api/domain/review/write/submit/hook";

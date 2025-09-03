@@ -38,6 +38,7 @@ const nextConfig: NextConfig = {
       "@type": path.resolve(__dirname, "src/type"),
       "@store": path.resolve(__dirname, "src/store"),
       "@auth": path.resolve(__dirname, "src/auth"),
+      "@design-system": path.resolve(__dirname, "src/design-system"),
     };
     return config;
   },

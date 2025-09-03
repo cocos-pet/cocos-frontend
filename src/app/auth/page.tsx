@@ -9,7 +9,9 @@ import dynamic from "next/dynamic";
 import { useAuth } from "@providers/AuthProvider";
 import { API_BASE_URL } from "@api/index";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading"), { ssr: false });
+const Loading = dynamic(() => import("@design-system/Loading/Loading"), {
+  ssr: false,
+});
 
 function AuthRedirectContent() {
   const router = useRouter();

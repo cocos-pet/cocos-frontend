@@ -1,16 +1,15 @@
-import React from "react";
 import * as styles from "../../_style/mypage.css";
-import Divider from "@common/component/Divider/Divider";
-import { Button } from "@common/component/Button";
-import { IcChevronRight, IcPlus } from "@asset/svg";
+import Divider from "@design-system/Divider/Divider";
+import {Button} from "@design-system/Button";
+import {IcChevronRight, IcPlus} from "@asset/svg";
 import Image from "next/image";
 import AddFavoriteHospital from "../AddFavoriteHospital";
-import { Disease, MemberInfo } from "../../_hooks/useMypageState";
-import { PetInfo, useProfileSectionState } from "@app/mypage/_hooks/useProfileSectionState";
-import { useMypageMemberInfo } from "@app/mypage/_store/mypageStore";
-import { useRouter } from "next/navigation";
-import { PATH } from "@route/path";
-import { useAuth } from "@providers/AuthProvider";
+import {Disease, MemberInfo} from "../../_hooks/useMypageState";
+import {PetInfo, useProfileSectionState} from "@app/mypage/_hooks/useProfileSectionState";
+import {useMypageMemberInfo} from "@app/mypage/_store/mypageStore";
+import {useRouter} from "next/navigation";
+import {PATH} from "@route/path";
+import {useAuth} from "@providers/AuthProvider";
 
 interface ProfileSectionProps {
   onNavigateToEditPet: () => void;

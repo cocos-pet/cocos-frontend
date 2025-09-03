@@ -1,9 +1,9 @@
 import BottomSheet from "@common/component/BottomSheet/BottomSheet";
 import { CategoryType, SelectedChips, useCategoryFilterStore } from "../../_store/categoryFilter";
-import Tab from "@common/component/Tab/Tab";
+import Tab from "@design-system/Tab/Tab";
 import * as styles from "./CategoryBottomSheet.css";
-import { Button } from "@common/component/Button";
-import Chip from "@common/component/Chip/Chip";
+import { Button } from "@design-system/Button";
+import Chip from "../../../../../design-system/Chip/Chip";
 import { getSelectedChipNamesById } from "../../_utils/getSelectedChipNamesById";
 import CategoryContent from "./components/CategoryContent/CategoryContent";
 import { usePatchPetInfo } from "@api/domain/mypage/edit-pet/hook";
@@ -23,7 +23,13 @@ const CategoryBottomSheet = ({ petId }: { petId: number }) => {
         alert("증상은 최소 1개 이상 존재해야합니다.");
         return;
       }
-      patchPetInfo({ petId, reqBody: { diseaseIds: selectedChips.diseaseIds, symptomIds: selectedChips.symptomIds } });
+      patchPetInfo({
+        petId,
+        reqBody: {
+          diseaseIds: selectedChips.diseaseIds,
+          symptomIds: selectedChips.symptomIds,
+        },
+      });
       setOpen(false);
     } else {
       alert("에러 발생");

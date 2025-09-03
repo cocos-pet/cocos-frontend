@@ -1,6 +1,6 @@
 import dynamic from "next/dynamic";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
+const Loading = dynamic(() => import("@design-system/Loading/Loading"), {
   ssr: false,
 });
 

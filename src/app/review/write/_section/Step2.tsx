@@ -1,10 +1,10 @@
-import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import HeaderNav from "@design-system/HeaderNav/HeaderNav";
 import { IcDeleteBlack } from "@asset/svg/index";
 import ReviewSymptom from "@app/review/write/_component/ReviewSymptom";
 import ReviewPurpose from "@app/review/write/_component/ReviewPurpose";
 import ReviewDisease from "@app/review/write/_component/ReviewDisease";
 import * as styles from "./Step2.style.css";
-import { Button } from "@common/component/Button";
+import { Button } from "@design-system/Button";
 import { useState } from "react";
 import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDisease";
 

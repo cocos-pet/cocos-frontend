@@ -3,8 +3,8 @@ import { ChangeEvent, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { validateNickname } from "@shared/util/validateNickname";
-import { Button } from "@common/component/Button";
-import { TextField } from "@common/component/TextField";
+import { Button } from "@design-system/Button";
+import { TextField } from "@design-system/TextField/index.tsx";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
 import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
@@ -15,7 +15,9 @@ import { ONBOARDING_GUIDE } from "../../constant/onboardingGuide.ts";
 import Title from "../../common/title/Title.tsx";
 import Docs from "../../common/docs/Docs.tsx";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 const Nickname = () => {
   // 상태 하나로 관리

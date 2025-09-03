@@ -1,13 +1,13 @@
-import { IcRightArror, IcChevronRight2 } from "@asset/svg/index";
-import { color } from "@style/styles.css";
+import {IcChevronRight2, IcRightArror} from "@asset/svg/index";
+import {color} from "@style/styles.css";
 import * as styles from "./ReviewPetInfo.style.css";
 import DirectMyPetInfo from "./DirectMyPetInfo";
-import { useGetPetInfo } from "@api/domain/mypage/hook";
-import { useFormContext } from "react-hook-form";
-import { ReviewFormWithUIData } from "@app/review/write/page";
-import { useState } from "react";
-import { Toast } from "@common/component/Toast/Toast";
-import { PET_TYPE_STANDARD } from "../constant";
+import {useGetPetInfo} from "@api/domain/mypage/hook";
+import {useFormContext} from "react-hook-form";
+import {ReviewFormWithUIData} from "@app/review/write/page";
+import {useState} from "react";
+import {Toast} from "../../../../design-system";
+import {PET_TYPE_STANDARD} from "../constant";
 
 const ReviewPetInfo = () => {
   const { watch, setValue } = useFormContext<ReviewFormWithUIData>();
@@ -47,7 +47,11 @@ const ReviewPetInfo = () => {
               if (typeof petInfo?.breedId === "number") {
                 setValue(
                   "petType",
-                  petInfo.breedId > 0 ? (petInfo.breedId < PET_TYPE_STANDARD ? "강아지" : "고양이") : "",
+                  petInfo.breedId > 0
+                    ? petInfo.breedId < PET_TYPE_STANDARD
+                      ? "강아지"
+                      : "고양이"
+                    : ""
                 );
               } else {
                 setValue("petType", "");
@@ -64,7 +68,11 @@ const ReviewPetInfo = () => {
             <IcRightArror
               width={20}
               height={20}
-              stroke={selectedPetInfo === "myPet" ? color.primary.blue700 : color.gray.gray500}
+              stroke={
+                selectedPetInfo === "myPet"
+                  ? color.primary.blue700
+                  : color.gray.gray500
+              }
             />
           </span>
         </button>
@@ -85,11 +93,20 @@ const ReviewPetInfo = () => {
             petInfoType: "manual",
           })}
         >
-          <span className={styles.buttonText} onClick={() => handleSelectPetInfo("manual")}>
+          <span
+            className={styles.buttonText}
+            onClick={() => handleSelectPetInfo("manual")}
+          >
             직접 입력하기
             <IcChevronRight2
-              className={styles.rotateIcon({ selected: selectedPetInfo === "manual" })}
-              stroke={selectedPetInfo === "manual" ? color.primary.blue700 : color.gray.gray500}
+              className={styles.rotateIcon({
+                selected: selectedPetInfo === "manual",
+              })}
+              stroke={
+                selectedPetInfo === "manual"
+                  ? color.primary.blue700
+                  : color.gray.gray500
+              }
             />
           </span>
           {selectedPetInfo === "manual" && (

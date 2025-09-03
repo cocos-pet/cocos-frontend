@@ -4,7 +4,7 @@ import * as styles from "./Complete.css";
 import { useRouter } from "next/navigation";
 import Docs from "../index/common/docs/Docs";
 import Title from "../index/common/title/Title";
-import { Button } from "@common/component/Button";
+import { Button } from "@design-system/Button";
 import { PATH } from "@route/path";
 import { useGetNickname } from "@api/domain/complete/hook";
 import registerPet from "@asset/lottie/registerPet.json";

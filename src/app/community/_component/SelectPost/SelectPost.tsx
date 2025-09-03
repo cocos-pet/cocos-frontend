@@ -3,7 +3,7 @@
 import {useCallback, useEffect, useState} from "react";
 import {useRouter} from "next/navigation";
 import * as styles from "./SelectPost.css.ts";
-import Divider from "@common/component/Divider/Divider.tsx";
+import Divider from "@design-system/Divider/Divider.tsx";
 import {IcUnderline} from "@asset/svg";
 import Content from "@common/component/Content/Content.tsx";
 import {usePostPostFilters} from "@api/domain/community/search/hook.ts";
@@ -14,7 +14,9 @@ import nocategory from "@asset/image/nocategory.png";
 import Image from "next/image";
 import dynamic from "next/dynamic";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@design-system/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 const PostList = () => {
   const [isRecentPost, setIsRecentPost] = useState(true);
