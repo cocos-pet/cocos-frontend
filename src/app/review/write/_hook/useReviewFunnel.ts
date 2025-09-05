@@ -21,7 +21,6 @@ interface CustomFunnel {
   pop: () => void;
   replace: (state: FunnelState) => void;
   go: (delta: number) => void;
-  cleanup: () => void;
 }
 
 const stepToNumber = (step: FunnelStep): number => {
@@ -133,6 +132,5 @@ export const useReviewFunnel = () => {
         setCurrentStep(numberToStep(targetStepNumber));
       }
     },
-    cleanup: () => {},
   } satisfies CustomFunnel;
 };
