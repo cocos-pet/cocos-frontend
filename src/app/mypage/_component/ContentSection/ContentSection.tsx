@@ -16,7 +16,7 @@ const ContentSection = ({ activeTab }: ContentSectionProps) => {
         {isAuthenticated ? (
           <MyPageContent tab={activeTab} />
         ) : (
-          <div className={styles.nothingContent}>로그인 해주세요.</div>
+          <div className={styles.nothingContent}>로그인 후 내 활동을 확인해보세요.</div>
         )}
       </div>
     </article>
