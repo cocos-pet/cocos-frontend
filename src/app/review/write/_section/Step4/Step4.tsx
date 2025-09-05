@@ -7,6 +7,7 @@ import { ReviewFormData, ReviewFormWithUIData } from "../../page";
 import { useReviewPost } from "@app/api/review/write/submit/hook";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { useReviewFunnel } from "../../_hook/useReviewFunnel";
 
 import * as styles from "./Step4.style.css";
 import ReviewContent from "../../_component/ReviewContent/ReviewContent";
@@ -15,13 +16,13 @@ import { useState } from "react";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
 
 interface Step4Props {
-  onPrev: () => void;
   onNext: () => void;
 }
 
-const Step4 = ({ onPrev, onNext }: Step4Props) => {
+const Step4 = ({ onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const funnel = useReviewFunnel();
 
   const searchParams = useSearchParams();
   const rawHospitalId = searchParams?.get("hospitalId");
@@ -119,6 +120,10 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
     setIsModalOpen(true);
   };
 
+  const handlePrev = () => {
+    funnel.back();
+  };
+
   return (
     <div className={styles.wrapper}>
       {/* 상단 리뷰 영역 */}
@@ -140,7 +145,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} disabled={isPending} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handlePrev} disabled={isPending} />
         <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={isPending} />
       </section>
 

@@ -14,18 +14,15 @@ import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../../page";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
+import { useReviewFunnel } from "../../_hook/useReviewFunnel";
 
 type CategoryType = "symptom" | "disease";
 
-interface Step2Props {
-  onPrev: () => void;
-  onNext: () => void;
-}
-
-const Step2 = ({ onPrev, onNext }: Step2Props) => {
+const Step2 = () => {
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const funnel = useReviewFunnel();
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -50,6 +47,14 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
 
   const handleGoHospitalDetail = () => {
     window.history.go(-2);
+  };
+
+  const handlePrev = () => {
+    funnel.back();
+  };
+
+  const handleNext = () => {
+    funnel.push({ step: "Step3", context: {} });
   };
 
   const handleModalOpen = () => {
@@ -80,8 +85,8 @@ const Step2 = ({ onPrev, onNext }: Step2Props) => {
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
-        <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFormValid} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handlePrev} />
+        <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={!isFormValid} />
       </section>
 
       {/* 증상&질병 바텀시트 */}

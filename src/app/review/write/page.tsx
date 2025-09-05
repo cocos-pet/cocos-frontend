@@ -67,14 +67,10 @@ export default function Page() {
 
   return (
     <FormProvider {...methods}>
-      {step === "Step1" && <Step1 onNext={() => funnel.push({ step: "Step2", context: {} })} />}
-      {step === "Step2" && (
-        <Step2 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step3", context: {} })} />
-      )}
-      {step === "Step3" && (
-        <Step3 onPrev={() => funnel.pop()} onNext={() => funnel.push({ step: "Step4", context: {} })} />
-      )}
-      {step === "Step4" && <Step4 onPrev={() => funnel.pop()} onNext={() => router.push(PATH.REVIEW.COMPLETE)} />}
+      {step === "Step1" && <Step1 />}
+      {step === "Step2" && <Step2 />}
+      {step === "Step3" && <Step3 />}
+      {step === "Step4" && <Step4  onNext={() => router.push(PATH.REVIEW.COMPLETE)} />}
     </FormProvider>
   );
 }
