@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { createUrlWithStep } from "../_utils/createUrlWithStep";
 
 export type FunnelStep = "Step1" | "Step2" | "Step3" | "Step4";
 
@@ -95,29 +96,26 @@ export const useReviewFunnel = () => {
     step,
     push(state: FunnelState) {
       const stepNumber = stepToNumber(state.step);
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.set("step", stepNumber.toString());
+      const url = createUrlWithStep(stepNumber);
 
-      router.push(newUrl.pathname + newUrl.search, { scroll: false });
+      router.push(url, { scroll: false });
       setCurrentStep(state.step);
     },
     pop() {
       const currentStepNumber = stepToNumber(currentStep);
       if (currentStepNumber > 1) {
         const prevStepNumber = currentStepNumber - 1;
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set("step", prevStepNumber.toString());
+        const url = createUrlWithStep(prevStepNumber);
 
-        router.push(newUrl.pathname + newUrl.search, { scroll: false });
+        router.push(url, { scroll: false });
         setCurrentStep(numberToStep(prevStepNumber));
       }
     },
     replace(state: FunnelState) {
       const stepNumber = stepToNumber(state.step);
-      const newUrl = new URL(window.location.href);
-      newUrl.searchParams.set("step", stepNumber.toString());
+      const url = createUrlWithStep(stepNumber);
 
-      router.replace(newUrl.pathname + newUrl.search, { scroll: false });
+      router.replace(url, { scroll: false });
       setCurrentStep(state.step);
     },
     go(delta: number) {
@@ -125,10 +123,9 @@ export const useReviewFunnel = () => {
       const targetStepNumber = Math.max(1, Math.min(4, currentStepNumber + delta));
 
       if (targetStepNumber !== currentStepNumber) {
-        const newUrl = new URL(window.location.href);
-        newUrl.searchParams.set("step", targetStepNumber.toString());
+        const url = createUrlWithStep(targetStepNumber);
 
-        router.push(newUrl.pathname + newUrl.search, { scroll: false });
+        router.push(url, { scroll: false });
         setCurrentStep(numberToStep(targetStepNumber));
       }
     },
