@@ -46,7 +46,7 @@ const Step1 = () => {
   };
 
   const handleGoHospitalDetail = () => {
-    funnel.pop();
+    funnel.back();
   };
 
   const handleNext = () => {

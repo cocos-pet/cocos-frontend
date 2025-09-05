@@ -50,7 +50,7 @@ const Step2 = () => {
   };
 
   const handlePrev = () => {
-    funnel.pop();
+    funnel.back();
   };
 
   const handleNext = () => {

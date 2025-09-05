@@ -19,7 +19,7 @@ export type FunnelState = {
 interface CustomFunnel {
   step: keyof FunnelSteps;
   push: (state: FunnelState) => void;
-  pop: () => void;
+  back: () => void;
   replace: (state: FunnelState) => void;
   go: (delta: number) => void;
 }
@@ -101,7 +101,7 @@ export const useReviewFunnel = () => {
       router.push(url, { scroll: false });
       setCurrentStep(state.step);
     },
-    pop() {
+    back() {
       const currentStepNumber = stepToNumber(currentStep);
       if (currentStepNumber > 1) {
         const prevStepNumber = currentStepNumber - 1;

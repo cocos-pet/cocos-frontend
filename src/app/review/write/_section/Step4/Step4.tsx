@@ -121,7 +121,7 @@ const Step4 = ({ onNext }: Step4Props) => {
   };
 
   const handlePrev = () => {
-    funnel.pop();
+    funnel.back();
   };
 
   return (
