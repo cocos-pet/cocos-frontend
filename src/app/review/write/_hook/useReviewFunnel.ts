@@ -1,6 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createUrlWithStep } from "../_utils/createUrlWithStep";
 
-export type FunnelStep = "Step1"|"Step2"|"Step3"|"Step4"
+export type FunnelStep = "Step1" | "Step2" | "Step3" | "Step4";
 
 type FunnelSteps = {
   Step1: Record<string, never>;
@@ -15,44 +17,117 @@ export type FunnelState = {
 };
 
 interface CustomFunnel {
-  // history: FunnelState[];
-  // currentIndex: number;
   step: keyof FunnelSteps;
   push: (state: FunnelState) => void;
-  pop: () => void;
+  back: () => void;
   replace: (state: FunnelState) => void;
   go: (delta: number) => void;
-  cleanup: () => void;
 }
 
-export const useReviewFunnel = () => {
-  const [history, setHistory] = useState<FunnelState[]>([{ step: "Step1", context: {} }]);
-  const [currentIndex, setIndex] = useState(0);
+const stepToNumber = (step: FunnelStep): number => {
+  switch (step) {
+    case "Step1":
+      return 1;
+    case "Step2":
+      return 2;
+    case "Step3":
+      return 3;
+    case "Step4":
+      return 4;
+    default:
+      return 1;
+  }
+};
 
-const current = history[currentIndex];
-const step = current.step;
+const numberToStep = (num: number): FunnelStep => {
+  switch (num) {
+    case 1:
+      return "Step1";
+    case 2:
+      return "Step2";
+    case 3:
+      return "Step3";
+    case 4:
+      return "Step4";
+    default:
+      return "Step1";
+  }
+};
+
+export const useReviewFunnel = () => {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [currentStep, setCurrentStep] = useState<FunnelStep>("Step1");
+
+  // URL의 step 파라미터 확인 후 현재 단계 설정
+  useEffect(() => {
+    const stepParam = searchParams?.get("step");
+    if (stepParam && ["1", "2", "3", "4"].includes(stepParam)) {
+      setCurrentStep(numberToStep(Number.parseInt(stepParam, 10)));
+    } else {
+      // step 파라미터가 없으면 Step1으로 설정하고 URL에 추가
+      const newUrl = new URL(window.location.href);
+      newUrl.searchParams.set("step", "1");
+      router.replace(newUrl.pathname + newUrl.search, { scroll: false });
+      setCurrentStep("Step1");
+    }
+  }, [searchParams?.get("step")]);
+
+  // 브라우저 뒤로가기/앞으로가기
+  useEffect(() => {
+    const handlePopState = () => {
+      // popstate 이벤트가 발생하면 URL의 step 파라미터를 다시 확인
+      const urlParams = new URLSearchParams(window.location.search);
+      const stepParam = urlParams.get("step");
+      if (stepParam && ["1", "2", "3", "4"].includes(stepParam)) {
+        setCurrentStep(numberToStep(Number.parseInt(stepParam, 10)));
+      } else {
+        setCurrentStep("Step1");
+      }
+    };
+
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
+
+  const step = currentStep;
 
   return {
     step,
     push(state: FunnelState) {
-      setHistory((prev) => {
-        const next = prev.slice(0, currentIndex + 1);
-        return [...next, state];
-      });
-      setIndex((i) => i + 1);
+      const stepNumber = stepToNumber(state.step);
+      const url = createUrlWithStep(stepNumber);
+
+      router.push(url, { scroll: false });
+      setCurrentStep(state.step);
     },
-    pop() {
-      setIndex((i) => Math.max(0, i - 1));
+    back() {
+      const currentStepNumber = stepToNumber(currentStep);
+      if (currentStepNumber > 1) {
+        const prevStepNumber = currentStepNumber - 1;
+        const url = createUrlWithStep(prevStepNumber);
+
+        router.push(url, { scroll: false });
+        setCurrentStep(numberToStep(prevStepNumber));
+      }
     },
     replace(state: FunnelState) {
-      setHistory((prev) => {
-        const next = prev.slice(0, currentIndex);
-        return [...next, state];
-      });
+      const stepNumber = stepToNumber(state.step);
+      const url = createUrlWithStep(stepNumber);
+
+      router.replace(url, { scroll: false });
+      setCurrentStep(state.step);
     },
     go(delta: number) {
-      setIndex((i) => i + delta);
+      const currentStepNumber = stepToNumber(currentStep);
+      const targetStepNumber = Math.max(1, Math.min(4, currentStepNumber + delta));
+
+      if (targetStepNumber !== currentStepNumber) {
+        const url = createUrlWithStep(targetStepNumber);
+
+        router.push(url, { scroll: false });
+        setCurrentStep(numberToStep(targetStepNumber));
+      }
     },
-    cleanup: () => {},
   } satisfies CustomFunnel;
 };

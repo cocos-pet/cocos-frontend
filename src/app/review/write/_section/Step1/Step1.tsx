@@ -14,17 +14,14 @@ import { useFormContext } from "react-hook-form";
 import { ReviewFormWithUIData } from "../../page";
 import { useRouter } from "next/navigation";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
-
+import { useReviewFunnel } from "../../_hook/useReviewFunnel";
 export type PetInfoType = "myPet" | "manual";
 
-interface Step1Props {
-  onNext: () => void;
-}
-
-const Step1 = ({ onNext }: Step1Props) => {
+const Step1 = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
+  const funnel = useReviewFunnel();
 
   const visitedAt = watch("visitedAt");
   const breedId = watch("breedId");
@@ -48,12 +45,12 @@ const Step1 = ({ onNext }: Step1Props) => {
     router.replace(`?hospitalId=${hospital?.id}`);
   };
 
-  // // 1-3. petInfo
-  // const selectedPetInfo = watch("selectedPetInfoType");
-  // setValue("selectedPetInfoType",  selectedPetInfo === type ? null : type);
-
   const handleGoHospitalDetail = () => {
-    window.history.go(-2); //review/agree +1
+    funnel.back();
+  };
+
+  const handleNext = () => {
+    funnel.push({ step: "Step2", context: {} });
   };
 
   return (
@@ -73,9 +70,8 @@ const Step1 = ({ onNext }: Step1Props) => {
         {/* 1-3. 동물 정보 */}
         <ReviewPetInfo />
       </div>
-
       <div className={styles.buttonContainer}>
-        <Button label="다음으로" size="large" variant="solidPrimary" disabled={!isFormValid} onClick={onNext} />
+        <Button label="다음으로" size="large" variant="solidPrimary" disabled={!isFormValid} onClick={handleNext} />
       </div>
 
       {/* 병원 검색 바텀시트 */}
