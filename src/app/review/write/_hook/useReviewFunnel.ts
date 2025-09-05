@@ -71,7 +71,7 @@ export const useReviewFunnel = () => {
       router.replace(newUrl.pathname + newUrl.search, { scroll: false });
       setCurrentStep("Step1");
     }
-  }, [searchParams, router]);
+  }, [searchParams?.get("step")]);
 
   // 브라우저 뒤로가기/앞으로가기
   useEffect(() => {
