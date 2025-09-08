@@ -53,19 +53,25 @@ export const useGetBodies = (petProblem: "DISEASE" | "SYMPTOM") => {
   });
 };
 
-export const useGetSymptoms = (bodyIds: number[]) => {
+export const useGetSymptoms = (bodyIds: number[] | undefined) => {
+  const _bodyIds= bodyIds ? bodyIds : []
+  const _enabled= _bodyIds.length > 0
   return useQuery({
-    queryKey: SYMPTOMS_QUERY_KEY.SYMPTOMS(bodyIds),
-    queryFn: () => getSymptoms(bodyIds),
+    queryKey: SYMPTOMS_QUERY_KEY.SYMPTOMS(_bodyIds),
+    queryFn: () => getSymptoms(_bodyIds),
     staleTime: 1000 * 60 * 10,
+    enabled: _enabled
   });
 };
 
-export const useGetDisease = (bodyIds: number[]) => {
+export const useGetDisease = (bodyIds: number[] | undefined) => {
+  const _bodyIds= bodyIds ? bodyIds : []
+  const _enabled= _bodyIds.length > 0
   return useQuery({
-    queryKey: DISEASE_QUERY_KEY.DISEASE(bodyIds),
-    queryFn: () => getDisease(bodyIds),
+    queryKey: DISEASE_QUERY_KEY.DISEASE(_bodyIds),
+    queryFn: () => getDisease(_bodyIds),
     staleTime: 1000 * 60 * 10,
+    enabled: _enabled
   });
 };
 
