@@ -5,6 +5,8 @@ import MapComponent from "../MapComponent/MapComponent";
 import * as styles from "./InfoContent.css";
 import { IcCopy } from "@asset/svg";
 import { useGetHospitalDetail } from "@api/domain/review/hospital-detail/hook";
+import Loading from "@common/component/Loading/Loading";
+import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
 
 export interface InfoContentProps {
   hospitalId: number;
@@ -13,11 +15,7 @@ export interface InfoContentProps {
 export default function InfoContent({ hospitalId }: InfoContentProps) {
   const [showToast, setShowToast] = useState(false);
 
-  const {
-    data: hospitalData,
-    isLoading,
-    error,
-  } = useGetHospitalDetail(hospitalId);
+  const { data: hospitalData, isLoading, error } = useGetHospitalDetail(hospitalId);
 
   const handleCopy = () => {
     if (!hospitalData?.address) return;
@@ -26,10 +24,8 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
     setTimeout(() => setShowToast(false), 5000);
   };
 
-  if (isLoading) return <div>로딩 중...</div>;
-  if (error) {
-    return <div>에러가 발생했습니다.</div>;
-  }
+  if (isLoading) return <Loading height={80} />;
+  if (error) return <WarningToastWrap errorMessage="에러가 발생했습니다. 잠시 후 다시 시도해 주세요." />;
   if (!hospitalData) return null;
 
   return (
@@ -49,9 +45,7 @@ export default function InfoContent({ hospitalId }: InfoContentProps) {
       )}
 
       <div className={styles.introduction}>
-        <div className={styles.introductionText}>
-          {hospitalData.introduction || "병원 소개가 없습니다."}
-        </div>
+        <div className={styles.introductionText}>{hospitalData.introduction || "병원 소개가 없습니다."}</div>
       </div>
 
       <div className={styles.addressRow}>
