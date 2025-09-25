@@ -1,7 +1,8 @@
 import * as styles from "./DualOptionSelector.css";
-import {useState} from "react";
-import {animalGetResponse} from "@api/domain/register-pet/animal/index";
+import { useState } from "react";
+import { animalGetResponse } from "@api/domain/register-pet/animal/index";
 import Image, { StaticImageData } from "next/image";
+import LazyImage from "@common/component/LazyImage";
 
 interface DualOptionSelectorProps {
   data: {
@@ -38,7 +39,7 @@ const DualOptionSelector = ({ data, onSelect }: DualOptionSelectorProps) => {
           onClick={() => handleOptionClick(item.id, item.name)}
         >
           {item.name}
-          {item.image && <Image src={item.image} alt={item.name || ""} width={104} height={59} />}
+          {item.image && <LazyImage src={item.image} alt={item.name || ""} width="10.4rem" height="5.9rem" />}
         </div>
       ))}
     </div>

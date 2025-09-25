@@ -3,8 +3,8 @@
 import * as styles from "./ReviewHospital.style.css";
 import { IcSearch } from "@asset/svg/index";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
-import Image from "next/image";
 import { useFormContext } from "react-hook-form";
+import LazyImage from "@common/component/LazyImage";
 import { ReviewFormWithUIData } from "../../page";
 interface ReviewHospitalProps {
   handleOpenSearchHospital: () => void;
@@ -31,7 +31,14 @@ const ReviewHospital = ({ handleOpenSearchHospital }: ReviewHospitalProps) => {
               </span>
             </div>
             {/* ⚠️ api 연동시 이미지도 받아와야 함 */}
-            <Image src={nicknameCoco} alt="hospital-exterior" className={styles.img} priority />
+            <LazyImage
+              src={nicknameCoco}
+              alt="hospital-exterior"
+              className={styles.img}
+              priority
+              width="4.8rem"
+              height="4.8rem"
+            />
           </div>
         ) : (
           <button onClick={handleOpenSearchHospital} className={styles.myPetInfoBtn({ selected: false })}>

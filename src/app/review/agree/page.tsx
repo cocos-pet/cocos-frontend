@@ -4,17 +4,17 @@ import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { IcLeftarrow } from "@asset/svg";
 import reviewNoticeFrame from "@asset/image/reviewNoticeFrame.png";
 import danger from "@asset/image/danger.png";
-import Image from "next/image";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
 import * as style from "./style.css";
 import { IcCheckbox } from "@asset/svg";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TITLE, CHECKBOX_TEXTS } from "@app/review/agree/constant";
 import { useAgreeReviewMutation } from "@api/domain/review/agree/hook";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
+import LazyImage from "@common/component/LazyImage";
 
 const page = () => {
   const CHECKBOX_COUNT = CHECKBOX_TEXTS.length;
@@ -74,13 +74,20 @@ const page = () => {
       />
       <div className={style.wrapper}>
         <section className={style.topLayout}>
-          <Image src={danger} alt="주의 표시" className={style.dangerImg} />
+          <LazyImage src={danger} alt="주의 표시" className={style.dangerImg} width="4.8rem" height="4.8rem" />
           <h2>{TITLE.main}</h2>
           <h2 className={style.title}>{TITLE.sub}</h2>
           <p className={style.docs}>{TITLE.descriptions[0]}</p>
           <p className={style.docs}>{TITLE.descriptions[1]}</p>
         </section>
-        <Image src={reviewNoticeFrame} alt="리뷰작성 유의사항 이미지" priority className={style.mainImg} />
+        <LazyImage
+          src={reviewNoticeFrame}
+          alt="리뷰작성 유의사항 이미지"
+          priority
+          className={style.mainImg}
+          width="26rem"
+          height="19.5rem"
+        />
         <section className={style.bottomLayout}>
           {CHECKBOX_TEXTS.map((text, idx) => (
             <div key={idx}>

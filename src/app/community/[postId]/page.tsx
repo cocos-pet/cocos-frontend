@@ -24,7 +24,6 @@ import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomS
 
 import nocategory from "@asset/image/nocategory.png";
 import { useParams, useRouter } from "next/navigation";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { styles } from "./PostDetail.css.ts";
 import { getCategoryResponse } from "../_utills/getPostCategoryLike.ts";
@@ -33,6 +32,7 @@ import Profile from "@app/community/_component/Profile/Profile.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal.tsx";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
@@ -77,14 +77,12 @@ const Page = () => {
   if (!postData) {
     return (
       <div className={styles.emptyContainer}>
-        <Image
+        <LazyImage
           src={nocategory}
           alt="게시글 없음."
-          style={{
-            width: "27.6074rem",
-            height: "15.4977rem",
-            objectFit: "cover",
-          }}
+          width="27.6rem"
+          height="15.5rem"
+          style={{ objectFit: "cover" }}
         />
         <h1>아직 등록된 게시글이 없어요</h1>
       </div>
@@ -275,7 +273,7 @@ const Page = () => {
           <div className={styles.content}>{postData.content}</div>
         </div>
         {postData.images?.map((image, index) => (
-          <Image
+          <LazyImage
             key={`postImage-${
               // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
               index
@@ -283,8 +281,8 @@ const Page = () => {
             src={image}
             alt="postImage"
             className={styles.image}
-            width={100}
-            height={262}
+            width="100%"
+            height="26.2rem"
           />
         ))}
         <div className={styles.labelWrap}>
