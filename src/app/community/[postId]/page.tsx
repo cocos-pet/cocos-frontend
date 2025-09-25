@@ -31,7 +31,6 @@ import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from ".
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "@common/component/Modal/Modal.tsx";
 import LazyImage from "@common/component/LazyImage.tsx";
 import LoginModal from "@common/component/LoginModal/LoginModal.tsx";
 
