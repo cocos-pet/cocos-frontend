@@ -79,6 +79,13 @@ const Nickname = () => {
             width="16.5rem"
             height="9.3rem"
           />
+          <LazyImage
+            src={nicknameCoco}
+            alt="onboarding-character"
+            className={styles.imgStyle}
+            width="16.5rem"
+            height="9.3rem"
+          />
           <Title text={ONBOARDING_GUIDE.nickname.title} />
           <Docs text={ONBOARDING_GUIDE.nickname.docs} />
         </div>

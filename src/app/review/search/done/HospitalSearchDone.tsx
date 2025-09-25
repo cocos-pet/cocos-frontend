@@ -10,7 +10,6 @@ import Divider from "@common/component/Divider/Divider.tsx";
 import { useGetHospitalSearch } from "@api/domain/hospitals/search/hook";
 import { PATH } from "@route/path.ts";
 import { Hospital } from "@api/domain/hospitals/search";
-import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
 import LazyImage from "@common/component/LazyImage";
 import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
 
