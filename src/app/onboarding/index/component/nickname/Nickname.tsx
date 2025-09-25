@@ -14,12 +14,14 @@ import { ONBOARDING_GUIDE } from "../../constant/onboardingGuide.ts";
 import Title from "../../common/title/Title.tsx";
 import Docs from "../../common/docs/Docs.tsx";
 import LazyImage from "@common/component/LazyImage.tsx";
+import { useLogout } from "@api/domain/setting/hook.ts";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const Nickname = () => {
   // 상태 하나로 관리
   const [nickname, setNickname] = useState("");
+  const { mutate: logout } = useLogout();
 
   // api nickname있는 경우에만 실행
   const isEnabled = nickname.length > 0;
@@ -48,7 +50,7 @@ const Nickname = () => {
   // 뒤로 가기
   const router = useRouter();
   const handleGoBack = () => {
-    router.back();
+    logout();
   };
 
   // 다음 버튼
