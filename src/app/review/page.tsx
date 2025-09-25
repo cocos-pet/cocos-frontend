@@ -7,7 +7,6 @@ import * as styles from "./style.css";
 import { TextField } from "@common/component/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
-import Image from "next/image";
 import HospitalList from "./_components/hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
@@ -19,7 +18,7 @@ import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal.tsx";
-import { useGetReviewAgreementStatus } from "@app/api/review/agree/hook";
+import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
 import LazyImage from "@common/component/LazyImage";
 
 interface Location {

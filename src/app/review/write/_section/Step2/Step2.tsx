@@ -1,0 +1,114 @@
+import HeaderNav from "@common/component/HeaderNav/HeaderNav";
+import { IcDeleteBlack } from "@asset/svg/index";
+import ReviewSymptom from "../../_component/ReviewSymptom/ReviewSymptom";
+import ReviewPurpose from "../../_component/ReviewPurpose/ReviewPurpose";
+import ReviewDisease from "../../_component/ReviewDisease/ReviewDisease";
+import * as styles from "./Step2.style.css";
+import { Button } from "@common/component/Button";
+import { useState } from "react";
+import SearchSymptomDisease from "@app/review/write/_component/SearchSymptomDisease";
+
+import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
+import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
+import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
+import { useFormContext } from "react-hook-form";
+import { ReviewFormData } from "../../page";
+import ExitConfirmModal from "../../_component/ExitConfirmModal";
+import { useReviewFunnel } from "../../_hook/useReviewFunnel";
+
+type CategoryType = "symptom" | "disease";
+
+const Step2 = () => {
+  const [open, setOpen] = useState(false);
+  const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const funnel = useReviewFunnel();
+
+  const { watch } = useFormContext<ReviewFormData>();
+
+  const purposeId = watch("purposeId");
+  const isFormValid = purposeId !== -1;
+
+  const { data: diseaseData } = useBodiesGet("disease");
+  const { data: symptomData } = useBodiesGet("symptom");
+
+  const allDiseaseBodyIds =
+    diseaseData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+  const allSymptomBodyIds =
+    symptomData?.data?.bodies?.map((body) => body.id).filter((id): id is number => id !== undefined) ?? [];
+
+  const { data: symptomBodyData } = useSymptomGet(allSymptomBodyIds);
+  const { data: diseaseBodyData } = useDiseaseGet(allDiseaseBodyIds);
+
+  const handleOpenBottomSheet = (category: CategoryType) => {
+    setSelectedCategory(category);
+    setOpen(true);
+  };
+
+  const handleGoHospitalDetail = () => {
+    window.history.go(-2);
+  };
+
+  const handlePrev = () => {
+    funnel.back();
+  };
+
+  const handleNext = () => {
+    funnel.push({ step: "Step3", context: {} });
+  };
+
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  return (
+    <div className={styles.backgroundColor}>
+      {/* 상단 헤더 영역 */}
+      <HeaderNav
+        centerContent="리뷰작성(2/4)"
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
+      />
+
+      <section className={styles.wrapper}>
+        {/* 2-1. 증상 선택 */}
+        <ReviewSymptom
+          onCategoryChange={handleOpenBottomSheet}
+          symptomBodyData={symptomBodyData}
+          diseaseBodyData={diseaseBodyData}
+        />
+        {/* 2-2. 방문 목적 */}
+        <ReviewPurpose />
+
+        {/* 2-3. 질병 선택 */}
+        <ReviewDisease onCategoryChange={handleOpenBottomSheet} diseaseBodyData={diseaseBodyData} />
+      </section>
+
+      {/* 하단 버튼 영역 */}
+      <section className={styles.btnLayout}>
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handlePrev} />
+        <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={!isFormValid} />
+      </section>
+
+      {/* 증상&질병 바텀시트 */}
+      <SearchSymptomDisease
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        selectedCategory={selectedCategory}
+        onCategoryChange={setSelectedCategory}
+        symptomData={symptomData?.data}
+        symptomBodyData={symptomBodyData}
+        diseaseData={diseaseData?.data}
+        diseaseBodyData={diseaseBodyData}
+      />
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
+      />
+    </div>
+  );
+};
+
+export default Step2;

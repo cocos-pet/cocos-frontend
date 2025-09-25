@@ -3,7 +3,7 @@ import { color, font } from "@style/styles.css";
 
 export const container = style({
   margin: "0rem 2rem",
-  width: "100%",
+  width: "calc(100% - 4rem)",
 });
 
 export const title = style([
