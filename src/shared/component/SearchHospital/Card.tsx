@@ -3,6 +3,7 @@ import * as styles from "./Card.css";
 import Image from "next/image";
 import nicknameCoco from "@asset/image/nicknameCoco.png";
 import Radio from "@common/component/Radio/Radio";
+import LazyImage from "@common/component/LazyImage";
 
 type CardProps = {
   id: number;
@@ -23,7 +24,13 @@ const Card = ({ id, name, address, selected, imgSrc, onSelect }: CardProps) => {
           <span className={styles.address}>{address}</span>
         </div>
       </div>
-      <Image src={imgSrc ?? nicknameCoco} alt="hospital-exterior" className={styles.img} />
+      <LazyImage
+        src={imgSrc ?? nicknameCoco}
+        alt="hospital-exterior"
+        className={styles.img}
+        width="7.6rem"
+        height="7.6rem"
+      />
     </div>
   );
 };

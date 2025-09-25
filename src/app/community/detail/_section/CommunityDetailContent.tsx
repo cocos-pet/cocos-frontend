@@ -7,13 +7,13 @@ import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import Content from "@common/component/Content/Content.tsx";
 import { PATH } from "@route/path.ts";
 import { formatTime } from "@shared/util/formatTime.ts";
-import Image from "next/image";
 import nocategory from "@asset/image/nocategory.png";
 import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
+import LazyImage from "@common/component/LazyImage";
 
 const EmptyState = () => (
   <div className={styles.emptyContainer}>
-    <Image src={nocategory} alt="게시글 없음." style={{ objectFit: "cover" }} width={276} height={155} />
+    <LazyImage src={nocategory} alt="게시글 없음." width="27.6rem" height="15.5rem" style={{ objectFit: "cover" }} />
     <h1> 아직 등록된 게시글이 없어요 </h1>
   </div>
 );

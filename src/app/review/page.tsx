@@ -7,7 +7,6 @@ import * as styles from "./style.css";
 import { TextField } from "@common/component/TextField";
 import { useGetMemberInfo } from "@api/domain/mypage/hook";
 import banner from "@asset/image/banner.png";
-import Image from "next/image";
 import HospitalList from "./_components/hospitalList/hospitalList";
 import { NAV_CONTENT } from "@common/component/Nav/constant";
 import Nav from "@common/component/Nav/Nav";
@@ -20,6 +19,7 @@ import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal.tsx";
 import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
+import LazyImage from "@common/component/LazyImage";
 
 interface Location {
   id: number;
@@ -117,7 +117,7 @@ export default function ReviewPage() {
                   </div>
                 ))}
               </div>
-              <Image src={banner} alt="banner" className={styles.bannerContainer} />
+              <LazyImage src={banner} alt="banner" className={styles.bannerContainer} width="100%" height="10rem" />
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
             <HospitalList
