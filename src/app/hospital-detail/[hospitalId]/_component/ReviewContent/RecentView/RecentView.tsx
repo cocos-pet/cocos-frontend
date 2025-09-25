@@ -12,9 +12,14 @@ import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import Divider from "@common/component/Divider/Divider";
 import { Modal } from "@common/component/Modal/Modal";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
-import Image from "next/image";
 import no_review from "@asset/image/no_review.png";
 import { Button } from "@common/component/Button";
+import LazyImage from "@common/component/LazyImage";
+
+interface ReviewSummaryItem {
+  id?: number;
+  label?: string;
+}
 
 interface RecentViewProps {
   hospitalId: number;
@@ -28,6 +33,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   const observerRef = useRef<IntersectionObserver | null>(null);
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
 
   const handleObserver = useCallback(
@@ -106,6 +112,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
         <div className={styles.headerLeft}>
           <span className={styles.recentViewTitle}>최근 많이 본 리뷰</span>
           {totalReviewCount > 0 && <span className={styles.reviewCount}>+{totalReviewCount}</span>}
+          {totalReviewCount > 0 && <span className={styles.reviewCount}>+{totalReviewCount}</span>}
         </div>
         {totalReviewCount > 0 && (
           <button className={styles.headerMore} onClick={handleMoreClick}>
@@ -151,18 +158,21 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
                 {index < reviews.length - 1 && <Divider size="small" />}
               </div>
             ))}
-            {hasNextPage && (
-              <div ref={loadMoreRef} style={{ height: "10px" }}>
-                {isFetchingNextPage ? "더 불러오는 중..." : ""}
-              </div>
-            )}
+            {hasNextPage && <div ref={loadMoreRef} style={{ height: "10px" }} />}
           </>
         ) : (
           <div className={styles.noReviewContainer}>
             <div className={styles.imageContainer}>
-              <Image src={no_review} alt="리뷰 없음" width={127} height={127} style={{ objectFit: "contain" }} />
+              <LazyImage
+                src={no_review}
+                alt="리뷰 없음"
+                width="12.7rem"
+                height="12.7rem"
+                style={{ objectFit: "contain" }}
+              />
             </div>
             <p className={styles.noReviewText}>리뷰가 아직 없어요</p>
+            <Button size="large" onClick={handleFloatingBtnClick} label="리뷰 작성하기" />
             <Button size="large" onClick={handleFloatingBtnClick} label="리뷰 작성하기" />
           </div>
         )}
@@ -185,6 +195,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
           bottomAffix={
             <Modal.BottomAffix>
               <Modal.Close label={"취소"} />
+              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
               <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
             </Modal.BottomAffix>
           }

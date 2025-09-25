@@ -2,11 +2,10 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import { useEffect } from "react";
 import * as styles from "./hospitalList.css";
-import Image from "next/image";
 import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
-import Loading from "@common/component/Loading/Loading";
+import LazyImage from "@common/component/LazyImage";
 
 interface Location {
   id: number;
@@ -25,8 +24,16 @@ interface HospitalListProps {
 }
 
 export default function HospitalList({ title, highlightText, selectedLocation }: HospitalListProps) {
+export default function HospitalList({ title, highlightText, selectedLocation }: HospitalListProps) {
   const { ref, inView } = useInView();
 
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteHospitalList({
+    locationType: selectedLocation?.type || "CITY",
+    locationId: selectedLocation?.id,
+    size: 10,
+    sortBy: "REVIEW",
+    image: "",
+  });
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, refetch } = useInfiniteHospitalList({
     locationType: selectedLocation?.type || "CITY",
     locationId: selectedLocation?.id,
@@ -55,22 +62,26 @@ export default function HospitalList({ title, highlightText, selectedLocation }:
           page.hospitals?.map((hospital: Hospital) => (
             <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
               <Link href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`} className={styles.link}>
+            <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
+              <Link href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`} className={styles.link}>
                 <div className={styles.hospitalInfo}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
                   <p className={styles.hospitalAddress}>{hospital.address}</p>
                   <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
+                  <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
                 </div>
                 {hospital.image && (
-                  <Image
+                  <LazyImage
                     src={hospital.image}
                     alt={hospital.name}
-                    width={80}
-                    height={80}
+                    width="8rem"
+                    height="8rem"
                     className={styles.hospitalImage}
                   />
                 )}
               </Link>
             </div>
+          )),
           )),
         )}
         <div ref={ref}>{isFetchingNextPage && <Loading height={80} />}</div>

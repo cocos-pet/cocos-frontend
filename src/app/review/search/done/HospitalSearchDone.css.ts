@@ -27,8 +27,6 @@ export const styles = {
     paddingBottom: "10.4rem",
   }),
   noSearchResultImage: style({
-    width: "26.3rem",
-    height: "15.5rem",
     objectFit: "cover",
   }),
   noSearchText: style([

@@ -1,7 +1,7 @@
-import Image from "next/image";
 import notFoundGraphic from "@asset/image/notFoundGraphic.png";
 import { StaticImageData } from "next/image";
 import * as styles from "./HotHospitalItem.css.ts";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 interface HotHospitalItemProps {
   id: number;
@@ -44,9 +44,21 @@ const HotHospitalItem = ({
       </div>
       {/* 병원 이미지가 없을 경우를 대비하여 기본 이미지 설정 */}
       {typeof imageSrc !== "string" && !imageSrc ? (
-        <Image src={notFoundGraphic} alt={"병원 이미지"} className={styles.hotHospitalImage} height={76} width={76} />
+        <LazyImage
+          src={notFoundGraphic}
+          alt={"병원 이미지"}
+          className={styles.hotHospitalImage}
+          height="7.6rem"
+          width="7.6rem"
+        />
       ) : (
-        <Image src={imageSrc} alt={"병원 이미지"} className={styles.hotHospitalImage} height={76} width={76} />
+        <LazyImage
+          src={imageSrc}
+          alt={"병원 이미지"}
+          className={styles.hotHospitalImage}
+          height="7.6rem"
+          width="7.6rem"
+        />
       )}
     </div>
   );

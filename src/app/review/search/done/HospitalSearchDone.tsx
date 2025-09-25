@@ -4,13 +4,13 @@ import { TextField } from "@common/component/TextField";
 import { ChangeEvent, Suspense, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import noSearchResult from "@asset/image/noSearchResult.png";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { styles } from "./HospitalSearchDone.css.ts";
 import Divider from "@common/component/Divider/Divider.tsx";
 import { useGetHospitalSearch } from "@api/domain/hospitals/search/hook";
 import { PATH } from "@route/path.ts";
 import { Hospital } from "@api/domain/hospitals/search";
+import LazyImage from "@common/component/LazyImage";
 import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
@@ -88,12 +88,12 @@ function HospitalSearchDoneContent() {
       </div>
       {hospitals.length === 0 ? (
         <div className={styles.noSearchData}>
-          <Image
+          <LazyImage
             className={styles.noSearchResultImage}
             src={noSearchResult}
             alt="검색 결과 없음"
-            width={276}
-            height={155}
+            width="26.3rem"
+            height="15.5rem"
           />
           <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
           <span className={styles.noSearchRecommendText}>
@@ -118,7 +118,7 @@ function HospitalSearchDoneContent() {
                   </p>
                 </div>
                 <div className={styles.hospitalImage}>
-                  <Image src={hospital.image || defaultImage} alt={hospital.name} width={100} height={100} />
+                  <LazyImage src={hospital.image || defaultImage} alt={hospital.name} width="10rem" height="10rem" />
                 </div>
               </div>
               <Divider size="small" />
