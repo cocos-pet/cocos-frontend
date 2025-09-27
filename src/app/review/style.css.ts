@@ -1,6 +1,11 @@
 import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
+export const pageWrapper = style({
+  position: "fixed",
+  maxWidth: "76.8rem",
+});
+
 export const searchBarContainer = style({
   margin: "1.6rem 2rem 2rem",
 });
@@ -9,7 +14,7 @@ export const reviewContainer = style({
   position: "relative",
   height: "100vh",
   overflow: "auto",
-  paddingBottom: "8rem",
+  paddingBottom: "10rem",
 });
 
 export const reviewList = style({
