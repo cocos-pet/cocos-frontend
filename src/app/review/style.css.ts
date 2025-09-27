@@ -3,7 +3,12 @@ import { style } from "@vanilla-extract/css";
 
 export const pageWrapper = style({
   position: "fixed",
+  width: "100%",
   maxWidth: "76.8rem",
+  left: "50%",
+  transform: "translateX(-50%)",
+  top: 0,
+  bottom: 0,
 });
 
 export const searchBarContainer = style({
@@ -99,7 +104,12 @@ export const hospitalAddress = style([
   },
 ]);
 
-export const bannerContainer = style({});
+export const bannerContainer = style({
+  width: "100%",
+  height: "auto",
+  objectFit: "cover",
+  borderRadius: "1.6rem",
+});
 
 export const hospitalListText = style([
   font.label01,
