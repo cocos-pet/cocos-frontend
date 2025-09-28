@@ -12,6 +12,7 @@ import nocategory from "@asset/image/nocategory.png";
 import { useFilterStore } from "@store/filter.ts";
 import { postPostFiltersRequestType } from "@api/domain/community/search";
 import Image from "next/image";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 const symptomMapping: { [key: string]: string } = {
   1: "피부/털",
@@ -71,11 +72,11 @@ function SymptomDetailContent() {
           />
         </div>
         <div className={styles.emptyContainer}>
-          <Image
+          <LazyImage
             src={nocategory}
             alt="게시글 없음."
-            width={276}
-            height={155}
+            width="27.6rem"
+            height="15.5rem"
             style={{ objectFit: "cover" }}
           />
           <h1> 아직 등록된 게시글이 없어요 </h1>

@@ -8,6 +8,7 @@ import { Suspense, useCallback, useEffect, useState } from "react";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
+import LazyImage from "@common/component/LazyImage.tsx";
 
 function SymptomContent() {
   const searchParams = useSearchParams();
@@ -56,7 +57,9 @@ function SymptomContent() {
             aria-label={`증상 부위: ${bodyPart.name}`}
             type="button"
           >
-            {bodyPart.image && <Image src={bodyPart.image} alt={`${bodyPart.name} 아이콘`} width={56} height={56} />}
+            {bodyPart.image && (
+              <LazyImage src={bodyPart.image} alt={`${bodyPart.name} 아이콘`} width="5.6rem" height="5.6rem" />
+            )}
             <p className={styles.symptomName}>{bodyPart.name}</p>
           </button>
         ))}

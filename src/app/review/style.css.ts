@@ -14,7 +14,10 @@ export const reviewContainer = style({
 
 export const reviewList = style({
   height: "100%",
-  overflow: "auto",
+  overflowX: "hidden",
+  "::-webkit-scrollbar": {
+    display: "none",
+  },
 });
 
 export const headerContainer = style({
@@ -91,10 +94,7 @@ export const hospitalAddress = style([
   },
 ]);
 
-export const bannerContainer = style({
-  width: "100%",
-  height: "10rem",
-});
+export const bannerContainer = style({});
 
 export const hospitalListText = style([
   font.label01,

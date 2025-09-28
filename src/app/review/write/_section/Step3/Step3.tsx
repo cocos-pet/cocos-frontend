@@ -4,22 +4,22 @@ import Tab from "@common/component/Tab/Tab";
 import { Button } from "@common/component/Button";
 import * as styles from "./Step3.style.css";
 import { useState } from "react";
-import FeedbackCategoryContent from "@app/review/write/_component/FeedbackCategoryContent";
-import Image from "next/image";
+import FeedbackCategoryContent from "../../_component/FeedbackCategoryContent/FeedbackCategoryContent";
 import feedbackImg from "@asset/image/reviewFeedback.png";
-import { FEEDBACK_CATEGORIES } from "../constant";
+import { FEEDBACK_CATEGORIES } from "../../constant";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData } from "../page";
+import LazyImage from "@common/component/LazyImage";
+
+import { ReviewFormData } from "../../page";
+import ExitConfirmModal from "../../_component/ExitConfirmModal";
+import { useReviewFunnel } from "../../_hook/useReviewFunnel";
 
 type CategoryType = "good" | "bad";
 
-interface Step3Props {
-  onPrev: () => void;
-  onNext: () => void;
-}
-
-const Step3 = ({ onPrev, onNext }: Step3Props) => {
+const Step3 = () => {
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const funnel = useReviewFunnel();
 
   const { watch } = useFormContext<ReviewFormData>();
 
@@ -32,17 +32,28 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
     window.history.go(-2);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handlePrev = () => {
+    funnel.back();
+  };
+
+  const handleNext = () => {
+    funnel.push({ step: "Step4", context: {} });
+  };
   return (
     <>
       {/* 상단 리뷰 영역 */}
       <HeaderNav
         centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
       <div className={styles.backgroundColor}>
         {/* 타이틀 */}
         <section className={styles.TopLayout}>
-          <Image src={feedbackImg} alt="review-feedback img" className={styles.img} />
+          <LazyImage src={feedbackImg} alt="review-feedback img" className={styles.img} width="8rem" height="6rem" />
           <div className={styles.titleBox}>
             <h1 className={styles.title}>진료 경험은 어땠나요?</h1>
             <div>
@@ -73,10 +84,17 @@ const Step3 = ({ onPrev, onNext }: Step3Props) => {
 
         {/* 하단 버튼 영역 */}
         <section className={styles.btnLayout}>
-          <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} />
-          <Button label="다음으로" size="large" variant="solidPrimary" onClick={onNext} disabled={!isFromValid} />
+          <Button label="이전으로" size="large" variant="solidNeutral" onClick={handlePrev} />
+          <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={!isFromValid} />
         </section>
       </div>
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
+      />
     </>
   );
 };

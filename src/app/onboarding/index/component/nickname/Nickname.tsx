@@ -9,17 +9,19 @@ import nicknameCoco from "@asset/image/nicknameCoco.png";
 import { useCheckNicknameGet } from "@api/domain/onboarding/nicknameDuplicate/hook";
 import { usePatchNickname } from "@api/domain/onboarding/nickname/hook";
 import { PATH } from "@route/path";
-import Image from "next/image";
 import dynamic from "next/dynamic";
 import { ONBOARDING_GUIDE } from "../../constant/onboardingGuide.ts";
 import Title from "../../common/title/Title.tsx";
 import Docs from "../../common/docs/Docs.tsx";
+import LazyImage from "@common/component/LazyImage.tsx";
+import { useLogout } from "@api/domain/setting/hook.ts";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
 
 const Nickname = () => {
   // 상태 하나로 관리
   const [nickname, setNickname] = useState("");
+  const { mutate: logout } = useLogout();
 
   // api nickname있는 경우에만 실행
   const isEnabled = nickname.length > 0;
@@ -48,7 +50,7 @@ const Nickname = () => {
   // 뒤로 가기
   const router = useRouter();
   const handleGoBack = () => {
-    router.back();
+    logout();
   };
 
   // 다음 버튼
@@ -70,7 +72,13 @@ const Nickname = () => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div>
-          <Image src={nicknameCoco} alt="onboarding-character" className={styles.imgStyle} width={276} height={155} />
+          <LazyImage
+            src={nicknameCoco}
+            alt="onboarding-character"
+            className={styles.imgStyle}
+            width="16.5rem"
+            height="9.3rem"
+          />
           <Title text={ONBOARDING_GUIDE.nickname.title} />
           <Docs text={ONBOARDING_GUIDE.nickname.docs} />
         </div>

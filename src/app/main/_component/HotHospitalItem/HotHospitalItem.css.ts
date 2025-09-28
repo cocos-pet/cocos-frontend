@@ -63,7 +63,5 @@ export const hotHospitalSub = style([
 ]);
 
 export const hotHospitalImage = style({
-  width: "7.6rem",
-  height: "7.6rem",
   borderRadius: "0.8rem",
 });

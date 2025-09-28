@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import Image from "next/image";
 import { StaticImageData } from "next/image";
+import LazyImage from "@common/component/LazyImage";
 
 interface ImageGalleryModalProps {
   isOpen: boolean;
@@ -9,12 +10,7 @@ interface ImageGalleryModalProps {
   onClose: () => void;
 }
 
-const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
-  isOpen,
-  images,
-  currentIndex,
-  onClose,
-}) => {
+const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({ isOpen, images, currentIndex, onClose }) => {
   // 스크롤 위치를 저장하기 위한 ref
   const scrollPositionRef = useRef(0);
 
@@ -85,7 +81,7 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           width: "100%",
           padding: "1.6rem",
           display: "flex",
-          justifyContent: "center", 
+          justifyContent: "center",
           alignItems: "center",
           color: "white",
         }}
@@ -129,7 +125,7 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
           }}
           onDoubleClick={preventDoubleClick}
         >
-          <Image
+          <LazyImage
             src={images[currentIndex]}
             alt={`이미지 ${currentIndex + 1}`}
             style={{
@@ -138,15 +134,13 @@ const ImageGalleryModal: React.FC<ImageGalleryModalProps> = ({
               objectFit: "contain",
               pointerEvents: "none", // 이미지 상호작용 비활성화
             }}
-            width={500}
-            height={500}
+            width={"50rem"}
+            height={"50rem"}
             onClick={(e) => e.stopPropagation()} // 이미지 클릭이 모달 닫기로 이어지지 않도록
             onDoubleClick={preventDoubleClick} // 더블클릭 비활성화
             unoptimized // 이미지 최적화 비활성화로 일부 상호작용 방지
           />
         </div>
-
-        
       </div>
     </div>
   );

@@ -12,10 +12,7 @@ export const TopLayout = style({
   backgroundColor: color.gray.gray000,
 });
 
-export const img = style({
-  width: "8rem",
-  height: "6rem",
-});
+export const img = style({});
 
 export const titleBox = style({
   display: "flex",

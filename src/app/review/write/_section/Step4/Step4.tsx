@@ -3,22 +3,27 @@ import { IcDeleteBlack } from "@asset/svg/index";
 import { Button } from "@common/component/Button";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import { useFormContext } from "react-hook-form";
-import { ReviewFormData, ReviewFormWithUIData } from "../page";
+import { ReviewFormData, ReviewFormWithUIData } from "../../page";
 import { useReviewPost } from "@api/domain/review/write/submit/hook";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
+import { useReviewFunnel } from "../../_hook/useReviewFunnel";
 
 import * as styles from "./Step4.style.css";
-import ReviewContent from "@app/review/write/_component/ReviewContent";
-import ReviewImg from "@app/review/write/_component/ReviewImg";
+import ReviewContent from "../../_component/ReviewContent/ReviewContent";
+import ReviewImg from "../../_component/ReviewImg/ReviewImg";
 import { useState } from "react";
+import ExitConfirmModal from "../../_component/ExitConfirmModal";
+
 interface Step4Props {
-  onPrev: () => void;
   onNext: () => void;
 }
 
-const Step4 = ({ onPrev, onNext }: Step4Props) => {
+const Step4 = ({ onNext }: Step4Props) => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const funnel = useReviewFunnel();
+
   const searchParams = useSearchParams();
   const rawHospitalId = searchParams?.get("hospitalId");
   const hospitalId = rawHospitalId ? Number(rawHospitalId) : undefined;
@@ -111,12 +116,20 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
     handleSubmit(onValid)();
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
+  const handlePrev = () => {
+    funnel.back();
+  };
+
   return (
     <div className={styles.wrapper}>
       {/* 상단 리뷰 영역 */}
       <HeaderNav
         centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
       {/* 중앙 컨텐츠 영역 */}
       <section className={styles.contentLayout}>
@@ -132,7 +145,7 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
 
       {/* 하단 버튼 영역 */}
       <section className={styles.btnLayout}>
-        <Button label="이전으로" size="large" variant="solidNeutral" onClick={onPrev} disabled={isPending} />
+        <Button label="이전으로" size="large" variant="solidNeutral" onClick={handlePrev} disabled={isPending} />
         <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={isPending} />
       </section>
 
@@ -144,6 +157,13 @@ const Step4 = ({ onPrev, onNext }: Step4Props) => {
         handleClose={handleCloseBottomSheet}
         leftOnClick={handleCloseBottomSheet}
         rightOnClick={handleSubmitReview}
+      />
+
+      {/* 이탈 방지 모달 */}
+      <ExitConfirmModal
+        isModalOpen={isModalOpen}
+        setIsModalOpen={setIsModalOpen}
+        handleGoHospitalDetail={handleGoHospitalDetail}
       />
     </div>
   );
