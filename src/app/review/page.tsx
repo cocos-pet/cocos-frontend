@@ -80,7 +80,7 @@ export default function ReviewPage() {
   };
 
   return (
-    <div>
+    <div className={styles.pageWrapper}>
       <LocationHeader onLocationChange={handleLocationChange} onBottomSheetOpenChange={setIsLocationSheetOpen} />
 
       <div className={styles.reviewContainer}>
