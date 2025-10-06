@@ -172,7 +172,7 @@ const Page = () => {
       setIsLoginModalOpen(true);
       return;
     }
-  
+
     likeDelete(
       { postId: postIdString },
       {
@@ -190,7 +190,6 @@ const Page = () => {
       setIsLoginModalOpen(true);
       return;
     }
-   
 
     likePost(
       { postId: postIdString },
@@ -342,6 +341,7 @@ const Page = () => {
           placeholder={"댓글을 입력해주세요."}
           onKeyDown={onKeyDown}
           onClick={handleCheckCommentPermission}
+          className={parsedComment.text && styles.textField}
         />
         {parsedComment.text && (
           <button className={styles.upload} onClick={onSubmitComment}>
