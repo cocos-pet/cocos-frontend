@@ -1,15 +1,18 @@
 //cocos 화이팅!
-import React from 'react';
-import { Html, Head, Main, NextScript } from 'next/document';
-import Script from 'next/script';
+import React from "react";
+import { Html, Head, Main, NextScript } from "next/document";
+import Script from "next/script";
 
 export default function Document() {
   return (
-    <Html lang="ko" style={{ scrollbarWidth: 'none' }}>
+    <Html lang="ko" style={{ scrollbarWidth: "none" }}>
       <Head>
         <meta charSet="UTF-8" />
         <link rel="icon" type="image/svg+xml" href="/cocos2.svg" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover"
+        />
         <title>코코스</title>
       </Head>
       <body>
@@ -23,4 +26,4 @@ export default function Document() {
       </body>
     </Html>
   );
-} 
+}
