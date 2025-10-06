@@ -22,7 +22,7 @@ globalStyle("html", {
 globalStyle("body", {
   margin: 0,
   padding: 0,
-  minWidth: "375px",
+  minWidth: "320px",
   maxWidth: "768px",
   minHeight: "calc(var(--vh, 1vh) * 100)",
   fontFamily: "Pretendard, sans-serif",
