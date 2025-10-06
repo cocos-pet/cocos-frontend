@@ -1,7 +1,13 @@
 "use client";
 
 import React from "react";
-import { clearButton, iconstyle, InputVariants, styles, WrapVariants } from "@common/component/TextField/styles.css.ts";
+import {
+  iconstyle,
+  InputVariants,
+  leftIconStyle,
+  styles,
+  WrapVariants,
+} from "@common/component/TextField/styles.css.ts";
 import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
@@ -65,7 +71,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
     return (
       <div className={styles.wrapper({ state, active })} onClick={onClick}>
         <div className={styles.leftWrap()}>
-          {leftIcon && <p className={iconstyle}>{leftIcon}</p>}
+          {leftIcon && <p className={leftIconStyle}>{leftIcon}</p>}
           <span className={styles.mention}>{mentionedNickname}</span>
           <input
             ref={ref}
@@ -83,7 +89,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
           />
         </div>
         {value && isDelete ? (
-          <button onClick={onClearClick} className={clearButton}>
+          <button onClick={onClearClick} className={iconstyle}>
             <IcClear height={20} width={20} />
           </button>
         ) : (

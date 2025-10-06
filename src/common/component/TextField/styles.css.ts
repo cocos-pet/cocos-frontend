@@ -137,21 +137,19 @@ export const styles = {
   ]),
 };
 
-export const clearButton = style({
-  background: "transparent",
-  border: "none",
-  padding: 0,
-  cursor: "pointer",
-  height: "2rem",
-});
-
 export const iconstyle = style({
   height: "2rem",
   width: "2rem",
   display: "flex",
   alignContent: "center",
-  marginRight: "1rem",
 });
+
+export const leftIconStyle = style([
+  iconstyle,
+  {
+    marginRight: "1rem",
+  },
+]);
 
 export type WrapVariants = RecipeVariants<typeof styles.wrapper>;
 export type InputVariants = RecipeVariants<typeof styles.input>;
