@@ -8,6 +8,9 @@ export const styles = {
     flexDirection: "column",
     gap: "1.2rem",
   }),
+  textField: style({
+    width: "calc(100vw - 10rem)",
+  }),
 
   emptyContainer: style([
     font.heading03,
@@ -130,10 +133,13 @@ export const styles = {
   }),
   textContainer: style({
     display: "flex",
+    justifyContent: "center",
     flexDirection: "row",
     position: "fixed",
     bottom: 0,
-    width: "100%",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "100vw",
     maxWidth: "76.8rem",
     padding: "1.2rem 2rem 4rem 2rem",
     background: color.gray.gray000,
