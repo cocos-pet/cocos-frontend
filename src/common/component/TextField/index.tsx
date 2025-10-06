@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { iconstyle, InputVariants, styles, WrapVariants } from "@common/component/TextField/styles.css.ts";
+import { clearButton, iconstyle, InputVariants, styles, WrapVariants } from "@common/component/TextField/styles.css.ts";
 import { IcClear } from "@asset/svg";
 
 interface TextFieldProps {
@@ -83,7 +83,7 @@ export const TextField = React.forwardRef<HTMLInputElement, propsType>(
           />
         </div>
         {value && isDelete ? (
-          <button onClick={onClearClick}>
+          <button onClick={onClearClick} className={clearButton}>
             <IcClear height={20} width={20} />
           </button>
         ) : (

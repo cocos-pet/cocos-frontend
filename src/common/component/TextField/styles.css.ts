@@ -6,11 +6,12 @@ export const styles = {
   wrapper: recipe({
     base: {
       width: "100%",
+      height: "4rem",
       display: "flex",
       justifyContent: "space-between",
       gap: "1rem",
       alignItems: "center",
-      padding: "1rem 1.8rem",
+      padding: "1rem 2rem",
       border: `0.1rem solid ${color.gray.gray200}`,
       borderRadius: "8px",
       background: color.gray.gray000,
@@ -70,9 +71,9 @@ export const styles = {
     base: [
       font.body01,
       {
-        letterSpacing: "-0.28px",
         fontWeight: 500,
-        height: "auto",
+        height: "20px",
+        lineHeight: "20px",
         minWidth: "100%",
         maxWidth: "100%",
         color: color.gray.gray900,
@@ -135,6 +136,14 @@ export const styles = {
     },
   ]),
 };
+
+export const clearButton = style({
+  background: "transparent",
+  border: "none",
+  padding: 0,
+  cursor: "pointer",
+  height: "2rem",
+});
 
 export const iconstyle = style({
   height: "2rem",
