@@ -14,12 +14,15 @@ import ReviewContent from "../../_component/ReviewContent/ReviewContent";
 import ReviewImg from "../../_component/ReviewImg/ReviewImg";
 import { useState } from "react";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
+import { PATH } from "@route/path";
+import { useRouter } from "next/navigation";
 
 interface Step4Props {
   onNext: () => void;
 }
 
 const Step4 = ({ onNext }: Step4Props) => {
+  const router = useRouter();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const funnel = useReviewFunnel();
@@ -107,8 +110,8 @@ const Step4 = ({ onNext }: Step4Props) => {
     handleOpenBottomSheet();
   };
 
-  const handleGoHospitalDetail = () => {
-    window.history.go(-2);
+  const handleGoReviewList = () => {
+    router.push(PATH.REVIEW.ROOT);
   };
 
   const handleSubmitReview = () => {
@@ -163,7 +166,7 @@ const Step4 = ({ onNext }: Step4Props) => {
       <ExitConfirmModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        handleGoHospitalDetail={handleGoHospitalDetail}
+        handleGoHospitalDetail={handleGoReviewList}
       />
     </div>
   );
