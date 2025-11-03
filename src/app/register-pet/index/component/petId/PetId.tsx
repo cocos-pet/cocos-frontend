@@ -65,10 +65,7 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
   const allItems = getAllItems();
   const inputWithoutSpaces = input.replace(/\s+/g, "");
   const isDropDownOpen =
-    input.length > 0 &&
-    filteredItems.length > 0 &&
-    JSON.stringify(filteredItems) !== JSON.stringify(allItems) && // 필터된 품종 목록과 전체 목록이 다르면
-    !filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === inputWithoutSpaces); // 입력값이 선택된 품종과 동일하지 않으면
+    input.length > 0 && filteredItems.length > 0 && JSON.stringify(filteredItems) !== JSON.stringify(allItems); // 필터된 품종 목록과 전체 목록이 다르면 드롭다운 표시
 
   const isInputValid = filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === inputWithoutSpaces);
 
