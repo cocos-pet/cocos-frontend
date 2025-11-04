@@ -14,6 +14,7 @@ import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 import { Modal } from "@common/component/Modal/Modal";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
+import LoginModal from "@common/component/LoginModal/LoginModal";
 
 interface MoreReviewProps {
   hospitalId: number;
@@ -28,8 +29,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const { data: hospitalData } = useGetHospitalDetail(hospitalId);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteHospitalReviews(hospitalId);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
 
   useEffect(() => {
     const element = loadMoreRef.current;
@@ -92,16 +92,9 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
       <div className={styles.container}>
         <div className={styles.reviewList}>
           {reviews.map((review, index) => (
-            <div
-              key={review.id}
-              onClick={() =>
-                !isAuthenticated && index >= 3 && handleLoginClick()
-              }
-            >
+            <div key={review.id} onClick={() => !isAuthenticated && index >= 3 && handleLoginClick()}>
               <HospitalReview
-                handleProfileClick={() =>
-                  review.memberId && handleProfileClick(review.memberId)
-                }
+                handleProfileClick={() => review.memberId && handleProfileClick(review.memberId)}
                 handleHospitalDetailClick={handleHospitalDetailClick}
                 reviewData={{
                   id: review.id ?? 0,
@@ -136,22 +129,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
         </div>
       </div>
 
-      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
-        <Modal.Content
-          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
-          bottomAffix={
-            <Modal.BottomAffix>
-              <Modal.Close label={"취소"} />
-              <Modal.Confirm
-                label={"로그인"}
-                onClick={() => router.push(PATH.LOGIN)}
-              />
-            </Modal.BottomAffix>
-          }
-        >
-          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
-        </Modal.Content>
-      </Modal.Root>
+      <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
     </>
   );
 };
