@@ -10,11 +10,11 @@ import { components } from "src/type/schema";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import Divider from "@common/component/Divider/Divider";
-import { Modal } from "@common/component/Modal/Modal";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import no_review from "@asset/image/no_review.png";
 import { Button } from "@common/component/Button";
 import LazyImage from "@common/component/LazyImage";
+import LoginModal from "@common/component/LoginModal/LoginModal";
 
 interface ReviewSummaryItem {
   id?: number;
@@ -34,7 +34,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
   const loadMoreRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteReviewSearch(hospitalId);
 
   const handleObserver = useCallback(
     (entries: IntersectionObserverEntry[]) => {
@@ -66,10 +66,13 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
     };
   }, [handleObserver]);
 
-  const handleProfileClick = (memberId: number) => {
-    if (memberId) {
-      router.push(`${PATH.ONBOARDING.ROOT}`);
+  const handleProfileClick = (nickname: string | undefined) => {
+    if (!nickname) return;
+    if (!isAuthenticated) {
+      setIsLoginModalOpen(true);
+      return;
     }
+    router.push(`${PATH.PROFILE.ROOT}/?nickname=${nickname}`);
   };
 
   const handleHospitalDetailClick = () => {
@@ -127,7 +130,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
             {reviews.map((review: components["schemas"]["HospitalReviewResponse"], index: number) => (
               <div key={review.id} onClick={() => !isAuthenticated && index >= 3 && handleLoginClick()}>
                 <HospitalReview
-                  handleProfileClick={() => review.memberId && handleProfileClick(review.memberId)}
+                  handleProfileClick={() => handleProfileClick(review.nickname)}
                   handleHospitalDetailClick={handleHospitalDetailClick}
                   reviewData={{
                     id: review.id ?? 0,
@@ -189,20 +192,7 @@ const RecentView = ({ hospitalId }: RecentViewProps) => {
         </div>
       )}
 
-      <Modal.Root open={isLoginModalOpen} onOpenChange={setIsLoginModalOpen}>
-        <Modal.Content
-          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
-          bottomAffix={
-            <Modal.BottomAffix>
-              <Modal.Close label={"취소"} />
-              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
-              <Modal.Confirm label={"로그인"} onClick={() => router.push(PATH.LOGIN)} />
-            </Modal.BottomAffix>
-          }
-        >
-          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
-        </Modal.Content>
-      </Modal.Root>
+      <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
     </div>
   );
 };
