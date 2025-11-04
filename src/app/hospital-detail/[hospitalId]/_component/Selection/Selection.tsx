@@ -7,7 +7,7 @@ import InfoContent from "@app/hospital-detail/[hospitalId]/_component/InfoConten
 import ReviewContent from "@app/hospital-detail/[hospitalId]/_component/ReviewContent/ReviewContent";
 import Divider from "@common/component/Divider/Divider";
 
-const Selections = [
+const SELECTIONS = [
   { label: "병원 정보", value: "info" },
   { label: "맞춤형 리뷰", value: "review" },
 ];
@@ -22,7 +22,7 @@ export default function Selection({ hospitalId }: SelectionProps) {
   return (
     <div>
       <div className={styles.tabContainer}>
-        {Selections.map((tab) => (
+        {SELECTIONS.map((tab) => (
           <button
             key={tab.value}
             type="button"
