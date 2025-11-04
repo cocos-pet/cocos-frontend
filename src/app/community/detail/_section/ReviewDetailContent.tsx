@@ -15,6 +15,7 @@ import HospitalReviewFilter, { LocationFilterType } from "@app/community/detail/
 import { If } from "@shared/component/If/if.tsx";
 import { ReviewActiveTabType } from "@app/community/detail/_section/ReviewFilter.tsx";
 import { useOpenToggle } from "@shared/hook/useOpenToggle.ts";
+import LoginModal from "@common/component/LoginModal/LoginModal";
 
 interface ReviewFilterState {
   location: LocationFilterType | null;
@@ -152,19 +153,7 @@ const ReviewDetailContent = () => {
         </div>
       </If>
 
-      <Modal.Root open={isModalOpen} onOpenChange={handleOpenChange}>
-        <Modal.Content
-          title={<Modal.Title>로그인이 필요해요.</Modal.Title>}
-          bottomAffix={
-            <Modal.BottomAffix>
-              <Modal.Close label="취소" />
-              <Modal.Confirm label="로그인" onClick={handleLoginClick} />
-            </Modal.BottomAffix>
-          }
-        >
-          코코스를 더 잘 즐기기 위해 로그인을 해주세요.
-        </Modal.Content>
-      </Modal.Root>
+      <LoginModal isOpen={isModalOpen} setIsOpen={handleOpenChange} />
     </div>
   );
 };
