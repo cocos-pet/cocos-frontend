@@ -15,10 +15,13 @@ import { useFormContext } from "react-hook-form";
 import { ReviewFormData } from "../../page";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
 import { useReviewFunnel } from "../../_hook/useReviewFunnel";
+import { PATH } from "@route/path";
+import { useRouter } from "next/navigation";
 
 type CategoryType = "symptom" | "disease";
 
 const Step2 = () => {
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("symptom");
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -45,8 +48,8 @@ const Step2 = () => {
     setOpen(true);
   };
 
-  const handleGoHospitalDetail = () => {
-    window.history.go(-2);
+  const handleGoReviewList = () => {
+    router.push(PATH.REVIEW.ROOT);
   };
 
   const handlePrev = () => {
@@ -105,7 +108,7 @@ const Step2 = () => {
       <ExitConfirmModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        handleGoHospitalDetail={handleGoHospitalDetail}
+        handleGoHospitalDetail={handleGoReviewList}
       />
     </div>
   );

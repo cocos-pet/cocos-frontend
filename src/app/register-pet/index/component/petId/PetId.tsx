@@ -37,12 +37,15 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
   };
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value.replace(/\s+/g, ""); // 모든 공백 제거
+    const value = e.target.value; // 띄어쓰기 허용
     setInput(value);
 
-    if (value.length > 0) {
+    // 필터링할 때만 공백 제거해서 비교
+    const valueWithoutSpaces = value.replace(/\s+/g, "");
+    const allItems = getAllItems();
+    if (valueWithoutSpaces.length > 0) {
       // 입력값과 품종명에서 모든 공백 제거 후 비교
-      const filtered = allItems.filter((item) => item.name.replace(/\s+/g, "").includes(value));
+      const filtered = allItems.filter((item) => item.name.replace(/\s+/g, "").includes(valueWithoutSpaces));
       setFilteredItems(filtered);
     } else {
       setFilteredItems(allItems); // 입력값이 없으면 전체 품종 목록
@@ -50,9 +53,9 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
   };
 
   const handleDropDownClick = (value: string) => {
-    const trimmedValue = value.replace(/\s+/g, ""); // 선택된 값에서 모든 공백 제거
-    setInput(trimmedValue);
-    const selectedBreed = filteredItems.find((breed) => breed.name.replace(/\s+/g, "") === trimmedValue);
+    // 원본 이름 그대로 input에 저장 (띄어쓰기 포함)
+    setInput(value);
+    const selectedBreed = filteredItems.find((breed) => breed.name === value);
     if (selectedBreed) {
       updatePetData("breedId", selectedBreed.id);
     }
@@ -60,13 +63,11 @@ const PetId = ({ setStep, updatePetData, petData }: PetIdProps) => {
 
   // 드롭다운 열림 여부 결정
   const allItems = getAllItems();
+  const inputWithoutSpaces = input.replace(/\s+/g, "");
   const isDropDownOpen =
-    input.length > 0 &&
-    filteredItems.length > 0 &&
-    JSON.stringify(filteredItems) !== JSON.stringify(allItems) && // 필터된 품종 목록과 전체 목록이 다르면
-    !filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === input); // 입력값이 선택된 품종과 동일하지 않으면
+    input.length > 0 && filteredItems.length > 0 && JSON.stringify(filteredItems) !== JSON.stringify(allItems); // 필터된 품종 목록과 전체 목록이 다르면 드롭다운 표시
 
-  const isInputValid = filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === input);
+  const isInputValid = filteredItems.some((breed) => breed.name.replace(/\s+/g, "") === inputWithoutSpaces);
 
   const handleGoBack = () => {
     setStep((prev) => Math.max(prev - 1, 0));
