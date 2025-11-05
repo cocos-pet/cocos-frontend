@@ -13,10 +13,13 @@ import LazyImage from "@common/component/LazyImage";
 import { ReviewFormData } from "../../page";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
 import { useReviewFunnel } from "../../_hook/useReviewFunnel";
+import { PATH } from "@route/path";
+import { useRouter } from "next/navigation";
 
 type CategoryType = "good" | "bad";
 
 const Step3 = () => {
+  const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<CategoryType>("good");
   const [isModalOpen, setIsModalOpen] = useState(false);
   const funnel = useReviewFunnel();
@@ -28,8 +31,8 @@ const Step3 = () => {
 
   const isFromValid = goodReviewIds.length > 0 || badReviewIds.length > 0;
 
-  const handleGoHospitalDetail = () => {
-    window.history.go(-2);
+  const handleGoReviewList = () => {
+    router.push(PATH.REVIEW.ROOT);
   };
 
   const handleModalOpen = () => {
@@ -93,7 +96,7 @@ const Step3 = () => {
       <ExitConfirmModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        handleGoHospitalDetail={handleGoHospitalDetail}
+        handleGoHospitalDetail={handleGoReviewList}
       />
     </>
   );
