@@ -7,6 +7,7 @@ import {
   profileImage,
 } from "@app/community/_component/Profile/Profile.css.ts";
 import LazyImage from "@common/component/LazyImage";
+import { formatTime } from "@shared/util/formatTime.ts";
 
 interface propsType {
   handleProfileClick?: () => void;
@@ -29,7 +30,7 @@ const Profile = (props: propsType) => {
       <div className={info}>
         <div className={infoName}>{nickname}</div>
         <div className={infoDetail}>
-          {breed}·{petAge}살 · {createdAt}
+          {breed}·{petAge}살 · {formatTime(createdAt)}
         </div>
       </div>
     </div>
