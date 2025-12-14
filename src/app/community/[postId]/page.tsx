@@ -31,7 +31,6 @@ import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from ".
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "@common/component/Modal/Modal.tsx";
 import LazyImage from "@common/component/LazyImage.tsx";
 import LoginModal from "@common/component/LoginModal/LoginModal.tsx";
 
@@ -237,6 +236,7 @@ const Page = () => {
         rightBtn={
           postData.isWriter && (
             <MoreModal
+              onEdit={() => router.push(`${PATH.COMMUNITY.WRITE.replace(":postId", postIdString)}`)}
               onDelete={() => setOpen(true)}
               iconSize={24}
               isOpen={openModalId === `post-${postIdString}`}
