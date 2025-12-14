@@ -1,57 +1,92 @@
 import * as styles from "./locationHeader.css";
 import { IcChevronDown, IcTarget } from "@asset/svg";
-import { useState, Dispatch, SetStateAction } from "react";
+import { useState, Dispatch, SetStateAction, useEffect, useCallback, useMemo } from "react";
 import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
 import { useGetMemberLocation } from "@api/domain/review/location/hook";
 import { motion } from "framer-motion";
 import { updateMemberLocation } from "@api/domain/review/location";
 import { LocationType } from "@api/domain/review/location/types";
+import { DEFAULT_LOCATION } from "@app/review/_constant/locationConfig";
 
+const STORAGE_KEY = "selectedLocation";
 interface Location {
   id: number;
   name: string;
   type: LocationType;
 }
-
 interface LocationHeaderProps {
   onLocationChange: (location: Location) => void;
   onBottomSheetOpenChange: Dispatch<SetStateAction<boolean>>;
 }
 
-export default function LocationHeader({
-  onLocationChange,
-  onBottomSheetOpenChange,
-}: LocationHeaderProps) {
+export default function LocationHeader({ onLocationChange, onBottomSheetOpenChange }: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
-  const [selectedLocation, setSelectedLocation] = useState<Location | null>(
-    null
-  );
+  const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
   const { data: memberLocation } = useGetMemberLocation();
 
-  const handleBottomSheetOpen = () => {
-    setIsBottomSheetOpen(true);
-    onBottomSheetOpenChange(true);
-  };
+  const handleBottomSheetToggle = useCallback(
+    (isOpen: boolean) => {
+      setIsBottomSheetOpen(isOpen);
+      onBottomSheetOpenChange(isOpen);
+    },
+    [onBottomSheetOpenChange],
+  );
 
-  const handleBottomSheetClose = () => {
-    setIsBottomSheetOpen(false);
-    onBottomSheetOpenChange(false);
-  };
+  const handleLocationSelect = useCallback(
+    (location: {
+      id: number;
+      name: string;
+      type: LocationType;
+    }) => {
+      const updatedLocation = {
+        ...location,
+        cityName: "",
+        districtName: location.name,
+        townName: "",
+      } as Location;
 
-  const handleLocationSelect = async (location: Location) => {
-    setSelectedLocation(location);
-    onLocationChange(location);
-    handleBottomSheetClose();
-    await updateMemberLocation(location.id);
-  };
+      setSelectedLocation(updatedLocation);
+      onLocationChange(updatedLocation);
+      handleBottomSheetToggle(false);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLocation));
 
-  // 표시할 위치 이름 결정
-  const displayLocationName =
-    selectedLocation?.name || memberLocation?.locationName || "위치 선택";
+      updateMemberLocation({
+        locationId: location.id,
+        locationType: location.type,
+      });
+    },
+    [onLocationChange, handleBottomSheetToggle],
+  );
+
+  useEffect(() => {
+    const savedLocation = localStorage.getItem(STORAGE_KEY);
+    if (!savedLocation) {
+      if (memberLocation?.locationId) {
+        const newLocation = {
+          id: memberLocation.locationId,
+          name: memberLocation.locationName,
+          type: "DISTRICT",
+        } as Location;
+        setSelectedLocation(newLocation);
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(newLocation));
+        onLocationChange(newLocation);
+      }
+      return;
+    }
+
+    const parsedLocation = JSON.parse(savedLocation);
+    setSelectedLocation(parsedLocation);
+    onLocationChange(parsedLocation);
+  }, [memberLocation]);
+
+  const displayLocationName = useMemo(
+    () => selectedLocation?.name || memberLocation?.locationName || "위치 선택",
+    [selectedLocation?.name, memberLocation?.locationName],
+  );
 
   return (
     <div className={styles.location}>
-      <div className={styles.locationButton} onClick={handleBottomSheetOpen}>
+      <div className={styles.locationButton} onClick={() => handleBottomSheetToggle(true)}>
         <div className={styles.locationContent}>
           <IcTarget width={20} />
           <span className={styles.locationText}>{displayLocationName}</span>
@@ -66,8 +101,9 @@ export default function LocationHeader({
       </div>
       <LocationBottomSheet
         isOpen={isBottomSheetOpen}
-        onClose={handleBottomSheetClose}
+        onClose={() => handleBottomSheetToggle(false)}
         onLocationSelect={handleLocationSelect}
+        currentLocation={selectedLocation || DEFAULT_LOCATION.DISTRICT}
       />
     </div>
   );
