@@ -1,7 +1,5 @@
 "use client";
-
-import React from "react";
-import {IcEllipses} from "@asset/svg";
+import { IcEllipses } from "@asset/svg";
 import {
   container,
   iconSizeVar,
@@ -10,7 +8,7 @@ import {
   moreModalDivider,
   moreModalItem,
 } from "@shared/component/MoreModal/MoreModal.css.ts";
-import {assignInlineVars} from "@vanilla-extract/dynamic";
+import { assignInlineVars } from "@vanilla-extract/dynamic";
 
 interface MoreModalParams {
   isOpen?: boolean;
@@ -20,28 +18,19 @@ interface MoreModalParams {
   onEdit?: () => void;
 }
 
-const MoreModal = ({
-  isOpen = false,
-  onToggleModal,
-  onDelete,
-  iconSize,
-  onEdit,
-}: MoreModalParams) => {
+const MoreModal = ({ isOpen = false, onToggleModal, onDelete, iconSize, onEdit }: MoreModalParams) => {
   const onItemClick = () => {
     onDelete();
     onToggleModal();
   };
 
   const onEditClick = () => {
-    onEdit && onEdit();
+    onEdit?.();
     onToggleModal();
   };
 
   return (
-    <div
-      className={container}
-      style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}
-    >
+    <div className={container} style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}>
       <IcEllipses
         className={moreIcon}
         style={assignInlineVars({ [iconSizeVar]: `${iconSize}px` })}

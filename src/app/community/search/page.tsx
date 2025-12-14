@@ -27,6 +27,10 @@ function Search() {
     if (searchText.trim() === "") {
       return;
     }
+    if (!isAuthenticated) {
+      handleNavigate(searchText);
+      return;
+    }
     mutate(
       { keyword: searchText },
       {
