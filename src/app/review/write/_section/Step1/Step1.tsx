@@ -15,9 +15,12 @@ import { ReviewFormWithUIData } from "../../page";
 import { useRouter } from "next/navigation";
 import ExitConfirmModal from "../../_component/ExitConfirmModal";
 import { useReviewFunnel } from "../../_hook/useReviewFunnel";
+import { PATH } from "@route/path";
+
 export type PetInfoType = "myPet" | "manual";
 
 const Step1 = () => {
+  const router = useRouter();
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const { setValue, watch } = useFormContext<ReviewFormWithUIData>();
@@ -30,8 +33,6 @@ const Step1 = () => {
   const selectedHospital = watch("selectedHospital");
   const isFormValid = selectedHospital !== null && visitedAt !== "" && breedId !== -1 && gender !== null;
 
-  const router = useRouter();
-
   // 1-1. hospital ⚠️ 나갈 수 있는 방법이 2가지라 분리
   const handleOpenSearchHospital = () => {
     setIsBottomSheetOpen(true);
@@ -40,13 +41,17 @@ const Step1 = () => {
     setIsBottomSheetOpen(false);
   };
 
+  const handleModalOpen = () => {
+    setIsModalOpen(true);
+  };
+
   const handleSelectHospital = (hospital: Hospital | null) => {
     setValue("selectedHospital", hospital);
     router.replace(`?hospitalId=${hospital?.id}`);
   };
 
-  const handleGoHospitalDetail = () => {
-    funnel.back();
+  const handleGoReviewList = () => {
+    router.push(PATH.REVIEW.ROOT);
   };
 
   const handleNext = () => {
@@ -58,7 +63,7 @@ const Step1 = () => {
       {/* 상단 헤더 */}
       <HeaderNav
         centerContent="리뷰작성(1/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
       />
 
       {/* 중앙 컨텐츠 */}
@@ -86,7 +91,7 @@ const Step1 = () => {
       <ExitConfirmModal
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        handleGoHospitalDetail={handleGoHospitalDetail}
+        handleGoHospitalDetail={handleGoReviewList}
       />
     </div>
   );
