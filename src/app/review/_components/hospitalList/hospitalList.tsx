@@ -2,7 +2,6 @@ import { useInView } from "react-intersection-observer";
 import { useInfiniteHospitalList } from "@api/domain/hospitals/hook";
 import { useEffect } from "react";
 import * as styles from "./hospitalList.css";
-import Image from "next/image";
 import Link from "next/link";
 import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
