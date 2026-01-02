@@ -2,8 +2,8 @@
 
 import { useInfiniteHospitalReviews } from "@api/domain/community/detail/hook";
 import { useGetHospitalDetail } from "@api/domain/hospitals/hook";
-import { useEffect, useRef, useState } from "react";
-import { components } from "src/type/schema";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview";
 import Divider from "@common/component/Divider/Divider";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
@@ -12,7 +12,6 @@ import * as styles from "./MoreReview.css";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
-import { Modal } from "@common/component/Modal/Modal";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import LoginModal from "@common/component/LoginModal/LoginModal";
 
@@ -25,35 +24,16 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
   const { isAuthenticated } = useAuth();
   const isPetRegistered = useIsPetRegistered();
   const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
-  const observerRef = useRef<IntersectionObserver | null>(null);
-  const loadMoreRef = useRef<HTMLDivElement>(null);
+  const { ref, inView } = useInView();
 
   const { data: hospitalData } = useGetHospitalDetail(hospitalId);
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteHospitalReviews(hospitalId);
 
   useEffect(() => {
-    const element = loadMoreRef.current;
-    if (!element || !hasNextPage) return;
-
-    const handleObserver = (entries: IntersectionObserverEntry[]) => {
-      const [target] = entries;
-      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
-        fetchNextPage();
-      }
-    };
-
-    observerRef.current = new IntersectionObserver(handleObserver, {
-      threshold: 0.1,
-    });
-
-    observerRef.current.observe(element);
-
-    return () => {
-      if (observerRef.current) {
-        observerRef.current.disconnect();
-      }
-    };
-  }, [hasNextPage, fetchNextPage, isFetchingNextPage]);
+    if (inView && hasNextPage && !isFetchingNextPage) {
+      fetchNextPage();
+    }
+  }, [inView, hasNextPage, isFetchingNextPage, fetchNextPage]);
 
   const reviews = data?.pages.flat() || [];
 
@@ -125,7 +105,7 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
               {index < reviews.length - 1 && <Divider size="small" />}
             </div>
           ))}
-          {hasNextPage && <div ref={loadMoreRef} style={{ height: "10px" }} />}
+          {hasNextPage && <div ref={ref} style={{ height: "10px" }} />}
         </div>
       </div>
 
