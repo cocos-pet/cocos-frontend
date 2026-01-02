@@ -17,7 +17,6 @@ import type { Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "@common/component/Modal/Modal.tsx";
 import { useGetReviewAgreementStatus } from "@api/domain/review/agree/hook";
 import LazyImage from "@common/component/LazyImage";
 import LoginModal from "@common/component/LoginModal/LoginModal";
@@ -26,6 +25,9 @@ interface Location {
   id: number;
   name: string;
   type: "CITY" | "DISTRICT";
+  cityName?: string;
+  districtName?: string;
+  townName?: string;
 }
 
 export default function ReviewPage() {
