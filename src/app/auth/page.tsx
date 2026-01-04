@@ -30,6 +30,7 @@ function AuthRedirectContent() {
           body: JSON.stringify({
             platform: "KAKAO",
             code: code,
+            redirectUri: process.env.NEXT_PUBLIC_REDIRECT_URI,
           }),
         });
 
