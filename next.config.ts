@@ -17,6 +17,8 @@ const nextConfig: NextConfig = {
   },
   // 정적 내보내기 대신 정적 대체 사용
   staticPageGenerationTimeout: 120, // 타임아웃을 2분으로 설정
+  // Production에서 source map 생성 (Sentry를 위해 필요)
+  productionBrowserSourceMaps: true,
   images: {
     unoptimized: false,
     domains: [
