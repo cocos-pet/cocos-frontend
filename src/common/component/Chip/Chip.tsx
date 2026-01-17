@@ -19,7 +19,7 @@ type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
 const Chip = ({
   label,
   icon = false,
-  size: sizeProp,
+  size: sizeProp = "large",
   rightIcon,
   color = "blue",
   onClick,
@@ -42,7 +42,7 @@ const Chip = ({
 
   return (
     <div className={chipItem({ size, color, active: isActive })} onClick={handleClick}>
-      {label}
+      <span>{label}</span>
       {rightIcon ? (
         <>{rightIcon}</>
       ) : (
