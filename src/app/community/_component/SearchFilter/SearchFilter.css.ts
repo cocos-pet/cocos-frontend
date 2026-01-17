@@ -19,11 +19,13 @@ export const filterText = style([
 ]);
 
 export const selectedChipsContainer = style({
+  width: "calc(100vw - 2rem)",
   display: "flex",
   alignItems: "center",
-  gap: "0.8rem",
-  overflowX: "auto",
+  gap: "0.4rem",
+  overflow: 'hidden',
   whiteSpace: "nowrap",
+  overflowX: "scroll",
   selectors: {
     "&::-webkit-scrollbar": {
       display: "none",
@@ -31,4 +33,8 @@ export const selectedChipsContainer = style({
   },
   msOverflowStyle: "none",
   scrollbarWidth: "none",
+});
+
+export const fillterIcon = style({
+  flexShrink: 0,
 });

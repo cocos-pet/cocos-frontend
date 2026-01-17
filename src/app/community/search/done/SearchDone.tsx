@@ -175,7 +175,7 @@ function SearchDone() {
       </div>
 
       <div className={styles.searchContent}>
-        <SearchFilter isActive={isFilterActive} onFilterClick={handleFilterClick} />
+        <SearchFilter isActive={isFilterActive}  />
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>

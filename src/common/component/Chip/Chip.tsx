@@ -35,7 +35,9 @@ const Chip = ({
 
   const handleClick = () => {
     if (disabled) return;
-    if (color === "gray" || (size === "large" && icon === false)) return;
+    if (color === "gray") return;
+    // onClick이 있으면 항상 실행, 없으면 large + no icon일 때만 클릭 막기
+    if (!onClick && size === "large" && icon === false) return;
     if (!icon) setIsActive(!isActive);
     onClick?.();
   };

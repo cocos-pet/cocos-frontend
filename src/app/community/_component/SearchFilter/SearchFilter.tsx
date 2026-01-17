@@ -10,19 +10,21 @@ import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById"
 
 type filterButtonProps = { 
   isActive: boolean;
-  onFilterClick: () => void;
 };
 
 export const SearchFilter = ({
   isActive,
-  onFilterClick,
 }: filterButtonProps) => {
-  const { selectedChips, toggleChips, categoryData } = useFilterStore();
+  const { selectedChips, toggleChips, categoryData, setOpen } = useFilterStore();
+
+  const handleFilterClick = () => {
+    setOpen(true);
+  };
 
   if (!isActive) {
     return (
-      <div className={filterButtonContainer}>
-        <IcSearchFillter onClick={onFilterClick} width={20} height={20} />
+      <div className={filterButtonContainer} onClick={handleFilterClick}>
+        <IcSearchFillter  width={20} height={20} />
         <span className={filterText}>필터</span>
       </div>
     );
@@ -30,7 +32,7 @@ export const SearchFilter = ({
 
   return (
     <div className={selectedChipsContainer}>
-      <IcSearchFillterBlue onClick={onFilterClick} width={20} height={20} />
+      <IcSearchFillterBlue width={20} height={20} style={{ flexShrink: 0 }} onClick={handleFilterClick}/>
       {Object.entries(selectedChips).map(([key, ids]) =>
         (ids as number[]).map((id) => {
           const keyMap: Record<keyof SelectedChips, CategoryType> = {
