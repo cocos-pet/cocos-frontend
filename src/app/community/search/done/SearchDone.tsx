@@ -6,7 +6,7 @@ import { styles } from "@app/community/search/done/SearchDone.css.ts";
 import { PATH } from "@route/path.ts";
 import Content from "@common/component/Content/Content.tsx";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
-import { useFilterStore } from "@store/filter.ts";
+import { SelectedChips, useFilterStore } from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
 import { useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
 import { formatTime } from "@shared/util/formatTime";
@@ -104,19 +104,17 @@ function SearchDone() {
     router.push(`${PATH.COMMUNITY.ROOT}/${postId}`);
   };
 
-  const handleFilterSubmit = () => {
+  const handleFilterSubmit = (selectedChipsFromProps?: SelectedChips) => {
     setOpen(false);
+    const chipsToUse = selectedChipsFromProps || selectedChips; // 바텀시트에서는 전역상태 사용, 칩 클릭 시에는 최신 상태 사용
+
     if (searchText) {
       mutate(
         {
           keyword: searchText,
-          animalIds: selectedChips.breedId,
-          symptomIds: selectedChips.symptomIds,
-          diseaseIds: selectedChips.diseaseIds,
-          cursorId: null,
-          categoryId: null,
-          likeCount: null,
-          createdAt: null,
+          animalIds: chipsToUse.breedId,
+          symptomIds: chipsToUse.symptomIds,
+          diseaseIds: chipsToUse.diseaseIds,
           sortBy: "RECENT",
         },
         {
@@ -171,7 +169,7 @@ function SearchDone() {
       </div>
 
       <div className={styles.searchContent}>
-        <SearchFilter isActive={isFilterActive} onFilterClick={handleFilterSubmit}  />
+        <SearchFilter isActive={isFilterActive} onFilterClick={(selectedChipsFromProps) => handleFilterSubmit(selectedChipsFromProps)}  />
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>

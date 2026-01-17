@@ -10,7 +10,7 @@ import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById"
 
 type filterButtonProps = { 
   isActive: boolean;
-  onFilterClick: () => void;
+  onFilterClick: (selectedChips: SelectedChips) => void;
 };
 
 export const SearchFilter = ({
@@ -52,9 +52,14 @@ export const SearchFilter = ({
               label={name || "Unknown"}
               icon={true}
               size='small'
-              onClick={() =>{
-                toggleChips({ id, category: key as keyof SelectedChips });
-                onFilterClick();
+              onClick={() => {
+                const categoryKey = key as keyof SelectedChips;
+                const updatedChips: SelectedChips = {
+                  ...selectedChips,
+                  [categoryKey]: selectedChips[categoryKey].filter((chipId) => chipId !== id),
+                };
+                toggleChips({ id, category: categoryKey });
+                onFilterClick(updatedChips);
               }}
               
             />
