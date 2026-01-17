@@ -20,10 +20,10 @@ export const chipItem = recipe({
   variants: {
     size: {
       small: {
-        height: "3.6rem",
+        height: "3.2rem",
       },
       large: {
-        height: "4rem",
+        height: "3.6rem",
       },
     },
 
