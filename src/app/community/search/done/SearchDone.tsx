@@ -1,9 +1,4 @@
-import {
-  IcLeftarrow,
-  IcSearch,
-  IcSearchFillter,
-  IcSearchFillterBlue,
-} from "@asset/svg";
+import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
 import { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -13,16 +8,12 @@ import Content from "@common/component/Content/Content.tsx";
 import { usePostPostFilters } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet.tsx";
-import {
-  useGetAnimal,
-  useGetBodies,
-  useGetDisease,
-  useGetSymptoms,
-} from "@api/domain/mypage/edit-pet/hook.ts";
+import { useGetAnimal, useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
 import { formatTime } from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import dynamic from "next/dynamic";
 import LazyImage from "@common/component/LazyImage";
+import { SearchFilter } from "@app/community/_component/FilterButton/SearchFilter.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
@@ -46,16 +37,13 @@ function SearchDone() {
   const searchParams = useSearchParams();
   const query = searchParams?.get("searchText");
 
-  const [searchDoneData, setSearchDoneData] = useState<
-    Array<SearchDonePropTypes>
-  >([]);
+  const [searchDoneData, setSearchDoneData] = useState<Array<SearchDonePropTypes>>([]);
   const [searchText, setSearchText] = useState(query || "");
   const router = useRouter();
   const { mutate, isPending } = usePostPostFilters();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
-  const { setCategoryData, selectedChips, clearAllChips, setOpen } =
-    useFilterStore();
+  const { setCategoryData, selectedChips, clearAllChips, setOpen } = useFilterStore();
   const { data: diseaseBodies } = useGetBodies("DISEASE");
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
@@ -76,20 +64,14 @@ function SearchDone() {
 
   const isFilterActive = useMemo(() => {
     return (
-      selectedChips.breedId.length > 0 ||
-      selectedChips.symptomIds.length > 0 ||
-      selectedChips.diseaseIds.length > 0
+      selectedChips.breedId.length > 0 || selectedChips.symptomIds.length > 0 || selectedChips.diseaseIds.length > 0
     );
   }, [selectedChips]);
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map(
-        (item) => item.id as number
-      );
-      const symptomIdArr = symptomBodies.bodies.map(
-        (item) => item.id as number
-      );
+      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
+      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -106,9 +88,7 @@ function SearchDone() {
     router.push(PATH.COMMUNITY.SEARCH);
   };
 
-  const onTextFieldClear = (
-    e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>
-  ) => {
+  const onTextFieldClear = (e: React.MouseEvent<HTMLButtonElement | SVGSVGElement>) => {
     e.stopPropagation();
     setSearchText("");
     clearAllChips();
@@ -122,6 +102,10 @@ function SearchDone() {
 
   const onClickPost = (postId: number | undefined) => {
     router.push(`${PATH.COMMUNITY.ROOT}/${postId}`);
+  };
+
+  const handleFilterClick = () => {
+    setOpen(true);
   };
 
   const handleFilterSubmit = () => {
@@ -147,7 +131,7 @@ function SearchDone() {
           onError: (error) => {
             console.error("Filter Search Error:", error);
           },
-        }
+        },
       );
     }
   };
@@ -167,7 +151,7 @@ function SearchDone() {
           onError: () => {
             alert("검색에 실패했습니다.");
           },
-        }
+        },
       );
     }
   }, [searchText]);
@@ -191,19 +175,7 @@ function SearchDone() {
       </div>
 
       <div className={styles.searchContent}>
-        {isFilterActive ? (
-          <IcSearchFillterBlue
-            onClick={() => {
-              setOpen(true);
-            }}
-          />
-        ) : (
-          <IcSearchFillter
-            onClick={() => {
-              setOpen(true);
-            }}
-          />
-        )}
+        <SearchFilter isActive={isFilterActive} onFilterClick={handleFilterClick} />
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>
@@ -214,9 +186,7 @@ function SearchDone() {
               width="27.6rem"
               height="15.5rem"
             />
-            <span className={styles.noSearchText}>
-              검색 결과를 찾지 못했어요.
-            </span>
+            <span className={styles.noSearchText}>검색 결과를 찾지 못했어요.</span>
             <span className={styles.noSearchRecommendText}>
               {"검색어를 확인하거나"}
               <br />

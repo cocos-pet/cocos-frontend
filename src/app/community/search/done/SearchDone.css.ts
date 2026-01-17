@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {color, font} from "@style/styles.css.ts";
+import { style } from "@vanilla-extract/css";
+import { color, font } from "@style/styles.css.ts";
 
 export const styles = {
   container: style({}),
@@ -19,6 +19,7 @@ export const styles = {
     padding: "1.6rem 2rem 0 2rem",
     display: "flex",
     flexDirection: "column",
+    alignItems: "flex-start",
   }),
   searchWrap: style({
     marginTop: "1.6rem",

@@ -17,3 +17,18 @@ export const filterText = style([
     color: semanticColor.text.assistive,
   },
 ]);
+
+export const selectedChipsContainer = style({
+  display: "flex",
+  alignItems: "center",
+  gap: "0.8rem",
+  overflowX: "auto",
+  whiteSpace: "nowrap",
+  selectors: {
+    "&::-webkit-scrollbar": {
+      display: "none",
+    },
+  },
+  msOverflowStyle: "none",
+  scrollbarWidth: "none",
+});
