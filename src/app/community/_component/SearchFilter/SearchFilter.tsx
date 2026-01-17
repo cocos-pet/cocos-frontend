@@ -3,12 +3,12 @@ import {
   filterButtonContainer,
   filterText,
   selectedChipsContainer,
-} from "@app/community/_component/FilterButton/SearchFilter.css.ts";
+} from "@app/community/_component/SearchFilter/SearchFilter.css.ts";
 import { useFilterStore, SelectedChips, CategoryType } from "@store/filter.ts";
 import Chip from "@common/component/Chip/Chip";
 import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById";
 
-type filterButtonProps = {
+type filterButtonProps = { 
   isActive: boolean;
   onFilterClick: () => void;
 };
