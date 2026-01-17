@@ -104,10 +104,6 @@ function SearchDone() {
     router.push(`${PATH.COMMUNITY.ROOT}/${postId}`);
   };
 
-  const handleFilterClick = () => {
-    setOpen(true);
-  };
-
   const handleFilterSubmit = () => {
     setOpen(false);
     if (searchText) {
@@ -175,7 +171,7 @@ function SearchDone() {
       </div>
 
       <div className={styles.searchContent}>
-        <SearchFilter isActive={isFilterActive}  />
+        <SearchFilter isActive={isFilterActive} onFilterClick={handleFilterSubmit}  />
 
         {searchDoneData.length === 0 ? (
           <div className={styles.noSearchData}>

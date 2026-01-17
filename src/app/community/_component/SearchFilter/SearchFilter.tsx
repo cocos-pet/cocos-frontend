@@ -10,10 +10,12 @@ import { getSelectedChipNamesById } from "@shared/util/getSelectedChipNamesById"
 
 type filterButtonProps = { 
   isActive: boolean;
+  onFilterClick: () => void;
 };
 
 export const SearchFilter = ({
   isActive,
+  onFilterClick,
 }: filterButtonProps) => {
   const { selectedChips, toggleChips, categoryData, setOpen } = useFilterStore();
 
@@ -50,9 +52,11 @@ export const SearchFilter = ({
               label={name || "Unknown"}
               icon={true}
               size='small'
-              onClick={() =>
-                toggleChips({ id, category: key as keyof SelectedChips })
-              }
+              onClick={() =>{
+                toggleChips({ id, category: key as keyof SelectedChips });
+                onFilterClick();
+              }}
+              
             />
           );
         })

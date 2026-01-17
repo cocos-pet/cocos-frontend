@@ -20,6 +20,7 @@ export const filterText = style([
 
 export const selectedChipsContainer = style({
   width: "calc(100vw - 2rem)",
+  paddingRight: "2rem",
   display: "flex",
   alignItems: "center",
   gap: "0.4rem",
