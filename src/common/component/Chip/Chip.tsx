@@ -7,6 +7,7 @@ import { IcDelete } from "@asset/svg/index";
 interface ChipProps {
   label?: string;
   icon?: boolean;
+  size?: "small" | "large";
   color?: "blue" | "gray" | "red" | "border" | "solidBlue";
   onClick?: () => void;
   isSelected?: boolean;
@@ -18,6 +19,7 @@ type CombinedChipProps = ChipProps & Exclude<ChipType, undefined>;
 const Chip = ({
   label,
   icon = false,
+  size: sizeProp,
   rightIcon,
   color = "blue",
   onClick,
@@ -25,7 +27,7 @@ const Chip = ({
   disabled = false,
 }: CombinedChipProps) => {
   const [isActive, setIsActive] = useState(isSelected);
-  const size = icon ? "large" : "small";
+  const size = sizeProp ?? (icon ? "large" : "small");
 
   useEffect(() => {
     setIsActive(isSelected);

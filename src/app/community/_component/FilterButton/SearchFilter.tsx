@@ -47,6 +47,7 @@ export const SearchFilter = ({
               key={`filter-chip-${key}-${id}`}
               label={name || "Unknown"}
               icon={true}
+              size='small'
               onClick={() =>
                 toggleChips({ id, category: key as keyof SelectedChips })
               }

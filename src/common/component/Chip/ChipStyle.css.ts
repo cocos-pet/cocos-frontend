@@ -7,6 +7,7 @@ export const chipItem = recipe({
     {
       display: "flex",
       padding: "0.8rem 1.2rem",
+      alignItems: "center",
       justifyContent: "space-between",
       gap: "0.4rem",
 
