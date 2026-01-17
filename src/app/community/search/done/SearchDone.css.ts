@@ -2,7 +2,8 @@ import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css.ts";
 
 export const styles = {
-  container: style({}),
+  container: style({
+  }),
   icon: style({
     width: "2.4rem",
   }),
@@ -30,6 +31,7 @@ export const styles = {
   filterwrap: style({}),
 
   noSearchData: style({
+    width: "100%",
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
