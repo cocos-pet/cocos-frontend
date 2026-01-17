@@ -13,7 +13,7 @@ import { formatTime } from "@shared/util/formatTime";
 import noSearchResult from "@asset/image/noSearchResult.png";
 import dynamic from "next/dynamic";
 import LazyImage from "@common/component/LazyImage";
-import { SearchFilter } from "@app/community/_component/FilterButton/SearchFilter.tsx";
+import { SearchFilter } from "@app/community/_component/SearchFilter/SearchFilter.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
   ssr: false,
