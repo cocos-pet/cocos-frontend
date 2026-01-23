@@ -24,6 +24,10 @@ export const ONBOARDING_GUIDE = {
     title: "반려동물의 나이를 입력해주세요",
     docs: "1살 이상의 나이를 숫자로 입력해 주세요",
   },
+  petWeight: {
+    title: "반려동물의 몸무게를 입력해주세요",
+    docs: "모르겠다면 ‘다음’을 눌러주세요 (예 : 말티즈 약 4kg)",
+  },
   isPetDisease: {
     title: "반려동물 건강 관련 고민이 있나요?",
     docs: "자세히 알려주시면 더 많은 도움을 드릴 수 있어요",

@@ -8,6 +8,7 @@ import PetName from "./component/petName/PetName.tsx";
 import PetType from "./component/petType/PetType.tsx";
 import PetGender from "./component/petGender/PetGender.tsx";
 import PetAge from "./component/petAge/PetAge.tsx";
+import PetWeight from "./component/weight/PetWeight.tsx";
 import PetId from "./component/petId/PetId.tsx";
 import PetHealth from "./component/petHealth/PetHealth.tsx";
 import ProgressBar from "./common/ProgressBar/ProgressBar.tsx";
@@ -19,6 +20,7 @@ export interface PetData {
   name: string;
   gender: "F" | "M" | null;
   age: number | null;
+  weight: number | null;
   diseaseIds: number[] | null;
   symptomIds: number[];
 }
@@ -40,6 +42,7 @@ const RegisterPet = () => {
     name: "",
     gender: null,
     age: null,
+    weight: null,
     diseaseIds: [],
     symptomIds: [],
   });
@@ -66,6 +69,7 @@ const RegisterPet = () => {
           name: "",
           gender: null,
           age: null,
+          weight: null, // 몸무게 추가
           diseaseIds: [],
           symptomIds: [],
         });
@@ -88,6 +92,8 @@ const RegisterPet = () => {
       case 4:
         return <PetAge setStep={setStep} updatePetData={updatePetData} />;
       case 5:
+        return <PetWeight setStep={setStep} updatePetData={updatePetData} />;
+      case 6:
         return (
           <PetHealthDualSelector
             setStep={setStep}
@@ -96,7 +102,7 @@ const RegisterPet = () => {
             setCurrentStep={setCurrentStep}
           />
         );
-      case 6:
+      case 7:
         return (
           <PetHealth
             setStep={setStep}
@@ -116,7 +122,7 @@ const RegisterPet = () => {
 
   return (
     <>
-      <ProgressBar max={7} current={step} />
+      <ProgressBar max={8} current={step} />
       {getComponent()}
     </>
   );
