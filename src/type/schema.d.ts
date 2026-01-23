@@ -304,6 +304,26 @@ export interface paths {
         patch: operations["updatePet"];
         trace?: never;
     };
+    "/api/dev/notifications/{notificationId}/read": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        /**
+         * 알림 읽음 처리 API
+         * @description 알림을 읽음 처리합니다.
+         */
+        patch: operations["read"];
+        trace?: never;
+    };
     "/api/dev/members": {
         parameters: {
             query?: never;
@@ -532,6 +552,26 @@ export interface paths {
         patch?: never;
         trace?: never;
     };
+    "/api/dev/posts/categories/writable": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 게시글 작성 가능 카테고리 리스트 API
+         * @description 게시글 작성 가능 카테고리 리스트를 조회하는 API입니다.
+         */
+        get: operations["getWritablePostCategories"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
     "/api/dev/pets/owner/check": {
         parameters: {
             query?: never;
@@ -544,6 +584,46 @@ export interface paths {
          * @description 사용자가 반려동물을 등록했는지 확인하는 API입니다.
          */
         get: operations["checkOwner"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/notifications": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 알림 리스트 조회 API
+         * @description 카테고리별(MAGAZINE, MY) 알림 리스트를 cursor 기반 페이지네이션으로 조회합니다.
+         */
+        get: operations["getNotifications"];
+        put?: never;
+        post?: never;
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/dev/notifications/unread": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * 읽지 않은 알림 존재 여부 조회 API
+         * @description 읽지 않은 알림이 존재하는지 조회하는 API 입니다.
+         */
+        get: operations["hasUnread"];
         put?: never;
         post?: never;
         delete?: never;
@@ -1192,15 +1272,20 @@ export interface components {
         LoginRequest: {
             /**
              * @description 소셜 플랫폼
-             * @example KAKAO or GOOGLE or APPLE
+             * @example KAKAO
              * @enum {string}
              */
-            platform?: "KAKAO";
+            platform: "KAKAO";
             /**
              * @description 코드
              * @example egagasdgasdgdagdasgasgasdgdasgasdglkj
              */
-            code?: string;
+            code: string;
+            /**
+             * @description 리다이렉트 uri
+             * @example http://localhost~/auth
+             */
+            redirectUri: string;
         };
         BaseResponseLoginResponse: {
             /** Format: int32 */
@@ -2080,6 +2165,98 @@ export interface components {
         PetOwnerCheckResponse: {
             isPetOwner?: boolean;
         };
+        BaseResponseNotificationListResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["NotificationListResponse"];
+        };
+        NotificationListResponse: {
+            /**
+             * Format: date-time
+             * @description 리스트의 마지막 알림 생성 시간
+             */
+            cursorCreatedAt?: string;
+            /**
+             * Format: int64
+             * @description 리스트의 마지막 알림 ID
+             */
+            cursorId?: number;
+            /** @description 알림 리스트 */
+            notifications?: components["schemas"]["NotificationResponse"][];
+        };
+        /** @description 알림 응답 DTO */
+        NotificationResponse: {
+            /**
+             * Format: int64
+             * @description 알림 고유 ID
+             * @example 123
+             */
+            id?: number;
+            /**
+             * @description 알림 타입
+             * @example COMMENT
+             * @enum {string}
+             */
+            type?: "COMMENT" | "SUB_COMMENT" | "POST_LIKE_MILESTONE" | "MAGAZINE_PUBLISHED";
+            /**
+             * @description 알림 읽음 여부
+             * @example false
+             */
+            isRead?: boolean;
+            /**
+             * Format: date-time
+             * @description 알림 생성 시각
+             * @example 2026-01-20T10:30:00
+             */
+            createdAt?: string;
+            /**
+             * Format: int64
+             * @description 알림과 연관된 게시글 ID
+             * @example 45
+             */
+            postId?: number;
+            /**
+             * Format: int64
+             * @description 알림 대상 ID (댓글 ID, 대댓글 ID, 게시글 ID 등 알림 타입에 따라 다름)
+             * @example 78
+             */
+            targetId?: number;
+            /**
+             * @description 알림 제목 (게시글 제목)
+             * @example 강아지 헥헥거림 증상
+             */
+            title?: string;
+            /**
+             * @description 알림 내용 (댓글 내용 요약, 매거진 요약 등)
+             * @example 닉네임님의 댓글: 저희 집 강아지도 비슷한 증상이 있었어요.
+             */
+            content?: string;
+            /**
+             * @description 알림을 발생시킨 사용자 닉네임 (댓글/대댓글 알림에서 사용)
+             * @example 코코
+             */
+            actorNickname?: string;
+            /**
+             * Format: int32
+             * @description 좋아요 마일스톤 수치 (POST_LIKE_MILESTONE 타입에서만 사용, 그 외 null)
+             * @example 10
+             */
+            milestone?: number;
+        };
+        BaseResponseUnreadNotificationResponse: {
+            /** Format: int32 */
+            code?: number;
+            message?: string;
+            data?: components["schemas"]["UnreadNotificationResponse"];
+        };
+        UnreadNotificationResponse: {
+            /**
+             * @description 읽지 않은 알림이 있는지 여부
+             * @example true
+             */
+            hasUnread?: boolean;
+        };
         BaseResponseMemberProfileResponse: {
             /** Format: int32 */
             code?: number;
@@ -2250,6 +2427,18 @@ export interface components {
              * @example https://www.~~
              */
             homepageUrl?: string;
+            /**
+             * Format: double
+             * @description 병원 위도
+             * @example 36.68372225927701
+             */
+            latitude?: number;
+            /**
+             * Format: double
+             * @description 병원 경도
+             * @example 126.82909060661319
+             */
+            longitude?: number;
         };
         BaseResponseReviewSummaryListResponse: {
             /** Format: int32 */
@@ -3179,6 +3368,29 @@ export interface operations {
             };
         };
     };
+    read: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                /** @description 알림 아이디 */
+                notificationId: unknown;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 알림 읽음 처리에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseVoid"];
+                };
+            };
+        };
+    };
     getMemberProfile: {
         parameters: {
             query?: {
@@ -3479,6 +3691,26 @@ export interface operations {
             };
         };
     };
+    getWritablePostCategories: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 게시글 작성 가능 카테고리 리스트 조회 성공 */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponsePostCategoriesResponse"];
+                };
+            };
+        };
+    };
     checkOwner: {
         parameters: {
             query?: never;
@@ -3495,6 +3727,53 @@ export interface operations {
                 };
                 content: {
                     "*/*": components["schemas"]["BaseResponsePetOwnerCheckResponse"];
+                };
+            };
+        };
+    };
+    getNotifications: {
+        parameters: {
+            query: {
+                /** @description 알림 카테고리 (MAGAZINE | MY) */
+                category: "MAGAZINE" | "MY";
+                /** @description 마지막 알림의 생성 시간 (cursor 기반 페이지네이션) */
+                cursorCreatedAt?: unknown;
+                /** @description 마지막 알림의 아이디 (cursor 기반 페이지네이션) */
+                cursorId?: unknown;
+            };
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 알림 리스트 조회에 성공했습니다. */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseNotificationListResponse"];
+                };
+            };
+        };
+    };
+    hasUnread: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description 읽지 않은 알림 존재 여부 조회에 성공했습니다.  */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "*/*": components["schemas"]["BaseResponseUnreadNotificationResponse"];
                 };
             };
         };
