@@ -12,7 +12,7 @@
     "format": "biome format --write",
     "check": "biome check --write",
     "reporter": "biome check --reporter=summary",
-    "generate-types": "openapi-typescript https://www.cocos.r-e.kr/v3/api-docs  -o ./src/type/schema.d.ts"
+    "generate-types": "openapi-typescript https://www.cocos-dev.r-e.kr/v3/api-docs -o ./src/type/schema.d.ts"
   },
   "dependencies": {
     "@next/third-parties": "^15.5.9",
