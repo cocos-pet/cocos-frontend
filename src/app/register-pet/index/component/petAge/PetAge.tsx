@@ -18,7 +18,12 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
 
   // 유효성 검사 통과한 반려동물 나이
   const updatePetAge = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setPetAge(value.replace(/[^0-9]/g, "")); // 숫자만 필터링 후 상태 업데이트
+    const numericValue = value.replace(/[^0-9]/g, ""); // 숫자만
+    // 0은 입력하지 못하도록 필터링
+    if (numericValue === "0") {
+      return;
+    }
+    setPetAge(numericValue);
   };
 
   // '다음으로' 버튼 활성화 유무
