@@ -22,7 +22,7 @@ export const ONBOARDING_GUIDE = {
   },
   petAge: {
     title: "반려동물의 나이를 입력해주세요",
-    docs: "태어난 지 몇 년이나 되었는지 숫자로 입력해주세요",
+    docs: "1살 이상의 나이를 숫자로 입력해 주세요",
   },
   isPetDisease: {
     title: "반려동물 건강 관련 고민이 있나요?",
