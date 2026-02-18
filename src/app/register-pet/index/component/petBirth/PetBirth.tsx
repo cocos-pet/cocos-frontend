@@ -7,7 +7,7 @@ import { PetData } from "../../RegisterPet.tsx";
 import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
-import { validateBirthDate, formatBirthDate, toBirthNumber } from "../../utils/validateBirthDate";
+import { validateBirthDate, formatBirthDate, toBirthDateString } from "../../utils/validateBirthDate";
 
 interface PetBirthProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -39,8 +39,8 @@ const PetBirth = ({ setStep, updatePetData }: PetBirthProps) => {
 
   const handleNext = () => {
     if (isValid) {
-      const birthNumber = toBirthNumber(petBirth);
-      updatePetData("birth", String(birthNumber));
+      const birthDate = toBirthDateString(petBirth); // "2020-02-12" 형식
+      updatePetData("birth", birthDate);
       setStep((prev) => prev + 1);
     } else if (petBirth) {
       const result = validateBirthDate(petBirth);

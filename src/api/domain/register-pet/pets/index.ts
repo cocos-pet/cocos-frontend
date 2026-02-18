@@ -9,7 +9,7 @@ export interface myPetPostType {
   breedId: number | null;
   name: string;
   gender: "F" | "M" | null;
-  age: number | null;
+  birthDate: string | null;
   diseaseIds: number[] | null;
   symptomIds: number[];
 }

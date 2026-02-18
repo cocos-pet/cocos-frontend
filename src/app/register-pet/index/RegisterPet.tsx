@@ -65,7 +65,7 @@ const RegisterPet = () => {
       breedId: petData.breedId,
       name: petData.name,
       gender: petData.gender,
-      age: petData.birth != null ? Number(petData.birth) : null,
+      birthDate: petData.birth,
       diseaseIds: petData.diseaseIds,
       symptomIds: petData.symptomIds,
     };
