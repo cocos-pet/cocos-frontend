@@ -21,8 +21,8 @@ export const ONBOARDING_GUIDE = {
     docs: "반려동물은 어떤 종인가요?",
   },
   petAge: {
-    title: "반려동물의 나이를 입력해주세요",
-    docs: "1살 이상의 나이를 숫자로 입력해 주세요",
+    title: "반려동물의 생일을 입력해주세요",
+    docs: "오늘 기준의 만 나이를 자동으로 적용해 드려요",
   },
   petWeight: {
     title: "반려동물의 몸무게를 입력해주세요",

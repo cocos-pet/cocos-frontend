@@ -1,10 +1,10 @@
 import * as styles from "./PetAge.css";
-import {ChangeEvent, useState} from "react";
+import { ChangeEvent, useState } from "react";
 
-import {TextField} from "@common/component/TextField";
-import {Button} from "@common/component/Button";
-import {PetData} from "../../RegisterPet.tsx";
-import {ONBOARDING_GUIDE} from "../../../../onboarding/index/constant/onboardingGuide.ts";
+import { TextField } from "@common/component/TextField";
+import { Button } from "@common/component/Button";
+import { PetData } from "../../RegisterPet.tsx";
+import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 
@@ -53,17 +53,8 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
         </div>
         {/* 나이 입력 영역 */}
         <div className={styles.centerLayout}>
-          <div>
-            <TextField
-              state="centerPlaceholder"
-              value={petAge}
-              onChange={updatePetAge}
-              placeholder="나이"
-              maxLength={2}
-              isDelete={false}
-            />
-          </div>
-          <span className={styles.ageFontStyle}>살</span>
+          <TextField value={petAge} onChange={updatePetAge} placeholder="YYYY/MM/DD" maxLength={8} isDelete={false} />
+          {/* <span className={styles.ageFontStyle}>살</span> */}
         </div>
       </div>
       {/* 하단 영역 */}
