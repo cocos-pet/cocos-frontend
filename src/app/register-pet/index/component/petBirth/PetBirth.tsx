@@ -1,4 +1,4 @@
-import * as styles from "./PetAge.css";
+import * as styles from "./PetBirth.css.ts";
 import { ChangeEvent, useState } from "react";
 
 import { TextField } from "@common/component/TextField";
@@ -8,32 +8,32 @@ import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardi
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 
-interface PetAgeProps {
+interface PetBirthProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
 }
 
-const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
-  const [petAge, setPetAge] = useState("");
+const PetBirth = ({ setStep, updatePetData }: PetBirthProps) => {
+  const [petBirth, setPetBirth] = useState("");
 
   // 유효성 검사 통과한 반려동물 나이
-  const updatePetAge = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
+  const updatePetBirth = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
     const numericValue = value.replace(/[^0-9]/g, ""); // 숫자만
     // 0은 입력하지 못하도록 필터링
     if (numericValue === "0") {
       return;
     }
-    setPetAge(numericValue);
+    setPetBirth(numericValue);
   };
 
   // '다음으로' 버튼 활성화 유무
-  const isValid = petAge && petAge.length !== 0;
+  const isValid = petBirth && petBirth.length !== 0;
 
   const handleNext = () => {
     if (isValid) {
-      const age = Number.parseInt(petAge, 10);
+      const birth = Number.parseInt(petBirth, 10);
 
-      updatePetData("age", age); // 부모 상태에 나이 업데이트
+      updatePetData("birth", birth); // 부모 상태에 생일 업데이트
       setStep((prev) => prev + 1); // 다음 단계로 이동
     }
   };
@@ -48,13 +48,18 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
       {/* 상단 영역 */}
       <div className={styles.layout}>
         <div className={styles.gap}>
-          <Title text={ONBOARDING_GUIDE.petAge.title} />
-          <Docs text={ONBOARDING_GUIDE.petAge.docs} />
+          <Title text={ONBOARDING_GUIDE.petBirth.title} />
+          <Docs text={ONBOARDING_GUIDE.petBirth.docs} />
         </div>
         {/* 나이 입력 영역 */}
         <div className={styles.centerLayout}>
-          <TextField value={petAge} onChange={updatePetAge} placeholder="YYYY/MM/DD" maxLength={8} isDelete={false} />
-          {/* <span className={styles.ageFontStyle}>살</span> */}
+          <TextField
+            value={petBirth}
+            onChange={updatePetBirth}
+            placeholder="YYYY/MM/DD"
+            maxLength={8}
+            isDelete={false}
+          />
         </div>
       </div>
       {/* 하단 영역 */}
@@ -72,4 +77,4 @@ const PetAge = ({ setStep, updatePetData }: PetAgeProps) => {
   );
 };
 
-export default PetAge;
+export default PetBirth;

@@ -1,4 +1,4 @@
-import * as styles from "../petAge/PetAge.css";
+import * as styles from "../petBirth/PetBirth.css.ts";
 import { ChangeEvent, useState } from "react";
 
 import { TextField } from "@common/component/TextField";
@@ -8,12 +8,12 @@ import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardi
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
 
-interface PetAgeProps {
+interface PetWeightProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
   updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
 }
 
-const PetWeight = ({ setStep, updatePetData }: PetAgeProps) => {
+const PetWeight = ({ setStep, updatePetData }: PetWeightProps) => {
   const [petWeight, setPetWeight] = useState("");
 
   const updatePetWeight = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
