@@ -1,5 +1,5 @@
-import {style} from "@vanilla-extract/css";
-import {font} from "@style/styles.css";
+import { style } from "@vanilla-extract/css";
+import { color, font } from "@style/styles.css.ts";
 
 export const layout = style({
   display: "flex",
@@ -21,7 +21,21 @@ export const centerLayout = style({
   gap: "1.2rem",
 });
 
+export const inputWithError = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.4rem",
+});
+
 export const ageFontStyle = style([font.body01, {}]);
+
+export const errorText = style([
+  font.caption01,
+  {
+    color: color.red.warning_red200,
+    marginTop: "1rem",
+  },
+]);
 
 export const btnWrapper = style({
   maxWidth: "76.8rem",

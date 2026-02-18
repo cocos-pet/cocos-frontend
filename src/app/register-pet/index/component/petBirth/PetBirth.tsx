@@ -7,6 +7,7 @@ import { PetData } from "../../RegisterPet.tsx";
 import { ONBOARDING_GUIDE } from "../../../../onboarding/index/constant/onboardingGuide.ts";
 import Title from "../../../../onboarding/index/common/title/Title.tsx";
 import Docs from "../../../../onboarding/index/common/docs/Docs.tsx";
+import { validateBirthDate, formatBirthDate, toBirthNumber } from "../../utils/validateBirthDate";
 
 interface PetBirthProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -15,30 +16,40 @@ interface PetBirthProps {
 
 const PetBirth = ({ setStep, updatePetData }: PetBirthProps) => {
   const [petBirth, setPetBirth] = useState("");
+  const [error, setError] = useState<string | null>(null);
 
-  // 유효성 검사 통과한 반려동물 나이
   const updatePetBirth = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    const numericValue = value.replace(/[^0-9]/g, ""); // 숫자만
-    // 0은 입력하지 못하도록 필터링
-    if (numericValue === "0") {
-      return;
+    const numericValue = value.replace(/[^0-9]/g, "");
+    if (numericValue === "0") return;
+    const formatted = formatBirthDate(value);
+    setPetBirth(formatted);
+    // 실시간 유효성 검사 (형식 완성 시에만)
+    if (formatted.length === 0) {
+      setError(null);
+    } else if (formatted.length === 10) {
+      const result = validateBirthDate(formatted);
+      setError(result.valid ? null : result.error);
+    } else {
+      setError(null);
     }
-    setPetBirth(numericValue);
   };
 
-  // '다음으로' 버튼 활성화 유무
-  const isValid = petBirth && petBirth.length !== 0;
+  const validationResult = petBirth ? validateBirthDate(petBirth) : null;
+  const isValid = validationResult?.valid ?? false;
 
   const handleNext = () => {
     if (isValid) {
-      const birth = Number.parseInt(petBirth, 10);
-
-      updatePetData("birth", birth); // 부모 상태에 생일 업데이트
-      setStep((prev) => prev + 1); // 다음 단계로 이동
+      const birthNumber = toBirthNumber(petBirth);
+      updatePetData("birth", String(birthNumber));
+      setStep((prev) => prev + 1);
+    } else if (petBirth) {
+      const result = validateBirthDate(petBirth);
+      if (!result.valid) {
+        setError(result.error);
+      }
     }
   };
 
-  // 뒤로가기
   const handleGoBack = () => {
     setStep((prev) => Math.max(prev - 1, 0));
   };
@@ -52,26 +63,28 @@ const PetBirth = ({ setStep, updatePetData }: PetBirthProps) => {
           <Docs text={ONBOARDING_GUIDE.petBirth.docs} />
         </div>
         {/* 나이 입력 영역 */}
-        <div className={styles.centerLayout}>
-          <TextField
-            value={petBirth}
-            onChange={updatePetBirth}
-            placeholder="YYYY/MM/DD"
-            maxLength={8}
-            isDelete={false}
-          />
+        <div>
+          <div className={styles.inputWithError}>
+            <TextField
+              value={petBirth}
+              onChange={updatePetBirth}
+              placeholder="YYYY/MM/DD"
+              maxLength={10}
+              isDelete={false}
+              state={error ? "error" : "default"}
+            />
+            {error && (
+              <p className={styles.errorText} role="alert">
+                {error}
+              </p>
+            )}
+          </div>
         </div>
       </div>
       {/* 하단 영역 */}
       <div className={styles.btnWrapper}>
         <Button label="돌아가기" size="large" variant="solidNeutral" disabled={false} onClick={handleGoBack} />
-        <Button
-          label="다음"
-          size="large"
-          variant="solidPrimary"
-          disabled={!isValid}
-          onClick={handleNext} // 나이 값이 유효하면 다음 단계로 진행
-        />
+        <Button label="다음" size="large" variant="solidPrimary" disabled={!petBirth || !isValid} onClick={handleNext} />
       </div>
     </>
   );
