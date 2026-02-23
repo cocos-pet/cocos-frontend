@@ -11,7 +11,7 @@ import { validateBirthDate, formatBirthDate, toBirthDateString } from "../../uti
 
 interface PetBirthProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
+  updatePetData: <K extends keyof PetData>(field: K, value: PetData[K]) => void;
 }
 
 const PetBirth = ({ setStep, updatePetData }: PetBirthProps) => {

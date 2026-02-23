@@ -15,9 +15,9 @@ import SymStep2 from "./symptom/SymStep2.tsx";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  updatePetData: (
-    field: keyof PetData,
-    value: PetData[keyof PetData],
+  updatePetData: <K extends keyof PetData>(
+    field: K,
+    value: PetData[K],
     callback?: (updatedData: PetData) => void,
   ) => void;
   currentStep: number | null;

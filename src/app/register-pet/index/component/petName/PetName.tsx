@@ -16,7 +16,7 @@ import LazyImage from "@common/component/LazyImage.tsx";
 
 interface PetNameProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  updatePetData: (field: keyof PetData, value: string) => void; // PetData의 key와 string 값
+  updatePetData: <K extends keyof PetData>(field: K, value: PetData[K]) => void;
 }
 
 const PetName = ({ setStep, updatePetData }: PetNameProps) => {

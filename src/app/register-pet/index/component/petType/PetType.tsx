@@ -11,7 +11,7 @@ import DualOptionSelector from "../../common/dualOptionSelector/DualOptionSelect
 
 interface PetTypeProps {
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  updatePetData: (field: keyof PetData, value: PetData[keyof PetData]) => void;
+  updatePetData: <K extends keyof PetData>(field: K, value: PetData[K]) => void;
 }
 
 const PetType = ({ setStep, updatePetData }: PetTypeProps) => {
