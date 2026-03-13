@@ -1,4 +1,4 @@
-//궁금증 : undefind을 인자로 보내면, 인식을 할까?
+//궁금증 : undefined을 인자로 보내면, 인식을 할까?
 
 import { useQuery } from "@tanstack/react-query";
 import { getMemberInfo, getMyComment, getMyPost, getPetInfo } from ".";
@@ -21,7 +21,7 @@ export const MY_COMMENT_QUERY_KEY = {
   MY_COMMENT: (nickname?: string) => ["myCommentList", nickname],
 };
 
-//todo: invaildate 필요(나중에 patch 되면)
+//todo: invalidate 필요(나중에 patch 되면)
 export const useGetPetInfo = (nickname?: string) => {
   return useQuery({
     queryKey: PETINFO_QUERY_KEY.PET_INFO(nickname),

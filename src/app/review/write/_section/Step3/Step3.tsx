@@ -29,7 +29,7 @@ const Step3 = () => {
   const goodReviewIds = watch("goodReviewIds");
   const badReviewIds = watch("badReviewIds");
 
-  const isFromValid = goodReviewIds.length > 0 || badReviewIds.length > 0;
+  const isFormValid = goodReviewIds.length > 0 || badReviewIds.length > 0;
 
   const handleGoReviewList = () => {
     router.push(PATH.REVIEW.ROOT);
@@ -88,7 +88,7 @@ const Step3 = () => {
         {/* 하단 버튼 영역 */}
         <section className={styles.btnLayout}>
           <Button label="이전으로" size="large" variant="solidNeutral" onClick={handlePrev} />
-          <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={!isFromValid} />
+          <Button label="다음으로" size="large" variant="solidPrimary" onClick={handleNext} disabled={!isFormValid} />
         </section>
       </div>
 

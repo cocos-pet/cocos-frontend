@@ -3,7 +3,7 @@
 import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { PATH } from "@route/path";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import * as styles from "./PetEdit.css";
 import Divider from "@common/component/Divider/Divider";
 import { Button } from "@common/component/Button";
@@ -52,7 +52,7 @@ const Page = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [name, setName] = useState("");
   const [validationMessages, setValidationMessages] = useState<string[]>([]);
-  const [isValid, setIsVaild] = useState(false);
+  const [isValid, setIsValid] = useState(false);
   const [petBirth, setPetBirth] = useState("");
   const [birthError, setBirthError] = useState<string | null>(null);
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]); //api 요청으로 받아온 body id들을 저장해두었다가, 다시 요청에 사용
@@ -64,21 +64,10 @@ const Page = () => {
   // member 정보를 직접 가져와서 스토어에 설정
   const { data: memberData } = useGetMemberInfo();
 
+  const { setOpen, setCategory, setCategoryData, selectedChips, categoryData, setSelectedChips } =
+    useCategoryFilterStore();
   const {
-    isOpen,
-    setOpen,
-    category,
-    setCategory,
-    setCategoryData,
-    selectedChips,
-    toggleChips,
-    categoryData,
-    setSelectedChips,
-  } = useCategoryFilterStore();
-  const {
-    isOpen: animalOpen,
     setOpen: setAnimalOpen,
-    category: animalCategory,
     setCategory: setAnimalCategory,
     setCategoryData: setAnimalCategoryData,
     selectedChips: animalChips,
@@ -196,9 +185,9 @@ const Page = () => {
     setName(name);
 
     //유효성 검사, 유효성 상태 설정
-    const inVaildateMessages = validateNickname(name);
-    setValidationMessages(inVaildateMessages);
-    setIsVaild(inVaildateMessages.length === 0);
+    const messages = validateNickname(name);
+    setValidationMessages(messages);
+    setIsValid(messages.length === 0);
   };
 
   const handleEditClick = () => {
