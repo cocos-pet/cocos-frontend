@@ -34,15 +34,6 @@ export const ageInputContainer = style({
   alignSelf: "stretch",
 });
 
-export const ageInputWrapper = style([
-  font.body01,
-  {
-    display: "flex",
-    alignItems: "center",
-    gap: "1.2rem",
-  },
-]);
-
 export const buttonWrapper = style({
   position: "absolute",
   bottom: "0",

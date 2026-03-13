@@ -30,22 +30,18 @@ const AgeBottomSheet = ({ isOpen, setIsOpen, age, updatePetAge, petId }: AgeBott
       <>
         <div className={styles.ageWrapper}>
           <div className={styles.ageContainer}>
-            <span className={styles.pleaseAgeText}>반려동물의 나이를 알려주세요.</span>
+            <span className={styles.pleaseAgeText}>반려동물의 생일을 알려주세요.</span>
             <div className={styles.ageInputContainer}>
-              <div className={styles.ageInputWrapper}>
-                <span style={{ minWidth: "10rem" }}>
-                  <TextField
-                    state="centerPlaceholder"
-                    value={age}
-                    onChange={(e) => {
-                      updatePetAge(e);
-                    }}
-                    placeholder="나이"
-                    maxLength={2}
-                    isDelete={false}
-                  />
-                </span>
-                살
+              <div style={{ width: "100%" }}>
+                <TextField
+                  value={age}
+                  onChange={(e) => {
+                    updatePetAge(e);
+                  }}
+                  placeholder="YYYY/MM/DD"
+                  maxLength={8}
+                  isDelete={false}
+                />
               </div>
             </div>
           </div>
