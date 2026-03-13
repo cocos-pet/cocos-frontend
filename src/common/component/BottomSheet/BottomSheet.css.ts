@@ -4,10 +4,12 @@ import { style } from "@vanilla-extract/css";
 export const overlay = style({
   position: "fixed",
   top: 0,
-  left: 0,
+  left: "50%",
+  transform: "translateX(-50%)",
   zIndex: "99",
 
   width: "100%",
+  maxWidth: "76.8rem",
   height: "100%",
   backgroundColor: "rgba(34, 34, 34, 0.2)",
 });
