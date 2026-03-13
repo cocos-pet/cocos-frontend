@@ -1,4 +1,4 @@
-import { font } from "@style/styles.css";
+import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
 export const ageWrapper = style({
@@ -33,6 +33,21 @@ export const ageInputContainer = style({
   gap: "1rem",
   alignSelf: "stretch",
 });
+
+export const inputWithError = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.4rem",
+  width: "100%",
+});
+
+export const errorText = style([
+  font.caption01,
+  {
+    color: color.red.warning_red200,
+    marginTop: "0.4rem",
+  },
+]);
 
 export const buttonWrapper = style({
   position: "absolute",
