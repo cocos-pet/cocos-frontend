@@ -3,7 +3,7 @@
 import Symptom from "@app/main/_section/symptom/Symptom.tsx";
 import * as styles from "./Main.css.ts";
 import { TextField } from "@common/component/TextField";
-import { IcSearch } from "@asset/svg";
+import { IcNotice, IcSearch } from "@asset/svg";
 import MainFooter from "@app/main/_section/mainFooter/MainFooter.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
 import HotPost from "@app/main/_section/hotPost/HotPost.tsx";
@@ -30,8 +30,15 @@ export default function Page() {
     router.push(PATH.COMMUNITY.SEARCH);
   };
 
+  const handleAlarmClick = () => {
+    router.push(PATH.ALARM);
+  };
+
   return (
     <div className={styles.mainContainer}>
+      <button className={styles.alarmButton} onClick={handleAlarmClick} aria-label="알림">
+        <IcNotice width={24} height={24} />
+      </button>
       <MainHeader />
       <div className={styles.headerContainer}>
         <TextField

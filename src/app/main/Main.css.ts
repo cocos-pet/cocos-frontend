@@ -12,3 +12,17 @@ export const headerContainer = style({
   width: "100%",
   transform: "translateY(-50%)",
 });
+
+export const alarmButton = style({
+  position: "absolute",
+  top: "2rem",
+  right: "2rem",
+  zIndex: 1100,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "transparent",
+  border: "none",
+  padding: 0,
+  cursor: "pointer",
+});

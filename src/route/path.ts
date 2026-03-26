@@ -10,6 +10,7 @@ export const PATH = {
     COMPLETE: "/register-pet/complete",
   },
   MAIN: "/main",
+  ALARM: "/alarm",
   COMMUNITY: {
     ROOT: "/community",
     POST: "/community/:postId",
