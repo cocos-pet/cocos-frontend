@@ -19,24 +19,24 @@ export default function AlarmToggle() {
 
   return (
     <div className={styles.toggleContainer}>
-      <div onClick={handleMagazineClick} style={{ cursor: "pointer" }}>
+      <div style={{ cursor: "pointer" }}>
         <Chip
           label="전체"
           icon={false}
           color={selectedTab === "all" ? "solidBlue" : "blue"}
           onClick={handleMagazineClick}
           isSelected={selectedTab === "all"}
-          disabled={false}
+          disabled={selectedTab === "all"}
         />
       </div>
-      <div onClick={handleMyNewsClick} style={{ cursor: "pointer" }}>
+      <div style={{ cursor: "pointer" }}>
         <Chip
           label="댓글 · 답글만 보기"
           icon={false}
           color={selectedTab === "comment" ? "solidBlue" : "blue"}
           onClick={handleMyNewsClick}
           isSelected={selectedTab === "comment"}
-          disabled={false}
+          disabled={selectedTab === "comment"}
         />
       </div>
     </div>
