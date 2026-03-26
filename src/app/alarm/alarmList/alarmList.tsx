@@ -5,6 +5,8 @@ import { useInfiniteNotifications } from "@api/domain/alarm/hook";
 import { IcCocosmagazine, IcCocosmagazineTrue, IcLikeActive, IcMessageFalse, IcMessageTrue } from "@asset/svg";
 import Loading from "@common/component/Loading/Loading";
 import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
+import { PATH } from "@route/path";
+import { useRouter } from "next/navigation";
 import { SVGProps } from "react";
 import * as styles from "./alarmList.css.ts";
 
@@ -19,6 +21,8 @@ interface AlarmItem {
   description: string;
   type: NotificationType | "UNKNOWN";
   isRead: boolean;
+  postId: number | null;
+  targetId: number | null;
 }
 
 const SOURCE_TEXT_BY_TYPE: Record<NotificationType, string> = {
@@ -56,6 +60,8 @@ const mapNotificationToAlarmItem = (notification: NotificationItem, category: Al
       description: notification.title || notification.content,
       type,
       isRead: notification.isRead,
+      postId: notification.postId,
+      targetId: notification.targetId,
     };
   }
 
@@ -68,10 +74,35 @@ const mapNotificationToAlarmItem = (notification: NotificationItem, category: Al
       : notification.content,
     type,
     isRead: notification.isRead,
+    postId: notification.postId,
+    targetId: notification.targetId,
   };
 };
 
+const getAlarmNavigationPath = (alarm: AlarmItem): string | null => {
+  if (
+    (alarm.type === "COMMENT" || alarm.type === "SUB_COMMENT" || alarm.type === "POST_LIKE_MILESTONE") &&
+    alarm.postId
+  ) {
+    return `${PATH.COMMUNITY.ROOT}/${alarm.postId}`;
+  }
+
+  if (alarm.type === "MAGAZINE_PUBLISHED") {
+    if (alarm.postId) {
+      return `${PATH.COMMUNITY.ROOT}/${alarm.postId}`;
+    }
+    return PATH.COMMUNITY.ROOT;
+  }
+
+  if (alarm.postId) {
+    return `${PATH.COMMUNITY.ROOT}/${alarm.postId}`;
+  }
+
+  return null;
+};
+
 export default function AlarmList({ category }: AlarmListProps) {
+  const router = useRouter();
   const { data, isPending, isError } = useInfiniteNotifications(category);
   const notifications: NotificationItem[] = data?.pages.flatMap((page) => page.data.notifications) ?? [];
   const alarmList: AlarmItem[] = notifications.map((notification) =>
@@ -96,9 +127,15 @@ export default function AlarmList({ category }: AlarmListProps) {
                 ? ALARM_ICON[alarm.type].read
                 : ALARM_ICON[alarm.type].unread;
         const sourceClassName = !alarm.isRead ? styles.sourceTextHighlight : styles.sourceText;
+        const nextPath = getAlarmNavigationPath(alarm);
 
         return (
-          <div key={alarm.id} className={styles.alarmItem}>
+          <div
+            key={alarm.id}
+            className={styles.alarmItem}
+            onClick={() => nextPath && router.push(nextPath)}
+            style={{ cursor: nextPath ? "pointer" : "default" }}
+          >
             <div className={`${styles.leftSection} ${isLastItem ? styles.leftSectionLast : ""}`}>
               <div className={styles.metaRow}>
                 <Icon width={18} height={18} />
