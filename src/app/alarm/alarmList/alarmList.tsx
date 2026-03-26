@@ -2,7 +2,7 @@
 
 import { AlarmCategory, NotificationItem, NotificationType } from "@api/domain/alarm";
 import { useInfiniteNotifications } from "@api/domain/alarm/hook";
-import { IcCocosmagazine, IcLikeActive, IcMessageFalse, IcMessageTrue } from "@asset/svg";
+import { IcCocosmagazine, IcCocosmagazineTrue, IcLikeActive, IcMessageFalse, IcMessageTrue } from "@asset/svg";
 import Loading from "@common/component/Loading/Loading";
 import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
 import { SVGProps } from "react";
@@ -35,15 +35,12 @@ const ALARM_ICON: AlarmIconMap = {
   COMMENT: { read: IcMessageFalse, unread: IcMessageTrue },
   SUB_COMMENT: { read: IcMessageFalse, unread: IcMessageTrue },
   POST_LIKE_MILESTONE: { read: IcLikeActive, unread: IcLikeActive },
-  MAGAZINE_PUBLISHED: { read: IcCocosmagazine, unread: IcCocosmagazine },
+  MAGAZINE_PUBLISHED: { read: IcCocosmagazine, unread: IcCocosmagazineTrue },
 };
 
 const isNotificationType = (type: string): type is NotificationType => {
   return (
-    type === "COMMENT" ||
-    type === "SUB_COMMENT" ||
-    type === "POST_LIKE_MILESTONE" ||
-    type === "MAGAZINE_PUBLISHED"
+    type === "COMMENT" || type === "SUB_COMMENT" || type === "POST_LIKE_MILESTONE" || type === "MAGAZINE_PUBLISHED"
   );
 };
 
@@ -77,7 +74,9 @@ const mapNotificationToAlarmItem = (notification: NotificationItem, category: Al
 export default function AlarmList({ category }: AlarmListProps) {
   const { data, isPending, isError } = useInfiniteNotifications(category);
   const notifications: NotificationItem[] = data?.pages.flatMap((page) => page.data.notifications) ?? [];
-  const alarmList: AlarmItem[] = notifications.map((notification) => mapNotificationToAlarmItem(notification, category));
+  const alarmList: AlarmItem[] = notifications.map((notification) =>
+    mapNotificationToAlarmItem(notification, category),
+  );
 
   if (isPending) return <Loading height={80} />;
   if (isError) return <WarningToastWrap errorMessage="알림을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요." />;
@@ -88,7 +87,9 @@ export default function AlarmList({ category }: AlarmListProps) {
         const isLastItem = index === alarmList.length - 1;
         const Icon =
           category === "MAGAZINE"
-            ? IcCocosmagazine
+            ? alarm.isRead
+              ? IcCocosmagazine
+              : IcCocosmagazineTrue
             : alarm.type === "UNKNOWN"
               ? IcMessageFalse
               : alarm.isRead

@@ -26,6 +26,7 @@ export { default as IcClear } from "./IcClear";
 export { default as IcCocos } from "./IcCocos";
 export { default as IcCocosM } from "./IcCocosM";
 export { default as IcCocosmagazine } from "./IcCocosmagazine";
+export { default as IcCocosmagazineTrue } from "./IcCocosmagazineTrue";
 export { default as IcCommunity } from "./IcCommunity";
 export { default as IcCommunityon } from "./IcCommunityon";
 export { default as IcCopy } from "./IcCopy";
