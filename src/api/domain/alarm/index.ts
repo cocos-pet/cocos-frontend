@@ -1,5 +1,5 @@
 import { API_PATH } from "@api/constants/apiPath";
-import { get } from "@api/index";
+import { get, patch } from "@api/index";
 
 export type AlarmCategory = "MAGAZINE" | "MY";
 
@@ -35,8 +35,19 @@ export interface GetNotificationsResponse {
   };
 }
 
+export interface ReadNotificationResponse {
+  code: number;
+  message: string;
+  data: null;
+}
+
 export const getNotifications = async (params: GetNotificationsRequest) => {
   const response = await get<GetNotificationsResponse>(API_PATH.NOTIFICATIONS, { params });
+  return response.data;
+};
+
+export const readNotification = async (notificationId: number) => {
+  const response = await patch<ReadNotificationResponse>(`${API_PATH.NOTIFICATIONS}/${notificationId}/read`);
   return response.data;
 };
 

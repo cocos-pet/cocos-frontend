@@ -1,7 +1,7 @@
 "use client";
 
 import { AlarmCategory, NotificationItem, NotificationType } from "@api/domain/alarm";
-import { useInfiniteNotifications } from "@api/domain/alarm/hook";
+import { useInfiniteNotifications, useReadNotification } from "@api/domain/alarm/hook";
 import { IcCocosmagazine, IcCocosmagazineTrue, IcLikeActive, IcMessageFalse, IcMessageTrue } from "@asset/svg";
 import Loading from "@common/component/Loading/Loading";
 import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
@@ -103,6 +103,7 @@ const getAlarmNavigationPath = (alarm: AlarmItem): string | null => {
 
 export default function AlarmList({ category }: AlarmListProps) {
   const router = useRouter();
+  const { mutateAsync: readNotification } = useReadNotification();
   const { data, isPending, isError } = useInfiniteNotifications(category);
   const notifications: NotificationItem[] = data?.pages.flatMap((page) => page.data.notifications) ?? [];
   const alarmList: AlarmItem[] = notifications.map((notification) =>
@@ -129,14 +130,30 @@ export default function AlarmList({ category }: AlarmListProps) {
         const sourceClassName = !alarm.isRead ? styles.sourceTextHighlight : styles.sourceText;
         const nextPath = getAlarmNavigationPath(alarm);
 
+        const handleAlarmClick = async () => {
+          if (!nextPath) return;
+
+          try {
+            if (!alarm.isRead) {
+              await readNotification(alarm.id);
+            }
+          } catch (error) {
+            console.log(error);
+          } finally {
+            router.push(nextPath);
+          }
+        };
+
         return (
           <div
             key={alarm.id}
-            className={styles.alarmItem}
-            onClick={() => nextPath && router.push(nextPath)}
+            className={`${styles.alarmItem} ${alarm.isRead ? styles.alarmItemRead : ""}`}
+            onClick={handleAlarmClick}
             style={{ cursor: nextPath ? "pointer" : "default" }}
           >
-            <div className={`${styles.leftSection} ${isLastItem ? styles.leftSectionLast : ""}`}>
+            <div
+              className={`${styles.leftSection} ${alarm.isRead ? styles.leftSectionRead : ""} ${isLastItem ? styles.leftSectionLast : ""}`}
+            >
               <div className={styles.metaRow}>
                 <Icon width={18} height={18} />
                 <span className={sourceClassName}>{alarm.source}</span>
@@ -144,11 +161,11 @@ export default function AlarmList({ category }: AlarmListProps) {
               {category === "MAGAZINE" ? (
                 <>
                   <p className={styles.description}>{alarm.description}</p>
-                  <p className={styles.magazineTitle}>{alarm.title}</p>
+                  <p className={`${styles.magazineTitle} ${alarm.isRead ? styles.readText : ""}`}>{alarm.title}</p>
                 </>
               ) : (
                 <>
-                  <p className={styles.title}>{alarm.title}</p>
+                  <p className={`${styles.title} ${alarm.isRead ? styles.readText : ""}`}>{alarm.title}</p>
                   <p className={styles.myDescription}>{alarm.description}</p>
                 </>
               )}

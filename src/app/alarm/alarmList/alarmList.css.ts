@@ -8,7 +8,11 @@ export const listContainer = style({
 export const alarmItem = style({
   display: "flex",
   justifyContent: "space-between",
-  padding: "1.2rem 2rem",
+  padding: 0,
+});
+
+export const alarmItemRead = style({
+  backgroundColor: color.gray.gray100,
 });
 
 export const leftSection = style({
@@ -16,13 +20,31 @@ export const leftSection = style({
   flex: 1,
   display: "flex",
   flexDirection: "column",
+  position: "relative",
   gap: "0.4rem",
-  paddingBottom: "1.6rem",
-  borderBottom: `1px solid ${color.gray.gray300}`,
+  padding: "1.2rem 2rem 1.6rem 2rem",
+  selectors: {
+    "&::after": {
+      content: "",
+      position: "absolute",
+      left: "2rem",
+      right: "2rem",
+      bottom: 0,
+      borderBottom: `1px solid ${color.gray.gray300}`,
+    },
+  },
+});
+
+export const leftSectionRead = style({
+  backgroundColor: color.gray.gray100,
 });
 
 export const leftSectionLast = style({
-  borderBottom: "none",
+  selectors: {
+    "&::after": {
+      content: "none",
+    },
+  },
 });
 
 export const metaRow = style({
@@ -95,3 +117,7 @@ export const myDescription = style([
     WebkitBoxOrient: "vertical",
   },
 ]);
+
+export const readText = style({
+  color: semanticColor.text.normal,
+});

@@ -1,5 +1,5 @@
-import { InfiniteData, useInfiniteQuery } from "@tanstack/react-query";
-import { AlarmCategory, getNotifications, GetNotificationsResponse } from "./index";
+import { InfiniteData, useInfiniteQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { AlarmCategory, getNotifications, GetNotificationsResponse, readNotification } from "./index";
 
 interface NotificationCursor {
   cursorCreatedAt?: string;
@@ -30,6 +30,18 @@ export const useInfiniteNotifications = (category: AlarmCategory) => {
       const { cursorCreatedAt, cursorId, notifications } = lastPage.data;
       if (!notifications?.length || !cursorCreatedAt || cursorId === null) return undefined;
       return { cursorCreatedAt, cursorId };
+    },
+  });
+};
+
+export const useReadNotification = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationKey: ["notifications", "read"],
+    mutationFn: (notificationId: number) => readNotification(notificationId),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["notifications"] });
     },
   });
 };
