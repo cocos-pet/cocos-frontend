@@ -54,6 +54,7 @@ export { default as IcMessageFalse } from "./IcMessageFalse";
 export { default as IcMessageTrue } from "./IcMessageTrue";
 export { default as IcMypage } from "./IcMypage";
 export { default as IcMypageon } from "./IcMypageon";
+export { default as IcNotice } from "./IcNotice";
 export { default as IcOut } from "./IcOut";
 export { default as IcPlus } from "./IcPlus";
 export { default as IcPostImageSkeleton } from "./IcPostImageSkeleton";
