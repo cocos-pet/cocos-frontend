@@ -2,40 +2,40 @@
 
 import { useState } from "react";
 import Chip from "@common/component/Chip/Chip";
-import * as styles from "./alarmToggle.css";
+import * as styles from "./alarmToggle.css.ts";
 
-type TabType = "magazine" | "myNews";
+type TabType = "all" | "comment";
 
 export default function AlarmToggle() {
-  const [selectedTab, setSelectedTab] = useState<TabType>("magazine");
+  const [selectedTab, setSelectedTab] = useState<TabType>("all");
 
   const handleMagazineClick = () => {
-    setSelectedTab("magazine");
+    setSelectedTab("all");
   };
 
   const handleMyNewsClick = () => {
-    setSelectedTab("myNews");
+    setSelectedTab("comment");
   };
 
   return (
     <div className={styles.toggleContainer}>
       <div onClick={handleMagazineClick} style={{ cursor: "pointer" }}>
         <Chip
-          label="매거진"
+          label="전체"
           icon={false}
-          color={selectedTab === "magazine" ? "solidBlue" : "blue"}
+          color={selectedTab === "all" ? "solidBlue" : "blue"}
           onClick={handleMagazineClick}
-          isSelected={selectedTab === "magazine"}
+          isSelected={selectedTab === "all"}
           disabled={false}
         />
       </div>
       <div onClick={handleMyNewsClick} style={{ cursor: "pointer" }}>
         <Chip
-          label="내 소식"
+          label="댓글 · 답글만 보기"
           icon={false}
-          color={selectedTab === "myNews" ? "solidBlue" : "blue"}
+          color={selectedTab === "comment" ? "solidBlue" : "blue"}
           onClick={handleMyNewsClick}
-          isSelected={selectedTab === "myNews"}
+          isSelected={selectedTab === "comment"}
           disabled={false}
         />
       </div>

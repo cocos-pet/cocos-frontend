@@ -5,4 +5,6 @@ export const toggleContainer = style({
   gap: "0.4rem",
   alignItems: "center",
   width: "fit-content",
+  marginLeft: "2rem",
+  marginTop: "1.6rem",
 });
