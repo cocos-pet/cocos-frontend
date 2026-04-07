@@ -23,6 +23,9 @@ export interface PetData {
   diseaseIds: number[] | null;
   symptomIds: number[];
 }
+
+export type PetHealthIds = Pick<PetData, "diseaseIds" | "symptomIds">;
+
 const RegisterPet = () => {
   // 등록 전체 조절
   const [step, setStep] = useState(0);
@@ -58,14 +61,16 @@ const RegisterPet = () => {
     });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (healthIds?: PetHealthIds) => {
+    const diseaseIds = healthIds?.diseaseIds ?? petData.diseaseIds;
+    const symptomIds = healthIds?.symptomIds ?? petData.symptomIds;
     const apiData: myPetPostType = {
       breedId: petData.breedId,
       name: petData.name,
       gender: petData.gender,
       birthDate: petData.birth,
-      diseaseIds: petData.diseaseIds,
-      symptomIds: petData.symptomIds,
+      diseaseIds,
+      symptomIds,
     };
     myPet(apiData, {
       onSuccess: () => {
@@ -103,7 +108,6 @@ const RegisterPet = () => {
         return (
           <PetHealth
             setStep={setStep}
-            updatePetData={updatePetData}
             handleSubmit={handleSubmit}
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}

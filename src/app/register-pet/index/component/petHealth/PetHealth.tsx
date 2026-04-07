@@ -7,20 +7,15 @@ import { Button } from "@common/component/Button";
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
-import { PetData } from "../../RegisterPet.tsx";
+import type { PetHealthIds } from "../../RegisterPet.tsx";
 import BodyPart from "./bodyPart/BodyPart.tsx";
 import ChipSelector from "./chipSelector/ChipSelector.tsx";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
-  updatePetData: <K extends keyof PetData>(
-    field: K,
-    value: PetData[K],
-    callback?: (updatedData: PetData) => void,
-  ) => void;
   currentStep: number;
   setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
-  handleSubmit: () => void;
+  handleSubmit: (healthIds?: PetHealthIds) => void;
   isPending: boolean;
 }
 
@@ -30,7 +25,6 @@ const PetHealth = ({
   currentStep,
   setCurrentStep,
   setStep,
-  updatePetData,
   handleSubmit,
   isPending,
 }: PetHealthPropTypes) => {
@@ -85,12 +79,8 @@ const PetHealth = ({
   const handleGoToChipSelector = () => {
     if (isSkipSelected) {
       if (isPending) return;
-      updatePetData("diseaseIds", [], () => {
-        updatePetData("symptomIds", [], () => {
-          handleSubmit();
-          router.push(PATH.REGISTER_PET.COMPLETE);
-        });
-      });
+      handleSubmit({ diseaseIds: [], symptomIds: [] });
+      router.push(PATH.REGISTER_PET.COMPLETE);
     } else {
       setCurrentStep(2);
     }
@@ -114,12 +104,8 @@ const PetHealth = ({
       const allSymptoms = newSelections.flatMap((s) => s.symptomIds);
       if (isPending) return;
 
-      updatePetData("diseaseIds", allDiseases, () => {
-        updatePetData("symptomIds", allSymptoms, () => {
-          handleSubmit();
-          router.push(PATH.REGISTER_PET.COMPLETE);
-        });
-      });
+      handleSubmit({ diseaseIds: allDiseases, symptomIds: allSymptoms });
+      router.push(PATH.REGISTER_PET.COMPLETE);
     }
   };
 
