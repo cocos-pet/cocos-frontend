@@ -8,10 +8,8 @@ import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
 import { useDiseaseGet } from "@api/domain/register-pet/disease/hook";
 import { useSymptomGet } from "@api/domain/register-pet/symptom/hook";
 import { PetData } from "../../RegisterPet.tsx";
-import Step1 from "./disease/Step1.tsx";
-import Step2 from "./disease/Step2.tsx";
-import SymStep1 from "./symptom/SymStep1.tsx";
-import SymStep2 from "./symptom/SymStep2.tsx";
+import BodyPart from "./bodyPart/BodyPart.tsx";
+import ChipSelector from "./chipSelector/ChipSelector.tsx";
 
 interface PetHealthPropTypes {
   setStep: React.Dispatch<React.SetStateAction<number>>;
@@ -20,12 +18,13 @@ interface PetHealthPropTypes {
     value: PetData[K],
     callback?: (updatedData: PetData) => void,
   ) => void;
-  currentStep: number | null;
-  setCurrentStep: React.Dispatch<React.SetStateAction<number | null>>;
-  isSkipDisease: boolean | null;
+  currentStep: number;
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>;
   handleSubmit: () => void;
   isPending: boolean;
 }
+
+type BodySelection = { diseaseIds: number[]; symptomIds: number[] };
 
 const PetHealth = ({
   currentStep,
@@ -33,156 +32,131 @@ const PetHealth = ({
   setStep,
   updatePetData,
   handleSubmit,
-  isSkipDisease,
   isPending,
 }: PetHealthPropTypes) => {
-  // 질병 대분류, 소분류
-  const [selectedDiseaseBody, setSelectedDiseaseBody] = useState<number[]>([]);
-  const [selectedDiseases, setSelectedDiseases] = useState<number[]>([]);
-  // 증상 대분류, 소분류
-  const [selectedSymptomBody, setSelectedSymBodyParts] = useState<number[]>([]);
-  const [selectedSymptom, setSelectedSymptoms] = useState<number[]>([]);
+  const router = useRouter();
+  const [selectedBodies, setSelectedBodies] = useState<number[]>([]);
+  const [isSkipSelected, setIsSkipSelected] = useState(false);
 
-  // 질병 선택 부위 (최대 2개 선택 가능???)
+  // 부위별 질병/증상 선택 (부위 순서대로 저장)
+  const [bodySelections, setBodySelections] = useState<BodySelection[]>([]);
+  const [currentBodyDiseases, setCurrentBodyDiseases] = useState<number[]>([]);
+  const [currentBodySymptoms, setCurrentBodySymptoms] = useState<number[]>([]);
+
+  const currentBodyIndex = currentStep - 2;
+  const isChipSelectorStep = currentStep >= 2 && currentBodyIndex < selectedBodies.length;
+
+  const { data: bodyData } = useBodiesGet();
+  const { data: diseaseBodyData } = useDiseaseGet(selectedBodies);
+  const { data: symptomBodyData } = useSymptomGet(selectedBodies);
+
   const handleBodyPartSelection = (bodyPartId: number) => {
-    setSelectedDiseaseBody((prevSelected) => {
-      // 두 번 클릭시 해제
-      if (prevSelected.includes(bodyPartId)) {
-        return prevSelected.filter((id) => id !== bodyPartId);
-      }
-      return [...prevSelected, bodyPartId];
-    });
+    setSelectedBodies((prev) =>
+      prev.includes(bodyPartId) ? prev.filter((id) => id !== bodyPartId) : [...prev, bodyPartId],
+    );
+    setIsSkipSelected(false);
   };
 
-  // 질병 명 (최대 7개 선택 가능)
+  const handleSkipToggle = () => {
+    setIsSkipSelected((prev) => !prev);
+    if (!isSkipSelected) setSelectedBodies([]);
+  };
+
   const handleDiseaseSelection = (diseaseId: number) => {
-    setSelectedDiseases((prevSelected) => {
-      // 두 번 클릭시 해지
-      if (prevSelected.includes(diseaseId)) {
-        return prevSelected.filter((id) => id !== diseaseId);
-      }
-      if (prevSelected.length < 7) {
-        return [...prevSelected, diseaseId];
-      }
-      return prevSelected;
-    });
-  };
-
-  // 질병 1단계에서 질병유무 컴포넌트로
-  const handleBackDual = () => {
-    setStep(5);
-  };
-
-  // 질병 1단계에서 질병 2단계로
-  const handleGoDisease2 = () => {
-    setCurrentStep(2);
-  };
-
-  // 비우기
-  // 질병 2단계에서 질병 1단계로
-  const handleBackDisease1 = () => {
-    selectedDiseases.length = 0;
-    setCurrentStep(1);
-  };
-
-  // 질병 2단계에서 증상 1단계로
-  const handleGoSymptom1 = () => {
-    updatePetData("diseaseIds", selectedDiseases);
-    setCurrentStep(3);
-  };
-
-  //////////////////////이제부터 증상
-
-  const handleBodyPartSymSelection = (bodyPartId: number) => {
-    setSelectedSymBodyParts((prevSelected) => {
-      if (prevSelected.includes(bodyPartId)) {
-        return prevSelected.filter((id) => id !== bodyPartId);
-      }
-      return [...prevSelected, bodyPartId];
+    setCurrentBodyDiseases((prev) => {
+      if (prev.includes(diseaseId)) return prev.filter((id) => id !== diseaseId);
+      if (prev.length < 2) return [...prev, diseaseId];
+      return prev;
     });
   };
 
   const handleSymptomSelection = (symptomId: number) => {
-    setSelectedSymptoms((prevSelected) => {
-      if (prevSelected.includes(symptomId)) {
-        return prevSelected.filter((id) => id !== symptomId);
-      }
-      if (prevSelected.length < 7) {
-        return [...prevSelected, symptomId];
-      }
-      return prevSelected;
+    setCurrentBodySymptoms((prev) => {
+      if (prev.includes(symptomId)) return prev.filter((id) => id !== symptomId);
+      if (prev.length < 2) return [...prev, symptomId];
+      return prev;
     });
   };
 
-  // 질병 단계를 거치지 않았다면, 질병 유무 컴포넌트로
-  // 질병 단계를 거쳤다면, 증상 1단계에서 질병 2단계로
-  const handleBack = () => {
-    if (isSkipDisease) {
-      setStep(5);
+  const handleBackToWeight = () => {
+    setStep(5);
+  };
+
+  const handleGoToChipSelector = () => {
+    if (isSkipSelected) {
+      if (isPending) return;
+      updatePetData("diseaseIds", [], () => {
+        updatePetData("symptomIds", [], () => {
+          handleSubmit();
+          router.push(PATH.REGISTER_PET.COMPLETE);
+        });
+      });
     } else {
       setCurrentStep(2);
     }
   };
 
-  // 증상 1단계에서 2단계로
-  const handleGoSymptom2 = () => {
-    setCurrentStep(4);
+  const handleNextFromChipSelector = () => {
+    const newSelections = [...bodySelections];
+    newSelections[currentBodyIndex] = {
+      diseaseIds: currentBodyDiseases,
+      symptomIds: currentBodySymptoms,
+    };
+    setBodySelections(newSelections);
+
+    if (currentBodyIndex < selectedBodies.length - 1) {
+      const nextIndex = currentBodyIndex + 1;
+      setCurrentBodyDiseases(newSelections[nextIndex]?.diseaseIds ?? []);
+      setCurrentBodySymptoms(newSelections[nextIndex]?.symptomIds ?? []);
+      setCurrentStep(currentStep + 1);
+    } else {
+      const allDiseases = newSelections.flatMap((s) => s.diseaseIds);
+      const allSymptoms = newSelections.flatMap((s) => s.symptomIds);
+      if (isPending) return;
+
+      updatePetData("diseaseIds", allDiseases, () => {
+        updatePetData("symptomIds", allSymptoms, () => {
+          handleSubmit();
+          router.push(PATH.REGISTER_PET.COMPLETE);
+        });
+      });
+    }
   };
 
-  // 비우기
-  // 증상 2단계에서 1단계로
-  const handleBackSymptom1 = () => {
-    selectedSymptom.length = 0;
-    setCurrentStep(3);
+  const handleBackFromChipSelector = () => {
+    if (currentBodyIndex > 0) {
+      const prevSelections = bodySelections[currentBodyIndex - 1];
+      setCurrentBodyDiseases(prevSelections?.diseaseIds ?? []);
+      setCurrentBodySymptoms(prevSelections?.symptomIds ?? []);
+      setCurrentStep(currentStep - 1);
+    } else {
+      setBodySelections([]);
+      setCurrentBodyDiseases([]);
+      setCurrentBodySymptoms([]);
+      setCurrentStep(1);
+    }
   };
 
-  // 최종 폼 제출
-  const router = useRouter();
-  const handleGoComplete = () => {
-    if (isPending) return;
-    if (selectedSymptom.length === 0) return;
+  if (!bodyData) return null;
 
-    updatePetData("symptomIds", selectedSymptom, () => {
-      handleSubmit();
-      router.push(PATH.REGISTER_PET.COMPLETE);
-    });
-  };
-
-  const { data: diseaseData } = useBodiesGet("disease");
-  const { data: symptomData } = useBodiesGet("symptom");
-  const { data: diseaseBodyData } = useDiseaseGet(selectedDiseaseBody);
-  const { data: symptomBodyData } = useSymptomGet(selectedSymptomBody);
-
-  if (!diseaseData || !symptomData) return null;
+  const diseaseBody = diseaseBodyData?.bodies?.[currentBodyIndex];
+  const symptomBody = symptomBodyData?.bodies?.[currentBodyIndex];
+  const bodyName = diseaseBody?.name ?? symptomBody?.name ?? "";
+  const diseases = diseaseBody?.diseases ?? [];
+  const symptoms = symptomBody?.symptoms ?? [];
+  const canProceedChipSelector =
+    currentBodyDiseases.length > 0 || currentBodySymptoms.length > 0;
 
   return (
     <>
       {currentStep === 1 && (
         <>
-          <Step1
-            data={diseaseData?.data}
-            selectedIds={selectedDiseaseBody}
+          <BodyPart
+            data={bodyData?.data}
+            selectedIds={selectedBodies}
             onBodyPartSelection={handleBodyPartSelection}
-          />
-          <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBackDual} />
-
-            <Button
-              label="다음"
-              size="large"
-              variant="solidPrimary"
-              disabled={selectedDiseaseBody.length === 0}
-              onClick={handleGoDisease2}
-            />
-          </div>
-        </>
-      )}
-      {currentStep === 2 && (
-        <>
-          <Step2
-            data={diseaseBodyData}
-            selectedDiseases={selectedDiseases}
-            onDiseaseSelection={handleDiseaseSelection}
+            isSkipSelected={isSkipSelected}
+            onSkipToggle={handleSkipToggle}
           />
           <div className={styles.btnWrapper}>
             <Button
@@ -190,42 +164,27 @@ const PetHealth = ({
               size="large"
               variant="solidNeutral"
               disabled={false}
-              onClick={handleBackDisease1}
+              onClick={handleBackToWeight}
             />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedDiseases.length === 0}
-              onClick={handleGoSymptom1}
+              disabled={selectedBodies.length === 0 && !isSkipSelected}
+              onClick={handleGoToChipSelector}
             />
           </div>
         </>
       )}
-      {currentStep === 3 && (
+      {isChipSelectorStep && diseaseBody && symptomBody && (
         <>
-          <SymStep1
-            data={symptomData?.data}
-            selectedIds={selectedSymptomBody}
-            onBodyPartSelection={handleBodyPartSymSelection}
-          />
-          <div className={styles.btnWrapper}>
-            <Button label="이전으로" size="large" variant="solidNeutral" disabled={false} onClick={handleBack} />
-            <Button
-              label="다음"
-              size="large"
-              variant="solidPrimary"
-              disabled={selectedSymptomBody.length === 0}
-              onClick={handleGoSymptom2}
-            />
-          </div>
-        </>
-      )}
-      {currentStep === 4 && (
-        <>
-          <SymStep2
-            data={symptomBodyData}
-            selectedSymptom={selectedSymptom}
+          <ChipSelector
+            bodyName={bodyName}
+            diseases={diseases}
+            symptoms={symptoms}
+            selectedDiseaseIds={currentBodyDiseases}
+            selectedSymptomIds={currentBodySymptoms}
+            onDiseaseSelection={handleDiseaseSelection}
             onSymptomSelection={handleSymptomSelection}
           />
           <div className={styles.btnWrapper}>
@@ -233,15 +192,15 @@ const PetHealth = ({
               label="이전으로"
               size="large"
               variant="solidNeutral"
-              disabled={isPending}
-              onClick={handleBackSymptom1}
+              disabled={false}
+              onClick={handleBackFromChipSelector}
             />
             <Button
               label="다음"
               size="large"
               variant="solidPrimary"
-              disabled={selectedSymptom.length === 0 || isPending}
-              onClick={handleGoComplete} // 증상 선택 후 폼 제출
+              disabled={!canProceedChipSelector || isPending}
+              onClick={handleNextFromChipSelector}
             />
           </div>
         </>

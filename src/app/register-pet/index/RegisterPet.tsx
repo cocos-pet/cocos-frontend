@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-import PetHealthDualSelector from "./component/petHealth/petHealthDualSelector/PetHealthDualSelector";
-
 import { useMyPetPost } from "@api/domain/register-pet/pets/hook";
 import type { myPetPostType } from "@api/domain/register-pet/pets";
 import dynamic from "next/dynamic";
@@ -29,11 +27,8 @@ const RegisterPet = () => {
   // 등록 전체 조절
   const [step, setStep] = useState(0);
 
-  // 질병 단계 스킵 했는지 확인하는 상태
-  const [isSkipDisease, setIsSkipDisease] = useState<boolean | null>(null);
-
-  // 질병, 증상 세부 단계 조절
-  const [currentStep, setCurrentStep] = useState<number | null>(null);
+  // 질병, 증상 세부 단계 조절 (1: 대분류, 2: 질병 소분류, 3: 증상 소분류)
+  const [currentStep, setCurrentStep] = useState(1);
 
   // api
   const { mutate: myPet, isPending } = useMyPetPost();
@@ -55,7 +50,10 @@ const RegisterPet = () => {
   ) => {
     setPetData((prev) => {
       const updatedData = { ...prev, [field]: value };
-      if (callback) callback(updatedData);
+      // 콜백은 업데이터 안에서 호출하면 안 됨!!(렌더, 커밋 중 Router 등 다른 컴포넌트 업데이트 유발).
+      if (callback) {
+        queueMicrotask(() => callback(updatedData));
+      }
       return updatedData;
     });
   };
@@ -103,26 +101,15 @@ const RegisterPet = () => {
         return <PetWeight setStep={setStep} updatePetData={updatePetData} />;
       case 6:
         return (
-          <PetHealthDualSelector
-            setStep={setStep}
-            isSkipDisease={isSkipDisease}
-            setIsSkipDisease={setIsSkipDisease}
-            setCurrentStep={setCurrentStep}
-          />
-        );
-      case 7:
-        return (
           <PetHealth
             setStep={setStep}
             updatePetData={updatePetData}
-            isSkipDisease={isSkipDisease}
             handleSubmit={handleSubmit}
             currentStep={currentStep}
             setCurrentStep={setCurrentStep}
             isPending={isPending}
           />
         );
-
       default:
         return;
     }
@@ -130,7 +117,7 @@ const RegisterPet = () => {
 
   return (
     <>
-      <ProgressBar max={8} current={step} />
+      <ProgressBar max={7} current={step} />
       {getComponent()}
     </>
   );

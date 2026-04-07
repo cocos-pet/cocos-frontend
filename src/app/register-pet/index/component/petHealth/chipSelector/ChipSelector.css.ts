@@ -8,6 +8,10 @@ export const title = style({
   padding: "8rem 2rem 3.2rem",
 });
 
+export const bodyNameHighlight = style({
+  color: color.primary.blue700,
+});
+
 export const contentLayout = style({
   position: "fixed",
   top: "18.4rem",
@@ -15,8 +19,8 @@ export const contentLayout = style({
   flexDirection: "column",
   gap: "3.2rem",
   overflowY: "auto",
-  padding: "0 2rem",
-  height: "calc(100vh - 33.6rem)",
+  padding: "3.2rem 2rem 6rem 2rem",
+  height: "calc(100vh - 30rem)",
 });
 
 export const chipLayout = style({
