@@ -32,7 +32,12 @@ interface SelectedLocation {
   type: LocationType;
 }
 
-export default function LocationBottomSheet({ isOpen, onClose, onLocationSelect }: LocationBottomSheetProps) {
+export default function LocationBottomSheet({
+  isOpen,
+  onClose,
+  onLocationSelect,
+  currentLocation,
+}: LocationBottomSheetProps) {
   const [selectedCityId, setSelectedCityId] = useState(1);
   const [selectedLocation, setSelectedLocation] = useState<SelectedLocation | null>(null);
   const { data: cities, refetch } = useGetLocation();

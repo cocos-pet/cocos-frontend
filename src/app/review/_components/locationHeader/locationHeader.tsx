@@ -29,12 +29,11 @@ export default function LocationHeader({ onLocationChange, onBottomSheetOpenChan
 
   // 컴포넌트 마운트 시 로컬스토리지에서 선택한 위치 불러오기
   useEffect(() => {
-    const savedLocation = localStorage.getItem("selectedLocation");
+    const savedLocation = localStorage.getItem(STORAGE_KEY);
     if (savedLocation) {
       try {
         const parsedLocation = JSON.parse(savedLocation) as Location;
         setSelectedLocation(parsedLocation);
-        // 부모 컴포넌트에도 알림
         onLocationChange(parsedLocation);
       } catch (error) {
         console.error("Failed to parse saved location:", error);
@@ -43,32 +42,22 @@ export default function LocationHeader({ onLocationChange, onBottomSheetOpenChan
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleBottomSheetOpen = () => {
-    setIsBottomSheetOpen(true);
-    onBottomSheetOpenChange(true);
+  const handleBottomSheetToggle = (isOpen: boolean) => {
+    setIsBottomSheetOpen(isOpen);
+    onBottomSheetOpenChange(isOpen);
   };
-
-      setSelectedLocation(updatedLocation);
-      onLocationChange(updatedLocation);
-      handleBottomSheetToggle(false);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(updatedLocation));
 
   const handleLocationSelect = async (location: Location) => {
     setSelectedLocation(location);
     onLocationChange(location);
-    handleBottomSheetClose();
+    handleBottomSheetToggle(false);
 
-    const locationData = {
-      id: location.id,
-      name: location.name,
-      type: location.type,
-      cityName: location.cityName || "",
-      districtName: location.districtName || "",
-      townName: location.townName || "",
-    };
-    localStorage.setItem("selectedLocation", JSON.stringify(locationData));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(location));
 
-    await updateMemberLocation(location.id);
+    await updateMemberLocation({
+      locationId: location.id,
+      locationType: location.type,
+    });
   };
 
   const displayLocationName = selectedLocation?.name || memberLocation?.locationName || "위치 선택";
