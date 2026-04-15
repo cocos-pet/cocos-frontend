@@ -58,6 +58,7 @@ export { default as IcNotice } from "./IcNotice";
 export { default as IcOut } from "./IcOut";
 export { default as IcPlus } from "./IcPlus";
 export { default as IcPostImageSkeleton } from "./IcPostImageSkeleton";
+export { default as IcRedBtn } from "./IcRedBtn";
 export { default as IcRefresh } from "./IcRefresh";
 export { default as IcReview } from "./IcReview";
 export { default as IcReviewRightIcon } from "./IcReviewRightIcon";

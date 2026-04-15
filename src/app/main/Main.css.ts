@@ -38,3 +38,8 @@ export const alarmButton = style({
   padding: 0,
   cursor: "pointer",
 });
+
+export const alarmUnreadBadge = style({
+  position: "absolute",
+  padding: "0.3rem 0.4rem 1.5rem 1.4rem",
+});
