@@ -4,6 +4,18 @@ export const mainContainer = style({
   width: "100%",
   margin: "0 auto",
   position: "relative",
+  selectors: {
+    "&::before": {
+      content: "",
+      position: "absolute",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "6.4rem",
+      background: "linear-gradient(180deg, rgba(0, 0, 0, 0.40) 0%, rgba(255, 255, 255, 0.00) 100%)",
+      zIndex: 1000,
+    },
+  },
 });
 
 export const headerContainer = style({
