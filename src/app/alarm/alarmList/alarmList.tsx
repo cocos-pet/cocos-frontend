@@ -7,7 +7,7 @@ import Loading from "@common/component/Loading/Loading";
 import WarningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
-import { SVGProps } from "react";
+import { SVGProps, useEffect, useRef } from "react";
 import * as styles from "./alarmList.css.ts";
 
 interface AlarmListProps {
@@ -103,12 +103,38 @@ const getAlarmNavigationPath = (alarm: AlarmItem): string | null => {
 
 export default function AlarmList({ category }: AlarmListProps) {
   const router = useRouter();
+  const observerRef = useRef<IntersectionObserver | null>(null);
+  const loadMoreRef = useRef<HTMLDivElement>(null);
   const { mutateAsync: readNotification } = useReadNotification();
-  const { data, isPending, isError } = useInfiniteNotifications(category);
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage, isPending, isError } = useInfiniteNotifications(category);
   const notifications: NotificationItem[] = data?.pages.flatMap((page) => page.data.notifications) ?? [];
   const alarmList: AlarmItem[] = notifications.map((notification) =>
     mapNotificationToAlarmItem(notification, category),
   );
+
+  useEffect(() => {
+    const element = loadMoreRef.current;
+    if (!element || !hasNextPage) return;
+
+    const handleObserver = (entries: IntersectionObserverEntry[]) => {
+      const [target] = entries;
+      if (target.isIntersecting && hasNextPage && !isFetchingNextPage) {
+        fetchNextPage();
+      }
+    };
+
+    observerRef.current = new IntersectionObserver(handleObserver, {
+      threshold: 0.1,
+    });
+
+    observerRef.current.observe(element);
+
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+    };
+  }, [fetchNextPage, hasNextPage, isFetchingNextPage]);
 
   if (isPending) return <Loading height={80} />;
   if (isError) return <WarningToastWrap errorMessage="알림을 불러오지 못했습니다. 잠시 후 다시 시도해 주세요." />;
@@ -172,6 +198,11 @@ export default function AlarmList({ category }: AlarmListProps) {
           </div>
         );
       })}
+      {hasNextPage && (
+        <div ref={loadMoreRef} className={styles.loadMoreTrigger}>
+          {isFetchingNextPage && <Loading height={40} />}
+        </div>
+      )}
     </div>
   );
 }

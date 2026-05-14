@@ -121,3 +121,11 @@ export const myDescription = style([
 export const readText = style({
   color: semanticColor.text.normal,
 });
+
+export const loadMoreTrigger = style({
+  minHeight: "1rem",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  padding: "1rem 0",
+});
