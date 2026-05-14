@@ -1,3 +1,4 @@
+"use client";
 import { IcLeftarrow } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { PATH } from "@route/path";
