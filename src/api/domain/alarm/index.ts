@@ -41,12 +41,12 @@ export interface ReadNotificationResponse {
   data: null;
 }
 
-export const getNotifications = async (params: GetNotificationsRequest) => {
+export const getNotifications = async (params: GetNotificationsRequest): Promise<GetNotificationsResponse> => {
   const response = await get<GetNotificationsResponse>(API_PATH.NOTIFICATIONS, { params });
   return response.data;
 };
 
-export const readNotification = async (notificationId: number) => {
+export const readNotification = async (notificationId: number): Promise<ReadNotificationResponse> => {
   const response = await patch<ReadNotificationResponse>(`${API_PATH.NOTIFICATIONS}/${notificationId}/read`);
   return response.data;
 };
