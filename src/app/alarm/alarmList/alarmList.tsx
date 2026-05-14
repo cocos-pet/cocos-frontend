@@ -137,10 +137,9 @@ export default function AlarmList({ category }: AlarmListProps) {
             if (!alarm.isRead) {
               await readNotification(alarm.id);
             }
-          } catch (error) {
-            console.log(error);
-          } finally {
             router.push(nextPath);
+          } catch (error) {
+            console.error(error);
           }
         };
 
