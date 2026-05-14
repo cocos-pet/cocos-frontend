@@ -28,7 +28,7 @@ export const useInfiniteNotifications = (category: AlarmCategory) => {
       }),
     getNextPageParam: (lastPage) => {
       const { cursorCreatedAt, cursorId, notifications } = lastPage.data;
-      if (!notifications?.length || !cursorCreatedAt || cursorId === null) return undefined;
+      if (!notifications?.length || !cursorCreatedAt || cursorId == null) return undefined;
       return { cursorCreatedAt, cursorId };
     },
   });
@@ -45,4 +45,3 @@ export const useReadNotification = () => {
     },
   });
 };
-
