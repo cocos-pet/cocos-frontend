@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 import { useMyPetPost } from "@api/domain/register-pet/pets/hook";
 import type { myPetPostType } from "@api/domain/register-pet/pets";
+import { PATH } from "@route/path";
 import dynamic from "next/dynamic";
 import PetName from "./component/petName/PetName.tsx";
 import PetType from "./component/petType/PetType.tsx";
@@ -27,6 +29,8 @@ export interface PetData {
 export type PetHealthIds = Pick<PetData, "diseaseIds" | "symptomIds">;
 
 const RegisterPet = () => {
+  const router = useRouter();
+
   // 등록 전체 조절
   const [step, setStep] = useState(0);
 
@@ -84,6 +88,7 @@ const RegisterPet = () => {
           diseaseIds: [],
           symptomIds: [],
         });
+        router.push(PATH.REGISTER_PET.COMPLETE);
       },
     });
   };

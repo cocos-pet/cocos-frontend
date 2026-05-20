@@ -1,7 +1,5 @@
 import * as styles from "./PetHealth.css";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { PATH } from "@route/path";
 import { Button } from "@common/component/Button";
 
 import { useBodiesGet } from "@api/domain/register-pet/bodies/hook";
@@ -28,7 +26,6 @@ const PetHealth = ({
   handleSubmit,
   isPending,
 }: PetHealthPropTypes) => {
-  const router = useRouter();
   const [selectedBodies, setSelectedBodies] = useState<number[]>([]);
   const [isSkipSelected, setIsSkipSelected] = useState(false);
 
@@ -80,7 +77,6 @@ const PetHealth = ({
     if (isSkipSelected) {
       if (isPending) return;
       handleSubmit({ diseaseIds: [], symptomIds: [] });
-      router.push(PATH.REGISTER_PET.COMPLETE);
     } else {
       setCurrentStep(2);
     }
@@ -105,7 +101,6 @@ const PetHealth = ({
       if (isPending) return;
 
       handleSubmit({ diseaseIds: allDiseases, symptomIds: allSymptoms });
-      router.push(PATH.REGISTER_PET.COMPLETE);
     }
   };
 
