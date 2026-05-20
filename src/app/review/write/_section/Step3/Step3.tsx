@@ -26,8 +26,8 @@ const Step3 = () => {
 
   const { watch } = useFormContext<ReviewFormData>();
 
-  const goodReviewIds = watch("goodReviewIds");
-  const badReviewIds = watch("badReviewIds");
+  const goodReviewIds = watch("goodReviewIds") ?? [];
+  const badReviewIds = watch("badReviewIds") ?? [];
 
   const isFormValid = goodReviewIds.length > 0 || badReviewIds.length > 0;
 
