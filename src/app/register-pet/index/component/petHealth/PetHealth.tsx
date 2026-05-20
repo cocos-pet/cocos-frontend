@@ -157,7 +157,7 @@ const PetHealth = ({
           </div>
         </>
       )}
-      {isChipSelectorStep && diseaseBody && symptomBody && (
+      {isChipSelectorStep && (diseaseBody || symptomBody) && (
         <>
           <ChipSelector
             bodyName={bodyName}
