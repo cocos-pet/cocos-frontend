@@ -185,7 +185,7 @@ const PetInfo = ({ reviewData }: { reviewData: ReviewItemType }) => (
         </div>
         <div className={styles.petInfoCategory}>
           <p className={styles.petInfoLabel}>몸무게</p>
-          <p className={styles.petInfoValue}>{reviewData.weight}</p>
+          <p className={styles.petInfoValue}>{reviewData.weight === -1 ? "" : reviewData.weight}</p>
         </div>
       </Separated>
     </div>
