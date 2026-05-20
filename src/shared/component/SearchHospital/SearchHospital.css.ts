@@ -118,7 +118,7 @@ export const buttonContainer = style({
   gap: "0.8rem",
 
   width: "100%",
-  height: "12.6rem",
+  height: "7.4rem",
   padding: "0 2rem 3.2rem 2rem",
 
   backgroundColor: color.gray.gray000,

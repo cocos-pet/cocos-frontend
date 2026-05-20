@@ -202,7 +202,6 @@ const SearchHospital = (props: SearchHospitalProps) => {
             disabled={!selectedHospital}
             onClick={onConfirm ?? onCloseBottomSheet}
           />
-          <Button label="취소하기" size="large" variant="solidNeutral" disabled={false} onClick={handleCancelSearch} />
         </div>
       </div>
     </div>
