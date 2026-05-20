@@ -27,7 +27,7 @@ const Card = ({ id, name, address, selected, imgSrc, onSelect }: CardProps) => {
       <LazyImage
         src={imgSrc ?? nicknameCoco}
         alt="hospital-exterior"
-        className={styles.img}
+        className={imgSrc ? styles.img : styles.defaultImg}
         width="7.6rem"
         height="7.6rem"
       />

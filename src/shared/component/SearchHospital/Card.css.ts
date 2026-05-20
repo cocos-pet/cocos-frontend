@@ -55,3 +55,8 @@ export const address = style([
 export const img = style({
   borderRadius: "8px",
 });
+
+export const defaultImg = style({
+  borderRadius: "8px",
+  objectFit: "contain",
+});
