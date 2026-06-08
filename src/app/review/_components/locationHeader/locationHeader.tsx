@@ -2,7 +2,7 @@ import * as styles from "./locationHeader.css";
 import { IcChevronDown, IcTarget } from "@asset/svg";
 import { useState, useEffect, Dispatch, SetStateAction } from "react";
 import LocationBottomSheet from "../locationBottomSheet/locationBottomSheet";
-import { useGetMemberLocation } from "@api/domain/review/location/hook";
+import { useGetLocation, useGetMemberLocation } from "@api/domain/review/location/hook";
 import { motion } from "framer-motion";
 import { updateMemberLocation } from "@api/domain/review/location";
 import { LocationType } from "@api/domain/review/location/types";
@@ -25,7 +25,9 @@ interface LocationHeaderProps {
 export default function LocationHeader({ onLocationChange, onBottomSheetOpenChange }: LocationHeaderProps) {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false);
   const [selectedLocation, setSelectedLocation] = useState<Location | null>(null);
+  const [isLocalStorageLoaded, setIsLocalStorageLoaded] = useState(false);
   const { data: memberLocation } = useGetMemberLocation();
+  const { data: cities } = useGetLocation();
 
   // 컴포넌트 마운트 시 로컬스토리지에서 선택한 위치 불러오기
   useEffect(() => {
@@ -39,8 +41,33 @@ export default function LocationHeader({ onLocationChange, onBottomSheetOpenChan
         console.error("Failed to parse saved location:", error);
       }
     }
+    setIsLocalStorageLoaded(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (!isLocalStorageLoaded || selectedLocation || !memberLocation || !cities) return;
+
+    for (const city of cities) {
+      if (city.id === memberLocation.locationId) {
+        const cityWide = city.districts?.find((d) => d.type === "CITY");
+        if (cityWide) {
+          const loc: Location = { id: cityWide.id, name: cityWide.name, type: "CITY" };
+          setSelectedLocation(loc);
+          onLocationChange(loc);
+        }
+        return;
+      }
+      for (const district of city.districts ?? []) {
+        if (district.id === memberLocation.locationId) {
+          const loc: Location = { id: district.id, name: district.name, type: district.type as LocationType };
+          setSelectedLocation(loc);
+          onLocationChange(loc);
+          return;
+        }
+      }
+    }
+  }, [isLocalStorageLoaded, selectedLocation, memberLocation, cities, onLocationChange]);
 
   const handleBottomSheetToggle = (isOpen: boolean) => {
     setIsBottomSheetOpen(isOpen);
@@ -60,7 +87,7 @@ export default function LocationHeader({ onLocationChange, onBottomSheetOpenChan
     });
   };
 
-  const displayLocationName = selectedLocation?.name || memberLocation?.locationName || "위치 선택";
+  const displayLocationName = selectedLocation?.name || "위치 선택";
 
   return (
     <div className={styles.location}>

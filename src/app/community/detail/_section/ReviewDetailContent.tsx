@@ -40,10 +40,13 @@ const ReviewDetailContent = () => {
 
   // State
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
-  const [location, setLocation] = useState<LocationFilterType>({
-    id: 1,
-    name: "경기 전체",
-    type: "CITY",
+  const [location, setLocation] = useState<LocationFilterType>(() => {
+    if (typeof window === "undefined") return { id: 1, name: "경기 전체", type: "CITY" };
+    try {
+      const saved = localStorage.getItem("selectedLocation");
+      if (saved) return JSON.parse(saved) as LocationFilterType;
+    } catch {}
+    return { id: 1, name: "경기 전체", type: "CITY" };
   });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
