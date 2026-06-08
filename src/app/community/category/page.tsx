@@ -169,26 +169,30 @@ const CategoryContent = () => {
     return (
       <>
         <div className={styles.categoryContainer}>
-          <HeaderNav
-            leftIcon={<IcLeftarrow />}
-            centerContent={categoryMapping[type]}
-            rightBtn={<IcSearch />}
-            onLeftClick={handleGoBack}
-            onRightClick={handleGoSearch}
-          />
-          {type !== "magazine" && (
-            <div className={styles.filterContainer}>
-              {isFilterOn ? (
-                <Icfilteron onClick={() => setOpen(true)} width={24} />
-              ) : (
-                <Icfilter onClick={() => setOpen(true)} width={24} />
-              )}
-            </div>
-          )}
-          <NoData
-            label={"아직 등록된 리뷰가 없어요"}
-            onBtnClick={() => router.push(`/community/write?category=${type}`)}
-          />
+          <div className={styles.headerContainer}>
+            <HeaderNav
+              leftIcon={<IcLeftarrow />}
+              centerContent={categoryMapping[type]}
+              rightBtn={<IcSearch />}
+              onLeftClick={handleGoBack}
+              onRightClick={handleGoSearch}
+            />
+          </div>
+          <div style={{ marginTop: "6.4rem" }}>
+            {type !== "magazine" && (
+              <div className={styles.filterContainer}>
+                {isFilterOn ? (
+                  <Icfilteron onClick={() => setOpen(true)} width={24} />
+                ) : (
+                  <Icfilter onClick={() => setOpen(true)} width={24} />
+                )}
+              </div>
+            )}
+            <NoData
+              label={"아직 등록된 리뷰가 없어요"}
+              onBtnClick={() => router.push(`/community/write?category=${type}`)}
+            />
+          </div>
         </div>
         <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
       </>
@@ -200,23 +204,27 @@ const CategoryContent = () => {
   return (
     <>
       <div className={styles.categoryContainer}>
-        <HeaderNav
-          leftIcon={<IcLeftarrow />}
-          centerContent={categoryName}
-          rightBtn={<IcSearch />}
-          onLeftClick={handleGoBack}
-          onRightClick={handleGoSearch}
-        />
+        <div className={styles.headerContainer}>
+          <HeaderNav
+            leftIcon={<IcLeftarrow />}
+            centerContent={categoryName}
+            rightBtn={<IcSearch />}
+            onLeftClick={handleGoBack}
+            onRightClick={handleGoSearch}
+          />
+        </div>
 
-        {type !== "magazine" && (
-          <div className={styles.filterContainer}>
-            {isFilterOn ? (
-              <Icfilteron onClick={() => setOpen(true)} width={24} />
-            ) : (
-              <Icfilter onClick={() => setOpen(true)} width={24} />
-            )}
-          </div>
-        )}
+        <div style={{ marginTop: "6.4rem" }}>
+          {type !== "magazine" && (
+            <div className={styles.filterContainer}>
+              {isFilterOn ? (
+                <Icfilteron onClick={() => setOpen(true)} width={24} />
+              ) : (
+                <Icfilter onClick={() => setOpen(true)} width={24} />
+              )}
+            </div>
+          )}
+        </div>
 
         <div className={styles.postsContainer}>
           {posts.map((post) => (

@@ -1,10 +1,20 @@
 import { font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
+
 export const withdrawBodyWrapper = style({
   display: "flex",
   width: "100%",
   padding: "2rem 2rem 0 2rem",
+  marginTop: "6.4rem",
   flexDirection: "column",
   alignItems: "center",
   gap: "1.2rem",

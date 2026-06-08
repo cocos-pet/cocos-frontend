@@ -30,11 +30,13 @@ export default function Setting() {
 
   return (
     <>
-      <HeaderNav
-        leftIcon={<IcChevronLeft width={20} height={20} />}
-        centerContent={"설정"}
-        onLeftClick={() => router.push("/mypage")}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          leftIcon={<IcChevronLeft width={20} height={20} />}
+          centerContent={"설정"}
+          onLeftClick={() => router.push("/mypage")}
+        />
+      </div>
 
       <div className={styles.settingWrapper}>
         <div className={styles.myprofileSettingWrapper}>

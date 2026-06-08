@@ -229,22 +229,24 @@ const Page = () => {
 
   return (
     <>
-      <HeaderNav
-        leftIcon={<IcLeftarrow />}
-        onLeftClick={onBackClick}
-        type={"noTitle"}
-        rightBtn={
-          postData.isWriter && (
-            <MoreModal
-              onEdit={() => router.push(`${PATH.COMMUNITY.WRITE.replace(":postId", postIdString)}`)}
-              onDelete={() => setOpen(true)}
-              iconSize={24}
-              isOpen={openModalId === `post-${postIdString}`}
-              onToggleModal={() => setOpenModalId(`post-${postIdString}`)}
-            />
-          )
-        }
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          leftIcon={<IcLeftarrow />}
+          onLeftClick={onBackClick}
+          type={"noTitle"}
+          rightBtn={
+            postData.isWriter && (
+              <MoreModal
+                onEdit={() => router.push(`${PATH.COMMUNITY.WRITE.replace(":postId", postIdString)}`)}
+                onDelete={() => setOpen(true)}
+                iconSize={24}
+                isOpen={openModalId === `post-${postIdString}`}
+                onToggleModal={() => setOpenModalId(`post-${postIdString}`)}
+              />
+            )
+          }
+        />
+      </div>
       <div className={styles.container} onClick={onModalClose}>
         <Button
           leftIcon={getDropdownValuetoIcon(postData.category)}

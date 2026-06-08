@@ -1,9 +1,19 @@
 import { style } from "@vanilla-extract/css";
 import { color } from "@style/styles.css.ts";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
+
 export const writeWrap = style({
   backgroundColor: color.gray.gray100,
   padding: "2rem",
+  marginTop: "6.4rem",
   display: "flex",
   flexDirection: "column",
   gap: "3.2rem",

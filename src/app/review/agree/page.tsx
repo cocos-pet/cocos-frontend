@@ -67,11 +67,13 @@ const page = () => {
 
   return (
     <div className={style.backgroundColor}>
-      <HeaderNav
-        centerContent="후기 작성 유의사항"
-        type="noBackground"
-        leftIcon={<IcLeftarrow style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
-      />
+      <div className={style.headerContainer}>
+        <HeaderNav
+          centerContent="후기 작성 유의사항"
+          type="noBackground"
+          leftIcon={<IcLeftarrow style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+        />
+      </div>
       <div className={style.wrapper}>
         <section className={style.topLayout}>
           <LazyImage src={danger} alt="주의 표시" className={style.dangerImg} width="4.8rem" height="4.8rem" />

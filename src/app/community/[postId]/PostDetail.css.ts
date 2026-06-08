@@ -2,11 +2,20 @@ import { style } from "@vanilla-extract/css";
 import { color, font, semanticColor } from "@style/styles.css.ts";
 
 export const styles = {
+  headerContainer: style({
+    position: "fixed",
+    top: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: "#fff",
+    zIndex: 20,
+  }),
   container: style({
     padding: "1.6rem 2rem",
     display: "flex",
     flexDirection: "column",
     gap: "1.2rem",
+    marginTop: "6.4rem",
   }),
   textField: style({
     width: "calc(100vw - 10rem)",

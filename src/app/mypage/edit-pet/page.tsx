@@ -249,11 +249,13 @@ const Page = () => {
 
   return (
     <div>
-      <HeaderNav
-        leftIcon={<IcChevronLeft width={24} height={24} />}
-        centerContent={"반려동물 정보 수정"}
-        onLeftClick={() => router.push(PATH.MYPAGE.ROOT)}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          leftIcon={<IcChevronLeft width={24} height={24} />}
+          centerContent={"반려동물 정보 수정"}
+          onLeftClick={() => router.push(PATH.MYPAGE.ROOT)}
+        />
+      </div>
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
           <img className={styles.profileImage} alt="프로필 이미지" src={petInfo.petImage} />

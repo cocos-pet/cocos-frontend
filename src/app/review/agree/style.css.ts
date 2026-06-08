@@ -1,6 +1,15 @@
 import { style } from "@vanilla-extract/css";
 import { font, color } from "@style/styles.css.ts";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  background: "linear-gradient(180deg, #DEFEFF 0%, #DEFEFF 100%)",
+  zIndex: 20,
+});
+
 export const backgroundColor = style({
   background: "var(--blue-bg, linear-gradient(180deg, var(--primary-blue100, #DEFEFF) 0%, #FFF 36.13%))",
 });
@@ -10,6 +19,7 @@ export const wrapper = style({
   flexDirection: "column",
   alignItems: "center",
   padding: "1.2rem 2rem",
+  marginTop: "6.4rem",
 });
 
 export const topLayout = style([

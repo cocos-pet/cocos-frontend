@@ -1,6 +1,15 @@
 import { style } from "@vanilla-extract/css";
 import { color } from "@style/styles.css";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
+
 export const preventScroll = style({
   height: "100vh",
   overflow: "hidden",
@@ -13,6 +22,7 @@ export const wrapper = style({
 
   width: "100%",
   height: "calc(100vh - 15.2rem)",
+  marginTop: "6.4rem",
   padding: "2rem",
   backgroundColor: color.gray.gray100,
 

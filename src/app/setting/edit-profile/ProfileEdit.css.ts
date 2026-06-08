@@ -3,10 +3,20 @@
 import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
+
 export const profileEditWrapper = style({
   display: "flex",
   width: "100%",
   paddingTop: "2rem",
+  marginTop: "6.4rem",
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",

@@ -67,10 +67,12 @@ const Step2 = () => {
   return (
     <div className={styles.backgroundColor}>
       {/* 상단 헤더 영역 */}
-      <HeaderNav
-        centerContent="리뷰작성(2/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          centerContent="리뷰작성(2/4)"
+          leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
+        />
+      </div>
 
       <section className={styles.wrapper}>
         {/* 2-1. 증상 선택 */}

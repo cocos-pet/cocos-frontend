@@ -1,10 +1,20 @@
 import { style } from "@vanilla-extract/css";
 import { color } from "@style/styles.css";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
+
 export const backgroundColor = style({
   width: "100%",
   height: "100dvh",
   backgroundColor: color.gray.gray100,
+  paddingTop: "6.4rem",
 });
 
 export const wrapper = style({

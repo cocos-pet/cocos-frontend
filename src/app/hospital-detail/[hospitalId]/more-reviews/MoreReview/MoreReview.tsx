@@ -64,11 +64,13 @@ const MoreReview = ({ hospitalId }: MoreReviewProps) => {
 
   return (
     <>
-      <HeaderNav
-        leftIcon={<IcChevronLeft width={24} height={24} />}
-        centerContent={hospitalData?.name || ""}
-        onLeftClick={handleBackClick}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          leftIcon={<IcChevronLeft width={24} height={24} />}
+          centerContent={hospitalData?.name || ""}
+          onLeftClick={handleBackClick}
+        />
+      </div>
       <div className={styles.container}>
         <div className={styles.reviewList}>
           {reviews.map((review, index) => (

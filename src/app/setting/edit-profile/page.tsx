@@ -22,11 +22,13 @@ const ProfileEdit = () => {
 
   return (
     <div className={styles.profileEditContainer}>
-      <HeaderNav
-        leftIcon={<IcChevronLeft width={20} height={20} />}
-        centerContent={"내 정보 수정"}
-        onLeftClick={() => router.push(PATH.SETTING.ROOT)}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          leftIcon={<IcChevronLeft width={20} height={20} />}
+          centerContent={"내 정보 수정"}
+          onLeftClick={() => router.push(PATH.SETTING.ROOT)}
+        />
+      </div>
       <section className={styles.profileEditWrapper}>
         <img className={styles.profile} src={member.profileImage} alt="프로필 이미지" />
         <div className={styles.profileContent}>

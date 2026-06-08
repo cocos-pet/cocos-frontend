@@ -49,11 +49,13 @@ const Step3 = () => {
   return (
     <>
       {/* 상단 리뷰 영역 */}
-      <HeaderNav
-        centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
-      />
-      <div className={styles.backgroundColor}>
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          centerContent="리뷰작성(3/4)"
+          leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
+        />
+      </div>
+      <div className={styles.backgroundColor} style={{ marginTop: "6.4rem" }}>
         {/* 타이틀 */}
         <section className={styles.TopLayout}>
           <LazyImage src={feedbackImg} alt="review-feedback img" className={styles.img} width="8rem" height="6rem" />

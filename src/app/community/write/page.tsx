@@ -19,7 +19,7 @@ import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
 import { FillterToName } from "../_utills/getFillterNamebyid.ts";
 import { DropDownItems } from "../_constant/writeConfig.tsx";
-import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "./Write.css.ts";
+import { bottomButton, fileInput, headerContainer, imageContainer, plusImage, writeWrap } from "./Write.css.ts";
 import WriteInputSection from "../_component/WriteInputSection/WriteInputSection.tsx";
 import { getDropdownIdtoIcon, getDropdownIdtoValue } from "../_utills/handleCategoryItem.tsx";
 import DropDown from "../_component/DropDown/DropDown.tsx";
@@ -266,7 +266,9 @@ const WriteContent = () => {
     <>
       <WorningToastWrap errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
       <div>
-        <HeaderNav leftIcon={<IcDeleteBlack width={24} />} onLeftClick={onBackClick} centerContent={"글쓰기"} />
+        <div className={headerContainer}>
+          <HeaderNav leftIcon={<IcDeleteBlack width={24} />} onLeftClick={onBackClick} centerContent={"글쓰기"} />
+        </div>
         <div className={writeWrap}>
           {/* 제목 영역 */}
           <WriteInputSection title={"게시판 선택"}>

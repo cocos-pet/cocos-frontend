@@ -15,11 +15,13 @@ export default function Withdraw() {
   };
   return (
     <div>
-      <HeaderNav
-        leftIcon={<IcX width={20} height={20} />}
-        centerContent={"회원 탈퇴"}
-        onLeftClick={() => router.push(PATH.SETTING.ROOT)}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          leftIcon={<IcX width={20} height={20} />}
+          centerContent={"회원 탈퇴"}
+          onLeftClick={() => router.push(PATH.SETTING.ROOT)}
+        />
+      </div>
       <div className={styles.withdrawBodyWrapper}>
         <div className={styles.withdrawTitleWrapper}>
           <span className={styles.withdrawTitle}>정말 탈퇴하시겠습니까?</span>

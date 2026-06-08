@@ -1,6 +1,15 @@
 import {style} from "@vanilla-extract/css";
 import {color, font} from "@style/styles.css";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
+
 export const categoryContainer = style({
   width: "100%",
 });

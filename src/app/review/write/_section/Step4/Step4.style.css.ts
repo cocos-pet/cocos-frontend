@@ -1,6 +1,15 @@
 import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
 
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  right: 0,
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
+
 export const wrapper = style({
   width: "100%",
   height: "100dvh",
@@ -12,6 +21,7 @@ export const contentLayout = style({
   flexDirection: "column",
   gap: "3.2rem",
   padding: "2rem 2rem 10.8rem",
+  marginTop: "6.4rem",
 });
 
 export const docs = style([

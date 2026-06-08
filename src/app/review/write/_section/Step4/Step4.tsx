@@ -130,10 +130,12 @@ const Step4 = ({ onNext }: Step4Props) => {
   return (
     <div className={styles.wrapper}>
       {/* 상단 리뷰 영역 */}
-      <HeaderNav
-        centerContent="리뷰작성(3/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          centerContent="리뷰작성(3/4)"
+          leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
+        />
+      </div>
       {/* 중앙 컨텐츠 영역 */}
       <section className={styles.contentLayout}>
         {/* 4-1. 후기 작성 */}

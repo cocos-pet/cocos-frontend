@@ -8,7 +8,7 @@ export default function AlarmHeader() {
   const router = useRouter();
 
   return (
-    <div>
+    <div style={{ position: "fixed", top: 0, left: 0, right: 0, backgroundColor: "#fff", zIndex: 20 }}>
       <HeaderNav
         leftIcon={<IcLeftarrow width={20} height={20} />}
         centerContent="알림"

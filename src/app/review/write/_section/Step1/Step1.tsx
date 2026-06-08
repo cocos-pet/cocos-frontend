@@ -61,10 +61,12 @@ const Step1 = () => {
   return (
     <div className={styles.preventScroll}>
       {/* 상단 헤더 */}
-      <HeaderNav
-        centerContent="리뷰작성(1/4)"
-        leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
-      />
+      <div className={styles.headerContainer}>
+        <HeaderNav
+          centerContent="리뷰작성(1/4)"
+          leftIcon={<IcDeleteBlack style={{ width: 24, height: 24 }} onClick={handleModalOpen} />}
+        />
+      </div>
 
       {/* 중앙 컨텐츠 */}
       <div className={styles.wrapper}>

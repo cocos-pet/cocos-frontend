@@ -12,8 +12,10 @@ export default function Alarm() {
   return (
     <div>
       <AlarmHeader />
-      <AlarmToggle selectedCategory={selectedCategory} onChangeCategory={setSelectedCategory} />
-      <AlarmList category={selectedCategory} />
+      <div style={{ marginTop: "6.4rem" }}>
+        <AlarmToggle selectedCategory={selectedCategory} onChangeCategory={setSelectedCategory} />
+        <AlarmList category={selectedCategory} />
+      </div>
     </div>
   );
 }
