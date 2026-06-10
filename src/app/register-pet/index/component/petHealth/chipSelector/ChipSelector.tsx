@@ -40,7 +40,7 @@ const ChipSelector = ({
 
       <div className={styles.contentLayout}>
         <div className={styles.section}>
-          <span className={styles.sectionTitle}>궁금한 질병</span>
+          <span className={styles.sectionTitle}>질병</span>
           <div className={styles.chipLayout}>
             {diseases
               .filter((d) => d?.id != null && d?.name)
@@ -57,7 +57,7 @@ const ChipSelector = ({
         </div>
 
         <div className={styles.section}>
-          <span className={styles.sectionTitle}>궁금한 증상</span>
+          <span className={styles.sectionTitle}>증상</span>
           <div className={styles.chipLayout}>
             {symptoms
               .filter((s) => s?.id != null && s?.name)

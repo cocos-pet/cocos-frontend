@@ -40,6 +40,9 @@ export const section = style([
   },
 ]);
 
-export const sectionTitle = style({
-  color: color.gray.gray900,
-});
+export const sectionTitle = style([
+  font.heading01,
+  {
+    color: color.primary.blue700,
+  },
+]);
