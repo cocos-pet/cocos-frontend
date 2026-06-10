@@ -8,10 +8,16 @@ interface TabPropTypes {
   onClick?: () => void;
 }
 
-const Tab = ({ children, width, onClick, active = false, variant = "good" }: TabPropTypes) => {
+const Tab = ({
+  children,
+  width,
+  onClick,
+  active = false,
+  variant = "good",
+}: TabPropTypes) => {
   return (
     <div style={{ width: width }} className={styles.tab} onClick={onClick}>
-      <div className={styles.tabContent}>{children}</div>
+      <div className={styles.tabContent({ active: active })}>{children}</div>
       <div className={styles.tabBar({ active: active, variant })} />
     </div>
   );
