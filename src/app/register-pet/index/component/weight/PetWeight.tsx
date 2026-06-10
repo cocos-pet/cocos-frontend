@@ -17,7 +17,7 @@ const PetWeight = ({ setStep, updatePetData }: PetWeightProps) => {
   const [petWeight, setPetWeight] = useState("");
 
   const updatePetWeight = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setPetWeight(value);
+    setPetWeight(value.replace(/\./g, ""));
   };
 
   const handleNext = () => {
