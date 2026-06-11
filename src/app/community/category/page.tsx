@@ -4,7 +4,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import * as styles from "./Category.css";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { IcLeftarrow, IcSearch } from "@asset/svg";
+import { Icfilteron, IcLeftarrow, IcSearch } from "@asset/svg";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
 import { SelectedChips, useFilterStore } from "@store/filter";
@@ -28,7 +28,7 @@ import { Modal } from "@common/component/Modal/Modal";
 import LoginModal from "@common/component/LoginModal/LoginModal.tsx";
 import { SearchFilter } from "../_component/SearchFilter/SearchFilter";
 import { If } from "@shared/component/If/if";
-
+import { Icfilter } from "@asset/svg";
 const Loading = dynamic(
   () => import("../../../common/component/Loading/Loading.tsx"),
   { ssr: false },
@@ -198,6 +198,10 @@ const CategoryContent = () => {
   }
 
   if (posts.length === 0) {
+    function setOpen(arg0: boolean): void {
+      throw new Error("Function not implemented.");
+    }
+
     return (
       <>
         <div className={styles.categoryContainer}>
@@ -236,42 +240,6 @@ const CategoryContent = () => {
   return (
     <>
       <div className={styles.categoryContainer}>
-        <div className={styles.headerContainer}>
-          <HeaderNav
-            leftIcon={<IcLeftarrow />}
-            centerContent={categoryName}
-            rightBtn={<IcSearch />}
-            onLeftClick={handleGoBack}
-            onRightClick={handleGoSearch}
-          />
-          <div className={styles.postsContainer}>
-            <If condition={type !== "magazine"}>
-              <SearchFilter
-                isActive={isFilterOn}
-                onFilterClick={(selectedChipsFromProps) =>
-                  onSubmitClick(selectedChipsFromProps)
-                }
-              />
-            </If>
-          </div>
-          <NoData
-            label={"아직 등록된 리뷰가 없어요"}
-            onBtnClick={() => router.push(`/community/write?category=${type}`)}
-          />
-        </div>
-        <FilterBottomSheet
-          handleDimmedClose={handleDimmedClose}
-          onSubmitClick={onSubmitClick}
-        />
-      </>
-    );
-  }
-
-  const categoryName = categoryMapping[type] || "알 수 없는 카테고리";
-
-  return (
-    <>
-      <div className={styles.categoryContainer}>
         <HeaderNav
           leftIcon={<IcLeftarrow />}
           centerContent={categoryName}
@@ -283,7 +251,9 @@ const CategoryContent = () => {
           <If condition={type !== "magazine"}>
             <SearchFilter
               isActive={isFilterOn}
+
               onFilterClick={(selectedChipsFromProps) =>
+
                 onSubmitClick(selectedChipsFromProps)
               }
             />
