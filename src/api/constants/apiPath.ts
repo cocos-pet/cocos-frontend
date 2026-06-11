@@ -27,6 +27,7 @@ export const API_PATH = {
   POST_FILTERS: "posts/filters",
   POST_POPULAR: "posts/popular",
   POST_CATEGORIES: "posts/categories",
+  POST_CATEGORIES_WRITABLE: "posts/categories/writable",
 
   TEST_HEALTH_CHECK: "test/health-check",
   TEST_TOKEN_CHECK: "test/token-check",

@@ -1,10 +1,22 @@
 import DropDown from "@app/community/_component/DropDown/DropDown.tsx";
 import { TextField } from "@common/component/TextField";
 import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
-import React, { ChangeEvent, useEffect, useRef, useState } from "react";
+import React, {
+  ChangeEvent,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react";
 import { useDropDown } from "@app/community/_component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "@app/community/write/Write.css.ts";
+import {
+  bottomButton,
+  fileInput,
+  imageContainer,
+  plusImage,
+  writeWrap,
+} from "@app/community/write/Write.css.ts";
 import WriteInputSection from "@app/community/_component/WriteInputSection/WriteInputSection.tsx";
 
 import Tag from "@app/community/_component/Tag/Tag.tsx";
@@ -18,18 +30,20 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { PATH } from "@route/path.ts";
 import axios from "axios";
 import { FillterToName } from "@app/community/_utills/getFillterNamebyid.ts";
-import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook.ts";
-import { getDropdownIdtoIcon, getDropdownIdtoValue } from "@app/community/_utills/handleCategoryItem.tsx";
+import {
+  useGetBodies,
+  useGetDisease,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook.ts";
 import { useArticlePost } from "@api/domain/community/post/hook.ts";
-import { DropDownItems } from "@app/community/_constant/writeConfig.tsx";
 import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap";
-
-interface DropDownItem {
-  english: string;
-  label: string;
-  value: number;
-}
+import { useGetWritableCategoryData } from "@api/domain/review/write/hook.ts";
+import {
+  getDropdownIdtoIcon,
+  getDropdownIdtoValue,
+} from "@app/community/_utills/handleCategoryItem.tsx";
+import { formatCategoriesToDropDownItems } from "@app/community/_utills/formatWritableCategories.tsx";
 
 interface writeProps {
   categoryId: number | undefined;
@@ -50,7 +64,14 @@ const Write = () => {
   const [imageNames, setImageNames] = useState<string[]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { isDropDownOpen, toggleDropDown, closeDropDown } = useDropDown();
-  const { selectedChips, isOpen, setOpen, clearAllChips, setCategoryData, setCategory } = useFilterStore();
+  const {
+    selectedChips,
+    isOpen,
+    setOpen,
+    clearAllChips,
+    setCategoryData,
+    setCategory,
+  } = useFilterStore();
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
   const [bodySymptomsIds, setBodySymptomsIds] = useState<number[]>([]);
   const [errorMessage, setErrorMessage] = useState<string>("");
@@ -59,8 +80,14 @@ const Write = () => {
   const { mutate } = useArticlePost();
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
   const { data: disease } = useGetDisease(bodyDiseaseIds);
+  const { data: writableCategories } = useGetWritableCategoryData();
+  const dropDownItems = useMemo(
+    () => formatCategoriesToDropDownItems(writableCategories),
+    [writableCategories],
+  );
+
   const [params, setParams] = useState<writeProps>({
-    categoryId: 1,
+    categoryId: undefined,
     title: "",
     content: "",
     images: [],
@@ -106,16 +133,16 @@ const Write = () => {
   }, [isOpen]);
 
   useEffect(() => {
-    if (category) {
-      const matchedItem = DropDownItems.find((item: DropDownItem) => item.english === category);
+    if (category && dropDownItems.length) {
+      const matchedItem = dropDownItems.find((item) => item.label === category);
       if (matchedItem) {
         setParams((prevParams) => ({
           ...prevParams,
-          categoryId: matchedItem ? matchedItem.value : undefined,
+          categoryId: matchedItem.value,
         }));
       }
     }
-  }, [category]);
+  }, [category, dropDownItems]);
 
   useEffect(() => {
     if (symptoms?.bodies) {
@@ -128,8 +155,12 @@ const Write = () => {
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
-      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      const diseaseIdArr = diseaseBodies.bodies.map(
+        (item) => item.id as number,
+      );
+      const symptomIdArr = symptomBodies.bodies.map(
+        (item) => item.id as number,
+      );
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -138,7 +169,9 @@ const Write = () => {
   }, [diseaseBodies, symptomBodies]);
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedValue = DropDownItems.find((item) => item.label === e.target.value);
+    const selectedValue = dropDownItems.find(
+      (item) => item.label === e.target.value,
+    );
     if (!selectedValue) return;
     onChangeValue("categoryId", selectedValue.value);
     if (!isDropDownOpen) closeDropDown();
@@ -148,7 +181,10 @@ const Write = () => {
     toggleDropDown();
   };
 
-  const onChangeValue = (target: string, value: string | number | React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeValue = (
+    target: string,
+    value: string | number | React.ChangeEvent<HTMLInputElement>,
+  ) => {
     setParams({
       ...params,
       [target]: value,
@@ -255,28 +291,38 @@ const Write = () => {
   };
 
   const isAllParamsFilled =
-    params.categoryId && params.title && params.content && params.selectedChips.breedId.length > 0;
+    params.categoryId &&
+    params.title &&
+    params.content &&
+    params.selectedChips.breedId.length > 0;
 
   return (
     <>
-      <WorningToastWrap errorMessage={errorMessage} setErrorMessage={setErrorMessage} />
+      <WorningToastWrap
+        errorMessage={errorMessage}
+        setErrorMessage={setErrorMessage}
+      />
       <div>
-        <HeaderNav leftIcon={<IcDeleteBlack width={24} />} onLeftClick={onBackClick} centerContent={"글쓰기"} />
+        <HeaderNav
+          leftIcon={<IcDeleteBlack width={24} />}
+          onLeftClick={onBackClick}
+          centerContent={"글쓰기"}
+        />
         <div className={writeWrap}>
           {/* 제목 영역 */}
           <WriteInputSection title={"게시판 선택"}>
             <TextField
-              leftIcon={getDropdownIdtoIcon(params.categoryId)}
+              leftIcon={getDropdownIdtoIcon(params.categoryId, dropDownItems)}
               icon={<IcRightArror width={20} />}
               placeholder={"게시물 선택하기"}
               onChange={onTextFieldChange}
               onClick={onTextFieldClick}
               isDelete={false}
-              value={getDropdownIdtoValue(params.categoryId)}
+              value={getDropdownIdtoValue(params.categoryId, dropDownItems)}
             />
             <DropDown
               isOpen={isDropDownOpen}
-              items={DropDownItems}
+              items={dropDownItems}
               onClickItem={onChangeValue}
               toggleDropDown={toggleDropDown}
             />
@@ -298,9 +344,18 @@ const Write = () => {
               onChange={(e) => onChangeValue("content", e.target.value)}
             />
             <Spacing marginBottom={"1.2"} />
-            <input type="file" onChange={handleAddImage} accept="image/*" ref={fileInputRef} className={fileInput} />
+            <input
+              type="file"
+              onChange={handleAddImage}
+              accept="image/*"
+              ref={fileInputRef}
+              className={fileInput}
+            />
             <div className={imageContainer}>
-              <IcAddphoto className={plusImage} onClick={handleFileUploadClick} />
+              <IcAddphoto
+                className={plusImage}
+                onClick={handleFileUploadClick}
+              />
               {params.images.map((imageSrc, index) => (
                 <ImageCover
                   key={`image-${index}`}
@@ -313,7 +368,7 @@ const Write = () => {
           </WriteInputSection>
           {/* 태그 선택 영역 */}
           <WriteInputSection title={"태그 선택"}>
-            {TagLabel.map((tag, index) => (
+            {TagLabel.map((tag) => (
               <React.Fragment key={`tag-fragment-${tag.label}`}>
                 <Tag
                   key={`tag-${tag.label}`}
@@ -326,7 +381,10 @@ const Write = () => {
                     setCategory(tag.category || "breeds");
                   }}
                 />
-                <Spacing key={`spacing-write-${tag.label}`} marginBottom={"0.8"} />
+                <Spacing
+                  key={`spacing-write-${tag.label}`}
+                  marginBottom={"0.8"}
+                />
               </React.Fragment>
             ))}
           </WriteInputSection>
