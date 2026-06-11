@@ -26,6 +26,18 @@ interface ReviewFilterState {
 const DEFAULT_LOCATION_ID = 1;
 const PAGE_SIZE = 20;
 
+const DEFAULT_LOCATION: LocationFilterType = { id: 1, name: "경기 전체", type: "CITY" };
+
+const isLocationFilterType = (value: unknown): value is LocationFilterType => {
+  if (typeof value !== "object" || value === null) return false;
+  const v = value as Record<string, unknown>;
+  return (
+    typeof v.id === "number" &&
+    typeof v.name === "string" &&
+    (v.type === "CITY" || v.type === "DISTRICT")
+  );
+};
+
 const ReviewDetailContent = () => {
   const searchParams = useSearchParams();
   const bodyId = searchParams?.get("id");
@@ -41,12 +53,17 @@ const ReviewDetailContent = () => {
   // State
   const { isOpen: isModalOpen, handleOpenChange, handleOpen: handleOpenModal } = useOpenToggle();
   const [location, setLocation] = useState<LocationFilterType>(() => {
-    if (typeof window === "undefined") return { id: 1, name: "경기 전체", type: "CITY" };
+    if (typeof window === "undefined") return DEFAULT_LOCATION;
     try {
       const saved = localStorage.getItem("selectedLocation");
-      if (saved) return JSON.parse(saved) as LocationFilterType;
-    } catch {}
-    return { id: 1, name: "경기 전체", type: "CITY" };
+      if (saved) {
+        const parsed: unknown = JSON.parse(saved);
+        if (isLocationFilterType(parsed)) return parsed;
+      }
+    } catch (error) {
+      console.error("selectedLocation 파싱 실패:", error);
+    }
+    return DEFAULT_LOCATION;
   });
   const [reviewList, setReviewList] = useState<postHospitalReviewsResponseData[]>([]);
 
