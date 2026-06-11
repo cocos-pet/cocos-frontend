@@ -2,7 +2,7 @@
 
 import { TextField } from "@common/component/TextField";
 import { IcAddphoto, IcDeleteBlack, IcRightArror } from "@asset/svg";
-import React, { ChangeEvent, Suspense, useEffect, useRef, useState } from "react";
+import React, { ChangeEvent, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { useDropDown } from "../_component/DropDown/useDropDown";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 
@@ -18,11 +18,12 @@ import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
 import { FillterToName } from "../_utills/getFillterNamebyid.ts";
-import { DropDownItems } from "../_constant/writeConfig.tsx";
 import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "./Write.css.ts";
 import WriteInputSection from "../_component/WriteInputSection/WriteInputSection.tsx";
-import { getDropdownIdtoIcon, getDropdownIdtoValue } from "../_utills/handleCategoryItem.tsx";
+import { useGetWritableCategoryData } from "@api/domain/review/write/hook.ts";
 import DropDown from "../_component/DropDown/DropDown.tsx";
+import { getDropdownIdtoIcon, getDropdownIdtoValue } from "../_utills/handleCategoryItem.tsx";
+import { formatCategoriesToDropDownItems } from "../_utills/formatWritableCategories.tsx";
 import TextArea from "../_component/TextArea/TextArea.tsx";
 import ImageCover from "../../../shared/component/ImageCover/ImageCover.tsx";
 import Tag from "../_component/Tag/Tag.tsx";
@@ -64,8 +65,13 @@ const WriteContent = () => {
   const { mutate } = useArticlePost();
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
   const { data: disease } = useGetDisease(bodyDiseaseIds);
+  const { data: writableCategories } = useGetWritableCategoryData();
+  const dropDownItems = useMemo(
+    () => formatCategoriesToDropDownItems(writableCategories?.categories),
+    [writableCategories?.categories],
+  );
   const [params, setParams] = useState<writeProps>({
-    categoryId: 1,
+    categoryId: undefined,
     title: "",
     content: "",
     images: [],
@@ -111,16 +117,16 @@ const WriteContent = () => {
   }, [isOpen]);
 
   useEffect(() => {
-    if (category) {
-      const matchedItem = DropDownItems.find((item) => item.english === category);
+    if (category && dropDownItems.length) {
+      const matchedItem = dropDownItems.find((item) => item.english === category);
       if (matchedItem) {
         setParams((prevParams) => ({
           ...prevParams,
-          categoryId: matchedItem ? matchedItem.value : undefined,
+          categoryId: matchedItem.value,
         }));
       }
     }
-  }, []);
+  }, [category, dropDownItems]);
 
   useEffect(() => {
     if (symptoms?.bodies) {
@@ -143,7 +149,7 @@ const WriteContent = () => {
   }, [diseaseBodies, symptomBodies]);
 
   const onTextFieldChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const selectedValue = DropDownItems.find((item) => item.label === e.target.value);
+    const selectedValue = dropDownItems.find((item) => item.label === e.target.value);
     if (!selectedValue) return;
     onChangeValue("categoryId", selectedValue.value);
     if (!isDropDownOpen) closeDropDown();
@@ -271,17 +277,17 @@ const WriteContent = () => {
           {/* 제목 영역 */}
           <WriteInputSection title={"게시판 선택"}>
             <TextField
-              leftIcon={getDropdownIdtoIcon(params.categoryId)}
+              leftIcon={getDropdownIdtoIcon(params.categoryId, dropDownItems)}
               icon={<IcRightArror width={20} />}
               placeholder={"게시물 선택하기"}
               onChange={onTextFieldChange}
               onClick={onTextFieldClick}
               isDelete={false}
-              value={getDropdownIdtoValue(params.categoryId)}
+              value={getDropdownIdtoValue(params.categoryId, dropDownItems)}
             />
             <DropDown
               isOpen={isDropDownOpen}
-              items={DropDownItems}
+              items={dropDownItems}
               onClickItem={onChangeValue}
               toggleDropDown={toggleDropDown}
             />
