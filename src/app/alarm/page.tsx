@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import AlarmHeader from "./alarmHeader/alarmHeader";
 import AlarmList from "./alarmList/alarmList";
 import AlarmToggle from "./alarmToggle/alarmToggle";
+import * as styles from "./page.css";
 
 const ALARM_CATEGORIES: AlarmCategory[] = ["MAGAZINE", "MY"];
 
@@ -23,7 +24,7 @@ function AlarmContent() {
   return (
     <div>
       <AlarmHeader />
-      <div style={{ marginTop: "6.4rem" }}>
+      <div className={styles.contentWrapper}>
         <AlarmToggle selectedCategory={category} onChangeCategory={handleChangeCategory} />
         <AlarmList category={category} />
       </div>
