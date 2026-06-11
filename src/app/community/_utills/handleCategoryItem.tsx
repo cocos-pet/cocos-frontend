@@ -1,6 +1,6 @@
 import { IcDeleteBlack } from "@asset/svg";
 import { DropDownItems } from "../_constant/writeConfig.tsx";
-import { DropDownItem } from "./formatWritableCategories.tsx";
+import { DropDownItem } from "@app/community/_component/DropDown/DropDown.tsx";
 
 const emptyIconSpace = (
   <span style={{ display: "inline-block", width: 20, height: 20 }} />
@@ -8,7 +8,7 @@ const emptyIconSpace = (
 
 export const getDropdownIdtoIcon = (
   categoryId: number | undefined,
-  items: DropDownItem[] = [],
+  items: DropDownItem[],
 ) => {
   if (!categoryId) {
     return emptyIconSpace;
@@ -22,7 +22,7 @@ export const getDropdownIdtoIcon = (
 
 export const getDropdownIdtoValue = (
   categoryId: number | undefined,
-  items: DropDownItem[] = [],
+  items: DropDownItem[],
 ) => {
   const selectedItem = items.find((item) => categoryId === item.value);
   return selectedItem ? selectedItem.label : "";
