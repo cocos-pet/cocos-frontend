@@ -43,7 +43,7 @@ import {
   getDropdownIdtoIcon,
   getDropdownIdtoValue,
 } from "@app/community/_utills/handleCategoryItem.tsx";
-import { formatCategoriesToDropDownItems } from "@app/community/_utills/formatWritableCategories.ts";
+import { formatCategoriesToDropDownItems } from "@app/community/_utills/formatWritableCategories.tsx";
 
 interface writeProps {
   categoryId: number | undefined;
