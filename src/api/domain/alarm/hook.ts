@@ -10,7 +10,7 @@ export const ALARM_QUERY_KEY = {
   LIST: (category: AlarmCategory) => ["notifications", category] as const,
 };
 
-export const useInfiniteNotifications = (category: AlarmCategory) => {
+export const useInfiniteNotifications = (category: AlarmCategory, enabled = true) => {
   return useInfiniteQuery<
     GetNotificationsResponse,
     Error,
@@ -31,6 +31,7 @@ export const useInfiniteNotifications = (category: AlarmCategory) => {
       if (!notifications?.length || !cursorCreatedAt || cursorId == null) return undefined;
       return { cursorCreatedAt, cursorId };
     },
+    enabled,
   });
 };
 

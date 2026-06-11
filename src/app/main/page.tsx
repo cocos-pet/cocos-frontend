@@ -22,8 +22,8 @@ import { useAuth } from "@providers/AuthProvider";
 export default function Page() {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
-  const { data: myAlarmData } = useInfiniteNotifications("MY");
-  const { data: magazineAlarmData } = useInfiniteNotifications("MAGAZINE");
+  const { data: myAlarmData } = useInfiniteNotifications("MY", isAuthenticated);
+  const { data: magazineAlarmData } = useInfiniteNotifications("MAGAZINE", isAuthenticated);
   const hasUnreadAlarm = [...(myAlarmData?.pages ?? []), ...(magazineAlarmData?.pages ?? [])].some((page) =>
     page.data.notifications.some((notification) => !notification.isRead),
   );
