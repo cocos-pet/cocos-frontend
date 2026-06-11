@@ -7,10 +7,14 @@ import AlarmHeader from "./alarmHeader/alarmHeader";
 import AlarmList from "./alarmList/alarmList";
 import AlarmToggle from "./alarmToggle/alarmToggle";
 
+const ALARM_CATEGORIES: AlarmCategory[] = ["MAGAZINE", "MY"];
+
 function AlarmContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const category = (searchParams.get("category") as AlarmCategory) || "MAGAZINE";
+  const rawCategory = searchParams.get("category");
+  const category: AlarmCategory =
+    ALARM_CATEGORIES.includes(rawCategory as AlarmCategory) ? (rawCategory as AlarmCategory) : "MAGAZINE";
 
   const handleChangeCategory = (newCategory: AlarmCategory) => {
     router.replace(`/alarm?category=${newCategory}`);
