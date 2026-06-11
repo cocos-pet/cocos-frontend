@@ -2,8 +2,10 @@ import React from "react";
 import { components } from "@type/schema";
 import { DropDownItem } from "../_component/DropDown/DropDown";
 
+type PostCategoryType = components["schemas"]["PostCategoriesResponse"];
+
 export const formatCategoriesToDropDownItems = (
-  response: components["schemas"]["PostCategoriesResponse"] | undefined,
+  response: PostCategoryType | undefined,
 ): DropDownItem[] => {
   const categories = response?.categories ?? [];
   return categories
@@ -12,7 +14,7 @@ export const formatCategoriesToDropDownItems = (
       icon: category.image ? (
         <img src={category.image} alt={category.name} width={20} height={20} />
       ) : null,
-      label: category.name!,
-      value: category.id!,
+      label: category.name ?? "",
+      value: category.id ?? 0,
     }));
 };
