@@ -82,8 +82,8 @@ const Write = () => {
   const { data: disease } = useGetDisease(bodyDiseaseIds);
   const { data: writableCategories } = useGetWritableCategoryData();
   const dropDownItems = useMemo(
-    () => formatCategoriesToDropDownItems(writableCategories?.categories),
-    [writableCategories?.categories],
+    () => formatCategoriesToDropDownItems(writableCategories),
+    [writableCategories],
   );
 
   const [params, setParams] = useState<writeProps>({
@@ -134,9 +134,7 @@ const Write = () => {
 
   useEffect(() => {
     if (category && dropDownItems.length) {
-      const matchedItem = dropDownItems.find(
-        (item) => item.english === category,
-      );
+      const matchedItem = dropDownItems.find((item) => item.label === category);
       if (matchedItem) {
         setParams((prevParams) => ({
           ...prevParams,
@@ -370,7 +368,7 @@ const Write = () => {
           </WriteInputSection>
           {/* 태그 선택 영역 */}
           <WriteInputSection title={"태그 선택"}>
-            {TagLabel.map((tag, index) => (
+            {TagLabel.map((tag) => (
               <React.Fragment key={`tag-fragment-${tag.label}`}>
                 <Tag
                   key={`tag-${tag.label}`}

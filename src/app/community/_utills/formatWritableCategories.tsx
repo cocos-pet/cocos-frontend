@@ -1,25 +1,11 @@
 import React from "react";
 import { components } from "@type/schema";
-
-type PostCategory = components["schemas"]["PostCategoryResponse"];
-
-export type DropDownItem = {
-  icon: React.ReactNode;
-  label: string;
-  value: number;
-  english: string;
-};
-
-const CATEGORY_NAME_TO_ENGLISH: Record<string, string> = {
-  "증상·질병": "symptom",
-  "병원고민": "hospital",
-  "일상·치유": "healing",
-  "코코스매거진": "magazine",
-};
+import { DropDownItem } from "../_component/DropDown/DropDown";
 
 export const formatCategoriesToDropDownItems = (
-  categories: PostCategory[] = [],
+  response: components["schemas"]["PostCategoriesResponse"] | undefined,
 ): DropDownItem[] => {
+  const categories = response?.categories ?? [];
   return categories
     .filter((category) => category.id != null && category.name)
     .map((category) => ({
@@ -28,6 +14,5 @@ export const formatCategoriesToDropDownItems = (
       ) : null,
       label: category.name!,
       value: category.id!,
-      english: CATEGORY_NAME_TO_ENGLISH[category.name!] ?? "",
     }));
 };

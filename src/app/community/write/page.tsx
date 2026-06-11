@@ -67,8 +67,8 @@ const WriteContent = () => {
   const { data: disease } = useGetDisease(bodyDiseaseIds);
   const { data: writableCategories } = useGetWritableCategoryData();
   const dropDownItems = useMemo(
-    () => formatCategoriesToDropDownItems(writableCategories?.categories),
-    [writableCategories?.categories],
+    () => formatCategoriesToDropDownItems(writableCategories),
+    [writableCategories],
   );
   const [params, setParams] = useState<writeProps>({
     categoryId: undefined,

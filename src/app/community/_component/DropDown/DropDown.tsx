@@ -1,19 +1,21 @@
 import {container, itemStyle} from "./DropDown.css.ts";
 import React from "react";
 
-type DropDownType = {
+export interface DropDownItem {
+  icon: React.ReactNode;
+  label: string;
+  value: number;
+  english?: string;
+};
+
+interface DropDownProps {
   isOpen: boolean;
-  items: Array<{
-    icon: React.ReactNode;
-    value: number;
-    label: string;
-    english: string;
-  }>;
+  items: Array<DropDownItem>;
   onClickItem: (target: string, value: string | number) => void;
   toggleDropDown: () => void;
 };
 
-const DropDown = ({ isOpen, items, onClickItem, toggleDropDown }: DropDownType) => {
+const DropDown = ({ isOpen, items, onClickItem, toggleDropDown }: DropDownProps) => {
   if (!isOpen) {
     return;
   }
