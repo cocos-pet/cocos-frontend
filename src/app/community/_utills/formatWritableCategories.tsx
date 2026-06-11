@@ -12,13 +12,9 @@ export type DropDownItem = {
 
 const CATEGORY_NAME_TO_ENGLISH: Record<string, string> = {
   "증상·질병": "symptom",
-  병원고민: "hospital",
+  "병원고민": "hospital",
   "일상·치유": "healing",
-  코코스매거진: "magazine",
-};
-
-export const getCategoryEnglishByName = (name: string) => {
-  return CATEGORY_NAME_TO_ENGLISH[name] ?? "";
+  "코코스매거진": "magazine",
 };
 
 export const formatCategoriesToDropDownItems = (
@@ -32,6 +28,6 @@ export const formatCategoriesToDropDownItems = (
       ) : null,
       label: category.name!,
       value: category.id!,
-      english: getCategoryEnglishByName(category.name!),
+      english: CATEGORY_NAME_TO_ENGLISH[category.name!] ?? "",
     }));
 };
