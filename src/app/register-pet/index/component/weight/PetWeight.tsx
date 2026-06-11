@@ -1,5 +1,5 @@
 import * as styles from "../petBirth/PetBirth.css.ts";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, KeyboardEvent, useState } from "react";
 
 import { TextField } from "@common/component/TextField";
 import { Button } from "@common/component/Button";
@@ -17,7 +17,13 @@ const PetWeight = ({ setStep, updatePetData }: PetWeightProps) => {
   const [petWeight, setPetWeight] = useState("");
 
   const updatePetWeight = ({ target: { value } }: ChangeEvent<HTMLInputElement>) => {
-    setPetWeight(value);
+    setPetWeight(value.replace(/\D/g, ""));
+  };
+
+  const blockDecimalKey = (e: KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === ".") {
+      e.preventDefault();
+    }
   };
 
   const handleNext = () => {
@@ -47,6 +53,7 @@ const PetWeight = ({ setStep, updatePetData }: PetWeightProps) => {
               state="centerPlaceholder"
               value={petWeight}
               onChange={updatePetWeight}
+              onKeyDown={blockDecimalKey}
               placeholder="몸무게"
               maxLength={2}
               isDelete={false}

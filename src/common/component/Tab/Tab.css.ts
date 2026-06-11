@@ -10,19 +10,27 @@ export const tab = style({
   gap: "0.4rem",
 });
 
-export const tabContent = style([
-  font.body01,
-  {
-    display: "flex",
-    height: "3.6rem",
-    padding: "0.8rem 1.6rem",
-    justifyContent: "center",
-    alignItems: "center",
-    alignSelf: "stretch",
-    whiteSpace: "nowrap",
-    color: semanticColor.text.normal,
+export const tabContent = recipe({
+  base: [
+    font.body01,
+    {
+      display: "flex",
+      height: "3.6rem",
+      padding: "0.8rem 1.6rem",
+      justifyContent: "center",
+      alignItems: "center",
+      alignSelf: "stretch",
+      whiteSpace: "nowrap",
+      color: semanticColor.text.normal,
+    },
+  ],
+  variants: {
+    active: {
+      true: { color: semanticColor.text.normal },
+      false: { color: semanticColor.disable.text },
+    },
   },
-]);
+});
 
 export const tabBar = recipe({
   base: {

@@ -9,17 +9,33 @@ interface TabsSectionProps {
   onTabClick: (tab: ActiveTabType) => void;
 }
 
-const TabsSection = ({ activeTab, isActiveTab, onTabClick }: TabsSectionProps) => {
+const TabsSection = ({
+  activeTab,
+  isActiveTab,
+  onTabClick,
+}: TabsSectionProps) => {
   return (
     <div className={styles.contentHeaderWrapper}>
-      <Tab active={isActiveTab("review")} width={"100%"} onClick={() => onTabClick("review")}>
-        나의 병원 후기
+      <Tab
+        active={isActiveTab("review")}
+        width={"100%"}
+        onClick={() => onTabClick("review")}
+      >
+        병원 후기
       </Tab>
-      <Tab active={isActiveTab("post")} width={"100%"} onClick={() => onTabClick("post")}>
-        나의 게시글
+      <Tab
+        active={isActiveTab("post")}
+        width={"100%"}
+        onClick={() => onTabClick("post")}
+      >
+        게시글
       </Tab>
-      <Tab active={isActiveTab("comment")} width={"100%"} onClick={() => onTabClick("comment")}>
-        나의 댓글
+      <Tab
+        active={isActiveTab("comment")}
+        width={"100%"}
+        onClick={() => onTabClick("comment")}
+      >
+        댓글
       </Tab>
     </div>
   );

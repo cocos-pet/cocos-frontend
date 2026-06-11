@@ -13,6 +13,7 @@ export const contentWrapper = style({
   display: "flex",
   flexDirection: "row",
   alignItems: "center",
+  justifyContent: "center",
   gap: "0.8rem 2rem",
   flexWrap: "wrap",
   margin: "0 4.55rem",
@@ -73,6 +74,7 @@ export const skipTextWrapper = style({
   height: "3.2rem",
   margin: "2.4rem 2rem",
   background: color.gray.gray100,
+  borderRadius: "8px",
 });
 
 export const skipText = style([
