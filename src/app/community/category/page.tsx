@@ -4,25 +4,35 @@ import { useRouter, useSearchParams } from "next/navigation";
 import * as styles from "./Category.css";
 import Content from "@common/component/Content/Content";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
-import { Icfilter, Icfilteron, IcLeftarrow, IcSearch } from "@asset/svg";
+import { IcLeftarrow, IcSearch } from "@asset/svg";
 import FloatingBtn from "@common/component/FloatingBtn/Floating";
 import FilterBottomSheet from "@shared/component/FilterBottomSheet/FilterBottomSheet";
-import { useFilterStore } from "@store/filter";
+import { SelectedChips, useFilterStore } from "@store/filter";
 import { PATH } from "@route/path";
 import { formatTime } from "@shared/util/formatTime";
 import { usePostPostFilters } from "@api/domain/community/search/hook";
 import { Suspense, useCallback, useEffect, useState } from "react";
 import { components } from "@type/schema";
 import { postPostFiltersRequest } from "@api/domain/community/search";
-import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook";
+import {
+  useGetAnimal,
+  useGetBodies,
+  useGetDisease,
+  useGetSymptoms,
+} from "@api/domain/mypage/edit-pet/hook";
 import dynamic from "next/dynamic";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import { Modal } from "@common/component/Modal/Modal";
 import LoginModal from "@common/component/LoginModal/LoginModal.tsx";
+import { SearchFilter } from "../_component/SearchFilter/SearchFilter";
+import { If } from "@shared/component/If/if";
 
-const Loading = dynamic(() => import("../../../common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(
+  () => import("../../../common/component/Loading/Loading.tsx"),
+  { ssr: false },
+);
 
 export const validTypes = ["symptom", "hospital", "healing", "magazine"];
 const categoryMapping: { [key: string]: string } = {
@@ -42,13 +52,14 @@ const CategoryContent = () => {
   const searchParams = useSearchParams();
   const type = searchParams?.get("type");
   const typeId = searchParams?.get("id");
-  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>([]);
+  const [posts, setPosts] = useState<components["schemas"]["PostResponse"][]>(
+    [],
+  );
   const { mutate: fetchPosts, isPending } = usePostPostFilters();
   const router = useRouter();
 
   // 필터 관련 상태와 hooks
-  const { isOpen, setOpen, category, setCategory, setCategoryData, selectedChips, toggleChips, categoryData } =
-    useFilterStore();
+  const { isOpen, setCategoryData, selectedChips } = useFilterStore();
   const { clearAllChips } = useFilterStore();
 
   const [bodyDiseaseIds, setBodyDiseaseIds] = useState<number[]>([]);
@@ -57,6 +68,7 @@ const CategoryContent = () => {
   const { data: symptomBodies } = useGetBodies("SYMPTOM");
   const { data: symptoms } = useGetSymptoms(bodySymptomsIds);
   const { data: disease } = useGetDisease(bodyDiseaseIds);
+  const { data: animal } = useGetAnimal();
 
   useEffect(() => {
     if (isOpen) {
@@ -70,18 +82,25 @@ const CategoryContent = () => {
   }, [isOpen]);
 
   useEffect(() => {
+    if (animal?.animals) {
+      setCategoryData("breeds", animal.animals);
+    }
     if (symptoms?.bodies) {
       setCategoryData("symptoms", symptoms.bodies);
     }
     if (disease?.bodies) {
       setCategoryData("disease", disease.bodies);
     }
-  }, [symptoms, disease, setCategoryData]);
+  }, [animal, symptoms, disease, setCategoryData]);
 
   useEffect(() => {
     if (diseaseBodies?.bodies && symptomBodies?.bodies) {
-      const diseaseIdArr = diseaseBodies.bodies.map((item) => item.id as number);
-      const symptomIdArr = symptomBodies.bodies.map((item) => item.id as number);
+      const diseaseIdArr = diseaseBodies.bodies.map(
+        (item) => item.id as number,
+      );
+      const symptomIdArr = symptomBodies.bodies.map(
+        (item) => item.id as number,
+      );
       if (diseaseIdArr.length && symptomIdArr.length) {
         setBodyDiseaseIds(diseaseIdArr);
         setBodySymptomsIds(symptomIdArr);
@@ -90,28 +109,38 @@ const CategoryContent = () => {
   }, [diseaseBodies, symptomBodies]);
 
   const isFilterOn =
-    !!selectedChips.breedId.length || !!selectedChips.diseaseIds.length || !!selectedChips.symptomIds.length;
+    !!selectedChips.breedId.length ||
+    !!selectedChips.diseaseIds.length ||
+    !!selectedChips.symptomIds.length;
 
-  const fetchPostData = useCallback(() => {
-    if (!typeId) return;
+  const fetchPostData = useCallback(
+    (chipsOverride?: SelectedChips) => {
+      if (!typeId) return;
 
-    const filterPayload: postPostFiltersRequest = {
-      categoryId: Number(typeId),
-      sortBy: "RECENT",
-      animalIds: selectedChips.breedId.length > 0 ? selectedChips.breedId : undefined,
-      symptomIds: selectedChips.symptomIds.length > 0 ? selectedChips.symptomIds : undefined,
-      diseaseIds: selectedChips.diseaseIds.length > 0 ? selectedChips.diseaseIds : undefined,
-    };
+      const chipsToUse = chipsOverride || selectedChips;
 
-    fetchPosts(filterPayload, {
-      onSuccess: (data) => {
-        setPosts(data);
-      },
-      onError: (error) => {
-        console.error("필터링된 게시글 조회 실패:", error);
-      },
-    });
-  }, [fetchPosts, typeId, selectedChips]);
+      const filterPayload: postPostFiltersRequest = {
+        categoryId: Number(typeId),
+        sortBy: "RECENT",
+        animalIds:
+          chipsToUse.breedId.length > 0 ? chipsToUse.breedId : undefined,
+        symptomIds:
+          chipsToUse.symptomIds.length > 0 ? chipsToUse.symptomIds : undefined,
+        diseaseIds:
+          chipsToUse.diseaseIds.length > 0 ? chipsToUse.diseaseIds : undefined,
+      };
+
+      fetchPosts(filterPayload, {
+        onSuccess: (data) => {
+          setPosts(data);
+        },
+        onError: (error) => {
+          console.error("필터링된 게시글 조회 실패:", error);
+        },
+      });
+    },
+    [fetchPosts, typeId, selectedChips],
+  );
 
   const handleGoBack = () => {
     clearAllChips();
@@ -126,8 +155,8 @@ const CategoryContent = () => {
     clearAllChips();
   };
 
-  const onSubmitClick = () => {
-    fetchPostData();
+  const onSubmitClick = (selectedChipsFromProps?: SelectedChips) => {
+    fetchPostData(selectedChipsFromProps);
   };
 
   const { isAuthenticated } = useAuth();
@@ -156,7 +185,10 @@ const CategoryContent = () => {
           label={"아직 등록된 게시물이 없어요"}
           onBtnClick={() => router.push(`/community/write?category=${type}`)}
         />
-        <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
+        <FilterBottomSheet
+          handleDimmedClose={handleDimmedClose}
+          onSubmitClick={onSubmitClick}
+        />
       </>
     );
   }
@@ -176,21 +208,25 @@ const CategoryContent = () => {
             onLeftClick={handleGoBack}
             onRightClick={handleGoSearch}
           />
-          {type !== "magazine" && (
-            <div className={styles.filterContainer}>
-              {isFilterOn ? (
-                <Icfilteron onClick={() => setOpen(true)} width={24} />
-              ) : (
-                <Icfilter onClick={() => setOpen(true)} width={24} />
-              )}
-            </div>
-          )}
+          <div className={styles.postsContainer}>
+            <If condition={type !== "magazine"}>
+              <SearchFilter
+                isActive={isFilterOn}
+                onFilterClick={(selectedChipsFromProps) =>
+                  onSubmitClick(selectedChipsFromProps)
+                }
+              />
+            </If>
+          </div>
           <NoData
             label={"아직 등록된 리뷰가 없어요"}
             onBtnClick={() => router.push(`/community/write?category=${type}`)}
           />
         </div>
-        <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
+        <FilterBottomSheet
+          handleDimmedClose={handleDimmedClose}
+          onSubmitClick={onSubmitClick}
+        />
       </>
     );
   }
@@ -207,34 +243,33 @@ const CategoryContent = () => {
           onLeftClick={handleGoBack}
           onRightClick={handleGoSearch}
         />
-
-        {type !== "magazine" && (
-          <div className={styles.filterContainer}>
-            {isFilterOn ? (
-              <Icfilteron onClick={() => setOpen(true)} width={24} />
-            ) : (
-              <Icfilter onClick={() => setOpen(true)} width={24} />
-            )}
-          </div>
-        )}
-
         <div className={styles.postsContainer}>
-          {posts.map((post) => (
-            <Content
-              key={post.id}
-              breed={type === "magazine" ? "코코스" : post.breed}
-              petAge={type === "magazine" ? undefined : post.petAge}
-              postTitle={post.title}
-              postContent={post.content}
-              likeCnt={post.likeCount}
-              commentCnt={post.commentCount}
-              postImage={post.image}
-              onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
-              timeAgo={formatTime(post.updatedAt as string)}
-              category={post.category}
-              likeIconType="curious"
+          <If condition={type !== "magazine"}>
+            <SearchFilter
+              isActive={isFilterOn}
+              onFilterClick={(selectedChipsFromProps) =>
+                onSubmitClick(selectedChipsFromProps)
+              }
             />
-          ))}
+          </If>
+          <div className={styles.postsContent}>
+            {posts.map((post) => (
+              <Content
+                key={post.id}
+                breed={type === "magazine" ? "코코스" : post.breed}
+                petAge={type === "magazine" ? undefined : post.petAge}
+                postTitle={post.title}
+                postContent={post.content}
+                likeCnt={post.likeCount}
+                commentCnt={post.commentCount}
+                postImage={post.image}
+                onClick={() => router.push(`${PATH.COMMUNITY.ROOT}/${post.id}`)}
+                timeAgo={formatTime(post.updatedAt as string)}
+                category={post.category}
+                likeIconType="curious"
+              />
+            ))}
+          </div>
         </div>
 
         {type !== "magazine" && (
@@ -243,7 +278,10 @@ const CategoryContent = () => {
           </div>
         )}
       </div>
-      <FilterBottomSheet handleDimmedClose={handleDimmedClose} onSubmitClick={onSubmitClick} />
+      <FilterBottomSheet
+        handleDimmedClose={handleDimmedClose}
+        onSubmitClick={onSubmitClick}
+      />
       <LoginModal isOpen={isLoginModalOpen} setIsOpen={setIsLoginModalOpen} />
     </>
   );
