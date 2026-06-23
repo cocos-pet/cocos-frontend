@@ -18,7 +18,7 @@ import { useArticlePost } from "@api/domain/community/post/hook.ts";
 import { CustomAxiosError } from "@type/global";
 import WorningToastWrap from "@common/component/WarnningToastWrap/WarningToastWrap.tsx";
 import { FillterToName } from "../_utills/getFillterNamebyid.ts";
-import { bottomButton, fileInput, imageContainer, plusImage, writeWrap } from "./Write.css.ts";
+import { bottomButton, fileInput, headerContainer, imageContainer, plusImage, writeWrap } from "./Write.css.ts";
 import WriteInputSection from "../_component/WriteInputSection/WriteInputSection.tsx";
 import { useGetWritableCategoryData } from "@api/domain/review/write/hook.ts";
 import DropDown from "../_component/DropDown/DropDown.tsx";
