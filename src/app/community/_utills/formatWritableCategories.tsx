@@ -1,8 +1,13 @@
 import React from "react";
 import { components } from "@type/schema";
 import { DropDownItem } from "../_component/DropDown/DropDown";
+import { DropDownItems } from "../_constant/writeConfig.tsx";
 
 type PostCategoryType = components["schemas"]["PostCategoriesResponse"];
+
+const getCategoryEnglish = (name: string) => {
+  return DropDownItems.find((item) => item.label === name)?.english;
+};
 
 export const formatCategoriesToDropDownItems = (
   response: PostCategoryType | undefined,
@@ -16,5 +21,6 @@ export const formatCategoriesToDropDownItems = (
       ) : null,
       label: category.name ?? "",
       value: category.id ?? 0,
+      english: getCategoryEnglish(category.name ?? ""),
     }));
 };
