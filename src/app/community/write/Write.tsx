@@ -302,12 +302,12 @@ const Write = () => {
         errorMessage={errorMessage}
         setErrorMessage={setErrorMessage}
       />
+      <HeaderNav
+        leftIcon={<IcDeleteBlack width={24} />}
+        onLeftClick={onBackClick}
+        centerContent={"글쓰기"}
+      />
       <div>
-        <HeaderNav
-          leftIcon={<IcDeleteBlack width={24} />}
-          onLeftClick={onBackClick}
-          centerContent={"글쓰기"}
-        />
         <div className={writeWrap}>
           {/* 제목 영역 */}
           <WriteInputSection title={"게시판 선택"}>

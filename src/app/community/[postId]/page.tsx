@@ -2,7 +2,13 @@
 
 import React, { useEffect, useState } from "react";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
-import { IcCuriousActive, IcCuriousUnactive, IcLeftarrow, IcLikeActive, IcLikeDisabled } from "@asset/svg";
+import {
+  IcCuriousActive,
+  IcCuriousUnactive,
+  IcLeftarrow,
+  IcLikeActive,
+  IcLikeDisabled,
+} from "@asset/svg";
 import { Button } from "@common/component/Button";
 import Chip from "@common/component/Chip/Chip.tsx";
 import Divider from "@common/component/Divider/Divider.tsx";
@@ -27,20 +33,31 @@ import { useParams, useRouter } from "next/navigation";
 import dynamic from "next/dynamic";
 import { styles } from "./PostDetail.css.ts";
 import { getCategoryResponse } from "../_utills/getPostCategoryLike.ts";
-import { getCategorytoEnglish, getCategorytoId, getDropdownValuetoIcon } from "../_utills/handleCategoryItem.tsx";
+import {
+  getCategorytoEnglish,
+  getCategorytoId,
+  getDropdownValuetoIcon,
+} from "../_utills/handleCategoryItem.tsx";
 import Profile from "@app/community/_component/Profile/Profile.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
 import LazyImage from "@common/component/LazyImage.tsx";
 import LoginModal from "@common/component/LoginModal/LoginModal.tsx";
 
-const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), {
+  ssr: false,
+});
 
 const Page = () => {
   const router = useRouter();
   const params = useParams();
   const { postId } = params as { postId: string | string[] | undefined };
-  const postIdString = typeof postId === "string" ? postId : Array.isArray(postId) ? postId[0] : "";
+  const postIdString =
+    typeof postId === "string"
+      ? postId
+      : Array.isArray(postId)
+      ? postId[0]
+      : "";
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postIdString));
   const { data: commentsData } = useCommentsGet(Number(postIdString));
@@ -55,7 +72,10 @@ const Page = () => {
   const [commentId, setCommentId] = useState<number>();
   const [isOpen, setOpen] = useState(false);
   const { mutate: deletePost } = usePostDelete(Number(postIdString));
-  const { mutate: subCommentPost } = useSubCommentPost(commentId !== undefined ? commentId : 0, Number(postIdString));
+  const { mutate: subCommentPost } = useSubCommentPost(
+    commentId !== undefined ? commentId : 0,
+    Number(postIdString),
+  );
   const [parsedComment, setParsedComment] = useState<{
     mention: string;
     text: string;
@@ -127,7 +147,10 @@ const Page = () => {
     }
   };
 
-  const onCommentReplyClick = (nickname: string | undefined, commentId: number | undefined) => {
+  const onCommentReplyClick = (
+    nickname: string | undefined,
+    commentId: number | undefined,
+  ) => {
     if (nickname) {
       setParsedComment({ mention: nickname, text: "" });
     }
@@ -178,7 +201,9 @@ const Page = () => {
       {
         onSuccess: (data) => {
           setIsLiked(false);
-          setLikeCount((prevState) => Number(prevState !== undefined ? prevState - 1 : 0));
+          setLikeCount((prevState) =>
+            Number(prevState !== undefined ? prevState - 1 : 0),
+          );
         },
         onError: (error) => {},
       },
@@ -196,7 +221,9 @@ const Page = () => {
       {
         onSuccess: (data) => {
           setIsLiked(true);
-          setLikeCount((prevState) => (prevState !== undefined ? prevState + 1 : 0));
+          setLikeCount((prevState) =>
+            prevState !== undefined ? prevState + 1 : 0,
+          );
         },
         onError: (error) => {},
       },
@@ -207,7 +234,8 @@ const Page = () => {
     setOpenModalId(undefined);
   };
 
-  if (isLoading || !postIdString || !commentsData) return <Loading height={60} />;
+  if (isLoading || !postIdString || !commentsData)
+    return <Loading height={60} />;
 
   const handleProfileClick = () => {
     if (postData.nickname) {
@@ -237,7 +265,11 @@ const Page = () => {
           rightBtn={
             postData.isWriter && (
               <MoreModal
-                onEdit={() => router.push(`${PATH.COMMUNITY.WRITE.replace(":postId", postIdString)}`)}
+                onEdit={() =>
+                  router.push(
+                    `${PATH.COMMUNITY.WRITE.replace(":postId", postIdString)}`,
+                  )
+                }
                 onDelete={() => setOpen(true)}
                 iconSize={24}
                 isOpen={openModalId === `post-${postIdString}`}
@@ -305,19 +337,37 @@ const Page = () => {
           <div className={styles.item}>
             {getCategoryResponse(postData.category) === "curious" ? (
               isLiked ? (
-                <IcCuriousActive width={24} height={24} onClick={onLikePostClick} />
+                <IcCuriousActive
+                  width={24}
+                  height={24}
+                  onClick={onLikePostClick}
+                />
               ) : (
-                <IcCuriousUnactive width={24} height={24} onClick={onLikeDeleteClick} />
+                <IcCuriousUnactive
+                  width={24}
+                  height={24}
+                  onClick={onLikeDeleteClick}
+                />
               )
             ) : getCategoryResponse(postData.category) === "support" ? (
               isLiked ? (
-                <IcLikeActive width={24} height={24} onClick={onLikePostClick} />
+                <IcLikeActive
+                  width={24}
+                  height={24}
+                  onClick={onLikePostClick}
+                />
               ) : (
-                <IcLikeDisabled width={24} height={24} onClick={onLikeDeleteClick} />
+                <IcLikeDisabled
+                  width={24}
+                  height={24}
+                  onClick={onLikeDeleteClick}
+                />
               )
             ) : null}
             <span className={styles.categoryName}>
-              {getCategoryResponse(postData.category) === "curious" ? "궁금해요 " : "응원해요 "}
+              {getCategoryResponse(postData.category) === "curious"
+                ? "궁금해요 "
+                : "응원해요 "}
               {likeCount}
             </span>
           </div>
@@ -326,7 +376,10 @@ const Page = () => {
       <Divider size={"large"} />
       <div className={styles.commentContainer}>
         <div className={styles.commentTitle}>
-          댓글 <span className={styles.commentCount}>{postData.totalCommentCounts}</span>
+          댓글{" "}
+          <span className={styles.commentCount}>
+            {postData.totalCommentCounts}
+          </span>
         </div>
         <CommentList
           comments={{ comments: commentsData }}
@@ -337,7 +390,9 @@ const Page = () => {
 
       <div className={styles.textContainer}>
         <TextField
-          mentionedNickname={parsedComment.mention ? `@${parsedComment.mention} ` : ""}
+          mentionedNickname={
+            parsedComment.mention ? `@${parsedComment.mention} ` : ""
+          }
           onChange={onChange}
           value={parsedComment.text}
           onClearClick={onClearClick}
