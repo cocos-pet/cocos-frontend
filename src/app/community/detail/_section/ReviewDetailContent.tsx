@@ -1,9 +1,10 @@
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import * as styles from "@app/community/detail/SymptomDetail.css.ts";
 import { IcRightArrow } from "@asset/svg";
 import { LoadingFallback } from "@app/community/detail/_section/index.tsx";
 import { usePostHospitalReviews } from "@api/domain/community/detail/hook.ts";
+import { useUpdateMemberLocation } from "@api/domain/review/location/hook.ts";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import HospitalReview from "@shared/component/HospitalReview/HospitalReview.tsx";
 import { postHospitalReviewsResponseData } from "@api/domain/community/detail";
@@ -69,6 +70,7 @@ const ReviewDetailContent = () => {
 
   // API
   const { mutate: postHospitalReviews, isPending } = usePostHospitalReviews();
+  const { mutate: updateLocation } = useUpdateMemberLocation();
 
   const handleProfileClick = (nickname: string | undefined) => {
     router.push(`/profile?nickname=${nickname}`);
@@ -110,8 +112,14 @@ const ReviewDetailContent = () => {
     postReviews(location, summaryOptionId);
   };
 
+  useEffect(() => {
+    postReviews(location);
+  }, []);
+
   const handleLocationSelect = (newLocation: LocationFilterType) => {
     setLocation(newLocation);
+    localStorage.setItem("selectedLocation", JSON.stringify(newLocation));
+    updateLocation({ locationId: newLocation.id, locationType: newLocation.type });
     postReviews(newLocation, filterId ? Number(filterId) : undefined);
   };
 
