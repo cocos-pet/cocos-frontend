@@ -24,7 +24,6 @@ import dynamic from "next/dynamic";
 import NoData from "@shared/component/NoData/NoData.tsx";
 import { useAuth } from "@providers/AuthProvider";
 import { useIsPetRegistered } from "@common/hook/useIsPetRegistered";
-import { Modal } from "@common/component/Modal/Modal";
 import LoginModal from "@common/component/LoginModal/LoginModal.tsx";
 import { SearchFilter } from "../_component/SearchFilter/SearchFilter";
 import { If } from "@shared/component/If/if";
@@ -240,14 +239,16 @@ const CategoryContent = () => {
   return (
     <>
       <div className={styles.categoryContainer}>
-        <HeaderNav
-          leftIcon={<IcLeftarrow />}
-          centerContent={categoryName}
-          rightBtn={<IcSearch />}
-          onLeftClick={handleGoBack}
-          onRightClick={handleGoSearch}
-        />
-        <div className={styles.postsContainer}>
+        <div className={styles.headerContainer}>
+          <HeaderNav
+            leftIcon={<IcLeftarrow />}
+            centerContent={categoryName}
+            rightBtn={<IcSearch />}
+            onLeftClick={handleGoBack}
+            onRightClick={handleGoSearch}
+          />
+        </div>
+        <div className={styles.postsContainer} style={{ marginTop: "6.4rem" }}>
           <If condition={type !== "magazine"}>
             <SearchFilter
               isActive={isFilterOn}
