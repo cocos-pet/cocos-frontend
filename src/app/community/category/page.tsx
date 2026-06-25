@@ -248,7 +248,7 @@ const CategoryContent = () => {
             onRightClick={handleGoSearch}
           />
         </div>
-        <div className={styles.postsContainer} style={{ marginTop: "6.4rem" }}>
+        <div className={styles.postsContainer}>
           <If condition={type !== "magazine"}>
             <SearchFilter
               isActive={isFilterOn}
