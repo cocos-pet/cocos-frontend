@@ -1,10 +1,8 @@
 import type { MetadataRoute } from "next";
-import { isProductionDeploy, publicRoutes, siteConfig } from "@shared/constant/site";
+import { isProd, publicRoutes, siteConfig } from "@shared/constant/site";
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  if (!isProductionDeploy) {
-    return [];
-  }
+  if (!isProd) return [];
 
   const lastModified = new Date();
 
