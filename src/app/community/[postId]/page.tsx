@@ -280,58 +280,66 @@ const Page = () => {
         />
       </div>
       <div className={styles.container} onClick={onModalClose}>
-        <Button
-          leftIcon={getDropdownValuetoIcon(postData.category)}
-          label={postData.category}
-          variant={"outlineNeutral"}
-          size={"tag"}
-          onClick={() => {
-            router.push(
-              `${PATH.COMMUNITY.CATEGORY}?type=${getCategorytoEnglish(
-                postData.category,
-              )}&id=${getCategorytoId(postData.category)}`,
-            );
-          }}
-        />
+        <article className={styles.article}>
+          <header className={styles.articleHeader}>
+            <h1 className={styles.title}>{postData.title}</h1>
+            <h2 className={styles.subtitle}>
+              <Button
+                leftIcon={getDropdownValuetoIcon(postData.category)}
+                label={postData.category}
+                variant={"outlineNeutral"}
+                size={"tag"}
+                onClick={() => {
+                  router.push(
+                    `${PATH.COMMUNITY.CATEGORY}?type=${getCategorytoEnglish(
+                      postData.category,
+                    )}&id=${getCategorytoId(postData.category)}`,
+                  );
+                }}
+              />
+            </h2>
+            <address className={styles.author}>
+              <Profile
+                handleProfileClick={handleProfileClick}
+                profileImageData={postData.profileImage}
+                nickname={postData.nickname}
+                breed={postData.breed}
+                petAge={postData.petAge}
+                createdAt={postData.createdAt}
+              />
+            </address>
+          </header>
 
-        <Profile
-          handleProfileClick={handleProfileClick}
-          profileImageData={postData.profileImage}
-          nickname={postData.nickname}
-          breed={postData.breed}
-          petAge={postData.petAge}
-          createdAt={postData.createdAt}
-        />
-        <div>
-          <div className={styles.title}>{postData.title}</div>
-          <div className={styles.content}>{postData.content}</div>
-        </div>
-        {postData.images?.map((image, index) => (
-          <LazyImage
-            key={`postImage-${
-              // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-              index
-            }`}
-            src={image}
-            alt="postImage"
-            className={styles.image}
-            width="100%"
-            height="26.2rem"
-          />
-        ))}
-        <div className={styles.labelWrap}>
-          {postData.tags?.map((tag, index) => (
-            <Chip
-              key={`postTag-${
-                // biome-ignore lint/suspicious/noArrayIndexKey: <explanation>
-                index
-              }`}
-              label={tag}
-              color={"blue"}
-              disabled={true}
-            />
+          <div className={styles.articleBody}>
+            <p className={styles.content}>{postData.content}</p>
+          </div>
+
+          {postData.images?.map((image, index) => (
+            <figure key={`postImage-${index}`}>
+              <LazyImage
+                src={image}
+                alt={`${postData.title ?? "게시글"} 이미지 ${index + 1}`}
+                className={styles.image}
+                width="100%"
+                height="26.2rem"
+              />
+            </figure>
           ))}
-        </div>
+
+          {!!postData.tags?.length && (
+            <footer className={styles.labelWrap}>
+              {postData.tags.map((tag, index) => (
+                <Chip
+                  key={`postTag-${index}`}
+                  label={tag}
+                  color={"blue"}
+                  disabled={true}
+                />
+              ))}
+            </footer>
+          )}
+        </article>
+
         <Divider size={"small"} />
         <div className={styles.subContents}>
           <div className={styles.item}>
@@ -374,19 +382,22 @@ const Page = () => {
         </div>
       </div>
       <Divider size={"large"} />
-      <div className={styles.commentContainer}>
-        <div className={styles.commentTitle}>
+      <section
+        className={styles.commentContainer}
+        aria-labelledby="post-comments-heading"
+      >
+        <h2 id="post-comments-heading" className={styles.commentTitle}>
           댓글{" "}
           <span className={styles.commentCount}>
             {postData.totalCommentCounts}
           </span>
-        </div>
+        </h2>
         <CommentList
           comments={{ comments: commentsData }}
           onCommentReplyClick={onCommentReplyClick}
           onModalClose={onModalClose}
         />
-      </div>
+      </section>
 
       <div className={styles.textContainer}>
         <TextField

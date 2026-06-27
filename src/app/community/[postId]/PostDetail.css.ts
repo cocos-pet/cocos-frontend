@@ -75,17 +75,43 @@ export const styles = {
   title: style([
     font.heading02,
     {
-      marginBottom: "0.4rem",
+      margin: 0,
       color: color.gray.gray900,
+    },
+  ]),
+  subtitle: style([
+    font.heading03,
+    {
+      margin: 0,
+      color: color.gray.gray700,
     },
   ]),
   content: style([
     font.heading03,
     {
+      margin: 0,
       color: color.gray.gray800,
       whiteSpace: "pre-line",
     },
   ]),
+  article: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.2rem",
+  }),
+  articleHeader: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: "1.2rem",
+  }),
+  articleBody: style({
+    display: "flex",
+    flexDirection: "column",
+    gap: "0.8rem",
+  }),
+  author: style({
+    fontStyle: "normal",
+  }),
 
   image: style({
     maxHeight: "33.5rem",
@@ -124,6 +150,7 @@ export const styles = {
   commentTitle: style([
     font.body01,
     {
+      margin: 0,
       marginBottom: "2.5rem",
       color: color.gray.gray700,
     },

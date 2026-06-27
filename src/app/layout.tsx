@@ -3,13 +3,58 @@ import "@style/global.css.ts";
 import Provider from "./Provider";
 import { Metadata, Viewport } from "next";
 import { GoogleTagManager } from "@next/third-parties/google";
+import JsonLd from "@shared/component/Seo/JsonLd";
+import { siteConfig } from "@shared/constant/site";
 
-// Metadata는 서버 컴포넌트에서만 사용 가능합니다.
-// 이 파일은 이제 클라이언트 컴포넌트이므로 메타데이터 정의를 제거합니다.
 export const metadata: Metadata = {
-  title: "코코스",
-  description:
-    "반려동물 증상을 겪는 반려인들이 고민을 공유하고 병원 정보를 확인할 수 있는 서비스",
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: siteConfig.title,
+    template: siteConfig.titleTemplate,
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  formatDetection: {
+    email: false,
+    address: false,
+    telephone: false,
+  },
+  icons: {
+    icon: "/cocos2.svg",
+    shortcut: "/cocos2.svg",
+    apple: "/cocos2.svg",
+  },
+  openGraph: {
+    type: "website",
+    locale: siteConfig.locale,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
+  twitter: {
+    card: "summary",
+    title: siteConfig.title,
+    description: siteConfig.description,
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+  alternates: {
+    canonical: siteConfig.url,
+  },
 };
 
 export const viewport: Viewport = {
@@ -20,12 +65,12 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 };
 
-// 클라이언트 컴포넌트에서는 getServerSideProps나 metadata 등 서버 기능을 사용할 수 없습니다.
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html lang="ko" style={{ scrollbarWidth: "none" }}>
       <GoogleTagManager gtmId="GTM-MMTW28DS" />
       <body>
+        <JsonLd />
         <noscript>
           <iframe
             src="https://www.googletagmanager.com/ns.html?id=GTM-MMTW28DS"
