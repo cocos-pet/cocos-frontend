@@ -4,22 +4,21 @@ import { getPostServer } from "@api/domain/community/post/server";
 import PostArticleJsonLd from "@shared/component/Seo/PostArticleJsonLd";
 import { siteConfig } from "@shared/constant/site";
 
-type PostDetailLayoutProps = {
+type Props = {
   children: ReactNode;
   params: Promise<{ postId: string }>;
 };
 
-export async function generateMetadata({ params }: PostDetailLayoutProps): Promise<Metadata> {
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { postId } = await params;
   const post = await getPostServer(Number(postId));
 
-  if (!post?.title) {
-    return { title: "게시글" };
-  }
+  if (!post?.title) return { title: "게시글" };
 
   const description =
     post.content?.replace(/\s+/g, " ").trim().slice(0, 160) ?? siteConfig.description;
   const pageUrl = `${siteConfig.url}/community/${postId}`;
+  const ogImage = post.images?.[0];
 
   return {
     title: post.title,
@@ -29,19 +28,23 @@ export async function generateMetadata({ params }: PostDetailLayoutProps): Promi
       title: post.title,
       description,
       url: pageUrl,
-      images: post.images?.[0] ? [{ url: post.images[0] }] : undefined,
+      images: ogImage ? [{ url: ogImage }] : undefined,
       publishedTime: post.createdAt,
       modifiedTime: post.updatedAt,
       authors: post.nickname ? [post.nickname] : undefined,
       section: post.category,
     },
-    alternates: {
-      canonical: pageUrl,
+    twitter: {
+      card: ogImage ? "summary_large_image" : "summary",
+      title: post.title,
+      description,
+      images: ogImage ? [ogImage] : undefined,
     },
+    alternates: { canonical: pageUrl },
   };
 }
 
-export default async function PostDetailLayout({ children, params }: PostDetailLayoutProps) {
+export default async function PostDetailLayout({ children, params }: Props) {
   const { postId } = await params;
   const post = await getPostServer(Number(postId));
 
