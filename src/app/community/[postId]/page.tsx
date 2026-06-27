@@ -283,7 +283,7 @@ const Page = () => {
         <article className={styles.article}>
           <header className={styles.articleHeader}>
             <h1 className={styles.title}>{postData.title}</h1>
-            <h2 className={styles.subtitle}>
+            <div className={styles.subtitle}>
               <Button
                 leftIcon={getDropdownValuetoIcon(postData.category)}
                 label={postData.category}
@@ -297,7 +297,7 @@ const Page = () => {
                   );
                 }}
               />
-            </h2>
+            </div>
             <address className={styles.author}>
               <Profile
                 handleProfileClick={handleProfileClick}
