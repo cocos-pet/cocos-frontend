@@ -25,8 +25,7 @@ jobs:
           git config user.email ${{ secrets.EMAIL }}
 
       - name: Push changes to forked-repo
-        run: |
-          git push -f forked-repo main
+        run: bash .github/scripts/sync-to-fork.sh main forked-repo
 
       - name: Clean up
         run: |
