@@ -19,8 +19,11 @@ export const siteConfig = {
   ],
   url: SITE_URL,
   logoUrl: `${SITE_URL}/cocos2.svg`,
+  defaultOgImageUrl: `${SITE_URL}/cocos2.svg`,
   locale: "ko_KR",
 } as const;
+
+export const resolveOgImage = (image?: string) => image || siteConfig.defaultOgImageUrl;
 
 export const isProd = process.env.NEXT_PUBLIC_DEPLOY_ENV === "prod";
 

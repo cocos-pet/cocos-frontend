@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import { getPostServer } from "@api/domain/community/post/server";
-import { siteConfig } from "@shared/constant/site";
+import { siteConfig, resolveOgImage } from "@shared/constant/site";
 
 type Props = {
   children: ReactNode;
@@ -17,7 +17,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const description =
     post.content?.replace(/\s+/g, " ").trim().slice(0, 160) ?? siteConfig.description;
   const pageUrl = `${siteConfig.url}/community/${postId}`;
-  const ogImage = post.images?.[0];
+  const ogImageUrl = resolveOgImage(post.images?.[0]);
 
   return {
     title: post.title,
@@ -27,17 +27,26 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: post.title,
       description,
       url: pageUrl,
-      images: ogImage ? [{ url: ogImage }] : undefined,
+      siteName: siteConfig.name,
+      locale: siteConfig.locale,
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
       publishedTime: post.createdAt,
       modifiedTime: post.updatedAt,
       authors: post.nickname ? [post.nickname] : undefined,
       section: post.category,
     },
     twitter: {
-      card: ogImage ? "summary_large_image" : "summary",
+      card: "summary_large_image",
       title: post.title,
       description,
-      images: ogImage ? [ogImage] : undefined,
+      images: [ogImageUrl],
     },
     alternates: { canonical: pageUrl },
   };
