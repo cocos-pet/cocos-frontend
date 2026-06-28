@@ -299,6 +299,7 @@ const PostDetailContent = ({ postId, initialPost }: PostDetailContentProps) => {
               />
             </address>
           </header>
+          <h1 className={styles.title}>{postData.title}</h1>
 
           <div className={styles.articleBody}>
             <p className={styles.content}>{postData.content}</p>
