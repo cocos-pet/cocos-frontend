@@ -1,5 +1,6 @@
-import { useQuery } from "@tanstack/react-query";
-import { getLocation, getMemberLocation } from "./index";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { getLocation, getMemberLocation, updateMemberLocation } from "./index";
+import { UpdateMemberLocationRequest } from "./types";
 
 export const QUERY_KEY = {
   LOCATION: "location",
@@ -17,5 +18,12 @@ export const useGetMemberLocation = () => {
   return useQuery({
     queryKey: [QUERY_KEY.MEMBER_LOCATION],
     queryFn: () => getMemberLocation(),
+  });
+};
+
+export const useUpdateMemberLocation = () => {
+  return useMutation({
+    mutationFn: (locationData: UpdateMemberLocationRequest) =>
+      updateMemberLocation(locationData),
   });
 };

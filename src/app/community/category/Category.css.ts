@@ -15,6 +15,7 @@ export const categoryContainer = style({
 });
 
 export const postsContainer = style({
+  marginTop: "6.4rem",
   padding: "1.6rem 2rem 2rem 2rem",
   display: "flex",
   flexDirection: "column",
