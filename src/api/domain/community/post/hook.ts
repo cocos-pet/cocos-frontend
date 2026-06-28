@@ -34,12 +34,16 @@ export const COMMENT_QUERY_KEY = {
  * @param postId
  */
 
-export const usePostGet = (postId: number) => {
+export const usePostGet = (
+  postId: number,
+  initialPost?: Awaited<ReturnType<typeof getPost>> | null,
+) => {
   return useQuery({
     queryKey: POST_QUERY_KEY.POST_QUERY_KEY(postId),
-    queryFn: () => {
-      return getPost(postId);
-    },
+    queryFn: () => getPost(postId),
+    initialData: initialPost ?? undefined,
+    enabled: initialPost !== null,
+    staleTime: initialPost ? 300_000 : 0,
   });
 };
 

@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 import { Metadata } from "next";
 import { getPostServer } from "@api/domain/community/post/server";
-import PostArticleJsonLd from "@shared/component/Seo/PostArticleJsonLd";
 import { siteConfig } from "@shared/constant/site";
 
 type Props = {
@@ -44,14 +43,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default async function PostDetailLayout({ children, params }: Props) {
-  const { postId } = await params;
-  const post = await getPostServer(Number(postId));
-
-  return (
-    <>
-      {post?.title && <PostArticleJsonLd post={post} postId={postId} />}
-      {children}
-    </>
-  );
+export default function PostDetailLayout({ children }: { children: ReactNode }) {
+  return <>{children}</>;
 }

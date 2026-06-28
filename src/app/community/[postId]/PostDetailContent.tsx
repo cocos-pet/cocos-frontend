@@ -270,7 +270,6 @@ const PostDetailContent = ({ postId, initialPost }: PostDetailContentProps) => {
       <div className={styles.container} onClick={onModalClose}>
         <article className={styles.article}>
           <header className={styles.articleHeader}>
-            <h1 className={styles.title}>{postData.title}</h1>
             <div className={styles.subtitle}>
               <Button
                 leftIcon={getDropdownValuetoIcon(postData.category)}
