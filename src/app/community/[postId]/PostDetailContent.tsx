@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import * as Sentry from "@sentry/nextjs";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav.tsx";
 import {
   IcCuriousActive,
@@ -122,10 +123,11 @@ const PostDetailContent = ({ postId, initialPost }: PostDetailContentProps) => {
           onSuccess: () => {
             onClearClick();
           },
-          onError: () => {},
+          onError: (error) => {
+            Sentry.captureException(error);
+          },
         },
       );
-      onClearClick();
     } else {
       commentPost(
         {
@@ -135,10 +137,11 @@ const PostDetailContent = ({ postId, initialPost }: PostDetailContentProps) => {
           onSuccess: () => {
             onClearClick();
           },
-          onError: () => {},
+          onError: (error) => {
+            Sentry.captureException(error);
+          },
         },
       );
-      onClearClick();
     }
   };
 
