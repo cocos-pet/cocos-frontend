@@ -60,7 +60,7 @@ const PostDetailContent = ({ postId, initialPost }: PostDetailContentProps) => {
   const router = useRouter();
   const { openModalId, setOpenModalId } = useModalStore();
   const { data: postData, isLoading } = usePostGet(Number(postId), initialPost);
-  const { data: commentsData } = useCommentsGet(Number(postId));
+  const { data: commentsData } = useCommentsGet(Number(postId), initialPost);
 
   const { mutate: likePost } = useLikePost(postId);
   const { mutate: likeDelete } = useDeleteLike(postId);

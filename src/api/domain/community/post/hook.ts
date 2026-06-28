@@ -78,12 +78,14 @@ export const useDeleteLike = (postId: string) => {
  * @param postId
  */
 
-export const useCommentsGet = (postId: number) => {
+export const useCommentsGet = (
+  postId: number,
+  initialPost?: Awaited<ReturnType<typeof getPost>> | null,
+) => {
   return useQuery({
     queryKey: COMMENT_QUERY_KEY.COMMENTS_QUERY_KEY(postId),
-    queryFn: () => {
-      return getComments(postId);
-    },
+    queryFn: () => getComments(postId),
+    enabled: initialPost !== null,
   });
 };
 
