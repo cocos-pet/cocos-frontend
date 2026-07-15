@@ -1,5 +1,10 @@
 import { font, semanticColor } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
+
+const pulse = keyframes({
+  "0%, 100%": { opacity: 1 },
+  "50%": { opacity: 0.4 },
+});
 
 export const hotPostContainer = style({
   display: "flex",
@@ -49,6 +54,8 @@ export const hotPostListContainer = style({
   border: `0.1rem solid ${semanticColor.text.normal}`,
   borderColor: semanticColor.line.strong,
   width: "100%",
+  minHeight: "18.4rem",
+  boxSizing: "border-box",
 });
 
 export const postContent = style({
@@ -76,3 +83,20 @@ export const contentTitle = style([
     width: "calc(100% - 3.2rem)",
   },
 ]);
+
+export const skeletonRank = style({
+  width: "1.6rem",
+  height: "1.4rem",
+  flexShrink: 0,
+  borderRadius: "0.4rem",
+  backgroundColor: semanticColor.line.strong,
+  animation: `${pulse} 1.5s ease-in-out infinite`,
+});
+
+export const skeletonTitle = style({
+  height: "1.4rem",
+  flex: 1,
+  borderRadius: "0.4rem",
+  backgroundColor: semanticColor.line.strong,
+  animation: `${pulse} 1.5s ease-in-out infinite`,
+});

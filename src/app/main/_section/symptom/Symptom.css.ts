@@ -1,5 +1,10 @@
 import { font, semanticColor } from "@style/styles.css.ts";
-import { style } from "@vanilla-extract/css";
+import { keyframes, style } from "@vanilla-extract/css";
+
+const pulse = keyframes({
+  "0%, 100%": { opacity: 1 },
+  "50%": { opacity: 0.4 },
+});
 
 export const symptomContainer = style({
   display: "flex",
@@ -19,6 +24,7 @@ export const symptomTitle = style([
 export const symptomGrid = style({
   display: "grid",
   gridTemplateColumns: "repeat(5, 1fr)",
+  minHeight: "14.6rem",
 });
 
 export const symptomItem = style({
@@ -35,3 +41,20 @@ export const symptomName = style([
     fontWeight: "500",
   },
 ]);
+
+export const skeletonIcon = style({
+  width: "5.6rem",
+  height: "5.6rem",
+  borderRadius: "50%",
+  backgroundColor: semanticColor.line.strong,
+  animation: `${pulse} 1.5s ease-in-out infinite`,
+});
+
+export const skeletonLabel = style({
+  width: "3.2rem",
+  height: "1.2rem",
+  marginTop: "0.4rem",
+  borderRadius: "0.4rem",
+  backgroundColor: semanticColor.line.strong,
+  animation: `${pulse} 1.5s ease-in-out infinite`,
+});

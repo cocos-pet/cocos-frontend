@@ -7,13 +7,31 @@ import { PATH } from "@route/path.ts";
 import { useRouter } from "next/navigation";
 import { Separated } from "react-simplikit";
 import NoData from "@shared/component/NoData/NoData.tsx";
-import Loading from "@common/component/Loading/Loading.tsx";
 import { If } from "@shared/component/If/if.tsx";
+
+const HOT_POST_SKELETON_COUNT = 5;
+
+const HotPostSkeleton = () => {
+  return (
+    <div className={styles.hotPostListContainer} aria-hidden>
+      <Separated by={<Divider size="popular" />}>
+        {Array.from({ length: HOT_POST_SKELETON_COUNT }).map((_, index) => (
+          <div key={index} className={styles.postlist}>
+            <div className={styles.postContent}>
+              <div className={styles.skeletonRank} />
+              <div className={styles.skeletonTitle} />
+            </div>
+          </div>
+        ))}
+      </Separated>
+    </div>
+  );
+};
 
 const HotPost = () => {
   const router = useRouter();
 
-  const { data: postsData, isLoading, isError } = useQueryGetPopular();
+  const { data: postsData, isLoading } = useQueryGetPopular();
 
   const posts = postsData?.data?.posts || [];
 
@@ -30,7 +48,7 @@ const HotPost = () => {
         <div className={styles.title}>반려인들이 주목하는 글 TOP 5</div>
       </div>
       <If condition={isLoading}>
-        <Loading height={20} />
+        <HotPostSkeleton />
       </If>
       <If condition={!isLoading && posts.length === 0}>
         <NoData label="인기 게시물이 없습니다." style={{ marginTop: "10px" }} />
