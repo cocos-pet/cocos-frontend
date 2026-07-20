@@ -59,7 +59,7 @@ function SymptomContent() {
   return (
     <div className={styles.symptomContainer}>
       <p className={styles.symptomTitle}>증상이 나타나는 부위가 어딘가요?</p>
-      {!showSkeleton ? (
+      {showSkeleton ? (
         <SymptomSkeleton />
       ) : (
         <div className={styles.symptomGrid}>
