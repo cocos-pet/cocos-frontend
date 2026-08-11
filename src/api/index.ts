@@ -1,7 +1,8 @@
 import axios from "axios";
 const PROD_API_URL = "https://www.cocos.p-e.kr/api/prod";
-const DEV_API_URL = "https://www.cocos-dev.r-e.kr/api/dev";
-export const API_BASE_URL = process.env.NEXT_PUBLIC_DEPLOY_ENV === "prod" ? PROD_API_URL : DEV_API_URL;
+const DEV_API_URL = "https://dev.cocos.p-e.kr/api/dev";
+export const API_BASE_URL =
+  process.env.NEXT_PUBLIC_DEPLOY_ENV === "prod" ? PROD_API_URL : DEV_API_URL;
 
 export const getAccessToken = (): string | null => {
   const user = localStorage.getItem("user");
