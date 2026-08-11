@@ -90,18 +90,11 @@ const InterestedDiseases = ({ nickname, isMyPage = true }: InterestedDiseasesPro
       <div className={styles.favoriteHospitalContainer} onClick={handleClickContainer}>
         {displayBodies.length ? (
           <div className={styles.addBox}>
-            <div
-              style={{
-                position: "relative",
-                width: `${displayBodies.length >= 2 ? "42px" : "24px"}`,
-                display: "flex",
-                justifyContent: "center",
-                alignItems: "center",
-              }}
-            >
+            <div className={styles.bodyImageWrapper({ multiple: displayBodies.length >= 2 })}>
               {displayBodies.map((body, index) => (
                 <LazyImage
                   key={body.id ?? index}
+                  className={styles.iconCircleFrame}
                   style={{ position: "absolute", left: index === 0 ? 0 : "18px" }}
                   src={body.image as string}
                   alt={body.name ?? "관심 질병"}
@@ -116,7 +109,9 @@ const InterestedDiseases = ({ nickname, isMyPage = true }: InterestedDiseasesPro
           <div className={styles.addBox}>
             {isMyPage ? (
               <>
-                <IcPlus width={20} height={20} />
+                <div className={styles.plusIconButton}>
+                  <IcPlus width={20} height={20} />
+                </div>
                 관심 질병
               </>
             ) : (

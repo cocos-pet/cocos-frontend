@@ -384,6 +384,38 @@ export const rightContentBox = style([
   },
 ]);
 
+export const iconCircleFrame = style({
+  borderRadius: "100px",
+  border: `1px solid ${color.gray.gray500}`,
+  background: semanticColor.neutral.normal,
+});
+
+export const plusIconButton = style([
+  iconCircleFrame,
+  a.flexRow,
+  a.justifyCenter,
+  a.alignCenter,
+  {
+    width: "2rem",
+    height: "2rem",
+  },
+]);
+
+export const bodyImageWrapper = recipe({
+  base: {
+    position: "relative",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  variants: {
+    multiple: {
+      true: { width: "42px" },
+      false: { width: "24px" },
+    },
+  },
+});
+
 export const grayText = style({
   color: "#BEBEBE",
   fontFamily: "Pretendard",
