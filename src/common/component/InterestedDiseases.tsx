@@ -2,12 +2,16 @@ import { IcPlus } from "@asset/svg";
 import * as styles from "../../app/mypage/_style/mypage.css";
 import React, { useEffect, useState } from "react";
 import LazyImage from "@common/component/LazyImage";
-import Lung from "@asset/image/lung.png";
-import Liver from "@asset/image/liver.png";
 import { useGetPetInfo } from "@api/domain/mypage/hook";
 import { useDiseaseSymptomFilterStore } from "../../app/mypage/_component/DiseaseSymptomBottomSheet/_store/categoryFilter";
 import DiseasesSymptomBottomSheet from "../../app/mypage/_component/DiseaseSymptomBottomSheet/DiseaseSymptomBottomSheet";
 import { useGetBodies, useGetDisease, useGetSymptoms } from "@api/domain/mypage/edit-pet/hook";
+
+interface ConcernBody {
+  id?: number;
+  name?: string;
+  image?: string;
+}
 
 interface InterestedDiseasesPropTypes {
   nickname: string;
@@ -19,6 +23,9 @@ const InterestedDiseases = ({ nickname, isMyPage = true }: InterestedDiseasesPro
   const { data } = useGetPetInfo(nickname);
   // 패치/수정 기준(내 반려동물 기준)
   const { data: petAllInfo } = useGetPetInfo();
+
+  const concernBodies = (data as { concernBodies?: ConcernBody[] })?.concernBodies ?? [];
+  const displayBodies = concernBodies.filter((body) => body.image).slice(0, 2);
 
   const { setOpen, setSelectedChips, setCategory, setCategoryData } = useDiseaseSymptomFilterStore();
 
@@ -81,33 +88,27 @@ const InterestedDiseases = ({ nickname, isMyPage = true }: InterestedDiseasesPro
   return (
     <>
       <div className={styles.favoriteHospitalContainer} onClick={handleClickContainer}>
-        {data.diseases?.length ? (
+        {displayBodies.length ? (
           <div className={styles.addBox}>
             <div
               style={{
                 position: "relative",
-                width: `${data.diseases.length >= 2 ? "42px" : "24px"}`,
+                width: `${displayBodies.length >= 2 ? "42px" : "24px"}`,
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
               }}
             >
-              <LazyImage
-                style={{ position: "absolute", left: 0 }}
-                src={Lung}
-                alt="plusHosptial"
-                width="2rem"
-                height="2rem"
-              />
-              {data.diseases.length >= 2 && (
+              {displayBodies.map((body, index) => (
                 <LazyImage
-                  style={{ position: "absolute", left: "18px" }}
-                  src={Liver}
-                  alt="plusHosptial"
+                  key={body.id ?? index}
+                  style={{ position: "absolute", left: index === 0 ? 0 : "18px" }}
+                  src={body.image as string}
+                  alt={body.name ?? "관심 질병"}
                   width="2rem"
                   height="2rem"
                 />
-              )}
+              ))}
             </div>
             관심 질병
           </div>
