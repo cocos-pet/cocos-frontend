@@ -27,8 +27,8 @@ const nextConfig: NextConfig = {
       "cocos-app.s3.ap-northeast-2.amazonaws.com",
 
       //dev
-      "cocos-app-data-dev.s3.ap-northeast-2.amazonaws.com",
-      "cocos-member-data-dev.s3.ap-northeast-2.amazonaws.com",
+      "cocos-app-dev.s3.ap-northeast-2.amazonaws.com",
+      "cocos-member-dev.s3.ap-northeast-2.amazonaws.com",
     ],
   },
   webpack: (config) => {
