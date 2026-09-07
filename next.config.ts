@@ -21,14 +21,14 @@ const nextConfig: NextConfig = {
   productionBrowserSourceMaps: true,
   images: {
     unoptimized: false,
-    domains: [
+    formats: ["image/avif", "image/webp"],
+    remotePatterns: [
       //prod
-      "cocos-member.s3.ap-northeast-2.amazonaws.com",
-      "cocos-app.s3.ap-northeast-2.amazonaws.com",
-
+      { protocol: "https", hostname: "cocos-member.s3.ap-northeast-2.amazonaws.com" },
+      { protocol: "https", hostname: "cocos-app.s3.ap-northeast-2.amazonaws.com" },
       //dev
-      "cocos-app-dev.s3.ap-northeast-2.amazonaws.com",
-      "cocos-member-dev.s3.ap-northeast-2.amazonaws.com",
+      { protocol: "https", hostname: "cocos-app-dev.s3.ap-northeast-2.amazonaws.com" },
+      { protocol: "https", hostname: "cocos-member-dev.s3.ap-northeast-2.amazonaws.com" },
     ],
   },
   webpack: (config) => {
