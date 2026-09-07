@@ -2,6 +2,7 @@
 
 import * as styles from "./Comment.css";
 import { IcMessage } from "@asset/svg";
+import Image from "next/image";
 import SubCommentList from "../SubComment/SubCommentList";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
@@ -84,8 +85,10 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
     <div className={styles.commentItem} onClick={onModalClose}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img
-            src={comment.profileImage}
+          <Image
+            src={comment.profileImage ?? ""}
+            width={32}
+            height={32}
             className={styles.profileImage}
             alt="프로필 이미지"
             onClick={() => handleProfileClick(comment.nickname as string)}

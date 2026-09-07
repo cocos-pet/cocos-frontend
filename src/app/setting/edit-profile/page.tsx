@@ -1,5 +1,6 @@
 "use client";
 import { IcChevronLeft } from "@asset/svg";
+import Image from "next/image";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { useRouter } from "next/navigation";
 import * as styles from "./ProfileEdit.css";
@@ -30,7 +31,7 @@ const ProfileEdit = () => {
         />
       </div>
       <section className={styles.profileEditWrapper}>
-        <img className={styles.profile} src={member.profileImage} alt="프로필 이미지" />
+        <Image src={member.profileImage ?? ""} width={72} height={72} className={styles.profile} alt="프로필 이미지" />
         <div className={styles.profileContent}>
           <span className={styles.nicknameText}>닉네임</span>
           <Divider size={"small"} />

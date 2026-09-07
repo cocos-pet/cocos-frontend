@@ -1,6 +1,7 @@
 "use client";
 import * as styles from "./SubComment.css";
 import { IcMessage } from "@asset/svg";
+import Image from "next/image";
 import MoreModal from "@shared/component/MoreModal/MoreModal.tsx";
 import useModalStore from "@store/moreModalStore.ts";
 import { commentGetRequestSubCommentType } from "@api/domain/community/post";
@@ -64,8 +65,10 @@ const SubComment = ({
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <img
-            src={subComment.profileImage}
+          <Image
+            src={subComment.profileImage ?? ""}
+            width={32}
+            height={32}
             className={styles.profileImage}
             alt="프로필 이미지"
             onClick={() => handleProfileClick(subComment.nickname as string)}
