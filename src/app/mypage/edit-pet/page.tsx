@@ -1,6 +1,7 @@
 "use client";
 
 import { IcChevronLeft, IcChevronRight, IcEditPen, IcPlus } from "@asset/svg";
+import Image from "next/image";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import { PATH } from "@route/path";
 import { useRouter } from "next/navigation";
@@ -258,7 +259,7 @@ const Page = () => {
       </div>
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
-          <img className={styles.profileImage} alt="프로필 이미지" src={petInfo.petImage} />
+          <Image src={petInfo.petImage ?? ""} width={72} height={72} className={styles.profileImage} alt="프로필 이미지" />
           <span className={styles.nicknameWrapper}>
             {isEditing ? (
               <div
