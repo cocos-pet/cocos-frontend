@@ -31,7 +31,9 @@ const ProfileEdit = () => {
         />
       </div>
       <section className={styles.profileEditWrapper}>
-        <Image src={member.profileImage ?? ""} width={72} height={72} className={styles.profile} alt="프로필 이미지" />
+        {member.profileImage && (
+          <Image src={member.profileImage} width={72} height={72} className={styles.profile} alt="프로필 이미지" />
+        )}
         <div className={styles.profileContent}>
           <span className={styles.nicknameText}>닉네임</span>
           <Divider size={"small"} />
