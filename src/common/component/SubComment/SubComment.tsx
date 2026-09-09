@@ -65,14 +65,16 @@ const SubComment = ({
     <div className={styles.commentItem}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <Image
-            src={subComment.profileImage ?? ""}
-            width={32}
-            height={32}
-            className={styles.profileImage}
-            alt="프로필 이미지"
-            onClick={() => handleProfileClick(subComment.nickname as string)}
-          />
+          {subComment.profileImage && (
+            <Image
+              src={subComment.profileImage}
+              width={32}
+              height={32}
+              className={styles.profileImage}
+              alt="프로필 이미지"
+              onClick={() => handleProfileClick(subComment.nickname as string)}
+            />
+          )}
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {subComment.nickname}

@@ -259,7 +259,9 @@ const Page = () => {
       </div>
       <section className={styles.petEditWrapper}>
         <article className={styles.profileInfo}>
-          <Image src={petInfo.petImage ?? ""} width={72} height={72} className={styles.profileImage} alt="프로필 이미지" />
+          {petInfo.petImage && (
+            <Image src={petInfo.petImage} width={72} height={72} className={styles.profileImage} alt="프로필 이미지" />
+          )}
           <span className={styles.nicknameWrapper}>
             {isEditing ? (
               <div

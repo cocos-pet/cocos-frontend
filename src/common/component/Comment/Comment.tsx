@@ -85,14 +85,16 @@ const Comment = ({ comment, onCommentReplyClick, onDelete, onModalClose }: Comme
     <div className={styles.commentItem} onClick={onModalClose}>
       <div className={styles.contentContainer}>
         <div className={styles.header}>
-          <Image
-            src={comment.profileImage ?? ""}
-            width={32}
-            height={32}
-            className={styles.profileImage}
-            alt="프로필 이미지"
-            onClick={() => handleProfileClick(comment.nickname as string)}
-          />
+          {comment.profileImage && (
+            <Image
+              src={comment.profileImage}
+              width={32}
+              height={32}
+              className={styles.profileImage}
+              alt="프로필 이미지"
+              onClick={() => handleProfileClick(comment.nickname as string)}
+            />
+          )}
           <div className={styles.headerInfo}>
             <span className={styles.nickname}>
               {comment.nickname}
