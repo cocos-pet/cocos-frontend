@@ -3,6 +3,7 @@ import Title from "@app/onboarding/index/common/title/Title";
 import Docs from "@app/onboarding/index/common/docs/Docs";
 import { bodiesGetResponse } from "@api/domain/register-pet/bodies";
 import { ItemType, contentItem } from "./Step1.css";
+import Image from "next/image";
 
 interface Step1Props {
   selectedIds: number[];
@@ -45,7 +46,7 @@ const Step1 = ({ selectedIds, data, onBodyPartSelection }: CombinedStepProps) =>
               }}
               type="button"
             >
-              <img src={body.image} height={56} alt="body-img" />
+              <Image src={body.image ?? ""} width={56} height={56} alt="body-img" />
             </button>
             <span className={styles.spanFont}>{body.name}</span>
           </div>
