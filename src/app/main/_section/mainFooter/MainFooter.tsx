@@ -4,10 +4,11 @@ import Link from "next/link";
 import * as styles from "./MainFooter.css.ts";
 import { IcChevronRight, IcCocos } from "@asset/svg";
 import { Button } from "@common/component/Button";
+import { EXTERNAL_URL } from "@shared/constant/externalUrl";
 
 const MainFooter = () => {
   const handleOpenInquiry = () => {
-    window.open("http://pf.kakao.com/_EFNxcn", "_blank", "noopener,noreferrer");
+    window.open(EXTERNAL_URL.KAKAO_INQUIRY_CHANNEL, "_blank", "noopener,noreferrer");
   };
 
   return (

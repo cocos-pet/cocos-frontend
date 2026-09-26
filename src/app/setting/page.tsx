@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
+import { EXTERNAL_URL } from "@shared/constant/externalUrl";
 import { useLogout } from "@api/domain/setting/hook";
 import { useAuth } from "@providers/AuthProvider";
 import { useEffect } from "react";
@@ -29,7 +30,7 @@ export default function Setting() {
   };
 
   const handleOpenInquiry = () => {
-    window.open("http://pf.kakao.com/_EFNxcn", "_blank", "noopener,noreferrer");
+    window.open(EXTERNAL_URL.KAKAO_INQUIRY_CHANNEL, "_blank", "noopener,noreferrer");
   };
 
   return (
