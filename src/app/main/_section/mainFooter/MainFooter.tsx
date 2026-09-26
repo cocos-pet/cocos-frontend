@@ -2,12 +2,23 @@
 
 import Link from "next/link";
 import * as styles from "./MainFooter.css.ts";
-import {IcCocos} from "@asset/svg";
+import { IcChevronRight, IcCocos } from "@asset/svg";
+import { Button } from "@common/component/Button";
 
 const MainFooter = () => {
+  const handleOpenInquiry = () => {
+    window.open("http://pf.kakao.com/_EFNxcn", "_blank", "noopener,noreferrer");
+  };
+
   return (
     <div className={styles.footerContainer}>
       <IcCocos />
+      <Button
+        width="fit-content"
+        label="1:1 문의하기"
+        rightIcon={<IcChevronRight width={20} height={20} stroke="#fff" />}
+        onClick={handleOpenInquiry}
+      />
       <div className={styles.footerDetail}>
         <div>
           <Link
