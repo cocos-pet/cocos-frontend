@@ -1,6 +1,6 @@
 "use client";
 
-import { IcChevronLeft, IcEditPen, IcOut } from "@asset/svg";
+import { IcChevronLeft, IcEditPen, IcHeadset, IcOut } from "@asset/svg";
 import HeaderNav from "@common/component/HeaderNav/HeaderNav";
 import * as styles from "./page.css";
 import Divider from "@common/component/Divider/Divider";
@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import SimpleBottomSheet from "@common/component/SimpleBottomSheet/SimpleBottomSheet";
 import useSimpleBottomSheet from "@shared/hook/useSimpleBottomSheet";
 import { PATH } from "@route/path";
+import { EXTERNAL_URL } from "@shared/constant/externalUrl";
 import { useLogout } from "@api/domain/setting/hook";
 import { useAuth } from "@providers/AuthProvider";
 import { useEffect } from "react";
@@ -26,6 +27,10 @@ export default function Setting() {
 
   const handleMoveWithdraw = () => {
     router.push(PATH.SETTING.WITHDRAW);
+  };
+
+  const handleOpenInquiry = () => {
+    window.open(EXTERNAL_URL.KAKAO_INQUIRY_CHANNEL, "_blank", "noopener,noreferrer");
   };
 
   return (
@@ -50,11 +55,23 @@ export default function Setting() {
           </div>
         </div>
 
+        <div className={styles.myprofileSettingWrapper}>
+          <span className={styles.myprofileText}>고객센터</span>
+          <Divider size={"small"} />
+          <div className={styles.editMyProfile}>
+            <span className={styles.myProfileSpan} onClick={handleOpenInquiry}>
+              <IcHeadset width={20} height={20} />
+              <span className={styles.myProfileSpanText}>1:1 문의하기</span>
+            </span>
+          </div>
+        </div>
+
         <div className={styles.accountWrapper}>
           <span className={styles.myprofileText}>계정</span>
           <Divider size={"small"} />
           <div className={styles.editMyProfile}>
             <span className={styles.myProfileSpan} onClick={() => openBottomSheet()}>
+              <IcOut width={20} height={20} />
               <span className={styles.myProfileSpanText}>로그아웃</span>
             </span>
           </div>
