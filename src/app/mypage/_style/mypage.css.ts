@@ -2,6 +2,7 @@ import { color, font, semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
 import { recipe } from "@vanilla-extract/recipes";
 import * as a from "@shared/style/atomic.css";
+import { media } from "@style/breakpoints";
 
 export const mypageContainer = style([
   a.fullWidth,
@@ -31,9 +32,14 @@ export const unloginProfile = style([
   a.cardBase,
   a.gap12,
   {
-    width: "33.5rem",
+    width: "100%",
+    maxWidth: "33.5rem",
     minHeight: "13.8rem",
     padding: "1.6rem",
+    "@media": {
+      [media.tablet]: { maxWidth: "40rem" },
+      [media.laptop]: { maxWidth: "48rem" },
+    },
   },
 ]);
 
@@ -59,7 +65,12 @@ export const userProfileContainer = style([
 export const loginProfileContainer = style([
   a.cardBase,
   {
-    width: "33.5rem",
+    width: "100%",
+    maxWidth: "33.5rem",
+    "@media": {
+      [media.tablet]: { maxWidth: "40rem" },
+      [media.laptop]: { maxWidth: "48rem" },
+    },
   },
 ]);
 
