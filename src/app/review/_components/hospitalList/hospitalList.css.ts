@@ -1,9 +1,14 @@
 import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
+import { media, pagePadding } from "@style/breakpoints";
 
 export const container = style({
-  margin: "0rem 2rem",
-  width: "calc(100% - 4rem)",
+  width: "100%",
+  padding: `0 ${pagePadding.mobile}`,
+  "@media": {
+    [media.tablet]: { padding: `0 ${pagePadding.tablet}` },
+    [media.laptop]: { padding: `0 ${pagePadding.laptop}` },
+  },
 });
 
 export const title = style([
