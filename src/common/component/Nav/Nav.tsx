@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import * as styles from "./Nav.css";
 import { NAV_CONTENT } from "./constant";
@@ -11,6 +11,7 @@ type CommunityContent = {
   id: string;
   name?: string;
   image?: string;
+  icon?: ReactNode;
   type?: string;
 };
 
@@ -58,13 +59,17 @@ const Nav = ({ content, type = "nav" }: Props) => {
                 type,
               })}
             >
-              {communityItem.image && (
-                <LazyImage
-                  src={communityItem.image}
-                  alt={communityItem.name || "Unnamed"}
-                  width={"7.2rem"}
-                  height={"7.2rem"}
-                />
+              {communityItem.icon ? (
+                communityItem.icon
+              ) : (
+                communityItem.image && (
+                  <LazyImage
+                    src={communityItem.image}
+                    alt={communityItem.name || "Unnamed"}
+                    width={"7.2rem"}
+                    height={"7.2rem"}
+                  />
+                )
               )}
               <span>{communityItem.name || "Unnamed"}</span>
             </button>

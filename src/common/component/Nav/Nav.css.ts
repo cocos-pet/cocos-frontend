@@ -1,6 +1,7 @@
 import { recipe } from "@vanilla-extract/recipes";
 import { font, color } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
+import { contentMaxWidth, media, pagePadding } from "@style/breakpoints";
 
 export const container = style([
   font.label01,
@@ -8,11 +9,28 @@ export const container = style([
     display: "flex",
     justifyContent: "space-between",
     gap: "1.6rem",
-    paddingLeft: "2rem",
-    paddingRight: "2rem",
+    paddingLeft: pagePadding.mobile,
+    paddingRight: pagePadding.mobile,
     width: "100%",
-    maxWidth: "76.8rem",
+    maxWidth: contentMaxWidth.mobile,
     height: "8rem",
+    margin: "0 auto",
+    backgroundColor: color.gray.gray000,
+    "@media": {
+      [media.tablet]: {
+        justifyContent: "center",
+        gap: "4.8rem",
+        maxWidth: contentMaxWidth.tablet,
+        paddingLeft: pagePadding.tablet,
+        paddingRight: pagePadding.tablet,
+      },
+      [media.laptop]: {
+        gap: "6.4rem",
+        maxWidth: contentMaxWidth.laptop,
+        paddingLeft: pagePadding.laptop,
+        paddingRight: pagePadding.laptop,
+      },
+    },
   },
 ]);
 
@@ -31,7 +49,6 @@ export const navItem = recipe({
       true: {
         color: color.gray.gray900,
         font: font.body01,
-        
       },
       false: {
         color: color.gray.gray500,
