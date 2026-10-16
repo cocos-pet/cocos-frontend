@@ -1,6 +1,7 @@
 import { container, deleteButton, ghost, image } from "./ImageCover.css.ts";
 import React from "react";
 import { IcDeleteWhite } from "@asset/svg";
+import Image from "next/image";
 
 interface ImageSlideType {
   key?: string;
@@ -25,7 +26,7 @@ const ImageCover = ({ imageId, imageSrc, onDeleteClick }: ImageSlideType) => {
         className={deleteButton}
         onClick={() => onDeleteClick(imageId)}
       />
-      <img src={imageSrc} alt="이미지" className={image} />
+      <Image src={imageSrc} alt="이미지" width={104} height={104} className={image} />
       <div className={ghost} />
     </div>
   );

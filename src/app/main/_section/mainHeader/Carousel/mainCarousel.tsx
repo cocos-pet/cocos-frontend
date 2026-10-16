@@ -2,9 +2,10 @@ import useEmblaCarousel from "embla-carousel-react";
 import { useEffect, useState } from "react";
 import * as styles from "./mainCarousel.css.ts";
 import Image, { StaticImageData } from "next/image";
+import Link from "next/link";
 
 interface MainCarouselProps {
-  images: { id: string; src: StaticImageData | string }[];
+  images: { id: string; src: StaticImageData | string; href?: string }[];
 }
 
 const MainCarousel = ({ images }: MainCarouselProps) => {
@@ -40,14 +41,27 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
       <div className={styles.carouselSlides}>
         {images.map((image) => (
           <div key={image.id} className={styles.carouselSlide}>
-            <Image
-              src={image.src}
-              alt={`Slide ${image.id}`}
-              className={styles.image}
-              width={390}
-              height={156}
-              sizes="(min-width: 1440px) 1280px, (min-width: 1024px) 960px, 100vw"
-            />
+            {image.href ? (
+              <Link href={image.href}>
+                <Image
+                  src={image.src}
+                  alt={`Slide ${image.id}`}
+                  className={styles.image}
+                  width={390}
+                  height={156}
+                  sizes="(min-width: 1440px) 1280px, (min-width: 1024px) 960px, 100vw"
+                />
+              </Link>
+            ) : (
+              <Image
+                src={image.src}
+                alt={`Slide ${image.id}`}
+                className={styles.image}
+                width={390}
+                height={156}
+                sizes="(min-width: 1440px) 1280px, (min-width: 1024px) 960px, 100vw"
+              />
+            )}
           </div>
         ))}
       </div>
