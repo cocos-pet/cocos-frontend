@@ -40,7 +40,14 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
       <div className={styles.carouselSlides}>
         {images.map((image) => (
           <div key={image.id} className={styles.carouselSlide}>
-            <Image src={image.src} alt={`Slide ${image.id}`} className={styles.image} width={390} height={156} />
+            <Image
+              src={image.src}
+              alt={`Slide ${image.id}`}
+              className={styles.image}
+              width={390}
+              height={156}
+              sizes="(min-width: 1440px) 1280px, (min-width: 1024px) 960px, 100vw"
+            />
           </div>
         ))}
       </div>
