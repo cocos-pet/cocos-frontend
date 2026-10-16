@@ -1,6 +1,7 @@
 import { font, color } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
 import { recipe, RecipeVariants } from "@vanilla-extract/recipes";
+import { contentMaxWidth, media, pagePadding } from "@style/breakpoints";
 
 export const headerItem = recipe({
   base: [
@@ -11,12 +12,17 @@ export const headerItem = recipe({
       alignItems: "center",
       justifyItems: "center",
       width: "100%",
-      maxWidth: "76.8rem",
+      maxWidth: contentMaxWidth.mobile,
       height: "6.4rem",
       padding: "1.8rem 2.2rem",
+      margin: "0 auto",
       borderBottom: `1px solid ${color.gray.gray200}`,
       backgroundColor: color.gray.gray000,
       color: color.gray.gray900,
+      "@media": {
+        [media.tablet]: { maxWidth: contentMaxWidth.tablet, padding: `1.8rem ${pagePadding.tablet}` },
+        [media.laptop]: { maxWidth: contentMaxWidth.laptop, padding: `1.8rem ${pagePadding.laptop}` },
+      },
     },
   ],
   variants: {
