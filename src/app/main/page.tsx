@@ -19,7 +19,7 @@ import { useRouter } from "next/navigation";
 import HotHospital from "@app/main/_section/hotHospital/HotHospital.tsx";
 import { useAuth } from "@providers/AuthProvider";
 
-export default function Page() {
+const Page = () => {
   const router = useRouter();
   const { isAuthenticated } = useAuth();
   const { data: myAlarmData } = useInfiniteNotifications("MY", isAuthenticated);
@@ -67,21 +67,20 @@ export default function Page() {
       </div>
       <Symptom />
       <Divider />
-      <HotPost />
-      <Divider />
-      <HotHospital />
+      <div className={styles.contentRow}>
+        <HotPost />
+        <div className={styles.dividerInRow}>
+          <Divider />
+        </div>
+        <HotHospital />
+      </div>
       <MainFooter />
       <Spacing marginBottom="8" />
-      <span
-        style={{
-          position: "fixed",
-          bottom: "0",
-          backgroundColor: "white",
-          width: "100%",
-        }}
-      >
+      <div className={styles.navWrapper}>
         <Nav content={NAV_CONTENT} type={"nav"} />
-      </span>
+      </div>
     </div>
   );
-}
+};
+
+export default Page;

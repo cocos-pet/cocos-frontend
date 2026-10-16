@@ -14,7 +14,7 @@ const Banner = () => {
       <LazyImage
         src={bannerInquiry}
         width="100%"
-        height="10rem"
+        height="100%"
         alt="1:1 문의하기 배너"
         className={styles.bannerImage}
       />

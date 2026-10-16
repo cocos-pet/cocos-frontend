@@ -11,7 +11,7 @@ interface HeaderSectionProps {
 const HeaderSection = ({ onNavigateToSettings }: HeaderSectionProps) => {
   const { isAuthenticated } = useAuth();
   return (
-    <span style={{ position: "fixed", top: 0, width: "100%", zIndex: 10 }}>
+    <span style={{ position: "fixed", top: 0, left: 0, width: "100%", zIndex: 10 }}>
       <HeaderNav
         centerContent={"마이페이지"}
         rightBtn={

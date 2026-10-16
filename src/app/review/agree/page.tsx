@@ -68,11 +68,13 @@ const page = () => {
   return (
     <div className={style.backgroundColor}>
       <div className={style.headerContainer}>
-        <HeaderNav
-          centerContent="후기 작성 유의사항"
-          type="noBackground"
-          leftIcon={<IcLeftarrow style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
-        />
+        <div className={style.headerInner}>
+          <HeaderNav
+            centerContent="후기 작성 유의사항"
+            type="noBackground"
+            leftIcon={<IcLeftarrow style={{ width: 24, height: 24 }} onClick={handleGoHospitalDetail} />}
+          />
+        </div>
       </div>
       <div className={style.wrapper}>
         <section className={style.topLayout}>

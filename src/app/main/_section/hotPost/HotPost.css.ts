@@ -1,11 +1,16 @@
 import { font, semanticColor } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
+import { media, pagePadding } from "@style/breakpoints";
 
 export const hotPostContainer = style({
   display: "flex",
   width: "100%",
   flexDirection: "column",
-  padding: "3.2rem 2rem 3.2rem 2rem",
+  padding: `3.2rem ${pagePadding.mobile} 3.2rem ${pagePadding.mobile}`,
+  "@media": {
+    [media.tablet]: { padding: "3.2rem 0" },
+    [media.laptop]: { padding: "4rem 0" },
+  },
 });
 
 export const titleContainer = style({
@@ -45,10 +50,14 @@ export const hotPostListContainer = style({
   alignItems: "flex-start",
   alignSelf: "stretch",
   gap: "1.2rem",
-  borderRadius: "16px",
+  borderRadius: "1.6rem",
   border: `0.1rem solid ${semanticColor.text.normal}`,
   borderColor: semanticColor.line.strong,
   width: "100%",
+  "@media": {
+    [media.tablet]: { padding: "2rem" },
+    [media.laptop]: { padding: "2.4rem", gap: "1.6rem" },
+  },
 });
 
 export const postContent = style({
