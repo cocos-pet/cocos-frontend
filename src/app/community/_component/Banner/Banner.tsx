@@ -5,7 +5,7 @@ import LazyImage from "@common/component/LazyImage.tsx";
 const Banner = () => {
   return (
     <div className={styles.bannerContainer}>
-      <LazyImage src={banner} width="100%" height="10rem" alt="배너 이미지" className={styles.bannerImage} />
+      <LazyImage src={banner} width="100%" height="100%" alt="배너 이미지" className={styles.bannerImage} />
     </div>
   );
 };
