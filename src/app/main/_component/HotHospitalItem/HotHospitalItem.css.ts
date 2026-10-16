@@ -1,5 +1,6 @@
 import { color, font, semanticColor } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
+import { media } from "@style/breakpoints";
 
 export const hotHospital = style({
   padding: "1.6rem 0",
@@ -9,6 +10,9 @@ export const hotHospital = style({
   gap: "1.2rem",
   width: "100%",
   overflow: "hidden",
+  "@media": {
+    [media.laptop]: { padding: "2rem 0", gap: "1.6rem" },
+  },
 });
 
 export const hotHospitalContent = style({
