@@ -1,16 +1,19 @@
 "use client";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
+import Chip from "@common/component/Chip/Chip";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path.ts";
-import { useSearchGet, useSearchPost } from "@api/domain/community/search/hook.ts";
+import { useSearchGet, useSearchPopularGet, useSearchPost } from "@api/domain/community/search/hook.ts";
 import { useFilterStore } from "@store/filter.ts";
 import dynamic from "next/dynamic";
 import { styles } from "./Search.css.ts";
 import { useAuth } from "@providers/AuthProvider.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+
+const RECENT_KEYWORD_MAX = 5;
 
 function Search() {
   const router = useRouter();
@@ -19,6 +22,7 @@ function Search() {
   const { mutate } = useSearchPost();
   const { clearAllChips } = useFilterStore();
   const { data: recentSearchData, isLoading } = useSearchGet(isAuthenticated);
+  const { data: popularSearchData } = useSearchPopularGet();
 
   const inputRef = useRef<HTMLInputElement>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -78,6 +82,9 @@ function Search() {
 
   if (isLoading) return <Loading height={45} />;
 
+  const recentKeywords = (recentSearchData?.keywords ?? []).slice(0, RECENT_KEYWORD_MAX);
+  const popularKeywords = popularSearchData?.keywords ?? [];
+
   return (
     <div className={styles.container}>
       <div className={styles.searchHeader}>
@@ -92,22 +99,44 @@ function Search() {
           onClearClick={() => setSearchText("")}
         />
       </div>
-      {isAuthenticated && (
-        <div className={styles.searchContent}>
+
+      {isAuthenticated && recentKeywords.length > 0 && (
+        <div className={styles.section}>
           <div className={styles.title}>최근 검색 기록</div>
-          <ul className={styles.list}>
-            {recentSearchData?.keywords?.map((data) => (
-              <li
+          <div className={styles.chipList}>
+            {recentKeywords.map((data) => (
+              <button
                 key={data.id}
-                className={styles.listItem}
+                type="button"
+                className={styles.chipButton}
                 onClick={() => {
                   if (data.content) handleNavigate(data.content);
                 }}
               >
-                {data.content || ""}
-              </li>
+                <Chip label={data.content ?? ""} color="border" size="small" />
+              </button>
             ))}
-          </ul>
+          </div>
+        </div>
+      )}
+
+      {popularKeywords.length > 0 && (
+        <div className={styles.section}>
+          <div className={styles.sectionHeader}>
+            <div className={styles.sectionLabel}>인기 게시글을 확인해보세요</div>
+            <div className={styles.sectionTitle}>반려인들이 주목하는 글 TOP 5</div>
+          </div>
+          <div className={styles.popularCard}>
+            {popularKeywords.map((keyword, index) => (
+              <React.Fragment key={`${keyword}-${index}`}>
+                {index > 0 && <hr className={styles.popularDivider} />}
+                <button type="button" className={styles.popularItem} onClick={() => handleNavigate(keyword)}>
+                  <span className={styles.popularRank}>{index + 1}</span>
+                  <span className={styles.popularKeyword}>{keyword}</span>
+                </button>
+              </React.Fragment>
+            ))}
+          </div>
         </div>
       )}
     </div>

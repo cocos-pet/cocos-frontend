@@ -7,6 +7,7 @@ export const API_PATH = {
   PETS: "pets",
   SYMPTOMS: "symptoms",
   SEARCH: "search",
+  SEARCH_POPULAR: "search/popular",
   BODY: "bodies",
   DISEASE: "diseases",
 
