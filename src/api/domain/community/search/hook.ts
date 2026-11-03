@@ -1,5 +1,6 @@
 import {
   getSearch,
+  getSearchPopular,
   postPostFilters,
   postPostFiltersRequest,
   postPostFiltersRequestType,
@@ -12,6 +13,7 @@ import { paths } from "@type/schema";
 
 const SEARCH_QUERY_KEY = {
   SEARCH_QUERY_KEY: () => ["search"],
+  SEARCH_POPULAR_QUERY_KEY: () => ["searchPopular"],
   SEARCH_POST_QUERY_KEY: () => ["searchPost"],
   SEARCH_POST_FILTERS_QUERY_KEY: () => ["postFilters"],
 };
@@ -26,6 +28,16 @@ export const useSearchGet = (enabled: boolean) => {
       return getSearch();
     },
     enabled
+  });
+};
+
+/**
+ * @description 인기 검색어 GET API (로그인 불필요)
+ */
+export const useSearchPopularGet = () => {
+  return useQuery({
+    queryKey: SEARCH_QUERY_KEY.SEARCH_POPULAR_QUERY_KEY(),
+    queryFn: () => getSearchPopular(),
   });
 };
 

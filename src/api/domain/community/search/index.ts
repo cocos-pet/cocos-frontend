@@ -17,6 +17,24 @@ export const getSearch = async () => {
 };
 
 /**
+ * @description 인기 검색어 GET API (로그인 불필요)
+ */
+export interface PopularKeywordResponse {
+  keywords: string[];
+}
+
+interface BaseResponsePopularKeyword {
+  code: number;
+  message: string;
+  data: PopularKeywordResponse;
+}
+
+export const getSearchPopular = async () => {
+  const { data } = await get<BaseResponsePopularKeyword>(API_PATH.SEARCH_POPULAR, {});
+  return data.data;
+};
+
+/**
  * @description 최근 검색어 POST API
  */
 
