@@ -7,6 +7,7 @@ import { HospitalListResponse, Hospital } from "@api/domain/hospitals";
 import { PATH } from "@route/path";
 import { DEFAULT_LOCATION } from "@app/review/_constant/locationConfig";
 import LazyImage from "@common/component/LazyImage";
+import { getMockPositiveKeywords } from "./positiveKeywordMock";
 
 interface Location {
   id: number;
@@ -52,12 +53,23 @@ export default function HospitalList({ title, highlightText, selectedLocation }:
       </h2>
       <div className={styles.listContainer}>
         {data?.pages?.map((page: HospitalListResponse, pageIndex: number) =>
-          page.hospitals?.map((hospital: Hospital) => (
+          page.hospitals?.map((hospital: Hospital) => {
+            // TODO: 서버 긍정 키워드 필드 연동 시 교체 (현재는 목업 데이터)
+            const positiveKeywords = getMockPositiveKeywords(hospital.id);
+            return (
             <div key={`${pageIndex}-${hospital.id}`} className={styles.hospitalItem}>
               <Link href={`${PATH.HOSPITAL.ROOT}/${hospital.id}`} className={styles.link}>
                 <div className={styles.hospitalInfo}>
                   <h3 className={styles.hospitalName}>{hospital.name}</h3>
                   <p className={styles.hospitalAddress}>{hospital.address}</p>
+                  {positiveKeywords.length > 0 && (
+                    <p className={styles.positiveKeywords}>
+                      <span className={styles.positiveEmoji} aria-label="긍정">
+                        👍
+                      </span>
+                      {positiveKeywords.join(", ")}
+                    </p>
+                  )}
                   <p className={styles.reviewCount}>리뷰 {hospital.reviewCount}</p>
                 </div>
                 {hospital.image && (
@@ -71,7 +83,8 @@ export default function HospitalList({ title, highlightText, selectedLocation }:
                 )}
               </Link>
             </div>
-          )),
+            );
+          }),
         )}
         <div ref={ref}>{isFetchingNextPage && "로딩 중"}</div>
       </div>
