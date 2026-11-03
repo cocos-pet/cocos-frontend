@@ -69,6 +69,26 @@ export const reviewCount = style([
   },
 ]);
 
+export const positiveKeywords = style([
+  font.body01,
+  {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.4rem",
+    color: color.primary.blue700,
+    fontWeight: 600,
+    overflow: "hidden",
+    textOverflow: "ellipsis",
+    whiteSpace: "nowrap",
+  },
+]);
+
+export const positiveEmoji = style({
+  flexShrink: 0,
+  fontSize: "1.4rem",
+  lineHeight: 1,
+});
+
 export const hospitalImage = style({
   borderRadius: "0.8rem",
   objectFit: "cover",
