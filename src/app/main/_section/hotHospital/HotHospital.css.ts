@@ -1,11 +1,16 @@
 import { color, font, semanticColor } from "@style/styles.css.ts";
 import { style } from "@vanilla-extract/css";
+import { media, pagePadding } from "@style/breakpoints";
 
 export const hotHospitalContainer = style({
   display: "flex",
   width: "100%",
   flexDirection: "column",
-  padding: "3.2rem 2rem 3.2rem 2rem",
+  padding: `3.2rem ${pagePadding.mobile} 3.2rem ${pagePadding.mobile}`,
+  "@media": {
+    [media.tablet]: { padding: "3.2rem 0" },
+    [media.laptop]: { padding: "4rem 0" },
+  },
 });
 
 export const titleContainer = style({

@@ -1,14 +1,24 @@
 import { style } from "@vanilla-extract/css";
 import { font, color } from "@style/styles.css.ts";
+import { fixedContentWidth } from "@style/layout.css";
 
+// 고정 헤더는 뷰포트 전체 폭이라, 콘텐츠 바깥 여백은 html 레터박스 배경(#FBFBFB)으로 두고
+// 콘텐츠 폭만큼만 안쪽에서 시안색 배경을 그린다 (HeaderNav가 type="noBackground"라 배경이 없기 때문)
 export const headerContainer = style({
   position: "fixed",
   top: 0,
   left: 0,
-  right: 0,
-  background: "linear-gradient(180deg, #DEFEFF 0%, #DEFEFF 100%)",
+  width: "100%",
+  backgroundColor: "#FBFBFB",
   zIndex: 20,
 });
+
+export const headerInner = style([
+  fixedContentWidth,
+  {
+    background: "linear-gradient(180deg, #DEFEFF 0%, #DEFEFF 100%)",
+  },
+]);
 
 export const backgroundColor = style({
   background: "var(--blue-bg, linear-gradient(180deg, var(--primary-blue100, #DEFEFF) 0%, #FFF 36.13%))",

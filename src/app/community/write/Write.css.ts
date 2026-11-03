@@ -1,5 +1,15 @@
 import { style } from "@vanilla-extract/css";
 import { color } from "@style/styles.css.ts";
+import { contentMaxWidth, media } from "@style/breakpoints";
+
+export const headerContainer = style({
+  position: "fixed",
+  top: 0,
+  left: 0,
+  width: "100%",
+  backgroundColor: "#fff",
+  zIndex: 20,
+});
 
 export const writeWrap = style({
   backgroundColor: color.gray.gray100,
@@ -33,8 +43,12 @@ export const bottomButton = style({
   left: "50%",
   transform: "translateX(-50%)",
   width: "100vw",
-  maxWidth: "76.8rem",
+  maxWidth: contentMaxWidth.mobile,
   backgroundColor: color.gray.gray000,
   padding: "1.2rem 2rem 3.2rem 2rem",
   zIndex: 20,
+  "@media": {
+    [media.tablet]: { maxWidth: contentMaxWidth.tablet },
+    [media.laptop]: { maxWidth: contentMaxWidth.laptop },
+  },
 });

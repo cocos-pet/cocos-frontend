@@ -1,5 +1,6 @@
 import { semanticColor } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
+import { contentMaxWidth, media } from "@style/breakpoints";
 
 export const overlay = style({
   position: "fixed",
@@ -9,9 +10,13 @@ export const overlay = style({
   zIndex: "99",
 
   width: "100%",
-  maxWidth: "76.8rem",
+  maxWidth: contentMaxWidth.mobile,
   height: "100%",
   backgroundColor: "rgba(34, 34, 34, 0.2)",
+  "@media": {
+    [media.tablet]: { maxWidth: contentMaxWidth.tablet },
+    [media.laptop]: { maxWidth: contentMaxWidth.laptop },
+  },
 });
 
 export const bottomSheet = style({

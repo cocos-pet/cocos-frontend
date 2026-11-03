@@ -49,6 +49,7 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
                   className={styles.image}
                   width={390}
                   height={156}
+                  sizes="(min-width: 1440px) 1280px, (min-width: 1024px) 960px, 100vw"
                 />
               </Link>
             ) : (
@@ -58,6 +59,7 @@ const MainCarousel = ({ images }: MainCarouselProps) => {
                 className={styles.image}
                 width={390}
                 height={156}
+                sizes="(min-width: 1440px) 1280px, (min-width: 1024px) 960px, 100vw"
               />
             )}
           </div>

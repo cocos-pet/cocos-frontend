@@ -1,18 +1,27 @@
 import { color, font } from "@style/styles.css";
 import { style } from "@vanilla-extract/css";
+import { contentMaxWidth, media, pagePadding } from "@style/breakpoints";
 
 export const pageWrapper = style({
   position: "fixed",
   width: "100%",
-  maxWidth: "76.8rem",
+  maxWidth: contentMaxWidth.mobile,
   left: "50%",
   transform: "translateX(-50%)",
   top: 0,
   bottom: 0,
+  "@media": {
+    [media.tablet]: { maxWidth: contentMaxWidth.tablet },
+    [media.laptop]: { maxWidth: contentMaxWidth.laptop },
+  },
 });
 
 export const searchBarContainer = style({
-  margin: "1.6rem 2rem 2rem",
+  margin: `1.6rem ${pagePadding.mobile} 2rem`,
+  "@media": {
+    [media.tablet]: { marginLeft: pagePadding.tablet, marginRight: pagePadding.tablet },
+    [media.laptop]: { marginLeft: pagePadding.laptop, marginRight: pagePadding.laptop },
+  },
 });
 
 export const reviewContainer = style({
@@ -36,7 +45,11 @@ export const headerContainer = style({
 
 export const recommendHospital = style({
   marginTop: "2.4rem",
-  padding: "0rem 2rem",
+  padding: `0rem ${pagePadding.mobile}`,
+  "@media": {
+    [media.tablet]: { padding: `0rem ${pagePadding.tablet}` },
+    [media.laptop]: { padding: `0rem ${pagePadding.laptop}` },
+  },
 });
 
 export const recommendTitle = style([
@@ -104,19 +117,28 @@ export const hospitalAddress = style([
   },
 ]);
 
-export const bannerContainer = style({
+// 배너 원본 이미지 비율(1340x400)에 맞춰 폭이 늘어나면 높이도 같이 늘어남
+export const bannerWrapper = style({
   width: "100%",
-  height: "auto",
-  objectFit: "cover",
+  aspectRatio: "1340 / 400",
   borderRadius: "1.6rem",
+  overflow: "hidden",
+});
+
+export const bannerContainer = style({
+  objectFit: "cover",
 });
 
 export const hospitalListText = style([
   font.label01,
   {
     fontWeight: "500",
-    marginLeft: "2rem",
+    marginLeft: pagePadding.mobile,
     marginTop: "2.4rem",
+    "@media": {
+      [media.tablet]: { marginLeft: pagePadding.tablet },
+      [media.laptop]: { marginLeft: pagePadding.laptop },
+    },
   },
 ]);
 
@@ -124,20 +146,24 @@ export const hospitalWrapper = style({
   padding: "0 2rem",
 });
 
+// pageWrapper가 이미 breakpoint에 맞춰 너비를 갖고 있어 별도 maxWidth 불필요
 export const navWrapper = style({
   position: "fixed",
   bottom: 0,
   zIndex: 10,
   backgroundColor: "#fff",
   width: "100%",
-  maxWidth: "76.8rem",
 });
 
 export const floatBtnWrapper = style({
   position: "fixed",
   bottom: "9.6rem",
-  right: "2rem",
+  right: pagePadding.mobile,
   zIndex: 1000,
   display: "flex",
   justifyContent: "flex-end",
+  "@media": {
+    [media.tablet]: { right: pagePadding.tablet },
+    [media.laptop]: { right: pagePadding.laptop },
+  },
 });

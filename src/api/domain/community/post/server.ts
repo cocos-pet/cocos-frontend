@@ -16,6 +16,7 @@ export const getPostServer = cache(async (postId: number): Promise<PostDetail | 
       async () => {
         const res = await fetch(`${API_BASE_URL}/${API_PATH.POST}/${postId}`, {
           next: { revalidate: 300 },
+          signal: AbortSignal.timeout(8000),
         });
         if (!res.ok) return null;
         const json = await res.json();

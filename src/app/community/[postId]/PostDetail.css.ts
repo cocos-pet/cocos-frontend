@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { color, font, semanticColor } from "@style/styles.css.ts";
+import { contentMaxWidth, media } from "@style/breakpoints";
 
 export const styles = {
   headerContainer: style({
@@ -25,8 +26,12 @@ export const styles = {
       alignItems: "center",
       justifyContent: "center",
       width: "100%",
-      maxWidth: "76.8rem",
+      maxWidth: contentMaxWidth.mobile,
       marginTop: "27.821rem",
+      "@media": {
+        [media.tablet]: { maxWidth: contentMaxWidth.tablet },
+        [media.laptop]: { maxWidth: contentMaxWidth.laptop },
+      },
     },
   ]),
 
@@ -170,9 +175,13 @@ export const styles = {
     left: "50%",
     transform: "translateX(-50%)",
     width: "100vw",
-    maxWidth: "76.8rem",
+    maxWidth: contentMaxWidth.mobile,
     padding: "1.2rem 2rem 4rem 2rem",
     background: color.gray.gray000,
+    "@media": {
+      [media.tablet]: { maxWidth: contentMaxWidth.tablet },
+      [media.laptop]: { maxWidth: contentMaxWidth.laptop },
+    },
   }),
   upload: style([
     font.body01,

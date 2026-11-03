@@ -120,7 +120,9 @@ export default function ReviewPage() {
                   </div>
                 ))}
               </div>
-              <LazyImage src={banner} alt="banner" className={styles.bannerContainer} width="100%" height="10rem" />
+              <div className={styles.bannerWrapper}>
+                <LazyImage src={banner} alt="banner" className={styles.bannerContainer} width="100%" height="100%" />
+              </div>
             </div>
             <p className={styles.hospitalListText}>믿고 찾는 인기 병원</p>
             <HospitalList

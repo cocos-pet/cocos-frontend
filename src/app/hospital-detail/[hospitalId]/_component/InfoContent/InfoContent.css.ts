@@ -10,7 +10,7 @@ export const tags = style({
   display: "flex",
   gap: "0.4rem",
   flexWrap: "wrap",
-  padding: "1.2rem 2rem 1.2rem 1.6rem",
+  padding: "1.2rem 2rem",
 });
 
 export const keywords = style([
@@ -36,7 +36,7 @@ export const introduction = style({
 export const introductionText = style([
   font.body01,
   {
-    padding: "0.8rem 2.8rem 0.8rem 2.8rem",
+    padding: "0.8rem 2rem",
     color: color.gray.gray700,
   },
 ]);

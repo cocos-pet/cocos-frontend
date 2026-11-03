@@ -1,6 +1,7 @@
 import {style} from "@vanilla-extract/css";
 import {color, font, semanticColor} from "@style/styles.css.ts";
 import {recipe} from "@vanilla-extract/recipes";
+import { media, pagePadding } from "@style/breakpoints";
 
 export const container = style({
   display: "flex",
@@ -18,14 +19,22 @@ export const tabContainer = style({
   top: "6.4rem",
   width: "100%",
   zIndex: 10,
+  "@media": {
+    [media.tablet]: { padding: `1rem ${pagePadding.tablet}` },
+    [media.laptop]: { padding: `1rem ${pagePadding.laptop}` },
+  },
 });
 
 export const postList = style({
   width: "100%",
-  padding: "1.6rem 2rem 0rem 2rem",
+  padding: `1.6rem ${pagePadding.mobile} 0rem ${pagePadding.mobile}`,
   display: "flex",
   flexDirection: "column",
   gap: "1.6rem",
+  "@media": {
+    [media.tablet]: { padding: `1.6rem ${pagePadding.tablet} 0rem ${pagePadding.tablet}` },
+    [media.laptop]: { padding: `1.6rem ${pagePadding.laptop} 0rem ${pagePadding.laptop}` },
+  },
 });
 
 // 탭 버튼 스타일

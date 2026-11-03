@@ -1,5 +1,6 @@
 import { style } from "@vanilla-extract/css";
 import { color, font } from "@style/styles.css";
+import { media, pagePadding } from "@style/breakpoints";
 
 export const locationHeader = style({
   height: "6.4rem",
@@ -25,8 +26,12 @@ export const location = style({
   display: "flex",
   alignItems: "center",
   justifyContent: "space-between",
-  padding: "1.2rem 2rem",
+  padding: `1.2rem ${pagePadding.mobile}`,
   backgroundColor: "white",
+  "@media": {
+    [media.tablet]: { padding: `1.2rem ${pagePadding.tablet}` },
+    [media.laptop]: { padding: `1.2rem ${pagePadding.laptop}` },
+  },
 });
 
 export const locationButton = style({
