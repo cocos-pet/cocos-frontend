@@ -122,3 +122,60 @@ export const rotateIcon = style({
   transform: "rotate(180deg)",
   transition: "transform 0.2s ease",
 });
+
+export const aiCard = style({
+  display: "flex",
+  flexDirection: "column",
+  gap: "0.4rem",
+  margin: "0 2rem 2rem",
+  padding: "1.6rem",
+  borderRadius: "1.2rem",
+  backgroundColor: color.gray.gray100,
+});
+
+export const aiCardTitle = style([
+  font.heading03,
+  {
+    fontWeight: 600,
+  },
+]);
+
+export const aiCardSubtitle = style([
+  font.body01,
+  {
+    color: color.gray.gray700,
+    marginBottom: "0.4rem",
+  },
+]);
+
+export const aiKeywordLine = style([
+  font.body01,
+  {
+    display: "flex",
+    alignItems: "center",
+    gap: "0.6rem",
+    marginTop: "0.4rem",
+  },
+]);
+
+export const aiEmoji = style({
+  flexShrink: 0,
+  fontSize: "1.6rem",
+  lineHeight: 1,
+});
+
+export const aiPositiveText = style([
+  font.body01,
+  {
+    color: color.primary.blue700,
+    fontWeight: 600,
+  },
+]);
+
+export const aiNegativeText = style([
+  font.body01,
+  {
+    color: color.red.warning_red200,
+    fontWeight: 600,
+  },
+]);
