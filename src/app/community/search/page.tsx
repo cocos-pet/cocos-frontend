@@ -1,6 +1,7 @@
 "use client";
 import { IcLeftarrow, IcSearch } from "@asset/svg";
 import { TextField } from "@common/component/TextField";
+import Chip from "@common/component/Chip/Chip";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { PATH } from "@route/path.ts";
@@ -11,6 +12,8 @@ import { styles } from "./Search.css.ts";
 import { useAuth } from "@providers/AuthProvider.tsx";
 
 const Loading = dynamic(() => import("@common/component/Loading/Loading.tsx"), { ssr: false });
+
+const RECENT_KEYWORD_MAX = 5;
 
 function Search() {
   const router = useRouter();
@@ -78,6 +81,8 @@ function Search() {
 
   if (isLoading) return <Loading height={45} />;
 
+  const recentKeywords = (recentSearchData?.keywords ?? []).slice(0, RECENT_KEYWORD_MAX);
+
   return (
     <div className={styles.container}>
       <div className={styles.searchHeader}>
@@ -92,22 +97,24 @@ function Search() {
           onClearClick={() => setSearchText("")}
         />
       </div>
-      {isAuthenticated && (
-        <div className={styles.searchContent}>
+
+      {isAuthenticated && recentKeywords.length > 0 && (
+        <div className={styles.section}>
           <div className={styles.title}>최근 검색 기록</div>
-          <ul className={styles.list}>
-            {recentSearchData?.keywords?.map((data) => (
-              <li
+          <div className={styles.chipList}>
+            {recentKeywords.map((data) => (
+              <button
                 key={data.id}
-                className={styles.listItem}
+                type="button"
+                className={styles.chipButton}
                 onClick={() => {
                   if (data.content) handleNavigate(data.content);
                 }}
               >
-                {data.content || ""}
-              </li>
+                <Chip label={data.content ?? ""} color="border" size="small" />
+              </button>
             ))}
-          </ul>
+          </div>
         </div>
       )}
     </div>
